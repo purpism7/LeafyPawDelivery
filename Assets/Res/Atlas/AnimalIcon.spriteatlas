@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AnimalIcon
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 6a135350e9034468392c7177d5144295, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 6b94edc1e1c584cb69cfe2386f9b36f8, type: 3}
+  - {fileID: 21300000, guid: 935d6c9710319411daa54f76c907ed75, type: 3}
+  - {fileID: 21300000, guid: e4cf79b8db2bf4e8bbb62d7a8e570f8b, type: 3}
+  - {fileID: 21300000, guid: 3c6b221fd415848d4ac64ce02baa9599, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Dog
+  - RedPanda
+  - Cat
+  - Rabbit
+  m_RenderDataMap: {}
+  m_Tag: AnimalIcon
+  m_IsVariant: 0
