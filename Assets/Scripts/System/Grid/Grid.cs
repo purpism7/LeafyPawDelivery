@@ -6,10 +6,8 @@ namespace GameSystem
 {
     public class Grid : MonoBehaviour
     {
-        public int Row = 10;
-        public int Column = 10;
-        public float CellSize = 1f;
-        public GameObject cellGameObj; 
+        public GridData GridData;
+        public Cell Cell; 
 
         private int[,] _cellArray;
 
@@ -39,16 +37,32 @@ namespace GameSystem
 
         private void Generated()
         {
-            _cellArray = new int[Row, Column];
-
-            for (int i = 0; i < Row; ++i)
+            if(GridData == null)
             {
-                for(int j = 0; j < Column; ++j)
-                {
-                    var gameObj = GameObject.Instantiate(cellGameObj, transform);
+                return;
+            }
 
-                    gameObj.transform.localPosition = new Vector3(i, j, 0) * CellSize;
-                    gameObj.name = "[" + i + ", " + j + "]";
+            _cellArray = new int[GridData.Row, GridData.Column];
+
+            for (int i = 0; i < GridData.Row; ++i)
+            {
+                for(int j = 0; j < GridData.Column; ++j)
+                {
+                    var cell = GameObject.Instantiate(Cell, transform);
+                    if(cell == null)
+                    {
+                        continue;
+                    }
+
+                    cell.Init(new Cell.Data()
+                    {
+                        Row = i,
+                        Column = j,
+                        CellSize = GridData.CellSize,
+                    });
+
+                    //gameObj.transform.localPosition = new Vector3(i, j, 0) * GridData.CellSize;
+                    //gameObj.name = "[" + i + ", " + j + "]";
                 }
             }
         }
