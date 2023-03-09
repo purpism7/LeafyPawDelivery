@@ -44,9 +44,9 @@ namespace GameSystem
 
             _cellArray = new int[GridData.Row, GridData.Column];
 
-            for (int i = 0; i < GridData.Row; ++i)
+            for (int i = 0; i < GridData.Column; ++i)
             {
-                for(int j = 0; j < GridData.Column; ++j)
+                for(int j = 0; j < GridData.Row; ++j)
                 {
                     var cell = GameObject.Instantiate(Cell, transform);
                     if(cell == null)
@@ -56,8 +56,8 @@ namespace GameSystem
 
                     cell.Init(new Cell.Data()
                     {
-                        Row = i,
-                        Column = j,
+                        Row = j,
+                        Column = i,
                         CellSize = GridData.CellSize,
                     });
 
