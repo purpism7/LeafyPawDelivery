@@ -42,7 +42,10 @@ namespace UI
         void BottomMenu.IListener.ClickBottomMenu()
         {
             var popup = new GameSystem.PopupCreator<Arrangement, Arrangement.Data>()
-                .SetRootRectTm(_data.PopupRootRectTm)
+                .SetData(new Arrangement.Data()
+                {
+                    
+                })
                 .Create();
         }
     }

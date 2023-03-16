@@ -39,7 +39,7 @@ namespace GameSystem
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(_center, _mapSize * 2);
+            Gizmos.DrawWireCube(_center, _mapSize * 2f);
         }
 
         private void Drag()
@@ -63,21 +63,22 @@ namespace GameSystem
                 case TouchPhase.Moved:
                     {
                         var nowPos = touch.position - touch.deltaPosition;
-                        //Debug.Log(touch.deltaPosition);
                         var movePos = _prevPos - nowPos;
+                        var cameraTm = GameCamera.transform;
+
                         //Debug.Log(GameCamera.transform.position + " / " + movePos);
-                        GameCamera.transform.position = Vector3.Lerp(GameCamera.transform.position, movePos, Time.deltaTime * 10f);
+                        cameraTm.position = Vector3.Lerp(cameraTm.position, movePos, Time.deltaTime * 10f);
                         //GameCamera.transform.Translate(movePos);
                         //GameCamera.transform.position = movePos;
                         //_prevPos = touch.position - touch.deltaPosition;
 
-                        float lx = _mapSize.x - _width;
-                        float clampX = Mathf.Clamp(GameCamera.transform.position.x, -lx + _center.x, lx + _center.x);
+                        float x = _mapSize.x - _width;
+                        float clampX = Mathf.Clamp(cameraTm.position.x, -x + _center.x, x + _center.x);
 
-                        float ly = _mapSize.y - _height;
-                        float clampY = Mathf.Clamp(GameCamera.transform.position.y, -ly + _center.y, ly + _center.y);
+                        float y = _mapSize.y - _height;
+                        float clampY = Mathf.Clamp(cameraTm.position.y, -y + _center.y, y + _center.y);
 
-                        GameCamera.transform.position = new Vector3(clampX, clampY, -10f);
+                        cameraTm.position = new Vector3(clampX, clampY, -10f);
                     }
                     break;
 
@@ -97,6 +98,16 @@ namespace GameSystem
             {
                 return;
             }
+
+            var firTouch = Input.GetTouch(0);
+            var secTouch = Input.GetTouch(1);
+
+            var firMag = (firTouch.position - firTouch.deltaPosition).sqrMagnitude;
+            var secMag = (secTouch.position - secTouch.deltaPosition).sqrMagnitude;
+
+            float res = firMag - secMag;
+
+            GameCamera.orthographicSize += res * 1f;
         }
     }
 }

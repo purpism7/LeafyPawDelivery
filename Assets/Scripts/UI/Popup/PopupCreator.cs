@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using UI;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace GameSystem
 {
@@ -16,26 +19,45 @@ namespace GameSystem
             return this;
         }
 
-        public PopupCreator<T, V> SetRootRectTm(RectTransform rootRectTm)
-        {
-            _rootRecTm = rootRectTm;
+        //public PopupCreator<T, V> SetRootRectTm(RectTransform rootRectTm)
+        //{
+        //    _rootRecTm = rootRectTm;
 
-            return this;
-        }
+        //    return this;
+        //}
 
         public override T Create()
         {
-            var popup = UIManager.Instance.Instantiate<T>(_rootRecTm);
-            if(popup == null)
+            var popup = UIManager.Instance.InstantiatePopup<T>();
+            if (popup == null)
             {
                 return default(T);
             }
 
             popup.Init(_data);
 
-            UIManager.Instance.Fade.Out(null);
+            ShowAnimPopup(popup: popup);
 
             return popup;
+        }
+
+        private void ShowAnimPopup(UI.Base popup)
+        {
+            if(popup == null)
+            {
+                return;
+            }
+
+            UIManager.Instance.Fade.Out(null,
+                () =>
+                {
+
+                });
+
+            Sequence sequence = DOTween.Sequence()
+                .Append(popup.transform.DOScale(0, 0))
+                .Append(popup.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack));
+
         }
     }
 }

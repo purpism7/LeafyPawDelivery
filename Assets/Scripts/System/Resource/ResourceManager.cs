@@ -51,7 +51,7 @@ namespace GameSystem
             if (gameObj)
             {
                 return gameObj.GetComponent<T>();
-            }
+            }   
 
             return default(T);
         }

@@ -12,6 +12,8 @@ namespace UI
 
         public Image Img;
 
+        private System.Action _inAction = null;
+
         public override void Init(Data data)
         {
             base.Init(data);
@@ -20,13 +22,17 @@ namespace UI
             UIUtils.SetActive(Img.transform, false);
         }
 
-        public void Out(System.Action completeAction)
+        public void Out(System.Action completeAction, System.Action InAction)
         {
+            _inAction = InAction;
+
             UIUtils.SetActive(Img.transform, true);
 
             FadeInOut(0.4f, Duration,
                 () =>
                 {
+                    completeAction?.Invoke();
+
                     return;
                 });
         }
@@ -60,6 +66,8 @@ namespace UI
         public void OnClick()
         {
             In(null);
+
+            _inAction?.Invoke();
         }
     }
 }

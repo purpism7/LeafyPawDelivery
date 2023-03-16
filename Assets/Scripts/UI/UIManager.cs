@@ -38,6 +38,11 @@ namespace GameSystem
         {
             return ResourceManager.Instance.InstantiateUI<T>(rootRectTm);
         }
+
+        public T InstantiatePopup<T>()
+        {
+            return ResourceManager.Instance.InstantiateUI<T>(Popup?.RootRectTm);
+        }
     }
 }
 
