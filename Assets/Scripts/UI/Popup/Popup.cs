@@ -4,13 +4,8 @@ using UnityEngine;
 
 namespace UI
 {
-    public class Popup : Base<Popup.Data>
+    public class Popup : Base
     {
-        public class Data : UI.Data
-        {
-
-        }
-
         public RectTransform RootRectTm;
 
         private List<UI.Base> _opendPopupList = new();

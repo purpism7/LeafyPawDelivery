@@ -6,13 +6,13 @@ using DG.Tweening;
 
 namespace UI
 {
-    public class Fade : Base<Data>
+    public class Fade : Common<Data>
     {
         readonly float Duration = 0.5f;
 
         public Image Img;
 
-        private System.Action _inAction = null;
+        private System.Action _clickAction = null;
 
         public override void Init(Data data)
         {
@@ -22,9 +22,9 @@ namespace UI
             UIUtils.SetActive(Img.transform, false);
         }
 
-        public void Out(System.Action completeAction, System.Action InAction)
+        public void Out(System.Action completeAction, System.Action clickAction)
         {
-            _inAction = InAction;
+            _clickAction = clickAction;
 
             UIUtils.SetActive(Img.transform, true);
 
@@ -67,7 +67,7 @@ namespace UI
         {
             In(null);
 
-            _inAction?.Invoke();
+            _clickAction?.Invoke();
         }
     }
 }

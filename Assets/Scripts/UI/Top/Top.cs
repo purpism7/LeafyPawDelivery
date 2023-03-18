@@ -6,7 +6,7 @@ using TMPro;
 
 namespace UI
 {
-    public class Top : Base<Top.Data>
+    public class Top : Common<Top.Data>
     {
         public class Data : UI.Data
         {

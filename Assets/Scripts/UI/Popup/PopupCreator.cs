@@ -34,30 +34,9 @@ namespace GameSystem
                 return default(T);
             }
 
-            popup.Init(_data);
-
-            ShowAnimPopup(popup: popup);
+            popup.Init(_data);            
 
             return popup;
-        }
-
-        private void ShowAnimPopup(UI.Base popup)
-        {
-            if(popup == null)
-            {
-                return;
-            }
-
-            UIManager.Instance.Fade.Out(null,
-                () =>
-                {
-
-                });
-
-            Sequence sequence = DOTween.Sequence()
-                .Append(popup.transform.DOScale(0, 0))
-                .Append(popup.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack));
-
         }
     }
 }

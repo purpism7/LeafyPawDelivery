@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class Bottom : Base<Bottom.Data>, BottomMenu.IListener
+    public class Bottom : Common<Bottom.Data>, BottomMenu.IListener
     {
         public class Data : UI.Data
         {

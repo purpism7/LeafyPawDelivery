@@ -47,25 +47,25 @@ namespace GameSystem
 
         public void CreateActivityAnimal(int animalId)
         {
-            var animalData = GameManager.Instance?.DataContainer?.GetAnimal(animalId);
-            if(animalData == null)
-            {
-                return;
-            }
+            //var animalData = GameManager.Instance?.DataContainer?.GetAnimal(animalId);
+            //if(animalData == null)
+            //{
+            //    return;
+            //}
 
-            var activityAnimal = new ActivityAnimalCreator()
-                .SetAnimalId(animalId)
-                .SetAnimalName(animalData.name)
-                .SetRoot(RootRectTm)
-                .SetSelectActivityAnimal(_selectActivityAnimalDel)
-                .Create();
+            //var activityAnimal = new ActivityAnimalCreator()
+            //    .SetAnimalId(animalId)
+            //    .SetAnimalName(animalData.name)
+            //    .SetRoot(RootRectTm)
+            //    .SetSelectActivityAnimal(_selectActivityAnimalDel)
+            //    .Create();
 
-            if(activityAnimal == null)
-            {
-                return;
-            }
+            //if(activityAnimal == null)
+            //{
+            //    return;
+            //}
 
-            _activityAnimalDic.TryAdd(animalId, activityAnimal);
+            //_activityAnimalDic.TryAdd(animalId, activityAnimal);
         }
 
         public void RemoveActivityAnimal(int animalId)

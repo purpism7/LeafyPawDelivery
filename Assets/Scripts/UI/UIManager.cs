@@ -19,11 +19,6 @@ namespace GameSystem
 
             });
 
-            Popup?.Init(new UI.Popup.Data()
-            {
-
-            });
-
             Bottom?.Init(new UI.Bottom.Data()
             {
                 PopupRootRectTm = Popup.RootRectTm,
