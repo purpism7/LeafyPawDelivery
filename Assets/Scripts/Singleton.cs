@@ -12,7 +12,9 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (_instance == null)
             {
-                var obj = FindObjectOfType<T>();
+                Debug.Log(typeof(T).Name);
+
+                var obj = GameObject.FindObjectOfType<T>();
                 if (obj == null)
                 {
                     var gameObj = new GameObject(typeof(T).Name);

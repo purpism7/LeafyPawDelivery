@@ -51,7 +51,11 @@ namespace GameSystem
                 return null;
             }
 
-            animal.Init(_order, _dropItemAction);
+            animal.Init(new Animal.Data_()
+            {
+                Order = _order,
+                DropItemAction = _dropItemAction,
+            });
 
             return GameManager.Instance?.AddAnimal(animal);
         }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace GameSystem
 {
@@ -18,6 +19,18 @@ namespace GameSystem
 
         private void LateUpdate()
         {
+            int touchCnt = Input.touchCount;
+            if (touchCnt <= 0)
+            {
+                return;
+            }
+
+            var touch = Input.GetTouch(0);
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            {
+                return;
+            }
+
             InputHandler?.ChainLateUpdate();
         }
     }

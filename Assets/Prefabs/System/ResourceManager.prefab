@@ -61,6 +61,6 @@ MonoBehaviour:
   InitLoadLabelList:
   - m_LabelString: Animal
   - m_LabelString: Place
-  - m_LabelString: Deco
+  - m_LabelString: Object
   - m_LabelString: UI
   - m_LabelString: Game

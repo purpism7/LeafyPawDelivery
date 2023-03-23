@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace GameSystem
 {
@@ -22,12 +23,28 @@ namespace GameSystem
                 _height = GameCamera.orthographicSize;
                 _width = _height * Screen.width / Screen.height;
             }
-           
         }
 
         private void FixedUpdate()
         {
-            if(GameCamera == null)
+            if (GameCamera == null)
+            {
+                return;
+            }
+
+            if(!GameManager.Instance.GameState.CheckControlCamera)
+            {
+                return;
+            }
+
+            int touchCnt = Input.touchCount;
+            if (touchCnt <= 0)
+            {
+                return;
+            }
+
+            var touch = Input.GetTouch(0);
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
             {
                 return;
             }
@@ -85,6 +102,7 @@ namespace GameSystem
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
+                        Debug.Log("End Drag Camera");
                         //_prevPos = GameCamera.transform.position;
                     }
                     break;

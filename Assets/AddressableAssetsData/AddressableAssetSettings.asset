@@ -93,7 +93,7 @@ MonoBehaviour:
     - default
     - Animal
     - Place
-    - Deco
+    - Object
     - UI
     - Data
     - Atlas

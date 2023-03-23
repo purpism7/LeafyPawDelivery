@@ -5,19 +5,22 @@ using DG.Tweening;
 
 namespace Game
 {
-    public class DropItem : Base
+    public class DropItem : Game.Base<DropItem.Data>
     {
+        public class Data : BaseData
+        {
+            public Transform startRootTm = null;
+        }
+
         private Transform _startRootTm = null;
 
-        public override void Init(params object[] objs)
+        public override void Init(Data data)
         {
-            if (objs != null &&
-                objs.Length > 0)
-            {
-                _startRootTm = objs[1] as Transform;
-            }
+            base.Init(data);
 
-            if(_startRootTm)
+            _startRootTm = data.startRootTm;
+
+            if (_startRootTm)
             {
                 transform.position = new Vector3(_startRootTm.position.x, _startRootTm.position.y - 30f, 1f);
             }

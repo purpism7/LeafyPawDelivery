@@ -18,7 +18,7 @@ namespace GameSystem
 
         public List<AssetLabelReference> InitLoadLabelList;
 
-        private Dictionary<string, Dictionary<int, GameObject>> _gameObjByIdDic = new(); // Animal, Place, Deco
+        private Dictionary<string, Dictionary<int, GameObject>> _gameObjByIdDic = new(); // Animal, Place, Object
         private Dictionary<string, GameObject> _gameObjDic = new(); // Game
         private Dictionary<string, GameObject> _uiGameObjDic = new(); // UI
 

@@ -4,11 +4,16 @@ using UnityEngine;
 
 namespace Game
 {
-    public class ActivityArea : Base
+    public class ActivityArea : Base<ActivityArea.Data_>
     {
         public interface IListener
         {
             void PlaceAnimal(ActivityArea activityArea);
+        }
+
+        public class Data_ : BaseData
+        {
+            public IListener IListener = null;
         }
 
         public Transform AnimalRootTm;
@@ -21,13 +26,11 @@ namespace Game
 
         public bool PlayingAnimal { get; private set; } = false;
 
-        public override void Init(params object[] objs)
+        public override void Init(Data_ data)
         {
-            if (objs != null &&
-                objs.Length > 0)
-            {
-                _iListener = objs[0] as IListener;
-            }
+            base.Init(data);
+
+            _iListener = data?.IListener;
 
             _dropItemList.Clear();
 

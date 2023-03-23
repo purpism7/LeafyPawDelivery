@@ -84,6 +84,7 @@ namespace UI
             //        Close();
             //    });
             //sequence.Restart();
+            transform.SetActive(false);
 
             GameSystem.UIManager.Instance.Fade.In(null);
         }

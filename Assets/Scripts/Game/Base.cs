@@ -18,13 +18,24 @@ namespace Game
 
         }
 
-        public abstract void Init(params object[] objs);
-        public virtual void Init<T>(T tData) where T : BaseData
-        {
+        public abstract void ChainUpdate();
+    }
 
+    public abstract class Base<T> : Base where T : BaseData
+    {
+        protected T _data = default(T);
+
+        public virtual void Init(T data)
+        {
+            _data = data;
         }
 
-        public abstract void ChainUpdate();
+        public virtual IEnumerator CoInit(T data)
+        {
+            _data = data;
+
+            yield return null;
+        }
     }
 }
 

@@ -6,21 +6,24 @@ using GameSystem;
 
 namespace Game
 {
-    public class Place : Base, ActivityArea.IListener
+    public class Place : Base<Place.Data>, ActivityArea.IListener
     {
+        public class Data : BaseData
+        {
+            public System.Action<int> PlaceActivityAnimalAction = null;
+        }
+
         public Transform ActivityAreaRootTm;
 
         private Dictionary<int, ActivityArea> _activityAreaDic = new();
         private System.Action<int> _placeActivityAnimalAction = null;
         private int _selectedAnimalId = 0;
 
-        public override void Init(params object[] objs)
+        public override void Init(Data data)
         {
-            if(objs != null &&
-               objs.Length > 0)
-            {
-                _placeActivityAnimalAction = objs[0] as System.Action<int>;
-            }
+            base.Init(data);
+
+            _placeActivityAnimalAction = data?.PlaceActivityAnimalAction;
 
             InitActivityAreaDic();
         }
@@ -47,7 +50,10 @@ namespace Game
                     continue;
                 }
 
-                activityArea.Init(this);
+                activityArea.Init(new ActivityArea.Data_()
+                {
+                    IListener = this,
+                });
 
                 _activityAreaDic.TryAdd(activityArea.Id, activityArea);
             }

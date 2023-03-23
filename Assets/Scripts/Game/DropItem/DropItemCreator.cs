@@ -35,7 +35,10 @@ namespace Game
         public override DropItem Create()
         {
             var dropItem = ResourceManager.Instance.InstantiateGame<DropItem>(_rootTm);
-            dropItem?.Init(_dropItemData, _startRootTm);
+            dropItem?.Init(new DropItem.Data()
+            {
+                startRootTm = _startRootTm,
+            });
 
             return dropItem;
         }

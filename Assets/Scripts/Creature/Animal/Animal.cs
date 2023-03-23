@@ -5,8 +5,14 @@ using Game;
 
 namespace Creature
 {
-    public class Animal : Base
+    public class Animal : Base<Animal.Data_>
     {
+        public class Data_ : BaseData
+        {
+            public int Order = 0;
+            public System.Action<Data.DropItem, Transform> DropItemAction = null;
+        }
+
         private AnimalRoot _animalRoot = null;
         private AnimalActionController _actionCtr = null;
         private SpriteRenderer _spriteRenderer = null;
@@ -14,23 +20,20 @@ namespace Creature
         private Data.Animal _animalData = null;
         private System.Action<Data.DropItem, Transform> _dropItemAction = null;
 
-        public override void Init(params object[] objs)
+        public override void Init(Data_ data)
         {
+            base.Init(data);
+            
             _animalData = GameSystem.GameManager.Instance?.DataContainer?.GetAnimal(Id);
 
             _animalRoot = GetComponentInChildren<AnimalRoot>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
-
-            if (objs != null &&
-                objs.Length > 0)
+            if(_spriteRenderer != null)
             {
-                if (int.TryParse(objs[0].ToString(), out int order))
-                {
-                    _spriteRenderer.sortingOrder = order;
-                }
-
-                _dropItemAction = objs[1] as System.Action<Data.DropItem, Transform>;
+                _spriteRenderer.sortingOrder = data.Order;
             }
+
+            _dropItemAction = data?.DropItemAction;
 
             InitActionController();
 

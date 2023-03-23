@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Game_Deco
+  m_Name: Game_Object
   m_EditorClassIdentifier: 
-  m_GroupName: Game_Deco
+  m_GroupName: Game_Object
   m_Data:
     m_SerializedData: []
   m_GUID: 2eefddb9ae18f4e3caaf764679673fd7
   m_SerializeEntries:
-  - m_GUID: 2d860bb7b29d8481ebbe2b4212a474c0
-    m_Address: Assets/Prefabs/Game/Object/Deco
+  - m_GUID: 51164d90246f4462a828e1fc4c4f160e
+    m_Address: Assets/Prefabs/Game/Object
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Deco
+    - Object
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e7d7ed8f5841242acbc2f114c52db5f7, type: 2}
   m_SchemaSet:
