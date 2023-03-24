@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 namespace GameSystem
 {
@@ -72,7 +73,7 @@ namespace GameSystem
             {
                 case TouchPhase.Began:
                     {
-                        _prevPos = touch.position - touch.deltaPosition;
+                        _prevPos = touch.position;
                         //_prevPos = GameCamera.transform.position;
                     }
                     break;
@@ -80,14 +81,14 @@ namespace GameSystem
                 case TouchPhase.Moved:
                     {
                         var nowPos = touch.position - touch.deltaPosition;
-                        var movePos = _prevPos - nowPos;
+                        //var movePos = _prevPos - touch.position;
                         var cameraTm = GameCamera.transform;
+
+                        var movePos = touch.position - _prevPos;
 
                         //Debug.Log(GameCamera.transform.position + " / " + movePos);
                         cameraTm.position = Vector3.Lerp(cameraTm.position, movePos, Time.deltaTime * 10f);
-                        //GameCamera.transform.Translate(movePos);
-                        //GameCamera.transform.position = movePos;
-                        //_prevPos = touch.position - touch.deltaPosition;
+                        //cameraTm.DOMove(movePos, 1f);
 
                         float x = _mapSize.x - _width;
                         float clampX = Mathf.Clamp(cameraTm.position.x, -x + _center.x, x + _center.x);
@@ -102,7 +103,6 @@ namespace GameSystem
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
-                        Debug.Log("End Drag Camera");
                         //_prevPos = GameCamera.transform.position;
                     }
                     break;

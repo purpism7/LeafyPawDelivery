@@ -17,7 +17,7 @@ namespace GameSystem
             yield return null;
         }
 
-        private void LateUpdate()
+        private void Update()
         {
             int touchCnt = Input.touchCount;
             if (touchCnt <= 0)
@@ -31,7 +31,7 @@ namespace GameSystem
                 return;
             }
 
-            InputHandler?.ChainLateUpdate();
+            InputHandler?.ChainUpdate();
         }
     }
 }

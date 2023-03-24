@@ -4,27 +4,31 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+using DG.Tweening;
+
 namespace GameSystem
 {
     public class InputHandler : MonoBehaviour
     {
-        private Camera _mainCamera = null;
+        private Camera _gameCamera = null;
         private System.DateTime _touchInterval;
         private Vector2 _prevPos = Vector2.zero;
 
-        public void Init(Camera mainCamera)
+        private Game.Base _gameBase = null;
+
+        public void Init(Camera gameCamera)
         {
-            _mainCamera = mainCamera;
+            _gameCamera = gameCamera;
         }
 
-        public void ChainLateUpdate()
+        public void ChainUpdate()
         {
             UpdateTouch();
         }
 
         private void UpdateTouch()
         {
-            if(_mainCamera == null)
+            if(_gameCamera == null)
             {
                 return;
             }
@@ -38,9 +42,7 @@ namespace GameSystem
 
             var touch = Input.GetTouch(0);
             var touchPoint = touch.position;
-            var ray = _mainCamera.ScreenPointToRay(touchPoint);
-
-            Game.Base gameBase = null;
+            var ray = _gameCamera.ScreenPointToRay(touchPoint);
 
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
@@ -50,48 +52,62 @@ namespace GameSystem
                     return;
                 }
 
-                gameBase = collider.GetComponentInParent<Game.Base>();
+                if(_gameBase == null)
+                {
+                    _gameBase = collider.GetComponentInParent<Game.Base>();
+                }
             }
 
             switch (touch.phase)
             {
                 case TouchPhase.Began:
                     {
-                        if (gameBase != null)
+                        if (_gameBase != null)
                         {
                             GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
 
-                            _prevPos = touch.position  - touch.deltaPosition;
+                            _prevPos = touch.position;
                         }
                     }
                     break;
 
                 case TouchPhase.Moved:
                     {
-                        if (GameManager.Instance.GameState.CheckControlCamera)
-                        {
-                            return;
-                        }
-
-                        if(gameBase != null)
-                        {
-                            var nowPos = touch.position - touch.deltaPosition;
-                            var movePos = _prevPos - nowPos;
-                            var gamebaseTm = gameBase.transform;
-                            Debug.Log(movePos);
-                            gamebaseTm.localPosition = -movePos;
-
-                            gameBase.OnTouch();
-                        }
+                        _Drag(touch);
                     }
                     break;
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
+                        _gameBase = null;
+
                         GameSystem.GameManager.Instance.SetGameState<Game.State.Game>();
                     }                    
                     break;
+            }
+        }
+
+        private void _Drag(Touch touch)
+        {
+            if (GameManager.Instance.GameState.CheckControlCamera)
+            {
+                return;
+            }
+
+            Vector3 movePos = touch.position - _prevPos;
+            movePos.z = 350f;
+
+            if (_gameBase != null)
+            {
+                var gameBaseTm = _gameBase.transform;
+
+                
+                gameBaseTm.DOMove(movePos, 0);
+
+                //gameBaseTm.localPosition = movePos;
+
+                _gameBase.OnTouch();
             }
         }
     }
