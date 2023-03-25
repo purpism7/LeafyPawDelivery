@@ -13,7 +13,7 @@ namespace UI
         public SpriteRenderer animalSpr;
         public Image animalImg;
 
-        public class Data : UI.Data
+        public class Data : BaseData
         {
             public int AnimalId = 0;
             public string AnimalName = string.Empty;

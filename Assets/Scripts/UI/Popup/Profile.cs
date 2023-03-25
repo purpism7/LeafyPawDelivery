@@ -6,7 +6,7 @@ namespace UI
 {
     public class Profile : Base<Profile.Data>
     {
-        public class Data : UI.Data
+        public class Data : BaseData
         {
 
         }

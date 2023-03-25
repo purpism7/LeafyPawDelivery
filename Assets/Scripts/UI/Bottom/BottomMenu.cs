@@ -19,7 +19,7 @@ namespace UI
             void ClickBottomMenu();
         }
 
-        public class Data : UI.Data
+        public class Data : BaseData
         {
             public IListener ILisener = null;
         }

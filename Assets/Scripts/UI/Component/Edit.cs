@@ -6,7 +6,7 @@ namespace UI.Component
 {
     public class Edit : UI.Base<Edit.Data>
     {
-        public class Data : UI.Data
+        public class Data : BaseData
         {
             public int Id = 0;
         }

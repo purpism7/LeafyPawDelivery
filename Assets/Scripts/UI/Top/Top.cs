@@ -8,7 +8,7 @@ namespace UI
 {
     public class Top : Common<Top.Data>
     {
-        public class Data : UI.Data
+        public class Data : BaseData
         {
 
         }

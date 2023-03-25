@@ -6,7 +6,7 @@ using DG.Tweening;
 
 namespace UI
 {
-    public class Fade : Common<Data>
+    public class Fade : Common<BaseData>
     {
         readonly float Duration = 0.5f;
 
@@ -14,7 +14,7 @@ namespace UI
 
         private System.Action _clickAction = null;
 
-        public override void Init(Data data)
+        public override void Init(BaseData data)
         {
             base.Init(data);
 

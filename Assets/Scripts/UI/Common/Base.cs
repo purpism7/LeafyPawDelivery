@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class Data
+    public class BaseData
     {
 
     }
@@ -15,9 +15,9 @@ namespace UI
         protected bool _isTouch = false;
     }
 
-    public abstract class Common<T> : Base where T : Data
+    public abstract class Common<T> : Base where T : BaseData
     {
-        protected Data _data = null;
+        protected BaseData _data = null;
 
         public virtual void Init(T data)
         {
@@ -25,7 +25,7 @@ namespace UI
         }
     }
 
-    public abstract class Base<T> : Base where T : Data
+    public abstract class Base<T> : Base where T : BaseData
     {       
         protected T _data = default(T);
 
@@ -46,8 +46,6 @@ namespace UI
             _isTouch = false;
 
             _data = data;
-
-            ShowAnim();
         }
 
         public virtual void Close()
@@ -55,39 +53,23 @@ namespace UI
             transform.SetActive(false);
         }
 
-        private void ShowAnim()
-        {
-            GameSystem.UIManager.Instance.Fade.Out(null,
-               () =>
-               {
-                   HideAnim();
-               });
+        //private void ShowAnim()
+        //{
+        //    GameSystem.UIManager.Instance.Fade.Out(null,
+        //       () =>
+        //       {
+        //           HideAnim();
+        //       });
+        //}
 
-            //Sequence sequence = DOTween.Sequence()
-            //    .Append(transform.DOScale(0, 0))
-            //    .Append(transform.DOScale(1f, 0.1f).SetEase(Ease.Linear))
-            //    .OnComplete(() =>
-            //    {
-            //        _isTouch = true;
-            //    });
-            //sequence.Restart();
-        }
+        //private void HideAnim()
+        //{
+        //    _isTouch = false;
 
-        private void HideAnim()
-        {
-            _isTouch = false;
+        //    transform.SetActive(false);
 
-            //Sequence sequence = DOTween.Sequence()
-            //    .Append(transform.DoF(0f, 0.1f).SetEase(Ease.Linear))
-            //    .OnComplete(() =>
-            //    {
-            //        Close();
-            //    });
-            //sequence.Restart();
-            transform.SetActive(false);
-
-            GameSystem.UIManager.Instance.Fade.In(null);
-        }
+        //    GameSystem.UIManager.Instance.Fade.In(null);
+        //}
     }
 }
 

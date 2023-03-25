@@ -6,7 +6,7 @@ namespace UI
 {
     public class Arrangement : Base<Arrangement.Data>
     {
-        public class Data : UI.Data
+        public class Data : BaseData
         {
 
         }

@@ -1,22 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
+
+using DG.Tweening;
+using GameSystem;
 
 namespace UI
 {
-    public class Bottom : Common<Bottom.Data>, BottomMenu.IListener
+    public class Bottom : Common<Bottom.Data>, BottomMenu.IListener, Edit.IListener
     {
-        public class Data : UI.Data
+        public class Data : BaseData
         {
             public RectTransform PopupRootRectTm = null;
         }
+
+        readonly float InitPosY = -500f;
 
         public RectTransform RootRectTm;
         [SerializeField]
         private RectTransform EditRootRectTm;
 
         private List<BottomMenu> BottomMenuList = new();
+        private Edit _edit = null;
 
         public override void Init(Data data)
         {
@@ -43,6 +48,24 @@ namespace UI
             }
         }
 
+       private void ShowEdit()
+        {
+            if(_edit == null)
+            {
+                _edit = new UICreator<Edit, Edit.Data>()
+                    .SetData(new Edit.Data()
+                    {
+                        IListener = this,
+                    })
+                    .SetRootRectTm(EditRootRectTm)
+                    .Create();
+            }
+
+            UIUtils.SetActive(EditRootRectTm, true);
+            ShowAnim(EditRootRectTm, null);
+        }
+
+        #region BottomMenu.IListener
         void BottomMenu.IListener.ClickBottomMenu()
         {
             //var popup = new GameSystem.PopupCreator<Arrangement, Arrangement.Data>()
@@ -55,9 +78,22 @@ namespace UI
             HideAnim(RootRectTm,
                 () =>
                 {
-                    ShowAnim(EditRootRectTm, null);
+                    ShowEdit();
                 });
         }
+        #endregion
+
+        #region Edit.IListener
+        void Edit.IListener.Close()
+        {
+            HideAnim(EditRootRectTm,
+                () =>
+                {
+                    ShowAnim(RootRectTm, null);
+                    UIUtils.SetActive(EditRootRectTm, false);
+                });
+        }
+        #endregion
 
         private void ShowAnim(RectTransform rectTm, System.Action completeAction)
         {
@@ -68,27 +104,13 @@ namespace UI
 
             Sequence sequence = DOTween.Sequence()
              .SetAutoKill(false)
-             .Append(rectTm.DOAnchorPosY(500f, 0.3f).SetEase(Ease.OutBack))
+             .Append(rectTm.DOAnchorPosY(0, 0.3f).SetEase(Ease.OutBack))
 
              .OnComplete(() =>
              {
                  completeAction?.Invoke();
              });
             sequence.Restart();
-
-            //Sequence sequence = DOTween.Sequence()
-            //   .SetAutoKill(false)
-            //   .AppendCallback(() =>
-            //   {
-            //       Vector2.MoveTowards(rectTm.anchoredPosition, new Vector2(0, -500f), Time.deltaTime * 5f); 
-            //   })
-            //   .AppendInterval(1f)
-            //   //.Append(tm.DOMoveY(1000f, 0.5f).SetEase(Ease.OutBack))
-            //   .OnComplete(() =>
-            //   {
-            //       completeAction?.Invoke();
-            //   });
-            //sequence.Restart();
         }
 
         private void HideAnim(RectTransform rectTm, System.Action completeAction)
@@ -98,18 +120,9 @@ namespace UI
                 return;
             }
 
-            //Sequence sequence = DOTween.Sequence()
-            //    .SetAutoKill(false)
-            //    .Append(rectTm.DOLocalMoveY(-500f, 0.5f).SetEase(Ease.OutBack))
-            //    .OnComplete(() =>
-            //    {
-            //        completeAction?.Invoke();
-            //    });
-            //sequence.Restart();
-
             Sequence sequence = DOTween.Sequence()
               .SetAutoKill(false)
-              .Append(rectTm.DOAnchorPosY(-500f, 0.3f).SetEase(Ease.InBack))
+              .Append(rectTm.DOAnchorPosY(InitPosY, 0.3f).SetEase(Ease.InBack))
 
               .OnComplete(() =>
               {
