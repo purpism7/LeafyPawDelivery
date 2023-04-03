@@ -20,6 +20,8 @@ namespace GameSystem
 
         public override IEnumerator CoInit()
         {
+            DontDestroyOnLoad(this);
+
             if(AddressableAssetLoader != null)
             {
                 AtalsLoader = new();

@@ -8,7 +8,7 @@ public class CreateAnimalDataWindow : EditorWindow
 {
     private string _fileName = string.Empty;
     private int _animalId = 0;
-    private Data.Animal.EGrade _eGrade = Data.Animal.EGrade.Normal;
+    //private Data.Animal.EGrade _eGrade = Data.Animal.EGrade.Normal;
 
     private Data.OpenCondition _openCondition = new();
 
@@ -22,7 +22,7 @@ public class CreateAnimalDataWindow : EditorWindow
     {
         _fileName = EditorGUILayout.TextField("File Name", _fileName);
         _animalId = EditorGUILayout.IntField("Animal Id", _animalId);
-        _eGrade = (Data.Animal.EGrade)EditorGUILayout.EnumPopup("Animal Grade", _eGrade);
+        //_eGrade = (Data.Animal.EGrade)EditorGUILayout.EnumPopup("Animal Grade", _eGrade);
 
         if(_openCondition != null)
         {
@@ -48,35 +48,35 @@ public class CreateAnimalDataWindow : EditorWindow
             return;
         }
 
-        var animalData = ScriptableObject.CreateInstance<Data.Animal>();
+        //var animalData = ScriptableObject.CreateInstance<Data.Animal>();
 
-        AssetDatabase.CreateAsset(animalData, filePath);
-        AssetDatabase.SaveAssets();
+        //AssetDatabase.CreateAsset(animalData, filePath);
+        //AssetDatabase.SaveAssets();
 
-        animalData.name = _fileName;
-        animalData.Id = _animalId;
-        animalData.OpenCondition = _openCondition;
+        //animalData.name = _fileName;
+        //animalData.Id = _animalId;
+        //animalData.OpenCondition = _openCondition;
 
-        Save(animalData);
+        //Save(animalData);
     }
 
-    private void Save(Data.Animal animalData)
-    {
-        if(animalData == null)
-        {
-            return;
-        }
+    //private void Save(Data.Animal animalData)
+    //{
+    //    if(animalData == null)
+    //    {
+    //        return;
+    //    }
 
-        var containerPrefabPath = "Assets/Prefabs/DataContainer.prefab";
-        var gameObj = PrefabUtility.LoadPrefabContents(containerPrefabPath);
-        if (!gameObj)
-        {
-            return;
-        }
+    //    var containerPrefabPath = "Assets/Prefabs/DataContainer.prefab";
+    //    var gameObj = PrefabUtility.LoadPrefabContents(containerPrefabPath);
+    //    if (!gameObj)
+    //    {
+    //        return;
+    //    }
 
-        var dataContainer = gameObj.GetComponent<Data.Container>();
-        dataContainer?.AddAnimaData(animalData);
+    //    var dataContainer = gameObj.GetComponent<Data.Container>();
+    //    dataContainer?.AddAnimaData(animalData);
 
-        PrefabUtility.SaveAsPrefabAssetAndConnect(gameObj, containerPrefabPath, InteractionMode.AutomatedAction);
-    }
+    //    PrefabUtility.SaveAsPrefabAssetAndConnect(gameObj, containerPrefabPath, InteractionMode.AutomatedAction);
+    //}
 }

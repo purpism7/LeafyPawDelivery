@@ -8,7 +8,7 @@ using Game;
 
 namespace GameSystem
 {
-    public class AnimalCreator : BaseCreator<Animal>
+    public class AnimalCreator : BaseCreator<Creature.Animal>
     {
         private int _animalId = 0;
         private Transform _rootTm = null;
@@ -43,15 +43,15 @@ namespace GameSystem
             return this;
         }
 
-        public override Animal Create()
+        public override Creature.Animal Create()
         {
-            var animal = ResourceManager.Instance?.Instantiate<Animal>(_animalId, _rootTm);
+            var animal = ResourceManager.Instance?.Instantiate<Creature.Animal>(_animalId, _rootTm);
             if (animal == null)
             {
                 return null;
             }
 
-            animal.Init(new Animal.Data_()
+            animal.Init(new Creature.Animal.Data_()
             {
                 Order = _order,
                 DropItemAction = _dropItemAction,

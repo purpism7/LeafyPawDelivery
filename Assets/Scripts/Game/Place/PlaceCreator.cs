@@ -10,7 +10,7 @@ using Data;
 
 namespace GameSystem
 {
-    public class PlaceCreator : BaseCreator<Place>
+    public class PlaceCreator : BaseCreator<Game.Place>
     {         
         private int _placeId = 0;
         private Transform _rootTm = null;
@@ -37,15 +37,15 @@ namespace GameSystem
             return this;
         }
 
-        public override Place Create()
+        public override Game.Place Create()
         {
-            var place = ResourceManager.Instance?.Instantiate<Place>(_placeId, _rootTm);
+            var place = ResourceManager.Instance?.Instantiate<Game.Place>(_placeId, _rootTm);
             if (place == null)
             {
                 return null;
             }
 
-            place.Init(new Place.Data()
+            place.Init(new Game.Place.Data()
             {
                 PlaceActivityAnimalAction = _placeActivityAnimalAction,
             });

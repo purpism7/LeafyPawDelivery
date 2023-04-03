@@ -46,24 +46,24 @@ namespace GameSystem
         }
         #endregion
 
-        public Animal AddAnimal(Animal animal)
+        public Creature.Animal AddAnimal(Creature.Animal animal)
         {
             if(animal == null)
             {
                 return null;
             }
 
-            var animalData = DataContainer.GetAnimal(animal.Id);
-            if(animalData == null)
-            {
-                Debug.LogError(name + " = No Animal Data");
-                return null;
-            }
+            //var animalData = DataContainer.GetAnimal(animal.Id);
+            //if(animalData == null)
+            //{
+            //    Debug.LogError(name + " = No Animal Data");
+            //    return null;
+            //}
 
-            if (!AnimalMgr.AddAnimal(animal))
-            {
-                return null;
-            }
+            //if (!AnimalMgr.AddAnimal(animal))
+            //{
+            //    return null;
+            //}
 
             return animal;
         }

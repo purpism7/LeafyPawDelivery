@@ -17,14 +17,14 @@ namespace Creature
         private AnimalActionController _actionCtr = null;
         private SpriteRenderer _spriteRenderer = null;
 
-        private Data.Animal _animalData = null;
+        //private Data.Animal _animalData = null;
         private System.Action<Data.DropItem, Transform> _dropItemAction = null;
 
         public override void Init(Data_ data)
         {
             base.Init(data);
             
-            _animalData = GameSystem.GameManager.Instance?.DataContainer?.GetAnimal(Id);
+            //_animalData = GameSystem.GameManager.Instance?.DataContainer?.GetAnimal(Id);
 
             _animalRoot = GetComponentInChildren<AnimalRoot>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -37,7 +37,7 @@ namespace Creature
 
             InitActionController();
 
-            _dropItemAction?.Invoke(_animalData.DropItem, transform);
+            //_dropItemAction?.Invoke(_animalData.DropItem, transform);
         }
 
         private void InitActionController()

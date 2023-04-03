@@ -28,6 +28,9 @@ namespace Game
             base.OnTouch();
 
             Debug.Log(name);
+            Debug.Log(transform.position);
+
+
         }
     }
 }

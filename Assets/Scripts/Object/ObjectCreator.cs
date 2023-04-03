@@ -27,7 +27,6 @@ namespace GameSystem
         public override T Create()
         {
             var objectRootTm = GameManager.Instance?.ObjectRootTm;
-
             var popup = ResourceManager.Instance.Instantiate<T>(_id, objectRootTm);
             if (popup == null)
             {
