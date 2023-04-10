@@ -1634,7 +1634,6 @@ MonoBehaviour:
   ProcessList:
   - {fileID: 4567569917886630977}
   - {fileID: 393044063}
-  - {fileID: 175762252}
   - {fileID: 80954214}
   - {fileID: 678568159}
 --- !u!1 &601340403
@@ -3773,6 +3772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectRootTm: {fileID: 1768220815}
+  placeMgr: {fileID: 175762252}
 --- !u!1001 &4567569917886630975
 PrefabInstance:
   m_ObjectHideFlags: 0

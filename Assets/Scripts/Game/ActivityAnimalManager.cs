@@ -18,26 +18,26 @@ namespace GameSystem
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
-            var placeMgr = iProvider?.Get<Game.PlaceManager>();
-            if(placeMgr != null)
-            {
-                AddSelectActivityAnimalDelegate(placeMgr.EnableActivityArea);
-            }
+            //var placeMgr = iProvider?.Get<Game.PlaceManager>();
+            //if(placeMgr != null)
+            //{
+            //    //AddSelectActivityAnimalDelegate(placeMgr.EnableActivityArea);
+            //}
 
             yield break;
         }
 
-        public void AddSelectActivityAnimalDelegate(SelectActivityAnimalDelegate del)
-        {
-            if(del == null)
-            {
-                return;
-            }
+        //public void AddSelectActivityAnimalDelegate(SelectActivityAnimalDelegate del)
+        //{
+        //    if(del == null)
+        //    {
+        //        return;
+        //    }
 
-            RemoveSelectActivityAnimalDelegate(del);
+        //    RemoveSelectActivityAnimalDelegate(del);
 
-            _selectActivityAnimalDel += new SelectActivityAnimalDelegate(del);
-        }
+        //    _selectActivityAnimalDel += new SelectActivityAnimalDelegate(del);
+        //}
 
         public void RemoveSelectActivityAnimalDelegate(SelectActivityAnimalDelegate del)
         {

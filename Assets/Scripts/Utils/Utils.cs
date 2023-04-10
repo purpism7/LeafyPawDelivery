@@ -36,5 +36,21 @@ public static class Utils
 
         return component;
     }
+
+    public static T GetOrAddComponent<T>(this MonoBehaviour mono) where T : Component
+    {
+        if(mono == null)
+        {
+            return default(T);
+        }
+
+        var component = mono.gameObject.GetComponent<T>();
+        if (component == null)
+        {
+            component = mono.gameObject.AddComponent<T>();
+        }
+
+        return component;
+    }
 }
 

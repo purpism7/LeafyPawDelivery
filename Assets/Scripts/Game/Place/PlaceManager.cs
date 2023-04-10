@@ -6,27 +6,23 @@ using GameSystem;
 
 namespace Game
 {
-    public class PlaceManager : GameSystem.Processing
+    public class PlaceManager : Manager.Base
     {
         public Transform RootTm;
 
         private List<Place> _placeList = new List<Place>();
-        private System.Action<int> _removeActivityAnimalAction = null;
+        //private System.Action<int> _removeActivityAnimalAction = null;
 
         public Place ActivityPlace { get; private set; } = null;
 
-        public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
+        public override IEnumerator CoInit()
         {
-            var activityAnimalMgr = iProvider?.Get<ActivityAnimalManager>();
-            if (activityAnimalMgr != null)
-            {
-                _removeActivityAnimalAction = activityAnimalMgr.RemoveActivityAnimal;
-            }
+            Debug.Log("PlaceManager CoInit");
 
             ActivityPlace = new GameSystem.PlaceCreator()
                 .SetPlaceId(1)
                 .SetRoot(RootTm)
-                .SetPlaceActivityAnimalAction(PlaceActivityAnimal)
+                //.SetPlaceActivityAnimalAction(PlaceActivityAnimal)
                 .Create();
 
             _placeList.Add(ActivityPlace);
@@ -34,19 +30,38 @@ namespace Game
             yield break;
         }
 
-        public void EnableActivityArea(int animalId)
-        {
-            if(ActivityPlace == null)
-            {
-                return;
-            }
+        //public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
+        //{
+        //    //var activityAnimalMgr = iProvider?.Get<ActivityAnimalManager>();
+        //    //if (activityAnimalMgr != null)
+        //    //{
+        //    //    _removeActivityAnimalAction = activityAnimalMgr.RemoveActivityAnimal;
+        //    //}
 
-            ActivityPlace.EnableActivityArea(animalId);
-        }
+        //ActivityPlace = new GameSystem.PlaceCreator()
+        //        .SetPlaceId(1)
+        //        .SetRoot(RootTm)
+        //        //.SetPlaceActivityAnimalAction(PlaceActivityAnimal)
+        //        .Create();
 
-        private void PlaceActivityAnimal(int animalId)
-        {
-            _removeActivityAnimalAction?.Invoke(animalId);
-        }
+        //_placeList.Add(ActivityPlace);
+
+        //    yield break;
+        //}
+
+        //public void EnableActivityArea(int animalId)
+        //{
+        //    if(ActivityPlace == null)
+        //    {
+        //        return;
+        //    }
+
+        //    ActivityPlace.EnableActivityArea(animalId);
+        //}
+
+        //private void PlaceActivityAnimal(int animalId)
+        //{
+        //    _removeActivityAnimalAction?.Invoke(animalId);
+        //}
     }
 }

@@ -4,9 +4,16 @@ using UnityEngine;
 
 namespace Game
 {
-    public class AnimalManager 
+    public class AnimalManager : Manager.Base
     {
         private List<Creature.Animal> _animalList = new();
+
+        public override IEnumerator CoInit()
+        {
+            Debug.Log("AnimalManager CoInit");
+
+            yield break;
+        }
 
         public void ChainUpdate()
         {

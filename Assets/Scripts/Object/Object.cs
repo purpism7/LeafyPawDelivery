@@ -8,7 +8,7 @@ namespace Game
     {
         public class Data : BaseData
         {
-
+            public int Id = 0;
         }
 
         public override void Init(Data data)

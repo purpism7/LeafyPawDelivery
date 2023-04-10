@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 25
+  controlID: 128
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -189,8 +189,8 @@ MonoBehaviour:
     y: 0
     width: 664
     height: 373
-  m_MinSize: {x: 430, y: 250}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 431, y: 271}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 15}
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 89
+  controlID: 25
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -783,8 +783,8 @@ MonoBehaviour:
   m_GroupEditor:
     m_TreeState:
       scrollPos: {x: 44, y: 0}
-      m_SelectedIDs: bc9e9f55
-      m_LastClickedID: 1436524220
+      m_SelectedIDs: 
+      m_LastClickedID: 0
       m_ExpandedIDs: 9b2691969a6e8e9da7ab27e2ffffffffe72cdb0a4df9032641192136f6f09942525f38477f17ea4ad2d8df5a9f81e562a94f2876
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -900,9 +900,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: d8770000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 10faffffe2730000
+      m_SelectedIDs: 44740000
+      m_LastClickedID: 29764
+      m_ExpandedIDs: 10faffff64730000d6730000da730000ea730000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1082,7 +1082,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 29622
+  m_LastSelectedObjectID: 29764
 --- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1124,22 +1124,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/User
+    - Assets/Scripts/Info
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/User
+  - Assets/Scripts/Info
   m_LastFoldersGridSize: 16
   m_LastProjectPath: /Users/seungjaehan/Desktop/Project/Animals
   m_LockTracker:
     m_IsLocked: 1
   m_FolderTreeState:
     scrollPos: {x: 0, y: 233}
-    m_SelectedIDs: d6770000
-    m_LastClickedID: 30678
-    m_ExpandedIDs: 000000001e77000020770000227700002477000026770000287700002a7700002c7700002e770000307700003277000034770000ce77000000ca9a3b
+    m_SelectedIDs: f6770000
+    m_LastClickedID: 30710
+    m_ExpandedIDs: 0000000026770000287700002a7700002c7700002e77000030770000327700003477000036770000387700003a7700003c7700003e77000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1167,7 +1167,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000001e77000020770000227700002477000026770000287700002a7700002c7700002e770000307700003277000034770000
+    m_ExpandedIDs: 0000000026770000287700002a7700002c7700002e77000030770000327700003477000036770000387700003a7700003c7700003e770000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1192,9 +1192,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: d8770000
-    m_LastClickedInstanceID: 30680
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 44740000
+    m_LastClickedInstanceID: 29764
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000c2a1ffffde700000ea7000000e340000000000008c6e00009c7100005e9b0000d89e0000d49b000012700000389b00004674000018780000288100009c75000022860000a27500007677000026000100d0780000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

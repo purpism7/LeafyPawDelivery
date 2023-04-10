@@ -10,7 +10,8 @@ namespace Info
 
         public User User { get; private set; } = null;
 
-        public PlaceManager PlaceMgr { get; private set; } = null;
+        public PlaceHolder PlaceHolder { get; private set; } = null;
+        public ObjectHolder ObjectjHolder { get; private set; } = new();
 
         public override IEnumerator CoInit()
         {

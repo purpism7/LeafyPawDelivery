@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Creature;
+using UnityEditor.Experimental.GraphView;
 
 namespace GameSystem
 {
@@ -10,10 +11,13 @@ namespace GameSystem
     {
         [SerializeField]
         private Transform objectRootTm;
+        [SerializeField]
+        private Game.PlaceManager placeMgr;
 
         public Game.AnimalManager AnimalMgr { get; private set; } = null;
         public Data.Container DataContainer { get; private set; } = null;
 
+        public Game.PlaceManager PlaceMgr { get { return placeMgr; } }
         public Transform ObjectRootTm { get { return objectRootTm; } }
 
         public Game.State.IState GameState { get; private set; } = new Game.State.Game();
@@ -22,7 +26,10 @@ namespace GameSystem
         {
             DontDestroyOnLoad(this);
 
-            AnimalMgr = new();
+            AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
+            yield return StartCoroutine(AnimalMgr?.CoInit());
+
+            yield return StartCoroutine(PlaceMgr?.CoInit());
 
             DataContainer = FindObjectOfType<Data.Container>();
 
