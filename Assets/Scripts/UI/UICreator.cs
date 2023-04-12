@@ -27,15 +27,15 @@ namespace GameSystem
 
         public override T Create()
         {
-            var popup = UIManager.Instance.Instantiate<T>(_rootRecTm);
-            if (popup == null)
+            var ui = UIManager.Instance.Instantiate<T>(_rootRecTm);
+            if (ui == null)
             {
                 return default(T);
             }
 
-            popup.Init(_data);
+            ui.Init(_data);
 
-            return popup;
+            return ui;
         }
     }
 }

@@ -45,9 +45,10 @@ namespace GameSystem
                 return null;
             }
 
+            place.Id = _placeId;
             place.Init(new Game.Place.Data()
             {
-                PlaceActivityAnimalAction = _placeActivityAnimalAction,
+                Id = _placeId,
             });
 
             return place;

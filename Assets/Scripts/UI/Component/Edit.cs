@@ -8,12 +8,18 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
-            public int Id = 0;
+            public int ObjectId = 0;
+            public int ObjectUId = 0;
         }
+
+        [SerializeField]
+        private TMPro.TextMeshProUGUI idTMP;
 
         public override void Init(Data data)
         {
             base.Init(data);
+
+            idTMP?.SetText(data.ObjectId.ToString());
         }
 
         public void OnClick()
@@ -25,12 +31,12 @@ namespace UI.Component
 
             var objData = new Game.Object.Data()
             {
-                Id = 1,
+                ObjectUId = _data.ObjectUId,
             };
 
             new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
                 .SetData(objData)
-                .SetId(1)
+                .SetId(_data.ObjectId)
                 .Create();
         }
     }

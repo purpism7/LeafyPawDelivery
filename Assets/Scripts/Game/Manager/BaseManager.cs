@@ -5,9 +5,14 @@ using UnityEngine;
 
 namespace Game.Manager
 {
-    public abstract class Base : MonoBehaviour
+    public class BaseData
     {
-        public abstract IEnumerator CoInit();
+
+    }
+
+    public abstract class Base<T>: MonoBehaviour where T : BaseData
+    {
+        public abstract IEnumerator CoInit(T data);
     }
 }
 

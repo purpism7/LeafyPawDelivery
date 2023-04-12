@@ -49,7 +49,7 @@ namespace GameSystem
                 return default(T);
             }
 
-            var gameObj = AddressableAssetLoader.InstantiateUI(typeof(T).Name, rootRectTm);
+            var gameObj = AddressableAssetLoader.InstantiateUI(typeof(T).FullName, rootRectTm);
             if (gameObj)
             {
                 return gameObj.GetComponent<T>();

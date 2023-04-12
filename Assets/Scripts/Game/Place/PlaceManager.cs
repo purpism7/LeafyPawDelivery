@@ -6,8 +6,13 @@ using GameSystem;
 
 namespace Game
 {
-    public class PlaceManager : Manager.Base
+    public class PlaceManager : Manager.Base<PlaceManager.Data>
     {
+        public class Data : Manager.BaseData
+        {
+
+        }
+
         public Transform RootTm;
 
         private List<Place> _placeList = new List<Place>();
@@ -15,7 +20,7 @@ namespace Game
 
         public Place ActivityPlace { get; private set; } = null;
 
-        public override IEnumerator CoInit()
+        public override IEnumerator CoInit(Data data)
         {
             Debug.Log("PlaceManager CoInit");
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Info
 {
-    public class PlaceHolder
+    public class PlaceHolder : Holder.Base
     {
         readonly private string PlaceInfoJsonFilePath = "Assets/Info/Place_{0}.json";
 
@@ -13,6 +13,11 @@ namespace Info
         public PlaceHolder()
         {
             _placeDic.Clear();
+        }
+
+        protected override void LoadInfo()
+        {
+
         }
 
         public void Init(List<int> placeIdList)

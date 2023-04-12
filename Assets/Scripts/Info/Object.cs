@@ -8,6 +8,7 @@ namespace Info
     public class Object
     {
         public int Id = 0;
+        public int UId = 0;
         public Vector3 Pos = Vector3.zero;
         public int PlaceId = 0;
     }

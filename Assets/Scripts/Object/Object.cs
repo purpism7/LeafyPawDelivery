@@ -8,7 +8,7 @@ namespace Game
     {
         public class Data : BaseData
         {
-            public int Id = 0;
+            public int ObjectUId = 0;
         }
 
         public override void Init(Data data)
@@ -29,7 +29,7 @@ namespace Game
 
             Debug.Log(name);
             Debug.Log(transform.position);
-
+            GameSystem.GameManager.Instance?.ArrangeObject(_data.ObjectUId, transform.position);
 
         }
     }

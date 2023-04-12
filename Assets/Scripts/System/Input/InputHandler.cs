@@ -11,7 +11,6 @@ namespace GameSystem
     public class InputHandler : MonoBehaviour
     {
         private Camera _gameCamera = null;
-        private System.DateTime _touchInterval;
         private Vector2 _prevPos = Vector2.zero;
 
         private Game.Base _gameBase = null;
@@ -28,17 +27,10 @@ namespace GameSystem
 
         private void UpdateTouch()
         {
-            if(_gameCamera == null)
+            if (_gameCamera == null)
             {
                 return;
             }
-
-            //if((System.DateTime.UtcNow - _touchInterval).TotalSeconds < 0.1f)
-            //{
-            //    return;
-            //}
-
-            _touchInterval = System.DateTime.UtcNow;
 
             var touch = Input.GetTouch(0);
             var touchPoint = touch.position;
@@ -102,7 +94,6 @@ namespace GameSystem
             {
                 var gameBaseTm = _gameBase.transform;
 
-                
                 gameBaseTm.DOMove(movePos, 0);
 
                 //gameBaseTm.localPosition = movePos;

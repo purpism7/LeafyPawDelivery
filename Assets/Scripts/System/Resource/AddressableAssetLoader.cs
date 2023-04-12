@@ -79,7 +79,7 @@ namespace GameSystem
                 var uiBase = resultGameObj.GetComponent<UI.Base>();
                 if (uiBase != null)
                 {
-                    _uiGameObjDic.TryAdd(uiBase.GetType().Name, resultGameObj);
+                    _uiGameObjDic.TryAdd(uiBase.GetType().FullName, resultGameObj);
                 }
 
                 //var activityAnimal = resultGameObj.GetComponent<UI.ActivityAnimal>();

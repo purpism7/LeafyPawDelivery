@@ -14,31 +14,36 @@ namespace GameSystem
         [SerializeField]
         private Game.PlaceManager placeMgr;
 
-        public Game.AnimalManager AnimalMgr { get; private set; } = null;
         public Data.Container DataContainer { get; private set; } = null;
 
-        public Game.PlaceManager PlaceMgr { get { return placeMgr; } }
         public Transform ObjectRootTm { get { return objectRootTm; } }
 
         public Game.State.IState GameState { get; private set; } = new Game.State.Game();
+
+        private Game.AnimalManager _animalMgr = null;
+        public Game.ObjectManager ObjectMgr { get; private set; } = null;
 
         public override IEnumerator CoInit()
         {
             DontDestroyOnLoad(this);
 
-            AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
-            yield return StartCoroutine(AnimalMgr?.CoInit());
+            _animalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
+            yield return StartCoroutine(_animalMgr?.CoInit(null));
 
-            yield return StartCoroutine(PlaceMgr?.CoInit());
+            ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
+
+            yield return StartCoroutine(ObjectMgr?.CoInit(null));
+
+            yield return StartCoroutine(placeMgr?.CoInit(null));
 
             DataContainer = FindObjectOfType<Data.Container>();
 
-            yield return null;
+            yield break;
         }
 
         private void Update()
         {
-            AnimalMgr?.ChainUpdate();
+            _animalMgr?.ChainUpdate();
         }
 
         #region GameState
@@ -74,6 +79,19 @@ namespace GameSystem
 
             return animal;
         }
+
+        #region Object
+        public void ArrangeObject(int objectUId, Vector3 pos)
+        {
+            int placeId = 0;
+            if (placeMgr != null)
+            {
+                placeId = placeMgr.ActivityPlace.Id;
+            }
+
+            ObjectMgr?.ArrangeObject(objectUId, pos, placeId);
+        }
+        #endregion
     }
 }
 
