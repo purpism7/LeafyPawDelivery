@@ -48,7 +48,7 @@ namespace UI
             }
         }
 
-       private void ShowEdit()
+        private void ShowEdit()
         {
             if(_edit == null)
             {
@@ -63,6 +63,8 @@ namespace UI
 
             UIUtils.SetActive(EditRootRectTm, true);
             ShowAnim(EditRootRectTm, null);
+
+            GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
         }
 
         #region BottomMenu.IListener
@@ -91,6 +93,8 @@ namespace UI
                 {
                     ShowAnim(RootRectTm, null);
                     UIUtils.SetActive(EditRootRectTm, false);
+
+                    GameSystem.GameManager.Instance.SetGameState<Game.State.Game>();
                 });
         }
         #endregion

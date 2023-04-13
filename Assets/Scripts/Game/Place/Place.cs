@@ -14,6 +14,10 @@ namespace Game
             //public System.Action<int> PlaceActivityAnimalAction = null;
         }
 
+        [SerializeField]
+        private Transform objectRootTm;
+
+        public Transform ObjectRootTm { get { return objectRootTm; } }
         //public Transform ActivityAreaRootTm;
 
         //private Dictionary<int, ActivityArea> _activityAreaDic = new();
@@ -27,11 +31,48 @@ namespace Game
             //_placeActivityAnimalAction = data?.PlaceActivityAnimalAction;
 
             //InitActivityAreaDic();
+            SetObjectList();
         }
 
         public override void ChainUpdate()
         {
             return;
+        }
+
+        private void SetObjectList()
+        {
+            Debug.Log("SetObjectList()");
+
+            var objectInfoList = GameSystem.GameManager.Instance?.ObjectMgr?.ObjectInfoList;
+            if (objectInfoList == null)
+            {
+                return;
+            }
+
+            foreach (var objectInfo in objectInfoList)
+            {
+                if (objectInfo == null)
+                {
+                    continue;
+                }
+
+                if (objectInfo.PlaceId != Id)
+                {
+                    continue;
+                }
+
+                var objData = new Game.Object.Data()
+                {
+                    ObjectUId = objectInfo.UId,
+                    Pos = objectInfo.Pos,
+                };
+
+                new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
+                    .SetData(objData)
+                    .SetId(objectInfo.Id)
+                    .SetRootTm(objectRootTm)
+                    .Create();
+            }
         }
 
         //private void InitActivityAreaDic()

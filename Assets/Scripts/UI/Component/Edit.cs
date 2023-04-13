@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameSystem;
 using UnityEngine;
 
 namespace UI.Component
@@ -34,9 +35,11 @@ namespace UI.Component
                 ObjectUId = _data.ObjectUId,
             };
 
+            var objectRootTm = GameManager.Instance?.ObjectRootTm;
             new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
                 .SetData(objData)
                 .SetId(_data.ObjectId)
+                .SetRootTm(objectRootTm)
                 .Create();
         }
     }

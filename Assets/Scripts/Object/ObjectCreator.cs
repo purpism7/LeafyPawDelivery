@@ -8,7 +8,7 @@ namespace GameSystem
     {
         private V _data = null;
         private int _id = 0;
-        private RectTransform _rootRecTm = null;
+        private Transform _rootTm = null;
 
         public ObjectCreator<T, V> SetData(V vData)
         {
@@ -24,18 +24,24 @@ namespace GameSystem
             return this;
         }
 
+        public ObjectCreator<T, V> SetRootTm(Transform rootTm)
+        {
+            _rootTm = rootTm;
+
+            return this;
+        }
+
         public override T Create()
         {
-            var objectRootTm = GameManager.Instance?.ObjectRootTm;
-            var popup = ResourceManager.Instance.Instantiate<T>(_id, objectRootTm);
-            if (popup == null)
+            var obj = ResourceManager.Instance.Instantiate<T>(_id, _rootTm);
+            if (obj == null)
             {
                 return default(T);
             }
 
-            popup.Init(_data);
+            obj.Init(_data);
 
-            return popup;
+            return obj;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Game
         public class Data : BaseData
         {
             public int ObjectUId = 0;
+            public Vector3 Pos = Vector3.zero;
         }
 
         public override void Init(Data data)
@@ -16,6 +17,11 @@ namespace Game
             base.Init(data);
 
             _data = data;
+
+            if(data != null)
+            {
+                transform.position = data.Pos;
+            }
         }
 
         public override void ChainUpdate()

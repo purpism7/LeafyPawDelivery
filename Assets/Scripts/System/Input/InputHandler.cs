@@ -32,6 +32,11 @@ namespace GameSystem
                 return;
             }
 
+            if (GameManager.Instance.GameState.CheckControlCamera)
+            {
+                return;
+            }
+
             var touch = Input.GetTouch(0);
             var touchPoint = touch.position;
             var ray = _gameCamera.ScreenPointToRay(touchPoint);
@@ -56,7 +61,7 @@ namespace GameSystem
                     {
                         if (_gameBase != null)
                         {
-                            GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
+                            //GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
 
                             _prevPos = touch.position;
                         }
@@ -74,7 +79,7 @@ namespace GameSystem
                     {
                         _gameBase = null;
 
-                        GameSystem.GameManager.Instance.SetGameState<Game.State.Game>();
+                        //GameSystem.GameManager.Instance.SetGameState<Game.State.Game>();
                     }                    
                     break;
             }
@@ -82,11 +87,6 @@ namespace GameSystem
 
         private void _Drag(Touch touch)
         {
-            if (GameManager.Instance.GameState.CheckControlCamera)
-            {
-                return;
-            }
-
             Vector3 movePos = touch.position - _prevPos;
             movePos.z = 350f;
 

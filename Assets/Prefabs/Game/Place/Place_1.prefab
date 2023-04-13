@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8331713420321853600}
   m_Layer: 8
-  m_Name: Root
+  m_Name: ObjectRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Id: 1
-  ActivityAreaRootTm: {fileID: 4928264168687630460}
+  objectRootTm: {fileID: 8331713420321853600}
 --- !u!1 &7223590494916999530
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,13 +10,11 @@ namespace GameSystem
     public class GameManager : Singleton<GameManager>
     {
         [SerializeField]
-        private Transform objectRootTm;
-        [SerializeField]
         private Game.PlaceManager placeMgr;
 
         public Data.Container DataContainer { get; private set; } = null;
 
-        public Transform ObjectRootTm { get { return objectRootTm; } }
+        public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
 
         public Game.State.IState GameState { get; private set; } = new Game.State.Game();
 

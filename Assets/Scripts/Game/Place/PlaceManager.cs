@@ -16,7 +16,6 @@ namespace Game
         public Transform RootTm;
 
         private List<Place> _placeList = new List<Place>();
-        //private System.Action<int> _removeActivityAnimalAction = null;
 
         public Place ActivityPlace { get; private set; } = null;
 
@@ -27,7 +26,6 @@ namespace Game
             ActivityPlace = new GameSystem.PlaceCreator()
                 .SetPlaceId(1)
                 .SetRoot(RootTm)
-                //.SetPlaceActivityAnimalAction(PlaceActivityAnimal)
                 .Create();
 
             _placeList.Add(ActivityPlace);

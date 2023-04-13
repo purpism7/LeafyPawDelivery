@@ -14,7 +14,7 @@ namespace GameSystem
     {         
         private int _placeId = 0;
         private Transform _rootTm = null;
-        private System.Action<int> _placeActivityAnimalAction = null;
+        //private System.Action<int> _placeActivityAnimalAction = null;
 
         public PlaceCreator SetPlaceId(int id)
         {
@@ -30,12 +30,12 @@ namespace GameSystem
             return this;
         }
 
-        public PlaceCreator SetPlaceActivityAnimalAction(System.Action<int> action)
-        {
-            _placeActivityAnimalAction = action;
+        //public PlaceCreator SetPlaceActivityAnimalAction(System.Action<int> action)
+        //{
+        //    _placeActivityAnimalAction = action;
 
-            return this;
-        }
+        //    return this;
+        //}
 
         public override Game.Place Create()
         {
