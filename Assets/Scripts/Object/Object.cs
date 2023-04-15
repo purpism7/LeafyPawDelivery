@@ -20,7 +20,7 @@ namespace Game
 
             if(data != null)
             {
-                transform.position = data.Pos;
+                transform.localPosition = data.Pos;
             }
         }
 
@@ -33,10 +33,18 @@ namespace Game
         {
             base.OnTouch();
 
-            Debug.Log(name);
-            Debug.Log(transform.position);
-            GameSystem.GameManager.Instance?.ArrangeObject(_data.ObjectUId, transform.position);
+            GameSystem.GameManager.Instance?.ArrangeObject(_data.ObjectUId, transform.localPosition);
+        }
 
+        private void OnTriggerStay(Collider other)
+        {
+            Debug.Log(other.gameObject.name);
+        }
+
+
+        private void OnCollisionStay(Collision collision)
+        {
+            Debug.Log(collision.gameObject.name);
         }
     }
 }

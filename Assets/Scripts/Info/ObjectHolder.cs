@@ -38,7 +38,7 @@ namespace Info
             }
 
             var jsonString = JsonHelper.ToJson(ObjectInfoList.ToArray());
-            Debug.Log(jsonString);
+            //Debug.Log(jsonString);
             var filePath = ObjectInfoJsonFilePath;
             System.IO.File.WriteAllText(filePath, jsonString);
         }

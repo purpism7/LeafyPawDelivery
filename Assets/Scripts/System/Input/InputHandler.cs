@@ -11,8 +11,6 @@ namespace GameSystem
     public class InputHandler : MonoBehaviour
     {
         private Camera _gameCamera = null;
-        private Vector2 _prevPos = Vector2.zero;
-
         private Game.Base _gameBase = null;
 
         public void Init(Camera gameCamera)
@@ -63,7 +61,7 @@ namespace GameSystem
                         {
                             //GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
 
-                            _prevPos = touch.position;
+                            
                         }
                     }
                     break;
@@ -79,6 +77,8 @@ namespace GameSystem
                     {
                         _gameBase = null;
 
+                        //_prevPos = touch.position;
+                        //_prevPos = touch.position;
                         //GameSystem.GameManager.Instance.SetGameState<Game.State.Game>();
                     }                    
                     break;
@@ -87,16 +87,17 @@ namespace GameSystem
 
         private void _Drag(Touch touch)
         {
-            Vector3 movePos = touch.position - _prevPos;
-            movePos.z = 350f;
-
             if (_gameBase != null)
             {
                 var gameBaseTm = _gameBase.transform;
 
-                gameBaseTm.DOMove(movePos, 0);
+                float distance = _gameCamera.WorldToScreenPoint(gameBaseTm.position).z;
+                Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);
+                Vector3 pos = _gameCamera.ScreenToWorldPoint(movePos);
 
-                //gameBaseTm.localPosition = movePos;
+                //gameBaseTm.DOLocalMove(movePos, 0);
+
+                gameBaseTm.position = pos;
 
                 _gameBase.OnTouch();
             }
