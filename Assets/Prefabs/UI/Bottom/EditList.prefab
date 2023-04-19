@@ -651,7 +651,7 @@ GameObject:
   - component: {fileID: 6703990481814487956}
   - component: {fileID: 5097252055085191193}
   m_Layer: 5
-  m_Name: Edit
+  m_Name: EditList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -690,7 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ba03b26dc4f8403480876a71d96f782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectRootRectTm: {fileID: 5722745627679935961}
+  ObjectRootRectTm: {fileID: 5722745627679935961}
 --- !u!1 &8724812519489004112
 GameObject:
   m_ObjectHideFlags: 0

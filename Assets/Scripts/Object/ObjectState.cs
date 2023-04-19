@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.State
+namespace Game
 {
-    public abstract class Base
+    public abstract class ObjectState
     {
+        protected Game.Object _object = null;
+
         public System.Type Type
         {
             get
@@ -14,7 +16,6 @@ namespace Game.State
             }
         }
 
-        public abstract bool CheckEditObject { get; }
+        public abstract void Apply(Game.Object obj);
     }
 }
-

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class Edit : Base<Edit.Data>
+    public class EditList : Base<EditList.Data>
     {
         public class Data : BaseData
         {
@@ -17,7 +17,7 @@ namespace UI
         }
 
         [SerializeField]
-        private RectTransform objectRootRectTm;
+        private RectTransform ObjectRootRectTm;
 
         public override void Init(Data data)
         {
@@ -54,7 +54,7 @@ namespace UI
 
                 new GameSystem.UICreator<UI.Component.Edit, UI.Component.Edit.Data>()
                     .SetData(data)
-                    .SetRootRectTm(objectRootRectTm)
+                    .SetRootRectTm(ObjectRootRectTm)
                     .Create();
             }
         }

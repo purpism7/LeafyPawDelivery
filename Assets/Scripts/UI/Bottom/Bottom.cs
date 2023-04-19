@@ -7,7 +7,7 @@ using GameSystem;
 
 namespace UI
 {
-    public class Bottom : Common<Bottom.Data>, BottomMenu.IListener, Edit.IListener
+    public class Bottom : Common<Bottom.Data>, BottomMenu.IListener, EditList.IListener
     {
         public class Data : BaseData
         {
@@ -18,16 +18,16 @@ namespace UI
 
         public RectTransform RootRectTm;
         [SerializeField]
-        private RectTransform EditRootRectTm;
+        private RectTransform EditListRootRectTm;
 
         private List<BottomMenu> BottomMenuList = new();
-        private Edit _edit = null;
+        private EditList _editList = null;
 
         public override void Init(Data data)
         {
             base.Init(data);
 
-            HideAnim(EditRootRectTm, null);
+            HideAnim(EditListRootRectTm, null);
             InitBttomMenu();
         }
 
@@ -48,21 +48,21 @@ namespace UI
             }
         }
 
-        private void ShowEdit()
+        private void ShowEditList()
         {
-            if(_edit == null)
+            if(_editList == null)
             {
-                _edit = new UICreator<Edit, Edit.Data>()
-                    .SetData(new Edit.Data()
+                _editList = new UICreator<EditList, EditList.Data>()
+                    .SetData(new EditList.Data()
                     {
                         IListener = this,
                     })
-                    .SetRootRectTm(EditRootRectTm)
+                    .SetRootRectTm(EditListRootRectTm)
                     .Create();
             }
 
-            UIUtils.SetActive(EditRootRectTm, true);
-            ShowAnim(EditRootRectTm, null);
+            UIUtils.SetActive(EditListRootRectTm, true);
+            ShowAnim(EditListRootRectTm, null);
 
             GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
         }
@@ -80,19 +80,19 @@ namespace UI
             HideAnim(RootRectTm,
                 () =>
                 {
-                    ShowEdit();
+                    ShowEditList();
                 });
         }
         #endregion
 
         #region Edit.IListener
-        void Edit.IListener.Close()
+        void EditList.IListener.Close()
         {
-            HideAnim(EditRootRectTm,
+            HideAnim(EditListRootRectTm,
                 () =>
                 {
                     ShowAnim(RootRectTm, null);
-                    UIUtils.SetActive(EditRootRectTm, false);
+                    UIUtils.SetActive(EditListRootRectTm, false);
 
                     GameSystem.GameManager.Instance.SetGameState<Game.State.Game>();
                 });

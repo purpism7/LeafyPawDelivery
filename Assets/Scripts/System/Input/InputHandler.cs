@@ -11,7 +11,8 @@ namespace GameSystem
     public class InputHandler : MonoBehaviour
     {
         private Camera _gameCamera = null;
-        private Game.Base _gameBase = null;
+
+        private Game.Object _object = null; 
 
         public void Init(Camera gameCamera)
         {
@@ -30,7 +31,7 @@ namespace GameSystem
                 return;
             }
 
-            if (GameManager.Instance.GameState.CheckControlCamera)
+            if (!GameManager.Instance.GameState.CheckEditObject)
             {
                 return;
             }
@@ -47,9 +48,10 @@ namespace GameSystem
                     return;
                 }
 
-                if(_gameBase == null)
+                if(_object == null)
                 {
-                    _gameBase = collider.GetComponentInParent<Game.Base>();
+                    _object = collider.GetComponentInParent<Game.Object>();
+                    _object?.Apply(new Game.Edit());
                 }
             }
 
@@ -57,50 +59,42 @@ namespace GameSystem
             {
                 case TouchPhase.Began:
                     {
-                        if (_gameBase != null)
-                        {
-                            //GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
 
-                            
-                        }
                     }
                     break;
 
                 case TouchPhase.Moved:
                     {
-                        _Drag(touch);
+                        DragObject(touch);
                     }
                     break;
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
-                        _gameBase = null;
-
-                        //_prevPos = touch.position;
-                        //_prevPos = touch.position;
-                        //GameSystem.GameManager.Instance.SetGameState<Game.State.Game>();
+                        //_object?.Apply(new Game.Arrange());
+                        _object = null;
                     }                    
                     break;
             }
         }
 
-        private void _Drag(Touch touch)
+        private void DragObject(Touch touch)
         {
-            if (_gameBase != null)
+            if (_object == null)
             {
-                var gameBaseTm = _gameBase.transform;
-
-                float distance = _gameCamera.WorldToScreenPoint(gameBaseTm.position).z;
-                Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);
-                Vector3 pos = _gameCamera.ScreenToWorldPoint(movePos);
-
-                //gameBaseTm.DOLocalMove(movePos, 0);
-
-                gameBaseTm.position = pos;
-
-                _gameBase.OnTouch();
+                return;
             }
+
+            var objectTm = _object.transform;
+
+            float distance = _gameCamera.WorldToScreenPoint(objectTm.position).z;
+            Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);
+            Vector3 pos = _gameCamera.ScreenToWorldPoint(movePos);
+
+            objectTm.position = pos;
+
+            //_object.Apply(new Game.Arrange(objectTm.position));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace GameSystem
 
         public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
 
-        public Game.State.IState GameState { get; private set; } = new Game.State.Game();
+        public Game.State.Base GameState { get; private set; } = new Game.State.Game();
 
         private Game.AnimalManager _animalMgr = null;
         public Game.ObjectManager ObjectMgr { get; private set; } = null;

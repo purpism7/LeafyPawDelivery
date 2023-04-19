@@ -6,11 +6,11 @@ namespace Game.State
 {
     public class Game : Base
     {
-        public override bool CheckControlCamera
+        public override bool CheckEditObject
         {
             get
             {
-                return true;
+                return false;
             }
         }
     }

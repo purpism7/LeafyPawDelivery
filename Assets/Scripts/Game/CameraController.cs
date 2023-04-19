@@ -33,11 +33,6 @@ namespace GameSystem
                 return;
             }
 
-            if(!GameManager.Instance.GameState.CheckControlCamera)
-            {
-                return;
-            }
-
             int touchCnt = Input.touchCount;
             if (touchCnt <= 0)
             {
