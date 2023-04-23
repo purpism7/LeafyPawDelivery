@@ -6,7 +6,7 @@ using DG.Tweening;
 
 namespace GameSystem
 {
-    public class CameraController : MonoBehaviour
+    public class GameCameraController : MonoBehaviour
     {
         public Camera GameCamera = null;
 
@@ -16,6 +16,8 @@ namespace GameSystem
         private Vector2 _prevPos = Vector2.zero;
         private float _height = 0;
         private float _width = 0;
+
+        public bool StopUpdate { get; private set; } = false;
 
         private void Start()
         {
@@ -29,6 +31,11 @@ namespace GameSystem
         private void FixedUpdate()
         {
             if (GameCamera == null)
+            {
+                return;
+            }
+
+            if(StopUpdate)
             {
                 return;
             }
@@ -121,6 +128,11 @@ namespace GameSystem
             float res = firMag - secMag;
 
             GameCamera.orthographicSize += res * 1f;
+        }
+
+        public void SetStopUpdate(bool stopUpdate)
+        {
+            StopUpdate = stopUpdate;
         }
     }
 }

@@ -17,5 +17,6 @@ namespace Game
         }
 
         public abstract void Apply(Game.Object obj);
+        public abstract void Touch(Touch touch);
     }
 }

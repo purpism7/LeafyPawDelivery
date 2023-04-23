@@ -7,12 +7,17 @@ namespace GameSystem
 {
     public class InputManager : GameSystem.Processing
     {
-        public Camera MainCamera = null;
+        #region Inspector
+        public GameSystem.GameCameraController GameCameraCtr = null;
         public InputHandler InputHandler = null;
+
+        [SerializeField]
+        private Grid grid = null;
+        #endregion
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
-            InputHandler.Init(MainCamera);
+            InputHandler.Init(GameCameraCtr, grid);
 
             yield return null;
         }

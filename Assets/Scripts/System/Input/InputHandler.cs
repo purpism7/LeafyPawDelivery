@@ -10,92 +10,127 @@ namespace GameSystem
 {
     public class InputHandler : MonoBehaviour
     {
-        private Camera _gameCamera = null;
+        private GameSystem.GameCameraController _gameCameraCtr = null;
+        private Grid _grid = null;
 
-        private Game.Object _object = null; 
+        private Game.Base _gameBase = null;
+        private bool _notTouchGameBase = false;
 
-        public void Init(Camera gameCamera)
+        public void Init(GameSystem.GameCameraController gameCameraCtr, Grid grid)
         {
-            _gameCamera = gameCamera;
+            _gameCameraCtr = gameCameraCtr;
+            _grid = grid;
         }
 
         public void ChainUpdate()
         {
+            var gameMgr = GameManager.Instance;
+            if (!gameMgr.GameState.Type.Equals(typeof(Game.State.Edit)))
+            {
+                return;
+            }
+
             UpdateTouch();
         }
 
         private void UpdateTouch()
         {
-            if (_gameCamera == null)
-            {
-                return;
-            }
-
-            if (!GameManager.Instance.GameState.CheckEditObject)
+            if (_gameCameraCtr == null)
             {
                 return;
             }
 
             var touch = Input.GetTouch(0);
             var touchPoint = touch.position;
-            var ray = _gameCamera.ScreenPointToRay(touchPoint);
+            var ray = _gameCameraCtr.GameCamera.ScreenPointToRay(touchPoint);
 
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
-                var collider = raycastHit.collider;
-                if (collider == null)
+                if (touch.phase == TouchPhase.Began)
                 {
-                    return;
-                }
+                    if (_gameBase == null)
+                    {
+                        if(CheckGetGameBase(raycastHit, out Game.Base gameBase))
+                        {
+                            _gameBase = gameBase;
+                            _gameBase?.OnTouchBegan(_gameCameraCtr.GameCamera, _grid);
 
-                if(_object == null)
-                {
-                    _object = collider.GetComponentInParent<Game.Object>();
-                    _object?.Apply(new Game.Edit());
+                            _notTouchGameBase = false;
+                            _gameCameraCtr.SetStopUpdate(true);
+                        }                        
+                    }
+                    else
+                    {
+                        _notTouchGameBase = CheckGetGameBase(raycastHit, out Game.Base gameBase) == false;
+                        _gameCameraCtr.SetStopUpdate(_notTouchGameBase == false);
+                    }
                 }
             }
 
-            switch (touch.phase)
+            if(!_notTouchGameBase)
             {
-                case TouchPhase.Began:
-                    {
-
-                    }
-                    break;
-
-                case TouchPhase.Moved:
-                    {
-                        DragObject(touch);
-                    }
-                    break;
-
-                case TouchPhase.Ended:
-                case TouchPhase.Canceled:
-                    {
-                        //_object?.Apply(new Game.Arrange());
-                        _object = null;
-                    }                    
-                    break;
+                _gameBase?.OnTouch(touch);
             }
         }
 
-        private void DragObject(Touch touch)
+        private bool CheckGetGameBase(RaycastHit raycastHit, out Game.Base gameBase)
         {
-            if (_object == null)
+            gameBase = null;
+
+            var collider = raycastHit.collider;
+            if (collider == null)
             {
-                return;
+                return false;
             }
 
-            var objectTm = _object.transform;
+            gameBase = collider.GetComponentInParent<Game.Base>();
+            if (gameBase == null)
+            {
+                return false;
+            }
 
-            float distance = _gameCamera.WorldToScreenPoint(objectTm.position).z;
-            Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);
-            Vector3 pos = _gameCamera.ScreenToWorldPoint(movePos);
-
-            objectTm.position = pos;
-
-            //_object.Apply(new Game.Arrange(objectTm.position));
+            return true;
         }
+
+        //private void SetGameCameraUpdate(TouchPhase touchPhase)
+        //{
+        //    if (_gameCameraCtr == null)
+        //    {
+        //        return;
+        //    }
+
+        //    if (_gameBase != null)
+        //    {
+        //        switch (touchPhase)
+        //        {
+        //            case TouchPhase.Moved:
+        //                {
+        //                    if (!_gameCameraCtr.StopUpdate)
+        //                    {
+        //                        _gameCameraCtr.SetStopUpdate(true);
+        //                    }
+        //                }
+        //                break;
+
+        //            case TouchPhase.Ended:
+        //            case TouchPhase.Canceled:
+        //                {
+        //                    if (_gameCameraCtr.StopUpdate)
+        //                    {
+        //                        _gameCameraCtr.SetStopUpdate(false);
+        //                    }
+        //                }
+        //                break;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if(_gameCameraCtr.StopUpdate)
+        //        {
+        //            _gameCameraCtr.SetStopUpdate(false);
+        //        }
+        //    }
+        //}
     }
 }
 

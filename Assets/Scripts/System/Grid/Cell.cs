@@ -15,7 +15,7 @@ namespace GameSystem
 
         public BoxCollider boxCollider;
 
-        private Data _data = null;
+        public Data Data_ { get; private set; } = null;
 
         public void Init(Data data)
         {
@@ -24,7 +24,7 @@ namespace GameSystem
                 return;
             }
 
-            _data = data;
+            Data_ = data;
 
             name = "[" + data.Row + ", " + data.Column + "]"; 
 
@@ -39,12 +39,12 @@ namespace GameSystem
                 return;
             }
 
-            boxCollider.size = new Vector3(_data.CellSize, _data.CellSize, 0);
+            boxCollider.size = new Vector3(Data_.CellSize, Data_.CellSize, 0);
         }
 
         private void SetLocalPosition()
         {
-            gameObject.transform.localPosition = new Vector3(_data.Row, _data.Column, 0) * _data.CellSize;
+            gameObject.transform.localPosition = new Vector3(Data_.Row, Data_.Column, 0) * Data_.CellSize;
         }
     }
 }

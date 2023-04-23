@@ -13,7 +13,13 @@ namespace Game
     {
         public int Id;
 
-        public virtual void OnTouch()
+
+        public virtual void OnTouchBegan(Camera gameCamera, GameSystem.Grid grid)
+        {
+
+        }
+
+        public virtual void OnTouch(Touch touch)
         {
 
         }

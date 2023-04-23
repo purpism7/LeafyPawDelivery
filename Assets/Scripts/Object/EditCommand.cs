@@ -6,7 +6,7 @@ namespace Game
 {
     public abstract class EditCommand
     {
-        public abstract void Command();
+        public abstract void Execute();
     }
 }
 

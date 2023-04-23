@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Game
 {
-    public class ActivityArea : Base<ActivityArea.Data_>
+    public class ActivityArea : Base<ActivityArea.Data>
     {
         public interface IListener
         {
             void PlaceAnimal(ActivityArea activityArea);
         }
 
-        public class Data_ : BaseData
+        public class Data : BaseData
         {
             public IListener IListener = null;
         }
@@ -26,7 +26,7 @@ namespace Game
 
         public bool PlayingAnimal { get; private set; } = false;
 
-        public override void Init(Data_ data)
+        public override void Init(Data data)
         {
             base.Init(data);
 
@@ -47,38 +47,38 @@ namespace Game
             AreaTm.SetActive(enable);
         }
 
-        public bool PlaceAnimal(int animalId)
+        //public bool PlaceAnimal(int animalId)
+        //{
+        //    if (PlayingAnimal)
+        //    {
+        //        return false;
+        //    }
+
+        //    var animal = new GameSystem.AnimalCreator()
+        //        .SetAnimalId(animalId)
+        //        .SetRoot(AnimalRootTm)
+        //        .SetDropItemAction(OnDropItem)
+        //        .Create();
+
+        //    PlayingAnimal = animal != null;
+
+        //    return PlayingAnimal;
+        //}
+
+        //private void OnDropItem(Data.DropItem dropItemData, Transform rootTm)
+        //{
+        //    Debug.Log(dropItemData.Id);
+
+        //    _dropItemList.Add(new DropItemCreator()
+        //        .SetRootTm(DropItemRootTm)
+        //        .SetStartRootTm(rootTm)
+        //        .SetDropItemData(dropItemData)
+        //        .Create());
+        //}
+
+        public override void OnTouch(Touch touch)
         {
-            if (PlayingAnimal)
-            {
-                return false;
-            }
-
-            var animal = new GameSystem.AnimalCreator()
-                .SetAnimalId(animalId)
-                .SetRoot(AnimalRootTm)
-                .SetDropItemAction(OnDropItem)
-                .Create();
-
-            PlayingAnimal = animal != null;
-
-            return PlayingAnimal;
-        }
-
-        private void OnDropItem(Data.DropItem dropItemData, Transform rootTm)
-        {
-            Debug.Log(dropItemData.Id);
-
-            _dropItemList.Add(new DropItemCreator()
-                .SetRootTm(DropItemRootTm)
-                .SetStartRootTm(rootTm)
-                .SetDropItemData(dropItemData)
-                .Create());
-        }
-
-        public override void OnTouch()
-        {
-            base.OnTouch();
+            base.OnTouch(touch);
 
             _iListener?.PlaceAnimal(this);
         }

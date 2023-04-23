@@ -39,9 +39,9 @@ namespace Game
             return;
         }
 
-        public override void OnTouch()
+        public override void OnTouch(Touch touch)
         {
-            base.OnTouch();
+            base.OnTouch(touch);
 
         }
     }

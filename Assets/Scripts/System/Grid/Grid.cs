@@ -9,7 +9,7 @@ namespace GameSystem
         public GridData GridData;
         public Cell Cell; 
 
-        private int[,] _cellArray;
+        private Cell[,] _cellArray = null;
 
         //private LineRenderer _lineRenderer = null;
 
@@ -42,11 +42,11 @@ namespace GameSystem
                 return;
             }
 
-            _cellArray = new int[GridData.Row, GridData.Column];
+            _cellArray = new Cell[GridData.Row, GridData.Column];
 
-            for (int i = 0; i < GridData.Column; ++i)
+            for (int column = 0; column < GridData.Column; ++column)
             {
-                for(int j = 0; j < GridData.Row; ++j)
+                for(int row = 0; row < GridData.Row; ++row)
                 {
                     var cell = GameObject.Instantiate(Cell, transform);
                     if(cell == null)
@@ -56,14 +56,44 @@ namespace GameSystem
 
                     cell.Init(new Cell.Data()
                     {
-                        Row = j,
-                        Column = i,
+                        Row = row,
+                        Column = column,
                         CellSize = GridData.CellSize,
                     });
+
+                    _cellArray[row, column] = cell;
 
                     //gameObj.transform.localPosition = new Vector3(i, j, 0) * GridData.CellSize;
                     //gameObj.name = "[" + i + ", " + j + "]";
                 }
+            }
+        }
+
+        public Vector3 Limit
+        {
+            get
+            {
+                var cell = _cellArray[1, 1];
+                if (cell == null)
+                {
+                    //return V;
+                }
+
+                return cell.transform.position;
+            }
+        }
+
+        public Vector3 Limit2
+        {
+            get
+            {
+                var cell = _cellArray[GridData.Row - 2, GridData.Column - 2];
+                if (cell == null)
+                {
+                    //return V;
+                }
+
+                return cell.transform.position;
             }
         }
 
