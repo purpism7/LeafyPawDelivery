@@ -71,6 +71,21 @@ namespace GameSystem
             {
                 _gameBase?.OnTouch(touch);
             }
+
+
+            if(_gameBase != null &&
+               (_gameBase.EState_ == Game.EState.Remove ||
+                _gameBase.EState_ == Game.EState.Arrange))
+            {
+                _gameBase = null;
+            }
+
+            //if (_gameBase != null &&
+            //   _gameBase.ElementState != null &&
+            //   _gameBase.ElementState.GetType().Equals(typeof(Game.RemoveState)))
+            //{
+            //    _gameBase = null;
+            //}
         }
 
         private bool CheckGetGameBase(RaycastHit raycastHit, out Game.Base gameBase)

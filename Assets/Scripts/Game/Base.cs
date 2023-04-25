@@ -4,6 +4,15 @@ using UnityEngine;
 
 namespace Game
 {
+    public enum EState
+    {
+        None,
+
+        Edit,
+        Remove,
+        Arrange,
+    }
+
     public class BaseData
     {
 
@@ -12,7 +21,8 @@ namespace Game
     public abstract class Base : MonoBehaviour
     {
         public int Id;
-
+        public Game.State.Element ElementState { get; protected set; } = null;
+        public EState EState_ { get; protected set; } = EState.None;
 
         public virtual void OnTouchBegan(Camera gameCamera, GameSystem.Grid grid)
         {

@@ -62,6 +62,11 @@ namespace Game
                 return;
             }
 
+            if(state is Edit)
+            {
+                EState_ = EState.Edit;
+            }
+
             state.Apply(this);
 
             State = state;
@@ -98,12 +103,17 @@ namespace Game
         #region EditObject.IListener
         void EditObject.IListener.Remove()
         {
+            //ElementState = new RemoveState();
+            EState_ = EState.Remove;
+
             //var arrangeCmd = new Command.Remove(ObjectUId, transform.position);
             //arrangeCmd?.Execute();
         }
 
         void EditObject.IListener.Arrange()
         {
+            EState_ = EState.Arrange;
+
             var cmd = new Command.Arrange(ObjectUId, transform.position);
             cmd?.Execute();
         }
