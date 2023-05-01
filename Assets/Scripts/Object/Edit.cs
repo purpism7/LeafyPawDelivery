@@ -79,7 +79,10 @@ namespace Game
 
             objectTm.position = pos;
 
-            //_object.Apply(new Game.Arrange(objectTm.position));
+            if(_object.ObjectSprRenderer != null)
+            {
+                _object.ObjectSprRenderer.sortingOrder = -(int)pos.y;
+            }
         }
 
         public void Overlap(int cnt)
