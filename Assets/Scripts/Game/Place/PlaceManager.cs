@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
 using GameSystem;
 
 namespace Game
@@ -31,6 +32,11 @@ namespace Game
             _placeList.Add(ActivityPlace);
 
             yield break;
+        }
+
+        public void RemoveObject(int objectUId)
+        {
+            ActivityPlace?.RemoveObject(objectUId);
         }
 
         //public override IEnumerator CoProcess(IPreprocessingProvider iProvider)

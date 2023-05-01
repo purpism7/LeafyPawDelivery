@@ -57,11 +57,21 @@ namespace GameSystem
 
                             _notTouchGameBase = false;
                             _gameCameraCtr.SetStopUpdate(true);
+
+                            GameSystem.UIManager.Instance?.Bottom?.HideEditList();
                         }                        
                     }
                     else
                     {
-                        _notTouchGameBase = CheckGetGameBase(raycastHit, out Game.Base gameBase) == false;
+                        if(CheckGetGameBase(raycastHit, out Game.Base gameBase))
+                        {
+                            _notTouchGameBase = _gameBase.UId != gameBase.UId;
+                        }
+                        else
+                        {
+                            _notTouchGameBase = true;
+                        }
+                        
                         _gameCameraCtr.SetStopUpdate(_notTouchGameBase == false);
                     }
                 }
@@ -72,20 +82,16 @@ namespace GameSystem
                 _gameBase?.OnTouch(touch);
             }
 
-
             if(_gameBase != null &&
                (_gameBase.EState_ == Game.EState.Remove ||
                 _gameBase.EState_ == Game.EState.Arrange))
             {
                 _gameBase = null;
-            }
+                _notTouchGameBase = false;
+                _gameCameraCtr.SetStopUpdate(false);
 
-            //if (_gameBase != null &&
-            //   _gameBase.ElementState != null &&
-            //   _gameBase.ElementState.GetType().Equals(typeof(Game.RemoveState)))
-            //{
-            //    _gameBase = null;
-            //}
+                GameSystem.UIManager.Instance?.Bottom?.ShowEditList();
+            }
         }
 
         private bool CheckGetGameBase(RaycastHit raycastHit, out Game.Base gameBase)

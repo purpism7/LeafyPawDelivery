@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Creature;
 using UnityEditor.Experimental.GraphView;
+using static UnityEditor.PlayerSettings;
 
 namespace GameSystem
 {
@@ -79,6 +80,12 @@ namespace GameSystem
         }
 
         #region Object
+        public void RemoveObject(int objectUId)
+        {
+            placeMgr?.RemoveObject(objectUId);
+            ObjectMgr?.RemoveObject(objectUId);
+        }
+
         public void ArrangeObject(int objectUId, Vector3 pos)
         {
             int placeId = 0;

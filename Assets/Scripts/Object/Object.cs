@@ -25,10 +25,9 @@ namespace Game
         {
             base.Init(data);
 
-            _data = data;
-
             if(data != null)
             {
+                UId = ObjectUId;
                 transform.localPosition = data.Pos;
             }
 
@@ -41,6 +40,7 @@ namespace Game
             return;
         }
 
+        // object 최초 선택 시, 호출.
         public override void OnTouchBegan(Camera gameCamera, GameSystem.Grid grid)
         {
             base.OnTouchBegan(gameCamera, grid);
@@ -74,7 +74,7 @@ namespace Game
 
         public void ActiveEditObject(bool active)
         {
-            UIUtils.SetActive(EditObject?.transform, active);
+            UIUtils.SetActive(EditObject?.CanvasRectTm, active);
         }
 
         #region Collision 
@@ -103,19 +103,22 @@ namespace Game
         #region EditObject.IListener
         void EditObject.IListener.Remove()
         {
-            //ElementState = new RemoveState();
             EState_ = EState.Remove;
 
-            //var arrangeCmd = new Command.Remove(ObjectUId, transform.position);
-            //arrangeCmd?.Execute();
+            var cmd = new Command.Remove(ObjectUId);
+            cmd?.Execute();
+
+            ActiveEditObject(false);
         }
 
         void EditObject.IListener.Arrange()
         {
             EState_ = EState.Arrange;
 
-            var cmd = new Command.Arrange(ObjectUId, transform.position);
+            var cmd = new Command.Arrange(ObjectUId, transform.localPosition);
             cmd?.Execute();
+
+            ActiveEditObject(false);
         }
         #endregion
     }

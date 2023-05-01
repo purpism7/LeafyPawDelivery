@@ -23,6 +23,11 @@ namespace Game
             yield break;
         }
 
+        public void RemoveObject(int objectUId)
+        {
+            _objectHolder?.RemoveObject(objectUId);
+        }
+
         public void ArrangeObject(int objectUId, Vector3 pos, int placeId)
         {
             _objectHolder?.ArrangeObject(objectUId, pos, placeId);

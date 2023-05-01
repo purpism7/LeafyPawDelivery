@@ -23,11 +23,21 @@ namespace Game
 
         public override void Touch(Touch touch)
         {
+            if(_object == null)
+            {
+                return;
+            }
+
+            if(_object.EState_ != EState.Edit)
+            {
+                return;
+            }
+
             switch (touch.phase)
             {
                 case TouchPhase.Began:
                     {
-                        _object?.ActiveEditObject(true);
+                        _object.ActiveEditObject(true);
                     }
                     break;
 
@@ -35,14 +45,14 @@ namespace Game
                     {
                         DragObject(touch);
 
-                        _object?.ActiveEditObject(false);
+                        _object.ActiveEditObject(false);
                     }
                     break;
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
-                        _object?.ActiveEditObject(true);
+                        _object.ActiveEditObject(true);
                     }
                     break;
             }

@@ -11,13 +11,14 @@ namespace Game
         public class Data : BaseData
         {
             public int Id = 0;
-            //public System.Action<int> PlaceActivityAnimalAction = null;
         }
 
         [SerializeField]
         private Transform objectRootTm;
 
         public Transform ObjectRootTm { get { return objectRootTm; } }
+
+        private List<Game.Object> _objectList = new();
         //public Transform ActivityAreaRootTm;
 
         //private Dictionary<int, ActivityArea> _activityAreaDic = new();
@@ -39,9 +40,28 @@ namespace Game
             return;
         }
 
+        public void RemoveObject(int objectUId)
+        {
+            if(_objectList == null)
+            {
+                return;
+            }
+
+            var findObject = _objectList.Find(obj => obj.UId == objectUId);
+            if(findObject == null)
+            {
+                return;
+            }
+
+            if(_objectList.Remove(findObject))
+            {
+                Destroy(findObject.gameObject);
+            }
+        }
+
         private void SetObjectList()
         {
-            Debug.Log("SetObjectList()");
+            _objectList.Clear();
 
             var objectInfoList = GameSystem.GameManager.Instance?.ObjectMgr?.ObjectInfoList;
             if (objectInfoList == null)
@@ -67,11 +87,13 @@ namespace Game
                     Pos = objectInfo.Pos,
                 };
 
-                new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
+                var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
                     .SetData(objData)
                     .SetId(objectInfo.Id)
                     .SetRootTm(objectRootTm)
                     .Create();
+
+                _objectList.Add(obj);
             }
         }
 

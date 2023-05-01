@@ -48,7 +48,13 @@ namespace UI
             }
         }
 
-        private void ShowEditList()
+        public void Show()
+        {
+            ShowAnim(RootRectTm, null);
+        }
+
+        #region EditList
+        private void ShowInitEditList()
         {
             if(_editList == null)
             {
@@ -61,11 +67,26 @@ namespace UI
                     .Create();
             }
 
-            UIUtils.SetActive(EditListRootRectTm, true);
-            ShowAnim(EditListRootRectTm, null);
+            ShowEditList();
 
             GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
         }
+
+        public void ShowEditList()
+        {
+            UIUtils.SetActive(EditListRootRectTm, true);
+            ShowAnim(EditListRootRectTm, null);
+        }
+
+        public void HideEditList()
+        {
+            HideAnim(EditListRootRectTm,
+                () =>
+                {
+                    UIUtils.SetActive(EditListRootRectTm, false);
+                });
+        }
+        #endregion
 
         #region BottomMenu.IListener
         void BottomMenu.IListener.ClickBottomMenu()
@@ -80,7 +101,7 @@ namespace UI
             HideAnim(RootRectTm,
                 () =>
                 {
-                    ShowEditList();
+                    ShowInitEditList();
                 });
         }
         #endregion
@@ -107,13 +128,12 @@ namespace UI
             }
 
             Sequence sequence = DOTween.Sequence()
-             .SetAutoKill(false)
-             .Append(rectTm.DOAnchorPosY(0, 0.3f).SetEase(Ease.OutBack))
-
-             .OnComplete(() =>
-             {
-                 completeAction?.Invoke();
-             });
+                .SetAutoKill(false)
+                .Append(rectTm.DOAnchorPosY(0, 0.3f).SetEase(Ease.OutBack))
+                .OnComplete(() =>
+                {
+                    completeAction?.Invoke();
+                });
             sequence.Restart();
         }
 
@@ -125,13 +145,12 @@ namespace UI
             }
 
             Sequence sequence = DOTween.Sequence()
-              .SetAutoKill(false)
-              .Append(rectTm.DOAnchorPosY(InitPosY, 0.3f).SetEase(Ease.InBack))
-
-              .OnComplete(() =>
-              {
-                  completeAction?.Invoke();
-              });
+                .SetAutoKill(false)
+                .Append(rectTm.DOAnchorPosY(InitPosY, 0.3f).SetEase(Ease.InBack))
+                .OnComplete(() =>
+                {
+                    completeAction?.Invoke();
+                });
             sequence.Restart();
         }
     }

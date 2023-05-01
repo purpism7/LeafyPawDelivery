@@ -12,6 +12,10 @@ namespace UI
             void Arrange();
         }
 
+        #region Inspector
+        public RectTransform CanvasRectTm = null;
+        #endregion
+
         private IListener _iListener = null;
 
         public void Init(IListener iListener)

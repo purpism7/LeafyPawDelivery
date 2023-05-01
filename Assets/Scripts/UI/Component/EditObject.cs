@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UI.Component
 {
-    public class Edit : UI.Base<Edit.Data>
+    public class EditObject : UI.Base<EditObject.Data>
     {
         public class Data : BaseData
         {

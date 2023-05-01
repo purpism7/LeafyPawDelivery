@@ -163,9 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c816a3eb19c475ea1ff5bee9024392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: 2
+  Id: 1
   EditObject: {fileID: 8952438890831220305}
-  objectSprRenderer: {fileID: 8198808596251828485}
+  ObjectSprRenderer: {fileID: 8198808596251828485}
 --- !u!136 &7441345776543645308
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -176,10 +176,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 50
-  m_Height: 0
+  m_Radius: 100
+  m_Height: 360
   m_Direction: 1
-  m_Center: {x: 0, y: -140, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &796064345045659375
 PrefabInstance:
   m_ObjectHideFlags: 0

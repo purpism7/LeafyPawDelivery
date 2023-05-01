@@ -46,13 +46,13 @@ namespace UI
                     continue;
                 }
 
-                var data = new Component.Edit.Data()
+                var data = new Component.EditObject.Data()
                 {
                     ObjectId = objectInfo.Id,
                     ObjectUId = objectInfo.UId,
                 };
 
-                new GameSystem.UICreator<UI.Component.Edit, UI.Component.Edit.Data>()
+                new GameSystem.UICreator<UI.Component.EditObject, UI.Component.EditObject.Data>()
                     .SetData(data)
                     .SetRootRectTm(ObjectRootRectTm)
                     .Create();

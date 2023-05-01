@@ -60,6 +60,20 @@ namespace Info
             SaveInfo();
         }
 
+        public void RemoveObject(int objectUId)
+        {
+            var objectInfo = GetObjectInfo(objectUId);
+            if (objectInfo == null)
+            {
+                return;
+            }
+
+            objectInfo.Pos = Vector3.zero;
+            objectInfo.PlaceId = 0;
+
+            SaveInfo();
+        }
+
         public void ArrangeObject(int objectUId, Vector3 pos, int placeId)
         {
             var objectInfo = GetObjectInfo(objectUId);

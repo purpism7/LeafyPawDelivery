@@ -39,6 +39,7 @@ namespace GameSystem
                 return default(T);
             }
 
+            obj.Id = _id;
             obj.Init(_data);
 
             return obj;
