@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Creature;
-using UnityEditor.Experimental.GraphView;
-using static UnityEditor.PlayerSettings;
 
 namespace GameSystem
 {
@@ -13,18 +11,17 @@ namespace GameSystem
         [SerializeField]
         private Game.PlaceManager placeMgr;
 
-        public Data.Container DataContainer { get; private set; } = null;
-
-        public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
-
-        public Game.State.Base GameState { get; private set; } = new Game.State.Game();
-
         private Game.AnimalManager _animalMgr = null;
         public Game.ObjectManager ObjectMgr { get; private set; } = null;
+        public Data.Container DataContainer { get; private set; } = null;
 
-        public override IEnumerator CoInit()
+        public System.Action<Game.Base> StartEditAction { get; private set; } = null;
+        public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
+        public Game.State.Base GameState { get; private set; } = new Game.State.Game();
+
+        public override IEnumerator CoInit(IPreprocessingProvider iProvider)
         {
-            DontDestroyOnLoad(this);
+            yield return StartCoroutine(base.CoInit(iProvider));
 
             _animalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
             yield return StartCoroutine(_animalMgr?.CoInit(null));
@@ -35,7 +32,7 @@ namespace GameSystem
 
             yield return StartCoroutine(placeMgr?.CoInit(null));
 
-            DataContainer = FindObjectOfType<Data.Container>();
+            DataContainer = iProvider?.Get<Data.Container>();
 
             yield break;
         }
@@ -79,11 +76,18 @@ namespace GameSystem
             return animal;
         }
 
+        public void SetStartEditAction(System.Action<Game.Base> action)
+        {
+            StartEditAction = action;
+        }
+
         #region Object
         public void RemoveObject(int objectUId)
         {
             placeMgr?.RemoveObject(objectUId);
             ObjectMgr?.RemoveObject(objectUId);
+
+            UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
         }
 
         public void ArrangeObject(int objectUId, Vector3 pos)

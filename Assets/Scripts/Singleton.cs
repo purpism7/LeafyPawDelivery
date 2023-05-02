@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameSystem;
 using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
@@ -30,6 +31,18 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    public abstract IEnumerator CoInit();
+    public virtual IEnumerator CoInit()
+    {
+        DontDestroyOnLoad(this);
+
+        yield break;
+    }
+
+    public virtual IEnumerator CoInit(IPreprocessingProvider iProvider)
+    {
+        DontDestroyOnLoad(this);
+
+        yield break;
+    }
 }
 

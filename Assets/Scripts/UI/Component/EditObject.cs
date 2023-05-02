@@ -30,17 +30,24 @@ namespace UI.Component
                 return;
             }
 
+            var gameMgr = GameManager.Instance;
+            if(gameMgr == null)
+            {
+                return;
+            }
+
             var objData = new Game.Object.Data()
             {
                 ObjectUId = _data.ObjectUId,
             };
 
-            var objectRootTm = GameManager.Instance?.ObjectRootTm;
-            new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
+            var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
                 .SetData(objData)
                 .SetId(_data.ObjectId)
-                .SetRootTm(objectRootTm)
+                .SetRootTm(gameMgr.ObjectRootTm)
                 .Create();
+
+            gameMgr.StartEditAction?.Invoke(obj);
         }
     }
 }

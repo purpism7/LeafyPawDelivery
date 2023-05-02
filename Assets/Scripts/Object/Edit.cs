@@ -78,11 +78,6 @@ namespace Game
             pos.y = Mathf.Clamp(pos.y, _grid.Limit.y, _grid.Limit2.y);
 
             objectTm.position = pos;
-
-            if(_object.ObjectSprRenderer != null)
-            {
-                _object.ObjectSprRenderer.sortingOrder = -(int)pos.y;
-            }
         }
 
         public void Overlap(int cnt)

@@ -15,17 +15,25 @@ namespace GameSystem
 
         private Game.Base _gameBase = null;
         private bool _notTouchGameBase = false;
+        private GameManager _gameMgr = null;
 
         public void Init(GameSystem.GameCameraController gameCameraCtr, Grid grid)
         {
             _gameCameraCtr = gameCameraCtr;
             _grid = grid;
+
+            _gameMgr = GameManager.Instance;
+            _gameMgr?.SetStartEditAction(StartEdit);
         }
 
         public void ChainUpdate()
         {
-            var gameMgr = GameManager.Instance;
-            if (!gameMgr.GameState.Type.Equals(typeof(Game.State.Edit)))
+            if(_gameMgr == null)
+            {
+                return;
+            }
+
+            if (!_gameMgr.GameState.Type.Equals(typeof(Game.State.Edit)))
             {
                 return;
             }
@@ -52,13 +60,7 @@ namespace GameSystem
                     {
                         if(CheckGetGameBase(raycastHit, out Game.Base gameBase))
                         {
-                            _gameBase = gameBase;
-                            _gameBase?.OnTouchBegan(_gameCameraCtr.GameCamera, _grid);
-
-                            _notTouchGameBase = false;
-                            _gameCameraCtr.SetStopUpdate(true);
-
-                            GameSystem.UIManager.Instance?.Bottom?.HideEditList();
+                            StartEdit(gameBase);
                         }                        
                     }
                     else
@@ -82,16 +84,41 @@ namespace GameSystem
                 _gameBase?.OnTouch(touch);
             }
 
-            if(_gameBase != null &&
-               (_gameBase.EState_ == Game.EState.Remove ||
-                _gameBase.EState_ == Game.EState.Arrange))
+            if(_gameBase != null)
             {
-                _gameBase = null;
-                _notTouchGameBase = false;
-                _gameCameraCtr.SetStopUpdate(false);
-
-                GameSystem.UIManager.Instance?.Bottom?.ShowEditList();
+                EndEdit();
             }
+        }
+
+        private void StartEdit(Game.Base gameBase)
+        {
+            _gameBase = gameBase;
+            _gameBase?.OnTouchBegan(_gameCameraCtr.GameCamera, _grid);
+
+            _notTouchGameBase = false;
+            _gameCameraCtr.SetStopUpdate(true);
+
+            GameSystem.UIManager.Instance?.Bottom?.HideEditList();
+        }
+
+        private void EndEdit()
+        {
+            if(_gameBase == null)
+            {
+                return;
+            }
+
+            if(_gameBase.EState_ != Game.EState.Remove &&
+               _gameBase.EState_ != Game.EState.Arrange)
+            {
+                return;
+            }
+
+            _gameBase = null;
+            _notTouchGameBase = false;
+            _gameCameraCtr.SetStopUpdate(false);
+
+            GameSystem.UIManager.Instance?.Bottom?.ShowEditList();
         }
 
         private bool CheckGetGameBase(RaycastHit raycastHit, out Game.Base gameBase)

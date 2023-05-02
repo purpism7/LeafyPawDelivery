@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UI;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 namespace Game
 {
     public class Object : Game.Base<Object.Data>, EditObject.IListener
     {
+        readonly private int SelectOrder = 1000;
+
         public class Data : BaseData
         {
             public int ObjectUId = 0;
@@ -29,6 +32,8 @@ namespace Game
             {
                 UId = ObjectUId;
                 transform.localPosition = data.Pos;
+
+                SetSortingOrder(-(int)transform.localPosition.y);
             }
 
             EditObject?.Init(this);
@@ -46,6 +51,8 @@ namespace Game
             base.OnTouchBegan(gameCamera, grid);
 
             SetState(new Edit(gameCamera, grid));
+
+            SetSortingOrder(SelectOrder);
         }
 
         public override void OnTouch(Touch touch)
@@ -75,6 +82,16 @@ namespace Game
         public void ActiveEditObject(bool active)
         {
             UIUtils.SetActive(EditObject?.CanvasRectTm, active);
+        }
+
+        private void SetSortingOrder(int order)
+        {
+            if (ObjectSprRenderer == null)
+            {
+                return;
+            }
+
+            ObjectSprRenderer.sortingOrder = order;
         }
 
         #region Collision 
@@ -117,6 +134,8 @@ namespace Game
 
             var cmd = new Command.Arrange(ObjectUId, transform.localPosition);
             cmd?.Execute();
+
+            SetSortingOrder(-(int)transform.localPosition.y);
 
             ActiveEditObject(false);
         }

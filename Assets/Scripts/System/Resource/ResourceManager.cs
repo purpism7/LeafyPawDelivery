@@ -20,7 +20,7 @@ namespace GameSystem
 
         public override IEnumerator CoInit()
         {
-            DontDestroyOnLoad(this);
+            yield return StartCoroutine(base.CoInit());
 
             if(AddressableAssetLoader != null)
             {

@@ -14,6 +14,8 @@ namespace Info
 
         public override IEnumerator CoInit()
         {
+            yield return StartCoroutine(base.CoInit());
+
             LoadInfo();
 
             //InitHolder();

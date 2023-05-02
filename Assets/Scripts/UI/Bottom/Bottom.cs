@@ -21,7 +21,8 @@ namespace UI
         private RectTransform EditListRootRectTm;
 
         private List<BottomMenu> BottomMenuList = new();
-        private EditList _editList = null;
+
+        public EditList EditList { get; private set; } = null;
 
         public override void Init(Data data)
         {
@@ -56,9 +57,9 @@ namespace UI
         #region EditList
         private void ShowInitEditList()
         {
-            if(_editList == null)
+            if(EditList == null)
             {
-                _editList = new UICreator<EditList, EditList.Data>()
+                EditList = new UICreator<EditList, EditList.Data>()
                     .SetData(new EditList.Data()
                     {
                         IListener = this,
