@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -76,31 +76,42 @@ namespace GameSystem
                 case TouchPhase.Began:
                     {
                         //_prevPos = touch.position;
+    
                         _prevPos = touch.position - touch.deltaPosition;
+                        //_prevPos = GameCamera.ScreenToWorldPoint(touch.position);
+                        //startTouchPosition = worldPoint;
                     }
                     break;
 
                 case TouchPhase.Moved:
                     {
                         var nowPos = touch.position - touch.deltaPosition;
-                        //var movePos = _prevPos - touch.position;
-                        var cameraTm = GameCamera.transform;
+                        var movePos = (_prevPos - nowPos) * Time.deltaTime * 30f;
 
-                        var movePos = nowPos - _prevPos;
-                        
-                        cameraTm.position = Vector3.Lerp(cameraTm.position, movePos, Time.deltaTime * 10f);
+                        //var diffPos = _prevPos - GameCamera.ScreenToViewportPoint(touch.position);
+                        //var movePos = (_prevPos - nowPos);
+                        //
+                        //cameraTm.position = Vector3.Lerp(cameraTm.position, movePos, Time.deltaTime * 10f);
 
-//                         nowPos = touch.position - touch.deltaPosition;
-//                     movePosDiff = (Vector2)(prePos - nowPos) * Time.deltaTime;
-//                     prePos = touch.position - touch.deltaPosition;
+                        //                         nowPos = touch.position - touch.deltaPosition;
+                        //                     movePosDiff = (Vector2)(prePos - nowPos) * Time.deltaTime;
+                        //                     prePos = touch.position - touch.deltaPosition;
+                        //Debug.Log(touch.position);
+
+                        var pos = GameCamera.transform.position + new Vector3(movePos.x, movePos.y, 0);
 
                         float x = _mapSize.x - _width;
-                        float clampX = Mathf.Clamp(cameraTm.position.x, -x + _center.x, x + _center.x);
+                        float clampX = Mathf.Clamp(pos.x, -x + _center.x, x + _center.x);
 
                         float y = _mapSize.y - _height;
-                        float clampY = Mathf.Clamp(cameraTm.position.y, -y + _center.y, y + _center.y);
+                        float clampY = Mathf.Clamp(pos.y, -y + _center.y, y + _center.y);
 
-                        cameraTm.position = new Vector3(clampX, clampY, -10f);
+                        GameCamera.transform.position = new Vector3(clampX, clampY, 0);
+                        //GameCamera.transform.Translate(position);
+
+                        _prevPos = touch.position - touch.deltaPosition;
+
+
                     }
                     break;
 
@@ -108,6 +119,10 @@ namespace GameSystem
                 case TouchPhase.Canceled:
                     {
                         //_prevPos = GameCamera.transform.position;
+
+                        //_prevPos = touch.position;
+
+
                     }
                     break;
             }
