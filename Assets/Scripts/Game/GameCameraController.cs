@@ -75,8 +75,8 @@ namespace GameSystem
             {
                 case TouchPhase.Began:
                     {
-                        _prevPos = touch.position;
-                        //_prevPos = GameCamera.transform.position;
+                        //_prevPos = touch.position;
+                        _prevPos = touch.position - touch.deltaPosition;
                     }
                     break;
 
@@ -86,11 +86,13 @@ namespace GameSystem
                         //var movePos = _prevPos - touch.position;
                         var cameraTm = GameCamera.transform;
 
-                        var movePos = touch.position - _prevPos;
-
-                        //Debug.Log(GameCamera.transform.position + " / " + movePos);
+                        var movePos = nowPos - _prevPos;
+                        
                         cameraTm.position = Vector3.Lerp(cameraTm.position, movePos, Time.deltaTime * 10f);
-                        //cameraTm.DOMove(movePos, 1f);
+
+//                         nowPos = touch.position - touch.deltaPosition;
+//                     movePosDiff = (Vector2)(prePos - nowPos) * Time.deltaTime;
+//                     prePos = touch.position - touch.deltaPosition;
 
                         float x = _mapSize.x - _width;
                         float clampX = Mathf.Clamp(cameraTm.position.x, -x + _center.x, x + _center.x);
