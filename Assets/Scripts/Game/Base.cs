@@ -21,6 +21,7 @@ namespace Game
     public abstract class Base : MonoBehaviour
     {
         public int Id = 0;
+        [HideInInspector]
         public int UId = 0;
 
         //public Game.State.Element ElementState { get; protected set; } = null;

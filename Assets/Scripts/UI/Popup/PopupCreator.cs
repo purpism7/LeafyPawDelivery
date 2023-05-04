@@ -9,7 +9,7 @@ namespace GameSystem
     public class PopupCreator<T, V> : BaseCreator<T> where T : UI.Base<V> where V : BaseData
     {
         private V _data = null;
-        private RectTransform _rootRecTm = null;
+        // private RectTransform _rootRecTm = null;
 
         public PopupCreator<T, V> SetData(V vData)
         {
@@ -26,8 +26,8 @@ namespace GameSystem
                 return default(T);
             }
 
-            popup.Init(_data);            
-
+            popup.Init(_data);   
+            
             return popup;
         }
     }

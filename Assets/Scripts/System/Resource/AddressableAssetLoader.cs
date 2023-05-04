@@ -173,11 +173,12 @@ namespace GameSystem
             {
                 return null;
             }
-
+            // Debug.Log("typeKey = " + typeKey + " / " + _gameObjByIdDic[typeKey].Count);
             if(_gameObjByIdDic.TryGetValue(typeKey, out Dictionary<int, GameObject> dic))
             {
                 if(dic.TryGetValue(id, out GameObject gameObj))
                 {
+                    // Debug.Log("instantiate = " + gameObj.name);
                     return GameObject.Instantiate(gameObj, rootTm);
                 }
             }

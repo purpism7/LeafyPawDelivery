@@ -14,7 +14,7 @@ namespace GameSystem
         public RectTransform RootRectTm;
 
         private Dictionary<int, ActivityAnimal> _activityAnimalDic = new();
-        private event SelectActivityAnimalDelegate _selectActivityAnimalDel = null;
+        // private event SelectActivityAnimalDelegate _selectActivityAnimalDel = null;
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
@@ -39,10 +39,10 @@ namespace GameSystem
         //    _selectActivityAnimalDel += new SelectActivityAnimalDelegate(del);
         //}
 
-        public void RemoveSelectActivityAnimalDelegate(SelectActivityAnimalDelegate del)
-        {
-            _selectActivityAnimalDel -= del;
-        }
+        // public void RemoveSelectActivityAnimalDelegate(SelectActivityAnimalDelegate del)
+        // {
+        //     _selectActivityAnimalDel -= del;
+        // }
 
 
         public void CreateActivityAnimal(int animalId)

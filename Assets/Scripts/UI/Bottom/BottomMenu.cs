@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace UI
@@ -33,7 +35,21 @@ namespace UI
         {
             if (System.Enum.TryParse(eTypeStr, out EType eType))
             {
-                _data?.ILisener?.ClickBottomMenu();
+                switch(eType)
+                {
+                    case EType.Shop:
+                        {
+                            var popup = new GameSystem.PopupCreator<Shop, Shop.Data>()
+                                .Create();
+                        }
+                        break;
+
+                    default:
+                        {
+                            _data?.ILisener?.ClickBottomMenu();
+                        }
+                        break;
+                }
             }
         }
     }

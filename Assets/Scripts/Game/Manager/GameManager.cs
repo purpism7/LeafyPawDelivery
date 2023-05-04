@@ -23,18 +23,16 @@ namespace GameSystem
         {
             yield return StartCoroutine(base.CoInit(iProvider));
 
+            DataContainer = iProvider?.Get<Data.Container>();
+            
             _animalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
             yield return StartCoroutine(_animalMgr?.CoInit(null));
 
             ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
-
             yield return StartCoroutine(ObjectMgr?.CoInit(null));
-
             yield return StartCoroutine(placeMgr?.CoInit(null));
-
-            DataContainer = iProvider?.Get<Data.Container>();
-
-            yield break;
+            
+            yield return null;
         }
 
         private void Update()

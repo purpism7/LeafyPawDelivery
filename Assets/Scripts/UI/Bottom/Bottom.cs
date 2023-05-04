@@ -92,13 +92,6 @@ namespace UI
         #region BottomMenu.IListener
         void BottomMenu.IListener.ClickBottomMenu()
         {
-            //var popup = new GameSystem.PopupCreator<Arrangement, Arrangement.Data>()
-            //    .SetData(new Arrangement.Data()
-            //    {
-
-            //    })
-            //    .Create();
-
             HideAnim(RootRectTm,
                 () =>
                 {

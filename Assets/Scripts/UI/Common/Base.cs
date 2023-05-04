@@ -53,14 +53,14 @@ namespace UI
             transform.SetActive(false);
         }
 
-        //private void ShowAnim()
-        //{
-        //    GameSystem.UIManager.Instance.Fade.Out(null,
-        //       () =>
-        //       {
-        //           HideAnim();
-        //       });
-        //}
+        protected void ShowAnim()
+        {
+            GameSystem.UIManager.Instance?.Fade?.Out(null,
+               () =>
+               {
+                   // HideAnim();
+               });
+        }
 
         //private void HideAnim()
         //{
