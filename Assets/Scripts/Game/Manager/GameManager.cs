@@ -31,7 +31,10 @@ namespace GameSystem
             ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
             yield return StartCoroutine(ObjectMgr?.CoInit(null));
             yield return StartCoroutine(placeMgr?.CoInit(null));
-            
+
+            var sceneLoader = new GameSystem.Loader.Scene()
+                .Load(Loader.Scene.ESceneType.Logo);
+
             yield return null;
         }
 
