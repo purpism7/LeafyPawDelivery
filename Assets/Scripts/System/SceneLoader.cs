@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
@@ -21,45 +23,42 @@ namespace GameSystem.Loader
         }
 
         private ESceneType _eLoadSceneType = ESceneType.None;
-
-        private AssetReference _assetRef;
-
-        public Scene Load(ESceneType eSceneType)
+        
+        public Scene Load(ESceneType eSceneType)    
         {
             //_eLoadSceneType = eSceneType;
 
             var activeScene = SceneManager.GetActiveScene();
             Debug.Log("ActiveScene = " + activeScene.name);
-
-            var value = Addressables.LoadSceneAsync(eSceneType.ToString() + "Scene");
             
             LoadScene(ESceneType.Loading,
-                (operation) =>
+                (handle) =>
                 {
-                    LoadScene(eSceneType, EndLoad);
+                    if (handle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        var loading = GameObject.FindObjectOfType<Loading>();
+                        loading?.Init();
+                        SceneManager.UnloadSceneAsync(activeScene);
+                        Debug.Log(handle.Result.Scene.name);
+                        LoadScene(eSceneType, EndLoad);
+                    }
                 });
-            //var operation = SceneManager.LoadSceneAsync(ESceneType.Loading.ToString() + "Scene", LoadSceneMode.Additive);
-            //if (operation == null)
-            //{
-            //    return;
-            //}
-
-            //operation.completed += EndLoad;
-
+            
             return this;
         }
 
         private void LoadScene(ESceneType eSceneType, System.Action<AsyncOperationHandle<SceneInstance>> completedAction)
         {
-            UnityEngine.AddressableAssets.Addressables.LoadSceneAsync(eSceneType.ToString() + "Scene", LoadSceneMode.Additive)
-                .Completed += completedAction;
+            AsyncOperationHandle<SceneInstance> sceneInstance = Addressables.LoadSceneAsync("Assets/Scenes/" + eSceneType.ToString() + "Scene.unity", LoadSceneMode.Additive);
+            sceneInstance.Completed += completedAction;
         }
 
-        private void EndLoad(AsyncOperationHandle<SceneInstance> operation)
+        private void EndLoad(AsyncOperationHandle<SceneInstance> handle)
         {
             var activeScene = SceneManager.GetActiveScene();
             Debug.Log("ActiveScene = " + activeScene.name); 
             //SceneManager.UnloadSceneAsync()
+            Debug.Log(handle.Result.Scene.name);
         }
     }
 }
