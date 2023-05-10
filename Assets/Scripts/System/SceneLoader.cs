@@ -23,23 +23,24 @@ namespace GameSystem.Loader
         }
 
         //private ESceneType _eLoadSceneType = ESceneType.None;
+
         
-        public static void Load(ESceneType eSceneType)    
+        public static void Load(Load.Base load)    
         {
             //_eLoadSceneType = eSceneType;
 
             var activeScene = SceneManager.GetActiveScene();
             Debug.Log("ActiveScene = " + activeScene.name);
 
-            LoadScene(eSceneType, EndLoad);
+            LoadScene(load.SceneName, EndLoad);
         }
 
-        public static void LoadWithLoading(ESceneType eSceneType)
+        public static void LoadWithLoading(Load.Base load)
         {
             var activeScene = SceneManager.GetActiveScene();
             Debug.Log("ActiveScene = " + activeScene.name);
 
-            LoadScene(ESceneType.Loading,
+            LoadScene(ESceneType.Loading.ToString(),
                 (handle) =>
                 {
                     if (handle.Status == AsyncOperationStatus.Succeeded)
@@ -49,14 +50,14 @@ namespace GameSystem.Loader
 
                         SceneManager.UnloadSceneAsync(activeScene);
                         Debug.Log(handle.Result.Scene.name);
-                        LoadScene(eSceneType, EndLoad);
+                        LoadScene(load.SceneName, EndLoad);
                     }
                 });
         }
 
-        private static void LoadScene(ESceneType eSceneType, System.Action<AsyncOperationHandle<SceneInstance>> completedAction)
+        private static void LoadScene(string sceneName, System.Action<AsyncOperationHandle<SceneInstance>> completedAction)
         {
-            AsyncOperationHandle<SceneInstance> sceneInstance = Addressables.LoadSceneAsync("Assets/Scenes/" + eSceneType.ToString() + "Scene.unity", LoadSceneMode.Additive);
+            AsyncOperationHandle<SceneInstance> sceneInstance = Addressables.LoadSceneAsync("Assets/Scenes/" + sceneName + "Scene.unity", LoadSceneMode.Additive);
             sceneInstance.Completed += completedAction;
         }
 
