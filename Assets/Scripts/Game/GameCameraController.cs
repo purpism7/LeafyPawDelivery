@@ -81,7 +81,7 @@ namespace GameSystem
 
                 case TouchPhase.Moved:
                     {
-                        var pos = new Vector3(touch.deltaPosition.x, touch.deltaPosition.y, 0) * Time.deltaTime * 150f;
+                        var pos = new Vector3(touch.deltaPosition.x, touch.deltaPosition.y, 0) * Time.deltaTime * 100f;
                         var cameraTm = GameCamera.transform;
                         var movePos = cameraTm.position - pos;
                         

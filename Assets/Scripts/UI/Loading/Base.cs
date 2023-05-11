@@ -7,7 +7,7 @@ namespace GameSystem.Load
     public abstract class Base : MonoBehaviour
     {
         public abstract string SceneName { get; }
-        public abstract void Add(RectTransform rootRectTm);
+        public abstract void Create(RectTransform rootRectTm);
     }
 }
 

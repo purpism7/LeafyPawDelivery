@@ -32,7 +32,7 @@ namespace GameSystem
             yield return StartCoroutine(ObjectMgr?.CoInit(null));
             yield return StartCoroutine(placeMgr?.CoInit(null));
 
-            GameSystem.Loader.Scene.LoadWithLoading(new GameSystem.LoadGame());
+            // GameSystem.Loader.Scene.LoadWithLoading(new GameSystem.LoadGame());
 
             yield return null;
         }

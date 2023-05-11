@@ -50,7 +50,7 @@ namespace GameSystem.Loader
 
                         SceneManager.UnloadSceneAsync(activeScene);
                         Debug.Log(handle.Result.Scene.name);
-                        LoadScene(load.SceneName, EndLoad);
+                        LoadScene(ESceneType.Login.ToString(), EndLoad);
                     }
                 });
         }

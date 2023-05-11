@@ -8,9 +8,9 @@ namespace GameSystem
     {
         public override string SceneName => "Game";
 
-        public override void Add(RectTransform rootRectTm)
+        public override void Create(RectTransform rootRectTm)
         {
-            //Addre
+            
         }
     }
 }
