@@ -20,14 +20,21 @@ namespace GameSystem
 
         public override T Create()
         {
-            var popup = UIManager.Instance.InstantiatePopup<T>();
-            if (popup == null)
+            var basePopup = UIManager.Instance?.Popup?.Instantiate<T>();
+            if (basePopup == null)
             {
                 return default(T);
             }
 
-            popup.Init(_data);   
-            
+            var popup = basePopup.GetComponent<T>();
+            if(popup == null)
+            {
+                return default(T);
+            }
+
+            popup.Init(_data);
+            UIUtils.SetActive(popup.gameObject, true);
+
             return popup;
         }
     }

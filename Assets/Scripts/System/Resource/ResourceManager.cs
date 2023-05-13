@@ -42,18 +42,23 @@ namespace GameSystem
             yield return null;
         }
 
-        public T InstantiateUI<T>(RectTransform rootRectTm)
+        public GameObject InstantiateUIGameObj<T>(RectTransform rootRectTm)
         {
             if (AddressableAssetLoader == null)
             {
-                return default(T);
+                return null;
             }
 
-            var gameObj = AddressableAssetLoader.InstantiateUI(typeof(T).FullName, rootRectTm);
+            return AddressableAssetLoader.InstantiateUI(typeof(T).FullName, rootRectTm);
+        }
+
+        public T InstantiateUI<T>(RectTransform rootRectTm)
+        {
+            var gameObj = InstantiateUIGameObj<T>(rootRectTm);
             if (gameObj)
             {
                 return gameObj.GetComponent<T>();
-            }   
+            }
 
             return default(T);
         }
