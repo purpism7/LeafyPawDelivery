@@ -33,6 +33,8 @@ namespace GameSystem
             }
 
             popup.Init(_data);
+            StaticCoroutine.Start(popup.CoInit(_data));
+
             UIUtils.SetActive(popup.gameObject, true);
 
             return popup;
