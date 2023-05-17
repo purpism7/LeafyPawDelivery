@@ -42,6 +42,13 @@ namespace UI
                                 .Create();
                         }
                         break;
+                    
+                    case EType.Arrangement:
+                        {
+                            var popup = new GameSystem.PopupCreator<Arrangement, Arrangement.Data>()
+                                .Create();
+                        }
+                        break;
 
                     default:
                         {

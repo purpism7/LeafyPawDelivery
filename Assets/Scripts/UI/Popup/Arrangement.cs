@@ -17,5 +17,10 @@ namespace UI
 
             Debug.Log("Arrangment");
         }
+        
+        public override void Close()
+        {
+            base.Close();
+        }
     }
 }
