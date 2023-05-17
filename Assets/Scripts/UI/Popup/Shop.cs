@@ -20,9 +20,9 @@ namespace UI
             Debug.Log("Shop");
         }
 
-        public override void Close()
+        public override void Hide()
         {
-            base.Close();
+            base.Hide();
         }
     }
 }

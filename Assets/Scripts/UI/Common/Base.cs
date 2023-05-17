@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -26,9 +27,11 @@ namespace UI
     }
 
     public abstract class Base<T> : Base where T : BaseData
-    {       
+    {
+        public RectTransform rootRectTm = null; 
+            
         protected T _data = default(T);
-
+        
         public virtual void Init(T data)
         {
             InternalInit(data: data);
@@ -48,9 +51,14 @@ namespace UI
             _data = data;
         }
 
-        public virtual void Close()
+        public virtual void Show()
         {
-            transform.SetActive(false);
+            rootRectTm.SetActive(true);
+        }
+        
+        public virtual void Hide()
+        {
+            rootRectTm.SetActive(false);
         }
 
         protected void ShowAnim()

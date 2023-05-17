@@ -18,9 +18,9 @@ namespace UI
             Debug.Log("Arrangment");
         }
         
-        public override void Close()
+        public override void Hide()
         {
-            base.Close();
+            base.Hide();
         }
     }
 }
