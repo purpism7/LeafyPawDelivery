@@ -415,7 +415,7 @@ Camera:
   m_GameObject: {fileID: 104883388}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.09554112, g: 0.12809274, b: 0.1792453, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -1464,7 +1464,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &393044062
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1622,7 +1622,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProcessList:
   - {fileID: 4567569917886630977}
-  - {fileID: 393044063}
   - {fileID: 80954214}
   - {fileID: 678568159}
 --- !u!1 &601340403
