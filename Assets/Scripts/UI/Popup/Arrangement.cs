@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace UI
 {
@@ -16,6 +17,11 @@ namespace UI
             yield return StartCoroutine(base.CoInit(data));
 
             Debug.Log("Arrangment");
+        }
+
+        private void SetAnimalList()
+        {
+            // GameData.AnimalContainer
         }
         
         public override void Hide()

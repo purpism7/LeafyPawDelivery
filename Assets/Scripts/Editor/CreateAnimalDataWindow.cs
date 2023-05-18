@@ -10,7 +10,7 @@ public class CreateAnimalDataWindow : EditorWindow
     private int _animalId = 0;
     //private Data.Animal.EGrade _eGrade = Data.Animal.EGrade.Normal;
 
-    private Data.OpenCondition _openCondition = new();
+    private GameData.OpenCondition _openCondition = new();
 
     [MenuItem("Animals/Create Animal Data Window")]
     static void Open()

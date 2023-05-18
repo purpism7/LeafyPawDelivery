@@ -10,7 +10,7 @@ namespace GameSystem
         public class Data : ConditionData
         {
             public int AnimalId = 0;
-            public OpenCondition OpenCondition = null;
+            public GameData.OpenCondition OpenCondition = null;
             public System.Action<int> OpenAction = null;
         }
 

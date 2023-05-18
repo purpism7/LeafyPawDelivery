@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data
+namespace GameData
 {
-    public class PlaceContainer : Data.BaseContainer<Place>
+    public class PlaceContainer : BaseContainer<Place>
     {
         
     }

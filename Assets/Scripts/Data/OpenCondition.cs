@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data
+namespace GameData
 {
     [System.Serializable]
     public class ReqOpenCondition

@@ -67,7 +67,7 @@ namespace Data
 
                     if(type != null)
                     {
-                        var container = System.Activator.CreateInstance(type) as Data.BaseContainer;
+                        var container = System.Activator.CreateInstance(type) as GameData.BaseContainer;
                         container?.Init(result.text);
 
                         Debug.Log(typeName);

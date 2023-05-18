@@ -16,7 +16,7 @@ namespace GameSystem
             return this;
         }
 
-        public AnimalOpenConditionCreator SetOpenCondition(Data.OpenCondition openCondition)
+        public AnimalOpenConditionCreator SetOpenCondition(GameData.OpenCondition openCondition)
         {
             _data.OpenCondition = openCondition;
 

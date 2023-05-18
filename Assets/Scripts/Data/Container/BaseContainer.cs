@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data
+namespace GameData
 {
     public abstract class BaseContainer
     {
@@ -12,6 +12,14 @@ namespace Data
     public class BaseContainer<T> : BaseContainer
     {
         protected T[] _datas = null;
+
+        public T[] GetDatas 
+        {
+            get
+            {
+                return _datas;
+            }
+        }
 
         public override void Init(string json)
         {
