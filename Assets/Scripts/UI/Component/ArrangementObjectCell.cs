@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UI.Component
 {
-    public class ArrangementCell : UI.Base<ArrangementCell.Data>
+    public class ArrangementObjectCell : UI.Base<ArrangementObjectCell.Data>
     {
         public class Data : BaseData
         {
@@ -28,7 +28,7 @@ namespace UI.Component
 
         public void OnClickArrangement()
         {
-            
+
         }
     }
 }
