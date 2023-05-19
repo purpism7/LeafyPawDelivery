@@ -42,6 +42,11 @@ namespace UI
                     .Create();
             }
         }
+
+        private void SetObjectList()
+        {
+            
+        }
         
         public override void Hide()
         {

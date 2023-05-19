@@ -25,6 +25,11 @@ namespace UI.Component
         {
             nameTMP?.SetText(_data.animalData?.Name);
         }
+
+        public void OnClickArrangement()
+        {
+            
+        }
     }
 }
 

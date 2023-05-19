@@ -6,8 +6,14 @@ namespace Info
 {
     public class PlaceHolder : Holder.Base
     {
-        readonly private string PlaceInfoJsonFilePath = "Assets/Info/Place_{0}.json";
-
+        protected override string JsonFilePath
+        {
+            get
+            {
+                return "Assets/Info/Place_{0}.json";
+            }
+        }
+        
         private Dictionary<int, Info.Place> _placeDic = new();
 
         public PlaceHolder()
@@ -65,7 +71,7 @@ namespace Info
 
         private void LoadInfo(int placeId)
         {
-            var filePath = string.Format(PlaceInfoJsonFilePath, placeId);
+            var filePath = string.Format(JsonFilePath, placeId);
             if(!System.IO.File.Exists(filePath))
             {
                 return;
@@ -88,7 +94,7 @@ namespace Info
             {
                 var jsonString = JsonUtility.ToJson(place);
 
-                var filePath = string.Format(PlaceInfoJsonFilePath, placeId);
+                var filePath = string.Format(JsonFilePath, placeId);
                 System.IO.File.WriteAllText(filePath, jsonString);
             }
         }

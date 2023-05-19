@@ -11,6 +11,7 @@ namespace Info.Holder
             LoadInfo();
         }
 
+        protected abstract string JsonFilePath { get; }
         protected abstract void LoadInfo();
     }
 }

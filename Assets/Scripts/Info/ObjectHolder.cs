@@ -7,22 +7,28 @@ namespace Info
 {
     public class ObjectHolder : Holder.Base
     {
-        private readonly string ObjectInfoJsonFilePath = "Assets/Info/Object.json";
         private readonly string ObjectUIdKey = "Object_UId_Key";
+        
+        protected override string JsonFilePath
+        {
+            get
+            {
+                return "Assets/Info/Object.json";
+            }
+        }
 
         public List<Info.Object> ObjectInfoList { get; private set; } = new();
 
         protected override void LoadInfo()
         {
             ObjectInfoList.Clear();
-
-            var filePath = ObjectInfoJsonFilePath;
-            if (!System.IO.File.Exists(filePath))
+            
+            if (!System.IO.File.Exists(JsonFilePath))
             {
                 return;
             }
 
-            var jsonString = System.IO.File.ReadAllText(filePath);
+            var jsonString = System.IO.File.ReadAllText(JsonFilePath);
             var objectInfos = JsonHelper.FromJson<Info.Object>(jsonString);
             if(objectInfos != null)
             {
@@ -38,9 +44,8 @@ namespace Info
             }
 
             var jsonString = JsonHelper.ToJson(ObjectInfoList.ToArray());
-            //Debug.Log(jsonString);
-            var filePath = ObjectInfoJsonFilePath;
-            System.IO.File.WriteAllText(filePath, jsonString);
+   
+            System.IO.File.WriteAllText(JsonFilePath, jsonString);
         }
 
         public void AddObject(Info.Object objectInfo)
