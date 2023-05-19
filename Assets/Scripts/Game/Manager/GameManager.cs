@@ -13,8 +13,8 @@ namespace GameSystem
         [SerializeField]
         private Game.PlaceManager placeMgr;
 
-        private Game.AnimalManager _animalMgr = null;
         public Game.ObjectManager ObjectMgr { get; private set; } = null;
+        private Game.AnimalManager _animalMgr = null;
         
         public System.Action<Game.Base> StartEditAction { get; private set; } = null;
         public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }

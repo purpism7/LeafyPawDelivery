@@ -13,9 +13,23 @@ namespace Info
             }
         }
 
+        public List<Info.Animal> AnimalInfoList { get; private set; } = new();
+        
         protected override void LoadInfo()
         {
+            AnimalInfoList.Clear();
             
+            if (!System.IO.File.Exists(JsonFilePath))
+            {
+                return;
+            }
+
+            var jsonString = System.IO.File.ReadAllText(JsonFilePath);
+            var animalInfos = JsonHelper.FromJson<Info.Animal>(jsonString);
+            if(animalInfos != null)
+            {
+                AnimalInfoList.AddRange(animalInfos);
+            }
         }
     }
 }
