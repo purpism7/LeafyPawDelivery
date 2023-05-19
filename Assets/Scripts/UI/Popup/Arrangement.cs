@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Data;
 using GameData;
+using GameSystem;
+using UI.Component;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -13,6 +15,8 @@ namespace UI
         {
 
         }
+
+        [SerializeField] private RectTransform arrangementCellRootRectTm;
 
         public override IEnumerator CoInit(Data data)
         {
@@ -29,7 +33,13 @@ namespace UI
             
             foreach (var data in datas)
             {
-                
+                var arrangementCell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
+                    .SetData(new ArrangementCell.Data()
+                    {
+                        animalData = data,
+                    })
+                    .SetRootRectTm(arrangementCellRootRectTm)
+                    .Create();
             }
         }
         
