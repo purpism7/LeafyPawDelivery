@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Creature;
+using Data;
+using GameData;
 
 namespace GameSystem
 {
@@ -13,8 +15,7 @@ namespace GameSystem
 
         private Game.AnimalManager _animalMgr = null;
         public Game.ObjectManager ObjectMgr { get; private set; } = null;
-        public Data.Container DataContainer { get; private set; } = null;
-
+        
         public System.Action<Game.Base> StartEditAction { get; private set; } = null;
         public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
         public Game.State.Base GameState { get; private set; } = new Game.State.Game();
@@ -23,8 +24,6 @@ namespace GameSystem
         {
             yield return StartCoroutine(base.CoInit(iProvider));
 
-            DataContainer = iProvider?.Get<Data.Container>();
-            
             _animalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
             yield return StartCoroutine(_animalMgr?.CoInit(null));
 

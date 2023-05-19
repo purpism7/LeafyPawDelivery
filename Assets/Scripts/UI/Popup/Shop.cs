@@ -16,7 +16,7 @@ namespace UI
             yield return StartCoroutine(base.CoInit(data));
             
             // ShowAnim();
-            
+    
             Debug.Log("Shop");
         }
 

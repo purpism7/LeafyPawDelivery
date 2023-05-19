@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
+using GameData;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -15,13 +17,20 @@ namespace UI
         public override IEnumerator CoInit(Data data)
         {
             yield return StartCoroutine(base.CoInit(data));
-
-            Debug.Log("Arrangment");
+            
+            SetAnimalList();
         }
 
         private void SetAnimalList()
         {
-            // GameData.AnimalContainer
+            var datas = AnimalContainer.GetDatas;
+            if (datas == null)
+                return;
+            
+            foreach (var data in datas)
+            {
+                
+            }
         }
         
         public override void Hide()

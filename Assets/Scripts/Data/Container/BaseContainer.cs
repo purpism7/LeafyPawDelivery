@@ -2,32 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameData
+public abstract class BaseContainer
 {
-    public abstract class BaseContainer
+    public abstract void Init(string json);
+}
+
+public class BaseContainer<T> : BaseContainer
+{
+    protected static T[] _datas = null;
+
+    public static T[] GetDatas 
     {
-        public abstract void Init(string json);
+        get
+        {
+            return _datas;
+        }
     }
 
-    public class BaseContainer<T> : BaseContainer
+    public override void Init(string json)
     {
-        protected T[] _datas = null;
-
-        public T[] GetDatas 
+        var wrapper = JsonHelper.WrapperFromJson<T>(json);
+        if(wrapper != null)
         {
-            get
-            {
-                return _datas;
-            }
-        }
-
-        public override void Init(string json)
-        {
-            var wrapper = JsonHelper.WrapperFromJson<T>(json);
-            if(wrapper != null)
-            {
-                _datas = wrapper.Datas;
-            }
+            _datas = wrapper.Datas;
         }
     }
 }

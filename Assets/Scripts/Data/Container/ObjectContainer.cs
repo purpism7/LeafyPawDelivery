@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameData
+public class ObjectContainer : BaseContainer<Object>
 {
-    public class ObjectContainer : BaseContainer<Object>
+    public override void Init(string json)
     {
-        public override void Init(string json)
-        {
-            base.Init(json);
-        }
+        base.Init(json);
     }
 }
 

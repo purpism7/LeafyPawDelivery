@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using Data;
+using GameData;
 
 public class CreateAnimalDataWindow : EditorWindow
 {
