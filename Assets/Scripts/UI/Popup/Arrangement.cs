@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
+
 using Data;
 using GameData;
 using GameSystem;
 using UI.Component;
-using UnityEngine;
-using UnityEngine.Rendering;
+using static UI.Arrangement;
 
 namespace UI
 {
@@ -16,8 +19,16 @@ namespace UI
 
         }
 
-        [SerializeField] private RectTransform arrangementAnimalCellRootRectTm = null;
-        [SerializeField] private RectTransform arrangementObjectCellRootRectTm = null;
+        public enum ETabType
+        {
+            Animal,
+            Object,
+        }
+
+        [SerializeField] private ScrollRect animalScrollRect = null;
+        [SerializeField] private ScrollRect objectScrollRect = null;
+
+        private ETabType _currETabType = ETabType.Animal;
 
         public override IEnumerator CoInit(Data data)
         {
@@ -25,6 +36,8 @@ namespace UI
             
             SetAnimalList();
             SetObjectList();
+
+            ActiveContents();
         }
 
         private void SetAnimalList()
@@ -61,15 +74,35 @@ namespace UI
                    {
                        //animalData = data,
                    })
-                   .SetRootRectTm(arrangementObjectCellRootRectTm)
+                   .SetRootRectTm(objectScrollRect?.content)
                    .Create();
             }
-
         }
 
-        public override void Hide()
+        private void ActiveContents()
         {
-            base.Hide();
+            UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == ETabType.Animal);
+            UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == ETabType.Object);
+        }
+
+        public override void DeActivate()
+        {
+            base.DeActivate();
+        }
+
+        public void OnChanged(string tabType)
+        {
+            if(System.Enum.TryParse(tabType, out ETabType eTabType))
+            {
+                if(_currETabType == eTabType)
+                {
+                    return;
+                }
+
+                _currETabType = eTabType;
+
+                ActiveContents();
+            }
         }
     }
 }

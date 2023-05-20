@@ -30,6 +30,11 @@ namespace UI
             base.Init(data);
         }
 
+        public override void Activate()
+        {
+            base.Activate();
+        }
+
         public void OnClick(string eTypeStr)
         {
             if (System.Enum.TryParse(eTypeStr, out EType eType))

@@ -12,9 +12,10 @@ namespace UI
 
         private List<UI.Base> _opendPopupList = new();
 
-        public UI.Base Instantiate<T>()
+        public UI.Base Instantiate<T>(out bool init)
         {
             UI.Base basePopup = null;
+            init = false;
 
             if(_opendPopupList != null)
             {
@@ -30,6 +31,8 @@ namespace UI
                 basePopup = gameObj.GetComponent<UI.Base>();
                 _opendPopupList.Add(basePopup);
             }
+
+            init = true;
 
             return basePopup;
         }

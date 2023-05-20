@@ -51,12 +51,12 @@ namespace UI
             _data = data;
         }
 
-        public virtual void Show()
+        public virtual void Activate()
         {
             rootRectTm.SetActive(true);
         }
-        
-        public virtual void Hide()
+
+        public virtual void DeActivate()
         {
             rootRectTm.SetActive(false);
         }

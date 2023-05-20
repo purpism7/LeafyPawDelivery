@@ -20,7 +20,8 @@ namespace GameSystem
 
         public override T Create()
         {
-            var basePopup = UIManager.Instance?.Popup?.Instantiate<T>();
+            bool init = false;
+            var basePopup = UIManager.Instance?.Popup?.Instantiate<T>(out init);
             if (basePopup == null)
             {
                 return default(T);
@@ -32,11 +33,14 @@ namespace GameSystem
                 return default(T);
             }
 
-            popup.Init(_data);
-            
-            StaticCoroutine.Start(popup.CoInit(_data));
-            
-            popup.Show();
+            if(init)
+            {
+                popup.Init(_data);
+
+                StaticCoroutine.Start(popup.CoInit(_data));
+            }
+
+            popup.Activate();
 
             return popup;
         }
