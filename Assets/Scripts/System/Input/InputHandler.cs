@@ -98,7 +98,7 @@ namespace GameSystem
             _notTouchGameBase = false;
             _gameCameraCtr.SetStopUpdate(true);
 
-            GameSystem.UIManager.Instance?.Bottom?.HideEditList();
+            GameSystem.UIManager.Instance?.Bottom?.DeActivateEditList();
         }
 
         private void EndEdit()
@@ -118,7 +118,7 @@ namespace GameSystem
             _notTouchGameBase = false;
             _gameCameraCtr.SetStopUpdate(false);
 
-            GameSystem.UIManager.Instance?.Bottom?.ShowEditList();
+            GameSystem.UIManager.Instance?.Bottom?.ActivateEditList();
         }
 
         private bool CheckGetGameBase(RaycastHit raycastHit, out Game.Base gameBase)

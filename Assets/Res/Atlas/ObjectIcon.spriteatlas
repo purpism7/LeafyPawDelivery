@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AnimalIcon
+  m_Name: ObjectIcon
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -20,19 +20,31 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 1
-    platformSettings: []
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
       padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
-      enableTightPacking: 1
+      enableTightPacking: 0
       enableAlphaDilation: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: 6a135350e9034468392c7177d5144295, type: 3}
+    - {fileID: 102900000, guid: 64f30678e858e934cb6288ce77991707, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -41,16 +53,13 @@ SpriteAtlas:
   - {fileID: 21300000, guid: fa8d5f0014afa4291821d33c05b90209, type: 3}
   - {fileID: 21300000, guid: b6cd8c60175324ef0949fdee89717f44, type: 3}
   - {fileID: 21300000, guid: db57bef04698e4aa1a4f0468a90bb1f1, type: 3}
-  - {fileID: 21300000, guid: 6b94edc1e1c584cb69cfe2386f9b36f8, type: 3}
   - {fileID: 21300000, guid: e2d82062d9423457fb1e0d3524684ff6, type: 3}
   - {fileID: 21300000, guid: 8645a36200c5a4f9f8dd49c32e5acdb0, type: 3}
   - {fileID: 21300000, guid: 6b166ba22a6d14ae8ae6e5efea5cc1be, type: 3}
   - {fileID: 21300000, guid: 26200ee226517420bae9755474ed9319, type: 3}
   - {fileID: 21300000, guid: d5e82cb35d9f149669138bae3b6ac47a, type: 3}
   - {fileID: 21300000, guid: c158bb95244ad4070821ed0ca0f73dde, type: 3}
-  - {fileID: 21300000, guid: 935d6c9710319411daa54f76c907ed75, type: 3}
   - {fileID: 21300000, guid: 19adeba8606fb4aeba0e30fc1b0159d6, type: 3}
-  - {fileID: 21300000, guid: e4cf79b8db2bf4e8bbb62d7a8e570f8b, type: 3}
   - {fileID: 21300000, guid: 8b59c3c84bf584481872c1ffc94ec7f8, type: 3}
   - {fileID: 21300000, guid: d4aba569a50e145b0baf9cf1bae29fce, type: 3}
   - {fileID: 21300000, guid: eb62f289cfab6441891b440e28292c6b, type: 3}
@@ -66,21 +75,17 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 824638bddad184ffea93f2a1df00cc41, type: 3}
   - {fileID: 21300000, guid: ae3c7a5ec2e9d4cd2b97f09d6cd7c2cc, type: 3}
   - {fileID: 21300000, guid: 39c0530f59e7a42c698d55fca3598e86, type: 3}
-  - {fileID: 21300000, guid: 3c6b221fd415848d4ac64ce02baa9599, type: 3}
   m_PackedSpriteNamesToIndex:
   - Icon_Map01_Obj_24
   - Icon_Map01_Obj_26
   - Icon_Map01_Obj_13
-  - Dog
   - Icon_Map01_Obj_08
   - Icon_Map01_Obj_01
   - Icon_Map01_Obj_09
   - Icon_Map01_Obj_14
   - Icon_Map01_Obj_15
   - Icon_Map01_Obj_03
-  - RedPanda
   - Icon_Map01_Obj_02
-  - Cat
   - Icon_Map01_Obj_07
   - Icon_Map01_Obj_05
   - Icon_Map01_Obj_16
@@ -96,7 +101,6 @@ SpriteAtlas:
   - Icon_Map01_Obj_06
   - Icon_Map01_Obj_19
   - Icon_Map01_Obj_12
-  - Rabbit
   m_RenderDataMap: {}
-  m_Tag: AnimalIcon
+  m_Tag: ObjectIcon
   m_IsVariant: 0

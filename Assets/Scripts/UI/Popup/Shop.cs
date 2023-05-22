@@ -20,9 +20,9 @@ namespace UI
             Debug.Log("Shop");
         }
 
-        public override void DeActivate()
+        public override void Deactivate()
         {
-            base.DeActivate();
+            base.Deactivate();
         }
     }
 }

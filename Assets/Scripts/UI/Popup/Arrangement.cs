@@ -13,7 +13,7 @@ using static UI.Arrangement;
 
 namespace UI
 {
-    public class Arrangement : Base<Arrangement.Data>
+    public class Arrangement : Base<Arrangement.Data>, ArrangementObjectCell.IListener
     {
         public class Data : BaseData
         {
@@ -73,6 +73,7 @@ namespace UI
                 var cell = new ComponentCreator<ArrangementObjectCell, ArrangementObjectCell.Data>()
                    .SetData(new ArrangementObjectCell.Data()
                    {
+                       IListener = this,
                        ObjectData = ObjectContainer.Instance.GetData(info.Id),
                        ObjectUId = info.UId,
                    })
@@ -87,9 +88,9 @@ namespace UI
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == ETabType.Object);
         }
 
-        public override void DeActivate()
+        public override void Deactivate()
         {
-            base.DeActivate();
+            base.Deactivate();
         }
 
         public void OnChanged(string tabType)
@@ -106,5 +107,15 @@ namespace UI
                 ActiveContents();
             }
         }
+        
+        #region ArrangementObjectCell.IListener
+
+        void ArrangementObjectCell.IListener.EditObject(int objectUId)
+        {
+            Deactivate();
+            
+            GameSystem.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom();
+        }
+        #endregion
     }
 }

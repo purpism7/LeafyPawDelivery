@@ -56,7 +56,7 @@ namespace UI
             rootRectTm.SetActive(true);
         }
 
-        public virtual void DeActivate()
+        public virtual void Deactivate()
         {
             rootRectTm.SetActive(false);
         }

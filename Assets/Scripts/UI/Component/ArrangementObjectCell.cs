@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Component
 {
@@ -9,17 +11,25 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
+            public IListener IListener = null;
             public Object ObjectData = null;
             public int ObjectUId = 0;
         }
 
-        [SerializeField] private TextMeshProUGUI nameTMP;
+        public interface IListener
+        {
+            void EditObject(int objectUId);
+        }
+
+        [SerializeField] private TextMeshProUGUI nameTMP = null;
+        [SerializeField] private Image iconImg = null;
 
         public override void Init(Data data)
         {
             base.Init(data);
 
             SetNameTMP();
+            SetIconImg();
         }
 
         private void SetNameTMP()
@@ -30,9 +40,23 @@ namespace UI.Component
             nameTMP?.SetText(_data.ObjectData.Name);
         }
 
-        public void OnClickArrangement()
+        private void SetIconImg()
         {
+            if (_data?.ObjectData == null)
+                return;
 
+            if (iconImg == null)
+                return;
+
+            iconImg.sprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(_data.ObjectData.IconImgName);
+        }
+
+        public void OnClick()
+        {
+            if (_data == null)
+                return;
+            
+            _data.IListener?.EditObject(_data.ObjectUId);
         }
     }
 }

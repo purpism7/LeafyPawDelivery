@@ -12,6 +12,7 @@ namespace GameSystem
 
         private Vector2 _center = Vector2.zero;
         private Vector2 _mapSize = new Vector2(2000f, 2000f);
+        private Vector3 _velocity = Vector3.zero;
 
         private Vector3 _prevPos = Vector3.zero;
         private float _height = 0;
@@ -92,7 +93,7 @@ namespace GameSystem
                         float clampY = Mathf.Clamp(movePos.y, -y + _center.y, y + _center.y);
 
                         // cameraTm.Translate(pos);
-                        cameraTm.position = new Vector3(clampX, clampY, 0);
+                        cameraTm.position = Vector3.SmoothDamp(cameraTm.position, new Vector3(clampX, clampY, 0), ref _velocity, 0.01f);
                     }
                     break;
 

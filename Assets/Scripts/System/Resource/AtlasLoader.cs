@@ -8,6 +8,7 @@ namespace GameSystem
     public class AtlasLoader
     {
         readonly public string KeyAnimalIcon = "AnimalIcon";
+        readonly private string KeyObjectIcon = "ObjectIcon";
 
         private Dictionary<string, SpriteAtlas> _spriteAtlasDic = new();
 
@@ -29,6 +30,11 @@ namespace GameSystem
             }
 
             return null;
+        }
+
+        public Sprite GetObjectIconSprite(string name)
+        {
+            return GetSprite(KeyObjectIcon, name);
         }
     }
 }

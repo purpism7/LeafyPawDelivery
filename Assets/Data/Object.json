@@ -1,1 +1,1 @@
-{"Datas":[{"Id":1,"Name":"tree","PlaceId":1},{"Id":2,"Name":"rock","PlaceId":1},{"Id":3,"Name":"bush","PlaceId":1}]}
+{"Datas":[{"Id":1,"Name":"tree","IconImgName":"Icon_Map01_Obj_01","PlaceId":1},{"Id":2,"Name":"rock","IconImgName":"Icon_Map01_Obj_02","PlaceId":1},{"Id":3,"Name":"bush","IconImgName":"Icon_Map01_Obj_03","PlaceId":1}]}
