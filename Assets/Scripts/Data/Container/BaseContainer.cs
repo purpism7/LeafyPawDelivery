@@ -4,14 +4,27 @@ using UnityEngine;
 
 public abstract class BaseContainer
 {
-    public abstract void Init(string json);
+    public abstract void Init(object obj, string json);
 }
 
-public class BaseContainer<T> : BaseContainer
+public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.Base
 {
-    protected static T[] _datas = null;
+    private static T _instance = default(T);
+    
+    protected V[] _datas = null;
 
-    public static T[] GetDatas 
+    public static T Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = new T();
+            
+            return _instance;
+        }
+    }
+    
+    public V[] Datas 
     {
         get
         {
@@ -19,9 +32,11 @@ public class BaseContainer<T> : BaseContainer
         }
     }
 
-    public override void Init(string json)
+    public override void Init(object obj, string json)
     {
-        var wrapper = JsonHelper.WrapperFromJson<T>(json);
+        _instance = (T)obj;
+        
+        var wrapper = JsonHelper.WrapperFromJson<V>(json);
         if(wrapper != null)
         {
             _datas = wrapper.Datas;

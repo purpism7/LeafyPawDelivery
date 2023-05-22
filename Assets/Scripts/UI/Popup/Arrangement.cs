@@ -8,6 +8,7 @@ using Data;
 using GameData;
 using GameSystem;
 using UI.Component;
+using Unity.VisualScripting;
 using static UI.Arrangement;
 
 namespace UI
@@ -72,7 +73,8 @@ namespace UI
                 var cell = new ComponentCreator<ArrangementObjectCell, ArrangementObjectCell.Data>()
                    .SetData(new ArrangementObjectCell.Data()
                    {
-                       //animalData = data,
+                       ObjectData = ObjectContainer.Instance.GetData(info.Id),
+                       ObjectUId = info.UId,
                    })
                    .SetRootRectTm(objectScrollRect?.content)
                    .Create();

@@ -2,11 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectContainer : BaseContainer<Object>
+public class ObjectContainer : BaseContainer<ObjectContainer, Object>
 {
-    public override void Init(string json)
+    public Object GetData(int id)
     {
-        base.Init(json);
+        if (_datas == null)
+            return null;
+
+        foreach (var data in _datas)
+        {
+            if(data == null)
+                continue;
+
+            if (data.Id == id)
+                return data;
+        }
+
+        return null;
     }
 }
 

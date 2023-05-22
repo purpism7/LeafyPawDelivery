@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaceContainer : BaseContainer<Place>
+public class PlaceContainer : BaseContainer<PlaceContainer, Place>
 {
         
 }

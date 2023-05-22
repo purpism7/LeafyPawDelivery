@@ -9,7 +9,8 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
-            public Animal animalData = null;
+            public Object ObjectData = null;
+            public int ObjectUId = 0;
         }
 
         [SerializeField] private TextMeshProUGUI nameTMP;
@@ -23,7 +24,10 @@ namespace UI.Component
 
         private void SetNameTMP()
         {
-            nameTMP?.SetText(_data.animalData?.Name);
+            if (_data?.ObjectData == null)
+                return;
+            
+            nameTMP?.SetText(_data.ObjectData.Name);
         }
 
         public void OnClickArrangement()
