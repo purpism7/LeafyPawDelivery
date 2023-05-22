@@ -1,1 +1,28 @@
-{"Datas":[{"Id":1,"Name":"Rabbit","Desc":null,"IconImgName":"Icon_Map01_Char_01"},{"Id":2,"Name":"Cat","Desc":null,"IconImgName":"Icon_Map01_Char_02"},{"Id":3,"Name":"Dog","Desc":null,"IconImgName":"Icon_Map01_Char_03"},{"Id":4,"Name":null,"Desc":null,"IconImgName":null}]}
+{
+    "Datas": [
+        {
+            "Id": 1,
+            "Name": "Rabbit",
+            "Desc": null,
+            "IconImgName": "BookIcon_Map01_Char_01"
+        },
+        {
+            "Id": 2,
+            "Name": "Cat",
+            "Desc": null,
+            "IconImgName": "BookIcon_Map01_Char_02"
+        },
+        {
+            "Id": 3,
+            "Name": "Dog",
+            "Desc": null,
+            "IconImgName": "BookIcon_Map01_Char_04"
+        },
+        {
+            "Id": 4,
+            "Name": null,
+            "Desc": null,
+            "IconImgName": null
+        }
+    ]
+}

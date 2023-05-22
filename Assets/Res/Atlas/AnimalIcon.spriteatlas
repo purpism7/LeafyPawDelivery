@@ -27,86 +27,28 @@ SpriteAtlas:
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
-      enableTightPacking: 1
+      enableTightPacking: 0
       enableAlphaDilation: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: 6a135350e9034468392c7177d5144295, type: 3}
+    - {fileID: 102900000, guid: 8caab94bba1a04e4da1b177f37883673, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: fa8d5f0014afa4291821d33c05b90209, type: 3}
-  - {fileID: 21300000, guid: b6cd8c60175324ef0949fdee89717f44, type: 3}
-  - {fileID: 21300000, guid: db57bef04698e4aa1a4f0468a90bb1f1, type: 3}
-  - {fileID: 21300000, guid: 6b94edc1e1c584cb69cfe2386f9b36f8, type: 3}
-  - {fileID: 21300000, guid: e2d82062d9423457fb1e0d3524684ff6, type: 3}
-  - {fileID: 21300000, guid: 8645a36200c5a4f9f8dd49c32e5acdb0, type: 3}
-  - {fileID: 21300000, guid: 6b166ba22a6d14ae8ae6e5efea5cc1be, type: 3}
-  - {fileID: 21300000, guid: 26200ee226517420bae9755474ed9319, type: 3}
-  - {fileID: 21300000, guid: d5e82cb35d9f149669138bae3b6ac47a, type: 3}
-  - {fileID: 21300000, guid: 4eef11859df6849fab7fafb042dd8423, type: 3}
-  - {fileID: 21300000, guid: c158bb95244ad4070821ed0ca0f73dde, type: 3}
-  - {fileID: 21300000, guid: 935d6c9710319411daa54f76c907ed75, type: 3}
-  - {fileID: 21300000, guid: 19adeba8606fb4aeba0e30fc1b0159d6, type: 3}
-  - {fileID: 21300000, guid: e4cf79b8db2bf4e8bbb62d7a8e570f8b, type: 3}
-  - {fileID: 21300000, guid: 8b59c3c84bf584481872c1ffc94ec7f8, type: 3}
-  - {fileID: 21300000, guid: d4aba569a50e145b0baf9cf1bae29fce, type: 3}
-  - {fileID: 21300000, guid: eb62f289cfab6441891b440e28292c6b, type: 3}
-  - {fileID: 21300000, guid: 447b53b9b73564415bac2b2d341790e7, type: 3}
-  - {fileID: 21300000, guid: 21509b3a1098f4c488ca67ee1f61378e, type: 3}
-  - {fileID: 21300000, guid: f1e2984a5865d44b0a5fabd10c4c3eb3, type: 3}
-  - {fileID: 21300000, guid: 2656938a5cb184e9d89a1dc5fb78e6a6, type: 3}
-  - {fileID: 21300000, guid: cd8e49fa902d84dcd934aa40289a80d2, type: 3}
-  - {fileID: 21300000, guid: 0914e41bad0dc4edc90e96ec61367968, type: 3}
-  - {fileID: 21300000, guid: 01757a2b31dc34875875afcbb14fcc06, type: 3}
-  - {fileID: 21300000, guid: f586627bf75524a038439c36367ef5ae, type: 3}
-  - {fileID: 21300000, guid: d3298c0dff7054ea7b731a66987e4af3, type: 3}
-  - {fileID: 21300000, guid: 11ddfd3dc8e5841f2b0c0bc93ac0d765, type: 3}
-  - {fileID: 21300000, guid: 8543b65dfaf694c38b2e5440da2c7c67, type: 3}
-  - {fileID: 21300000, guid: 4cf2d3ad04167483daa27e1835624958, type: 3}
-  - {fileID: 21300000, guid: 824638bddad184ffea93f2a1df00cc41, type: 3}
-  - {fileID: 21300000, guid: ae3c7a5ec2e9d4cd2b97f09d6cd7c2cc, type: 3}
-  - {fileID: 21300000, guid: 7627e78ebfe77432cabfdf0b9b4c77c3, type: 3}
-  - {fileID: 21300000, guid: 39c0530f59e7a42c698d55fca3598e86, type: 3}
-  - {fileID: 21300000, guid: 3c6b221fd415848d4ac64ce02baa9599, type: 3}
+  - {fileID: 21300000, guid: b45cfc815d11c4b3f88312819278f144, type: 3}
+  - {fileID: 21300000, guid: 45165e2235a604a2682e78edea283491, type: 3}
+  - {fileID: 21300000, guid: 08dbcbc29b1574b4a8b282690027d262, type: 3}
+  - {fileID: 21300000, guid: 1c6500a4b49124f33b6399091cb04b9b, type: 3}
+  - {fileID: 21300000, guid: 2255f26bac7ca4f24af9c391bc920962, type: 3}
   m_PackedSpriteNamesToIndex:
-  - Icon_Map01_Obj_24
-  - Icon_Map01_Obj_26
-  - Icon_Map01_Obj_13
-  - Dog
-  - Icon_Map01_Obj_08
-  - Icon_Map01_Obj_01
-  - Icon_Map01_Obj_09
-  - Icon_Map01_Obj_14
-  - Icon_Map01_Obj_15
-  - Icon_Map01_Char_04
-  - Icon_Map01_Obj_03
-  - RedPanda
-  - Icon_Map01_Obj_02
-  - Cat
-  - Icon_Map01_Obj_07
-  - Icon_Map01_Obj_05
-  - Icon_Map01_Obj_16
-  - Icon_Map01_Char_05
-  - Icon_Map01_Obj_23
-  - Icon_Map01_Obj_21
-  - Icon_Map01_Char_01
-  - Icon_Map01_Obj_22
-  - Icon_Map01_Obj_04
-  - Icon_Map01_Obj_20
-  - Icon_Map01_Obj_10
-  - Icon_Map01_Obj_18
-  - Icon_Map01_Obj_11
-  - Icon_Map01_Char_02
-  - Icon_Map01_Obj_17
-  - Icon_Map01_Obj_06
-  - Icon_Map01_Obj_19
-  - Icon_Map01_Char_03
-  - Icon_Map01_Obj_12
-  - Rabbit
+  - BookIcon_Map01_Char_01
+  - BookIcon_Map01_Char_03
+  - BookIcon_Map01_Char_04.png
+  - BookIcon_Map01_Char_02
+  - BookIcon_Map01_Char_05
   m_RenderDataMap: {}
   m_Tag: AnimalIcon
   m_IsVariant: 0

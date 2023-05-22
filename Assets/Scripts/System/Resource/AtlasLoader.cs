@@ -32,6 +32,11 @@ namespace GameSystem
             return null;
         }
 
+        public Sprite GetAnimalIconSprite(string name)
+        {
+            return GetSprite(KeyAnimalIcon, name);
+        }
+
         public Sprite GetObjectIconSprite(string name)
         {
             return GetSprite(KeyObjectIcon, name);

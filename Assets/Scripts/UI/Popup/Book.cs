@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class Book : Base<Book.Data>
+    public class Book : Base<Book.Data>, BookCell.IListener
     {
         public class Data : BaseData
         {
@@ -34,47 +34,48 @@ namespace UI
             SetObjectList();
 
             ActiveContents();
+
+            yield return null;
         }
 
         private void SetAnimalList()
         {
-            //var datas = AnimalContainer.GetDatas;
-            //if (datas == null)
-            //    return;
-            
-            //foreach (var data in datas)
-            //{
-            //    var cell = new ComponentCreator<ArrangementAnimalCell, ArrangementAnimalCell.Data>()
-            //        .SetData(new ArrangementAnimalCell.Data()
-            //        {
-            //            animalData = data,
-            //        })
-            //        .SetRootRectTm(arrangementAnimalCellRootRectTm)
-            //        .Create();
-            //}
+            var datas = AnimalContainer.Instance.Datas;
+            if (datas == null)
+                return;
+
+            foreach (var data in datas)
+            {
+                var cell = new ComponentCreator<BookCell, BookCell.Data>()
+                    .SetData(new BookCell.Data()
+                    {
+                        IListener = this,
+                        Name = data.Name,
+                        IconSprite = GameSystem.ResourceManager.Instance.AtalsLoader.GetAnimalIconSprite(data.IconImgName),
+                    })
+                    .SetRootRectTm(animalScrollRect?.content)
+                    .Create();
+            }
         }
 
         private void SetObjectList()
         {
-            var infos = GameManager.Instance?.ObjectMgr?.ObjectInfoList;
-            if (infos == null)
+            var datas = ObjectContainer.Instance?.Datas;
+            if (datas == null)
                 return;
 
-            // foreach (var info in infos)
-            // {
-            //     if (info == null)
-            //         continue;
-            //
-            //     var component = new ComponentCreator<ArrangementObjectCell, ArrangementObjectCell.Data>()
-            //         .SetData(new ArrangementObjectCell.Data()
-            //         {
-            //             IListener = this,
-            //             ObjectData = ObjectContainer.Instance.GetData(info.Id),
-            //             ObjectUId = info.UId,
-            //         })
-            //         .SetRootRectTm(objectScrollRect?.content)
-            //         .Create();
-            // }
+            foreach (var data in datas)
+            {
+                var cell = new ComponentCreator<BookCell, BookCell.Data>()
+                    .SetData(new BookCell.Data()
+                    {
+                        IListener = this,
+                        Name = data.Name,
+                        IconSprite = GameSystem.ResourceManager.Instance.AtalsLoader.GetObjectIconSprite(data.IconImgName),
+                    })
+                    .SetRootRectTm(objectScrollRect?.content)
+                    .Create();
+            }
         }
 
         private void ActiveContents()
@@ -102,5 +103,12 @@ namespace UI
                 ActiveContents();
             }
         }
+
+        #region BookCell.IListener
+        void BookCell.IListener.Click()
+        {
+
+        }
+        #endregion
     }
 }
