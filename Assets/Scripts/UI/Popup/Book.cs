@@ -1,30 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using System.Linq;
-
-using Data;
-using GameData;
 using GameSystem;
 using UI.Component;
-using Unity.VisualScripting;
-using static UI.Arrangement;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
-    public class Arrangement : Base<Arrangement.Data>, ArrangementObjectCell.IListener
+    public class Book : Base<Book.Data>
     {
         public class Data : BaseData
         {
 
         }
-
+        
         [SerializeField] private ScrollRect animalScrollRect = null;
         [SerializeField] private ScrollRect objectScrollRect = null;
 
         private Type.ETab _currETabType = Type.ETab.Animal;
 
+        public override void Init(Data data)
+        {
+            base.Init(data);
+            
+            
+        }
+        
         public override IEnumerator CoInit(Data data)
         {
             yield return StartCoroutine(base.CoInit(data));
@@ -59,21 +60,21 @@ namespace UI
             if (infos == null)
                 return;
 
-            foreach (var info in infos)
-            {
-                if (info == null)
-                    continue;
-
-                var component = new ComponentCreator<ArrangementObjectCell, ArrangementObjectCell.Data>()
-                   .SetData(new ArrangementObjectCell.Data()
-                   {
-                       IListener = this,
-                       ObjectData = ObjectContainer.Instance.GetData(info.Id),
-                       ObjectUId = info.UId,
-                   })
-                   .SetRootRectTm(objectScrollRect?.content)
-                   .Create();
-            }
+            // foreach (var info in infos)
+            // {
+            //     if (info == null)
+            //         continue;
+            //
+            //     var component = new ComponentCreator<ArrangementObjectCell, ArrangementObjectCell.Data>()
+            //         .SetData(new ArrangementObjectCell.Data()
+            //         {
+            //             IListener = this,
+            //             ObjectData = ObjectContainer.Instance.GetData(info.Id),
+            //             ObjectUId = info.UId,
+            //         })
+            //         .SetRootRectTm(objectScrollRect?.content)
+            //         .Create();
+            // }
         }
 
         private void ActiveContents()
@@ -86,7 +87,7 @@ namespace UI
         {
             base.Deactivate();
         }
-
+        
         public void OnChanged(string tabType)
         {
             if(System.Enum.TryParse(tabType, out Type.ETab eTabType))
@@ -101,15 +102,5 @@ namespace UI
                 ActiveContents();
             }
         }
-        
-        #region ArrangementObjectCell.IListener
-
-        void ArrangementObjectCell.IListener.EditObject(int objectUId)
-        {
-            Deactivate();
-            
-            GameSystem.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom();
-        }
-        #endregion
     }
 }

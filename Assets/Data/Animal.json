@@ -1,1 +1,1 @@
-{"Datas":[{"Id":1,"Name":"Rabbit"},{"Id":2,"Name":null},{"Id":3,"Name":null},{"Id":4,"Name":null}]}
+{"Datas":[{"Id":1,"Name":"Rabbit","Desc":null,"IconImgName":"Icon_Map01_Char_01"},{"Id":2,"Name":"Cat","Desc":null,"IconImgName":"Icon_Map01_Char_02"},{"Id":3,"Name":"Dog","Desc":null,"IconImgName":"Icon_Map01_Char_03"},{"Id":4,"Name":null,"Desc":null,"IconImgName":null}]}

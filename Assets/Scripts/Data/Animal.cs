@@ -27,5 +27,7 @@ public class Animal : Data.Base
 {
     public int Id = 0;
     public string Name = string.Empty;
+    public string Desc = string.Empty;
+    public string IconImgName = string.Empty;
 }
 

@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
 using TMPro;
+using UnityEditor.AddressableAssets.Build.Layout;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.Component
 {
-    public class ArrangementObjectCell : UI.Base<ArrangementObjectCell.Data>
+    public class ArrangementObjectCell : UI.Base<ArrangementObjectCell.Data>, SimpleCell.IListener
     {
         public class Data : BaseData
         {
@@ -21,43 +22,30 @@ namespace UI.Component
             void EditObject(int objectUId);
         }
 
-        [SerializeField] private TextMeshProUGUI nameTMP = null;
-        [SerializeField] private Image iconImg = null;
+        [SerializeField] private SimpleCell simpleCell = null;
 
         public override void Init(Data data)
         {
             base.Init(data);
 
-            SetNameTMP();
-            SetIconImg();
+            simpleCell?.Init(new SimpleCell.Data()
+            {
+                IListener = this,
+                Name =  _data?.ObjectData.Name,
+                IconSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(_data.ObjectData?.IconImgName),
+            });
         }
-
-        private void SetNameTMP()
-        {
-            if (_data?.ObjectData == null)
-                return;
-            
-            nameTMP?.SetText(_data.ObjectData.Name);
-        }
-
-        private void SetIconImg()
-        {
-            if (_data?.ObjectData == null)
-                return;
-
-            if (iconImg == null)
-                return;
-
-            iconImg.sprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(_data.ObjectData.IconImgName);
-        }
-
-        public void OnClick()
+        
+        #region  SimpleCell.IListener
+        void SimpleCell.IListener.Click()
         {
             if (_data == null)
                 return;
             
             _data.IListener?.EditObject(_data.ObjectUId);
         }
+        
+        #endregion
     }
 }
 

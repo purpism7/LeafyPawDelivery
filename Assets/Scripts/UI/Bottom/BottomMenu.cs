@@ -11,8 +11,9 @@ namespace UI
         {
             None,
 
-            Arrangement,
             Shop,
+            Arrangement,
+            Book,
         }
 
         public interface IListener
@@ -51,6 +52,13 @@ namespace UI
                     case EType.Arrangement:
                         {
                             var popup = new GameSystem.PopupCreator<Arrangement, Arrangement.Data>()
+                                .Create();
+                        }
+                        break;
+                    
+                    case EType.Book:
+                        {
+                            var popup = new GameSystem.PopupCreator<Book, Book.Data>()
                                 .Create();
                         }
                         break;
