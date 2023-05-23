@@ -22,20 +22,25 @@ namespace UI
         public override void Init(Data data)
         {
             base.Init(data);
-            
-            
+
+            InternalInit();
         }
         
         public override IEnumerator CoInit(Data data)
         {
             yield return StartCoroutine(base.CoInit(data));
-            
+
+            InternalInit();
+
+            yield return null;
+        }
+
+        private void InternalInit()
+        {
             SetAnimalList();
             SetObjectList();
 
             ActiveContents();
-
-            yield return null;
         }
 
         private void SetAnimalList()

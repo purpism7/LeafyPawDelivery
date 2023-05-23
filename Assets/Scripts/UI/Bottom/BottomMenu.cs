@@ -59,6 +59,7 @@ namespace UI
                     case EType.Book:
                         {
                             var popup = new GameSystem.PopupCreator<Book, Book.Data>()
+                                .SetCoInit(true)
                                 .Create();
                         }
                         break;
