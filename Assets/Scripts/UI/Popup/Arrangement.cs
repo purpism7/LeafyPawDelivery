@@ -66,25 +66,14 @@ namespace UI
                 if (info == null)
                     continue;
 
-                ComponentCreator<ArrangementObjectCell, ArrangementObjectCell.Data>
-                    .Get
-                    .SetData(new ArrangementObjectCell.Data()
-                    {
-                        IListener = this,
-                        ObjectData = ObjectContainer.Instance.GetData(info.Id),
-                        ObjectUId = info.UId,
+                 var component = new ComponentCreator<ArrangementObjectCell, ArrangementObjectCell.Data>()
+                     .SetData(new ArrangementObjectCell.Data()
+                     {
+                         IListener = this,
+                         ObjectData = ObjectContainer.Instance.GetData(info.Id),
+                         ObjectUId = info.UId,
                     })
-                    .SetRootRectTm(objectScrollRect?.content)
                     .Create();
-                // var component = new ComponentCreator()
-                // .SetData(new ArrangementObjectCell.Data()
-                // {
-                //     IListener = this,
-                //     ObjectData = ObjectContainer.Instance.GetData(info.Id),
-                //     ObjectUId = info.UId,
-                // })
-                //   
-                //    .Create();
             }
         }
 

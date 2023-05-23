@@ -41,7 +41,7 @@ namespace UI
         {
             InternalInit(data: data);
 
-            yield return null;
+            yield break;
         }
 
         private void InternalInit(T data)

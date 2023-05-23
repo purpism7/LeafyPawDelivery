@@ -22,9 +22,11 @@ namespace UI
                 (popup) =>
                 {
                     resPopup = popup;
+                    Debug.Log("return 111 ");
 
                 }, vData, coInit));
-            
+
+            Debug.Log("return 22222");
             return resPopup;
         }
         
@@ -54,8 +56,13 @@ namespace UI
                 if (popup == null)
                     yield break;
 
+                popup.Deactivate();
+
+                returnAction?.Invoke(popup);
+
                 if (coInit)
                 {
+                    Debug.Log("return 3333");
                     yield return StartCoroutine(popup.CoInit(vData));
                 }
                 else
@@ -64,10 +71,9 @@ namespace UI
                 }
                
                 popup?.Activate();
-                
-                returnAction?.Invoke(popup);
             }
-            
+
+            Debug.Log("return 44444 ");
             yield break;
         }
 

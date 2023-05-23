@@ -12,7 +12,7 @@ namespace GameSystem
 
         private bool _coInit = false;
         // private RectTransform _rootRecTm = null;
-        
+
         public PopupCreator<T, V> SetData(V vData)
         {
             _data = vData;

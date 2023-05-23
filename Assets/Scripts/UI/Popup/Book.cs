@@ -32,7 +32,11 @@ namespace UI
 
             InternalInit();
 
+            Debug.Log("book init");
+
             yield return null;
+
+            Debug.Log("End book init");
         }
 
         private void InternalInit()

@@ -11,14 +11,6 @@ namespace GameSystem
         private V _data = null;
         private RectTransform _rootRectTm = null;
 
-        public static ComponentCreator<T, V> Get
-        {
-            get
-            {
-                return new ComponentCreator<T, V>();
-            }
-        }
-        
         public ComponentCreator<T, V> SetData(V vData)
         {
             _data = vData;
