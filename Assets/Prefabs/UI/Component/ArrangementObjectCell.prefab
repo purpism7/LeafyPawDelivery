@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4567962414730138807}
   - component: {fileID: 5052406990329879112}
   m_Layer: 5
-  m_Name: ArrangementObjectCell 1
+  m_Name: ArrangementObjectCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -33,7 +33,8 @@ namespace UI
             SetObjectList();
 
             ActiveContents();
-
+            Debug.Log("Arrangement init");
+            
             yield break;
         }
 
@@ -72,8 +73,9 @@ namespace UI
                          IListener = this,
                          ObjectData = ObjectContainer.Instance.GetData(info.Id),
                          ObjectUId = info.UId,
-                    })
-                    .Create();
+                     })
+                     .SetRootRectTm(objectScrollRect.content)
+                     .Create();
             }
         }
 

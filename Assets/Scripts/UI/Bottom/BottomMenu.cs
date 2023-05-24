@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -14,6 +15,7 @@ namespace UI
             Shop,
             Arrangement,
             Book,
+            Map,
         }
 
         public interface IListener
@@ -26,9 +28,14 @@ namespace UI
             public IListener ILisener = null;
         }
 
+        [SerializeField] private Button btn = null;
+
         public override void Init(Data data)
         {
             base.Init(data);
+            
+            btn?.onClick.RemoveAllListeners();
+            btn?.onClick.AddListener(OnClick);
         }
 
         public override void Activate()
@@ -36,9 +43,10 @@ namespace UI
             base.Activate();
         }
 
-        public void OnClick(string eTypeStr)
+        public void OnClick()
         {
-            if (System.Enum.TryParse(eTypeStr, out EType eType))
+            Debug.Log(gameObject.name);
+            if (System.Enum.TryParse(gameObject.name, out EType eType))
             {
                 switch(eType)
                 {
@@ -52,6 +60,7 @@ namespace UI
                     case EType.Arrangement:
                         {
                             var popup = new GameSystem.PopupCreator<Arrangement, Arrangement.Data>()
+                                .SetCoInit(true)
                                 .Create();
                         }
                         break;
@@ -59,6 +68,14 @@ namespace UI
                     case EType.Book:
                         {
                             var popup = new GameSystem.PopupCreator<Book, Book.Data>()
+                                .SetCoInit(true)
+                                .Create();
+                        }
+                        break;
+                    
+                    case EType.Map:
+                        {
+                            var popup = new GameSystem.PopupCreator<Map, Map.Data>()
                                 .SetCoInit(true)
                                 .Create();
                         }

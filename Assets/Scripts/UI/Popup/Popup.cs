@@ -18,6 +18,18 @@ namespace UI
         {
             T resPopup = null;
 
+            if(_opendPopupList != null)
+            {
+                if(CheckGetOpendPopup<T>(out UI.Base basePopup))
+                {
+                    Debug.Log("return already ");
+                    resPopup = basePopup.GetComponent<T>();
+                    resPopup?.Activate();
+
+                    return resPopup;
+                }
+            }
+            
             StartCoroutine(CoInstantiate<T, V>(
                 (popup) =>
                 {
@@ -33,48 +45,34 @@ namespace UI
         private IEnumerator CoInstantiate<T, V>(System.Action<T> returnAction, V vData, bool coInit)  
             where T :UI.Base<V> where V : BaseData
         {
-            if(_opendPopupList != null)
-            {
-                if(CheckGetOpendPopup<T>(out UI.Base basePopup))
-                {
-                    var popup = basePopup.GetComponent<T>();
-                    popup?.Activate();
-                    
-                    returnAction?.Invoke(popup);
-
-                    yield break;
-                }
-            }
-
             var gameObj = ResourceManager.Instance.InstantiateUIGameObj<T>(RootRectTm);
-            if(gameObj)
+            if(!gameObj)
+                yield break;    
+            
+            var basePopup = gameObj.GetComponent<UI.Base>();
+            _opendPopupList.Add(basePopup);
+
+            var popup = basePopup.GetComponent<T>();
+            if (popup == null)
+                yield break;
+                
+            popup.Deactivate();
+                
+            returnAction?.Invoke(popup);
+
+            if (coInit)
             {
-                var basePopup = gameObj.GetComponent<UI.Base>();
-                _opendPopupList.Add(basePopup);
-
-                var popup = basePopup.GetComponent<T>();
-                if (popup == null)
-                    yield break;
-
-                popup.Deactivate();
-
-                returnAction?.Invoke(popup);
-
-                if (coInit)
-                {
-                    Debug.Log("return 3333");
-                    yield return StartCoroutine(popup.CoInit(vData));
-                }
-                else
-                {
-                    popup.Init(vData);
-                }
-               
-                popup?.Activate();
+                Debug.Log("return 3333");
+                yield return StartCoroutine(popup.CoInit(vData));
             }
+            else
+            {
+                popup.Init(vData);
+            }
+               
+            popup?.Activate();
 
             Debug.Log("return 44444 ");
-            yield break;
         }
 
         private bool CheckGetOpendPopup<T>(out UI.Base basePopup)

@@ -13,6 +13,8 @@ namespace UI
 
     public class Base : MonoBehaviour
     {
+        public RectTransform rootRectTm = null; 
+        
         protected bool _isTouch = false;
     }
 
@@ -28,8 +30,6 @@ namespace UI
 
     public abstract class Base<T> : Base where T : BaseData
     {
-        public RectTransform rootRectTm = null; 
-            
         protected T _data = default(T);
         
         public virtual void Init(T data)
@@ -41,7 +41,7 @@ namespace UI
         {
             InternalInit(data: data);
 
-            yield break;
+            yield return null;
         }
 
         private void InternalInit(T data)
