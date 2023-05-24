@@ -753,8 +753,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Book
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 78cf637a8c846ed4dbc3f30a7a7de7e8, type: 2}
+  m_sharedMaterial: {fileID: -2008107277459295776, guid: 78cf637a8c846ed4dbc3f30a7a7de7e8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -947,6 +947,10 @@ PrefabInstance:
     - target: {fileID: 1176792883252249777, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
+      propertyPath: m_text
+      value: Object
       objectReference: {fileID: 0}
     - target: {fileID: 5090493428456885421, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
       propertyPath: m_Group
@@ -1236,6 +1240,10 @@ PrefabInstance:
     - target: {fileID: 1176792883252249777, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
+      propertyPath: m_text
+      value: Animal
       objectReference: {fileID: 0}
     - target: {fileID: 5090493428456885421, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
       propertyPath: m_IsOn
