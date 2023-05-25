@@ -19,6 +19,7 @@ namespace GameSystem
     {
         #region Inspector
         public RectTransform loadingTypeRootRectTm = null;
+        [SerializeField] private RectTransform rootRectTm = null;
         #endregion
 
         private UnityEngine.SceneManagement.Scene _scene;
@@ -33,9 +34,12 @@ namespace GameSystem
             
             _scene = scene;
             _loadData = loadData;
-            
-            gameObject.SetActive(loadData.ActiveLoading);
 
+            if (rootRectTm)
+            {
+                rootRectTm.gameObject.SetActive(loadData.ActiveLoading);
+            }
+           
             Load();
         }
         

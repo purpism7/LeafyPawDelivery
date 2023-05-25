@@ -14,7 +14,7 @@ namespace Scene
 
         private IEnumerator Start()
         {
-            yield return null;
+            yield return new WaitForSeconds(3f);
 
             Init(null);
         }
