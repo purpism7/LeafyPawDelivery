@@ -16,6 +16,11 @@ namespace GameSystem
         public abstract IEnumerator CoProcess(IPreprocessingProvider iProvider);
     }
 
+    public interface IProcessing 
+    {
+        public IEnumerator CoProcess(IPreprocessingProvider iProvider);
+    }
+
     public interface IPreprocessingProvider
     {
         T Get<T>() where T : Process;
@@ -23,13 +28,26 @@ namespace GameSystem
 
     public class Preprocessing : MonoBehaviour, IPreprocessingProvider
     {
+        public interface IListener
+        {
+            void End();
+        }
+        
         public List<Process> ProcessList = new List<Process>();
 
         private Queue<Process> _processQueue = new();
         private Processing _processing = null;
+        private IListener _iListener = null;
 
         private void Awake()
         {
+           
+        }
+
+        public void Init(IListener iListener)
+        {
+            _iListener = iListener;
+            
             SetProcessQueue();
 
             StartCoroutine(CoProcess());
@@ -85,7 +103,7 @@ namespace GameSystem
             else
             {
                 Debug.Log("End Preprocessing");
-
+                
                 var openConditionMgr = Get<OpenConditionManager>();
                 if(openConditionMgr != null)
                 {
@@ -93,6 +111,8 @@ namespace GameSystem
 
                     openConditionMgr.UpdaeCheckConditionList();
                 }
+                
+                _iListener?.End();
 
                 yield break;
             }

@@ -29,7 +29,11 @@ namespace GameSystem
 
             ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
             yield return StartCoroutine(ObjectMgr?.CoInit(null));
-            yield return StartCoroutine(placeMgr?.CoInit(null));
+            
+            if (placeMgr != null)
+            {
+                yield return StartCoroutine(placeMgr.CoInit(null));
+            }
 
             // GameSystem.Loader.Scene.LoadWithLoading(new GameSystem.LoadGame());
 

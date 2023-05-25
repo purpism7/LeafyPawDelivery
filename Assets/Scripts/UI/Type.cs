@@ -9,4 +9,14 @@ public class Type
         Animal,
         Object,
     }
+    
+    public enum EScene
+    {
+        None,
+
+        Loading,
+        Logo,
+        Login,
+        Game,
+    }
 }
