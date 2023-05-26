@@ -6,7 +6,7 @@ namespace Data
 {
     public class Base
     {
-
+        public int Id = 0;
     }
 }
 

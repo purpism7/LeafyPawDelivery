@@ -9,7 +9,13 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
-            public Animal animalData = null;
+            public IListener IListener = null;
+            public Animal AnimalData = null;
+        }
+
+        public interface IListener
+        {
+            void Edit(int animalId);
         }
 
         [SerializeField] private TextMeshProUGUI nameTMP;
@@ -23,12 +29,16 @@ namespace UI.Component
 
         private void SetNameTMP()
         {
-            nameTMP?.SetText(_data.animalData?.Name);
+            nameTMP?.SetText(_data.AnimalData?.Name);
         }
 
-        public void OnClickArrangement()
+        public void OnClick()
         {
+            var animalData = _data?.AnimalData;
+            if (animalData == null)
+                return;
             
+            _data?.IListener?.Edit(_data.AnimalData.Id);
         }
     }
 }

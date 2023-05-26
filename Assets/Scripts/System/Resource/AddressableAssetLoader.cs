@@ -61,7 +61,7 @@ namespace GameSystem
         public IEnumerator CoLoadAssetAsync<T>(string labelKey, System.Action<AsyncOperationHandle<T>> action)
         {
             var locationAsync = Addressables.LoadResourceLocationsAsync(labelKey);
-            yield return locationAsync;
+            yield return StartCoroutine(locationAsync);
             
             foreach (IResourceLocation resourceLocation in locationAsync.Result)
             {

@@ -19,7 +19,7 @@ namespace UI.Component
 
         public interface IListener
         {
-            void EditObject(int objectUId);
+            void Edit(int objectUId);
         }
 
         [SerializeField] private SimpleCell simpleCell = null;
@@ -42,7 +42,7 @@ namespace UI.Component
             if (_data == null)
                 return;
             
-            _data.IListener?.EditObject(_data.ObjectUId);
+            _data.IListener?.Edit(_data.ObjectUId);
         }
         
         #endregion

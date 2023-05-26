@@ -9,14 +9,8 @@ namespace Info
     {
         private readonly string ObjectUIdKey = "Object_UId_Key";
         
-        protected override string JsonFilePath
-        {
-            get
-            {
-                return "Assets/Info/Object.json";
-            }
-        }
-
+        protected override string JsonFilePath =>  "Assets/Info/Object.json";
+        
         public List<Info.Object> ObjectInfoList { get; private set; } = new();
 
         protected override void LoadInfo()
@@ -39,9 +33,7 @@ namespace Info
         private void SaveInfo()
         {
             if(ObjectInfoList == null)
-            {
                 return;
-            }
 
             var jsonString = JsonHelper.ToJson(ObjectInfoList.ToArray());
    
@@ -51,9 +43,7 @@ namespace Info
         public void AddObject(Info.Object objectInfo)
         {
             if (objectInfo == null)
-            {
                 return;
-            }
 
             int objectUId = PlayerPrefs.GetInt(ObjectUIdKey, 0);
             objectInfo.UId = ++objectUId;

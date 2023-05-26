@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class Object : Data.Base
 {
-    public int Id = 0;
     public string Name = string.Empty;
     public string IconImgName = string.Empty;
     public int PlaceId = 0;

@@ -13,6 +13,8 @@ namespace Game
         
         private Info.AnimalHolder _animalHolder = new();
 
+        public  List<Info.Animal> AnimalInfoList => _animalHolder?.AnimalInfoList;
+
         public override IEnumerator CoInit(Data data)
         {
             Debug.Log("AnimalManager CoInit");
@@ -20,35 +22,10 @@ namespace Game
             yield break;
         }
 
-        public void ChainUpdate()
+        public void AddAnimal(Info.Animal animalInfo)
         {
-            // if (_animalList == null)
-            // {
-            //     return;
-            // }
-            //
-            // foreach (var animal in _animalList)
-            // {
-            //     animal?.ChainUpdate();
-            // }
+            _animalHolder?.AddAnimal(animalInfo);
         }
-
-        // public bool AddAnimal(Creature.Animal addAnimal)
-        // {
-        //     if (addAnimal == null)
-        //     {
-        //         return false;
-        //     }
-        //
-        //     if (_animalList.Find(animal => animal.Id == addAnimal.Id) != null)
-        //     {
-        //         return false;
-        //     }
-        //
-        //     _animalList.Add(addAnimal);
-        //
-        //     return true;
-        // }
     }
 }
 

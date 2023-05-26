@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-
+using Creature;
 using Data;
 using GameData;
 using GameSystem;
@@ -13,7 +13,7 @@ using static UI.Arrangement;
 
 namespace UI
 {
-    public class Arrangement : Base<Arrangement.Data>, ArrangementObjectCell.IListener
+    public class Arrangement : Base<Arrangement.Data>, ArrangementObjectCell.IListener, ArrangementAnimalCell.IListener
     {
         public class Data : BaseData
         {
@@ -34,26 +34,25 @@ namespace UI
 
             ActiveContents();
             Debug.Log("Arrangement init");
-            
-            yield break;
         }
 
         private void SetAnimalList()
         {
-            //var datas = AnimalContainer.GetDatas;
-            //if (datas == null)
-            //    return;
+            var infos = GameManager.Instance?.AnimalMgr?.AnimalInfoList;
+            if (infos == null)
+                return;
             
-            //foreach (var data in datas)
-            //{
-            //    var cell = new ComponentCreator<ArrangementAnimalCell, ArrangementAnimalCell.Data>()
-            //        .SetData(new ArrangementAnimalCell.Data()
-            //        {
-            //            animalData = data,
-            //        })
-            //        .SetRootRectTm(arrangementAnimalCellRootRectTm)
-            //        .Create();
-            //}
+            foreach (var info in infos)
+            {
+                var component = new ComponentCreator<ArrangementAnimalCell, ArrangementAnimalCell.Data>()
+                    .SetData(new ArrangementAnimalCell.Data()
+                    {
+                        IListener = this, 
+                        AnimalData = AnimalContainer.Instance.GetData(info.Id),
+                    })
+                    .SetRootRectTm(animalScrollRect.content)
+                    .Create();
+            }
         }
 
         private void SetObjectList()
@@ -107,7 +106,17 @@ namespace UI
         
         #region ArrangementObjectCell.IListener
 
-        void ArrangementObjectCell.IListener.EditObject(int objectUId)
+        void ArrangementObjectCell.IListener.Edit(int objectUId)
+        {
+            Deactivate();
+            
+            GameSystem.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom();
+        }
+        #endregion
+        
+        #region ArrangementAnimalCell.IListener
+
+        void ArrangementAnimalCell.IListener.Edit(int animalId)
         {
             Deactivate();
             

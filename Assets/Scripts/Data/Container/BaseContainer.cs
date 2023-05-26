@@ -42,5 +42,23 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
             _datas = wrapper.Datas;
         }
     }
+
+    public V GetData(int id)
+    {
+        if (_datas == null)
+            return null;
+
+        foreach (var data in _datas)
+        {
+            if(data == null)
+                continue;
+
+            if (data.Id == id)
+                return data;
+        }
+
+        return null;
+    }
+    
 }
 

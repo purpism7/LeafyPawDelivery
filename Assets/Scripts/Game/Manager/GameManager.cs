@@ -5,6 +5,7 @@ using UnityEngine;
 using Creature;
 using Data;
 using GameData;
+using Animal = Info.Animal;
 
 namespace GameSystem
 {
@@ -14,8 +15,8 @@ namespace GameSystem
         private Game.PlaceManager placeMgr;
 
         public Game.ObjectManager ObjectMgr { get; private set; } = null;
-        private Game.AnimalManager _animalMgr = null;
-        
+        public Game.AnimalManager AnimalMgr { get; private set; } = null;
+
         public System.Action<Game.Base> StartEditAction { get; private set; } = null;
         public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
         public Game.State.Base GameState { get; private set; } = new Game.State.Game();
@@ -24,8 +25,8 @@ namespace GameSystem
         {
             yield return StartCoroutine(base.CoInit(iProvider));
 
-            _animalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
-            yield return StartCoroutine(_animalMgr?.CoInit(null));
+            AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
+            yield return StartCoroutine(AnimalMgr?.CoInit(null));
 
             ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
             yield return StartCoroutine(ObjectMgr?.CoInit(null));
@@ -34,15 +35,10 @@ namespace GameSystem
             {
                 yield return StartCoroutine(placeMgr.CoInit(null));
             }
-
+            
             // GameSystem.Loader.Scene.LoadWithLoading(new GameSystem.LoadGame());
 
             yield return null;
-        }
-
-        private void Update()
-        {
-            _animalMgr?.ChainUpdate();
         }
 
         #region GameState

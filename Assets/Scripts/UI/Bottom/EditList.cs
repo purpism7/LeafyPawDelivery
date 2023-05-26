@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -17,17 +18,53 @@ namespace UI
         }
 
         [SerializeField]
-        private RectTransform ObjectRootRectTm;
+        private ScrollRect animalScrollRect = null;
+        [SerializeField]
+        private ScrollRect objectScrollRect = null;
 
         private List<Component.EditObject> _editObjectList = new();
+        private Type.ETab _currETabType = Type.ETab.Animal;
 
         public override void Init(Data data)
         {
             base.Init(data);
 
+            SetAnimalList();
             SetObjectList();
+
+            ActiveContents();
         }
 
+        private void SetAnimalList()
+        {
+            // _editObjectList.Clear();
+
+            var infoList = GameSystem.GameManager.Instance?.AnimalMgr?.AnimalInfoList;
+            if(infoList == null)
+            {
+                return;
+            }
+
+            foreach(var info in infoList)
+            {
+                if(info == null)
+                    continue;
+
+                if(info.PlaceId > 0)
+                    continue;
+
+                var data = new Component.EditAnimal.Data()
+                {
+                    AnimalData = AnimalContainer.Instance.GetData(info.Id),
+                };
+
+                var editObject = new GameSystem.UICreator<UI.Component.EditAnimal, UI.Component.EditAnimal.Data>()
+                    .SetData(data)
+                    .SetRootRectTm(animalScrollRect.content)
+                    .Create();
+            }
+        }
+        
         private void SetObjectList()
         {
             _editObjectList.Clear();
@@ -41,14 +78,10 @@ namespace UI
             foreach(var objectInfo in objectInfoList)
             {
                 if(objectInfo == null)
-                {
                     continue;
-                }
 
                 if(objectInfo.PlaceId > 0)
-                {
                     continue;
-                }
 
                 var data = new Component.EditObject.Data()
                 {
@@ -58,11 +91,17 @@ namespace UI
 
                 var editObject = new GameSystem.UICreator<UI.Component.EditObject, UI.Component.EditObject.Data>()
                     .SetData(data)
-                    .SetRootRectTm(ObjectRootRectTm)
+                    .SetRootRectTm(objectScrollRect.content)
                     .Create();
 
                 _editObjectList.Add(editObject);
             }
+        }
+        
+        private void ActiveContents()
+        {
+            UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Type.ETab.Animal);
+            UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
         }
 
         public void RefreshObjectList()
@@ -108,6 +147,21 @@ namespace UI
                 }
 
                 UIUtils.SetActive(editObject.gameObject, false);
+            }
+        }
+        
+        public void OnChanged(string tabType)
+        {
+            if(System.Enum.TryParse(tabType, out Type.ETab eTabType))
+            {
+                if(_currETabType == eTabType)
+                {
+                    return;
+                }
+
+                _currETabType = eTabType;
+
+                ActiveContents();
             }
         }
 
