@@ -22,7 +22,6 @@ namespace UI
             {
                 if(CheckGetOpendPopup<T>(out UI.Base basePopup))
                 {
-                    Debug.Log("return already ");
                     resPopup = basePopup.GetComponent<T>();
                     resPopup?.Activate();
 
@@ -34,11 +33,9 @@ namespace UI
                 (popup) =>
                 {
                     resPopup = popup;
-                    Debug.Log("return 111 ");
 
                 }, vData, coInit));
-
-            Debug.Log("return 22222");
+            
             return resPopup;
         }
         
@@ -62,7 +59,6 @@ namespace UI
 
             if (coInit)
             {
-                Debug.Log("return 3333");
                 yield return StartCoroutine(popup.CoInit(vData));
             }
             else
@@ -71,8 +67,6 @@ namespace UI
             }
                
             popup?.Activate();
-
-            Debug.Log("return 44444 ");
         }
 
         private bool CheckGetOpendPopup<T>(out UI.Base basePopup)
@@ -89,9 +83,7 @@ namespace UI
             foreach(var opendPopup in _opendPopupList)
             {
                 if(opendPopup == null)
-                {
                     continue;
-                }
 
                 if(opendPopup.GetType().Equals(typeof(T)))
                 {

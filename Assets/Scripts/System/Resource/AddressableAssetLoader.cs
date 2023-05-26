@@ -23,25 +23,31 @@ namespace GameSystem
         private Dictionary<string, GameObject> _gameObjDic = new(); // Game
         private Dictionary<string, GameObject> _uiGameObjDic = new(); // UI
 
+        private bool _endLoad = true;
+
         public IEnumerator CoInit()
         {
             _gameObjByIdDic.Clear();
             _gameObjDic.Clear();
             _uiGameObjDic.Clear();
 
+            _endLoad = true;
             foreach (var assetLabel in InitLoadLabelList)
             {
+                yield return new WaitUntil(() => _endLoad); 
+                
                 if(assetLabel == null)
-                {
                     continue;
-                }
-
+                
                 var typeKey = assetLabel.labelString;
+                Debug.Log("typeKey = " + typeKey);
+
+                _endLoad = false;
                 if(typeKey == AssetLabelUI)
                 {
                     yield return StartCoroutine(CoLoadUIAsset());
                 }
-                if (typeKey == AssetLabelGame)
+                else if (typeKey == AssetLabelGame)
                 {
                     yield return StartCoroutine(CoLoadGameAsset());
                 }
@@ -50,15 +56,13 @@ namespace GameSystem
                     yield return StartCoroutine(CoLoadGameAssetById(typeKey));
                 }
             }
-
-            yield return null;
         }
 
         public IEnumerator CoLoadAssetAsync<T>(string labelKey, System.Action<AsyncOperationHandle<T>> action)
         {
             var locationAsync = Addressables.LoadResourceLocationsAsync(labelKey);
             yield return locationAsync;
-
+            
             foreach (IResourceLocation resourceLocation in locationAsync.Result)
             {
                 var assetAync = Addressables.LoadAssetAsync<T>(resourceLocation);
@@ -68,7 +72,7 @@ namespace GameSystem
 
         private IEnumerator CoLoadUIAsset()
         {
-            yield return CoLoadAssetAsync<GameObject>(AssetLabelUI, (resourceLocation) =>
+            yield return StartCoroutine(CoLoadAssetAsync<GameObject>(AssetLabelUI, (resourceLocation) =>
             {
                 var resultGameObj = resourceLocation.Result;
                 if (!resultGameObj)
@@ -87,12 +91,13 @@ namespace GameSystem
                 //{
                 //    _uiGameObjDic.TryAdd(activityAnimal.GetType().Name, resultGameObj);
                 //}
-            });
+                _endLoad = true;
+            }));
         }
 
         private IEnumerator CoLoadGameAsset()
         {
-            yield return CoLoadAssetAsync<GameObject>(AssetLabelGame, (resourceLocation) =>
+            yield return StartCoroutine(CoLoadAssetAsync<GameObject>(AssetLabelGame, (resourceLocation) =>
             {
                 var resultGameObj = resourceLocation.Result;
                 if (!resultGameObj)
@@ -105,19 +110,21 @@ namespace GameSystem
                 {
                     _gameObjDic.TryAdd(dropItem.GetType().Name, resultGameObj);
                 }
-            });
+                
+                _endLoad = true;
+            }));
         }
 
         private IEnumerator CoLoadGameAssetById(string typeKey)
         {
-            yield return CoLoadAssetAsync<GameObject>(typeKey, (resourceLocation) =>
+            yield return StartCoroutine(CoLoadAssetAsync<GameObject>(typeKey, (resourceLocation) =>
             {
                 var resultGameObj = resourceLocation.Result;
                 if (!resultGameObj)
                 {
                     return;
                 }
-
+               
                 var gameBase = resultGameObj.GetComponent<Game.Base>();
                 if (gameBase != null)
                 {
@@ -134,7 +141,9 @@ namespace GameSystem
                         _gameObjByIdDic.Add(typeKey, gameObjDic);
                     }
                 }
-            });
+                
+                _endLoad = true;
+            }));
         }
 
         public GameObject InstantiateUI(string typeKey, RectTransform rootRectTm)

@@ -16,11 +16,6 @@ namespace GameSystem
         public abstract IEnumerator CoProcess(IPreprocessingProvider iProvider);
     }
 
-    public interface IProcessing 
-    {
-        public IEnumerator CoProcess(IPreprocessingProvider iProvider);
-    }
-
     public interface IPreprocessingProvider
     {
         T Get<T>() where T : Process;

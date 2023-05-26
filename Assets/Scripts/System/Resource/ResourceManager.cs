@@ -38,8 +38,6 @@ namespace GameSystem
                         }
                     }));
             }
-
-            yield return null;
         }
 
         public GameObject InstantiateUIGameObj<T>(RectTransform rootRectTm)
