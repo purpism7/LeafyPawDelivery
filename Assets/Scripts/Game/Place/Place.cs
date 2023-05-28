@@ -40,22 +40,30 @@ namespace Game
             return;
         }
 
+        public void AddObject(Game.Object obj)
+        {
+            if (_objectList == null)
+                return;
+
+            var findObject = _objectList.Find(obj => obj.UId == obj.ObjectUId);
+            if (findObject != null)
+                return;
+
+            _objectList.Add(obj);
+        }
+
         public void RemoveObject(int objectUId)
         {
             if(_objectList == null)
-            {
                 return;
-            }
 
             var findObject = _objectList.Find(obj => obj.UId == objectUId);
             if(findObject == null)
-            {
                 return;
-            }
 
-            if(_objectList.Remove(findObject))
+            if (_objectList.Remove(findObject))
             {
-                Destroy(findObject.gameObject);
+                findObject.Deactivate();
             }
         }
 
@@ -72,14 +80,10 @@ namespace Game
             foreach (var objectInfo in objectInfoList)
             {
                 if (objectInfo == null)
-                {
                     continue;
-                }
 
                 if (objectInfo.PlaceId != Id)
-                {
                     continue;
-                }
 
                 var objData = new Game.Object.Data()
                 {

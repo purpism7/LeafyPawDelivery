@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI.Component;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -89,13 +90,21 @@ namespace UI
                     ObjectUId = objectInfo.UId,
                 };
 
-                var editObject = new GameSystem.UICreator<UI.Component.EditObject, UI.Component.EditObject.Data>()
-                    .SetData(data)
-                    .SetRootRectTm(objectScrollRect.content)
-                    .Create();
-
-                _editObjectList.Add(editObject);
+                CreateEditObject(data);
             }
+        }
+
+        private void CreateEditObject(Component.EditObject.Data objectData)
+        {
+            if (objectData == null)
+                return;
+
+            var editObject = new GameSystem.UICreator<UI.Component.EditObject, UI.Component.EditObject.Data>()
+                   .SetData(objectData)
+                   .SetRootRectTm(objectScrollRect.content)
+                   .Create();
+
+            _editObjectList.Add(editObject);
         }
         
         private void ActiveContents()
@@ -104,26 +113,30 @@ namespace UI
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
         }
 
+        private void DeactviateAllObject()
+        {
+            foreach(var objectInfo in _editObjectList)
+            {
+                objectInfo?.Deactivate();
+            }
+        }
+
         public void RefreshObjectList()
         {
             var objectInfoList = GameSystem.GameManager.Instance?.ObjectMgr?.ObjectInfoList;
             if (objectInfoList == null)
-            {
                 return;
-            }
 
-            for(int i = 0; i < objectInfoList.Count; ++i)
+            DeactviateAllObject();
+
+            for (int i = 0; i < objectInfoList.Count; ++i)
             {
                 var objectInfo = objectInfoList[i];
                 if (objectInfo == null)
-                {
                     continue;
-                }
 
                 if (objectInfo.PlaceId > 0)
-                {
                     continue;
-                }
 
                 var data = new Component.EditObject.Data()
                 {
@@ -131,22 +144,14 @@ namespace UI
                     ObjectUId = objectInfo.UId,
                 };
 
-                if(_editObjectList != null &&
-                   _editObjectList.Count > i)
+                if(_editObjectList?.Count > i)
                 {
                     _editObjectList[i].Init(data);
                 }
-            }
-
-            for(int i = objectInfoList.Count; i < _editObjectList.Count; ++i)
-            {
-                var editObject = _editObjectList[i];
-                if(editObject == null)
+                else
                 {
-                    continue;
+                    CreateEditObject(data);
                 }
-
-                UIUtils.SetActive(editObject.gameObject, false);
             }
         }
         

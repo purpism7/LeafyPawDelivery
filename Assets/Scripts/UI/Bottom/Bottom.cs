@@ -83,7 +83,7 @@ namespace UI
                 });
         }
 
-        public void DeActivateEditList()
+        public void DeactivateEditList()
         {
             DeactivateAnim(EditListRootRectTm,
                 () =>

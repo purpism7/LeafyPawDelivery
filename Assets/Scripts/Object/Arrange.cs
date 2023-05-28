@@ -9,6 +9,11 @@ namespace Game.Command
         private int _objectUId = 0;
         private Vector3 _pos = Vector3.zero;
 
+        public static void Execute(int objectUId, Vector3 pos)
+        {
+            new Arrange(objectUId, pos)?.Execute();
+        }
+
         public Arrange(int objectUId, Vector3 pos)
         {
             _objectUId = objectUId;

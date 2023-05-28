@@ -98,7 +98,7 @@ namespace GameSystem
             _notTouchGameBase = false;
             _gameCameraCtr.SetStopUpdate(true);
 
-            GameSystem.UIManager.Instance?.Bottom?.DeActivateEditList();
+            GameSystem.UIManager.Instance?.Bottom?.DeactivateEditList();
         }
 
         private void EndEdit()

@@ -21,6 +21,8 @@ namespace UI.Component
             base.Init(data);
 
             idTMP?.SetText(data.ObjectId.ToString());
+
+            Activate();
         }
 
         public void OnClick()
@@ -47,7 +49,7 @@ namespace UI.Component
                 .SetRootTm(gameMgr.ObjectRootTm)
                 .Create();
 
-            gameMgr.StartEditAction?.Invoke(obj);
+            gameMgr.AddObjectToPlace(obj);
         }
     }
 }

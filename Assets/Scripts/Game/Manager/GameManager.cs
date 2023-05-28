@@ -11,15 +11,15 @@ namespace GameSystem
 {
     public class GameManager : Singleton<GameManager>
     {
-        [SerializeField]
-        private Game.PlaceManager placeMgr;
+        public Game.PlaceManager placeMgr = null;
 
         public Game.ObjectManager ObjectMgr { get; private set; } = null;
         public Game.AnimalManager AnimalMgr { get; private set; } = null;
 
-        public System.Action<Game.Base> StartEditAction { get; private set; } = null;
         public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
         public Game.State.Base GameState { get; private set; } = new Game.State.Game();
+
+        private System.Action<Game.Base> _startEditAction = null;
 
         public override IEnumerator CoInit(IPreprocessingProvider iProvider)
         {
@@ -77,10 +77,20 @@ namespace GameSystem
 
         public void SetStartEditAction(System.Action<Game.Base> action)
         {
-            StartEditAction = action;
+            _startEditAction = action;
         }
 
         #region Object
+        public void AddObjectToPlace(Game.Object obj)
+        {
+            if (obj == null)
+                return;
+
+            placeMgr?.ActivityPlace?.AddObject(obj);
+
+            _startEditAction?.Invoke(obj);
+        }
+
         public void RemoveObject(int objectUId)
         {
             placeMgr?.RemoveObject(objectUId);
@@ -98,6 +108,8 @@ namespace GameSystem
             }
 
             ObjectMgr?.ArrangeObject(objectUId, pos, placeId);
+
+            UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
         }
         #endregion
     }

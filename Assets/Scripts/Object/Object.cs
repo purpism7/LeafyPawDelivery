@@ -95,26 +95,26 @@ namespace Game
         }
 
         #region Collision 
-        private void OnCollisionEnter(Collision collision)
-        {
-            //Debug.Log("OnCollisionEnter = " + collision.gameObject.name);
-        }
+        //private void OnCollisionEnter(Collision collision)
+        //{
+        //    //Debug.Log("OnCollisionEnter = " + collision.gameObject.name);
+        //}
 
-        private void OnCollisionExit(Collision collision)
-        {
-            //Debug.Log("OnCollisionExit = " + collision.gameObject.name);
-        }
+        //private void OnCollisionExit(Collision collision)
+        //{
+        //    //Debug.Log("OnCollisionExit = " + collision.gameObject.name);
+        //}
 
-        private void OnCollisionStay(Collision collision)
-        {
-            //Debug.Log("OnCollisionStay = " + collision.gameObject.name);
+        //private void OnCollisionStay(Collision collision)
+        //{
+        //    //Debug.Log("OnCollisionStay = " + collision.gameObject.name);
 
-            var cell = collision.gameObject.GetComponent<GameSystem.Cell>();
-            if(cell != null)
-            {
-                //Debug.Log(cell.Data_?.Column);
-            }
-        }
+        //    var cell = collision.gameObject.GetComponent<GameSystem.Cell>();
+        //    if(cell != null)
+        //    {
+        //        //Debug.Log(cell.Data_?.Column);
+        //    }
+        //}
         #endregion
 
         #region EditObject.IListener
@@ -122,8 +122,7 @@ namespace Game
         {
             EState_ = EState.Remove;
 
-            var cmd = new Command.Remove(ObjectUId);
-            cmd?.Execute();
+            Command.Remove.Execute(ObjectUId);
 
             ActiveEditObject(false);
         }
@@ -132,8 +131,7 @@ namespace Game
         {
             EState_ = EState.Arrange;
 
-            var cmd = new Command.Arrange(ObjectUId, transform.localPosition);
-            cmd?.Execute();
+            Command.Arrange.Execute(ObjectUId, transform.localPosition);
 
             SetSortingOrder(-(int)transform.localPosition.y);
 
