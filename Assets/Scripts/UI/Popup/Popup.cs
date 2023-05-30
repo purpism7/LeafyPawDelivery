@@ -59,11 +59,11 @@ namespace UI
 
             if (coInit)
             {
-                yield return StartCoroutine(popup.CoInit(vData));
+                yield return StartCoroutine(popup.CoInitialize(vData));
             }
             else
             {
-                popup.Init(vData);
+                popup.Initialize(vData);
             }
                
             popup?.Activate();

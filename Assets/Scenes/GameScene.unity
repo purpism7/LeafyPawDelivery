@@ -810,7 +810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ff86a4c46a049efb14e8863bb02d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootRectTm: {fileID: 0}
+  rootRectTm: {fileID: 1083525945}
   RootRectTm: {fileID: 1083525945}
   EditListRootRectTm: {fileID: 233562708}
 --- !u!1 &233562707

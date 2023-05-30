@@ -24,11 +24,11 @@ namespace UI.Component
 
         [SerializeField] private SimpleCell simpleCell = null;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
-            simpleCell?.Init(new SimpleCell.Data()
+            simpleCell?.Initialize(new SimpleCell.Data()
             {
                 IListener = this,
                 Name =  _data?.ObjectData?.Name,

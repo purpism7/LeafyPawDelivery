@@ -22,7 +22,7 @@ namespace UI
     {
         protected BaseData _data = null;
 
-        public virtual void Init(T data)
+        public virtual void Initialize(T data)
         {
             _data = data;
         }
@@ -32,19 +32,19 @@ namespace UI
     {
         protected T _data = default(T);
         
-        public virtual void Init(T data)
+        public virtual void Initialize(T data)
         {
-            InternalInit(data: data);
+            InternalInitialize(data: data);
         }
 
-        public virtual IEnumerator CoInit(T data)
+        public virtual IEnumerator CoInitialize(T data)
         {
-            InternalInit(data: data);
+            InternalInitialize(data: data);
 
             yield return null;
         }
 
-        private void InternalInit(T data)
+        private void InternalInitialize(T data)
         {
             _isTouch = false;
 

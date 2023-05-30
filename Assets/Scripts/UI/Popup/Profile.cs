@@ -11,9 +11,9 @@ namespace UI
 
         }
 
-        public override IEnumerator CoInit(Data data)
+        public override IEnumerator CoInitialize(Data data)
         {
-            yield return StartCoroutine(base.CoInit(data));
+            yield return StartCoroutine(base.CoInitialize(data));
 
             Debug.Log("Profile");
         }

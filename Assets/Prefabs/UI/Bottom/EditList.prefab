@@ -748,7 +748,7 @@ GameObject:
   - component: {fileID: 8134171514346658434}
   - component: {fileID: 6133499551694407534}
   m_Layer: 5
-  m_Name: ObjectBtn
+  m_Name: ObjectToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1302,6 +1302,8 @@ MonoBehaviour:
   rootRectTm: {fileID: 519449814211820878}
   animalScrollRect: {fileID: 167817445549701564}
   objectScrollRect: {fileID: 7775372434446777809}
+  animalToggle: {fileID: 2951676036973564659}
+  objectToggle: {fileID: 6133499551694407534}
 --- !u!1 &8724812519489004112
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,7 +1317,7 @@ GameObject:
   - component: {fileID: 1614766527179906149}
   - component: {fileID: 2951676036973564659}
   m_Layer: 5
-  m_Name: AnimalBtn
+  m_Name: AnimalToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

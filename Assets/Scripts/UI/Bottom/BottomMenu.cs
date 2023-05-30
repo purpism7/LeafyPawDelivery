@@ -30,9 +30,9 @@ namespace UI
 
         [SerializeField] private Button btn = null;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
             
             btn?.onClick.RemoveAllListeners();
             btn?.onClick.AddListener(OnClick);

@@ -29,11 +29,9 @@ namespace GameSystem
         {
             var ui = UIManager.Instance.Instantiate<T>(_rootRecTm);
             if (ui == null)
-            {
                 return default(T);
-            }
 
-            ui.Init(_data);
+            ui.Initialize(_data);
 
             return ui;
         }

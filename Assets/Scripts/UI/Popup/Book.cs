@@ -19,16 +19,16 @@ namespace UI
 
         private Type.ETab _currETabType = Type.ETab.Animal;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             InternalInit();
         }
         
-        public override IEnumerator CoInit(Data data)
+        public override IEnumerator CoInitialize(Data data)
         {
-            yield return StartCoroutine(base.CoInit(data));
+            yield return StartCoroutine(base.CoInitialize(data));
 
             InternalInit();
 

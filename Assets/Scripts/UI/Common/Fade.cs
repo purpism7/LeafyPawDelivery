@@ -14,9 +14,9 @@ namespace UI
 
         private System.Action _clickAction = null;
 
-        public override void Init(BaseData data)
+        public override void Initialize(BaseData data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             Img?.CrossFadeAlpha(0, 0, true);
             UIUtils.SetActive(Img.transform, false);

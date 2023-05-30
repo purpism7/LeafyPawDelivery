@@ -35,7 +35,7 @@ namespace GameSystem
             if (component == null)
                 return default(T);
             
-            component.Init(_data);
+            component.Initialize(_data);
 
             return component;
         }

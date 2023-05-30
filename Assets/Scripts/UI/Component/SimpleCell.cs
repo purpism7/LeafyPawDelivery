@@ -24,9 +24,9 @@ namespace UI.Component
         [SerializeField] private TextMeshProUGUI nameTMP = null;
         [SerializeField] private Image iconImg = null;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             SetNameTMP();
             SetIconImg();

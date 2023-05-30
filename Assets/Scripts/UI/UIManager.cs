@@ -14,17 +14,17 @@ namespace GameSystem
 
         public override IEnumerator CoInit()
         {
-            Top?.Init(new UI.Top.Data()
+            Top?.Initialize(new UI.Top.Data()
             {
 
             });
 
-            Bottom?.Init(new UI.Bottom.Data()
+            Bottom?.Initialize(new UI.Bottom.Data()
             {
                 PopupRootRectTm = Popup.RootRectTm,
             });
 
-            Fade?.Init(null);
+            Fade?.Initialize(null);
 
             yield return null;
         }

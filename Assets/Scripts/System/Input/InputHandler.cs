@@ -127,58 +127,14 @@ namespace GameSystem
 
             var collider = raycastHit.collider;
             if (collider == null)
-            {
                 return false;
-            }
 
             gameBase = collider.GetComponentInParent<Game.Base>();
             if (gameBase == null)
-            {
                 return false;
-            }
 
             return true;
         }
-
-        //private void SetGameCameraUpdate(TouchPhase touchPhase)
-        //{
-        //    if (_gameCameraCtr == null)
-        //    {
-        //        return;
-        //    }
-
-        //    if (_gameBase != null)
-        //    {
-        //        switch (touchPhase)
-        //        {
-        //            case TouchPhase.Moved:
-        //                {
-        //                    if (!_gameCameraCtr.StopUpdate)
-        //                    {
-        //                        _gameCameraCtr.SetStopUpdate(true);
-        //                    }
-        //                }
-        //                break;
-
-        //            case TouchPhase.Ended:
-        //            case TouchPhase.Canceled:
-        //                {
-        //                    if (_gameCameraCtr.StopUpdate)
-        //                    {
-        //                        _gameCameraCtr.SetStopUpdate(false);
-        //                    }
-        //                }
-        //                break;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if(_gameCameraCtr.StopUpdate)
-        //        {
-        //            _gameCameraCtr.SetStopUpdate(false);
-        //        }
-        //    }
-        //}
     }
 }
 

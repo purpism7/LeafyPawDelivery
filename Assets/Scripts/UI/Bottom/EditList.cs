@@ -22,18 +22,44 @@ namespace UI
         private ScrollRect animalScrollRect = null;
         [SerializeField]
         private ScrollRect objectScrollRect = null;
+        [SerializeField]
+        private Toggle animalToggle = null;
+        [SerializeField]
+        private Toggle objectToggle = null;
 
         private List<Component.EditObject> _editObjectList = new();
-        private Type.ETab _currETabType = Type.ETab.Animal;
+        public Type.ETab CurrETabType { get; private set; } = Type.ETab.Animal;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             SetAnimalList();
             SetObjectList();
+        }
 
+        public override void Activate()
+        {
+            base.Activate();
+            
             ActiveContents();
+        }
+
+        public EditList Setup(Type.ETab eTabType)
+        {
+            SetTab(eTabType);
+
+            if (animalToggle != null)
+            {
+                animalToggle.isOn = eTabType == Type.ETab.Animal; 
+            }
+
+            if (objectToggle != null)
+            {
+                objectToggle.isOn = eTabType == Type.ETab.Object;
+            }
+            
+            return this;
         }
 
         private void SetAnimalList()
@@ -107,8 +133,8 @@ namespace UI
         
         private void ActiveContents()
         {
-            UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Type.ETab.Animal);
-            UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
+            UIUtils.SetActive(animalScrollRect?.gameObject, CurrETabType == Type.ETab.Animal);
+            UIUtils.SetActive(objectScrollRect?.gameObject, CurrETabType == Type.ETab.Object);
         }
 
         private void DeactviateAllObject()
@@ -147,7 +173,7 @@ namespace UI
                     var editObj = _editObjectList[i];
                     if (editObj != null)
                     {
-                        editObj.Init(data);
+                        editObj.Initialize(data);
                         editObj.gameObject.SetActive(true);
                     }
                 }
@@ -157,19 +183,22 @@ namespace UI
                 }
             }
         }
+
+        private void SetTab(Type.ETab eTabType)
+        {
+            CurrETabType = eTabType;
+
+            ActiveContents();
+        }
         
         public void OnChanged(string tabType)
         {
             if(System.Enum.TryParse(tabType, out Type.ETab eTabType))
             {
-                if(_currETabType == eTabType)
-                {
+                if(CurrETabType == eTabType)
                     return;
-                }
-
-                _currETabType = eTabType;
-
-                ActiveContents();
+                
+                SetTab(eTabType);
             }
         }
 

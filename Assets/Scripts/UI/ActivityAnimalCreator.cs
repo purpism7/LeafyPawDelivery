@@ -49,7 +49,7 @@ namespace GameSystem
                 return null;
             }
 
-            activityAnimal.Init(new ActivityAnimal.Data()
+            activityAnimal.Initialize(new ActivityAnimal.Data()
             {
                 AnimalId = _animalId,
                 AnimalName = _animalName,

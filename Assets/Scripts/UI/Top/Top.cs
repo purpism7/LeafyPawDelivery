@@ -17,9 +17,9 @@ namespace UI
         public TextMeshProUGUI LeafTMP;
         public TextMeshProUGUI BerryTMP;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             var userInfo = Info.UserManager.Instance?.User;
             if(userInfo != null)

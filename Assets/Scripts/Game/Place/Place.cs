@@ -108,29 +108,6 @@ namespace Game
                 
                 resObj?.Activate();
             }
-
-            // foreach (var objectInfo in objectInfoList)
-            // {
-            //     if (objectInfo == null)
-            //         continue;
-            //
-            //     if (objectInfo.PlaceId != Id)
-            //         continue;
-            //
-            //     var objData = new Game.Object.Data()
-            //     {
-            //         ObjectUId = objectInfo.UId,
-            //         Pos = objectInfo.Pos,
-            //     };
-            //
-            //     var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
-            //         .SetData(objData)
-            //         .SetId(objectInfo.Id)
-            //         .SetRootTm(objectRootTm)
-            //         .Create();
-            //
-            //     _objectList.Add(obj);
-            // }
         }
 
         //private void InitActivityAreaDic()

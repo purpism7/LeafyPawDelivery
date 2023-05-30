@@ -21,9 +21,9 @@ namespace UI
             public ActivityAnimalManager.SelectActivityAnimalDelegate SelectActivityAnimalDel = null;
         }
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             var atlasLoader = GameSystem.ResourceManager.Instance?.AtalsLoader;
             if(atlasLoader != null)

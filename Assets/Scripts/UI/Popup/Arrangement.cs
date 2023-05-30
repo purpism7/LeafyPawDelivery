@@ -25,9 +25,9 @@ namespace UI
 
         private Type.ETab _currETabType = Type.ETab.Animal;
 
-        public override IEnumerator CoInit(Data data)
+        public override IEnumerator CoInitialize(Data data)
         {
-            yield return StartCoroutine(base.CoInit(data));
+            yield return StartCoroutine(base.CoInitialize(data));
             
             SetAnimalList();
             SetObjectList();
@@ -110,7 +110,7 @@ namespace UI
         {
             Deactivate();
             
-            GameSystem.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom();
+            GameSystem.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(Type.ETab.Object);
         }
         #endregion
         
@@ -120,7 +120,7 @@ namespace UI
         {
             Deactivate();
             
-            GameSystem.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom();
+            GameSystem.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(Type.ETab.Animal);
         }
         #endregion
     }

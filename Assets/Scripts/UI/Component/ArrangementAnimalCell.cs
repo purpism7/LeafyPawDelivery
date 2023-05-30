@@ -20,9 +20,9 @@ namespace UI.Component
 
         [SerializeField] private TextMeshProUGUI nameTMP;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             SetNameTMP();
         }

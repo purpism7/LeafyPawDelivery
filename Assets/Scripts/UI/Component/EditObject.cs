@@ -16,9 +16,9 @@ namespace UI.Component
         [SerializeField]
         private TMPro.TextMeshProUGUI idTMP;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             idTMP?.SetText(data.ObjectId.ToString());
         }

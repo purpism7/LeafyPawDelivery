@@ -24,9 +24,9 @@ namespace UI
 
         public EditList EditList { get; private set; } = null;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             DeactivateAnim(EditListRootRectTm, null);
             InitBttomMenu();
@@ -42,7 +42,7 @@ namespace UI
             var bottomMenus = RootRectTm.GetComponentsInChildren<BottomMenu>();
             foreach (var bottomMenu in bottomMenus)
             {
-                bottomMenu?.Init(new BottomMenu.Data()
+                bottomMenu?.Initialize(new BottomMenu.Data()
                 {
                     ILisener = this,
                 });
@@ -55,7 +55,7 @@ namespace UI
         }
 
         #region EditList
-        public void ActivateEditList()
+        public void ActivateEditList(Type.ETab eTabType)
         {
             if(EditList == null)
             {
@@ -67,19 +67,27 @@ namespace UI
                     .SetRootRectTm(EditListRootRectTm)
                     .Create();
             }
-                    
-            UIUtils.SetActive(EditListRootRectTm, true);
+
+            EditList.Setup(eTabType).Activate();
             ActivateAnim(EditListRootRectTm, null);
                     
             GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
         }
 
-        public void ActivateEditListAfterDeactivateBottom()
+        public void ActivateEditList()
+        {
+            EditList.Activate();
+            ActivateAnim(EditListRootRectTm, null);
+            
+            GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
+        }
+
+        public void ActivateEditListAfterDeactivateBottom(Type.ETab eTabType)
         {
             DeactivateAnim(RootRectTm,
                 () =>
                 {
-                    ActivateEditList();
+                    ActivateEditList(eTabType);
                 });
         }
 
@@ -88,7 +96,7 @@ namespace UI
             DeactivateAnim(EditListRootRectTm,
                 () =>
                 {
-                    UIUtils.SetActive(EditListRootRectTm, false);
+                    EditList.Deactivate();
                 });
         }
         #endregion
@@ -107,7 +115,7 @@ namespace UI
                 () =>
                 {
                     ActivateAnim(RootRectTm, null);
-                    UIUtils.SetActive(EditListRootRectTm, false);
+                    EditList.Deactivate();
 
                     GameSystem.GameManager.Instance.SetGameState<Game.State.Game>();
                 });
@@ -117,9 +125,7 @@ namespace UI
         private void ActivateAnim(RectTransform rectTm, System.Action completeAction)
         {
             if(!rectTm)
-            {
                 return;
-            }
 
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
@@ -149,4 +155,3 @@ namespace UI
         }
     }
 }
-
