@@ -40,16 +40,16 @@ namespace Game
             return;
         }
 
-        public void AddObject(Game.Object obj)
+        public void AddObject(Game.Object addObj)
         {
             if (_objectList == null)
                 return;
 
-            var findObject = _objectList.Find(obj => obj.UId == obj.ObjectUId);
+            var findObject = _objectList.Find(obj => obj.UId == addObj.ObjectUId);
             if (findObject != null)
                 return;
 
-            _objectList.Add(obj);
+            _objectList.Add(addObj);
         }
 
         public void RemoveObject(int objectUId)
@@ -73,32 +73,64 @@ namespace Game
 
             var objectInfoList = GameSystem.GameManager.Instance?.ObjectMgr?.ObjectInfoList;
             if (objectInfoList == null)
-            {
                 return;
-            }
 
-            foreach (var objectInfo in objectInfoList)
+            for (int i = 0; i < objectInfoList.Count; ++i)
             {
-                if (objectInfo == null)
+                var objectInfo = objectInfoList[i];
+                if(objectInfo == null)
                     continue;
-
+                
                 if (objectInfo.PlaceId != Id)
                     continue;
-
+                
                 var objData = new Game.Object.Data()
                 {
                     ObjectUId = objectInfo.UId,
                     Pos = objectInfo.Pos,
                 };
-
-                var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
-                    .SetData(objData)
-                    .SetId(objectInfo.Id)
-                    .SetRootTm(objectRootTm)
-                    .Create();
-
-                _objectList.Add(obj);
+                
+                var resObj = _objectList.Find(obj => obj.IsActivate);
+                if (resObj != null)
+                {
+                    resObj.Init(objData);
+                }
+                else
+                {
+                    resObj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
+                        .SetData(objData)
+                        .SetId(objectInfo.Id)
+                        .SetRootTm(objectRootTm)
+                        .Create();
+                    
+                    _objectList.Add(resObj);
+                }
+                
+                resObj?.Activate();
             }
+
+            // foreach (var objectInfo in objectInfoList)
+            // {
+            //     if (objectInfo == null)
+            //         continue;
+            //
+            //     if (objectInfo.PlaceId != Id)
+            //         continue;
+            //
+            //     var objData = new Game.Object.Data()
+            //     {
+            //         ObjectUId = objectInfo.UId,
+            //         Pos = objectInfo.Pos,
+            //     };
+            //
+            //     var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
+            //         .SetData(objData)
+            //         .SetId(objectInfo.Id)
+            //         .SetRootTm(objectRootTm)
+            //         .Create();
+            //
+            //     _objectList.Add(obj);
+            // }
         }
 
         //private void InitActivityAreaDic()

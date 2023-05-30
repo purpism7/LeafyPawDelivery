@@ -48,6 +48,17 @@ namespace Game
         {
             UIUtils.SetActive(rootTm, false);
         }
+        
+        public bool IsActivate
+        {
+            get
+            {
+                if (!rootTm)
+                    return false;
+            
+                return rootTm.gameObject.activeSelf;
+            }
+        }
 
         public abstract void ChainUpdate();
     }

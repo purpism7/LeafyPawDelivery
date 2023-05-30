@@ -31,8 +31,8 @@ namespace UI.Component
             simpleCell?.Init(new SimpleCell.Data()
             {
                 IListener = this,
-                Name =  _data?.ObjectData.Name,
-                IconSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(_data.ObjectData?.IconImgName),
+                Name =  _data?.ObjectData?.Name,
+                IconSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(_data?.ObjectData?.IconImgName),
             });
         }
         

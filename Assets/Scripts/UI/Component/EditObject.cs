@@ -21,22 +21,16 @@ namespace UI.Component
             base.Init(data);
 
             idTMP?.SetText(data.ObjectId.ToString());
-
-            Activate();
         }
 
         public void OnClick()
         {
             if(_data == null)
-            {
                 return;
-            }
 
             var gameMgr = GameManager.Instance;
             if(gameMgr == null)
-            {
                 return;
-            }
 
             var objData = new Game.Object.Data()
             {

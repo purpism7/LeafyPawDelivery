@@ -72,9 +72,7 @@ namespace UI
 
             var objectInfoList = GameSystem.GameManager.Instance?.ObjectMgr?.ObjectInfoList;
             if(objectInfoList == null)
-            {
                 return;
-            }
 
             foreach(var objectInfo in objectInfoList)
             {
@@ -117,7 +115,7 @@ namespace UI
         {
             foreach(var objectInfo in _editObjectList)
             {
-                objectInfo?.Deactivate();
+                objectInfo?.gameObject.SetActive(false);
             }
         }
 
@@ -146,7 +144,12 @@ namespace UI
 
                 if(_editObjectList?.Count > i)
                 {
-                    _editObjectList[i].Init(data);
+                    var editObj = _editObjectList[i];
+                    if (editObj != null)
+                    {
+                        editObj.Init(data);
+                        editObj.gameObject.SetActive(true);
+                    }
                 }
                 else
                 {
