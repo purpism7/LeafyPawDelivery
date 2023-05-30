@@ -32,26 +32,18 @@ namespace GameSystem
         private void FixedUpdate()
         {
             if (GameCamera is null)
-            {
                 return;
-            }
-
+            
             if(StopUpdate)
-            {
                 return;
-            }
 
             int touchCnt = Input.touchCount;
             if (touchCnt <= 0)
-            {
                 return;
-            }
 
             var touch = Input.GetTouch(0);
             if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-            {
                 return;
-            }
 
             Drag();
             ZoomInOut();
@@ -61,16 +53,15 @@ namespace GameSystem
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(_center, _mapSize * 2f);
+            Gizmos.DrawWireSphere(GameCamera.transform.position + GameCamera.transform.forward,  30f);
         }
 
         private void Drag()
         {
             int touchCnt = Input.touchCount;
             if (touchCnt != 1)
-            {
                 return;
-            }
-
+           
             var touch = Input.GetTouch(0);
             switch(touch.phase)
             {
@@ -92,8 +83,9 @@ namespace GameSystem
                         float y = _mapSize.y - _height;
                         float clampY = Mathf.Clamp(movePos.y, -y + _center.y, y + _center.y);
 
+                        cameraTm.position = new Vector3(clampX, clampY, 0);
                         // cameraTm.Translate(pos);
-                        cameraTm.position = Vector3.SmoothDamp(cameraTm.position, new Vector3(clampX, clampY, 0), ref _velocity, 0.01f);
+                        // cameraTm.position = Vector3.SmoothDamp(cameraTm.position, new Vector3(clampX, clampY, 0), ref _velocity, 0.01f);
                     }
                     break;
 
@@ -110,10 +102,8 @@ namespace GameSystem
         {
             int touchCnt = Input.touchCount;
             if (touchCnt != 2)
-            {
                 return;
-            }
-
+            
             var firTouch = Input.GetTouch(0);
             var secTouch = Input.GetTouch(1);
 

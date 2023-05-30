@@ -29,14 +29,10 @@ namespace GameSystem
         public void ChainUpdate()
         {
             if(_gameMgr == null)
-            {
                 return;
-            }
 
             if (!_gameMgr.GameState.Type.Equals(typeof(Game.State.Edit)))
-            {
                 return;
-            }
 
             UpdateTouch();
         }
@@ -44,9 +40,7 @@ namespace GameSystem
         private void UpdateTouch()
         {
             if (_gameCameraCtr == null)
-            {
                 return;
-            }
 
             var touch = Input.GetTouch(0);
             var touchPoint = touch.position;
@@ -104,15 +98,11 @@ namespace GameSystem
         private void EndEdit()
         {
             if(_gameBase == null)
-            {
                 return;
-            }
 
             if(_gameBase.EState_ != Game.EState.Remove &&
                _gameBase.EState_ != Game.EState.Arrange)
-            {
                 return;
-            }
 
             _gameBase = null;
             _notTouchGameBase = false;
