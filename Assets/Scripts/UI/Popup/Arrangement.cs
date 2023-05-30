@@ -38,7 +38,7 @@ namespace UI
 
         private void SetAnimalList()
         {
-            var infos = GameManager.Instance?.AnimalMgr?.AnimalInfoList;
+            var infos = MainGameManager.Instance?.AnimalMgr?.AnimalInfoList;
             if (infos == null)
                 return;
             
@@ -57,7 +57,7 @@ namespace UI
 
         private void SetObjectList()
         {
-            var infos = GameManager.Instance?.ObjectMgr?.ObjectInfoList;
+            var infos = MainGameManager.Instance?.ObjectMgr?.ObjectInfoList;
             if (infos == null)
                 return;
 
@@ -110,7 +110,7 @@ namespace UI
         {
             Deactivate();
             
-            GameSystem.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(Type.ETab.Object);
+            Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(Type.ETab.Object);
         }
         #endregion
         
@@ -120,7 +120,7 @@ namespace UI
         {
             Deactivate();
             
-            GameSystem.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(Type.ETab.Animal);
+            Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(Type.ETab.Animal);
         }
         #endregion
     }

@@ -27,7 +27,7 @@ namespace GameSystem
 
         public override T Create()
         {
-            var baseComponent = UIManager.Instance?.Instantiate<T>(_rootRectTm);
+            var baseComponent = Game.UIManager.Instance?.Instantiate<T>(_rootRectTm);
             if (baseComponent == null)
                 return default(T);
 

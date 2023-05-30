@@ -22,7 +22,7 @@ namespace Game.Command
 
         public override void Execute()
         {
-            GameSystem.GameManager.Instance.ArrangeObject(_objectUId, _pos);
+            MainGameManager.Instance.ArrangeObject(_objectUId, _pos);
         }
     }
 }

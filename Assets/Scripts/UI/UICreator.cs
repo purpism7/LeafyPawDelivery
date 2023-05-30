@@ -27,7 +27,7 @@ namespace GameSystem
 
         public override T Create()
         {
-            var ui = UIManager.Instance.Instantiate<T>(_rootRecTm);
+            var ui = Game.UIManager.Instance.Instantiate<T>(_rootRecTm);
             if (ui == null)
                 return default(T);
 

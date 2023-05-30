@@ -20,7 +20,7 @@ namespace Game.Command
 
         public override void Execute()
         {
-            GameSystem.GameManager.Instance?.RemoveObject(_objectUId);
+            MainGameManager.Instance?.RemoveObject(_objectUId);
         }
     }
 }

@@ -7,9 +7,7 @@ using Data;
 using GameData;
 using Animal = Info.Animal;
 
-namespace GameSystem
-{
-    public class GameManager : Singleton<GameManager>
+ public class MainGameManager : Singleton<MainGameManager>
     {
         public Game.PlaceManager placeMgr = null;
 
@@ -21,7 +19,7 @@ namespace GameSystem
 
         private System.Action<Game.Base> _startEditAction = null;
 
-        public override IEnumerator CoInit(IPreprocessingProvider iProvider)
+        public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
         {
             yield return StartCoroutine(base.CoInit(iProvider));
 
@@ -37,6 +35,8 @@ namespace GameSystem
             }
             
             // GameSystem.Loader.Scene.LoadWithLoading(new GameSystem.LoadGame());
+
+            Game.Manager.Cutscene.Create();
 
             yield return null;
         }
@@ -96,7 +96,7 @@ namespace GameSystem
             placeMgr?.RemoveObject(objectUId);
             ObjectMgr?.RemoveObject(objectUId);
 
-            UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
+            Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
         }
 
         public void ArrangeObject(int objectUId, Vector3 pos)
@@ -109,9 +109,8 @@ namespace GameSystem
 
             ObjectMgr?.ArrangeObject(objectUId, pos, placeId);
 
-            UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
+            Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
         }
         #endregion
     }
-}
 

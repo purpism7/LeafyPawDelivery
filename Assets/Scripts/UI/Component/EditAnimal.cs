@@ -25,15 +25,11 @@ namespace UI.Component
         public void OnClick()
         {
             if(_data == null)
-            {
                 return;
-            }
 
-            var gameMgr = GameManager.Instance;
-            if(gameMgr == null)
-            {
+            var mainGameMgr = MainGameManager.Instance;
+            if(mainGameMgr == null)
                 return;
-            }
 
             // var objData = new Game.Object.Data()
             // {

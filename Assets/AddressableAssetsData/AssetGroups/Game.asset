@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Game_Etc
+  m_Name: Game
   m_EditorClassIdentifier: 
-  m_GroupName: Game_Etc
+  m_GroupName: Game
   m_Data:
     m_SerializedData: []
   m_GUID: df6f93402dad44680aeeb14c3ed4d579
@@ -22,6 +22,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 19f8bea81779ebf4eb4fccc380a2921a
+    m_Address: Assets/Prefabs/Game/Manager
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e7d7ed8f5841242acbc2f114c52db5f7, type: 2}
   m_SchemaSet:

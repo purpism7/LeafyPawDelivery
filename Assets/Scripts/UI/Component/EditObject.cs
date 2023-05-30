@@ -28,7 +28,7 @@ namespace UI.Component
             if(_data == null)
                 return;
 
-            var gameMgr = GameManager.Instance;
+            var gameMgr = MainGameManager.Instance;
             if(gameMgr == null)
                 return;
 

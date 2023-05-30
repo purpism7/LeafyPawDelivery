@@ -57,7 +57,7 @@ namespace GameSystem
                 DropItemAction = _dropItemAction,
             });
 
-            return GameManager.Instance?.AddAnimal(animal);
+            return MainGameManager.Instance?.AddAnimal(animal);
         }
     }
 }

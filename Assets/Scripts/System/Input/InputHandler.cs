@@ -15,23 +15,23 @@ namespace GameSystem
 
         private Game.Base _gameBase = null;
         private bool _notTouchGameBase = false;
-        private GameManager _gameMgr = null;
+        private MainGameManager _mainGameMgr = null;
 
         public void Init(GameSystem.GameCameraController gameCameraCtr, Grid grid)
         {
             _gameCameraCtr = gameCameraCtr;
             _grid = grid;
 
-            _gameMgr = GameManager.Instance;
-            _gameMgr?.SetStartEditAction(StartEdit);
+            _mainGameMgr = MainGameManager.Instance;
+            _mainGameMgr?.SetStartEditAction(StartEdit);
         }
 
         public void ChainUpdate()
         {
-            if(_gameMgr == null)
+            if(_mainGameMgr == null)
                 return;
 
-            if (!_gameMgr.GameState.Type.Equals(typeof(Game.State.Edit)))
+            if (!_mainGameMgr.GameState.Type.Equals(typeof(Game.State.Edit)))
                 return;
 
             UpdateTouch();
@@ -92,7 +92,7 @@ namespace GameSystem
             _notTouchGameBase = false;
             _gameCameraCtr.SetStopUpdate(true);
 
-            GameSystem.UIManager.Instance?.Bottom?.DeactivateEditList();
+            Game.UIManager.Instance?.Bottom?.DeactivateEditList();
         }
 
         private void EndEdit()
@@ -108,7 +108,7 @@ namespace GameSystem
             _notTouchGameBase = false;
             _gameCameraCtr.SetStopUpdate(false);
 
-            GameSystem.UIManager.Instance?.Bottom?.ActivateEditList();
+            Game.UIManager.Instance?.Bottom?.ActivateEditList();
         }
 
         private bool CheckGetGameBase(RaycastHit raycastHit, out Game.Base gameBase)

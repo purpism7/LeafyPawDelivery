@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UI;
 using UnityEngine;
 
-namespace GameSystem
+namespace Game
 {
     public class UIManager : Singleton<UIManager>
     {
@@ -31,7 +31,7 @@ namespace GameSystem
 
         public T Instantiate<T>(RectTransform rootRectTm)
         {
-            return ResourceManager.Instance.InstantiateUI<T>(rootRectTm);
+            return GameSystem.ResourceManager.Instance.InstantiateUI<T>(rootRectTm);
         }
     }
 }

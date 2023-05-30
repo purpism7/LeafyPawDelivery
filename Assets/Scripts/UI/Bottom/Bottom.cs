@@ -71,7 +71,7 @@ namespace UI
             EditList.Setup(eTabType).Activate();
             ActivateAnim(EditListRootRectTm, null);
                     
-            GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
+            MainGameManager.Instance.SetGameState<Game.State.Edit>();
         }
 
         public void ActivateEditList()
@@ -79,7 +79,7 @@ namespace UI
             EditList.Activate();
             ActivateAnim(EditListRootRectTm, null);
             
-            GameSystem.GameManager.Instance.SetGameState<Game.State.Edit>();
+            MainGameManager.Instance.SetGameState<Game.State.Edit>();
         }
 
         public void ActivateEditListAfterDeactivateBottom(Type.ETab eTabType)
@@ -117,7 +117,7 @@ namespace UI
                     ActivateAnim(RootRectTm, null);
                     EditList.Deactivate();
 
-                    GameSystem.GameManager.Instance.SetGameState<Game.State.Game>();
+                    MainGameManager.Instance.SetGameState<Game.State.Game>();
                 });
         }
         #endregion

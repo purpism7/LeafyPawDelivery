@@ -71,7 +71,7 @@ namespace Game
         {
             _objectList.Clear();
 
-            var objectInfoList = GameSystem.GameManager.Instance?.ObjectMgr?.ObjectInfoList;
+            var objectInfoList = MainGameManager.Instance?.ObjectMgr?.ObjectInfoList;
             if (objectInfoList == null)
                 return;
 

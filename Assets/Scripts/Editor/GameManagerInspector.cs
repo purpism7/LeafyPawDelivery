@@ -4,7 +4,7 @@ using UnityEditor;
 
 using GameSystem;
 
-[CustomEditor(typeof(GameManager))]
+[CustomEditor(typeof(MainGameManager))]
 public class GameManagerInspector : Editor
 {
     // public override void OnInspectorGUI()

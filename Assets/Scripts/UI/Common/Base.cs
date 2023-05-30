@@ -63,7 +63,7 @@ namespace UI
 
         protected void ShowAnim()
         {
-            GameSystem.UIManager.Instance?.Fade?.Out(null,
+            Game.UIManager.Instance?.Fade?.Out(null,
                () =>
                {
                    // HideAnim();
