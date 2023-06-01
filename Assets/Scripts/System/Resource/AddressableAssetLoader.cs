@@ -101,14 +101,13 @@ namespace GameSystem
             {
                 var resultGameObj = resourceLocation.Result;
                 if (!resultGameObj)
-                {
                     return;
-                }
-
-                var dropItem = resultGameObj.GetComponent<Game.DropItem>();
-                if (dropItem != null)
+                
+                var gameBase = resultGameObj.GetComponent<Game.Base>();
+                if (gameBase != null)
                 {
-                    _gameObjDic.TryAdd(dropItem.GetType().Name, resultGameObj);
+                    // Debug.Log(gameBase.GetType().FullName);
+                    _gameObjDic.TryAdd(gameBase.GetType().FullName, resultGameObj);
                 }
                 
                 _endLoad = true;
@@ -164,9 +163,7 @@ namespace GameSystem
         public GameObject InstantiateGame(string typeKey, Transform rootTm)
         {
             if (_gameObjDic == null)
-            {
                 return null;
-            }
 
             if (_gameObjDic.TryGetValue(typeKey, out GameObject gameObj))
             {

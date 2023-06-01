@@ -6,15 +6,29 @@ using UnityEngine.SceneManagement;
 
 namespace Game.Manager
 {
-    public class Cutscene : MonoBehaviour
+    public class Cutscene : Game.Base
     {
+        private static Cutscene Cutscene_ = null;
+        
         public static Cutscene Create()
         {
-            return GameSystem.ResourceManager.Instance.InstantiateGame<Cutscene>(null);
-        }
-        private void Awake()
-        {
+            Cutscene_ = GameSystem.ResourceManager.Instance.InstantiateGame<Cutscene>(null);
+            Cutscene_?.Initialize();
             
+            return Cutscene_;
+        }
+
+        public static bool Validate
+        {
+            get
+            {
+                return Cutscene_ != null;
+            }
+        }
+        
+        private void Initialize()
+        {
+            Debug.Log("Cutscene Initialize");
         }
     }
 }

@@ -36,8 +36,6 @@ using Animal = Info.Animal;
             
             // GameSystem.Loader.Scene.LoadWithLoading(new GameSystem.LoadGame());
 
-            Game.Manager.Cutscene.Create();
-
             yield return null;
         }
 

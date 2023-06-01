@@ -60,7 +60,10 @@ namespace Game
             }
         }
 
-        public abstract void ChainUpdate();
+        public virtual void ChainUpdate()
+        {
+            
+        }
     }
 
     public abstract class Base<T> : Base where T : BaseData

@@ -43,9 +43,7 @@ namespace GameSystem
         public GameObject InstantiateUIGameObj<T>(RectTransform rootRectTm)
         {
             if (AddressableAssetLoader == null)
-            {
                 return null;
-            }
 
             return AddressableAssetLoader.InstantiateUI(typeof(T).FullName, rootRectTm);
         }
@@ -64,11 +62,9 @@ namespace GameSystem
         public T InstantiateGame<T>(Transform rootTm)
         {
             if (AddressableAssetLoader == null)
-            {
                 return default(T);
-            }
 
-            var gameObj = AddressableAssetLoader.InstantiateGame(typeof(T).Name, rootTm);
+            var gameObj = AddressableAssetLoader.InstantiateGame(typeof(T).FullName, rootTm);
             if (gameObj)
             {
                 return gameObj.GetComponent<T>();
@@ -80,9 +76,7 @@ namespace GameSystem
         public T Instantiate<T>(int id, Transform rootTm) where T : Game.Base
         {
             if (AddressableAssetLoader == null)
-            {
                 return default(T);
-            }
 
             var gameObj = AddressableAssetLoader.Instantiate(typeof(T).Name, id, rootTm);
             if (gameObj)
