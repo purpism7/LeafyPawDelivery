@@ -8,6 +8,21 @@ namespace UI
 {
     public class Fade : Common<BaseData>
     {
+        #region Static
+        private static Fade Fade_ = null;
+        public static Fade Create()
+        {
+            Fade_ = GameSystem.ResourceManager.Instance.InstantiateUI<Fade>(null);
+            if (Fade_ != null)
+            {
+                Fade_.transform.position = Vector3.zero;
+                Fade_.Initialize(null);
+            }
+
+            return Fade_;
+        }
+        #endregion
+        
         readonly float Duration = 0.5f;
 
         public Image Img;

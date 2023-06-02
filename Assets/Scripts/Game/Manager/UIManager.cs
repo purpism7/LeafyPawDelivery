@@ -10,7 +10,6 @@ namespace Game
         public UI.Top Top;
         public UI.Bottom Bottom;
         public UI.Popup Popup;
-        public UI.Fade Fade;
 
         public override IEnumerator CoInit()
         {
@@ -23,8 +22,6 @@ namespace Game
             {
                 PopupRootRectTm = Popup.RootRectTm,
             });
-
-            Fade?.Initialize(null);
 
             yield return null;
         }

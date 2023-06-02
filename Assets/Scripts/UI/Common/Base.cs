@@ -60,16 +60,7 @@ namespace UI
         {
             rootRectTm.SetActive(false);
         }
-
-        protected void ShowAnim()
-        {
-            Game.UIManager.Instance?.Fade?.Out(null,
-               () =>
-               {
-                   // HideAnim();
-               });
-        }
-
+        
         //private void HideAnim()
         //{
         //    _isTouch = false;
