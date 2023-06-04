@@ -34,11 +34,6 @@ namespace GameSystem
         private Processing _processing = null;
         private IListener _iListener = null;
 
-        private void Awake()
-        {
-           
-        }
-
         public void Init(IListener iListener)
         {
             _iListener = iListener;
@@ -50,25 +45,27 @@ namespace GameSystem
 
         private void SetProcessQueue()
         {
-            var init = gameObject.GetOrAddComponent<Init>();
-            if (init == null)
-            {
+            var start = gameObject.GetOrAddComponent<Start>();
+            if (start == null)
                 return;
-            }
 
-            _processQueue.Enqueue(init);
+            _processQueue.Enqueue(start);
 
             if (ProcessList != null)
             {
                 foreach (var process in ProcessList)
                 {
                     if (process == null)
-                    {
                         continue;
-                    }
 
                     _processQueue.Enqueue(process);
                 }
+            }
+
+            var end = gameObject.GetOrAddComponent<End>();
+            if(end != null)
+            {
+                _processQueue.Enqueue(end);
             }
         }
 

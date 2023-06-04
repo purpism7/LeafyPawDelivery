@@ -31,7 +31,7 @@ public class Container : GameSystem.Processing
     //     return default(T);
     // }
 
-    public IEnumerator CoLoadData()
+    private IEnumerator CoLoadData()
     {
         var addressableAssetLoader = GameSystem.ResourceManager.Instance?.AddressableAssetLoader;
         if(addressableAssetLoader == null)
