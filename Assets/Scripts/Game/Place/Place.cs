@@ -84,28 +84,42 @@ namespace Game
                 if (objectInfo.PlaceId != Id)
                     continue;
                 
-                var objData = new Game.Object.Data()
+                var objectData = new Game.Object.Data()
                 {
+                    ObjectId = objectInfo.Id,
                     ObjectUId = objectInfo.UId,
                     Pos = objectInfo.Pos,
                 };
-                
-                var resObj = _objectList.Find(obj => obj.IsActivate);
-                if (resObj != null)
+
+                Game.Object resObj = null;
+                foreach(var obj in _objectList)
                 {
-                    resObj.Init(objData);
+                    if (obj == null)
+                        continue;
+
+                    if (obj.IsActivate)
+                        continue;
+
+                    if (objectInfo.Id != obj.Id)
+                        continue;
+
+                    resObj = obj;
+                    resObj?.Init(objectData);
+
+                    break;
                 }
-                else
+
+                if(resObj == null)
                 {
                     resObj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
-                        .SetData(objData)
+                        .SetData(objectData)
                         .SetId(objectInfo.Id)
                         .SetRootTm(objectRootTm)
                         .Create();
-                    
+
                     _objectList.Add(resObj);
                 }
-                
+
                 resObj?.Activate();
             }
         }

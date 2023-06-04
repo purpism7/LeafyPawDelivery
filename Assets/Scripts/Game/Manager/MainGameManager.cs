@@ -23,20 +23,20 @@ using Animal = Info.Animal;
         {
             yield return StartCoroutine(base.CoInit(iProvider));
 
+
+            ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
+            yield return StartCoroutine(ObjectMgr?.CoInit(new Game.ObjectManager.Data
+            {
+                PlaceId = 1,
+            }));
+
             AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
             yield return StartCoroutine(AnimalMgr?.CoInit(null));
 
-            ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
-            yield return StartCoroutine(ObjectMgr?.CoInit(null));
-            
             if (placeMgr != null)
             {
                 yield return StartCoroutine(placeMgr.CoInit(null));
             }
-            
-            // GameSystem.Loader.Scene.LoadWithLoading(new GameSystem.LoadGame());
-
-            yield return null;
         }
 
         #region GameState
@@ -89,10 +89,10 @@ using Animal = Info.Animal;
             _startEditAction?.Invoke(obj);
         }
 
-        public void RemoveObject(int objectUId)
+        public void RemoveObject(int objectId, int objectUId)
         {
             placeMgr?.RemoveObject(objectUId);
-            ObjectMgr?.RemoveObject(objectUId);
+            ObjectMgr?.RemoveObject(objectId, objectUId);
 
             Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
         }

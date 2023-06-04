@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Game;
 using UnityEngine;
+using static UnityEditor.AddressableAssets.Build.Layout.BuildLayout;
 
 namespace Info
 {
@@ -9,35 +10,60 @@ namespace Info
     {
         private readonly string ObjectUIdKey = "Object_UId_Key";
         
-        protected override string JsonFilePath =>  "Assets/Info/Object.json";
+        protected override string JsonFilePath =>  "Assets/Info/Object_Place_{0}.json";
         
-        public List<Info.Object> ObjectInfoList { get; private set; } = new();
+        //public List<Info.Object> ObjectInfoList { get; private set; } = new();
+
+        private Dictionary<int, List<Info.Object>> _objectInfoDic = new();
 
         protected override void LoadInfo()
         {
-            ObjectInfoList.Clear();
-            
-            if (!System.IO.File.Exists(JsonFilePath))
-            {
-                return;
-            }
+            //ObjectInfoList.Clear();
 
-            var jsonString = System.IO.File.ReadAllText(JsonFilePath);
-            var objectInfos = JsonHelper.FromJson<Info.Object>(jsonString);
-            if(objectInfos != null)
+            _objectInfoDic.Clear();
+
+            for(int i = 1; i < 10; ++i)
             {
-                ObjectInfoList.AddRange(objectInfos);
+                var jsonfilePath = string.Format(JsonFilePath, i);
+                if (!System.IO.File.Exists(jsonfilePath))
+                    continue;
+
+                var jsonString = System.IO.File.ReadAllText(jsonfilePath);
+                var objectInfos = JsonHelper.FromJson<Info.Object>(jsonString);
+
+                if (objectInfos == null)
+                    continue;
+
+                foreach (var objectInfo in objectInfos)
+                {
+                    if (objectInfo == null)
+                        continue;
+
+                    var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
+                    if (objectData == null)
+                        continue;
+
+                    AddObject(objectData.PlaceId, objectInfo);
+                }
             }
         }
 
-        private void SaveInfo()
+        private void SaveInfo(int placeId)
         {
-            if(ObjectInfoList == null)
+            if(_objectInfoDic == null)
                 return;
 
-            var jsonString = JsonHelper.ToJson(ObjectInfoList.ToArray());
-   
-            System.IO.File.WriteAllText(JsonFilePath, jsonString);
+            if(_objectInfoDic.TryGetValue(placeId, out List<Object> objectInfoList))
+            {
+                if (objectInfoList == null ||
+                    objectInfoList.Count <= 0)
+                    return;
+
+                var jsonString = JsonHelper.ToJson(objectInfoList.ToArray());
+
+                System.IO.File.WriteAllText(string.Format(JsonFilePath, placeId), jsonString);
+
+            }
         }
 
         public void AddObject(Info.Object objectInfo)
@@ -45,33 +71,57 @@ namespace Info
             if (objectInfo == null)
                 return;
 
+            var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
+            if (objectData == null)
+                return;
+
             int objectUId = PlayerPrefs.GetInt(ObjectUIdKey, 0);
             objectInfo.UId = ++objectUId;
 
-            ObjectInfoList.Add(objectInfo);
+            AddObject(objectData.PlaceId, objectInfo);
 
             PlayerPrefs.SetInt(ObjectUIdKey, objectUId);
 
-            SaveInfo();
+            SaveInfo(objectData.PlaceId);
         }
 
-        public void RemoveObject(int objectUId)
+        private void AddObject(int placeId, Object objectInfo)
         {
-            var objectInfo = GetObjectInfo(objectUId);
-            if (objectInfo == null)
+            List<Object> objectInfoList = null;
+            if (_objectInfoDic.TryGetValue(placeId, out objectInfoList))
             {
-                return;
+                objectInfoList.Add(objectInfo);
             }
+            else
+            {
+                objectInfoList = new List<Object>();
+                objectInfoList.Clear();
+                objectInfoList.Add(objectInfo);
 
+                _objectInfoDic.Add(placeId, objectInfoList);
+            }
+        }
+
+        public void RemoveObject(int objectId, int objectUId)
+        {
+            var objectData = ObjectContainer.Instance.GetData(objectId);
+            if (objectData == null)
+                return;
+
+            var objectInfo = GetObjectInfo(objectUId, objectData.PlaceId);
+            if (objectInfo == null)
+                return;
+
+            
             objectInfo.Pos = Vector3.zero;
             objectInfo.PlaceId = 0;
 
-            SaveInfo();
+            SaveInfo(objectData.PlaceId);
         }
 
         public void ArrangeObject(int objectUId, Vector3 pos, int placeId)
         {
-            var objectInfo = GetObjectInfo(objectUId);
+            var objectInfo = GetObjectInfo(objectUId, placeId);
             if(objectInfo == null)
             {
                 return;
@@ -80,17 +130,33 @@ namespace Info
             objectInfo.Pos = pos;
             objectInfo.PlaceId = placeId;
 
-            SaveInfo();
+            SaveInfo(placeId);
         }
 
-        public Info.Object GetObjectInfo(int objectUId)
+        public Info.Object GetObjectInfo(int objectUId, int placeId)
         {
-            if(ObjectInfoList == null)
-            {
+            if(_objectInfoDic == null)
                 return null;
+
+            if(_objectInfoDic.TryGetValue(placeId, out List<Object> objectInfoList))
+            {
+                return objectInfoList.Find(objectInfo => objectInfo.UId == objectUId);
             }
 
-            return ObjectInfoList.Find(objectInfo => objectInfo.UId == objectUId);
+            return null;
+        }
+
+        public List<Info.Object> GetObjectInfoList(int placeId)
+        {
+            if (_objectInfoDic == null)
+                return null;
+
+            if (_objectInfoDic.TryGetValue(placeId, out List<Object> objectInfoList))
+            {
+                return objectInfoList;
+            }
+
+            return null;
         }
     }
 }

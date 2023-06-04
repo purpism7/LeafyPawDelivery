@@ -8,24 +8,34 @@ namespace Game
     {
         public class Data : Game.Manager.BaseData
         {
+            public int PlaceId = 0;
         }
 
+        private Data _data = null;
         private Info.ObjectHolder _objectHolder = new();
 
-        public List<Info.Object> ObjectInfoList { get { return _objectHolder?.ObjectInfoList; } }
+        public List<Info.Object> ObjectInfoList
+        {
+            get
+            {
+                return _objectHolder?.GetObjectInfoList(_data.PlaceId);
+            }
+        }
 
         public override IEnumerator CoInit(Data data)
         {
+            _data = data;
             //_objectInfoList.Clear();
 
             //_objectInfoList.AddRange(objectHolder.ObectInfoList);
 
+
             yield break;
         }
 
-        public void RemoveObject(int objectUId)
+        public void RemoveObject(int objectId, int objectUId)
         {
-            _objectHolder?.RemoveObject(objectUId);
+            _objectHolder?.RemoveObject(objectId, objectUId);
         }
 
         public void ArrangeObject(int objectUId, Vector3 pos, int placeId)

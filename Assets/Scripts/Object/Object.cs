@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UI;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+
+using UI;
 
 namespace Game
 {
@@ -12,6 +12,7 @@ namespace Game
 
         public class Data : BaseData
         {
+            public int ObjectId = 0;
             public int ObjectUId = 0;
             public Vector3 Pos = Vector3.zero;
         }
@@ -122,7 +123,7 @@ namespace Game
         {
             EState_ = EState.Remove;
 
-            Command.Remove.Execute(ObjectUId);
+            Command.Remove.Execute(_data.ObjectId, ObjectUId);
 
             ActiveEditObject(false);
         }

@@ -41,6 +41,7 @@ namespace UI.Component
             
             var objData = new Game.Object.Data()
             {
+                ObjectId = _data.ObjectId,
                 ObjectUId = _data.ObjectUId,
                 Pos = pos,
             };

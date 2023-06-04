@@ -31,15 +31,15 @@ public class Container : GameSystem.Processing
     //     return default(T);
     // }
 
-    private IEnumerator CoLoadData()
+    public IEnumerator CoLoadData()
     {
         var addressableAssetLoader = GameSystem.ResourceManager.Instance?.AddressableAssetLoader;
         if(addressableAssetLoader == null)
-        {
             yield break;
-        }
 
-        yield return addressableAssetLoader.CoLoadAssetAsync<TextAsset>(addressableAssetLoader.AssetLabelData,
+        bool endLoad = false;
+
+        yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<TextAsset>(addressableAssetLoader.AssetLabelData,
             (asyncOperationHandle) =>
             {
                 var result = asyncOperationHandle.Result;
@@ -60,9 +60,13 @@ public class Container : GameSystem.Processing
 
                     Debug.Log(typeName);
                 }
-            });
 
-        yield return null;
+                endLoad = true;
+            }));
+
+        yield return new WaitUntil(() => endLoad);
+
+
     }
 }
 

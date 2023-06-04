@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
-using TMPro;
-using UnityEditor.AddressableAssets.Build.Layout;
 using UnityEngine;
 using UnityEngine.UI;
+
+using TMPro;
 
 namespace UI.Component
 {

@@ -8,7 +8,7 @@ namespace Game
     {
         public class Data : Game.Manager.BaseData
         {
-
+            public int PlaceId = 0;
         }
         
         private Info.AnimalHolder _animalHolder = new();
