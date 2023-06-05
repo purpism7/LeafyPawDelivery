@@ -34,9 +34,7 @@ namespace UI
         readonly float _duration = 0.7f;
 
         public Image img = null;
-        [SerializeField] private Button btn = null; 
-
-        private System.Action _clickAction = null;
+        [SerializeField] private Button btn = null;
 
         public override void Initialize(BaseData data)
         {
@@ -111,13 +109,6 @@ namespace UI
             
             btn.interactable = interatable;
         }
-
-        // public void OnClick()
-        // {
-        //     In(null);
-        //
-        //     _clickAction?.Invoke();
-        // }
     }
 }
 

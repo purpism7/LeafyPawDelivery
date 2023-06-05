@@ -11,8 +11,9 @@ namespace Game.Manager
     public class Cutscene : Game.Base
     {
         #region Static
+
         private static Cutscene Cutscene_ = null;
-        
+
         public static Cutscene Create(Func<bool> endFunc)
         {
             Cutscene_ = GameSystem.ResourceManager.Instance.InstantiateGame<Cutscene>(null);
@@ -27,13 +28,11 @@ namespace Game.Manager
 
         public static bool Validate
         {
-            get
-            {
-                return Cutscene_ != null;
-            }
+            get { return Cutscene_ != null; }
         }
+
         #endregion
-        
+
         [SerializeField] private Transform timelineRootTm = null;
         [SerializeField] private RectTransform uiRootRectTm = null;
 
@@ -42,32 +41,23 @@ namespace Game.Manager
 
         private void Initialize(Func<bool> endFunc)
         {
-            Debug.Log("Cutscene Initialize");
-            
             Deactivate();
-            
+
             if (!timelineRootTm)
             {
                 // 종료시키자.
                 End();
-                
+
                 return;
             }
 
             if (InitPlayableDirector())
             {
                 _endFunc = endFunc;
-                
-                var cameras = timelineRootTm.GetComponentsInChildren<Camera>();
-                foreach (var camera in cameras)
-                {
-                    camera?.gameObject.SetActive(false);
-                }
-   
-                Fade.Create.Out(() =>
-                {
-                    StartCoroutine(CoStart());
-                });
+
+                DeactiveCameras();
+
+                Fade.Create.Out(() => { StartCoroutine(CoStart()); });
             }
         }
 
@@ -77,7 +67,7 @@ namespace Game.Manager
             if (_playableDirector == null)
             {
                 End();
-                
+
                 return false;
             }
 
@@ -85,8 +75,17 @@ namespace Game.Manager
             _playableDirector.playOnAwake = false;
 
             _playableDirector.stopped += End;
-            
+
             return true;
+        }
+
+        private void DeactiveCameras()
+        {
+            var cameras = timelineRootTm.GetComponentsInChildren<Camera>();
+            foreach (var camera in cameras)
+            {
+                camera?.gameObject.SetActive(false);
+            }
         }
 
         private IEnumerator CoStart()
@@ -94,11 +93,8 @@ namespace Game.Manager
             Activate();
 
             yield return null;
-            
-            Fade.Create.In(() =>
-            {
-                _playableDirector.Play();
-            });
+
+            Fade.Create.In(() => { _playableDirector.Play(); });
         }
 
         private void End(PlayableDirector playableDirector)
@@ -112,21 +108,18 @@ namespace Game.Manager
             {
                 yield return new WaitUntil(() => _endFunc.Invoke());
             }
-            
-            Fade.Create.Out(() =>
-            {
-                Deactivate();
 
-                Fade.Create.In(() =>
-                {
-                    End();
-                });
-            });
+            End();
         }
 
         private void End()
         {
-            Destroy(gameObject);
+            Fade.Create.Out(() =>
+            {
+                Deactivate();
+                
+                Fade.Create.In(() => { Destroy(gameObject); });
+            });
         }
     }
 }

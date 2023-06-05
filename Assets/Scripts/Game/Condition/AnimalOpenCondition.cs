@@ -47,10 +47,10 @@ namespace GameSystem
                 return false;
             }
 
-            if(openCondition.ReqLv > userInfo.Lv)
-            {
-                return false;
-            }
+            // if(openCondition.ReqLv > userInfo.Lv)
+            // {
+            //     return false;
+            // }
 
             _data.OpenAction?.Invoke(_data.AnimalId);
 

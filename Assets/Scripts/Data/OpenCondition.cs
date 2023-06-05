@@ -19,12 +19,10 @@ namespace GameData
         public int Id = 0;
     }
 
+  
     [System.Serializable]
     public class OpenCondition
     {
-        public int ReqLv = 0;
-        public long ReqLeaf = 0;
-        public long ReqBerry = 0;
         public List<ReqOpenCondition> ReqList = new();
     }
 }

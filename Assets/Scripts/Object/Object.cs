@@ -8,7 +8,7 @@ namespace Game
 {
     public class Object : Game.Base<Object.Data>, EditObject.IListener
     {
-        readonly private int SelectOrder = 1000;
+        readonly private int _selectOrder = 1000;
 
         public class Data : BaseData
         {
@@ -53,7 +53,7 @@ namespace Game
 
             SetState(new Edit(gameCamera, grid));
 
-            SetSortingOrder(SelectOrder);
+            SetSortingOrder(_selectOrder);
         }
 
         public override void OnTouch(Touch touch)

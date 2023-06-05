@@ -30,9 +30,9 @@ public class CreateAnimalDataWindow : EditorWindow
         {
             EditorGUILayout.BeginVertical("Box");
             EditorGUILayout.LabelField("Open Condition");
-            _openCondition.ReqLv = EditorGUILayout.IntField("Require Lv", _openCondition.ReqLv);
-            _openCondition.ReqLeaf = EditorGUILayout.LongField("Require Leaf", _openCondition.ReqLeaf);
-            _openCondition.ReqBerry = EditorGUILayout.LongField("Require Berry", _openCondition.ReqBerry);
+            // _openCondition.ReqLv = EditorGUILayout.IntField("Require Lv", _openCondition.ReqLv);
+            // _openCondition.ReqLeaf = EditorGUILayout.LongField("Require Leaf", _openCondition.ReqLeaf);
+            // _openCondition.ReqBerry = EditorGUILayout.LongField("Require Berry", _openCondition.ReqBerry);
             EditorGUILayout.EndVertical();
         }
 

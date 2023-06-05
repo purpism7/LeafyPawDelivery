@@ -95,15 +95,7 @@ namespace GameSystem
             else
             {
                 Debug.Log("End Preprocessing");
-                
-                var openConditionMgr = Get<OpenConditionManager>();
-                if(openConditionMgr != null)
-                {
-                    yield return null;
 
-                    openConditionMgr.UpdaeCheckConditionList();
-                }
-                
                 _iListener?.End();
 
                 yield break;
