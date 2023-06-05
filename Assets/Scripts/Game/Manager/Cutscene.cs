@@ -14,9 +14,14 @@ namespace Game.Manager
 
         private static Cutscene Cutscene_ = null;
 
-        public static Cutscene Create(Func<bool> endFunc)
+        // story cutscene 일 경우 Id 필요.
+        public static Cutscene Create(Func<bool> endFunc, int id = 0)
         {
-            Cutscene_ = GameSystem.ResourceManager.Instance.InstantiateGame<Cutscene>(null);
+            if (Cutscene_ == null)
+            {
+                Cutscene_ = GameSystem.ResourceManager.Instance.InstantiateGame<Cutscene>(null);
+            }
+            
             if (Cutscene_ != null)
             {
                 Cutscene_.transform.position = new Vector3(-3000f, 0, 0);
@@ -51,6 +56,8 @@ namespace Game.Manager
                 return;
             }
 
+            DestoryAllChild();
+
             if (InitPlayableDirector())
             {
                 _endFunc = endFunc;
@@ -58,6 +65,17 @@ namespace Game.Manager
                 DeactiveCameras();
 
                 Fade.Create.Out(() => { StartCoroutine(CoStart()); });
+            }
+        }
+
+        private void DestoryAllChild()
+        {
+            foreach (Transform tm in timelineRootTm)
+            {
+                if(!tm)
+                    continue;
+                
+                GameObject.Destroy(tm);
             }
         }
 

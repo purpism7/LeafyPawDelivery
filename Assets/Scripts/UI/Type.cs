@@ -19,4 +19,13 @@ public class Type
         Login,
         Game,
     }
+
+    public enum EOpenType
+    {
+        None,
+        
+        Animal,
+        Object,
+        Story,
+    }
 }
