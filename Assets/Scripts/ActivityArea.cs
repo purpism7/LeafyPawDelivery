@@ -26,9 +26,9 @@ namespace Game
 
         public bool PlayingAnimal { get; private set; } = false;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             _iListener = data?.IListener;
 

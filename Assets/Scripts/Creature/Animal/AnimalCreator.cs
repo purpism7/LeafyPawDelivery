@@ -51,7 +51,7 @@ namespace GameSystem
                 return null;
             }
 
-            animal.Init(new Creature.Animal.Data_()
+            animal.Initialize(new Creature.Animal.Data_()
             {
                 Order = _order,
                 DropItemAction = _dropItemAction,

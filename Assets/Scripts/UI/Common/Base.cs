@@ -16,6 +16,16 @@ namespace UI
         public RectTransform rootRectTm = null; 
         
         protected bool _isTouch = false;
+        
+        public virtual void Activate()
+        {
+            rootRectTm.SetActive(true);
+        }
+
+        public virtual void Deactivate()
+        {
+            rootRectTm.SetActive(false);
+        }
     }
 
     public abstract class Common<T> : Base where T : BaseData
@@ -51,16 +61,6 @@ namespace UI
             _data = data;
         }
 
-        public virtual void Activate()
-        {
-            rootRectTm.SetActive(true);
-        }
-
-        public virtual void Deactivate()
-        {
-            rootRectTm.SetActive(false);
-        }
-        
         //private void HideAnim()
         //{
         //    _isTouch = false;

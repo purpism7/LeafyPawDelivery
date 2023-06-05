@@ -40,7 +40,7 @@ namespace GameSystem
             }
 
             obj.Id = _id;
-            obj.Init(_data);
+            obj.Initialize(_data);
 
             return obj;
         }

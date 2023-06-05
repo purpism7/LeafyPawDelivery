@@ -70,12 +70,12 @@ namespace Game
     {
         protected T _data = default(T);
 
-        public virtual void Init(T data)
+        public virtual void Initialize(T data)
         {
             _data = data;
         }
 
-        public virtual IEnumerator CoInit(T data)
+        public virtual IEnumerator CoInitialze(T data)
         {
             _data = data;
 

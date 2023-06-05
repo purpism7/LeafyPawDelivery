@@ -25,9 +25,9 @@ namespace Game
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
         public ObjectState State { get; private set; } = null;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             if(data != null)
             {

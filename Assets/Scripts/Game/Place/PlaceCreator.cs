@@ -46,7 +46,7 @@ namespace GameSystem
             }
 
             place.Id = _placeId;
-            place.Init(new Game.Place.Data()
+            place.Initialize(new Game.Place.Data()
             {
                 Id = _placeId,
             });

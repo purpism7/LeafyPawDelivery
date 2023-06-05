@@ -14,9 +14,9 @@ namespace Game
 
         private Transform _startRootTm = null;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             _startRootTm = data.startRootTm;
 

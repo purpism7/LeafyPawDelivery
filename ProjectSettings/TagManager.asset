@@ -20,7 +20,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Fade
   - 
   - 
   - 
@@ -52,4 +52,10 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 1050415341
+    locked: 0
+  - name: Cutscene
+    uniqueID: 599298203
+    locked: 0
+  - name: Fade
+    uniqueID: 3350932203
     locked: 0

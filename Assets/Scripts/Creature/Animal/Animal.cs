@@ -20,9 +20,9 @@ namespace Creature
         //private Data.Animal _animalData = null;
         private System.Action<Data.DropItem, Transform> _dropItemAction = null;
 
-        public override void Init(Data_ data)
+        public override void Initialize(Data_ data)
         {
-            base.Init(data);
+            base.Initialize(data);
             
             //_animalData = GameSystem.GameManager.Instance?.DataContainer?.GetAnimal(Id);
 

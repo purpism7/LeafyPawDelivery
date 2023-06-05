@@ -59,7 +59,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4677234167379180288}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TimelineRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824200978547733478}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20, y: 0, z: 200}
+  m_LocalPosition: {x: 20, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 8687994439844040206}
   - component: {fileID: 4625970594919834217}
   - component: {fileID: 3818495514205008812}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 150
+  far clip plane: 20
   field of view: 100
   orthographic: 1
   orthographic size: 10
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 3754754574199879173}
   - component: {fileID: 6453510459483319222}
   - component: {fileID: 8303873670696918439}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 2420845280179744841}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -304,8 +304,8 @@ GameObject:
   - component: {fileID: 1068253122226824106}
   - component: {fileID: 2420845280179744841}
   - component: {fileID: 9130384188340587180}
-  m_Layer: 0
-  m_Name: UICamera
+  m_Layer: 9
+  m_Name: CutsceneUICamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -350,7 +350,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 150
+  far clip plane: 20
   field of view: 100
   orthographic: 1
   orthographic size: 10
@@ -426,7 +426,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6932598469148251868}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -444,7 +444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4307619195347766419}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 2647037763413667085}
   - component: {fileID: 6428816407891862441}
   - component: {fileID: 8679284782058461759}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}

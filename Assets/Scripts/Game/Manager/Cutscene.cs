@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -35,7 +36,7 @@ namespace Game.Manager
         
         [SerializeField] private Transform timelineRootTm = null;
         [SerializeField] private RectTransform uiRootRectTm = null;
-        
+
         private PlayableDirector _playableDirector = null;
         private Func<bool> _endFunc = null;
 
@@ -62,8 +63,11 @@ namespace Game.Manager
                 {
                     camera?.gameObject.SetActive(false);
                 }
-                
-                StartCoroutine(CoStart());
+   
+                Fade.Create.Out(() =>
+                {
+                    StartCoroutine(CoStart());
+                });
             }
         }
 
@@ -81,23 +85,25 @@ namespace Game.Manager
             _playableDirector.playOnAwake = false;
 
             _playableDirector.stopped += End;
-
+            
             return true;
         }
 
         private IEnumerator CoStart()
         {
-            yield return new WaitForSeconds(1f);
-            
             Activate();
+
+            yield return null;
             
-            _playableDirector.Play();
+            Fade.Create.In(() =>
+            {
+                _playableDirector.Play();
+            });
         }
 
         private void End(PlayableDirector playableDirector)
         {
-            End();
-            StaticCoroutine.Start(CoEnd());
+            StartCoroutine(CoEnd());
         }
 
         private IEnumerator CoEnd()
@@ -107,7 +113,15 @@ namespace Game.Manager
                 yield return new WaitUntil(() => _endFunc.Invoke());
             }
             
-            End();
+            Fade.Create.Out(() =>
+            {
+                Deactivate();
+
+                Fade.Create.In(() =>
+                {
+                    End();
+                });
+            });
         }
 
         private void End()

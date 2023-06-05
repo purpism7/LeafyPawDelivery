@@ -25,9 +25,9 @@ namespace Game
         //private System.Action<int> _placeActivityAnimalAction = null;
         //private int _selectedAnimalId = 0;
 
-        public override void Init(Data data)
+        public override void Initialize(Data data)
         {
-            base.Init(data);
+            base.Initialize(data);
 
             //_placeActivityAnimalAction = data?.PlaceActivityAnimalAction;
 
@@ -104,7 +104,7 @@ namespace Game
                         continue;
 
                     resObj = obj;
-                    resObj?.Init(objectData);
+                    resObj?.Initialize(objectData);
 
                     break;
                 }
