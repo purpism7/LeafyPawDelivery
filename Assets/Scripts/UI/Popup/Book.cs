@@ -60,6 +60,7 @@ namespace UI
                     {
                         IListener = this,
                         Name = data.Name,
+                        IconSprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalIconSprite(data.BookIconImg),
                     })
                     .SetRootRectTm(animalScrollRect?.content)
                     .Create();
@@ -79,6 +80,7 @@ namespace UI
                     {
                         IListener = this,
                         Name = data.Name,
+                        IconSprite = ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(data.BookIconImg),
                     })
                     .SetRootRectTm(objectScrollRect?.content)
                     .Create();
