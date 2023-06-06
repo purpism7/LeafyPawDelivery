@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class UIUtils
 {
@@ -32,5 +33,18 @@ public static class UIUtils
         }
 
         spriteRenderer.sprite = sprite;
+    }
+
+    public static void SetAnimalIcon(Image iconImg, string name)
+    {
+        if (iconImg == null)
+            return;
+
+        var atlasLoader = GameSystem.ResourceManager.Instance?.AtalsLoader;
+        if (atlasLoader == null)
+            return;
+
+
+        iconImg.sprite = atlasLoader?.GetSprite(atlasLoader.KeyAnimalIcon, name);
     }
 }

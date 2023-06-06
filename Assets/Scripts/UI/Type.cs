@@ -20,7 +20,7 @@ public class Type
         Game,
     }
 
-    public enum EOpenType
+    public enum EOpen
     {
         None,
         

@@ -32,23 +32,33 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: 8caab94bba1a04e4da1b177f37883673, type: 3}
+    - {fileID: 102900000, guid: 2007c250847bec34dbf686ae415b846c, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: b45cfc815d11c4b3f88312819278f144, type: 3}
-  - {fileID: 21300000, guid: 45165e2235a604a2682e78edea283491, type: 3}
-  - {fileID: 21300000, guid: 08dbcbc29b1574b4a8b282690027d262, type: 3}
-  - {fileID: 21300000, guid: 1c6500a4b49124f33b6399091cb04b9b, type: 3}
-  - {fileID: 21300000, guid: 2255f26bac7ca4f24af9c391bc920962, type: 3}
+  - {fileID: 21300000, guid: 6e2a7621e3359714cbbce1665c676d54, type: 3}
+  - {fileID: 21300000, guid: 97e332b15cab845fe91f0b23b022dcd9, type: 3}
+  - {fileID: 21300000, guid: d45f76f3ad19e4ce982b3c1570f16934, type: 3}
+  - {fileID: 21300000, guid: 41fa7e15ea323d249964a8c08728383f, type: 3}
+  - {fileID: 21300000, guid: 9e94afa64754b42a2b0fee9bc792c05d, type: 3}
+  - {fileID: 21300000, guid: 09d253b6430b0bf44b90682a5ec43274, type: 3}
+  - {fileID: 21300000, guid: b04eca58c86c0486ea39ef91424ba07e, type: 3}
+  - {fileID: 21300000, guid: 0323974a3f8a6499d967e2776a2dbb8a, type: 3}
+  - {fileID: 21300000, guid: 4a0b5e6ab5137264e927da84d5601b55, type: 3}
+  - {fileID: 21300000, guid: 5595e85eedf5aba49b8b80da1a63b92b, type: 3}
   m_PackedSpriteNamesToIndex:
-  - BookIcon_Map01_Char_01
-  - BookIcon_Map01_Char_03
-  - BookIcon_Map01_Char_04.png
   - BookIcon_Map01_Char_02
+  - EditIcon_Map01_Char_03
+  - EditIcon_Map01_Char_05
+  - BookIcon_Map01_Char_04
+  - EditIcon_Map01_Char_02
+  - BookIcon_Map01_Char_03
+  - EditIcon_Map01_Char_04
+  - EditIcon_Map01_Char_01
   - BookIcon_Map01_Char_05
+  - BookIcon_Map01_Char_01
   m_RenderDataMap: {}
   m_Tag: AnimalIcon
   m_IsVariant: 0

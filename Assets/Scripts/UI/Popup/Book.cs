@@ -60,7 +60,6 @@ namespace UI
                     {
                         IListener = this,
                         Name = data.Name,
-                        IconSprite = GameSystem.ResourceManager.Instance.AtalsLoader.GetAnimalIconSprite(data.IconImgName),
                     })
                     .SetRootRectTm(animalScrollRect?.content)
                     .Create();
@@ -80,7 +79,6 @@ namespace UI
                     {
                         IListener = this,
                         Name = data.Name,
-                        IconSprite = GameSystem.ResourceManager.Instance.AtalsLoader.GetObjectIconSprite(data.IconImgName),
                     })
                     .SetRootRectTm(objectScrollRect?.content)
                     .Create();

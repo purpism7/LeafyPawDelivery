@@ -2,27 +2,43 @@
     "Datas": [
         {
             "Id": 1,
+            "PlaceId": 1,
             "Name": "Rabbit",
             "Desc": null,
-            "IconImgName": "BookIcon_Map01_Char_01"
+            "ArrangementIconImg": "EditIcon_Map01_Char_01",
+            "BookIconImg": "BookIcon_Map01_Char_01"
         },
         {
             "Id": 2,
+            "PlaceId": 1,
             "Name": "Cat",
             "Desc": null,
-            "IconImgName": "BookIcon_Map01_Char_02"
+            "ArrangementIconImg": "EditIcon_Map01_Char_02",
+            "BookIconImg": "BookIcon_Map01_Char_02"
         },
         {
             "Id": 3,
+            "PlaceId": 1,
             "Name": "Dog",
             "Desc": null,
-            "IconImgName": "BookIcon_Map01_Char_04"
+            "ArrangementIconImg": "EditIcon_Map01_Char_03",
+            "BookIconImg": "BookIcon_Map01_Char_03"
         },
         {
             "Id": 4,
+            "PlaceId": 1,
             "Name": null,
             "Desc": null,
-            "IconImgName": null
+            "ArrangementIconImg": "EditIcon_Map01_Char_04",
+            "BookIconImg": "BookIcon_Map01_Char_04"
+        },
+        {
+            "Id": 5,
+            "PlaceId": 1,
+            "Name": null,
+            "Desc": null,
+            "ArrangementIconImg": "EditIcon_Map01_Char_05",
+            "BookIconImg": "BookIcon_Map01_Char_05"
         }
     ]
 }

@@ -32,7 +32,6 @@ namespace UI.Component
             {
                 IListener = this,
                 Name =  _data?.ObjectData?.Name,
-                IconSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(_data?.ObjectData?.IconImgName),
             });
         }
         

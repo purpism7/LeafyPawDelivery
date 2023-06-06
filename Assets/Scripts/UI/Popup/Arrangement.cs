@@ -10,10 +10,11 @@ using GameSystem;
 using UI.Component;
 using Unity.VisualScripting;
 using static UI.Arrangement;
+using static UnityEngine.AdaptivePerformance.Provider.AdaptivePerformanceSubsystemDescriptor;
 
 namespace UI
 {
-    public class Arrangement : Base<Arrangement.Data>, ArrangementObjectCell.IListener, ArrangementAnimalCell.IListener
+    public class Arrangement : Base<Arrangement.Data>, ArrangementObjectCell.IListener, ArrangementCell.IListener
     {
         public class Data : BaseData
         {
@@ -38,17 +39,22 @@ namespace UI
 
         private void SetAnimalList()
         {
-            var infos = MainGameManager.Instance?.AnimalMgr?.AnimalInfoList;
-            if (infos == null)
+            var datas = AnimalContainer.Instance.Datas;
+            if (datas == null)
                 return;
             
-            foreach (var info in infos)
+            foreach (var data in datas)
             {
-                var component = new ComponentCreator<ArrangementAnimalCell, ArrangementAnimalCell.Data>()
-                    .SetData(new ArrangementAnimalCell.Data()
+                if (data == null)
+                    continue;
+
+                var component = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
+                    .SetData(new ArrangementCell.Data()
                     {
-                        IListener = this, 
-                        AnimalData = AnimalContainer.Instance.GetData(info.Id),
+                        IListener = this,
+                        Id = data.Id,
+                        Name = data.Name,
+                        IconSprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalIconSprite(data.ArrangementIconImg),
                     })
                     .SetRootRectTm(animalScrollRect.content)
                     .Create();
@@ -57,24 +63,26 @@ namespace UI
 
         private void SetObjectList()
         {
-            var infos = MainGameManager.Instance?.ObjectMgr?.ObjectInfoList;
-            if (infos == null)
+
+            var datas = ObjectContainer.Instance.Datas;
+            if (datas == null)
                 return;
 
-            foreach (var info in infos)
+            foreach (var data in datas)
             {
-                if (info == null)
+                if (data == null)
                     continue;
 
-                 var component = new ComponentCreator<ArrangementObjectCell, ArrangementObjectCell.Data>()
-                     .SetData(new ArrangementObjectCell.Data()
-                     {
-                         IListener = this,
-                         ObjectData = ObjectContainer.Instance.GetData(info.Id),
-                         ObjectUId = info.UId,
-                     })
-                     .SetRootRectTm(objectScrollRect.content)
-                     .Create();
+                var component = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
+                  .SetData(new ArrangementCell.Data()
+                  {
+                      IListener = this,
+                      Id = data.Id,
+                      Name = data.Name,
+                      IconSprite = ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(data.ArrangementIconImg),
+                  })
+                  .SetRootRectTm(objectScrollRect.content)
+                  .Create();
             }
         }
 
@@ -116,7 +124,7 @@ namespace UI
         
         #region ArrangementAnimalCell.IListener
 
-        void ArrangementAnimalCell.IListener.Edit(int animalId)
+        void ArrangementCell.IListener.Edit(int id)
         {
             Deactivate();
             
