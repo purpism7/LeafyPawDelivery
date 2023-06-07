@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
   m_DefaultGroup: e7f1cb4ba7155487fa25de6ac6473baa
-  m_CachedHash:
+  m_currentHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
@@ -32,11 +32,14 @@ MonoBehaviour:
   m_ShaderBundleNaming: 0
   m_ShaderBundleCustomNaming: 
   m_MonoScriptBundleNaming: 0
+  m_CheckForContentUpdateRestrictionsOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
     m_Id: 
   m_RemoteCatalogLoadPath:
     m_Id: 
+  m_ContentStateBuildPathProfileVariableName: 
+  m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: 
@@ -50,6 +53,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b5a2ae47bd014f8fb87b6e2c84ae61a, type: 2}
   - {fileID: 11400000, guid: 69a8b49dd57d642ffb9d4db22cfff0fe, type: 2}
   - {fileID: 11400000, guid: bdde01241c6934bb9ab114d5146c7a11, type: 2}
+  - {fileID: 11400000, guid: becb112048480b1419c50892524fa32c, type: 2}
   - {fileID: 11400000, guid: 92e65a339de654c2582d782c44c40392, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
@@ -100,6 +104,7 @@ MonoBehaviour:
     - Atlas
     - Game
     - Scene
+    - OpenCondition
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 6ee7b5722d5394175a1a5df7ed7f6787, type: 2}
@@ -119,3 +124,4 @@ MonoBehaviour:
     m_Settings: {fileID: 11400000}
     m_NextInstanceId: 0
     m_RegisteredServiceTypeRefs: []
+    m_PingTimeoutInMilliseconds: 5000

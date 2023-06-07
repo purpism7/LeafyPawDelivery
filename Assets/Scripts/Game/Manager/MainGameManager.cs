@@ -5,6 +5,7 @@ using UnityEngine;
 using Creature;
 using Data;
 using GameData;
+using GameSystem;
 using Animal = Info.Animal;
 
 public class MainGameManager : Singleton<MainGameManager>
@@ -14,6 +15,8 @@ public class MainGameManager : Singleton<MainGameManager>
     public Game.ObjectManager ObjectMgr { get; private set; } = null;
     public Game.AnimalManager AnimalMgr { get; private set; } = null;
 
+    public GameSystem.OpenConditionManager OpenConditionManager { get; private set; } = null;
+
     public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
 
     public Game.State.Base GameState { get; private set; } = new Game.State.Game();
@@ -22,8 +25,6 @@ public class MainGameManager : Singleton<MainGameManager>
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
     {
-        var openConditionMgr = iProvider.Get<GameSystem.OpenConditionManager>();
-
         yield return StartCoroutine(base.CoInit(iProvider));
 
         ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
@@ -39,6 +40,9 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             yield return StartCoroutine(placeMgr.CoInit(null));
         }
+
+        OpenConditionManager = iProvider.Get<OpenConditionManager>();
+        Debug.Log(OpenConditionManager?.CheckOpenCondition);
     }
 
     #region GameState

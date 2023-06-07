@@ -169,6 +169,7 @@ MonoBehaviour:
   UId: 0
   EditObject: {fileID: 8952438890831220305}
   ObjectSprRenderer: {fileID: 8198808596251828485}
+  openCondition: {fileID: 11400000, guid: 55c17bc54e956214eba78d9ed26fe501, type: 2}
 --- !u!136 &7441345776543645308
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Rendering.UI;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 
@@ -16,6 +17,7 @@ namespace GameSystem
         readonly public string AssetLabelGame = "Game";
         readonly public string AssetLabelAtlas = "Atlas";
         readonly public string AssetLabelData = "Data";
+        readonly public string AssetLabelOpenCondition = "OpenCondition";
 
         public List<AssetLabelReference> InitLoadLabelList;
 
@@ -66,6 +68,12 @@ namespace GameSystem
             foreach (IResourceLocation resourceLocation in locationAsync.Result)
             {
                 var assetAync = Addressables.LoadAssetAsync<T>(resourceLocation);
+
+                yield return new WaitUntil(() => assetAync.IsDone);
+                
+                if(assetAync.Result == null)
+                    continue;
+                
                 assetAync.Completed += action;
             }
         }

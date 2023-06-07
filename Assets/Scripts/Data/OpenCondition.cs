@@ -1,29 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameData
 {
-    [System.Serializable]
-    public class ReqOpenCondition
+    [CreateAssetMenu(menuName = "Animals/Data/OpenCondition")]
+    public class OpenCondition : ScriptableObject
     {
-        public enum EType
+        [Serializable]
+        public class Data
         {
-            None,
-
-            Animal,
-            Object,
+            public Type.EOpen EOpenType = Type.EOpen.None;
+            public int Id = 0;
         }
 
-        public EType EType_ = EType.None;
-        public int Id = 0;
-    }
-
-  
-    [System.Serializable]
-    public class OpenCondition
-    {
-        public List<ReqOpenCondition> ReqList = new();
+        public bool Starter = false;
+        public int ReqLeaf = 0;
+        public Data[] Datas = null;
     }
 }
 

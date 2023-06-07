@@ -47,4 +47,23 @@ public static class UIUtils
 
         iconImg.sprite = atlasLoader?.GetSprite(atlasLoader.KeyAnimalIcon, name);
     }
+
+    public static void SetSilhouetteColorImg(Image img)
+    {
+        if (img == null)
+            return;
+
+        Color color = Color.black;
+        color.a = 200f;
+
+        img.color = color;
+    }
+
+    public static void SetOriginColorImg(Image img)
+    {
+        if (img == null)
+            return;
+        
+        img.color = Color.white;
+    }
 }

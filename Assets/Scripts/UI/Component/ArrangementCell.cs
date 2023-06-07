@@ -23,6 +23,9 @@ namespace UI.Component
         }
 
         [SerializeField] private TextMeshProUGUI nameTMP;
+
+        [SerializeField] private RectTransform lockRootRectTm = null;
+        [SerializeField] private Button buyBtn = null;
         [SerializeField] private Image iconImg = null;
 
         public override void Initialize(Data data)
@@ -31,6 +34,7 @@ namespace UI.Component
 
             SetNameTMP();
             SetIconImg();
+            SetButtonState();
         }
 
         private void SetNameTMP()
@@ -44,6 +48,22 @@ namespace UI.Component
                 return;
 
             iconImg.sprite = _data.IconSprite;
+        }
+
+        private void SetButtonState()
+        {
+            UIUtils.SetActive(buyBtn?.gameObject, false);
+            
+        }
+
+        public void OnClickUnlock()
+        {
+            
+        }
+        
+        public void OnClickBuy()
+        {
+            
         }
 
         public void OnClick()
