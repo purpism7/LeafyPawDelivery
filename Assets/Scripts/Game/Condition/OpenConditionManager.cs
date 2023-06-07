@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using GameData;
+using Info;
 
 namespace GameSystem
 {
@@ -42,18 +43,24 @@ namespace GameSystem
             yield return new WaitUntil(() => endLoad);
         }
 
-        public bool CheckOpenCondition
+        public bool CheckOpenCondition()
         {
-            get
+            var mainGameMgr = MainGameManager.Instance;
+            
+            foreach (var openCondition in _openConditionList)
             {
-                foreach (var openCondition in _openConditionList)
-                {
-                }
+                if(openCondition == null)
+                    continue;
                 
-                Debug.Log(_openConditionList.Count);
-
-                return true;
+                if(openCondition.AlreadExist)
+                    continue;
+                
+                // if(mainGameMgr.AnimalMgr?.CheckExist(openCondition.Id)
             }
+                
+            Debug.Log(_openConditionList.Count);
+
+            return true;
         }
     }
 }

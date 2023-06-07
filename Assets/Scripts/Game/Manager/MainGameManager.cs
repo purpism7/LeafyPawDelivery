@@ -42,7 +42,7 @@ public class MainGameManager : Singleton<MainGameManager>
         }
 
         OpenConditionManager = iProvider.Get<OpenConditionManager>();
-        Debug.Log(OpenConditionManager?.CheckOpenCondition);
+        OpenConditionManager?.CheckOpenCondition();
     }
 
     #region GameState

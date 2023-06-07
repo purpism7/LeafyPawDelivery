@@ -13,6 +13,8 @@ namespace GameSystem
             yield return StartCoroutine(MainGameManager.Instance.CoInit(iProvider));
             yield return StartCoroutine(Game.UIManager.Instance.CoInit());
 
+            MainGameManager.Instance?.OpenConditionManager?.CheckOpenCondition();
+            
             DOTween.Init();
         }
     }

@@ -26,6 +26,14 @@ namespace Game
         {
             _animalHolder?.AddAnimal(animalInfo);
         }
+
+        public bool CheckExist(int id)
+        {
+            if (AnimalInfoList == null)
+                return false;
+            
+            return _animalHolder.GetAnimalInfo(id) != null;
+        }
     }
 }
 
