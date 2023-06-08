@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameData
 {
-    [CreateAssetMenu(menuName = "Animals/Data/OpenCondition")]
+    [CreateAssetMenu(menuName = "Animals/ScriptableObject/OpenCondition")]
     public class OpenCondition : ScriptableObject
     {
         [Serializable]

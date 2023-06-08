@@ -18,12 +18,14 @@ namespace GameSystem
         readonly public string AssetLabelAtlas = "Atlas";
         readonly public string AssetLabelData = "Data";
         readonly public string AssetLabelOpenCondition = "OpenCondition";
+        readonly public string AssetLabelCutscene = "Cutscene";
 
         public List<AssetLabelReference> InitLoadLabelList;
 
         private Dictionary<string, Dictionary<int, GameObject>> _gameObjByIdDic = new(); // Animal, Place, Object
         private Dictionary<string, GameObject> _gameObjDic = new(); // Game
         private Dictionary<string, GameObject> _uiGameObjDic = new(); // UI
+        private Dictionary<string, GameObject> _cutsceneGameObjDic = new(); // Cutscene
 
         private bool _endLoad = true;
 
@@ -45,6 +47,7 @@ namespace GameSystem
                 Debug.Log("typeKey = " + typeKey);
 
                 _endLoad = false;
+                
                 if(typeKey == AssetLabelUI)
                 {
                     yield return StartCoroutine(CoLoadUIAsset());
@@ -52,6 +55,10 @@ namespace GameSystem
                 else if (typeKey == AssetLabelGame)
                 {
                     yield return StartCoroutine(CoLoadGameAsset());
+                }
+                else if (typeKey == AssetLabelCutscene)
+                {
+                    yield return StartCoroutine(CoLoadCutsceneAsset());
                 }
                 else
                 {
@@ -121,6 +128,20 @@ namespace GameSystem
                 _endLoad = true;
             }));
         }
+        
+        private IEnumerator CoLoadCutsceneAsset()
+        {
+            yield return StartCoroutine(CoLoadAssetAsync<GameObject>(AssetLabelCutscene, (resourceLocation) =>
+            {
+                var resultGameObj = resourceLocation.Result;
+                if (!resultGameObj)
+                    return;
+                
+                _cutsceneGameObjDic.TryAdd(resultGameObj.name, resultGameObj);
+                
+                _endLoad = true;
+            }));
+        }
 
         private IEnumerator CoLoadGameAssetById(string typeKey)
         {
@@ -128,9 +149,7 @@ namespace GameSystem
             {
                 var resultGameObj = resourceLocation.Result;
                 if (!resultGameObj)
-                {
                     return;
-                }
                
                 var gameBase = resultGameObj.GetComponent<Game.Base>();
                 if (gameBase != null)
@@ -156,9 +175,7 @@ namespace GameSystem
         public GameObject InstantiateUI(string typeKey, RectTransform rootRectTm)
         {
             if (_uiGameObjDic == null)
-            {
                 return null;
-            }
 
             if (_uiGameObjDic.TryGetValue(typeKey, out GameObject gameObj))
             {
@@ -180,13 +197,25 @@ namespace GameSystem
 
             return null;
         }
+        
+        public GameObject InstantiateCutscene(string typeKey, Transform rootTm)
+        {
+            if (_cutsceneGameObjDic == null)
+                return null;
+
+            if (_cutsceneGameObjDic.TryGetValue(typeKey, out GameObject gameObj))
+            {
+                return GameObject.Instantiate(gameObj, rootTm);
+            }
+
+            return null;
+        }
 
         public GameObject Instantiate(string typeKey, int id, Transform rootTm)
         {
             if(_gameObjByIdDic == null)
-            {
                 return null;
-            }
+            
             // Debug.Log("typeKey = " + typeKey + " / " + _gameObjByIdDic[typeKey].Count);
             if(_gameObjByIdDic.TryGetValue(typeKey, out Dictionary<int, GameObject> dic))
             {

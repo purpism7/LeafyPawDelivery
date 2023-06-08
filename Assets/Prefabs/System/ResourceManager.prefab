@@ -64,3 +64,4 @@ MonoBehaviour:
   - m_LabelString: Object
   - m_LabelString: UI
   - m_LabelString: Game
+  - m_LabelString: Cutscene

@@ -214,7 +214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c76ece8d3e924320b931fabf6d07cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rootTm: {fileID: 0}
   Id: 1
+  UId: 0
+  story: {fileID: 11400000, guid: 86473fb61e561d5458a6379678a9656d, type: 2}
   objectRootTm: {fileID: 8331713420321853600}
 --- !u!1 &7223590494916999530
 GameObject:

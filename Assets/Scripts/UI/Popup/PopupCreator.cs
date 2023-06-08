@@ -32,11 +32,9 @@ namespace GameSystem
         {
             var popup = Game.UIManager.Instance?.Popup?.Instantiate<T, V>(_data, _coInit);
             if (popup == null)
-            {
                 return default(T);
-            }
                                                                     
-            return default(T);
+            return popup;
         }
     }
 }

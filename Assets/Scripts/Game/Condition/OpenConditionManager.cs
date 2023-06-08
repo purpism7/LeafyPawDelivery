@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game;
+using Game.Manager;
 using UnityEngine;
 
 using GameData;
@@ -13,6 +14,7 @@ namespace GameSystem
     {
         private List<OpenCondition> _openConditionList = new();
         private int _activityPlaceId = 0;
+        private Unlock _unlockPopup = null; 
         
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
@@ -64,16 +66,20 @@ namespace GameSystem
                 var data = openCondition.Data_;
                 if(data == null)
                     continue;
-                
+               
                 if (openCondition.Starter)
                 {
                     Debug.Log("starter = " + openCondition.name );
 
-                    var popup = new PopupCreator<Unlock, Unlock.Data>()
+                    _unlockPopup = new PopupCreator<Unlock, Unlock.Data>()
                         .SetData(new Unlock.Data()
                         {
                             EOpenType = data.EOpenType,
                             Id = data.Id,
+                            // ClickAction = () =>
+                            // {
+                            //     Cutscene.Create(null);
+                            // },
                         })
                         .SetCoInit(true)
                         .Create();

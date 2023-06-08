@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,6 +16,7 @@ namespace UI
         {
             public Type.EOpen EOpenType = Type.EOpen.None;
             public int Id = 0;
+            public Action ClickAction = null;
         }
 
         public override IEnumerator CoInitialize(Data data)
@@ -35,8 +37,13 @@ namespace UI
         {
                
         }
-        
-        
+
+        public void OnClick()
+        {
+            _data?.ClickAction?.Invoke();
+            
+            Deactivate();
+        }
     }
 }
 
