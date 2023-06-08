@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using Game;
 using UnityEngine;
 using static UnityEditor.AddressableAssets.Build.Layout.BuildLayout;
@@ -108,42 +109,53 @@ namespace Info
             if (objectData == null)
                 return;
 
-            var objectInfo = GetObjectInfo(objectUId, objectData.PlaceId);
+            var objectInfo = GetObjectInfoByUId(objectUId, objectData.PlaceId);
             if (objectInfo == null)
                 return;
 
             
             objectInfo.Pos = Vector3.zero;
-            objectInfo.PlaceId = 0;
+            objectInfo.Arrangement = false;
 
             SaveInfo(objectData.PlaceId);
         }
 
         public void ArrangeObject(int objectUId, Vector3 pos, int placeId)
         {
-            var objectInfo = GetObjectInfo(objectUId, placeId);
+            var objectInfo = GetObjectInfoByUId(objectUId, placeId);
             if(objectInfo == null)
             {
                 return;
             }
 
             objectInfo.Pos = pos;
-            objectInfo.PlaceId = placeId;
+            objectInfo.Arrangement = true;
 
             SaveInfo(placeId);
         }
 
-        public Info.Object GetObjectInfo(int objectUId, int placeId)
+        public Info.Object GetObjectInfoByUId(int objectUId, int placeId)
         {
             if(_objectInfoDic == null)
                 return null;
 
-            if(_objectInfoDic.TryGetValue(placeId, out List<Object> objectInfoList))
-            {
-                return objectInfoList.Find(objectInfo => objectInfo.UId == objectUId);
-            }
+            var objectInfoList = GetObjectInfoList(placeId);
+            if (objectInfoList == null)
+                return null;
+            
+            return objectInfoList.Find(objectInfo => objectInfo.UId == objectUId);
+        }
 
-            return null;
+        public Info.Object GetObjectInfoById(int objectId, int placeId)
+        {
+            if(_objectInfoDic == null)
+                return null;
+
+            var objectInfoList = GetObjectInfoList(placeId);
+            if (objectInfoList == null)
+                return null;
+            
+            return objectInfoList.Find(objectInfo => objectInfo.Id == objectId);
         }
 
         public List<Info.Object> GetObjectInfoList(int placeId)

@@ -52,6 +52,17 @@ namespace Game
 
             _objectHolder?.AddObject(objectInfo);
         }
+
+        public bool CheckExist(int objectId)
+        {
+            if (_data == null)
+                return false;
+            
+            if (ObjectInfoList == null)
+                return false;
+            
+            return _objectHolder.GetObjectInfoById(objectId, _data.PlaceId) != null;
+        }
     }
 }
 

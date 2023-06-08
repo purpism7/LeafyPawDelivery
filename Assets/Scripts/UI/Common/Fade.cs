@@ -31,7 +31,7 @@ namespace UI
         }
         #endregion
         
-        readonly float _duration = 0.7f;
+        readonly float _duration = 1f;
 
         public Image img = null;
         [SerializeField] private Button btn = null;

@@ -10,6 +10,6 @@ namespace Info
         public int Id = 0;
         public int UId = 0;
         public Vector3 Pos = Vector3.zero;
-        public int PlaceId = 0;
+        public bool Arrangement = false;
     }
 }

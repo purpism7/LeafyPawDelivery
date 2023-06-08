@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using GameSystem;
+using UnityEditor.AddressableAssets.Build.Layout;
 
 namespace Game
 {
@@ -81,7 +82,14 @@ namespace Game
                 if(objectInfo == null)
                     continue;
                 
-                if (objectInfo.PlaceId != Id)
+                var data = ObjectContainer.Instance.GetData(objectInfo.Id);
+                if(data == null)
+                    continue;
+                
+                if (data.PlaceId != Id)
+                    continue;
+                
+                if(!objectInfo.Arrangement)
                     continue;
                 
                 var objectData = new Game.Object.Data()

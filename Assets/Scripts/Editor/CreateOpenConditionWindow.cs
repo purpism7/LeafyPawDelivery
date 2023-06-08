@@ -76,7 +76,7 @@ public class CreateOpenConditionWindow : EditorWindow
         if (!openCondition.Starter)
         {
             openCondition.ReqLeaf = _openCondition.ReqLeaf;
-            openCondition.Datas = _openCondition.Datas;
+            openCondition.ReqDatas = _openCondition.ReqDatas;
         }
 
         AssetDatabase.CreateAsset(openCondition, filePath);

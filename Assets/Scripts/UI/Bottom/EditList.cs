@@ -105,7 +105,7 @@ namespace UI
                 if(objectInfo == null)
                     continue;
 
-                if(objectInfo.PlaceId > 0)
+                if(objectInfo.Arrangement)
                     continue;
 
                 var data = new Component.EditObject.Data()
@@ -159,7 +159,7 @@ namespace UI
                 if (objectInfo == null)
                     continue;
 
-                if (objectInfo.PlaceId > 0)
+                if (objectInfo.Arrangement)
                     continue;
 
                 var data = new Component.EditObject.Data()

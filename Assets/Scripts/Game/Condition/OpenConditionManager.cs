@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using Game;
 using UnityEngine;
 
 using GameData;
 using Info;
+using UI;
 
 namespace GameSystem
 {
     public class OpenConditionManager : GameSystem.Processing
     {
         private List<OpenCondition> _openConditionList = new();
-
+        private int _activityPlaceId = 0;
+        
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
             _openConditionList.Clear();
@@ -46,6 +48,10 @@ namespace GameSystem
         public bool CheckOpenCondition()
         {
             var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                return false;
+
+            var activityPlaceId = mainGameMgr.placeMgr?.ActivityPlace?.Id;
             
             foreach (var openCondition in _openConditionList)
             {
@@ -54,8 +60,49 @@ namespace GameSystem
                 
                 if(openCondition.AlreadExist)
                     continue;
+
+                var data = openCondition.Data_;
+                if(data == null)
+                    continue;
                 
-                // if(mainGameMgr.AnimalMgr?.CheckExist(openCondition.Id)
+                if (openCondition.Starter)
+                {
+                    Debug.Log("starter = " + openCondition.name );
+
+                    var popup = new PopupCreator<Unlock, Unlock.Data>()
+                        .SetData(new Unlock.Data()
+                        {
+                            EOpenType = data.EOpenType,
+                            Id = data.Id,
+                        })
+                        .SetCoInit(true)
+                        .Create();
+                }
+                
+                switch (data.EOpenType)
+                {
+                    case Type.EOpen.Object: 
+                        {
+                            var objectData = ObjectContainer.Instance.GetData(data.Id);
+                            if (activityPlaceId == objectData.PlaceId)
+                            {
+                                if (mainGameMgr.ObjectMgr.CheckExist(data.Id))
+                                {
+                                
+                                }
+                            }
+                        }
+                        break;
+
+                    case Type.EOpen.Animal:
+                        {
+                            
+                        }
+                        break;
+                    
+                    default:
+                        break;
+                }
             }
                 
             Debug.Log(_openConditionList.Count);

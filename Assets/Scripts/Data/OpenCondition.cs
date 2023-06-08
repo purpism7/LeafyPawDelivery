@@ -15,12 +15,13 @@ namespace GameData
             public int Id = 0;
         }
 
-        public bool AlreadExist = false;
-
+        public Data Data_ = null;
         public bool Starter = false;
         
         public int ReqLeaf = 0;
-        public Data[] Datas = null;
+        public Data[] ReqDatas = null;
+        
+        public bool AlreadExist { get; set; } = false;
     }
 }
 

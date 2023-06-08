@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3905ac0c1bc86407d8129a215771de4d, type: 3}
   m_Name: Tree
   m_EditorClassIdentifier: 
-  Datas:
-  - EOpenType: 1
-    Id: 0
+  Data_:
+    EOpenType: 2
+    Id: 1
+  Starter: 0
+  ReqLeaf: 0
+  ReqDatas: []
