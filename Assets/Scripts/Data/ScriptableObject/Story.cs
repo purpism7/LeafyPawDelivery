@@ -24,7 +24,8 @@ namespace GameData
 
             public bool Completed = false;
         }
-        
+
+        public int PlaceId = 0;
         public Data[] datas = null;
     }
 }

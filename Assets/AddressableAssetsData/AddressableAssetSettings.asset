@@ -53,9 +53,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b5a2ae47bd014f8fb87b6e2c84ae61a, type: 2}
   - {fileID: 11400000, guid: 69a8b49dd57d642ffb9d4db22cfff0fe, type: 2}
   - {fileID: 11400000, guid: bdde01241c6934bb9ab114d5146c7a11, type: 2}
-  - {fileID: 11400000, guid: becb112048480b1419c50892524fa32c, type: 2}
   - {fileID: 11400000, guid: 92e65a339de654c2582d782c44c40392, type: 2}
   - {fileID: 11400000, guid: a51e804954faa6147a472dc1a7a4f873, type: 2}
+  - {fileID: 11400000, guid: becb112048480b1419c50892524fa32c, type: 2}
+  - {fileID: 11400000, guid: 5f629ce3ac8100547b09de051ea8f7f9, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -105,8 +106,9 @@ MonoBehaviour:
     - Atlas
     - Game
     - Scene
-    - OpenCondition
     - Cutscene
+    - OpenCondition
+    - Story
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 6ee7b5722d5394175a1a5df7ed7f6787, type: 2}

@@ -9,5 +9,6 @@ namespace Info
     {
         public int Id = 0;
         public int PlaceId = 0;
+        public bool Own = false;
     }
 }

@@ -22,17 +22,22 @@ namespace Game
             yield break;
         }
 
-        public void AddAnimal(Info.Animal animalInfo)
+        public void AddAnimalInfo(Info.Animal animalInfo)
         {
-            _animalHolder?.AddAnimal(animalInfo);
+            _animalHolder?.AddAnimalInfo(animalInfo);
         }
 
-        public bool CheckExist(int id)
+        public bool CheckExist(int animalId)
         {
             if (AnimalInfoList == null)
                 return false;
             
-            return _animalHolder.GetAnimalInfo(id) != null;
+            return GetAnimalInfo(animalId) != null;
+        }
+
+        public Info.Animal GetAnimalInfo(int animalId)
+        {
+            return _animalHolder?.GetAnimalInfo(animalId);
         }
     }
 }

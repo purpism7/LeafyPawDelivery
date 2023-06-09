@@ -34,7 +34,6 @@ namespace UI
             SetObjectList();
 
             ActiveContents();
-            Debug.Log("Arrangement init");
         }
 
         private void SetAnimalList()
@@ -42,11 +41,17 @@ namespace UI
             var datas = AnimalContainer.Instance.Datas;
             if (datas == null)
                 return;
-            
+
+            var animalMgr = MainGameManager.Instance?.AnimalMgr;
+            if (animalMgr == null)
+                return;
+   
             foreach (var data in datas)
             {
                 if (data == null)
                     continue;
+
+                var animalInfo = animalMgr.GetAnimalInfo(data.Id);
 
                 var component = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
                     .SetData(new ArrangementCell.Data()
@@ -55,6 +60,7 @@ namespace UI
                         Id = data.Id,
                         Name = data.Name,
                         IconSprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalIconSprite(data.ArrangementIconImg),
+                        EState = animalInfo != null ? (animalInfo.Own ? ArrangementCell.EState.Own : ArrangementCell.EState.None) : ArrangementCell.EState.Lock,
                     })
                     .SetRootRectTm(animalScrollRect.content)
                     .Create();
@@ -63,15 +69,20 @@ namespace UI
 
         private void SetObjectList()
         {
-
             var datas = ObjectContainer.Instance.Datas;
             if (datas == null)
                 return;
 
+            var objectMgr = MainGameManager.Instance?.ObjectMgr;
+            if (objectMgr == null)
+                return;
+            
             foreach (var data in datas)
             {
                 if (data == null)
                     continue;
+
+                var objectInfo = objectMgr.GetObjectInfoById(data.Id);
 
                 var component = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
                   .SetData(new ArrangementCell.Data()
@@ -80,6 +91,7 @@ namespace UI
                       Id = data.Id,
                       Name = data.Name,
                       IconSprite = ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(data.ArrangementIconImg),
+                      EState = objectInfo != null ? (objectInfo.Own ? ArrangementCell.EState.Own : ArrangementCell.EState.None) : ArrangementCell.EState.Lock,
                   })
                   .SetRootRectTm(objectScrollRect.content)
                   .Create();

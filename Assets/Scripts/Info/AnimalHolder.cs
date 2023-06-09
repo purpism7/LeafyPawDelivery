@@ -37,7 +37,7 @@ namespace Info
             System.IO.File.WriteAllText(JsonFilePath, jsonString);
         }
 
-        public void AddAnimal(Info.Animal animalInfo)
+        public void AddAnimalInfo(Info.Animal animalInfo)
         {
             if (animalInfo == null)
                 return;

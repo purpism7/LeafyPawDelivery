@@ -7,6 +7,7 @@ using Data;
 using GameData;
 using GameSystem;
 using Animal = Info.Animal;
+using Story = Game.Manager.Story;
 
 public class MainGameManager : Singleton<MainGameManager>
 {
@@ -42,9 +43,8 @@ public class MainGameManager : Singleton<MainGameManager>
             yield return StartCoroutine(placeMgr.CoInit(null));
         }
 
-        StoryMgr = gameObject.GetOrAddComponent<Game.Manager.Story>();
-        yield return StartCoroutine(StoryMgr?.CoInit(null));
-        
+        StoryMgr = iProvider.Get<Story>();
+
         OpenConditionMgr = iProvider.Get<OpenConditionManager>();
         OpenConditionMgr?.CheckOpenCondition();
     }
@@ -87,6 +87,10 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         _startEditAction = action;
     }
+
+    #region Animal
+    
+    #endregion
 
     #region Object
     public void AddObjectToPlace(Game.Object obj)

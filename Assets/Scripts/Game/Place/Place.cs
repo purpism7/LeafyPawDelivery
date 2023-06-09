@@ -13,8 +13,7 @@ namespace Game
         {
             public int Id = 0;
         }
-
-        [SerializeField] private GameData.Story story = null;
+        
         [SerializeField]
         private Transform objectRootTm;
 

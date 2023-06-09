@@ -17,8 +17,9 @@ namespace GameSystem
         readonly public string AssetLabelGame = "Game";
         readonly public string AssetLabelAtlas = "Atlas";
         readonly public string AssetLabelData = "Data";
-        readonly public string AssetLabelOpenCondition = "OpenCondition";
         readonly public string AssetLabelCutscene = "Cutscene";
+        readonly public string AssetLabelOpenCondition = "OpenCondition";
+        readonly public string AssetLabelStory = "Story";
 
         public List<AssetLabelReference> InitLoadLabelList;
 

@@ -61,7 +61,15 @@ namespace Game
             if (ObjectInfoList == null)
                 return false;
             
-            return _objectHolder.GetObjectInfoById(objectId, _data.PlaceId) != null;
+            return GetObjectInfoById(objectId) != null;
+        }
+
+        public Info.Object GetObjectInfoById(int objectId)
+        {
+            if (_data == null)
+                return null;
+            
+            return _objectHolder.GetObjectInfoById(objectId, _data.PlaceId);
         }
     }
 }

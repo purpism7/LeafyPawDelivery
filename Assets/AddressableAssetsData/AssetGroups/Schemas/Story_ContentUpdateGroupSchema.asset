@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2944433d14679954d924d6a014e39c4b, type: 3}
-  m_Name: PalmWood
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: Story_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  PlaceId: 1
-  datas:
-  - ReqDatas:
-    - EOpenType: 0
-      Id: 0
-    PlayCutscene: {fileID: 7468930555487874813, guid: c147b53fd30d7a8449a29a2840820123, type: 3}
-    Completed: 0
+  m_Group: {fileID: 11400000, guid: 5f629ce3ac8100547b09de051ea8f7f9, type: 2}
+  m_StaticContent: 0

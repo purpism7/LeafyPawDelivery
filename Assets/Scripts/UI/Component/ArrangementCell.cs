@@ -15,6 +15,15 @@ namespace UI.Component
             public int Id = 0;
             public string Name = string.Empty;
             public Sprite IconSprite = null;
+            public EState EState = EState.None;
+        }
+
+        public enum EState
+        {
+            None,
+            
+            Lock,
+            Own,
         }
 
         public interface IListener
@@ -25,6 +34,7 @@ namespace UI.Component
         [SerializeField] private TextMeshProUGUI nameTMP;
 
         [SerializeField] private RectTransform lockRootRectTm = null;
+        [SerializeField] private Button arrangementBtn = null;
         [SerializeField] private Button buyBtn = null;
         [SerializeField] private Image iconImg = null;
 
@@ -35,6 +45,8 @@ namespace UI.Component
             SetNameTMP();
             SetIconImg();
             SetButtonState();
+
+            UIUtils.SetActive(lockRootRectTm, _data.EState == EState.Lock);
         }
 
         private void SetNameTMP()
@@ -48,12 +60,21 @@ namespace UI.Component
                 return;
 
             iconImg.sprite = _data.IconSprite;
+
+            if (_data.EState == EState.Lock)
+            {
+                UIUtils.SetSilhouetteColorImg(iconImg);
+            }
+            else
+            {
+                UIUtils.SetOriginColorImg(iconImg);
+            }
         }
 
         private void SetButtonState()
         {
-            UIUtils.SetActive(buyBtn?.gameObject, false);
-            
+            UIUtils.SetActive(buyBtn?.gameObject, _data.EState != EState.Own);
+            UIUtils.SetActive(arrangementBtn?.gameObject, _data.EState == EState.Own);
         }
 
         public void OnClickUnlock()
