@@ -54,7 +54,7 @@ public static class UIUtils
             return;
 
         Color color = Color.black;
-        color.a = 200f;
+        color.a = 0.7f;
 
         img.color = color;
     }
