@@ -6,11 +6,11 @@ namespace Info
 {
     public class AnimalHolder : Holder.Base
     {
-        protected override string JsonFilePath => "Assets/Info/Animal.json";
+        protected override string JsonFilePath => Application.persistentDataPath + "/Info/Animal.json";
 
         public List<Info.Animal> AnimalInfoList { get; private set; } = new();
         
-        protected override void LoadInfo()
+        public override void LoadInfo()
         {
             AnimalInfoList.Clear();
             

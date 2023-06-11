@@ -44,6 +44,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 41fa7e15ea323d249964a8c08728383f, type: 3}
   - {fileID: 21300000, guid: 9e94afa64754b42a2b0fee9bc792c05d, type: 3}
   - {fileID: 21300000, guid: 09d253b6430b0bf44b90682a5ec43274, type: 3}
+  - {fileID: 21300000, guid: 4c9c64670e4304081b2848dc5886fd22, type: 3}
+  - {fileID: 21300000, guid: 70721d18ec1f14d458c8c07349c12379, type: 3}
   - {fileID: 21300000, guid: b04eca58c86c0486ea39ef91424ba07e, type: 3}
   - {fileID: 21300000, guid: 0323974a3f8a6499d967e2776a2dbb8a, type: 3}
   - {fileID: 21300000, guid: 4a0b5e6ab5137264e927da84d5601b55, type: 3}
@@ -55,6 +57,8 @@ SpriteAtlas:
   - BookIcon_Map01_Char_04
   - EditIcon_Map01_Char_02
   - BookIcon_Map01_Char_03
+  - BookIcon_Map01_Char_06
+  - EditIcon_Map01_Char_06
   - EditIcon_Map01_Char_04
   - EditIcon_Map01_Char_01
   - BookIcon_Map01_Char_05

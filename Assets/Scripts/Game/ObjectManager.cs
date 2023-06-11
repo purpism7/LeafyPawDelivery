@@ -26,9 +26,8 @@ namespace Game
         {
             _data = data;
             //_objectInfoList.Clear();
-
+            _objectHolder?.LoadInfo();
             //_objectInfoList.AddRange(objectHolder.ObectInfoList);
-
 
             yield break;
         }

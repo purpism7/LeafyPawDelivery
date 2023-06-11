@@ -8,11 +8,11 @@ namespace Info.Holder
     {
         protected Base()
         {
-            LoadInfo();
+            //LoadInfo();
         }
 
         protected abstract string JsonFilePath { get; }
-        protected abstract void LoadInfo();
+        public abstract void LoadInfo();
     }
 }
 

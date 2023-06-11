@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
-using Game;
 using UnityEngine;
-using static UnityEditor.AddressableAssets.Build.Layout.BuildLayout;
+
+using Game;
 
 namespace Info
 {
@@ -11,13 +11,13 @@ namespace Info
     {
         private readonly string ObjectUIdKey = "Object_UId_Key";
         
-        protected override string JsonFilePath =>  "Assets/Info/Object_Place_{0}.json";
+        protected override string JsonFilePath => Application.persistentDataPath + "/Info/Object_Place_{0}.json";
         
         //public List<Info.Object> ObjectInfoList { get; private set; } = new();
 
         private Dictionary<int, List<Info.Object>> _objectInfoDic = new();
 
-        protected override void LoadInfo()
+        public override void LoadInfo()
         {
             //ObjectInfoList.Clear();
 

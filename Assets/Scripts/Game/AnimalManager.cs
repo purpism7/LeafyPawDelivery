@@ -17,6 +17,8 @@ namespace Game
 
         public override IEnumerator CoInit(Data data)
         {
+            _animalHolder?.LoadInfo();
+
             Debug.Log("AnimalManager CoInit");
 
             yield break;

@@ -11,7 +11,7 @@ namespace Scene
     {
         [SerializeField] private Preprocessing _preprocessing = null;
 
-        private void Awake()
+        private void Start()
         {
             // GameScene 에서 바로 실행 시, 동작.
             // Loading 거쳐서 들어올 경우 에는, ActiveScene 이 LoadingScene 임.
