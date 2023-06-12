@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameData;
 using UI;
 using UnityEngine;
 
@@ -11,8 +12,10 @@ namespace Game
         public UI.Bottom Bottom;
         public UI.Popup Popup;
 
-        public override IEnumerator CoInit()
+        public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
         {
+            yield return StartCoroutine(base.CoInit(iProvider));
+            
             Top?.Initialize(new UI.Top.Data()
             {
 
@@ -22,6 +25,10 @@ namespace Game
             {
                 PopupRootRectTm = Popup.popupRootRectTm,
             });
+            
+            var openConditionMgr = iProvider.Get<Game.Manager.OpenCondition>();
+            openConditionMgr?.OpenCountEvent.RemoveListener(OpenCountListener);
+            openConditionMgr?.OpenCountEvent.AddListener(OpenCountListener);
 
             yield return null;
         }
@@ -29,6 +36,11 @@ namespace Game
         public T Instantiate<T>(RectTransform rootRectTm)
         {
             return GameSystem.ResourceManager.Instance.InstantiateUI<T>(rootRectTm);
+        }
+
+        private void OpenCountListener(int count)
+        {
+            Debug.Log("OpenCount " + count);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace GameSystem
         {
             yield return StartCoroutine(Info.UserManager.Instance.CoInit());
             yield return StartCoroutine(MainGameManager.Instance.CoInit(iProvider));
-            yield return StartCoroutine(Game.UIManager.Instance.CoInit());
+            yield return StartCoroutine(Game.UIManager.Instance.CoInit(iProvider));
 
             DOTween.Init();
             

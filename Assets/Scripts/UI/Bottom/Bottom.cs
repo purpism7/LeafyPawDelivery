@@ -16,10 +16,12 @@ namespace UI
 
         readonly float InitPosY = -500f;
 
+        #region Inspector
         public RectTransform RootRectTm;
         [SerializeField]
         private RectTransform EditListRootRectTm;
-
+        #endregion
+        
         private List<BottomMenu> BottomMenuList = new();
 
         public EditList EditList { get; private set; } = null;
@@ -35,9 +37,7 @@ namespace UI
         private void InitBttomMenu()
         {
             if(!RootRectTm)
-            {
                 return;
-            }
 
             var bottomMenus = RootRectTm.GetComponentsInChildren<BottomMenu>();
             foreach (var bottomMenu in bottomMenus)
@@ -47,11 +47,6 @@ namespace UI
                     ILisener = this,
                 });
             }
-        }
-
-        public void Show()
-        {
-            ActivateAnim(RootRectTm, null);
         }
 
         #region EditList

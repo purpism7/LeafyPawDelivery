@@ -6,18 +6,20 @@ using GameData;
 using GameSystem;
 using Info;
 using UI;
+using UnityEngine.Events;
 
 namespace Game.Manager
 {
     public class OpenCondition : GameSystem.Processing, MainGameManager.ICondition
     {
         private List<GameData.OpenCondition> _openConditionList = new();
-        private int _activityPlaceId = 0;
+        
+        public UnityEvent<int> OpenCountEvent = new();
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
             _openConditionList.Clear();
-            
+
             yield return StartCoroutine(CoLoadOpenCondition());
         }
         
@@ -61,7 +63,7 @@ namespace Game.Manager
                
                 if (openCondition.Starter)
                 {
-                    CreateUnlockPopup(data);
+                    CreateUnlockPopup(openCondition);
                 }
                 
                 switch (data.EOpenType)
@@ -102,14 +104,22 @@ namespace Game.Manager
                 }
             }
 
+            OpenCountEvent?.Invoke(1);
+            
             return true;
         }
 
-        private void CreateUnlockPopup(GameData.OpenCondition.Data data)
+        private void CreateUnlockPopup(GameData.OpenCondition openCondition)
         {
+            if (openCondition == null)
+                return;
+
+            var data = openCondition.Data_;
             if (data == null)
                 return;
 
+            openCondition.AlreadExist = true;
+            
             new PopupCreator<Unlock, Unlock.Data>()
                 .SetData(new Unlock.Data()
                 {
