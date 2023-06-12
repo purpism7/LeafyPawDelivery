@@ -33,6 +33,18 @@ namespace UI
                 
         }
 
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            
+            if (_data != null)
+            {
+                MainGameManager.Instance?.AddInfo(_data.EOpenType, _data.Id);
+                
+                _data?.ClickAction?.Invoke();
+            }
+        }
+
         private void SetIconImg()
         {
                
@@ -40,8 +52,6 @@ namespace UI
 
         public void OnClick()
         {
-            _data?.ClickAction?.Invoke();
-            
             Deactivate();
         }
     }

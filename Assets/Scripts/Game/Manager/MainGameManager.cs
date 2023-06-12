@@ -6,24 +6,30 @@ using Creature;
 using Data;
 using GameData;
 using GameSystem;
-using Animal = Info.Animal;
-using Story = Game.Manager.Story;
 
 public class MainGameManager : Singleton<MainGameManager>
 {
+    public interface ICondition
+    {
+        bool Check(int placeId);
+    }
+    
     public Game.PlaceManager placeMgr = null;
 
     public Game.ObjectManager ObjectMgr { get; private set; } = null;
     public Game.AnimalManager AnimalMgr { get; private set; } = null;
 
-    public Game.Manager.Story StoryMgr { get; private set; } = null;
-    public GameSystem.OpenConditionManager OpenConditionMgr { get; private set; } = null;
-    
+    // public Game.Manager.Story StoryMgr { get; private set; } = null;
+    // public GameSystem.OpenConditionManager OpenConditionMgr { get; private set; } = null;
+
     public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
 
     public Game.State.Base GameState { get; private set; } = new Game.State.Game();
 
     private System.Action<Game.Base> _startEditAction = null;
+
+    private ICondition _story = null;
+    private ICondition _openCondition = null;
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
     {
@@ -46,10 +52,8 @@ public class MainGameManager : Singleton<MainGameManager>
             yield return StartCoroutine(placeMgr.CoInit(null));
         }
 
-        StoryMgr = iProvider.Get<Story>();
-
-        OpenConditionMgr = iProvider.Get<OpenConditionManager>();
-        OpenConditionMgr?.CheckOpenCondition();
+        _story = iProvider.Get<Game.Manager.Story>();
+        _openCondition = iProvider.Get<Game.Manager.OpenCondition>();
     }
 
     #region GameState
@@ -101,6 +105,22 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             ObjectMgr?.AddObjectInfo(id);
         }
+
+        _story?.Check(placeMgr.ActivityPlace.Id);
+    }
+
+    public bool CheckExist(Type.EOpen eOpenType, int id)
+    {
+        if (eOpenType == Type.EOpen.Animal)
+        {
+            return AnimalMgr.CheckExist(id);
+        }
+        else if (eOpenType == Type.EOpen.Object)
+        {
+            return ObjectMgr.CheckExist(id);
+        }
+
+        return false;
     }
 
     #region Object
@@ -135,5 +155,10 @@ public class MainGameManager : Singleton<MainGameManager>
         Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
     }
     #endregion
+
+    public void CheckOpenCondition()
+    {
+        _openCondition?.Check(placeMgr.ActivityPlace.Id);
+    }
 }   
 

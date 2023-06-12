@@ -17,4 +17,6 @@ MonoBehaviour:
     Id: 1
   Starter: 0
   ReqLeaf: 0
-  ReqDatas: []
+  ReqDatas:
+  - EOpenType: 3
+    Id: 1

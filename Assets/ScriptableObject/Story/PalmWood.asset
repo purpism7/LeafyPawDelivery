@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PalmWood
   m_EditorClassIdentifier: 
   PlaceId: 1
-  datas:
+  Datas:
   - ReqDatas:
-    - EOpenType: 0
-      Id: 0
-    PlayCutscene: {fileID: 7468930555487874813, guid: c147b53fd30d7a8449a29a2840820123, type: 3}
+    - EOpenType: 1
+      Id: 1
+    PlayStory: {fileID: 7468930555487874813, guid: c147b53fd30d7a8449a29a2840820123, type: 3}
     Completed: 0

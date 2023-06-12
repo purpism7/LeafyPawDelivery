@@ -13,9 +13,11 @@ namespace GameSystem
             yield return StartCoroutine(MainGameManager.Instance.CoInit(iProvider));
             yield return StartCoroutine(Game.UIManager.Instance.CoInit());
 
-            MainGameManager.Instance?.OpenConditionMgr?.CheckOpenCondition();
-            
             DOTween.Init();
+            
+            yield return new WaitForEndOfFrame();
+            
+            MainGameManager.Instance?.CheckOpenCondition();
         }
     }
 }

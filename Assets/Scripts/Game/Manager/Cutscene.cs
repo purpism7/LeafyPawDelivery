@@ -13,10 +13,11 @@ namespace Game.Manager
         #region Static
 
         private static Cutscene Cutscene_ = null;
-
-        // story cutscene 일 경우 Id 필요.
-        public static Cutscene Create(Func<bool> endFunc, int id = 0)
+        public static Cutscene Create(Data data)
         {
+            if (data == null)
+                return null;
+            
             if (Cutscene_ == null)
             {
                 Cutscene_ = GameSystem.ResourceManager.Instance.InstantiateGame<Cutscene>(null);
@@ -25,7 +26,7 @@ namespace Game.Manager
             if (Cutscene_ != null)
             {
                 Cutscene_.transform.position = new Vector3(-3000f, 0, 0);
-                Cutscene_.Initialize(endFunc);
+                Cutscene_.Initialize(data);
             }
 
             return Cutscene_;
@@ -38,14 +39,24 @@ namespace Game.Manager
 
         #endregion
 
+        public class Data
+        {
+            public int Id = 0;
+            public GameObject TargetGameObj = null;
+            public Func<bool> EndFunc = null;
+            public Action<int> EndAction = null;
+        }
+
         [SerializeField] private Transform timelineRootTm = null;
         [SerializeField] private RectTransform uiRootRectTm = null;
 
+        private Data _data = null;
         private PlayableDirector _playableDirector = null;
-        private Func<bool> _endFunc = null;
 
-        private void Initialize(Func<bool> endFunc)
+        private void Initialize(Data data)
         {
+            _data = data;
+                
             Deactivate();
 
             if (!timelineRootTm)
@@ -56,12 +67,12 @@ namespace Game.Manager
                 return;
             }
 
+            GameObject.Instantiate(_data.TargetGameObj, timelineRootTm);
+
             DestoryAllChild();
 
             if (InitPlayableDirector())
             {
-                _endFunc = endFunc;
-
                 DeactiveCameras();
 
                 Fade.Create.Out(() => { StartCoroutine(CoStart()); });
@@ -122,9 +133,9 @@ namespace Game.Manager
 
         private IEnumerator CoEnd()
         {
-            if (_endFunc != null)
+            if (_data?.EndFunc != null)
             {
-                yield return new WaitUntil(() => _endFunc.Invoke());
+                yield return new WaitUntil(() => _data.EndFunc.Invoke());
             }
 
             End();
@@ -136,7 +147,12 @@ namespace Game.Manager
             {
                 Deactivate();
                 
-                Fade.Create.In(() => { Destroy(gameObject); });
+                Fade.Create.In(() =>
+                {
+                    _data.EndAction(_data.Id);
+                    
+                    Destroy(gameObject);
+                });
             });
         }
     }

@@ -1,21 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using Game;
-using Game.Manager;
 using UnityEngine;
 
 using GameData;
+using GameSystem;
 using Info;
 using UI;
 
-namespace GameSystem
+namespace Game.Manager
 {
-    public class OpenConditionManager : GameSystem.Processing
+    public class OpenCondition : GameSystem.Processing, MainGameManager.ICondition
     {
-        private List<OpenCondition> _openConditionList = new();
+        private List<GameData.OpenCondition> _openConditionList = new();
         private int _activityPlaceId = 0;
-        private Unlock _unlockPopup = null; 
-        
+
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
             _openConditionList.Clear();
@@ -31,7 +29,7 @@ namespace GameSystem
 
             bool endLoad = false;
 
-            yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<OpenCondition>(
+            yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<GameData.OpenCondition>(
                 addressableAssetLoader.AssetLabelOpenCondition,
                 (asyncOperationHandle) =>
                 {
@@ -47,14 +45,8 @@ namespace GameSystem
             yield return new WaitUntil(() => endLoad);
         }
 
-        public bool CheckOpenCondition()
+        bool MainGameManager.ICondition.Check(int placeId)
         {
-            var mainGameMgr = MainGameManager.Instance;
-            if (mainGameMgr == null)
-                return false;
-
-            var activityPlaceId = mainGameMgr.placeMgr?.ActivityPlace?.Id;
-            
             foreach (var openCondition in _openConditionList)
             {
                 if(openCondition == null)
@@ -69,58 +61,64 @@ namespace GameSystem
                
                 if (openCondition.Starter)
                 {
-                    Debug.Log("starter = " + openCondition.name );
-                    
                     CreateUnlockPopup(data);
                 }
                 
                 switch (data.EOpenType)
                 {
-                    case Type.EOpen.Object: 
+                    case Type.EOpen.Object:
+                    {
+                        var objectMgr = MainGameManager.Instance?.ObjectMgr;
+                        if (objectMgr == null)
+                            break;
+
+                        var objectData = ObjectContainer.Instance.GetData(data.Id);
+                        if (placeId == objectData.PlaceId)
                         {
-                            var objectData = ObjectContainer.Instance.GetData(data.Id);
-                            if (activityPlaceId == objectData.PlaceId)
+                            if (objectMgr.CheckExist(data.Id))
                             {
-                                if (mainGameMgr.ObjectMgr.CheckExist(data.Id))
-                                {
                                 
-                                }
                             }
                         }
+                        
                         break;
-
+                    }
+                    
                     case Type.EOpen.Animal:
-                        {
-                            
-                        }
+                    {
                         break;
+                    }
+                   
+
+                    case Type.EOpen.Story:
+                    {
+                        
+                        break;
+                    }
+                        
                     
                     default:
                         break;
                 }
             }
-                
-            Debug.Log(_openConditionList.Count);
 
             return true;
         }
 
-        private void CreateUnlockPopup(OpenCondition.Data data)
+        private void CreateUnlockPopup(GameData.OpenCondition.Data data)
         {
             if (data == null)
                 return;
 
-            MainGameManager.Instance?.AddInfo(data.EOpenType, data.Id);
-            
-            _unlockPopup = new PopupCreator<Unlock, Unlock.Data>()
+            new PopupCreator<Unlock, Unlock.Data>()
                 .SetData(new Unlock.Data()
                 {
                     EOpenType = data.EOpenType,
                     Id = data.Id,
-                    // ClickAction = () =>
-                    // {
-                    //     Cutscene.Create(null);
-                    // },
+                    ClickAction = () =>
+                    {
+                        
+                    },
                 })
                 .SetCoInit(true)
                 .Create();

@@ -19,7 +19,7 @@ public class GameManagerInspector : Editor
         
         if (GUILayout.Button("Play Cutscene"))
         {
-            Game.Manager.Cutscene.Create(null);
+            // Game.Manager.Cutscene.Create(null);
         }
         //gameMgr.EditorFoldout = EditorGUILayout.Foldout(gameMgr.EditorFoldout, "Editor");
         //if(gameMgr.EditorFoldout)

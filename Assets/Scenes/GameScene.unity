@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 80954213}
   - component: {fileID: 80954214}
   m_Layer: 0
-  m_Name: OpenConditionManager
+  m_Name: OpenCondition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

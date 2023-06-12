@@ -20,13 +20,13 @@ namespace GameData
         {
             public ReqData[] ReqDatas = null;
             
-            public GameObject PlayCutscene = null;
+            public GameObject PlayStory = null;
 
             public bool Completed = false;
         }
 
         public int PlaceId = 0;
-        public Data[] datas = null;
+        public Data[] Datas = null;
     }
 }
 
