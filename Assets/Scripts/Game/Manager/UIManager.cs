@@ -20,7 +20,7 @@ namespace Game
 
             Bottom?.Initialize(new UI.Bottom.Data()
             {
-                PopupRootRectTm = Popup.RootRectTm,
+                PopupRootRectTm = Popup.popupRootRectTm,
             });
 
             yield return null;

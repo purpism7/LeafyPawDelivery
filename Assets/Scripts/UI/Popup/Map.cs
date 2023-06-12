@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class Map : Base<Map.Data>
+    public class Map : BasePopup<Map.Data>
     {
         public class Data : BaseData
         {

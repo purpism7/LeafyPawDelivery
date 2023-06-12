@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class Shop : Base<Shop.Data>
+    public class Shop : BasePopup<Shop.Data>
     {
         public class Data : BaseData
         {

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class Unlock : Base<Unlock.Data>
+    public class Unlock : BasePopup<Unlock.Data>
     {
         [SerializeField] private Image iconImg = null;
         [SerializeField] private TextMeshProUGUI nameTMP = null;

@@ -14,7 +14,7 @@ using static UnityEngine.AdaptivePerformance.Provider.AdaptivePerformanceSubsyst
 
 namespace UI
 {
-    public class Arrangement : Base<Arrangement.Data>, ArrangementObjectCell.IListener, ArrangementCell.IListener
+    public class Arrangement : BasePopup<Arrangement.Data>, ArrangementObjectCell.IListener, ArrangementCell.IListener
     {
         public class Data : BaseData
         {

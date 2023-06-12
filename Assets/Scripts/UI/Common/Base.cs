@@ -13,18 +13,42 @@ namespace UI
 
     public class Base : MonoBehaviour
     {
+        [SerializeField]
         public RectTransform rootRectTm = null; 
         
         protected bool _isTouch = false;
         
         public virtual void Activate()
         {
+            if (!rootRectTm)
+                return;
+
+            if (IsActivate)
+                return;
+
             rootRectTm.SetActive(true);
         }
 
         public virtual void Deactivate()
         {
+            if (!rootRectTm)
+                return;
+
+            if (!IsActivate)
+                return;
+            
             rootRectTm.SetActive(false);
+        }
+        
+        public bool IsActivate
+        {
+            get
+            {
+                if (!rootRectTm)
+                    return false;
+            
+                return rootRectTm.gameObject.activeSelf;
+            }
         }
     }
 
@@ -60,15 +84,6 @@ namespace UI
 
             _data = data;
         }
-
-        //private void HideAnim()
-        //{
-        //    _isTouch = false;
-
-        //    transform.SetActive(false);
-
-        //    GameSystem.UIManager.Instance.Fade.In(null);
-        //}
     }
 }
 

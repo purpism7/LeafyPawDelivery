@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class Book : Base<Book.Data>, BookCell.IListener
+    public class Book : BasePopup<Book.Data>, BookCell.IListener
     {
         public class Data : BaseData
         {
@@ -32,11 +32,7 @@ namespace UI
 
             InternalInit();
 
-            Debug.Log("book init");
-
             yield return null;
-
-            Debug.Log("End book init");
         }
 
         private void InternalInit()
