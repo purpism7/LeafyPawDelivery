@@ -6,8 +6,8 @@ namespace Info
 {
     public class AnimalHolder : Holder.Base
     {
-        protected override string JsonFilePath => Application.persistentDataPath + "/Info/Animal.json";
-
+        protected override string JsonFilePath => RootJsonFilePath + "/Info/Animal.json";
+        
         public List<Info.Animal> AnimalInfoList { get; private set; } = new();
         
         public override void LoadInfo()
@@ -15,9 +15,7 @@ namespace Info
             AnimalInfoList.Clear();
             
             if (!System.IO.File.Exists(JsonFilePath))
-            {
                 return;
-            }
             
             var jsonString = System.IO.File.ReadAllText(JsonFilePath);
             var animalInfos = JsonHelper.FromJson<Info.Animal>(jsonString);
@@ -33,7 +31,7 @@ namespace Info
                 return;
 
             var jsonString = JsonHelper.ToJson(AnimalInfoList.ToArray());
-   
+            
             System.IO.File.WriteAllText(JsonFilePath, jsonString);
         }
 

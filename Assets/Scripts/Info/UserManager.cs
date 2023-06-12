@@ -6,7 +6,12 @@ namespace Info
 {
     public class UserManager : Singleton<UserManager>
     {
-        readonly private string UserInfoJsonFilePath = "Assets/Info/User.json";
+#if UNITY_EDITOR
+        readonly private string _userInfoJsonFilePath = "Assets/Info/User.json";
+#else
+        readonly private string _userInfoJsonFilePath = Application.persistentDataPath + "/Info/User.json";
+#endif
+        
 
         public User User { get; private set; } = null;
 
@@ -33,12 +38,10 @@ namespace Info
 
         private void LoadInfo()
         {
-            if(!System.IO.File.Exists(UserInfoJsonFilePath))
-            {
+            if(!System.IO.File.Exists(_userInfoJsonFilePath))
                 return;
-            }
 
-            var jsonString = System.IO.File.ReadAllText(UserInfoJsonFilePath);
+            var jsonString = System.IO.File.ReadAllText(_userInfoJsonFilePath);
 
             User = JsonUtility.FromJson<User>(jsonString);
         }

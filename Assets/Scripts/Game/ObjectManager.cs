@@ -42,7 +42,7 @@ namespace Game
             _objectHolder?.ArrangeObject(objectUId, pos, placeId);
         }
 
-        public void AddObject(int objectId)
+        public void AddObjectInfo(int objectId)
         {
             var objectInfo = new Info.Object()
             {

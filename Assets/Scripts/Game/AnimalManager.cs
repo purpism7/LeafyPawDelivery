@@ -11,12 +11,15 @@ namespace Game
             public int PlaceId = 0;
         }
         
+        private Data _data = null;
         private Info.AnimalHolder _animalHolder = new();
 
         public  List<Info.Animal> AnimalInfoList => _animalHolder?.AnimalInfoList;
 
         public override IEnumerator CoInit(Data data)
         {
+            _data = data;
+            
             _animalHolder?.LoadInfo();
 
             Debug.Log("AnimalManager CoInit");
@@ -27,6 +30,14 @@ namespace Game
         public void AddAnimalInfo(Info.Animal animalInfo)
         {
             _animalHolder?.AddAnimalInfo(animalInfo);
+        }
+
+        public void AddAnimalInfo(int animalId)
+        {
+            _animalHolder?.AddAnimalInfo(new Info.Animal()
+            {
+                Id = animalId,
+            });
         }
 
         public bool CheckExist(int animalId)

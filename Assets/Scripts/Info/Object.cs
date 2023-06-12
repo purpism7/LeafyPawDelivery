@@ -11,6 +11,5 @@ namespace Info
         public int UId = 0;
         public Vector3 Pos = Vector3.zero;
         public bool Arrangement = false;
-        public bool Own = false;
     }
 }

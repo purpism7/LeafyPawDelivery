@@ -11,6 +11,12 @@ namespace Info.Holder
             //LoadInfo();
         }
 
+#if UNITY_EDITOR
+        protected string RootJsonFilePath = "Assets";
+#else
+        protected string RootJsonFilePath = Application.persistentDataPath;
+#endif
+        
         protected abstract string JsonFilePath { get; }
         public abstract void LoadInfo();
     }

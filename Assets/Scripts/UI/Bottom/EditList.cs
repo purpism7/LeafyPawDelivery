@@ -27,6 +27,7 @@ namespace UI
         [SerializeField]
         private Toggle objectToggle = null;
 
+        private List<Component.EditAnimal> _editAnimaList = new();
         private List<Component.EditObject> _editObjectList = new();
         public Type.ETab CurrETabType { get; private set; } = Type.ETab.Animal;
 
@@ -64,20 +65,18 @@ namespace UI
 
         private void SetAnimalList()
         {
-            // _editObjectList.Clear();
+            _editAnimaList.Clear();
 
             var infoList = MainGameManager.Instance?.AnimalMgr?.AnimalInfoList;
             if(infoList == null)
-            {
                 return;
-            }
 
             foreach(var info in infoList)
             {
                 if(info == null)
                     continue;
 
-                if(info.PlaceId > 0)
+                if(info.Arrangement)
                     continue;
 
                 var data = new Component.EditAnimal.Data()

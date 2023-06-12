@@ -129,7 +129,7 @@ namespace UI
 
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
-                .Append(rectTm.DOAnchorPosY(0, 0.3f).SetEase(Ease.OutBack))
+                .Append(rectTm.DOAnchorPosY(50f, 0.3f).SetEase(Ease.OutBack))
                 .OnComplete(() =>
                 {
                     completeAction?.Invoke();

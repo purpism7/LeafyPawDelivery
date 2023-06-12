@@ -70,19 +70,8 @@ namespace GameSystem
                 if (openCondition.Starter)
                 {
                     Debug.Log("starter = " + openCondition.name );
-
-                    _unlockPopup = new PopupCreator<Unlock, Unlock.Data>()
-                        .SetData(new Unlock.Data()
-                        {
-                            EOpenType = data.EOpenType,
-                            Id = data.Id,
-                            // ClickAction = () =>
-                            // {
-                            //     Cutscene.Create(null);
-                            // },
-                        })
-                        .SetCoInit(true)
-                        .Create();
+                    
+                    CreateUnlockPopup(data);
                 }
                 
                 switch (data.EOpenType)
@@ -114,6 +103,27 @@ namespace GameSystem
             Debug.Log(_openConditionList.Count);
 
             return true;
+        }
+
+        private void CreateUnlockPopup(OpenCondition.Data data)
+        {
+            if (data == null)
+                return;
+
+            MainGameManager.Instance?.AddInfo(data.EOpenType, data.Id);
+            
+            _unlockPopup = new PopupCreator<Unlock, Unlock.Data>()
+                .SetData(new Unlock.Data()
+                {
+                    EOpenType = data.EOpenType,
+                    Id = data.Id,
+                    // ClickAction = () =>
+                    // {
+                    //     Cutscene.Create(null);
+                    // },
+                })
+                .SetCoInit(true)
+                .Create();
         }
     }
 }

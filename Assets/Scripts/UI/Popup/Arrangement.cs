@@ -60,7 +60,7 @@ namespace UI
                         Id = data.Id,
                         Name = data.Name,
                         IconSprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalIconSprite(data.ArrangementIconImg),
-                        EState = animalInfo != null ? (animalInfo.Own ? ArrangementCell.EState.Own : ArrangementCell.EState.None) : ArrangementCell.EState.Lock,
+                        Lock = animalInfo == null,
                     })
                     .SetRootRectTm(animalScrollRect.content)
                     .Create();
@@ -91,7 +91,7 @@ namespace UI
                       Id = data.Id,
                       Name = data.Name,
                       IconSprite = ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(data.ArrangementIconImg),
-                      EState = objectInfo != null ? (objectInfo.Own ? ArrangementCell.EState.Own : ArrangementCell.EState.None) : ArrangementCell.EState.Lock,
+                      Lock = objectInfo == null,
                   })
                   .SetRootRectTm(objectScrollRect.content)
                   .Create();

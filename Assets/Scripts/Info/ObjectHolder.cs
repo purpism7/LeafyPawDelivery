@@ -11,7 +11,7 @@ namespace Info
     {
         private readonly string ObjectUIdKey = "Object_UId_Key";
         
-        protected override string JsonFilePath => Application.persistentDataPath + "/Info/Object_Place_{0}.json";
+        protected override string JsonFilePath => RootJsonFilePath + "/Info/Object_Place_{0}.json";
         
         //public List<Info.Object> ObjectInfoList { get; private set; } = new();
 
@@ -61,9 +61,8 @@ namespace Info
                     return;
 
                 var jsonString = JsonHelper.ToJson(objectInfoList.ToArray());
-
-                System.IO.File.WriteAllText(string.Format(JsonFilePath, placeId), jsonString);
-
+                
+                System.IO.File.WriteAllText(JsonFilePath, jsonString);
             }
         }
 
@@ -112,7 +111,6 @@ namespace Info
             var objectInfo = GetObjectInfoByUId(objectUId, objectData.PlaceId);
             if (objectInfo == null)
                 return;
-
             
             objectInfo.Pos = Vector3.zero;
             objectInfo.Arrangement = false;

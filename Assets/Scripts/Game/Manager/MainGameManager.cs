@@ -36,7 +36,10 @@ public class MainGameManager : Singleton<MainGameManager>
         }));
 
         AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
-        yield return StartCoroutine(AnimalMgr?.CoInit(null));
+        yield return StartCoroutine(AnimalMgr?.CoInit(new Game.AnimalManager.Data
+        {
+            PlaceId = 1,
+        }));
 
         if (placeMgr != null)
         {
@@ -88,9 +91,17 @@ public class MainGameManager : Singleton<MainGameManager>
         _startEditAction = action;
     }
 
-    #region Animal
-    
-    #endregion
+    public void AddInfo(Type.EOpen eOpenType, int id)
+    {
+        if (eOpenType == Type.EOpen.Animal)
+        {
+            AnimalMgr?.AddAnimalInfo(id);
+        }
+        else if (eOpenType == Type.EOpen.Object)
+        {
+            ObjectMgr?.AddObjectInfo(id);
+        }
+    }
 
     #region Object
     public void AddObjectToPlace(Game.Object obj)

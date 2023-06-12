@@ -8,7 +8,6 @@ namespace Info
     public class Animal
     {
         public int Id = 0;
-        public int PlaceId = 0;
-        public bool Own = false;
+        public bool Arrangement = false;
     }
 }

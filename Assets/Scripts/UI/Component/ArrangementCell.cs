@@ -15,17 +15,9 @@ namespace UI.Component
             public int Id = 0;
             public string Name = string.Empty;
             public Sprite IconSprite = null;
-            public EState EState = EState.None;
+            public bool Lock = true;
         }
-
-        public enum EState
-        {
-            None,
-            
-            Lock,
-            Own,
-        }
-
+        
         public interface IListener
         {
             void Edit(int id);
@@ -46,7 +38,7 @@ namespace UI.Component
             SetIconImg();
             SetButtonState();
 
-            UIUtils.SetActive(lockRootRectTm, _data.EState == EState.Lock);
+            UIUtils.SetActive(lockRootRectTm, _data.Lock);
         }
 
         private void SetNameTMP()
@@ -61,7 +53,7 @@ namespace UI.Component
 
             iconImg.sprite = _data.IconSprite;
 
-            if (_data.EState == EState.Lock)
+            if (_data.Lock)
             {
                 UIUtils.SetSilhouetteColorImg(iconImg);
             }
@@ -73,8 +65,8 @@ namespace UI.Component
 
         private void SetButtonState()
         {
-            UIUtils.SetActive(buyBtn?.gameObject, _data.EState != EState.Own);
-            UIUtils.SetActive(arrangementBtn?.gameObject, _data.EState == EState.Own);
+            // UIUtils.SetActive(buyBtn?.gameObject, _data.Lock);
+            UIUtils.SetActive(arrangementBtn?.gameObject, !_data.Lock);
         }
 
         public void OnClickUnlock()
@@ -82,11 +74,6 @@ namespace UI.Component
             
         }
         
-        public void OnClickBuy()
-        {
-            
-        }
-
         public void OnClick()
         {
             if (_data == null)
