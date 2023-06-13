@@ -11,8 +11,7 @@ namespace GameSystem
         private int _animalId = 0;
         private string _animalName = string.Empty;
         private RectTransform _rootRectTm = null;
-        private ActivityAnimalManager.SelectActivityAnimalDelegate _selectActivityAnimalDel = null;
-  
+
         public ActivityAnimalCreator SetAnimalId(int animalId)
         {
             _animalId = animalId;
@@ -33,14 +32,7 @@ namespace GameSystem
 
             return this;
         }
-
-        public ActivityAnimalCreator SetSelectActivityAnimal(ActivityAnimalManager.SelectActivityAnimalDelegate del)
-        {
-            _selectActivityAnimalDel = del;
-
-            return this;
-        }
-
+        
         public override ActivityAnimal Create()
         {
             var activityAnimal = ResourceManager.Instance.InstantiateUI<ActivityAnimal>(_rootRectTm);
@@ -53,7 +45,6 @@ namespace GameSystem
             {
                 AnimalId = _animalId,
                 AnimalName = _animalName,
-                SelectActivityAnimalDel = _selectActivityAnimalDel,
             });
 
             return activityAnimal;

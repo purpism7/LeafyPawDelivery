@@ -7,6 +7,11 @@ namespace GameSystem
 {
     public class End : GameSystem.Processing
     {
+        protected override void Initialize()
+        {
+            
+        }
+
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
             yield return StartCoroutine(Info.UserManager.Instance.CoInit());
@@ -16,8 +21,6 @@ namespace GameSystem
             DOTween.Init();
             
             yield return new WaitForEndOfFrame();
-            
-            MainGameManager.Instance?.CheckOpenCondition();
         }
     }
 }

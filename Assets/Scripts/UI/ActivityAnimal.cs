@@ -18,7 +18,6 @@ namespace UI
             public int AnimalId = 0;
             public string AnimalName = string.Empty;
             //public System.Action<int> EnableActivityAreaAction = null;
-            public ActivityAnimalManager.SelectActivityAnimalDelegate SelectActivityAnimalDel = null;
         }
 
         public override void Initialize(Data data)
@@ -40,9 +39,6 @@ namespace UI
             {
                 return;
             }
-
-            //_data.EnableActivityAreaAction?.Invoke(_data.AnimalId);
-            _data.SelectActivityAnimalDel(_data.AnimalId);
         }
     }
 }

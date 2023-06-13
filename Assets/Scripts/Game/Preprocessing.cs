@@ -8,11 +8,17 @@ namespace GameSystem
     [Serializable]
     public class Process : MonoBehaviour
     {
-
+       
     }
 
     public abstract class Processing : Process
     {
+        private void Awake()
+        {
+            Initialize();
+        }
+
+        protected abstract void Initialize();
         public abstract IEnumerator CoProcess(IPreprocessingProvider iProvider);
     }
 

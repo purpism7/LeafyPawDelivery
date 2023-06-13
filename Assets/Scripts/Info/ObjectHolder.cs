@@ -66,14 +66,14 @@ namespace Info
             }
         }
 
-        public void AddObject(Info.Object objectInfo)
+        public bool AddObjectInfo(Info.Object objectInfo)
         {
             if (objectInfo == null)
-                return;
+                return false;
 
             var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
             if (objectData == null)
-                return;
+                return false;
 
             int objectUId = PlayerPrefs.GetInt(ObjectUIdKey, 0);
             objectInfo.UId = ++objectUId;
@@ -83,6 +83,8 @@ namespace Info
             PlayerPrefs.SetInt(ObjectUIdKey, objectUId);
 
             SaveInfo(objectData.PlaceId);
+
+            return true;
         }
 
         private void AddObject(int placeId, Object objectInfo)

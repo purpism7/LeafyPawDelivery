@@ -9,11 +9,6 @@ using GameSystem;
 
 public class MainGameManager : Singleton<MainGameManager>
 {
-    public interface ICondition
-    {
-        bool Check(int placeId);
-    }
-    
     public Game.PlaceManager placeMgr = null;
 
     public Game.ObjectManager ObjectMgr { get; private set; } = null;
@@ -28,20 +23,21 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private System.Action<Game.Base> _startEditAction = null;
 
-    private ICondition _story = null;
-    private ICondition _openCondition = null;
+    private Game.Manager.Story _story = null;
+    private Game.Manager.OpenCondition _openCondition = null;
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
     {
         yield return StartCoroutine(base.CoInit(iProvider));
 
         ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
+        AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
+
         yield return StartCoroutine(ObjectMgr?.CoInit(new Game.ObjectManager.Data
         {
             PlaceId = 1,
         }));
-
-        AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
+        
         yield return StartCoroutine(AnimalMgr?.CoInit(new Game.AnimalManager.Data
         {
             PlaceId = 1,
@@ -51,7 +47,7 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             yield return StartCoroutine(placeMgr.CoInit(null));
         }
-
+        
         _story = iProvider.Get<Game.Manager.Story>();
         _openCondition = iProvider.Get<Game.Manager.OpenCondition>();
     }
@@ -105,8 +101,6 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             ObjectMgr?.AddObjectInfo(id);
         }
-
-        _story?.Check(placeMgr.ActivityPlace.Id);
     }
 
     public bool CheckExist(Type.EOpen eOpenType, int id)
@@ -155,10 +149,5 @@ public class MainGameManager : Singleton<MainGameManager>
         Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
     }
     #endregion
-
-    public void CheckOpenCondition()
-    {
-        _openCondition?.Check(placeMgr.ActivityPlace.Id);
-    }
 }   
 

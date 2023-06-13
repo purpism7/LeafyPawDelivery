@@ -15,6 +15,11 @@ namespace GameSystem
         private Grid grid = null;
         #endregion
 
+        protected override void Initialize()
+        {
+            
+        }
+
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
             InputHandler?.Init(GameCameraCtr, grid);

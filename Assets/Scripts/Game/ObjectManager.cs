@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game 
 {
@@ -13,7 +14,7 @@ namespace Game
 
         private Data _data = null;
         private Info.ObjectHolder _objectHolder = new();
-
+            
         public List<Info.Object> ObjectInfoList
         {
             get
@@ -22,12 +23,20 @@ namespace Game
             }
         }
 
+        public UnityEvent<Info.Object> Listener { get; private set; } = new();
+
+        protected override void Initialize()
+        {
+            Debug.Log("ObjectManager Initialize");
+            
+            Listener?.RemoveAllListeners();
+        }
+
         public override IEnumerator CoInit(Data data)
         {
             _data = data;
-            //_objectInfoList.Clear();
+  
             _objectHolder?.LoadInfo();
-            //_objectInfoList.AddRange(objectHolder.ObectInfoList);
 
             yield break;
         }
@@ -44,12 +53,18 @@ namespace Game
 
         public void AddObjectInfo(int objectId)
         {
+            if (_objectHolder == null)
+                return;
+            
             var objectInfo = new Info.Object()
             {
                 Id = objectId,
             };
 
-            _objectHolder?.AddObject(objectInfo);
+            if (_objectHolder.AddObjectInfo(objectInfo))
+            {
+                Listener?.Invoke(objectInfo);
+            }
         }
 
         public bool CheckExist(int objectId)

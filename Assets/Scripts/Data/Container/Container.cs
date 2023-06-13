@@ -7,6 +7,11 @@ using UnityEngine;
 
 public class Container : GameSystem.Processing
 {
+    protected override void Initialize()
+    {
+        
+    }
+
     public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
     {
         yield return StartCoroutine(CoLoadData());

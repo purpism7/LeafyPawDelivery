@@ -27,7 +27,7 @@ namespace UI.Component
 
         [SerializeField] private RectTransform lockRootRectTm = null;
         [SerializeField] private Button arrangementBtn = null;
-        [SerializeField] private Button buyBtn = null;
+        // [SerializeField] private Button buyBtn = null;
         [SerializeField] private Image iconImg = null;
 
         public override void Initialize(Data data)
@@ -67,6 +67,11 @@ namespace UI.Component
         {
             // UIUtils.SetActive(buyBtn?.gameObject, _data.Lock);
             UIUtils.SetActive(arrangementBtn?.gameObject, !_data.Lock);
+        }
+
+        private void Unlock()
+        {
+            
         }
 
         public void OnClickUnlock()

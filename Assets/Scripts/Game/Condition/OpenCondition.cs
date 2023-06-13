@@ -10,15 +10,29 @@ using UnityEngine.Events;
 
 namespace Game.Manager
 {
-    public class OpenCondition : GameSystem.Processing, MainGameManager.ICondition
+    public class OpenCondition : GameSystem.Processing
     {
         private List<GameData.OpenCondition> _openConditionList = new();
+        private int _placeId = 0;
         
-        public UnityEvent<int> OpenCountEvent = new();
+        public UnityEvent<int> Listener { get; private set; }= new();
+
+        protected override void Initialize()
+        {
+            Listener?.RemoveAllListeners();
+
+            var mainGameMgr = MainGameManager.Instance;
+            mainGameMgr?.AnimalMgr?.Listener?.AddListener(OnChangedAnimalInfo);
+            mainGameMgr?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
+            mainGameMgr?.placeMgr?.Listener?.AddListener(OnChangedPlace);
+        }
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
             _openConditionList.Clear();
+
+            var story = iProvider.Get<Story>();
+            story?.Listener?.AddListener(OnChangedStory);
 
             yield return StartCoroutine(CoLoadOpenCondition());
         }
@@ -47,13 +61,14 @@ namespace Game.Manager
             yield return new WaitUntil(() => endLoad);
         }
 
-        bool MainGameManager.ICondition.Check(int placeId)
+        private bool Check()
         {
             foreach (var openCondition in _openConditionList)
             {
                 if(openCondition == null)
                     continue;
-                
+                //
+                // openCondition.AlreadExist = false;
                 if(openCondition.AlreadExist)
                     continue;
 
@@ -75,7 +90,7 @@ namespace Game.Manager
                             break;
 
                         var objectData = ObjectContainer.Instance.GetData(data.Id);
-                        if (placeId == objectData.PlaceId)
+                        if (_placeId == objectData.PlaceId)
                         {
                             if (objectMgr.CheckExist(data.Id))
                             {
@@ -104,8 +119,6 @@ namespace Game.Manager
                 }
             }
 
-            OpenCountEvent?.Invoke(1);
-            
             return true;
         }
 
@@ -118,7 +131,7 @@ namespace Game.Manager
             if (data == null)
                 return;
 
-            openCondition.AlreadExist = true;
+            // openCondition.AlreadExist = true;
             
             new PopupCreator<Unlock, Unlock.Data>()
                 .SetData(new Unlock.Data()
@@ -133,5 +146,27 @@ namespace Game.Manager
                 .SetCoInit(true)
                 .Create();
         }
+
+        #region Listener
+        private void OnChangedAnimalInfo(Info.Animal animalInfo)
+        {
+            
+        }
+        
+        private void OnChangedObjectInfo(Info.Object objectInfo)
+        {
+            
+        }
+
+        private void OnChangedStory(Story.Data storyData)
+        {
+            Debug.Log(storyData.EState);
+        }
+
+        private void OnChangedPlace(int placeId)
+        {
+            _placeId = placeId;
+        }
+        #endregion
     }
 }

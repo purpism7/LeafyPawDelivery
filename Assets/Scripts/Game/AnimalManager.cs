@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game
 {
@@ -15,6 +16,14 @@ namespace Game
         private Info.AnimalHolder _animalHolder = new();
 
         public  List<Info.Animal> AnimalInfoList => _animalHolder?.AnimalInfoList;
+        public UnityEvent<Info.Animal> Listener { get; private set; } = new();
+
+        protected override void Initialize()
+        {
+            Debug.Log("AnimalManager Initialize");
+            
+            Listener.RemoveAllListeners();
+        }
 
         public override IEnumerator CoInit(Data data)
         {
@@ -23,21 +32,35 @@ namespace Game
             _animalHolder?.LoadInfo();
 
             Debug.Log("AnimalManager CoInit");
-
+            
             yield break;
         }
 
         public void AddAnimalInfo(Info.Animal animalInfo)
         {
-            _animalHolder?.AddAnimalInfo(animalInfo);
+            if (_animalHolder == null)
+                return;
+            
+            if (_animalHolder.AddAnimalInfo(animalInfo))
+            {
+                Listener?.Invoke(animalInfo);
+            }
         }
 
         public void AddAnimalInfo(int animalId)
         {
-            _animalHolder?.AddAnimalInfo(new Info.Animal()
+            if (_animalHolder == null)
+                return;
+            
+            var animalInfo = new Info.Animal()
             {
                 Id = animalId,
-            });
+            };
+
+            if (_animalHolder.AddAnimalInfo(animalInfo))
+            {
+                Listener?.Invoke(animalInfo);
+            }
         }
 
         public bool CheckExist(int animalId)

@@ -2,17 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using GameSystem;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Manager
 {
-    public class Story : GameSystem.Processing, MainGameManager.ICondition
+    public class Story : GameSystem.Processing
     {
+        public enum EState
+        {
+            None,
+            
+            Start,
+            End,
+        }
+
+        public class Data
+        {
+            public int Id = 0;
+            public EState EState = EState.None;
+        }
+        
         private Dictionary<int, GameData.Story> _storyDic = new();
+        private int _placeId = 0;
+        
+        public UnityEvent<Data> Listener = new();
+
+        protected override void Initialize()
+        {
+            _storyDic.Clear();
+            
+            var mainGameMgr = MainGameManager.Instance;
+            mainGameMgr?.placeMgr?.Listener?.AddListener(OnChangedPlace);
+        }
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
-            _storyDic.Clear();
-
             yield return StartCoroutine(CoLoadStory());
         }
         
@@ -40,13 +64,13 @@ namespace Game.Manager
             yield return new WaitUntil(() => endLoad);
         }
 
-        bool MainGameManager.ICondition.Check(int placeId)
+        private bool Check()
         {
             var mainGameMgr = MainGameManager.Instance;
             if (mainGameMgr == null)
                 return false;
             
-            if (_storyDic.TryGetValue(placeId, out GameData.Story story))
+            if (_storyDic.TryGetValue(_placeId, out GameData.Story story))
             {
                 if (story == null)
                     return false;
@@ -83,13 +107,8 @@ namespace Game.Manager
    
                     if (check)
                     {
-                        Cutscene.Create(new Cutscene.Data()
-                        {
-                            Id = i + 1,
-                            TargetGameObj = data.PlayStory,
-                            EndAction = EndStory,
-                        });
-
+                        StartStory(i + 1, data.PlayStory);
+                        
                         break;
                     }
                 }
@@ -98,14 +117,34 @@ namespace Game.Manager
             return false;
         }
 
+        private void StartStory(int storyId, GameObject gameObj)
+        {
+            Cutscene.Create(new Cutscene.Data()
+            {
+                Id = storyId,
+                TargetGameObj = gameObj,
+                EndAction = EndStory,
+            });
+                        
+            Listener?.Invoke(new Data()
+            {
+                Id = storyId,
+                EState = EState.Start,
+            });
+        }
+
         private void EndStory(int storyId)
         {
-            Debug.Log(storyId);
-            var mainGameMgr = MainGameManager.Instance;
-            if (mainGameMgr == null)
-                return;
-            
-            mainGameMgr?.CheckOpenCondition();
+            Listener?.Invoke(new Data()
+            {
+                Id = storyId,
+                EState = EState.End,
+            });
+        }
+        
+        private void OnChangedPlace(int placeId)
+        {
+            _placeId = placeId;
         }
     }
 }

@@ -35,17 +35,19 @@ namespace Info
             System.IO.File.WriteAllText(JsonFilePath, jsonString);
         }
 
-        public void AddAnimalInfo(Info.Animal animalInfo)
+        public bool AddAnimalInfo(Info.Animal animalInfo)
         {
             if (animalInfo == null)
-                return;
+                return false;
 
             if (GetAnimalInfo(animalInfo.Id) != null)
-                return;
+                return false;
             
             AnimalInfoList.Add(animalInfo);
             
             SaveInfo();
+
+            return true;
         }
         
         public Info.Animal GetAnimalInfo(int animalId)

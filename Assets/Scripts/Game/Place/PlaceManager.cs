@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 
 using GameSystem;
+using UnityEngine.Events;
 
 namespace Game
 {
@@ -17,8 +18,17 @@ namespace Game
         public Transform RootTm;
 
         private List<Place> _placeList = new List<Place>();
-
+        
         public Place ActivityPlace { get; private set; } = null;
+
+        public UnityEvent<int> Listener { get; private set; } = new();
+
+        protected override void Initialize()
+        {
+            Debug.Log("PlaceManager Initialize");
+            
+            Listener?.RemoveAllListeners();
+        }
 
         public override IEnumerator CoInit(Data data)
         {
@@ -30,6 +40,8 @@ namespace Game
                 .Create();
 
             _placeList.Add(ActivityPlace);
+            
+            Listener?.Invoke(1);
 
             yield break;
         }

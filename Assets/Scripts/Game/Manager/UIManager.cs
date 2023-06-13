@@ -27,8 +27,6 @@ namespace Game
             });
             
             var openConditionMgr = iProvider.Get<Game.Manager.OpenCondition>();
-            openConditionMgr?.OpenCountEvent.RemoveListener(OpenCountListener);
-            openConditionMgr?.OpenCountEvent.AddListener(OpenCountListener);
 
             yield return null;
         }
