@@ -44,7 +44,6 @@ public static class UIUtils
         if (atlasLoader == null)
             return;
 
-
         iconImg.sprite = atlasLoader?.GetSprite(atlasLoader.KeyAnimalIcon, name);
     }
 

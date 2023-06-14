@@ -5,40 +5,40 @@
             "PlaceId": 1,
             "Name": "Rabbit",
             "Desc": null,
-            "ArrangementIconImg": "EditIcon_Map01_Char_01",
-            "BookIconImg": "BookIcon_Map01_Char_01"
+            "ShortIconImgName": "EditIcon_Map01_Char_01",
+            "LargeIconImgName": "BookIcon_Map01_Char_01"
         },
         {
             "Id": 2,
             "PlaceId": 1,
             "Name": "Cat",
             "Desc": null,
-            "ArrangementIconImg": "EditIcon_Map01_Char_02",
-            "BookIconImg": "BookIcon_Map01_Char_02"
+            "ShortIconImgName": "EditIcon_Map01_Char_02",
+            "LargeIconImgName": "BookIcon_Map01_Char_02"
         },
         {
             "Id": 3,
             "PlaceId": 1,
             "Name": "Dog",
             "Desc": null,
-            "ArrangementIconImg": "EditIcon_Map01_Char_03",
-            "BookIconImg": "BookIcon_Map01_Char_03"
+            "ShortIconImgName": "EditIcon_Map01_Char_03",
+            "LargeIconImgName": "BookIcon_Map01_Char_03"
         },
         {
             "Id": 4,
             "PlaceId": 1,
             "Name": null,
             "Desc": null,
-            "ArrangementIconImg": "EditIcon_Map01_Char_04",
-            "BookIconImg": "BookIcon_Map01_Char_04"
+            "ShortIconImgName": "EditIcon_Map01_Char_04",
+            "LargeIconImgName": "BookIcon_Map01_Char_04"
         },
         {
             "Id": 5,
             "PlaceId": 1,
             "Name": null,
             "Desc": null,
-            "ArrangementIconImg": "EditIcon_Map01_Char_05",
-            "BookIconImg": "BookIcon_Map01_Char_05"
+            "ShortIconImgName": "EditIcon_Map01_Char_05",
+            "LargeIconImgName": "BookIcon_Map01_Char_05"
         }
     ]
 }

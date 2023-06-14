@@ -11,8 +11,10 @@ namespace UI.Component
         public class Data : BaseData
         {
             public IListener IListener = null;
+
+            public int Id = 0;
+            public Type.EMain EMain = Type.EMain.None;
             public string Name = string.Empty;
-            public Sprite IconSprite = null;
         }
 
         public interface IListener
@@ -22,7 +24,7 @@ namespace UI.Component
 
         [SerializeField] private TextMeshProUGUI nameTMP;
         [SerializeField] private Image iconImg;
-
+        
         public override void Initialize(Data data)
         {
             base.Initialize(data);
@@ -44,7 +46,7 @@ namespace UI.Component
             if (iconImg == null)
                 return;
 
-            iconImg.sprite = _data.IconSprite;
+            iconImg.sprite = GameUtils.GetLargeIconSprite(_data.EMain, _data.Id);
         }
 
         public void OnClick()

@@ -4,99 +4,99 @@
             "Id": 1,
             "PlaceId": 1,
             "Name": "tree",
-            "ArrangementIconImg": "EditIcon_Map01_Object_01",
-            "BookIconImg": "BookIcon_Map01_Object_01"
+            "ShortIconImgName": "EditIcon_Map01_Object_01",
+            "LargeIconImgName": "BookIcon_Map01_Object_01"
         },
         {
             "Id": 2,
             "PlaceId": 1,
             "Name": "rock",
-            "ArrangementIconImg": "EditIcon_Map01_Object_02",
-            "BookIconImg": "BookIcon_Map01_Object_02"
+            "ShortIconImgName": "EditIcon_Map01_Object_02",
+            "LargeIconImgName": "BookIcon_Map01_Object_02"
         },
         {
             "Id": 3,
             "PlaceId": 1,
             "Name": "bush",
-            "ArrangementIconImg": "EditIcon_Map01_Object_03",
-            "BookIconImg": "BookIcon_Map01_Object_03"
+            "ShortIconImgName": "EditIcon_Map01_Object_03",
+            "LargeIconImgName": "BookIcon_Map01_Object_03"
         },
         {
             "Id": 4,
             "PlaceId": 1,
             "Name": "Flower",
-            "ArrangementIconImg": "EditIcon_Map01_Object_04",
-            "BookIconImg": "BookIcon_Map01_Object_04"
+            "ShortIconImgName": "EditIcon_Map01_Object_04",
+            "LargeIconImgName": "BookIcon_Map01_Object_04"
         },
         {
             "Id": 5,
             "PlaceId": 1,
             "Name": null,
-            "ArrangementIconImg": "EditIcon_Map01_Object_05",
-            "BookIconImg": "BookIcon_Map01_Object_05"
+            "ShortIconImgName": "EditIcon_Map01_Object_05",
+            "LargeIconImgName": "BookIcon_Map01_Object_05"
         },
         {
             "Id": 6,
             "PlaceId": 1,
             "Name": null,
-            "ArrangementIconImg": "EditIcon_Map01_Object_06",
-            "BookIconImg": "BookIcon_Map01_Object_06"
+            "ShortIconImgName": "EditIcon_Map01_Object_06",
+            "LargeIconImgName": "BookIcon_Map01_Object_06"
         },
         {
             "Id": 7,
             "PlaceId": 1,
             "Name": null,
-            "ArrangementIconImg": "EditIcon_Map01_Object_07",
-            "BookIconImg": "BookIcon_Map01_Object_07"
+            "ShortIconImgName": "EditIcon_Map01_Object_07",
+            "LargeIconImgName": "BookIcon_Map01_Object_07"
         },
         {
             "Id": 8,
             "PlaceId": 1,
             "Name": null,
-            "ArrangementIconImg": "EditIcon_Map01_Object_08",
-            "BookIconImg": "BookIcon_Map01_Object_08"
+            "ShortIconImgName": "EditIcon_Map01_Object_08",
+            "LargeIconImgName": "BookIcon_Map01_Object_08"
         },
         {
             "Id": 9,
             "PlaceId": 1,
             "Name": null,
-            "ArrangementIconImg": "EditIcon_Map01_Object_09",
-            "BookIconImg": "BookIcon_Map01_Object_09"
+            "ShortIconImgName": "EditIcon_Map01_Object_09",
+            "LargeIconImgName": "BookIcon_Map01_Object_09"
         },
         {
             "Id": 10,
             "PlaceId": 1,
             "Name": null,
-            "ArrangementIconImg": "EditIcon_Map01_Object_10",
-            "BookIconImg": "BookIcon_Map01_Object_10"
+            "ShortIconImgName": "EditIcon_Map01_Object_10",
+            "LargeIconImgName": "BookIcon_Map01_Object_10"
         },
         {
             "Id": 11,
             "PlaceId": 1,
             "Name": null,
-            "ArrangementIconImg": "EditIcon_Map01_Object_11",
-            "BookIconImg": "BookIcon_Map01_Object_11"
+            "ShortIconImgName": "EditIcon_Map01_Object_11",
+            "LargeIconImgName": "BookIcon_Map01_Object_11"
         },
         {
             "Id": 12,
             "PlaceId": 1,
             "Name": null,
-            "ArrangementIconImg": "EditIcon_Map01_Object_12",
-            "BookIconImg": "BookIcon_Map01_Object_12"
+            "ShortIconImgName": "EditIcon_Map01_Object_12",
+            "LargeIconImgName": "BookIcon_Map01_Object_12"
         },
         {
             "Id": 13,
             "PlaceId": 1,
             "Name": null,
-            "ArrangementIconImg": "EditIcon_Map01_Object_13",
-            "BookIconImg": "BookIcon_Map01_Object_13"
+            "ShortIconImgName": "EditIcon_Map01_Object_13",
+            "LargeIconImgName": "BookIcon_Map01_Object_13"
         },
         {
             "Id": 14,
             "PlaceId": 1,
             "Name": null,
-            "ArrangementIconImg": "EditIcon_Map01_Object_14",
-            "BookIconImg": "BookIcon_Map01_Object_14"
+            "ShortIconImgName": "EditIcon_Map01_Object_14",
+            "LargeIconImgName": "BookIcon_Map01_Object_14"
         }
     ]
 }

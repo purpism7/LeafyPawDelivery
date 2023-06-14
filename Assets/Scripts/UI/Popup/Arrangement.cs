@@ -8,9 +8,6 @@ using Data;
 using GameData;
 using GameSystem;
 using UI.Component;
-using Unity.VisualScripting;
-using static UI.Arrangement;
-using static UnityEngine.AdaptivePerformance.Provider.AdaptivePerformanceSubsystemDescriptor;
 
 namespace UI
 {
@@ -27,9 +24,16 @@ namespace UI
 
         private Type.ETab _currETabType = Type.ETab.Animal;
 
+        private List<ArrangementCell> _arrangementCellList = new();
+
         public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
+            
+            MainGameManager.Instance?.AnimalMgr?.Listener?.AddListener(OnChangedAnimalInfo);
+            MainGameManager.Instance?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
+            
+            _arrangementCellList.Clear();
             
             SetAnimalList();
             SetObjectList();
@@ -47,6 +51,11 @@ namespace UI
             {
                 tabToggle.SetIsOnWithoutNotify(true);
             }
+        }
+        
+        public override void Deactivate()
+        {
+            base.Deactivate();
         }
 
         private void SetAnimalList()
@@ -70,14 +79,16 @@ namespace UI
                     .SetData(new ArrangementCell.Data()
                     {
                         IListener = this,
+                        
                         Id = data.Id,
                         EMain = Type.EMain.Animal,
                         Name = data.Name,
-                        IconSprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalIconSprite(data.ArrangementIconImg),
                         Lock = animalInfo == null,
                     })
                     .SetRootRectTm(animalScrollRect.content)
                     .Create();
+                
+                _arrangementCellList.Add(component);
             }
         }
 
@@ -102,14 +113,16 @@ namespace UI
                   .SetData(new ArrangementCell.Data()
                   {
                       IListener = this,
+                      
                       Id = data.Id,
-                      EMain = Type.EMain.Animal,
+                      EMain = Type.EMain.Object,
                       Name = data.Name,
-                      IconSprite = ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(data.ArrangementIconImg),
                       Lock = objectInfo == null,
                   })
                   .SetRootRectTm(objectScrollRect.content)
                   .Create();
+                
+                _arrangementCellList.Add(component);
             }
         }
 
@@ -119,9 +132,31 @@ namespace UI
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
         }
 
-        public override void Deactivate()
+        private void Unlock(Type.EMain eMain, int id)
         {
-            base.Deactivate();
+            if (_arrangementCellList == null)
+                return;
+
+            foreach (var arrangementCell in _arrangementCellList)
+            {
+                arrangementCell?.Unlock(eMain, id);
+            }
+        }
+        
+        private void OnChangedAnimalInfo(Info.Animal animalInfo)
+        {
+            if (animalInfo == null)
+                return;
+            
+            Unlock(Type.EMain.Animal, animalInfo.Id);
+        }
+        
+        private void OnChangedObjectInfo(Info.Object objectInfo)
+        {
+            if (objectInfo == null)
+                return;
+            
+            Unlock(Type.EMain.Object, objectInfo.Id);
         }
 
         public void OnChanged(string tabType)

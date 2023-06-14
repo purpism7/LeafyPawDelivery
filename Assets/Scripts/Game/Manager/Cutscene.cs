@@ -41,10 +41,9 @@ namespace Game.Manager
 
         public class Data
         {
-            public int Id = 0;
             public GameObject TargetGameObj = null;
             public Func<bool> EndFunc = null;
-            public Action<int> EndAction = null;
+            public Action EndAction = null;
         }
 
         [SerializeField] private Transform timelineRootTm = null;
@@ -149,7 +148,7 @@ namespace Game.Manager
                 
                 Fade.Create.In(() =>
                 {
-                    _data.EndAction(_data.Id);
+                    _data.EndAction();
                     
                     Destroy(gameObject);
                 });

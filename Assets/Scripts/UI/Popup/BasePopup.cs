@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
-using Game;
 using UnityEngine;
+
+using DG.Tweening;
+
+using Game;
 
 namespace UI
 {

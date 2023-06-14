@@ -18,7 +18,6 @@ namespace UI.Component
             public int Id = 0;
             public Type.EMain EMain = Type.EMain.None; 
             public string Name = string.Empty;
-            public Sprite IconSprite = null;
             public bool Lock = true;
         }
         
@@ -31,7 +30,6 @@ namespace UI.Component
 
         [SerializeField] private RectTransform lockRootRectTm = null;
         [SerializeField] private Button arrangementBtn = null;
-        // [SerializeField] private Button buyBtn = null;
         [SerializeField] private Image iconImg = null;
 
         public override void Initialize(Data data)
@@ -41,7 +39,7 @@ namespace UI.Component
             SetNameTMP();
             SetIconImg();
             SetButtonState();
-
+            
             UIUtils.SetActive(lockRootRectTm, _data.Lock);
         }
 
@@ -55,7 +53,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            iconImg.sprite = _data.IconSprite;
+            iconImg.sprite = GameUtils.GetShortIconSprite(_data.EMain, _data.Id);
 
             if (_data.Lock)
             {
@@ -73,7 +71,7 @@ namespace UI.Component
             UIUtils.SetActive(arrangementBtn?.gameObject, !_data.Lock);
         }
 
-        private void Unlock()
+        private void CreateUnlockPopup()
         {
             if (_data == null)
                 return;
@@ -97,14 +95,38 @@ namespace UI.Component
                             },
                         })
                         .SetCoInit(true)
+                        .SetReInitialize(true)
                         .Create();
+                }
+                else
+                {
+                    Debug.Log("오픈 조건 미 충족.");
                 }
             }
         }
 
+        public void Unlock(Type.EMain eMain, int id)
+        {
+            if (_data == null)
+                return;
+
+            if (_data.EMain != eMain)
+                return;
+
+            if (_data.Id != id)
+                return;
+            
+            _data.Lock = false;
+            
+            SetIconImg();
+            SetButtonState();
+            
+            UIUtils.SetActive(lockRootRectTm, _data.Lock);
+        }
+        
         public void OnClickUnlock()
         {
-            Unlock();
+            CreateUnlockPopup();
         }
         
         public void OnClick()

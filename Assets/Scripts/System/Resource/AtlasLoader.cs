@@ -8,7 +8,7 @@ namespace GameSystem
     public class AtlasLoader
     {
         readonly public string KeyAnimalIcon = "AnimalIcon";
-        readonly private string KeyObjectIcon = "ObjectIcon";
+        readonly public string KeyObjectIcon = "ObjectIcon";
 
         private Dictionary<string, SpriteAtlas> _spriteAtlasDic = new();
 

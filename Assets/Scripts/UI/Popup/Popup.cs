@@ -18,7 +18,7 @@ namespace UI
         private List<UI.Base> _opendPopupList = new();
         private Stack<UI.Base> _popupStack = new();
 
-        public T Instantiate<T, V>(V vData, bool coInit) 
+        public T Instantiate<T, V>(V vData, bool coInit, bool reInitialize) 
             where T :UI.Base<V> where V : BaseData
         {
             T resPopup = null;
@@ -30,12 +30,15 @@ namespace UI
                     var basePopup = uiBase.GetComponent<UI.BasePopup<V>>();
                     if (basePopup != null)
                     {
-                        resPopup = basePopup.GetComponent<T>();
+                        if (!reInitialize)
+                        {
+                            resPopup = basePopup.GetComponent<T>();
                         
-                        AnimActivatePopup<T, V>(uiBase);
+                            AnimActivatePopup<T, V>(uiBase);
+                            
+                            return resPopup;
+                        }
                     }
-
-                    return resPopup;
                 }
             }
             
@@ -52,14 +55,18 @@ namespace UI
         private IEnumerator CoInstantiate<T, V>(System.Action<T> returnAction, V vData, bool coInit)  
             where T :UI.Base<V> where V : BaseData
         {
-            var gameObj = ResourceManager.Instance.InstantiateUIGameObj<T>(popupRootRectTm);
-            if(!gameObj)
-                yield break;    
+            UI.Base uIBase = null;
+            if (!CheckGetOpendPopup<T>(out uIBase))
+            {
+                var gameObj = ResourceManager.Instance.InstantiateUIGameObj<T>(popupRootRectTm);
+                if(!gameObj)
+                    yield break;    
             
-            var uiBase = gameObj.GetComponent<UI.Base>();
-            _opendPopupList.Add(uiBase);
-
-            var basePopup = uiBase.GetComponent<UI.BasePopup<V>>();
+                uIBase = gameObj.GetComponent<UI.Base>();
+                _opendPopupList.Add(uIBase);
+            }
+            
+            var basePopup = uIBase.GetComponent<UI.BasePopup<V>>();
             if (basePopup == null)
                 yield break;
             
@@ -67,7 +74,9 @@ namespace UI
             if (popup == null)
                 yield break;
                 
-            basePopup.Deactivate();
+            // basePopup.Deactivate();
+            
+            UIUtils.SetActive(basePopup.rootRectTm, false);
                 
             returnAction?.Invoke(popup);
 
@@ -80,9 +89,9 @@ namespace UI
                 popup.Initialize(vData);
             }
             
-            AnimActivatePopup<T, V>(uiBase);
+            AnimActivatePopup<T, V>(uIBase);
         }
-
+        
         private void AnimActivatePopup<T, V>(UI.Base uiBase) where T :UI.Base<V> where V : BaseData
         {
             if (uiBase == null)

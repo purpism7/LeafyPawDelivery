@@ -79,7 +79,7 @@ namespace Game.Manager
 
                 if (story.Datas == null)
                     return false;
- 
+
                 for (int i = 0; i < story.Datas.Length; ++i)
                 {
                     var data = story.Datas[i];
@@ -112,8 +112,8 @@ namespace Game.Manager
    
                     if (check)
                     {
-                        StartStory(i + 1, data.PlayStory);
-                        
+                        StartStory(i + 1, data);
+
                         break;
                     }
                 }
@@ -122,13 +122,18 @@ namespace Game.Manager
             return false;
         }
 
-        private void StartStory(int storyId, GameObject gameObj)
+        private void StartStory(int storyId, GameData.Story.Data storyData)
         {
+            if (storyData == null)
+                return;
+            
             Cutscene.Create(new Cutscene.Data()
             {
-                Id = storyId,
-                TargetGameObj = gameObj,
-                EndAction = EndStory,
+                TargetGameObj = storyData.PlayStory,
+                EndAction = () =>
+                {
+                    EndStory(storyId, storyData);
+                },
             });
                         
             Listener?.Invoke(new Data()
@@ -138,15 +143,45 @@ namespace Game.Manager
             });
         }
 
-        private void EndStory(int storyId)
+        private void EndStory(int storyId, GameData.Story.Data storyData)
         {
+            if (storyData == null)
+                return;
+            
             Listener?.Invoke(new Data()
             {
                 Id = storyId,
                 EState = EState.End,
             });
+
+            storyData.Completed = true;
         }
-        
+
+        public bool CheckCompleted(int storyId)
+        {
+            if (_storyDic.TryGetValue(_placeId, out GameData.Story story))
+            {
+                if (story == null)
+                    return false;
+
+                if (story.Datas == null)
+                    return false;
+
+                int index = storyId - 1;
+                if (story.Datas.Length <= index ||
+                    0 < index)
+                    return false;
+
+                var storyData = story.Datas[index];
+                if (storyData == null)
+                    return false;
+                
+                return storyData.Completed;
+            }
+
+            return false;
+        }
+
         #region Listener
         private void OnChangedAnimalInfo(Info.Animal animalInfo)
         {

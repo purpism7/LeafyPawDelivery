@@ -119,7 +119,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         return false;
     }
-
+    
     #region Object
     public void AddObjectToPlace(Game.Object obj)
     {

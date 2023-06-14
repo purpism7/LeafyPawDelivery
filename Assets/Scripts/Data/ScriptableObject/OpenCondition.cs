@@ -21,7 +21,7 @@ namespace GameData
         public int ReqLeaf = 0;
         public Data[] ReqDatas = null;
         
-        public bool AlreadExist { get; set; } = false;
+        public bool Exist { get; set; } = false;
     }
 }
 

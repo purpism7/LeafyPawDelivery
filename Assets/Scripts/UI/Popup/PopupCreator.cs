@@ -11,6 +11,8 @@ namespace GameSystem
         private V _data = null;
 
         private bool _coInit = false;
+
+        private bool _reInitialize = false;
         // private RectTransform _rootRecTm = null;
 
         public PopupCreator<T, V> SetData(V vData)
@@ -27,9 +29,16 @@ namespace GameSystem
             return this;
         }
         
+        public PopupCreator<T, V> SetReInitialize(bool reInitialize)
+        {
+            _reInitialize = reInitialize;
+
+            return this;
+        }
+
         public override T Create()
         {
-            var popup = Game.UIManager.Instance?.Popup?.Instantiate<T, V>(_data, _coInit);
+            var popup = Game.UIManager.Instance?.Popup?.Instantiate<T, V>(_data, _coInit, _reInitialize);
             if (popup == null)
                 return default(T);
                                                                     

@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+using TMPro;
 
 namespace UI
 {
@@ -22,8 +23,9 @@ namespace UI
         public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
-            
-            
+
+            SetIconImg();
+            SetNameTMP();
         }
 
         public override void Activate()
@@ -47,7 +49,22 @@ namespace UI
 
         private void SetIconImg()
         {
-               
+            if (_data == null)
+                return;
+
+            if (iconImg == null)
+                return;
+
+            var sprite = GameUtils.GetLargeIconSprite(_data.EMain, _data.Id);
+            iconImg.sprite = sprite;
+        }
+
+        private void SetNameTMP()
+        {
+            if (_data == null)
+                return;
+            
+            nameTMP?.SetText(GameUtils.GetName(_data.EMain, _data.Id));
         }
 
         public void OnClick()

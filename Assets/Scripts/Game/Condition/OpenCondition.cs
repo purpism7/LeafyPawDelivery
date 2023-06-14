@@ -72,7 +72,7 @@ namespace Game.Manager
                     continue;
                 //
                 // openCondition.AlreadExist = false;
-                if(openCondition.AlreadExist)
+                if(openCondition.Exist)
                     continue;
 
                 var data = openCondition.Data_;
@@ -147,6 +147,7 @@ namespace Game.Manager
                         },
                     })
                     .SetCoInit(true)
+                    .SetReInitialize(true)
                     .Create();
                 
             }
@@ -168,7 +169,7 @@ namespace Game.Manager
                 if (openCondition == null)
                     continue;
                 
-                if(openCondition.AlreadExist)
+                if(openCondition.Exist)
                     continue;
 
                 var data = openCondition.Data_;
@@ -192,9 +193,37 @@ namespace Game.Manager
                         if(reqData == null)
                             continue;
 
-                        if (Enum.TryParse(reqData.EOpenType.ToString(), out Type.EMain eMain))
+                        switch (reqData.EOpenType)
                         {
-                            if (!mainGameMgr.CheckExist(eMain, reqData.Id))
+                            case Type.EOpen.Story:
+                            {
+                                var story = mainGameMgr.Story;
+                                if (story == null)
+                                    return false;
+                                
+                                if (!mainGameMgr.Story.CheckCompleted(id))
+                                {
+                                    return false;
+                                }
+                                
+                                break;
+                            }
+                            
+                            case Type.EOpen.Animal:
+                            case Type.EOpen.Object:
+                            {
+                                if (Enum.TryParse(reqData.EOpenType.ToString(), out Type.EMain eMain))
+                                {
+                                    if (!mainGameMgr.CheckExist(eMain, reqData.Id))
+                                    {
+                                        return false;
+                                    }
+                                }
+                                
+                                break;
+                            }
+
+                            default:
                             {
                                 return false;
                             }
@@ -211,17 +240,17 @@ namespace Game.Manager
         #region Listener
         private void OnChangedAnimalInfo(Info.Animal animalInfo)
         {
-            Debug.Log("OnChangedAnimalInfo = " + animalInfo.Id);
+            Debug.Log("OnChanged AnimalInfo = " + animalInfo.Id);
         }
         
         private void OnChangedObjectInfo(Info.Object objectInfo)
         {
-            
+            Debug.Log("OnChanged ObjectInfo = " + objectInfo.Id);
         }
 
         private void OnChangedStory(Story.Data storyData)
         {
-            Debug.Log(storyData.EState);
+            Debug.Log(storyData.EState + " / Id = " + storyData.Id);
         }
 
         private void OnChangedPlace(int placeId)

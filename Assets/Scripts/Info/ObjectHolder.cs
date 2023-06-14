@@ -19,8 +19,6 @@ namespace Info
 
         public override void LoadInfo()
         {
-            //ObjectInfoList.Clear();
-
             _objectInfoDic.Clear();
 
             for(int i = 1; i < 10; ++i)
@@ -61,8 +59,9 @@ namespace Info
                     return;
 
                 var jsonString = JsonHelper.ToJson(objectInfoList.ToArray());
+                var jsonFilePath = string.Format(JsonFilePath, placeId);
                 
-                System.IO.File.WriteAllText(JsonFilePath, jsonString);
+                System.IO.File.WriteAllText(jsonFilePath, jsonString);
             }
         }
 

@@ -40,7 +40,19 @@ namespace UI
             SetAnimalList();
             SetObjectList();
 
+           MainGameManager.Instance?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+            
             ActiveContents();
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
         }
 
         private void SetAnimalList()
@@ -55,8 +67,10 @@ namespace UI
                     .SetData(new BookCell.Data()
                     {
                         IListener = this,
+                        
+                        Id = data.Id,
+                        EMain = Type.EMain.Animal,
                         Name = data.Name,
-                        IconSprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalIconSprite(data.BookIconImg),
                     })
                     .SetRootRectTm(animalScrollRect?.content)
                     .Create();
@@ -75,8 +89,10 @@ namespace UI
                     .SetData(new BookCell.Data()
                     {
                         IListener = this,
+                        
+                        Id = data.Id,
+                        EMain = Type.EMain.Object,
                         Name = data.Name,
-                        IconSprite = ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(data.BookIconImg),
                     })
                     .SetRootRectTm(objectScrollRect?.content)
                     .Create();
@@ -89,11 +105,16 @@ namespace UI
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
         }
 
-        public override void Deactivate()
+        private void OnChangedAnimalInfo(Info.Animal animalInfo)
         {
-            base.Deactivate();
+            
         }
         
+        private void OnChangedObjectInfo(Info.Object objectInfo)
+        {
+            
+        }
+
         public void OnChanged(string tabType)
         {
             if(System.Enum.TryParse(tabType, out Type.ETab eTabType))
