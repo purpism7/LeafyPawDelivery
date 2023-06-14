@@ -670,7 +670,6 @@ MonoBehaviour:
   nameTMP: {fileID: 3135873274105291789}
   lockRootRectTm: {fileID: 3808354688377789990}
   arrangementBtn: {fileID: 2205301942068251714}
-  buyBtn: {fileID: 4283878143574396423}
   iconImg: {fileID: 104543042166436535}
 --- !u!1 &4537128303235262610
 GameObject:
@@ -984,9 +983,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI.Component.ArrangementAnimalCell, Assembly-CSharp
-        m_MethodName: OnClick
+      - m_Target: {fileID: 4454048119561390549}
+        m_TargetAssemblyTypeName: UI.Component.ArrangementCell, Assembly-CSharp
+        m_MethodName: OnClickUnlock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

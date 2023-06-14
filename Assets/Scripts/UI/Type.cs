@@ -9,6 +9,14 @@ public class Type
         Animal,
         Object,
     }
+
+    public enum EMain
+    {
+        None,
+        
+        Animal,
+        Object,
+    }
     
     public enum EScene
     {

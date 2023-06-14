@@ -12,6 +12,11 @@ namespace Game
         public UI.Bottom Bottom;
         public UI.Popup Popup;
 
+        protected override void Initialize()
+        {
+            
+        }
+        
         public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
         {
             yield return StartCoroutine(base.CoInit(iProvider));

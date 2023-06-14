@@ -1,12 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-using GameData;
 using GameSystem;
 using Info;
 using UI;
-using UnityEngine.Events;
+
 
 namespace Game.Manager
 {
@@ -17,7 +18,7 @@ namespace Game.Manager
         
         public UnityEvent<int> Listener { get; private set; }= new();
 
-        protected override void Initialize()
+        public override void Initialize()
         {
             Listener?.RemoveAllListeners();
 
@@ -35,6 +36,10 @@ namespace Game.Manager
             story?.Listener?.AddListener(OnChangedStory);
 
             yield return StartCoroutine(CoLoadOpenCondition());
+
+            yield return new WaitForEndOfFrame();
+
+            Check();
         }
         
         private IEnumerator CoLoadOpenCondition()
@@ -81,42 +86,42 @@ namespace Game.Manager
                     CreateUnlockPopup(openCondition);
                 }
                 
-                switch (data.EOpenType)
-                {
-                    case Type.EOpen.Object:
-                    {
-                        var objectMgr = MainGameManager.Instance?.ObjectMgr;
-                        if (objectMgr == null)
-                            break;
-
-                        var objectData = ObjectContainer.Instance.GetData(data.Id);
-                        if (_placeId == objectData.PlaceId)
-                        {
-                            if (objectMgr.CheckExist(data.Id))
-                            {
-                                
-                            }
-                        }
-                        
-                        break;
-                    }
-                    
-                    case Type.EOpen.Animal:
-                    {
-                        break;
-                    }
-                   
-
-                    case Type.EOpen.Story:
-                    {
-                        
-                        break;
-                    }
-                        
-                    
-                    default:
-                        break;
-                }
+                // switch (data.EOpenType)
+                // {
+                //     case Type.EOpen.Object:
+                //     {
+                //         var objectMgr = MainGameManager.Instance?.ObjectMgr;
+                //         if (objectMgr == null)
+                //             break;
+                //
+                //         var objectData = ObjectContainer.Instance.GetData(data.Id);
+                //         if (_placeId == objectData.PlaceId)
+                //         {
+                //             if (objectMgr.CheckExist(data.Id))
+                //             {
+                //                 
+                //             }
+                //         }
+                //         
+                //         break;
+                //     }
+                //     
+                //     case Type.EOpen.Animal:
+                //     {
+                //         break;
+                //     }
+                //    
+                //
+                //     case Type.EOpen.Story:
+                //     {
+                //         
+                //         break;
+                //     }
+                //         
+                //     
+                //     default:
+                //         break;
+                // }
             }
 
             return true;
@@ -131,26 +136,84 @@ namespace Game.Manager
             if (data == null)
                 return;
 
-            // openCondition.AlreadExist = true;
-            
-            new PopupCreator<Unlock, Unlock.Data>()
-                .SetData(new Unlock.Data()
-                {
-                    EOpenType = data.EOpenType,
-                    Id = data.Id,
-                    ClickAction = () =>
+            if (Enum.TryParse(data.EOpenType.ToString(), out Type.EMain eMain))
+            {
+                new PopupCreator<Unlock, Unlock.Data>()
+                    .SetData(new Unlock.Data()
                     {
+                        EMain = eMain,
+                        Id = data.Id,
+                        ClickAction = () =>
+                        {
                         
-                    },
-                })
-                .SetCoInit(true)
-                .Create();
+                        },
+                    })
+                    .SetCoInit(true)
+                    .Create();
+                
+            }
+            // openCondition.AlreadExist = true;
         }
 
+        public bool CheckOpenCondition(Type.EOpen eOpenType, int id)
+        {
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                return false;
+            
+            var userInfo = UserManager.Instance?.User;
+            if (userInfo == null)
+                return false;
+            
+            foreach (var openCondition in _openConditionList)
+            {
+                if (openCondition == null)
+                    continue;
+                
+                if(openCondition.AlreadExist)
+                    continue;
+
+                var data = openCondition.Data_;
+                if(data == null)
+                    continue;
+                
+                if(data.EOpenType != eOpenType)
+                    continue;
+                
+                if(data.Id != id)
+                    continue;
+                
+                if(openCondition.ReqLeaf > userInfo.Leaf)
+                    continue;
+
+                var reqDatas = openCondition.ReqDatas;
+                if (reqDatas != null)
+                {
+                    foreach (var reqData in reqDatas)
+                    {
+                        if(reqData == null)
+                            continue;
+
+                        if (Enum.TryParse(reqData.EOpenType.ToString(), out Type.EMain eMain))
+                        {
+                            if (!mainGameMgr.CheckExist(eMain, reqData.Id))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            return true;
+        }
+        
         #region Listener
         private void OnChangedAnimalInfo(Info.Animal animalInfo)
         {
-            
+            Debug.Log("OnChangedAnimalInfo = " + animalInfo.Id);
         }
         
         private void OnChangedObjectInfo(Info.Object objectInfo)

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +14,9 @@ namespace UI.Component
         public class Data : BaseData
         {
             public IListener IListener = null;
+            
             public int Id = 0;
+            public Type.EMain EMain = Type.EMain.None; 
             public string Name = string.Empty;
             public Sprite IconSprite = null;
             public bool Lock = true;
@@ -71,12 +75,36 @@ namespace UI.Component
 
         private void Unlock()
         {
-            
+            if (_data == null)
+                return;
+
+            if (Enum.TryParse(_data.EMain.ToString(), out Type.EOpen eOpen))
+            {
+                var openCondition = MainGameManager.Instance?.OpenCondition;
+                if (openCondition == null)
+                    return;
+                
+                if (openCondition.CheckOpenCondition(eOpen, _data.Id))
+                {
+                    new PopupCreator<Unlock, Unlock.Data>()
+                        .SetData(new Unlock.Data()
+                        {
+                            EMain = _data.EMain,
+                            Id = _data.Id,
+                            ClickAction = () =>
+                            {
+                        
+                            },
+                        })
+                        .SetCoInit(true)
+                        .Create();
+                }
+            }
         }
 
         public void OnClickUnlock()
         {
-            
+            Unlock();
         }
         
         public void OnClick()

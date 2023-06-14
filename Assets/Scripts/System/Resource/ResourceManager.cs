@@ -18,6 +18,11 @@ namespace GameSystem
 
         public AtlasLoader AtalsLoader { get; private set; } = null;
 
+        protected override void Initialize()
+        {
+            
+        }
+        
         public override IEnumerator CoInit()
         {
             yield return StartCoroutine(base.CoInit());

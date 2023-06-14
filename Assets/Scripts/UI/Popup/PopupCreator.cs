@@ -26,8 +26,7 @@ namespace GameSystem
 
             return this;
         }
-
-        // 반환값이 의미가 없다 ?!
+        
         public override T Create()
         {
             var popup = Game.UIManager.Instance?.Popup?.Instantiate<T, V>(_data, _coInit);

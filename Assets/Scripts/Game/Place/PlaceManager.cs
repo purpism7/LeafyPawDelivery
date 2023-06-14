@@ -5,6 +5,7 @@ using System;
 
 using GameSystem;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Game
 {
@@ -21,13 +22,13 @@ namespace Game
         
         public Place ActivityPlace { get; private set; } = null;
 
-        public UnityEvent<int> Listener { get; private set; } = new();
+        public UnityEvent<int> Listener { get; private set; } = null;
 
         protected override void Initialize()
         {
             Debug.Log("PlaceManager Initialize");
-            
-            Listener?.RemoveAllListeners();
+            Listener = new UnityEvent<int>();
+            Listener.RemoveAllListeners();
         }
 
         public override IEnumerator CoInit(Data data)

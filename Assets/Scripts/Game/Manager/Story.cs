@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using GameSystem;
@@ -27,11 +28,12 @@ namespace Game.Manager
         
         public UnityEvent<Data> Listener = new();
 
-        protected override void Initialize()
+        public override void Initialize()
         {
             _storyDic.Clear();
             
             var mainGameMgr = MainGameManager.Instance;
+            mainGameMgr?.AnimalMgr?.Listener.AddListener(OnChangedAnimalInfo);
             mainGameMgr?.placeMgr?.Listener?.AddListener(OnChangedPlace);
         }
 
@@ -97,11 +99,14 @@ namespace Game.Manager
                         if(reqData == null)
                             continue;
 
-                        if (!mainGameMgr.CheckExist(reqData.EOpenType, reqData.Id))
+                        if (Enum.TryParse(reqData.EOpenType.ToString(), out Type.EMain eMain))
                         {
-                            check = false;
+                            if (!mainGameMgr.CheckExist(eMain, reqData.Id))
+                            {
+                                check = false;
 
-                            break;
+                                break;
+                            }
                         }
                     }
    
@@ -142,10 +147,23 @@ namespace Game.Manager
             });
         }
         
+        #region Listener
+        private void OnChangedAnimalInfo(Info.Animal animalInfo)
+        {
+            Debug.Log("Start Story Animal = " + animalInfo.Id);
+            Check();
+        }
+        
+        private void OnChangedObjectInfo(Info.Object objectInfo)
+        {
+            Check();
+        }
+        
         private void OnChangedPlace(int placeId)
         {
             _placeId = placeId;
         }
+        #endregion
     }
 }
 

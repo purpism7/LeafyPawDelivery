@@ -15,7 +15,7 @@ namespace GameSystem
         private Grid grid = null;
         #endregion
 
-        protected override void Initialize()
+        public override void Initialize()
         {
             
         }

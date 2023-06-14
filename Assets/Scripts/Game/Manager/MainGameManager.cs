@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,24 +15,24 @@ public class MainGameManager : Singleton<MainGameManager>
     public Game.ObjectManager ObjectMgr { get; private set; } = null;
     public Game.AnimalManager AnimalMgr { get; private set; } = null;
 
-    // public Game.Manager.Story StoryMgr { get; private set; } = null;
-    // public GameSystem.OpenConditionManager OpenConditionMgr { get; private set; } = null;
-
+    public Game.Manager.Story Story { get; private set; } = null;
+    public Game.Manager.OpenCondition OpenCondition { get; private set; } = null;
+    
     public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
 
     public Game.State.Base GameState { get; private set; } = new Game.State.Game();
 
     private System.Action<Game.Base> _startEditAction = null;
-
-    private Game.Manager.Story _story = null;
-    private Game.Manager.OpenCondition _openCondition = null;
+    
+    protected override void Initialize()
+    {
+        ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
+        AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
+    }
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
     {
         yield return StartCoroutine(base.CoInit(iProvider));
-
-        ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
-        AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
 
         yield return StartCoroutine(ObjectMgr?.CoInit(new Game.ObjectManager.Data
         {
@@ -48,8 +49,8 @@ public class MainGameManager : Singleton<MainGameManager>
             yield return StartCoroutine(placeMgr.CoInit(null));
         }
         
-        _story = iProvider.Get<Game.Manager.Story>();
-        _openCondition = iProvider.Get<Game.Manager.OpenCondition>();
+        Story = iProvider.Get<Game.Manager.Story>();
+        OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();
     }
 
     #region GameState
@@ -91,25 +92,25 @@ public class MainGameManager : Singleton<MainGameManager>
         _startEditAction = action;
     }
 
-    public void AddInfo(Type.EOpen eOpenType, int id)
+    public void AddInfo(Type.EMain eMain, int id)
     {
-        if (eOpenType == Type.EOpen.Animal)
+        if (eMain == Type.EMain.Animal)
         {
             AnimalMgr?.AddAnimalInfo(id);
         }
-        else if (eOpenType == Type.EOpen.Object)
+        else if (eMain == Type.EMain.Object)
         {
             ObjectMgr?.AddObjectInfo(id);
         }
     }
 
-    public bool CheckExist(Type.EOpen eOpenType, int id)
+    public bool CheckExist(Type.EMain eMain, int id)
     {
-        if (eOpenType == Type.EOpen.Animal)
+        if (eMain == Type.EMain.Animal)
         {
             return AnimalMgr.CheckExist(id);
         }
-        else if (eOpenType == Type.EOpen.Object)
+        else if (eMain == Type.EMain.Object)
         {
             return ObjectMgr.CheckExist(id);
         }

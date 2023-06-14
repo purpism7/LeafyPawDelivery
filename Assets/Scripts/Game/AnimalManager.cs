@@ -21,7 +21,8 @@ namespace Game
         protected override void Initialize()
         {
             Debug.Log("AnimalManager Initialize");
-            
+
+            Listener = new UnityEvent<Info.Animal>();
             Listener.RemoveAllListeners();
         }
 

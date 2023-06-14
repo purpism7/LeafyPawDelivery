@@ -58,6 +58,7 @@ namespace UI
                     {
                         IListener = this,
                         Id = data.Id,
+                        EMain = Type.EMain.Animal,
                         Name = data.Name,
                         IconSprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalIconSprite(data.ArrangementIconImg),
                         Lock = animalInfo == null,
@@ -89,6 +90,7 @@ namespace UI
                   {
                       IListener = this,
                       Id = data.Id,
+                      EMain = Type.EMain.Animal,
                       Name = data.Name,
                       IconSprite = ResourceManager.Instance?.AtalsLoader?.GetObjectIconSprite(data.ArrangementIconImg),
                       Lock = objectInfo == null,

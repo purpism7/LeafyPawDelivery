@@ -7,7 +7,7 @@ namespace GameSystem
 {
     public class End : GameSystem.Processing
     {
-        protected override void Initialize()
+        public override void Initialize()
         {
             
         }

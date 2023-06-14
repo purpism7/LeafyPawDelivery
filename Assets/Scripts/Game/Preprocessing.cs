@@ -13,12 +13,7 @@ namespace GameSystem
 
     public abstract class Processing : Process
     {
-        private void Awake()
-        {
-            Initialize();
-        }
-
-        protected abstract void Initialize();
+        public abstract void Initialize();
         public abstract IEnumerator CoProcess(IPreprocessingProvider iProvider);
     }
 
@@ -51,28 +46,26 @@ namespace GameSystem
 
         private void SetProcessQueue()
         {
-            var start = gameObject.GetOrAddComponent<Start>();
-            if (start == null)
-                return;
-
-            _processQueue.Enqueue(start);
+            InitializeProcess(gameObject.GetOrAddComponent<Start>());
 
             if (ProcessList != null)
             {
-                foreach (var process in ProcessList)
+                foreach (Processing processing in ProcessList)
                 {
-                    if (process == null)
-                        continue;
-
-                    _processQueue.Enqueue(process);
+                    InitializeProcess(processing);
                 }
             }
 
-            var end = gameObject.GetOrAddComponent<End>();
-            if(end != null)
-            {
-                _processQueue.Enqueue(end);
-            }
+            InitializeProcess(gameObject.GetOrAddComponent<End>());
+        }
+
+        void InitializeProcess(Processing processing)
+        {
+            if (processing == null)
+                return;
+            
+            processing.Initialize();
+            _processQueue.Enqueue(processing);
         }
 
         private IEnumerator CoProcess()

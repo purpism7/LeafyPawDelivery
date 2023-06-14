@@ -14,7 +14,7 @@ namespace UI
         
         public class Data : BaseData
         {
-            public Type.EOpen EOpenType = Type.EOpen.None;
+            public Type.EMain EMain = Type.EMain.None;
             public int Id = 0;
             public Action ClickAction = null;
         }
@@ -39,7 +39,7 @@ namespace UI
             
             if (_data != null)
             {
-                MainGameManager.Instance?.AddInfo(_data.EOpenType, _data.Id);
+                MainGameManager.Instance?.AddInfo(_data.EMain, _data.Id);
                 
                 _data?.ClickAction?.Invoke();
             }

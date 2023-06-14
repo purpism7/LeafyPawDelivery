@@ -12,11 +12,15 @@ namespace Info
         readonly private string _userInfoJsonFilePath = Application.persistentDataPath + "/Info/User.json";
 #endif
         
-
         public User User { get; private set; } = null;
 
         //private Dictionary<System.Type, Holder.Base> _holderDic = new();
 
+        protected override void Initialize()
+        {
+            
+        }
+        
         public override IEnumerator CoInit()
         {
             yield return StartCoroutine(base.CoInit());

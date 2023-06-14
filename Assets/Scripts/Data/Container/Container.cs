@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Container : GameSystem.Processing
 {
-    protected override void Initialize()
+    public override void Initialize()
     {
         
     }
