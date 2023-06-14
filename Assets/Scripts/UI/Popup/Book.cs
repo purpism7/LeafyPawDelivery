@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using GameSystem;
 using UI.Component;
 using UnityEngine;
@@ -14,10 +15,13 @@ namespace UI
 
         }
         
+        [SerializeField] private Toggle[] tabToggles = null;
         [SerializeField] private ScrollRect animalScrollRect = null;
         [SerializeField] private ScrollRect objectScrollRect = null;
 
         private Type.ETab _currETabType = Type.ETab.Animal;
+        
+        private List<BookCell> _bookCellList = new();
 
         public override void Initialize(Data data)
         {
@@ -37,17 +41,27 @@ namespace UI
 
         private void InternalInit()
         {
+            MainGameManager.Instance?.AnimalMgr?.Listener?.AddListener(OnChangedAnimalInfo);
+            MainGameManager.Instance?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
+            
+            _bookCellList.Clear();
+            
             SetAnimalList();
             SetObjectList();
-
-           MainGameManager.Instance?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
         }
 
         public override void Activate()
         {
             base.Activate();
             
+            _currETabType = Type.ETab.Animal;
             ActiveContents();
+
+            var tabToggle = tabToggles?.First();
+            if (tabToggle != null)
+            {
+                tabToggle.SetIsOnWithoutNotify(true);
+            }
         }
 
         public override void Deactivate()
@@ -61,8 +75,14 @@ namespace UI
             if (datas == null)
                 return;
 
+            var animalMgr = MainGameManager.Instance?.AnimalMgr;
+            if (animalMgr == null)
+                return;
+            
             foreach (var data in datas)
             {
+                var animalInfo = animalMgr.GetAnimalInfo(data.Id);
+                
                 var cell = new ComponentCreator<BookCell, BookCell.Data>()
                     .SetData(new BookCell.Data()
                     {
@@ -71,9 +91,12 @@ namespace UI
                         Id = data.Id,
                         EMain = Type.EMain.Animal,
                         Name = data.Name,
+                        Lock = animalInfo == null,
                     })
                     .SetRootRectTm(animalScrollRect?.content)
                     .Create();
+                
+                _bookCellList.Add(cell);
             }
         }
 
@@ -83,8 +106,14 @@ namespace UI
             if (datas == null)
                 return;
 
+            var objectMgr = MainGameManager.Instance?.ObjectMgr;
+            if (objectMgr == null)
+                return;
+            
             foreach (var data in datas)
             {
+                var objectInfo = objectMgr.GetObjectInfoById(data.Id);
+                
                 var cell = new ComponentCreator<BookCell, BookCell.Data>()
                     .SetData(new BookCell.Data()
                     {
@@ -93,9 +122,12 @@ namespace UI
                         Id = data.Id,
                         EMain = Type.EMain.Object,
                         Name = data.Name,
+                        Lock = objectInfo == null,
                     })
                     .SetRootRectTm(objectScrollRect?.content)
                     .Create();
+                
+                _bookCellList.Add(cell);
             }
         }
 
@@ -105,14 +137,31 @@ namespace UI
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
         }
 
+        private void Unlock(Type.EMain eMain, int id)
+        {
+            if (_bookCellList == null)
+                return;
+
+            foreach (var cell in _bookCellList)
+            {
+                cell?.Unlock(eMain, id);
+            }
+        }
+        
         private void OnChangedAnimalInfo(Info.Animal animalInfo)
         {
+            if (animalInfo == null)
+                return;
             
+            Unlock(Type.EMain.Animal, animalInfo.Id);
         }
         
         private void OnChangedObjectInfo(Info.Object objectInfo)
         {
+            if (objectInfo == null)
+                return;
             
+            Unlock(Type.EMain.Object, objectInfo.Id);
         }
 
         public void OnChanged(string tabType)

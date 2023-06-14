@@ -75,7 +75,7 @@ namespace UI
 
                 var animalInfo = animalMgr.GetAnimalInfo(data.Id);
 
-                var component = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
+                var cell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
                     .SetData(new ArrangementCell.Data()
                     {
                         IListener = this,
@@ -88,7 +88,7 @@ namespace UI
                     .SetRootRectTm(animalScrollRect.content)
                     .Create();
                 
-                _arrangementCellList.Add(component);
+                _arrangementCellList.Add(cell);
             }
         }
 
@@ -109,7 +109,7 @@ namespace UI
 
                 var objectInfo = objectMgr.GetObjectInfoById(data.Id);
 
-                var component = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
+                var cell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
                   .SetData(new ArrangementCell.Data()
                   {
                       IListener = this,
@@ -122,7 +122,7 @@ namespace UI
                   .SetRootRectTm(objectScrollRect.content)
                   .Create();
                 
-                _arrangementCellList.Add(component);
+                _arrangementCellList.Add(cell);
             }
         }
 
@@ -137,9 +137,9 @@ namespace UI
             if (_arrangementCellList == null)
                 return;
 
-            foreach (var arrangementCell in _arrangementCellList)
+            foreach (var cell in _arrangementCellList)
             {
-                arrangementCell?.Unlock(eMain, id);
+                cell?.Unlock(eMain, id);
             }
         }
         

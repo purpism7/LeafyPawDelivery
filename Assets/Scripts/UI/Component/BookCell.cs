@@ -15,6 +15,7 @@ namespace UI.Component
             public int Id = 0;
             public Type.EMain EMain = Type.EMain.None;
             public string Name = string.Empty;
+            public bool Lock = true;
         }
 
         public interface IListener
@@ -47,6 +48,31 @@ namespace UI.Component
                 return;
 
             iconImg.sprite = GameUtils.GetLargeIconSprite(_data.EMain, _data.Id);
+            
+            if (_data.Lock)
+            {
+                UIUtils.SetSilhouetteColorImg(iconImg);
+            }
+            else
+            {
+                UIUtils.SetOriginColorImg(iconImg);
+            }
+        }
+        
+        public void Unlock(Type.EMain eMain, int id)
+        {
+            if (_data == null)
+                return;
+
+            if (_data.EMain != eMain)
+                return;
+
+            if (_data.Id != id)
+                return;
+            
+            _data.Lock = false;
+            
+            SetIconImg();
         }
 
         public void OnClick()
