@@ -25,7 +25,7 @@ namespace Info
         {
             yield return StartCoroutine(base.CoInit());
 
-            LoadInfo();
+            yield return StartCoroutine(CoLoadUserInfo());
 
             //InitHolder();
 
@@ -40,15 +40,39 @@ namespace Info
         //    _holderDic.Add(typeof(ObjectHolder), new ObjectHolder());
         //}
 
-        private void LoadInfo()
+        private IEnumerator CoLoadUserInfo()
         {
-            if(!System.IO.File.Exists(_userInfoJsonFilePath))
-                return;
+            var addressableAssetLoader = GameSystem.ResourceManager.Instance?.AddressableAssetLoader;
+            if (addressableAssetLoader == null)
+                yield break;
 
-            var jsonString = System.IO.File.ReadAllText(_userInfoJsonFilePath);
+            bool endLoad = false;
 
-            User = JsonUtility.FromJson<User>(jsonString);
+            yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<Info.User>(
+                "Info",
+                (asyncOperationHandle) =>
+                {
+                    var result = asyncOperationHandle.Result;
+                    if (result == null)
+                        return;
+
+                    User = result;
+
+                    endLoad = true;
+                }));
+
+            yield return new WaitUntil(() => endLoad);
         }
+
+        //private void LoadInfo()
+        //{
+        //    if(!System.IO.File.Exists(_userInfoJsonFilePath))
+        //        return;
+
+        //    var jsonString = System.IO.File.ReadAllText(_userInfoJsonFilePath);
+
+        //    User = JsonUtility.FromJson<User>(jsonString);
+        //}
 
         //public void SaveInfo()
         //{

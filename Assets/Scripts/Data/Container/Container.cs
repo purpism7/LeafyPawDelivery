@@ -42,7 +42,8 @@ public class Container : GameSystem.Processing
                 if(result == null)
                     return;
 
-                var typeName = asyncOperationHandle.Result.name + "Container";
+                var typeName = asyncOperationHandle.Result.name + GetType().Name;
+                Debug.Log("Container = " + typeName);
                 var type = System.Type.GetType(typeName);
                
                 if(type != null)

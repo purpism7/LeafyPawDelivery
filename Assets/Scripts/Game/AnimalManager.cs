@@ -15,7 +15,7 @@ namespace Game
         private Data _data = null;
         private Info.AnimalHolder _animalHolder = new();
 
-        public  List<Info.Animal> AnimalInfoList => _animalHolder?.AnimalInfoList;
+        public List<Info.Animal> AnimalInfoList => _animalHolder?.AnimalInfoList;
         public UnityEvent<Info.Animal> Listener { get; private set; } = new();
 
         protected override void Initialize()

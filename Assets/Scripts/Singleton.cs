@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using GameSystem;
-using UnityEditorInternal;
 using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
@@ -33,11 +32,6 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             return _instance;
         }
     }
-
-    // private static void Initialize()
-    // {
-    //     _instance.GetComponent<Singleton<T>>().Initialize();
-    // }
     
     public static bool Validate()
     {

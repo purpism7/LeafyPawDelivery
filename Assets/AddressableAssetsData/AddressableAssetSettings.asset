@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: e7f1cb4ba7155487fa25de6ac6473baa
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: 49a90eb4696ee0b9b534f2d8835a37c1
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -57,6 +57,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a51e804954faa6147a472dc1a7a4f873, type: 2}
   - {fileID: 11400000, guid: becb112048480b1419c50892524fa32c, type: 2}
   - {fileID: 11400000, guid: 5f629ce3ac8100547b09de051ea8f7f9, type: 2}
+  - {fileID: 11400000, guid: a5222da432e734ffbad908488a4fbadd, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -109,6 +110,7 @@ MonoBehaviour:
     - Cutscene
     - OpenCondition
     - Story
+    - Info
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 6ee7b5722d5394175a1a5df7ed7f6787, type: 2}

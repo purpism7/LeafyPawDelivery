@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Info
 {
-    [System.Serializable]
-    public class User
+    [CreateAssetMenu(menuName = "Animals/ScriptableObject/User")]
+    public class User : ScriptableObject
     {
         public int Lv = 1;
-        public long Leaf = 100;
-        public long Berry = 10;
+        public long Leaf = 0;
+        public long Berry = 0;
 
         public List<int> AnimalIdList = new();
         public List<int> ObjectIdList = new();
