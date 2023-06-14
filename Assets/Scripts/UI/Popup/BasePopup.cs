@@ -11,8 +11,8 @@ namespace UI
         public override void Deactivate()
         {
             base.Deactivate();
-            
-            UIManager.Instance?.Popup?.DeactivateBackground();
+
+            UIManager.Instance?.Popup?.PopPopup();
         }
 
         public void AnimActivate()

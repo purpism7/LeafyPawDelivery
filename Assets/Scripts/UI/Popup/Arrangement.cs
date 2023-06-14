@@ -21,6 +21,7 @@ namespace UI
 
         }
 
+        [SerializeField] private Toggle[] tabToggles = null;
         [SerializeField] private ScrollRect animalScrollRect = null;
         [SerializeField] private ScrollRect objectScrollRect = null;
 
@@ -32,8 +33,20 @@ namespace UI
             
             SetAnimalList();
             SetObjectList();
+        }
 
+        public override void Activate()
+        {
+            base.Activate();
+            
+            _currETabType = Type.ETab.Animal;
             ActiveContents();
+
+            var tabToggle = tabToggles?.First();
+            if (tabToggle != null)
+            {
+                tabToggle.SetIsOnWithoutNotify(true);
+            }
         }
 
         private void SetAnimalList()

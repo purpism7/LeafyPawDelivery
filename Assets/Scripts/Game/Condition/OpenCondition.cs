@@ -37,8 +37,6 @@ namespace Game.Manager
 
             yield return StartCoroutine(CoLoadOpenCondition());
 
-            yield return new WaitForEndOfFrame();
-
             Check();
         }
         

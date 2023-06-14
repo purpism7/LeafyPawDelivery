@@ -19,16 +19,22 @@ namespace Game
         public Transform RootTm;
 
         private List<Place> _placeList = new List<Place>();
+
+        public UnityEvent<int> Listener { get; private set; } = new();
         
         public Place ActivityPlace { get; private set; } = null;
-
-        public UnityEvent<int> Listener { get; private set; } = null;
+        public int ActivityPlaceId 
+        {
+            get
+            {
+                return ActivityPlace != null ? ActivityPlace.Id : 0;
+            }
+        }
 
         protected override void Initialize()
         {
             Debug.Log("PlaceManager Initialize");
-            Listener = new UnityEvent<int>();
-            Listener.RemoveAllListeners();
+            Listener?.RemoveAllListeners();
         }
 
         public override IEnumerator CoInit(Data data)
@@ -42,7 +48,7 @@ namespace Game
 
             _placeList.Add(ActivityPlace);
             
-            Listener?.Invoke(1);
+            Listener?.Invoke(ActivityPlaceId);
 
             yield break;
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Game;
 using UnityEngine;
 
 using GameSystem;
@@ -15,8 +16,8 @@ namespace UI
         [SerializeField] private Image backgroundImg = null;
         
         private List<UI.Base> _opendPopupList = new();
-        private UI.Base _currPopup = null;
-        
+        private Stack<UI.Base> _popupStack = new();
+
         public T Instantiate<T, V>(V vData, bool coInit) 
             where T :UI.Base<V> where V : BaseData
         {
@@ -30,14 +31,10 @@ namespace UI
                     if (basePopup != null)
                     {
                         resPopup = basePopup.GetComponent<T>();
-                        // resPopup?.Activate();
                         
-                        FadeOutBackground();
-                        basePopup.AnimActivate();
+                        AnimActivatePopup<T, V>(uiBase);
                     }
-                    
-                    _currPopup = uiBase;
-                    
+
                     return resPopup;
                 }
             }
@@ -82,11 +79,30 @@ namespace UI
             {
                 popup.Initialize(vData);
             }
+            
+            AnimActivatePopup<T, V>(uiBase);
+        }
+
+        private void AnimActivatePopup<T, V>(UI.Base uiBase) where T :UI.Base<V> where V : BaseData
+        {
+            if (uiBase == null)
+                return;
+            
+            uiBase.transform.SetAsLastSibling();
+            
+            var basePopup = uiBase.GetComponent<UI.BasePopup<V>>();
+            if (basePopup == null)
+                return;
 
             FadeOutBackground();
-            basePopup?.AnimActivate();
+            basePopup.AnimActivate();
+
+            if (_popupStack.Count > 0)
+            {
+                UIUtils.SetActive(_popupStack?.Peek()?.rootRectTm, false);
+            }
             
-            _currPopup = uiBase;
+            _popupStack?.Push(uiBase);
         }
 
         private bool CheckGetOpendPopup<T>(out UI.Base basePopup)
@@ -115,10 +131,41 @@ namespace UI
 
             return false;
         }
+        
+        private void Check()
+        {
+            foreach (RectTransform rectTm in popupRootRectTm)
+            {
+                if(!rectTm)
+                    continue;
+                
+                Debug.Log(rectTm.name);
+            }
+        }
+
+        public void PopPopup()
+        {
+            if (_popupStack.Count <= 0)
+                return;
+
+            _popupStack?.Pop();
+
+            if (_popupStack.Count > 0)
+            {
+                UIUtils.SetActive(_popupStack?.Peek()?.rootRectTm, true);
+            }
+            else
+            {
+                DeactivateBackground();
+            }
+        }
 
         #region Background
         private void FadeOutBackground()
         {
+            if (backgroundImg.isActiveAndEnabled)
+                return;
+            
             if (backgroundImg == null)
                 return;
             
@@ -136,8 +183,11 @@ namespace UI
             sequence.Restart();
         }
 
-        public void DeactivateBackground()
+        private void DeactivateBackground()
         {
+            if (_popupStack.Count > 0)
+                return;
+            
             if (!backgroundImg)
                 return;
             
@@ -146,7 +196,7 @@ namespace UI
         
         public void OnClickBackground()
         {
-            _currPopup?.Deactivate();
+            _popupStack?.Peek()?.Deactivate();
         }
         #endregion
     }

@@ -39,7 +39,7 @@ namespace UI
             
             rootRectTm.SetActive(false);
         }
-        
+
         public bool IsActivate
         {
             get

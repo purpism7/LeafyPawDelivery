@@ -34,14 +34,16 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         yield return StartCoroutine(base.CoInit(iProvider));
 
+        var activityPlaceId = 1;//placeMgr.ActivityPlaceId; 
+        
         yield return StartCoroutine(ObjectMgr?.CoInit(new Game.ObjectManager.Data
         {
-            PlaceId = 1,
+            PlaceId = activityPlaceId,
         }));
         
         yield return StartCoroutine(AnimalMgr?.CoInit(new Game.AnimalManager.Data
         {
-            PlaceId = 1,
+            PlaceId = activityPlaceId,
         }));
 
         if (placeMgr != null)
