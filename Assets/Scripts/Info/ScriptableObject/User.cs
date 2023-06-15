@@ -21,9 +21,9 @@ namespace Info
 
         public List<Currency> CurrencyList = new();
 
-        public List<int> AnimalIdList = new();
-        public List<int> ObjectIdList = new();
-        public List<int> PlaceIdList = new();
+        // public List<int> AnimalIdList = new();
+        // public List<int> ObjectIdList = new();
+        // public List<int> PlaceIdList = new();
 
         public Currency GetCurrency(int placeId)
         {
