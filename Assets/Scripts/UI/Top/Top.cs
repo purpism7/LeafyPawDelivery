@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Coffee.UIExtensions;
 using UnityEngine;
 
 using TMPro;
@@ -17,6 +18,8 @@ namespace UI
         [SerializeField] private TextMeshProUGUI animalCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI objectCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI cashTMP = null;
+
+        [SerializeField] private UIParticleAttractor animalCurrencyAttractor = null;
 
         public override void Initialize(Data data)
         {
