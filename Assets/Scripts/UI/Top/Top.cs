@@ -24,7 +24,10 @@ namespace UI
 
             Set();
         }
-
+        
+        // a=x10000
+        // b=x100000
+        // c=x1000000
         private void Set()
         {
             if (_data == null)
