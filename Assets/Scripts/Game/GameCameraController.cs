@@ -46,7 +46,7 @@ namespace GameSystem
                 return;
 
             Drag();
-            ZoomInOut();
+            // ZoomInOut();
         }
 
         private void OnDrawGizmos()

@@ -20,10 +20,19 @@ namespace Game
         public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
         {
             yield return StartCoroutine(base.CoInit(iProvider));
+
+            int activityPlaceId = 1;
+            var placeMgr = MainGameManager.Instance?.placeMgr;
+            if (placeMgr != null)
+            {
+                activityPlaceId = placeMgr.ActivityPlaceId;
+            }
+
+            //MainGameManager.Instance?.placeMgr.ActivityPlaceId;
             
             Top?.Initialize(new UI.Top.Data()
             {
-
+                PlaceId = activityPlaceId,
             });
 
             Bottom?.Initialize(new UI.Bottom.Data()

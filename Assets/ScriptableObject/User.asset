@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: User
   m_EditorClassIdentifier: 
   Lv: 1
-  Leaf: 0
-  Berry: 0
+  Cash: 0
+  CurrencyList:
+  - PlaceId: 1
+    AnimalCurrency: 0
+    ObjectCurrency: 0
   AnimalIdList: 
   ObjectIdList: 
   PlaceIdList: 

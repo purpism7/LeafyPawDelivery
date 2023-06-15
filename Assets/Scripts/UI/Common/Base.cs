@@ -54,7 +54,7 @@ namespace UI
 
     public abstract class Common<T> : Base where T : BaseData
     {
-        protected BaseData _data = null;
+        protected T _data = null;
 
         public virtual void Initialize(T data)
         {

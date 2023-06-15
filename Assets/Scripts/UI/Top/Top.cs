@@ -10,24 +10,41 @@ namespace UI
     {
         public class Data : BaseData
         {
-
+            public int PlaceId = 0;
         }
-
-        public TextMeshProUGUI LvTMP;
-        public TextMeshProUGUI LeafTMP;
-        public TextMeshProUGUI BerryTMP;
+        
+        [SerializeField] private TextMeshProUGUI lvTMP = null;
+        [SerializeField] private TextMeshProUGUI animalCurrencyTMP = null;
+        [SerializeField] private TextMeshProUGUI objectCurrencyTMP = null;
+        [SerializeField] private TextMeshProUGUI cashTMP = null;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
+            Set();
+        }
+
+        private void Set()
+        {
+            if (_data == null)
+                return;
+            
             var userInfo = Info.UserManager.Instance?.User;
-            if(userInfo != null)
+            if (userInfo == null)
+                return;
+            
+            lvTMP?.SetText(userInfo.Lv + "");
+
+            var currency = userInfo.GetCurrency(_data.PlaceId);
+            if (currency != null)
             {
-                LvTMP?.SetText(userInfo.Lv + "");
-                LeafTMP?.SetText(userInfo.Leaf + "");
-                BerryTMP?.SetText(userInfo.Berry + "");
+                animalCurrencyTMP?.SetText(currency.AnimalCurrency + "");
+                objectCurrencyTMP?.SetText(currency.ObjectCurrency + "");
             }
+
+            cashTMP?.SetText(userInfo.Cash + "");
+            
         }
     }
 }

@@ -182,8 +182,8 @@ namespace Game.Manager
                 if(data.Id != id)
                     continue;
                 
-                if(openCondition.ReqLeaf > userInfo.Leaf)
-                    continue;
+                // if(openCondition.ReqLeaf > userInfo.Leaf)
+                //     continue;
 
                 var reqDatas = openCondition.ReqDatas;
                 if (reqDatas != null)
