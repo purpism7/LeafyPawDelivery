@@ -32,10 +32,10 @@ namespace UI
             base.Initialize(data);
 
             DeactivateAnim(EditListRootRectTm, null);
-            InitBttomMenu();
+            InitBottomMenu();
         }
 
-        private void InitBttomMenu()
+        private void InitBottomMenu()
         {
             if(!RootRectTm)
                 return;

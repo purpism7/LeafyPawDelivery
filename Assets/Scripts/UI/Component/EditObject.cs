@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GameSystem;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Component
 {
@@ -12,15 +13,22 @@ namespace UI.Component
             public int ObjectId = 0;
             public int ObjectUId = 0;
         }
-
-        [SerializeField]
-        private TMPro.TextMeshProUGUI idTMP;
-
+        
+        [SerializeField] private Image iconImg = null;
+        
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+            
+            SetIconImg();
+        }
+        
+        private void SetIconImg()
+        {
+            if (_data == null)
+                return;
 
-            idTMP?.SetText(data.ObjectId.ToString());
+            iconImg.sprite = GameUtils.GetShortIconSprite(Type.EMain.Object, _data.ObjectId);
         }
 
         public void OnClick()

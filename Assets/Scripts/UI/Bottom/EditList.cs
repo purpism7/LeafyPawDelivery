@@ -50,16 +50,9 @@ namespace UI
         {
             SetTab(eTabType);
 
-            if (animalToggle != null)
-            {
-                animalToggle.isOn = eTabType == Type.ETab.Animal; 
-            }
+            animalToggle?.SetIsOnWithoutNotify(eTabType == Type.ETab.Animal);
+            objectToggle?.SetIsOnWithoutNotify(eTabType == Type.ETab.Object);
 
-            if (objectToggle != null)
-            {
-                objectToggle.isOn = eTabType == Type.ETab.Object;
-            }
-            
             return this;
         }
 

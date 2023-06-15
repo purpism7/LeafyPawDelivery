@@ -23,7 +23,7 @@ namespace UI.Component
         
         public interface IListener
         {
-            void Edit(int id);
+            void Edit(Type.EMain eMain, int id);
         }
 
         [SerializeField] private TextMeshProUGUI nameTMP;
@@ -134,7 +134,7 @@ namespace UI.Component
             if (_data == null)
                 return;
             
-            _data.IListener?.Edit(_data.Id);
+            _data.IListener?.Edit(_data.EMain, _data.Id);
         }
     }
 }

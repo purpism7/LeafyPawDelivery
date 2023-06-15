@@ -11,7 +11,7 @@ using UI.Component;
 
 namespace UI
 {
-    public class Arrangement : BasePopup<Arrangement.Data>, ArrangementObjectCell.IListener, ArrangementCell.IListener
+    public class Arrangement : BasePopup<Arrangement.Data>, ArrangementCell.IListener
     {
         public class Data : BaseData
         {
@@ -173,24 +173,14 @@ namespace UI
                 ActiveContents();
             }
         }
-        
-        #region ArrangementObjectCell.IListener
 
-        void ArrangementObjectCell.IListener.Edit(int objectUId)
+        #region ArrangementCell.IListener
+
+        void ArrangementCell.IListener.Edit(Type.EMain eMain, int id)
         {
             Deactivate();
             
-            Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(Type.ETab.Object);
-        }
-        #endregion
-        
-        #region ArrangementAnimalCell.IListener
-
-        void ArrangementCell.IListener.Edit(int id)
-        {
-            Deactivate();
-            
-            Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(Type.ETab.Animal);
+            Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(eMain == Type.EMain.Animal ? Type.ETab.Animal : Type.ETab.Object);
         }
         #endregion
     }
