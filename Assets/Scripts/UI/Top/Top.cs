@@ -49,7 +49,7 @@ namespace UI
             cashTMP?.SetText(userInfo.Cash + "");
         }
 
-        public void OnAttracted()
+        public void OnAttracted(GameObject gameObj)
         {
             Debug.Log("OnAttracted");
         }
