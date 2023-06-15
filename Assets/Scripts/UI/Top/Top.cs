@@ -44,7 +44,11 @@ namespace UI
             }
 
             cashTMP?.SetText(userInfo.Cash + "");
-            
+        }
+
+        public void OnAttracted()
+        {
+            Debug.Log("OnAttracted");
         }
     }
 }
