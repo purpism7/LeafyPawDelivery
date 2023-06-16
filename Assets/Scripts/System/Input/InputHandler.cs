@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using DG.Tweening;
+using Game;
+using UI.Component;
 
 namespace GameSystem
 {
@@ -52,6 +54,9 @@ namespace GameSystem
                         if(CheckGetGameBase(raycastHit, out Game.Base gameBase))
                         {
                             Debug.Log(gameBase.name);
+                            new ComponentCreator<CollectCurrency, CollectCurrency.Data>()
+                                .SetRootRectTm(UIManager.Instance?.Top?.particleRootRecTm)
+                                .Create();
                         }
                     }
                 }

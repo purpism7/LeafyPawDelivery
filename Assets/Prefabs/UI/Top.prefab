@@ -706,7 +706,8 @@ MonoBehaviour:
   animalCurrencyTMP: {fileID: 5197083202406173486}
   objectCurrencyTMP: {fileID: 1184800537530304502}
   cashTMP: {fileID: 5278897631640219088}
-  animalCurrencyAttractor: {fileID: 3886750508737240343}
+  particleRootRecTm: {fileID: 4757803008134759927}
+  animalCurrencyAttractor: {fileID: 0}
 --- !u!1 &3417995903615073184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,7 +1434,6 @@ RectTransform:
   - {fileID: 2003757909732337152}
   - {fileID: 7225265464203876659}
   - {fileID: 8457457904180775952}
-  - {fileID: 2633987039643495880}
   m_Father: {fileID: 3040557602613828001}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1476,42 +1476,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &8663924583607831484
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2633987039643495880}
-  m_Layer: 5
-  m_Name: ParticleRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2633987039643495880
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8663924583607831484}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2711693529902603192}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8875718841491779050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,8 +1485,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2983650378917757540}
-  - component: {fileID: 3886750508737240343}
-  - component: {fileID: 4767816552426278055}
   m_Layer: 5
   m_Name: Currency
   m_TagString: Untagged
@@ -1550,70 +1512,6 @@ RectTransform:
   m_AnchoredPosition: {x: -90, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3886750508737240343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8875718841491779050}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e55ae1441ff4583859c55384964d86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ParticleSystem: {fileID: 0}
-  m_DestinationRadius: 0.1
-  m_DelayRate: 0.03
-  m_MaxSpeed: 0.1
-  m_Movement: 0
-  m_OnAttracted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3040557603893754166}
-        m_TargetAssemblyTypeName: UI.Top, Assembly-CSharp
-        m_MethodName: OnAttracted
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
---- !u!114 &4767816552426278055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8875718841491779050}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e55ae1441ff4583859c55384964d86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ParticleSystem: {fileID: 0}
-  m_DestinationRadius: 0.1
-  m_DelayRate: 0.03
-  m_MaxSpeed: 0.1
-  m_Movement: 0
-  m_OnAttracted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3040557603893754166}
-        m_TargetAssemblyTypeName: UI.Top, Assembly-CSharp
-        m_MethodName: OnAttracted
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
 --- !u!1 &8954886546924169922
 GameObject:
   m_ObjectHideFlags: 0

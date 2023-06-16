@@ -19,7 +19,8 @@ namespace UI
         [SerializeField] private TextMeshProUGUI objectCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI cashTMP = null;
 
-        [SerializeField] private UIParticleAttractor animalCurrencyAttractor = null;
+        public RectTransform particleRootRecTm = null;
+        public UIParticleAttractor animalCurrencyAttractor = null;
 
         public override void Initialize(Data data)
         {
