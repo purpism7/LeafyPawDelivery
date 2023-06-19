@@ -37,10 +37,10 @@ namespace UI.Component
                 .SetAutoKill(false)
                 .Append(rectTm.DOMove(_data.StartPos, 0))
                 .AppendCallback(() => { Activate(); })
-                .Append(rectTm.DOShakePosition(0.3f, 100f, 30))
-                // .Append(rectTm.DOLocalJump(new Vector2(0, 0), 100, 2, 0.3f).SetEase(_data.JumpEase))
+                // .Append(rectTm.DOShakePosition(0.3f, 100f, 30))
+                // .Append(rectTm.SetEase(_data.JumpEase))
                 .Append(rectTm.DOMove(_data.EndPos, 1f).SetEase(_data.MoveEase))
-                .Join(rectTm.DOShakeRotation(0.5f, 120f))
+                .Join(rectTm.DOShakeRotation(1f, 120f))
                 .OnComplete(() =>
                 {
                     Deactivate();
