@@ -12,6 +12,9 @@ namespace GameSystem
 {
     public class InputHandler : MonoBehaviour
     {
+        public Ease TestJumEase = Ease.OutSine;
+        public Ease TestMoveEase = Ease.OutQuint;
+        
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private Grid _grid = null;
 
@@ -42,22 +45,16 @@ namespace GameSystem
                 return;
 
             var touch = Input.GetTouch(0);
-            var touchPoint = touch.position;
-            var ray = _gameCameraCtr.GameCamera.ScreenPointToRay(touchPoint);
-
+            var touchPosition = touch.position;
+            var ray = _gameCameraCtr.GameCamera.ScreenPointToRay(touchPosition);
+            
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
                 if (touch.phase == TouchPhase.Began)
                 {
                     if (!CheckEdit(raycastHit))
                     {
-                        if(CheckGetGameBase(raycastHit, out Game.Base gameBase))
-                        {
-                            Debug.Log(gameBase.name);
-                            new ComponentCreator<CollectCurrency, CollectCurrency.Data>()
-                                .SetRootRectTm(UIManager.Instance?.Top?.particleRootRecTm)
-                                .Create();
-                        }
+                        CollectCurrency(raycastHit, touchPosition);
                     }
                 }
             }
@@ -76,6 +73,27 @@ namespace GameSystem
             }
         }
 
+        private void CollectCurrency(RaycastHit raycastHit, Vector2 touchPosition)
+        {
+            Game.Base gameBase = null;
+            if (!CheckGetGameBase(raycastHit, out gameBase))
+                return;
+
+            var startPos = _gameCameraCtr.UICamera.ScreenToWorldPoint(touchPosition);
+            startPos.z = 10f;
+            
+            new ComponentCreator<CollectCurrency, CollectCurrency.Data>()
+                .SetData(new CollectCurrency.Data()
+                {
+                    StartPos = startPos,
+                    EndPos = UIManager.Instance.Top.animalCurrencyRectTm.position,
+                    JumpEase = TestJumEase,
+                    MoveEase = TestMoveEase,
+                })
+                .SetRootRectTm(UIManager.Instance?.Top?.particleRootRecTm)
+                .Create();
+        }
+        
         #region  Edit
         private bool CheckEdit(RaycastHit raycastHit)
         {

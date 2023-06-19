@@ -9,7 +9,8 @@ namespace GameSystem
     public class GameCameraController : MonoBehaviour
     {
         public Camera GameCamera = null;
-
+        public Camera UICamera = null;
+        
         private Vector2 _center = Vector2.zero;
         private Vector2 _mapSize = new Vector2(2000f, 2000f);
         private Vector3 _velocity = Vector3.zero;

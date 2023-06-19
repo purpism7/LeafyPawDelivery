@@ -707,7 +707,7 @@ MonoBehaviour:
   objectCurrencyTMP: {fileID: 1184800537530304502}
   cashTMP: {fileID: 5278897631640219088}
   particleRootRecTm: {fileID: 4757803008134759927}
-  animalCurrencyAttractor: {fileID: 0}
+  animalCurrencyRectTm: {fileID: 2983650378917757540}
 --- !u!1 &3417995903615073184
 GameObject:
   m_ObjectHideFlags: 0
