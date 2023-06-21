@@ -81,17 +81,8 @@ namespace GameSystem
 
             var startPos = _gameCameraCtr.UICamera.ScreenToWorldPoint(touchPosition);
             startPos.z = 10f;
-            
-            new ComponentCreator<CollectCurrency, CollectCurrency.Data>()
-                .SetData(new CollectCurrency.Data()
-                {
-                    StartPos = startPos,
-                    EndPos = UIManager.Instance.Top.animalCurrencyRectTm.position,
-                    JumpEase = TestJumEase,
-                    MoveEase = TestMoveEase,
-                })
-                .SetRootRectTm(UIManager.Instance?.Top?.particleRootRecTm)
-                .Create();
+
+            UIManager.Instance?.Top?.CollectCurrency(startPos);
         }
         
         #region  Edit

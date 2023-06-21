@@ -184,7 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4757803008134759927}
   m_Layer: 5
-  m_Name: ParticleRoot
+  m_Name: CollectCurrencyRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -706,7 +706,7 @@ MonoBehaviour:
   animalCurrencyTMP: {fileID: 5197083202406173486}
   objectCurrencyTMP: {fileID: 1184800537530304502}
   cashTMP: {fileID: 5278897631640219088}
-  particleRootRecTm: {fileID: 4757803008134759927}
+  collectCurrencyRootRectTm: {fileID: 4757803008134759927}
   animalCurrencyRectTm: {fileID: 2983650378917757540}
 --- !u!1 &3417995903615073184
 GameObject:

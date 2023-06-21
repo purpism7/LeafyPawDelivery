@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Coffee.UIExtensions;
+using Game;
+using GameSystem;
 using UnityEngine;
 
 using TMPro;
+using UI.Component;
 
 namespace UI
 {
@@ -19,20 +22,24 @@ namespace UI
         [SerializeField] private TextMeshProUGUI objectCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI cashTMP = null;
 
-        public RectTransform particleRootRecTm = null;
-        public RectTransform animalCurrencyRectTm = null;
+        [SerializeField] private RectTransform collectCurrencyRootRectTm = null;
+        [SerializeField] private RectTransform animalCurrencyRectTm = null;
+
+        private List<CollectCurrency> _collectCurrencyList = new();
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-
-            Set();
+            
+            _collectCurrencyList?.Clear();
+            
+            Initialize();
         }
         
         // a=x10000
         // b=x100000
         // c=x1000000
-        private void Set()
+        private void Initialize()
         {
             if (_data == null)
                 return;
@@ -53,9 +60,36 @@ namespace UI
             cashTMP?.SetText(userInfo.Cash + "");
         }
 
-        public void OnAttracted(GameObject gameObj)
+        public void CollectCurrency(Vector3 startPos)
         {
-            Debug.Log("OnAttracted");
+            if (_collectCurrencyList == null)
+                return;
+
+            var data = new CollectCurrency.Data()
+            {
+                StartPos = startPos,
+                EndPos = animalCurrencyRectTm.position,
+                CollectEndAction =
+                    () =>
+                    {
+
+                    },
+            };
+            
+            var collectCurrency = _collectCurrencyList.Find(collectCurrency => !collectCurrency.IsActivate);
+            if (collectCurrency != null)
+            {
+                collectCurrency.Initialize(data);
+
+                return;
+            }
+            
+            var component = new ComponentCreator<CollectCurrency, CollectCurrency.Data>()
+                .SetData(data)
+                .SetRootRectTm(collectCurrencyRootRectTm)
+                .Create();
+            
+            _collectCurrencyList.Add(component);
         }
     }
 }
