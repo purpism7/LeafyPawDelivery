@@ -23,10 +23,10 @@ namespace UI.Component
             
             Deactivate();
             
-            Move();
+            Collect();
         }
 
-        private void Move()
+        private void Collect()
         {
             var rectTm = GetComponent<RectTransform>();
             if (!rectTm)

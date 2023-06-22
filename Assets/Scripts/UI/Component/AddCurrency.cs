@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace UI.Component
         
         public class Data : BaseData
         {
+            public Vector3 StartPos = Vector3.zero;
             public int Currency = 0;
         }
 
@@ -19,7 +21,11 @@ namespace UI.Component
         {
             base.Initialize(data);
             
+            Deactivate();
+            
             Initialize();
+            
+            Add();
         }
 
         private void Initialize()
@@ -30,6 +36,23 @@ namespace UI.Component
         private void SetText()
         {
             currencyTMP?.SetText("+" + _data.Currency);
+        }
+
+        private void Add()
+        {
+            var rectTm = GetComponent<RectTransform>();
+            if (!rectTm)
+                return;
+            
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(rectTm.DOMove(_data.StartPos, 0))
+                .AppendCallback(() => { Activate(); })
+                .OnComplete(() =>
+                {
+                    Deactivate();
+                });
+            sequence.Restart();
         }
     }
 }

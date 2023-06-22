@@ -23,6 +23,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI cashTMP = null;
 
         [SerializeField] private RectTransform collectCurrencyRootRectTm = null;
+        [SerializeField] private RectTransform addCurrencyRootRectTm = null;
         [SerializeField] private RectTransform animalCurrencyRectTm = null;
 
         private List<CollectCurrency> _collectCurrencyList = new();
@@ -96,7 +97,7 @@ namespace UI
         
         private void EndCollectCurrency()
         {
-            // AddCurrency()
+            AddCurrency();
         }
 
         private void AddCurrency()
@@ -106,7 +107,8 @@ namespace UI
             
             var data = new AddCurrency.Data()
             {
-
+                StartPos = objectCurrencyTMP.transform.position,
+                Currency = 1,
             };
             
             var addCurrency = _addCurrencyList.Find(addCurrency => !addCurrency.IsActivate);
@@ -119,7 +121,7 @@ namespace UI
             
             var component = new ComponentCreator<AddCurrency, AddCurrency.Data>()
                 .SetData(data)
-                .SetRootRectTm(collectCurrencyRootRectTm)
+                .SetRootRectTm(addCurrencyRootRectTm)
                 .Create();
             
             _addCurrencyList.Add(component);
