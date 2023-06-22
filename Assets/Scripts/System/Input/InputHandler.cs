@@ -12,9 +12,6 @@ namespace GameSystem
 {
     public class InputHandler : MonoBehaviour
     {
-        public Ease TestJumEase = Ease.OutSine;
-        public Ease TestMoveEase = Ease.OutQuint;
-        
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private Grid _grid = null;
 
@@ -78,7 +75,7 @@ namespace GameSystem
             Game.Base gameBase = null;
             if (!CheckGetGameBase(raycastHit, out gameBase))
                 return;
-
+            
             var startPos = _gameCameraCtr.UICamera.ScreenToWorldPoint(touchPosition);
             startPos.z = 10f;
 

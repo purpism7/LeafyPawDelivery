@@ -14,8 +14,6 @@ namespace UI.Component
         {
             public Vector3 StartPos = Vector3.zero;
             public Vector3 EndPos = Vector3.zero;
-            public DG.Tweening.Ease JumpEase = Ease.OutSine;
-            public DG.Tweening.Ease MoveEase = Ease.OutQuad;
             public Action CollectEndAction = null;
         }
         
@@ -45,7 +43,7 @@ namespace UI.Component
                 .Append(rectTm.DOMove(_data.StartPos, 0))
                 .AppendCallback(() => { Activate(); })
                 
-                .Append(rectTm.DOPath(wayPoints, 1f, PathType.CatmullRom).SetEase(_data.MoveEase))
+                .Append(rectTm.DOPath(wayPoints, 1f, PathType.CatmullRom).SetEase(Ease.OutQuint))
                 //.Append(rectTm.DOMove(_data.EndPos, 1f).SetEase(_data.MoveEase))
                 // .Join(rectTm.DOLocalRotate(new Vector3(0, 0, UnityEngine.Random.Range(-180f, 180f)), 0.5f))
                 .Join(rectTm.DOLocalRotate(new Vector3(0, 0, UnityEngine.Random.Range(-180f, 180f)), 1f))

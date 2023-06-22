@@ -26,12 +26,14 @@ namespace UI
         [SerializeField] private RectTransform animalCurrencyRectTm = null;
 
         private List<CollectCurrency> _collectCurrencyList = new();
+        private List<AddCurrency> _addCurrencyList = new();
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
             
             _collectCurrencyList?.Clear();
+            _addCurrencyList?.Clear();
             
             Initialize();
         }
@@ -72,7 +74,7 @@ namespace UI
                 CollectEndAction =
                     () =>
                     {
-
+                        EndCollectCurrency();
                     },
             };
             
@@ -90,6 +92,37 @@ namespace UI
                 .Create();
             
             _collectCurrencyList.Add(component);
+        }
+        
+        private void EndCollectCurrency()
+        {
+            // AddCurrency()
+        }
+
+        private void AddCurrency()
+        {
+            if (_addCurrencyList == null)
+                return;
+            
+            var data = new AddCurrency.Data()
+            {
+
+            };
+            
+            var addCurrency = _addCurrencyList.Find(addCurrency => !addCurrency.IsActivate);
+            if (addCurrency != null)
+            {
+                addCurrency.Initialize(data);
+
+                return;
+            }
+            
+            var component = new ComponentCreator<AddCurrency, AddCurrency.Data>()
+                .SetData(data)
+                .SetRootRectTm(collectCurrencyRootRectTm)
+                .Create();
+            
+            _addCurrencyList.Add(component);
         }
     }
 }
