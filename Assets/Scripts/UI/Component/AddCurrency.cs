@@ -48,9 +48,13 @@ namespace UI.Component
                 .SetAutoKill(false)
                 .Append(rectTm.DOMove(_data.StartPos, 0))
                 .AppendCallback(() => { Activate(); })
+                .Append(rectTm.DOLocalMoveY(60f, 1f).SetEase(Ease.OutCirc))
+                .Append(currencyTMP.DOFade(0, 0.5f))
                 .OnComplete(() =>
                 {
                     Deactivate();
+
+                    currencyTMP.DOFade(1, 0);
                 });
             sequence.Restart();
         }

@@ -145,7 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7225265464203876659}
   m_Layer: 5
-  m_Name: ObjectCurrency
+  m_Name: AnimalCurrency
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -431,7 +431,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6621514834874157733}
-  - component: {fileID: 5671306911113697125}
   m_Layer: 5
   m_Name: Currency
   m_TagString: Untagged
@@ -459,38 +458,6 @@ RectTransform:
   m_AnchoredPosition: {x: -90, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5671306911113697125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2405776790690964681}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e55ae1441ff4583859c55384964d86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ParticleSystem: {fileID: 0}
-  m_DestinationRadius: 0.1
-  m_DelayRate: 0.03
-  m_MaxSpeed: 0.1
-  m_Movement: 0
-  m_OnAttracted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3040557603893754166}
-        m_TargetAssemblyTypeName: UI.Top, Assembly-CSharp
-        m_MethodName: OnAttracted
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
 --- !u!1 &2647311652826155129
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,12 +671,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootRectTm: {fileID: 0}
   lvTMP: {fileID: 6488718898988318557}
-  animalCurrencyTMP: {fileID: 5197083202406173486}
-  objectCurrencyTMP: {fileID: 1184800537530304502}
+  animalCurrencyTMP: {fileID: 1184800537530304502}
+  objectCurrencyTMP: {fileID: 5197083202406173486}
   cashTMP: {fileID: 5278897631640219088}
   collectCurrencyRootRectTm: {fileID: 4757803008134759927}
   addCurrencyRootRectTm: {fileID: 4627736380213755255}
-  animalCurrencyRectTm: {fileID: 0}
+  objectCurrencyRectTm: {fileID: 2983650378917757540}
+  animalCurrencyRectTm: {fileID: 6621514834874157733}
 --- !u!1 &3417995903615073184
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,7 +899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2003757909732337152}
   m_Layer: 5
-  m_Name: AnimalCurrency
+  m_Name: ObjectCurrency
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

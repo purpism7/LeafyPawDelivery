@@ -24,6 +24,8 @@ namespace UI
 
         [SerializeField] private RectTransform collectCurrencyRootRectTm = null;
         [SerializeField] private RectTransform addCurrencyRootRectTm = null;
+        
+        [SerializeField] private RectTransform objectCurrencyRectTm = null;
         [SerializeField] private RectTransform animalCurrencyRectTm = null;
 
         private List<CollectCurrency> _collectCurrencyList = new();
@@ -71,7 +73,7 @@ namespace UI
             var data = new CollectCurrency.Data()
             {
                 StartPos = startPos,
-                EndPos = animalCurrencyRectTm.position,
+                EndPos = objectCurrencyRectTm.position,
                 CollectEndAction =
                     () =>
                     {
@@ -104,10 +106,14 @@ namespace UI
         {
             if (_addCurrencyList == null)
                 return;
+
+            var startPos = objectCurrencyTMP.transform.position;
+            startPos.x -= 5f;
+            startPos.y += 20f;
             
             var data = new AddCurrency.Data()
             {
-                StartPos = objectCurrencyTMP.transform.position,
+                StartPos = startPos,
                 Currency = 1,
             };
             
