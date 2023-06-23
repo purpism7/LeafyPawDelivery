@@ -42,7 +42,7 @@ namespace UI.Component
                 .SetAutoKill(false)
                 .Append(rectTm.DOMove(_data.StartPos, 0))
                 .AppendCallback(() => { Activate(); })
-                .Append(rectTm.DOPath(wayPoints, 0.8f, PathType.CatmullRom).SetEase(Ease.OutQuint))
+                .Append(rectTm.DOPath(wayPoints, 0.8f, PathType.CatmullRom).SetEase(Ease.Linear))
                 .Join(rectTm.DOLocalRotate(new Vector3(0, 0, UnityEngine.Random.Range(-180f, 180f)), 0.8f))
                 .OnComplete(() =>
                 {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
@@ -12,12 +13,16 @@ namespace GameSystem
 {
     public class InputHandler : MonoBehaviour
     {
+        readonly private float TouchInterval = 0.3f;
+        
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private Grid _grid = null;
 
         private Game.Base _gameBase = null;
         private bool _notTouchGameBase = false;
         private MainGameManager _mainGameMgr = null;
+
+        private DateTime _touchDateTime;
 
         public void Init(GameSystem.GameCameraController gameCameraCtr, Grid grid)
         {
@@ -50,7 +55,7 @@ namespace GameSystem
                 if (touch.phase == TouchPhase.Began)
                 {
                     if (!CheckEdit(raycastHit))
-                    {
+                    { 
                         CollectCurrency(raycastHit, touchPosition);
                     }
                 }
@@ -72,6 +77,11 @@ namespace GameSystem
 
         private void CollectCurrency(RaycastHit raycastHit, Vector2 touchPosition)
         {
+            if ((DateTime.UtcNow - _touchDateTime).TotalSeconds < TouchInterval)
+                return;
+                        
+            _touchDateTime = DateTime.UtcNow;
+            
             Game.Base gameBase = null;
             if (!CheckGetGameBase(raycastHit, out gameBase))
                 return;
