@@ -49,7 +49,7 @@ namespace UI.Component
                 .Append(rectTm.DOMove(_data.StartPos, 0))
                 .AppendCallback(() => { Activate(); })
                 .Append(rectTm.DOLocalMoveY(60f, 1f).SetEase(Ease.OutCirc))
-                .Append(currencyTMP.DOFade(0, 0.5f))
+                .Append(currencyTMP.DOFade(0, 0.3f))
                 .OnComplete(() =>
                 {
                     Deactivate();
