@@ -5,7 +5,6 @@ using GameSystem;
 using UnityEngine;
 
 using GameSystem.Load;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 
 namespace Scene
@@ -27,10 +26,27 @@ namespace Scene
         }
 
         private IEnumerator CoInteractive()
-        {
-            yield return new WaitForSeconds(3f);
-            
-            btn.interactable = true;
+        { 
+            var auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+            yield return auth?.SignInAnonymouslyAsync().ContinueWith(task => {
+                if (task.IsCanceled)
+                {
+                    Debug.LogError("SignInAnonymouslyAsync was canceled.");
+                    return;
+                }
+                if (task.IsFaulted)
+                {
+                    Debug.LogError("SignInAnonymouslyAsync encountered an error: " + task.Exception);
+                    return;
+                }
+
+                Firebase.Auth.AuthResult result = task.Result;
+                Debug.LogFormat("User signed in successfully: {0} ({1})",
+                    result.User.DisplayName, result.User.UserId);
+
+                btn.interactable = true;
+
+            });
         }
 
         public void OnClick()
