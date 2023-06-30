@@ -4,30 +4,20 @@ using UnityEngine;
 
 namespace GameSystem
 {
-    public class FirebaseManager
+    public class FirebaseManager : Singleton<FirebaseManager>
     {
-        private static FirebaseManager _instance = null;
+        public Firestore Firestore { get; private set; } = new();
 
-        public static FirebaseManager Instance
+        protected override void Initialize()
         {
-            get
-            {
-                if(_instance == null)
-                {
-                    _instance = new();
-                }
-
-                return _instance;
-            }
+            
         }
 
-
-        public Firestore Firestore { get; private set; } = null;
-
-        public void Init()
+        public override IEnumerator CoInit()
         {
-            Firestore = new();
+            yield return StartCoroutine(base.CoInit());
+
+            yield return Firestore?.CoInit();
         }
     }
 }
-

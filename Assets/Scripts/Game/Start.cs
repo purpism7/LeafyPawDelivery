@@ -14,8 +14,6 @@ namespace GameSystem
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
-            FirebaseManager.Instance.Init();
-
             yield return StartCoroutine(ResourceManager.Instance.CoInit());
         }
     }

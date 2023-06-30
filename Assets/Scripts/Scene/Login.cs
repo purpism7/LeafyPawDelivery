@@ -22,11 +22,13 @@ namespace Scene
 
             _iListener?.EndLoad();
             
-            StartCoroutine(CoInteractive());
+            StartCoroutine(CoInit());
         }
 
-        private IEnumerator CoInteractive()
-        { 
+        private IEnumerator CoInit()
+        {
+            yield return StartCoroutine(FirebaseManager.Instance.CoInit());
+
             var auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
             yield return auth?.SignInAnonymouslyAsync().ContinueWith(task => {
                 if (task.IsCanceled)
