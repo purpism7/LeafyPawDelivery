@@ -29,26 +29,7 @@ namespace Scene
         {
             yield return StartCoroutine(FirebaseManager.Instance.CoInit());
 
-            var auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
-            yield return auth?.SignInAnonymouslyAsync().ContinueWith(task => {
-                if (task.IsCanceled)
-                {
-                    Debug.LogError("SignInAnonymouslyAsync was canceled.");
-                    return;
-                }
-                if (task.IsFaulted)
-                {
-                    Debug.LogError("SignInAnonymouslyAsync encountered an error: " + task.Exception);
-                    return;
-                }
-
-                Firebase.Auth.AuthResult result = task.Result;
-                Debug.LogFormat("User signed in successfully: {0} ({1})",
-                    result.User.DisplayName, result.User.UserId);
-
-                btn.interactable = true;
-
-            });
+            btn.interactable = true;
         }
 
         public void OnClick()

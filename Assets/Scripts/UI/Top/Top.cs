@@ -52,14 +52,12 @@ namespace UI
             var userInfo = Info.UserManager.Instance?.User;
             if (userInfo == null)
                 return;
-            
-            lvTMP?.SetText(userInfo.Lv + "");
 
             var currency = userInfo.GetCurrency(_data.PlaceId);
             if (currency != null)
             {
-                animalCurrencyTMP?.SetText(currency.AnimalCurrency + "");
-                objectCurrencyTMP?.SetText(currency.ObjectCurrency + "");
+                animalCurrencyTMP?.SetText(currency.Animal + "");
+                objectCurrencyTMP?.SetText(currency.Object + "");
             }
 
             cashTMP?.SetText(userInfo.Cash + "");

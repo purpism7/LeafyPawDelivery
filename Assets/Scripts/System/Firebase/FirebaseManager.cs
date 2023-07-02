@@ -6,7 +6,8 @@ namespace GameSystem
 {
     public class FirebaseManager : Singleton<FirebaseManager>
     {
-        public Firestore Firestore { get; private set; } = new();
+        public Firebase.Auth Auth { get; private set; } = null;
+        public Firebase.Firestore Firestore { get; private set; } = null;
 
         protected override void Initialize()
         {
@@ -17,7 +18,11 @@ namespace GameSystem
         {
             yield return StartCoroutine(base.CoInit());
 
-            yield return Firestore?.CoInit();
+            Auth = gameObject.GetOrAddComponent<Firebase.Auth>();
+            yield return StartCoroutine(Auth?.CoInit());
+
+            Firestore = gameObject.GetOrAddComponent<Firebase.Firestore>();
+            yield return StartCoroutine(Firestore?.CoInit());
         }
     }
 }

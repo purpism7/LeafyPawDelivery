@@ -8,15 +8,14 @@ namespace Info
     [CreateAssetMenu(menuName = "Animals/ScriptableObject/User")]
     public class User : ScriptableObject
     {
-        public int Lv = 1;
         public long Cash = 0;
         
         [Serializable]
         public class Currency
         {
             public int PlaceId = 0;
-            public long AnimalCurrency = 0;
-            public long ObjectCurrency = 0;
+            public long Animal = 0;
+            public long Object = 0;
         }
 
         public List<Currency> CurrencyList = new();
@@ -32,8 +31,8 @@ namespace Info
                 return new Currency()
                 {
                     PlaceId = placeId,
-                    AnimalCurrency = 0,
-                    ObjectCurrency = 0,
+                    Animal = 0,
+                    Object = 0,
                 };
             }
             

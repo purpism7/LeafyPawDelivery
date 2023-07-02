@@ -19,8 +19,6 @@ MonoBehaviour:
       Id: 1
     PlayStory: {fileID: 5507199157241136487, guid: 2b552540f74cc47c7bef8941d633e255, type: 3}
     Completed: 1
-  - ReqDatas:
-    - EOpenType: 1
-      Id: 1
+  - ReqDatas: []
     PlayStory: {fileID: 7884318762631278943, guid: 1bf1f2322a76b46918e3728a688bae13, type: 3}
     Completed: 1

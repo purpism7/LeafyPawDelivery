@@ -1,9 +1,10 @@
 {
-  "project_info": {
-    "project_number": "327674171124",
-    "project_id": "leafypawdelivery",
-    "storage_bucket": "leafypawdelivery.appspot.com"
-  },
+    "project_info": {
+        "project_number": "327674171124",
+        "project_id": "leafypawdelivery",
+        "storage_bucket": "leafypawdelivery.appspot.com",
+        "firebase_url": "https://leafypawdelivery-default-rtdb.firebaseio.com/"
+    },
   "client": [
     {
       "client_info": {
