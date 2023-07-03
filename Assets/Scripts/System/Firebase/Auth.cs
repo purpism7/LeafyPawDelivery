@@ -11,18 +11,24 @@ namespace GameSystem.Firebase
     {
         public string UserId { get; private set; } = string.Empty;
 
+        private bool _endLoad = false;
+
         public IEnumerator CoInit()
         {
-            UserId = PlayerPrefs.GetString("Auth_UserId", string.Empty);
+            var auth = FirebaseAuth.DefaultInstance;
+            var currUser = auth.CurrentUser;
+
+            UserId = currUser.UserId;
+
             Debug.Log("UserId = " + UserId);
-            if(!string.IsNullOrEmpty(UserId))
+            if (!string.IsNullOrEmpty(UserId))
                 yield break;
 
-            bool endLoad = false;
+            //auth.StateChanged += OnStateChanged;
 
-            var auth = FirebaseAuth.DefaultInstance;
             yield return auth?.SignInAnonymouslyAsync().ContinueWith(
-                task => {
+                task =>
+                {
                     if (task.IsCanceled)
                         return;
 
@@ -33,21 +39,26 @@ namespace GameSystem.Firebase
 
                     UserId = result.User.UserId;
                     Debug.Log("UserId = " + UserId);
-                    PlayerPrefs.SetString("Auth_UserId", UserId);
 
-                    endLoad = true;
+                    _endLoad = true;
                 });
 
 
-            while (!endLoad)
+            while (!_endLoad)
             {
                 yield return null;
             }
-
-            Debug.Log("End Load");
-
-            Debug.Log(UserId);
         }
+
+        //private void OnStateChanged(object sender, System.EventArgs eventArgs)
+        //{
+        //    var auth = FirebaseAuth.DefaultInstance;
+        //    var userId = auth.CurrentUser.UserId;
+        //    Debug.Log("Auth State Changed = " + userId);
+        //    PlayerPrefs.SetString("Auth_UserId", userId);
+
+            
+        //}
     }
 }
 
