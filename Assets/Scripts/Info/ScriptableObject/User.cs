@@ -5,8 +5,7 @@ using UnityEngine;
 
 namespace Info
 {
-    [CreateAssetMenu(menuName = "Animals/ScriptableObject/User")]
-    public class User : ScriptableObject
+    public class User
     {
         public long Cash = 0;
         
@@ -19,10 +18,6 @@ namespace Info
         }
 
         public List<Currency> CurrencyList = new();
-
-        // public List<int> AnimalIdList = new();
-        // public List<int> ObjectIdList = new();
-        // public List<int> PlaceIdList = new();
 
         public Currency GetCurrency(int placeId)
         {

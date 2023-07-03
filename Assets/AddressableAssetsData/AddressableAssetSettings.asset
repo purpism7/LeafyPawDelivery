@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: e7f1cb4ba7155487fa25de6ac6473baa
   m_currentHash:
     serializedVersion: 2
-    Hash: 49a90eb4696ee0b9b534f2d8835a37c1
+    Hash: cdeee2f1a9e09f207ccaacf1330e4c62
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
     - Cutscene
     - OpenCondition
     - Story
-    - Info
+    - Const
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 6ee7b5722d5394175a1a5df7ed7f6787, type: 2}

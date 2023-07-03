@@ -19,15 +19,28 @@ namespace Scene
             base.Init(iListener);
             
             // SceneLoader.LoadWithLoading(loadData);
-
-            _iListener?.EndLoad();
-            
+  
             StartCoroutine(CoInit());
         }
 
         private IEnumerator CoInit()
         {
-            yield return StartCoroutine(FirebaseManager.Instance.CoInit());
+            var firebaseMgr = FirebaseManager.Instance;
+
+            yield return StartCoroutine(firebaseMgr.CoInit());
+
+            yield return null;
+
+            _iListener?.EndLoad();
+
+            if(firebaseMgr.Auth.IsValid)
+            {
+                yield return new WaitForSeconds(1f);
+
+                SceneLoader.LoadWithLoading(loadData);
+
+                yield break;
+            }
 
             btn.interactable = true;
         }

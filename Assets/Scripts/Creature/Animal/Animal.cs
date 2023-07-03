@@ -10,7 +10,7 @@ namespace Creature
         public class Data_ : BaseData
         {
             public int Order = 0;
-            public System.Action<Data.DropItem, Transform> DropItemAction = null;
+            public System.Action<DropItem, Transform> DropItemAction = null;
         }
 
         private AnimalRoot _animalRoot = null;
@@ -18,7 +18,7 @@ namespace Creature
         private SpriteRenderer _spriteRenderer = null;
 
         //private Data.Animal _animalData = null;
-        private System.Action<Data.DropItem, Transform> _dropItemAction = null;
+        private System.Action<DropItem, Transform> _dropItemAction = null;
 
         public override void Initialize(Data_ data)
         {

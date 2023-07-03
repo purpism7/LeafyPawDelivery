@@ -34,7 +34,7 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         yield return StartCoroutine(base.CoInit(iProvider));
 
-        var activityPlaceId = 1;//placeMgr.ActivityPlaceId; 
+        var activityPlaceId = Game.Data.Const.StartPlaceId;//placeMgr.ActivityPlaceId; 
         
         yield return StartCoroutine(ObjectMgr?.CoInit(new Game.ObjectManager.Data
         {

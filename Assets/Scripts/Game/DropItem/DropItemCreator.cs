@@ -9,7 +9,7 @@ namespace Game
     {
         private Transform _rootTm = null;
         private Transform _startRootTm = null;
-        private Data.DropItem _dropItemData = null;
+        private DropItem _dropItemData = null;
 
         public DropItemCreator SetRootTm(Transform rootTm)
         {
@@ -25,7 +25,7 @@ namespace Game
             return this;
         }
 
-        public DropItemCreator SetDropItemData(Data.DropItem dropItemData)
+        public DropItemCreator SetDropItemData(DropItem dropItemData)
         {
             _dropItemData = dropItemData;
 

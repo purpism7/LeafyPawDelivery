@@ -13,6 +13,14 @@ namespace GameSystem.Firebase
 
         private bool _endLoad = false;
 
+        public bool IsValid
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(UserId);
+            }
+        }
+
         public IEnumerator CoInit()
         {
             var auth = FirebaseAuth.DefaultInstance;
@@ -26,6 +34,7 @@ namespace GameSystem.Firebase
 
             //auth.StateChanged += OnStateChanged;
 
+            // 익명으로 로그인 진행.
             yield return auth?.SignInAnonymouslyAsync().ContinueWith(
                 task =>
                 {

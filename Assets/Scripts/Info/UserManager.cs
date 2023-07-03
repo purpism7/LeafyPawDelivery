@@ -42,26 +42,56 @@ namespace Info
 
         private IEnumerator CoLoadUserInfo()
         {
-            var addressableAssetLoader = GameSystem.ResourceManager.Instance?.AddressableAssetLoader;
-            if (addressableAssetLoader == null)
+            var firebase = GameSystem.FirebaseManager.Instance;
+            if (firebase == null)
                 yield break;
 
             bool endLoad = false;
 
-            yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<Info.User>(
-                "Info",
-                (asyncOperationHandle) =>
+            var database = firebase.Database;
+            yield return StartCoroutine(database?.CoLoad(firebase.Auth.UserId,
+                (resObj) =>
                 {
-                    var result = asyncOperationHandle.Result;
-                    if (result == null)
-                        return;
+                    Debug.Log(resObj);
+                    if(ReferenceEquals(resObj, null))
+                    {
+                        User = new Info.User();
+                        User.CurrencyList.Add(
+                            new User.Currency()
+                            {
+                                PlaceId = Game.Data.Const.StartPlaceId,
+                            });
 
-                    User = result;
+                        StartCoroutine(database?.CoSave(firebase.Auth.UserId, JsonUtility.ToJson(User)));
+                    }
 
                     endLoad = true;
                 }));
 
             yield return new WaitUntil(() => endLoad);
+
+            Debug.Log("End Load CoLoadUserInfo");
+
+            //var addressableAssetLoader = GameSystem.ResourceManager.Instance?.AddressableAssetLoader;
+            //if (addressableAssetLoader == null)
+            //    yield break;
+
+            //
+
+            //yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<Info.User>(
+            //    "Info",
+            //    (asyncOperationHandle) =>
+            //    {
+            //        var result = asyncOperationHandle.Result;
+            //        if (result == null)
+            //            return;
+
+            //        User = result;
+
+            //        endLoad = true;
+            //    }));
+
+            //
         }
 
         //private void LoadInfo()

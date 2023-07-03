@@ -13,7 +13,7 @@ namespace GameSystem
         private int _animalId = 0;
         private Transform _rootTm = null;
         private int _order = 0;
-        private System.Action<Data.DropItem, Transform> _dropItemAction = null;
+        private System.Action<DropItem, Transform> _dropItemAction = null;
 
         public AnimalCreator SetAnimalId(int id)
         {
@@ -36,7 +36,7 @@ namespace GameSystem
             return this;
         }
 
-        public AnimalCreator SetDropItemAction(System.Action<Data.DropItem, Transform> dropItemAction)
+        public AnimalCreator SetDropItemAction(System.Action<DropItem, Transform> dropItemAction)
         {
             _dropItemAction = dropItemAction;
 

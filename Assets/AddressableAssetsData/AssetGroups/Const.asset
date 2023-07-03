@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Info
+  m_Name: Const
   m_EditorClassIdentifier: 
-  m_GroupName: Info
+  m_GroupName: Const
   m_Data:
     m_SerializedData: []
   m_GUID: 3ca87eab11fb84245b766f9de288e4ea
   m_SerializeEntries:
-  - m_GUID: 2a2c036420cc34c3ab7f5eb6796ba45f
-    m_Address: Assets/ScriptableObject/User.asset
+  - m_GUID: 0afe51a602a314e64928002a8e801f4d
+    m_Address: Assets/ScriptableObject/Const.asset
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Info
+    - Const
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e7d7ed8f5841242acbc2f114c52db5f7, type: 2}

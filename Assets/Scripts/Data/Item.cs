@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Data
+[System.Serializable]
+public class Item
 {
-    [System.Serializable]
-    public class Item
-    {
-        public int Id = 0;
-    }
+    public int Id = 0;
 }
 
