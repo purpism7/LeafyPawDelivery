@@ -81,19 +81,18 @@ namespace GameSystem.Firebase
                 yield break;
             }
 
-            Debug.Log("pathStr = " + pathStr);
             bool endLoad = false;
 
             yield return databaseRef.GetValueAsync().ContinueWith(
                 task =>
                 {
-                    endLoad = true;
-
                     var result = task.Result;
 
                     resAction?.Invoke(result);
                   
                     Debug.Log("database value async");
+
+                    endLoad = true;
                 });
 
             yield return new WaitUntil(() => endLoad);
@@ -101,11 +100,25 @@ namespace GameSystem.Firebase
             Debug.Log("End Load database");
         }
 
-        public IEnumerator CoSave(string pathStr, string jsonStr)
+        public void Save(string pathStr, string jsonStr)
         {
             var database = FirebaseDatabase.DefaultInstance;
             if (database == null)
+                return;
+
+            var databaseRef = database.GetReference(pathStr);
+            Debug.Log("jsonStr = " + jsonStr);
+            databaseRef.SetRawJsonValueAsync(jsonStr);
+        }
+
+        public IEnumerator CoSave(string pathStr, string jsonStr)
+        {
+            Debug.Log("CoSave");
+            var database = FirebaseDatabase.DefaultInstance;
+            if (database == null)
                 yield break;
+
+            Debug.Log("database = " + pathStr);
 
             var databaseRef = database.GetReference(pathStr);
             Debug.Log("jsonStr = " + jsonStr);
