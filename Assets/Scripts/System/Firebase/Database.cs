@@ -63,17 +63,17 @@ namespace GameSystem.Firebase
             yield return null;
         }
 
-        public IEnumerator CoLoad(string pathStr, System.Action<object> resAction)
+        public IEnumerator CoLoad(string pathStr, System.Action<DataSnapshot> resAction)
         {
-            var rootRef = FirebaseDatabase.DefaultInstance?.RootReference;
-            if (rootRef == null)
+            var database = FirebaseDatabase.DefaultInstance;
+            if (database == null)
             {
                 resAction?.Invoke(null);
 
                 yield break;
             }
 
-            var databaseRef = rootRef.Child(pathStr);
+            var databaseRef = database.GetReference(pathStr);
             if (databaseRef == null)
             {
                 resAction?.Invoke(null);
@@ -81,16 +81,19 @@ namespace GameSystem.Firebase
                 yield break;
             }
 
+            Debug.Log("pathStr = " + pathStr);
             bool endLoad = false;
 
             yield return databaseRef.GetValueAsync().ContinueWith(
                 task =>
                 {
-                    var result = task.Result.GetValue(true);
+                    endLoad = true;
+
+                    var result = task.Result;
 
                     resAction?.Invoke(result);
-
-                    endLoad = true;
+                  
+                    Debug.Log("database value async");
                 });
 
             yield return new WaitUntil(() => endLoad);
@@ -100,13 +103,15 @@ namespace GameSystem.Firebase
 
         public IEnumerator CoSave(string pathStr, string jsonStr)
         {
-            var rootRef = FirebaseDatabase.DefaultInstance?.RootReference;
-            if (rootRef == null)
+            var database = FirebaseDatabase.DefaultInstance;
+            if (database == null)
                 yield break;
 
-            var databaseRef = rootRef.Child(pathStr);
-
+            var databaseRef = database.GetReference(pathStr);
+            Debug.Log("jsonStr = " + jsonStr);
             databaseRef.SetRawJsonValueAsync(jsonStr);
+
+            yield return null;
         }
     }
 }

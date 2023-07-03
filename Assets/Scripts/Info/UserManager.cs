@@ -50,10 +50,14 @@ namespace Info
 
             var database = firebase.Database;
             yield return StartCoroutine(database?.CoLoad(firebase.Auth.UserId,
-                (resObj) =>
+                (dataSnapshot) =>
                 {
-                    Debug.Log(resObj);
-                    if(ReferenceEquals(resObj, null))
+                    Debug.Log(dataSnapshot);
+
+                    endLoad = true;
+
+                    User = dataSnapshot.Value as User;
+                    if(User == null)
                     {
                         User = new Info.User();
                         User.CurrencyList.Add(
@@ -62,36 +66,13 @@ namespace Info
                                 PlaceId = Game.Data.Const.StartPlaceId,
                             });
 
-                        StartCoroutine(database?.CoSave(firebase.Auth.UserId, JsonUtility.ToJson(User)));
+                        StartCoroutine(database.CoSave(firebase.Auth.UserId, JsonUtility.ToJson(User)));
                     }
-
-                    endLoad = true;
                 }));
 
             yield return new WaitUntil(() => endLoad);
 
             Debug.Log("End Load CoLoadUserInfo");
-
-            //var addressableAssetLoader = GameSystem.ResourceManager.Instance?.AddressableAssetLoader;
-            //if (addressableAssetLoader == null)
-            //    yield break;
-
-            //
-
-            //yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<Info.User>(
-            //    "Info",
-            //    (asyncOperationHandle) =>
-            //    {
-            //        var result = asyncOperationHandle.Result;
-            //        if (result == null)
-            //            return;
-
-            //        User = result;
-
-            //        endLoad = true;
-            //    }));
-
-            //
         }
 
         //private void LoadInfo()
