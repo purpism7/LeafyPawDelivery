@@ -77,15 +77,14 @@ namespace Info
                     {
                         User.CurrencyList.Clear();
 
-                        //var currencyList = data.Value as List<User.Currency>;
-
-                        //Debug.Log((IDictionary)data.Value);
-                        //User.CurrencyList
-
-                        //var value = (List<User.Currency>)data.Value;
-                        ////User.CurrencyList.AddRange(();
-                        //Debug.Log(value);
-
+                        var currencyList = data.Value as IList;
+                        foreach(IDictionary currencyDic in currencyList)
+                        {
+                            //foreach(vadf wvr currency in currencyDic)
+                            //{
+                            //    Debug.Log(currency);
+                            //}
+                        }
                     }
                 }
             }
