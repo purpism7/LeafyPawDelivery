@@ -40,6 +40,11 @@ namespace Game
             return;
         }
 
+        public void AddAnimal(Game.Creature.Animal addAnimal)
+        {
+
+        }
+
         public void AddObject(Game.Object addObj)
         {
             if (_objectList == null)

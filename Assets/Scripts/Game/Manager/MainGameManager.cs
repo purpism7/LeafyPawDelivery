@@ -97,7 +97,19 @@ public class MainGameManager : Singleton<MainGameManager>
 
         return false;
     }
-    
+
+    #region Animal
+    public void AddAnimalToPlace(Game.Creature.Animal animal)
+    {
+        if (animal == null)
+            return;
+
+        //placeMgr?.ActivityPlace?.(animal);
+
+        //_startEditAction?.Invoke(obj);
+    }
+    #endregion
+
     #region Object
     public void AddObjectToPlace(Game.Object obj)
     {
