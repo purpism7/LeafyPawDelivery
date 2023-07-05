@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Creature;
+using Game.Creature;
 using UI;
 using Game;
 
 namespace GameSystem
 {
-    public class AnimalCreator : BaseCreator<Creature.Animal>
+    public class AnimalCreator : BaseCreator<Game.Creature.Animal>
     {
         private int _animalId = 0;
         private Transform _rootTm = null;
@@ -43,21 +43,22 @@ namespace GameSystem
             return this;
         }
 
-        public override Creature.Animal Create()
+        public override Game.Creature.Animal Create()
         {
-            var animal = ResourceManager.Instance?.Instantiate<Creature.Animal>(_animalId, _rootTm);
+            var animal = ResourceManager.Instance?.Instantiate<Game.Creature.Animal>(_animalId, _rootTm);
             if (animal == null)
             {
                 return null;
             }
 
-            animal.Initialize(new Creature.Animal.Data_()
+            animal.Initialize(new Game.Creature.Animal.Data()
             {
                 Order = _order,
-                DropItemAction = _dropItemAction,
             });
 
-            return MainGameManager.Instance?.AddAnimal(animal);
+            MainGameManager.Instance?.AnimalMgr?.AddAnimalInfo(_animalId);
+
+            return animal;
         }
     }
 }

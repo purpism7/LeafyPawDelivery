@@ -5,7 +5,7 @@ using UnityEngine;
 
 using UI;
 using Game;
-using Creature;
+using Game.Creature;
 using Data;
 
 namespace GameSystem

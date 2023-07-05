@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Creature;
+using Game.Creature;
 using Data;
 using GameData;
 using GameSystem;
@@ -66,28 +66,6 @@ public class MainGameManager : Singleton<MainGameManager>
         GameState = System.Activator.CreateInstance<T>();
     }
     #endregion
-
-    public Creature.Animal AddAnimal(Creature.Animal animal)
-    {
-        if(animal == null)
-        {
-            return null;
-        }
-
-        //var animalData = DataContainer.GetAnimal(animal.Id);
-        //if(animalData == null)
-        //{
-        //    Debug.LogError(name + " = No Animal Data");
-        //    return null;
-        //}
-
-        //if (!AnimalMgr.AddAnimal(animal))
-        //{
-        //    return null;
-        //}
-
-        return animal;
-    }
 
     public void SetStartEditAction(System.Action<Game.Base> action)
     {

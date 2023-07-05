@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-using Creature;
+
+using Game.Creature;
 using Data;
 using GameData;
 using GameSystem;

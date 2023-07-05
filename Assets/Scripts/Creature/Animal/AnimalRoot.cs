@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Creature
+namespace Game.Creature
 {
     public class AnimalRoot : MonoBehaviour
     {

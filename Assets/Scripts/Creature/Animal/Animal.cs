@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game;
 
-namespace Creature
+namespace Game.Creature
 {
-    public class Animal : Base<Animal.Data_>
+    public class Animal : Base<Animal.Data>
     {
-        public class Data_ : BaseData
+        public class Data : BaseData
         {
             public int Order = 0;
             public System.Action<DropItem, Transform> DropItemAction = null;
@@ -20,7 +20,7 @@ namespace Creature
         //private Data.Animal _animalData = null;
         private System.Action<DropItem, Transform> _dropItemAction = null;
 
-        public override void Initialize(Data_ data)
+        public override void Initialize(Data data)
         {
             base.Initialize(data);
             

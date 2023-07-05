@@ -27,22 +27,16 @@ namespace UI.Component
             if(_data == null)
                 return;
 
+            if (_data.AnimalData == null)
+                return;
+
             var mainGameMgr = MainGameManager.Instance;
             if(mainGameMgr == null)
                 return;
 
-            // var objData = new Game.Object.Data()
-            // {
-            //     ObjectUId = _data.ObjectUId,
-            // };
-            //
-            // var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
-            //     .SetData(objData)
-            //     .SetId(_data.ObjectId)
-            //     .SetRootTm(gameMgr.ObjectRootTm)
-            //     .Create();
-
-            // gameMgr.StartEditAction?.Invoke(obj);
+            var animal = new GameSystem.AnimalCreator()
+                .SetAnimalId(_data.AnimalData.Id)
+                .Create();
         }
     }
 }
