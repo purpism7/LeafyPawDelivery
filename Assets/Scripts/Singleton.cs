@@ -13,7 +13,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (_instance == null)
             {
-                Debug.Log(typeof(T).Name);
+                Debug.Log("Singleton = " + typeof(T).Name);
 
                 var obj = GameObject.FindObjectOfType<T>();
                 if (obj == null)

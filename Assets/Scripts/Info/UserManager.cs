@@ -80,10 +80,31 @@ namespace Info
                         var currencyList = data.Value as IList;
                         foreach(IDictionary currencyDic in currencyList)
                         {
-                            //foreach(vadf wvr currency in currencyDic)
-                            //{
-                            //    Debug.Log(currency);
-                            //}
+                            var currency = new User.Currency();
+
+                            var enumerator = currencyDic.GetEnumerator();
+                            while (enumerator.MoveNext())
+                            {
+                                DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
+    
+                                string key = dicEntry.Key.ToString();
+
+                                if(key.Equals("Animal"))
+                                {
+                                    currency.Animal = (long)dicEntry.Value;
+                                }
+                                else if(key.Equals("Object"))
+                                {
+                                    currency.Object = (long)dicEntry.Value;
+                                }
+                                else if (key.Equals("PlaceId"))
+                                {
+                                    var value = (long)dicEntry.Value;
+                                    currency.PlaceId = (int)value;
+                                }
+                            }
+
+                            User.CurrencyList.Add(currency);
                         }
                     }
                 }
