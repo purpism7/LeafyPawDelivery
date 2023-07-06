@@ -41,7 +41,7 @@ namespace UI.Component
                 return;
 
             Vector3 pos = Vector3.zero;
-            var camera = Camera.main;
+            var camera = gameMgr.GameCamera;
             if (camera)
             {
                 pos = camera.transform.position + camera.transform.forward;

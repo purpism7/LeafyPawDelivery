@@ -41,6 +41,9 @@ namespace Info
             bool endLoad = false;
 
             var database = firebase.Database;
+            if (database == null)
+                yield break;
+
             yield return StartCoroutine(database?.CoLoad(firebase.Auth.UserId,
                 (dataSnapshot) =>
                 {

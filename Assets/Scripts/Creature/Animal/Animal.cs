@@ -10,6 +10,7 @@ namespace Game.Creature
         public class Data : BaseData
         {
             public int Order = 0;
+            public Vector3 Pos = Vector3.zero;
             public System.Action<DropItem, Transform> DropItemAction = null;
         }
 
@@ -23,14 +24,15 @@ namespace Game.Creature
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-            
-            //_animalData = GameSystem.GameManager.Instance?.DataContainer?.GetAnimal(Id);
 
             _animalRoot = GetComponentInChildren<AnimalRoot>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            if(_spriteRenderer != null)
+
+            if (data != null)
             {
-                _spriteRenderer.sortingOrder = data.Order;
+                transform.localPosition = data.Pos;
+
+                SetSortingOrder(-(int)transform.localPosition.y);
             }
 
             _dropItemAction = data?.DropItemAction;
@@ -49,6 +51,16 @@ namespace Game.Creature
         public override void ChainUpdate()
         {
             _actionCtr?.ChainUpdate();
+        }
+
+        private void SetSortingOrder(int order)
+        {
+            if (_spriteRenderer == null)
+            {
+                return;
+            }
+
+            _spriteRenderer.sortingOrder = order;
         }
     }
 }

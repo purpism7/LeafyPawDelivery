@@ -22,13 +22,6 @@ namespace GameSystem
             return this;
         }
 
-        public AnimalCreator SetRoot(Transform rootTm)
-        {
-            _rootTm = rootTm;
-
-            return this;
-        }
-
         public AnimalCreator SetOrder(int order)
         {
             _order = order;
@@ -45,15 +38,29 @@ namespace GameSystem
 
         public override Game.Creature.Animal Create()
         {
-            var animal = ResourceManager.Instance?.Instantiate<Game.Creature.Animal>(_animalId, _rootTm);
-            if (animal == null)
-            {
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
                 return null;
+
+            var activityPlace = mainGameMgr.placeMgr?.ActivityPlace;
+            if (activityPlace == null)
+                return null;
+
+            var animal = ResourceManager.Instance?.Instantiate<Game.Creature.Animal>(_animalId, activityPlace.animalRootTm);
+            if (animal == null)
+                return null;
+
+            Vector3 pos = Vector3.zero;
+            var camera = mainGameMgr.GameCamera;
+            if (camera)
+            {
+                pos = camera.transform.position + camera.transform.forward;
             }
 
             animal.Initialize(new Game.Creature.Animal.Data()
             {
                 Order = _order,
+                Pos = pos,
             });
 
             MainGameManager.Instance?.AnimalMgr?.AddAnimalInfo(_animalId);

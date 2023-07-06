@@ -15,6 +15,7 @@ namespace Game
         
         [SerializeField]
         private Transform objectRootTm;
+        public Transform animalRootTm;
 
         public Transform ObjectRootTm { get { return objectRootTm; } }
 
