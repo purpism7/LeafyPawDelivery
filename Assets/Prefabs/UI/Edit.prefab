@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5863624380499047944}
   - component: {fileID: 8588720666229858494}
   m_Layer: 0
-  m_Name: EditObject
+  m_Name: Edit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

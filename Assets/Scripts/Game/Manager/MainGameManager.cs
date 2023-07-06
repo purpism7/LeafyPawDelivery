@@ -110,7 +110,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         //placeMgr?.ActivityPlace?.(animal);
 
-        //_startEditAction?.Invoke(obj);
+        _startEditAction?.Invoke(animal);
     }
     #endregion
 

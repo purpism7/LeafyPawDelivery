@@ -18,9 +18,6 @@ namespace Game.Creature
         private AnimalActionController _actionCtr = null;
         private SpriteRenderer _spriteRenderer = null;
 
-        //private Data.Animal _animalData = null;
-        private System.Action<DropItem, Transform> _dropItemAction = null;
-
         public override void Initialize(Data data)
         {
             base.Initialize(data);
@@ -35,8 +32,6 @@ namespace Game.Creature
                 SetSortingOrder(-(int)transform.localPosition.y);
             }
 
-            _dropItemAction = data?.DropItemAction;
-
             InitActionController();
 
             //_dropItemAction?.Invoke(_animalData.DropItem, transform);
@@ -44,7 +39,7 @@ namespace Game.Creature
 
         private void InitActionController()
         {
-            _actionCtr = GetComponent<AnimalActionController>();
+            _actionCtr = gameObject.GetOrAddComponent<AnimalActionController>();
             _actionCtr?.Init();
         }
 

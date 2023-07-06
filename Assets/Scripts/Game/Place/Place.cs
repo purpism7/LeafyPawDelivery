@@ -20,6 +20,7 @@ namespace Game
         public Transform ObjectRootTm { get { return objectRootTm; } }
 
         private List<Game.Object> _objectList = new();
+        private List<Game.Creature.Animal> _animalList = new();
         //public Transform ActivityAreaRootTm;
 
         //private Dictionary<int, ActivityArea> _activityAreaDic = new();

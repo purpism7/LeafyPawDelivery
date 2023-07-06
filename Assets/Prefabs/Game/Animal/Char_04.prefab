@@ -49,7 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199448939a6eb41d9b355ec6e6c23476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: 1
+  rootTm: {fileID: 0}
+  Id: 4
+  UId: 0
 --- !u!114 &1299675193131916836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +67,7 @@ MonoBehaviour:
   AnimalActionList: []
 --- !u!95 &1929264783874850026
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -82,7 +84,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!222 &6725727288528443948
 CanvasRenderer:
   m_ObjectHideFlags: 0

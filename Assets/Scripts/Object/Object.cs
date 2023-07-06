@@ -7,7 +7,7 @@ using UI;
 
 namespace Game
 {
-    public class Object : Game.Base<Object.Data>, EditObject.IListener
+    public class Object : Game.Base<Object.Data>, UI.Edit.IListener
     {
         readonly private int _selectOrder = 1000;
 
@@ -19,7 +19,7 @@ namespace Game
         }
 
         #region Inspector
-        public UI.EditObject EditObject = null;
+        public UI.Edit Edit = null;
         public SpriteRenderer ObjectSprRenderer = null;
         #endregion
 
@@ -38,7 +38,7 @@ namespace Game
                 SetSortingOrder(-(int)transform.localPosition.y);
             }
 
-            EditObject?.Init(this);
+            Edit?.Init(this);
             ActiveEditObject(false);
         }
 
@@ -83,7 +83,7 @@ namespace Game
 
         public void ActiveEditObject(bool active)
         {
-            UIUtils.SetActive(EditObject?.CanvasRectTm, active);
+            UIUtils.SetActive(Edit?.CanvasRectTm, active);
         }
 
         private void SetSortingOrder(int order)
@@ -119,8 +119,8 @@ namespace Game
         //}
         #endregion
 
-        #region EditObject.IListener
-        void EditObject.IListener.Remove()
+        #region Edit.IListener
+        void UI.Edit.IListener.Remove()
         {
             EState_ = EState.Remove;
 
@@ -129,7 +129,7 @@ namespace Game
             ActiveEditObject(false);
         }
 
-        void EditObject.IListener.Arrange()
+        void UI.Edit.IListener.Arrange()
         {
             EState_ = EState.Arrange;
 

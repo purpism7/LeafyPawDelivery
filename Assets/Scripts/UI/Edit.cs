@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class EditObject : Base
+    public class Edit : Base
     {
         public interface IListener
         {
