@@ -8,14 +8,14 @@ namespace Game.Creature
     {
         public List<Action> AnimalActionList = new();
 
-        private Animator _animator;
-        private SpriteRenderer _sprRenderer;
+        private Animator _animator = null;
+        private SpriteRenderer _sprRenderer = null;
         private AnimalAction _currentAnimalAction = null;
 
-        public void Init()
+        public void Init(Animator animator, SpriteRenderer sprRenderer)
         {
-            _animator = GetComponent<Animator>();
-            _sprRenderer = GetComponent<SpriteRenderer>();
+            _animator = animator;
+            _sprRenderer = sprRenderer;
 
             AnimalActionList.Add(CreateaAnimalAction<IdleAction>());
             AnimalActionList.Add(CreateaAnimalAction<WalkAction>());

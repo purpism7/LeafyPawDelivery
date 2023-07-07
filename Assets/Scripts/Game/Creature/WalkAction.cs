@@ -30,15 +30,14 @@ namespace Game.Creature
         private void MoveToTarget(Vector3 targetPos)
         {
             if(_data == null)
-            {
                 return;
-            }
+
+            if (_data.SprRenderer == null)
+                return;
 
             var animalTm = _data.Tm;
             if (!animalTm)
-            {
                 return;
-            }
 
             _data.SprRenderer.flipX = animalTm.localPosition.x - targetPos.x < 0;
             _targetPos = targetPos;

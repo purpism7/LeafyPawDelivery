@@ -15,9 +15,13 @@ namespace Game.Creature
             public System.Action<DropItem, Transform> DropItemAction = null;
         }
 
+        [SerializeField]
+        private SpriteRenderer spriteRenderer = null;
+        [SerializeField]
+        private Animator animator = null;
+
         private AnimalRoot _animalRoot = null;
         private AnimalActionController _actionCtr = null;
-        private SpriteRenderer _spriteRenderer = null;
 
         public BaseState<Creature.Animal> State { get; private set; } = null;
 
@@ -26,7 +30,6 @@ namespace Game.Creature
             base.Initialize(data);
 
             _animalRoot = GetComponentInChildren<AnimalRoot>();
-            _spriteRenderer = GetComponent<SpriteRenderer>();
 
             if (data != null)
             {
@@ -44,7 +47,7 @@ namespace Game.Creature
         private void InitActionController()
         {
             _actionCtr = gameObject.GetOrAddComponent<AnimalActionController>();
-            _actionCtr?.Init();
+            _actionCtr?.Init(animator, spriteRenderer);
         }
 
         public override void ChainUpdate()
@@ -85,10 +88,10 @@ namespace Game.Creature
 
         private void SetSortingOrder(int order)
         {
-            if (_spriteRenderer == null)
+            if (spriteRenderer == null)
                 return;
 
-            _spriteRenderer.sortingOrder = order;
+            spriteRenderer.sortingOrder = order;
         }
 
         #region Edit.IListener

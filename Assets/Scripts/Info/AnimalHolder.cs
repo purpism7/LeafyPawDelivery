@@ -20,10 +20,11 @@ namespace Info
                 System.IO.Directory.CreateDirectory(JsonFilePath);
             }
 
-            if (!System.IO.File.Exists(JsonFilePath))
+            var fullPath = JsonFilePath + JsonFileName;
+            if (!System.IO.File.Exists(fullPath))
                 return;
             
-            var jsonString = System.IO.File.ReadAllText(JsonFilePath + JsonFileName);
+            var jsonString = System.IO.File.ReadAllText(fullPath);
             var animalInfos = JsonHelper.FromJson<Info.Animal>(jsonString);
             if(animalInfos != null)
             {
@@ -36,9 +37,8 @@ namespace Info
             if(AnimalInfoList == null)
                 return;
 
-            Debug.Log("JsonFilePath = " + JsonFilePath);
             var jsonString = JsonHelper.ToJson(AnimalInfoList.ToArray());
-            
+            Debug.Log("jsonString = " + jsonString);
             System.IO.File.WriteAllText(JsonFilePath + JsonFileName , jsonString);
         }
 

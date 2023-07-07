@@ -215,8 +215,9 @@ namespace GameSystem
         {
             if(_gameObjByIdDic == null)
                 return null;
-            
-            // Debug.Log("typeKey = " + typeKey + " / " + _gameObjByIdDic[typeKey].Count);
+
+            Debug.Log("id = " + id);
+            Debug.Log("typeKey = " + typeKey + " / " + _gameObjByIdDic[typeKey].Count);
             if(_gameObjByIdDic.TryGetValue(typeKey, out Dictionary<int, GameObject> dic))
             {
                 if(dic.TryGetValue(id, out GameObject gameObj))

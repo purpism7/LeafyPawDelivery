@@ -164,6 +164,7 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             case Type.EMain.Animal:
                 {
+                    AnimalMgr?.ArrangeAnimal(id, pos, placeId);
 
                     Game.UIManager.Instance?.Bottom?.EditList?.RefreshAnimalList();
 

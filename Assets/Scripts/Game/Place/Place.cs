@@ -34,6 +34,7 @@ namespace Game
             //_placeActivityAnimalAction = data?.PlaceActivityAnimalAction;
 
             //InitActivityAreaDic();
+            SetAnimalList();
             SetObjectList();
         }
 
@@ -93,6 +94,66 @@ namespace Game
             if (_objectList.Remove(findObject))
             {
                 findObject.Deactivate();
+            }
+        }
+
+        private void SetAnimalList()
+        {
+            _animalList.Clear();
+
+            var animalInfoList = MainGameManager.Instance?.AnimalMgr?.AnimalInfoList;
+            if (animalInfoList == null)
+                return;
+
+            for (int i = 0; i < animalInfoList.Count; ++i)
+            {
+                var animalInfo = animalInfoList[i];
+                if (animalInfo == null)
+                    continue;
+
+                var data = AnimalContainer.Instance.GetData(animalInfo.Id);
+                if (data == null)
+                    continue;
+
+                if (data.PlaceId != Id)
+                    continue;
+
+                if (!animalInfo.Arrangement)
+                    continue;
+
+                var animalData = new Game.Creature.Animal.Data()
+                {
+                    Id = data.Id,
+                };
+
+                Game.Creature.Animal resAnimal = null;
+                foreach (var animal in _animalList)
+                {
+                    if (animal == null)
+                        continue;
+
+                    if (animal.IsActivate)
+                        continue;
+
+                    if (animalInfo.Id != animal.Id)
+                        continue;
+
+                    resAnimal = animal;
+                    resAnimal?.Initialize(animalData);
+
+                    break;
+                }
+
+                if (resAnimal == null)
+                {
+                    resAnimal = new GameSystem.AnimalCreator()
+                        .SetAnimalId(animalInfo.Id)
+                        .Create();
+
+                    _animalList.Add(resAnimal);
+                }
+
+                resAnimal?.Activate();
             }
         }
 
