@@ -37,7 +37,7 @@ namespace Game
             yield break;
         }
 
-        public void AddAnimalInfo(Info.Animal animalInfo)
+        public void AddAnimal(Info.Animal animalInfo)
         {
             if (_animalHolder == null)
                 return;
@@ -48,7 +48,7 @@ namespace Game
             }
         }
 
-        public void AddAnimalInfo(int animalId)
+        public void AddAnimal(int animalId)
         {
             if (_animalHolder == null)
                 return;
@@ -62,6 +62,16 @@ namespace Game
             {
                 Listener?.Invoke(animalInfo);
             }
+        }
+
+        public void RemoveAnimal(int id)
+        {
+            _animalHolder?.RemoveAnimal(id);
+        }
+
+        public void ArrangeAnimal(int id, Vector3 pos, int placeId)
+        {
+            _animalHolder?.ArrangeAnimal(id, pos, placeId);
         }
 
         public bool CheckExist(int animalId)

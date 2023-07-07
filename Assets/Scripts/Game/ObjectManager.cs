@@ -51,7 +51,7 @@ namespace Game
             _objectHolder?.ArrangeObject(objectUId, pos, placeId);
         }
 
-        public void AddObjectInfo(int objectId)
+        public void AddObject(int objectId)
         {
             if (_objectHolder == null)
                 return;

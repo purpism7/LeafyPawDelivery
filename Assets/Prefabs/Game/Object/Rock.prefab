@@ -164,9 +164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 6281575790720672042}
+  edit: {fileID: 5203643539711986364}
   Id: 2
   UId: 0
-  Edit: {fileID: 5203643539711986364}
   ObjectSprRenderer: {fileID: 8198808596251828485}
 --- !u!136 &7441345776543645308
 CapsuleCollider:

@@ -59,11 +59,12 @@ namespace GameSystem
 
             animal.Initialize(new Game.Creature.Animal.Data()
             {
+                Id = _animalId,
                 Order = _order,
                 Pos = pos,
             });
 
-            MainGameManager.Instance?.AnimalMgr?.AddAnimalInfo(_animalId);
+            MainGameManager.Instance?.AnimalMgr?.AddAnimal(_animalId);
 
             return animal;
         }

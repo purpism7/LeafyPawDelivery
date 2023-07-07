@@ -44,7 +44,29 @@ namespace Game
 
         public void AddAnimal(Game.Creature.Animal addAnimal)
         {
+            if (_animalList == null)
+                return;
 
+            var findAnimal = _animalList.Find(animal => animal.Id == addAnimal.Id);
+            if (findAnimal != null)
+                return;
+
+            _animalList.Add(addAnimal);
+        }
+
+        public void RemoveAnimal(int id)
+        {
+            if (_animalList == null)
+                return;
+
+            var findAnimal = _animalList.Find(animal => animal.Id == id);
+            if (findAnimal == null)
+                return;
+
+            if (_animalList.Remove(findAnimal))
+            {
+                findAnimal.Deactivate();
+            }
         }
 
         public void AddObject(Game.Object addObj)

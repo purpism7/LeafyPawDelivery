@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Firebase;
+
 namespace GameSystem
 {
     public class FirebaseManager : Singleton<FirebaseManager>
@@ -11,7 +13,7 @@ namespace GameSystem
 
         protected override void Initialize()
         {
-            
+            FirebaseApp.Create();
         }
 
         public override IEnumerator CoInit()

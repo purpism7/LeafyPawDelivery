@@ -9,8 +9,6 @@ namespace Game
 {
     public class Object : Game.Base<Object.Data>, UI.Edit.IListener
     {
-        readonly private int _selectOrder = 1000;
-
         public class Data : BaseData
         {
             public int ObjectId = 0;
@@ -19,12 +17,11 @@ namespace Game
         }
 
         #region Inspector
-        public UI.Edit Edit = null;
         public SpriteRenderer ObjectSprRenderer = null;
         #endregion
 
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
-        public ObjectState State { get; private set; } = null;
+        public BaseState<Game.Object> State { get; private set; } = null;
 
         public override void Initialize(Data data)
         {
@@ -38,8 +35,8 @@ namespace Game
                 SetSortingOrder(-(int)transform.localPosition.y);
             }
 
-            Edit?.Init(this);
-            ActiveEditObject(false);
+            edit?.Init(this);
+            ActiveEdit(false);
         }
 
         public override void ChainUpdate()
@@ -52,7 +49,9 @@ namespace Game
         {
             base.OnTouchBegan(gameCamera, grid);
 
-            SetState(new Edit(gameCamera, grid));
+            var edit = new Game.Edit<Game.Object>(gameCamera, grid);
+
+            SetState(edit);
 
             SetSortingOrder(_selectOrder);
         }
@@ -64,14 +63,14 @@ namespace Game
             State?.Touch(touch);
         }
 
-        public void SetState(ObjectState state)
+        public void SetState(BaseState<Game.Object> state)
         {
-            if(state == null)
+            if(state == null)   
             {
                 return;
             }
 
-            if(state is Edit)
+            if(state is Game.Edit<Game.Object>)
             {
                 EState_ = EState.Edit;
             }
@@ -79,11 +78,6 @@ namespace Game
             state.Apply(this);
 
             State = state;
-        }
-
-        public void ActiveEditObject(bool active)
-        {
-            UIUtils.SetActive(Edit?.CanvasRectTm, active);
         }
 
         private void SetSortingOrder(int order)
@@ -124,20 +118,20 @@ namespace Game
         {
             EState_ = EState.Remove;
 
-            Command.Remove.Execute(_data.ObjectId, ObjectUId);
+            Command.Remove.Execute(Type.EMain.Object, _data.ObjectId, ObjectUId);
 
-            ActiveEditObject(false);
+            ActiveEdit(false);
         }
 
         void UI.Edit.IListener.Arrange()
         {
             EState_ = EState.Arrange;
 
-            Command.Arrange.Execute(ObjectUId, transform.localPosition);
+            Command.Arrange.Execute(Type.EMain.Object, ObjectUId, transform.localPosition);
 
             SetSortingOrder(-(int)transform.localPosition.y);
 
-            ActiveEditObject(false);
+            ActiveEdit(false);
         }
         #endregion
     }

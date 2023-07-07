@@ -37,6 +37,8 @@ namespace UI.Component
             var animal = new GameSystem.AnimalCreator()
                 .SetAnimalId(_data.AnimalData.Id)
                 .Create();
+
+            mainGameMgr.AddAnimalToPlace(animal);
         }
     }
 }

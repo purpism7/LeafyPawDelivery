@@ -53,11 +53,6 @@ namespace Game
             yield break;
         }
 
-        public void RemoveObject(int objectUId)
-        {
-            ActivityPlace?.RemoveObject(objectUId);
-        }
-
         //public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         //{
         //    //var activityAnimalMgr = iProvider?.Get<ActivityAnimalManager>();

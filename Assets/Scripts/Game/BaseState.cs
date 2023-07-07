@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Game
 {
-    public abstract class ObjectState
+    public abstract class BaseState<T> where T : Game.Base
     {
-        protected Game.Object _object = null;
+        protected Game.Base _gameBase = null;
 
         public System.Type Type
         {
@@ -16,7 +16,8 @@ namespace Game
             }
         }
 
-        public abstract void Apply(Game.Object obj);
+        public abstract void Apply(T t);
         public abstract void Touch(Touch touch);
     }
+
 }

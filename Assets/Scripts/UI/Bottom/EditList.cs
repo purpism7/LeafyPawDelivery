@@ -27,7 +27,7 @@ namespace UI
         [SerializeField]
         private Toggle objectToggle = null;
 
-        private List<Component.EditAnimal> _editAnimaList = new();
+        private List<Component.EditAnimal> _editAnimalList = new();
         private List<Component.EditObject> _editObjectList = new();
         public Type.ETab CurrETabType { get; private set; } = Type.ETab.Animal;
 
@@ -58,7 +58,7 @@ namespace UI
 
         private void SetAnimalList()
         {
-            _editAnimaList.Clear();
+            _editAnimalList.Clear();
 
             var infoList = MainGameManager.Instance?.AnimalMgr?.AnimalInfoList;
             if(infoList == null)
@@ -77,10 +77,7 @@ namespace UI
                     AnimalData = AnimalContainer.Instance.GetData(info.Id),
                 };
 
-                var editObject = new GameSystem.UICreator<UI.Component.EditAnimal, UI.Component.EditAnimal.Data>()
-                    .SetData(data)
-                    .SetRootRectTm(animalScrollRect.content)
-                    .Create();
+                CreateEditAnimal(data);
             }
         }
         
@@ -110,6 +107,19 @@ namespace UI
             }
         }
 
+        private void CreateEditAnimal(Component.EditAnimal.Data data)
+        {
+            if (data == null)
+                return;
+
+            var editAnimal = new GameSystem.UICreator<UI.Component.EditAnimal, UI.Component.EditAnimal.Data>()
+                      .SetData(data)
+                      .SetRootRectTm(animalScrollRect.content)
+                      .Create();
+
+            _editAnimalList.Add(editAnimal);
+        }
+
         private void CreateEditObject(Component.EditObject.Data objectData)
         {
             if (objectData == null)
@@ -129,25 +139,73 @@ namespace UI
             UIUtils.SetActive(objectScrollRect?.gameObject, CurrETabType == Type.ETab.Object);
         }
 
+        private void DeactviateAllAnimal()
+        {
+            foreach (var animal in _editAnimalList)
+            {
+                animal?.gameObject.SetActive(false);
+            }
+        }
+
         private void DeactviateAllObject()
         {
-            foreach(var objectInfo in _editObjectList)
+            foreach(var obj in _editObjectList)
             {
-                objectInfo?.gameObject.SetActive(false);
+                obj?.gameObject.SetActive(false);
+            }
+        }
+
+        public void RefreshAnimalList()
+        {
+            var infoList = MainGameManager.Instance?.AnimalMgr?.AnimalInfoList;
+            if (infoList == null)
+                return;
+
+            DeactviateAllAnimal();
+
+            for (int i = 0; i < infoList.Count; ++i)
+            {
+                var info = infoList[i];
+                if (info == null)
+                    continue;
+
+                if (info.Arrangement)
+                    continue;
+
+                var animalData = AnimalContainer.Instance.GetData(info.Id);
+
+                var data = new Component.EditAnimal.Data()
+                {
+                    AnimalData = animalData,
+                };
+
+                if (_editAnimalList?.Count > i)
+                {
+                    var editAnimal = _editAnimalList[i];
+                    if (editAnimal != null)
+                    {
+                        editAnimal.Initialize(data);
+                        editAnimal.gameObject.SetActive(true);
+                    }
+                }
+                else
+                {
+                    CreateEditAnimal(data);
+                }
             }
         }
 
         public void RefreshObjectList()
         {
-            var objectInfoList = MainGameManager.Instance?.ObjectMgr?.ObjectInfoList;
-            if (objectInfoList == null)
+            var infoList = MainGameManager.Instance?.ObjectMgr?.ObjectInfoList;
+            if (infoList == null)
                 return;
 
             DeactviateAllObject();
 
-            for (int i = 0; i < objectInfoList.Count; ++i)
+            for (int i = 0; i < infoList.Count; ++i)
             {
-                var objectInfo = objectInfoList[i];
+                var objectInfo = infoList[i];
                 if (objectInfo == null)
                     continue;
 

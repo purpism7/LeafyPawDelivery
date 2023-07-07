@@ -56,13 +56,41 @@ namespace Info
 
             return true;
         }
-        
-        public Info.Animal GetAnimalInfo(int animalId)
+
+        public void RemoveAnimal(int id)
+        {
+            var animalData = AnimalContainer.Instance.GetData(id);
+            if (animalData == null)
+                return;
+
+            var animalInfo = GetAnimalInfo(id);
+            if (animalInfo == null)
+                return;
+
+            animalInfo.Pos = Vector3.zero;
+            animalInfo.Arrangement = false;
+
+            SaveInfo();
+        }
+
+        public void ArrangeAnimal(int id, Vector3 pos, int placeId)
+        {
+            var animalInfo = GetAnimalInfo(id);
+            if (animalInfo == null)
+                return;
+
+            animalInfo.Pos = pos;
+            animalInfo.Arrangement = true;
+
+            SaveInfo();
+        }
+
+        public Info.Animal GetAnimalInfo(int id)
         {
             if(AnimalInfoList == null)
                 return null;
 
-            return AnimalInfoList.Find(animalInfo => animalInfo.Id == animalId);
+            return AnimalInfoList.Find(animalInfo => animalInfo.Id == id);
         }
     }
 }

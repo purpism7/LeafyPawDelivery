@@ -54,9 +54,7 @@ namespace Game.Creature
         private void UpdateMove()
         {
             if (_data == null)
-            {
                 return;
-            }
 
             if (_data.EState != EState.InProgress)
             {

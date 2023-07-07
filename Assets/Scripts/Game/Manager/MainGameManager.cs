@@ -80,11 +80,11 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         if (eMain == Type.EMain.Animal)
         {
-            AnimalMgr?.AddAnimalInfo(id);
+            AnimalMgr?.AddAnimal(id);
         }
         else if (eMain == Type.EMain.Object)
         {
-            ObjectMgr?.AddObjectInfo(id);
+            ObjectMgr?.AddObject(id);
         }
     }
 
@@ -108,7 +108,7 @@ public class MainGameManager : Singleton<MainGameManager>
         if (animal == null)
             return;
 
-        //placeMgr?.ActivityPlace?.(animal);
+        placeMgr?.ActivityPlace?.AddAnimal(animal);
 
         _startEditAction?.Invoke(animal);
     }
@@ -124,16 +124,35 @@ public class MainGameManager : Singleton<MainGameManager>
 
         _startEditAction?.Invoke(obj);
     }
+    #endregion
 
-    public void RemoveObject(int objectId, int objectUId)
+    public void Remove(Type.EMain eMain, int id, int uId)
     {
-        placeMgr?.RemoveObject(objectUId);
-        ObjectMgr?.RemoveObject(objectId, objectUId);
+        switch (eMain)
+        {
+            case Type.EMain.Animal:
+                {
+                    placeMgr?.ActivityPlace?.RemoveAnimal(id);
+                    AnimalMgr?.RemoveAnimal(id);
 
-        Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
+                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshAnimalList();
+
+                    break;
+                }
+
+            case Type.EMain.Object:
+                {
+                    placeMgr?.ActivityPlace?.RemoveObject(uId);
+                    ObjectMgr?.RemoveObject(id, uId);
+
+                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
+
+                    break;
+                }
+        }
     }
 
-    public void ArrangeObject(int objectUId, Vector3 pos)
+    public void Arrange(Type.EMain eMain, int id, Vector3 pos)
     {
         int placeId = 0;
         if (placeMgr != null)
@@ -141,10 +160,26 @@ public class MainGameManager : Singleton<MainGameManager>
             placeId = placeMgr.ActivityPlace.Id;
         }
 
-        ObjectMgr?.ArrangeObject(objectUId, pos, placeId);
+        switch(eMain)
+        {
+            case Type.EMain.Animal:
+                {
 
-        Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
+                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshAnimalList();
+
+                    break;
+                }
+
+            case Type.EMain.Object:
+                {
+
+                    ObjectMgr?.ArrangeObject(id, pos, placeId);
+
+                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
+
+                    break;
+                }
+        }
     }
-    #endregion
 }   
 

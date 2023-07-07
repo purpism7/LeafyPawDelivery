@@ -8,6 +8,7 @@ namespace Info
     public class Animal
     {
         public int Id = 0;
+        public Vector3 Pos = Vector3.zero;
         public bool Arrangement = false;
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class Edit : ObjectState
+    public class Edit<T> : BaseState<T> where T : Game.Base
     {
         private Camera _gameCamera = null;
         private int _overlapCnt = 0;
@@ -16,19 +16,17 @@ namespace Game
             _grid = grid;
         }
 
-        public override void Apply(Game.Object obj)
+        public override void Apply(T t)
         {
-            _object = obj;
+            _gameBase = t;
         }
 
         public override void Touch(Touch touch)
         {
-            if(_object == null)
-            {
+            if(_gameBase == null)
                 return;
-            }
 
-            if(_object.EState_ != EState.Edit)
+            if (_gameBase.EState_ != EState.Edit)
             {
                 return;
             }
@@ -37,7 +35,7 @@ namespace Game
             {
                 case TouchPhase.Began:
                     {
-                        _object.ActiveEditObject(true);
+                        _gameBase.ActiveEdit(true);
                     }
                     break;
 
@@ -45,14 +43,14 @@ namespace Game
                     {
                         DragObject(touch);
 
-                        _object.ActiveEditObject(false);
+                        _gameBase.ActiveEdit(false);
                     }
                     break;
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
-                        _object.ActiveEditObject(true);
+                        _gameBase.ActiveEdit(true);
                     }
                     break;
             }
@@ -60,12 +58,10 @@ namespace Game
 
         private void DragObject(Touch touch)
         {
-            if (_object == null)
-            {
+            if (_gameBase == null)
                 return;
-            }
 
-            var objectTm = _object.transform;
+            var objectTm = _gameBase.transform;
 
             float distance = _gameCamera.WorldToScreenPoint(objectTm.position).z;
             Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);

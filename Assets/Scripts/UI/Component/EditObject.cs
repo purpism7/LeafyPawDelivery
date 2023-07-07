@@ -36,12 +36,12 @@ namespace UI.Component
             if(_data == null)
                 return;
 
-            var gameMgr = MainGameManager.Instance;
-            if(gameMgr == null)
+            var mainGameMgr = MainGameManager.Instance;
+            if(mainGameMgr == null)
                 return;
 
             Vector3 pos = Vector3.zero;
-            var camera = gameMgr.GameCamera;
+            var camera = mainGameMgr.GameCamera;
             if (camera)
             {
                 pos = camera.transform.position + camera.transform.forward;
@@ -57,10 +57,10 @@ namespace UI.Component
             var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
                 .SetData(objData)
                 .SetId(_data.ObjectId)
-                .SetRootTm(gameMgr.ObjectRootTm)
+                .SetRootTm(mainGameMgr.ObjectRootTm)
                 .Create();
 
-            gameMgr.AddObjectToPlace(obj);
+            mainGameMgr.AddObjectToPlace(obj);
         }
     }
 }

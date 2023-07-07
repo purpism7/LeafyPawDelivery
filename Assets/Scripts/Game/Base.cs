@@ -22,6 +22,8 @@ namespace Game
     {
         [SerializeField]
         private Transform rootTm = null;
+        [SerializeField]
+        protected UI.Edit edit = null;
 
         public int Id = 0;
         [HideInInspector]
@@ -64,10 +66,17 @@ namespace Game
         {
             
         }
+
+        public void ActiveEdit(bool active)
+        {
+            UIUtils.SetActive(edit?.CanvasRectTm, active);
+        }
     }
 
     public abstract class Base<T> : Base where T : BaseData
     {
+        readonly protected int _selectOrder = 1000;
+
         protected T _data = default(T);
 
         public virtual void Initialize(T data)
