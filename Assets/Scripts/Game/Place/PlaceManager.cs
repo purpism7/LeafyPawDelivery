@@ -13,7 +13,7 @@ namespace Game
     {
         public class Data : Manager.BaseData
         {
-
+            public int StartPlaceId = 0;
         }
 
         public Transform RootTm;
@@ -41,14 +41,7 @@ namespace Game
         {
             Debug.Log("PlaceManager CoInit");
 
-            ActivityPlace = new GameSystem.PlaceCreator()
-                .SetPlaceId(1)
-                .SetRoot(RootTm)
-                .Create();
-
-            _placeList.Add(ActivityPlace);
             
-            Listener?.Invoke(ActivityPlaceId);
 
             yield break;
         }

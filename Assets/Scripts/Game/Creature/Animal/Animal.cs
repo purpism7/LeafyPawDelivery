@@ -12,7 +12,6 @@ namespace Game.Creature
             public int Id = 0;
             public int Order = 0;
             public Vector3 Pos = Vector3.zero;
-            public System.Action<DropItem, Transform> DropItemAction = null;
         }
 
         [SerializeField]

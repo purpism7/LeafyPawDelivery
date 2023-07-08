@@ -115,7 +115,7 @@ namespace Game
                 if (data == null)
                     continue;
 
-                if (data.PlaceId != Id)
+                if (data.PlaceId != _data.Id)
                     continue;
 
                 if (!animalInfo.Arrangement)
@@ -124,6 +124,7 @@ namespace Game
                 var animalData = new Game.Creature.Animal.Data()
                 {
                     Id = data.Id,
+                    Pos = animalInfo.Pos,
                 };
 
                 Game.Creature.Animal resAnimal = null;

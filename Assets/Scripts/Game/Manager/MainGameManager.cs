@@ -37,7 +37,16 @@ public class MainGameManager : Singleton<MainGameManager>
         yield return StartCoroutine(base.CoInit(iProvider));
 
         var activityPlaceId = Game.Data.Const.StartPlaceId;//placeMgr.ActivityPlaceId; 
-        
+
+        if (placeMgr != null)
+        {
+            yield return StartCoroutine(placeMgr.CoInit(
+                new Game.PlaceManager.Data()
+                {
+                    StartPlaceId = activityPlaceId,
+                }));
+        }
+
         yield return StartCoroutine(ObjectMgr?.CoInit(new Game.ObjectManager.Data
         {
             PlaceId = activityPlaceId,
@@ -47,11 +56,6 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             PlaceId = activityPlaceId,
         }));
-
-        if (placeMgr != null)
-        {
-            yield return StartCoroutine(placeMgr.CoInit(null));
-        }
         
         Story = iProvider.Get<Game.Manager.Story>();
         OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();
