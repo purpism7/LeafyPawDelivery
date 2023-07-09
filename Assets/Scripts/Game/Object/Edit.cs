@@ -67,10 +67,6 @@ namespace Game
             Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);
             Vector3 pos = _gameCamera.ScreenToWorldPoint(movePos);
 
-            //Debug.Log(_grid.Limit);
-            //Debug.Log(_grid.Limit2);
-            //Debug.Log(pos);
-
             pos.y = Mathf.Clamp(pos.y, _grid.Limit.y, _grid.Limit2.y);
 
             objectTm.position = pos;

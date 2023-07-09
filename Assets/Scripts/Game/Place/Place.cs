@@ -35,7 +35,10 @@ namespace Game
 
         public override void ChainUpdate()
         {
-            return;
+            foreach(var animal in _animalList)
+            {
+                animal?.ChainUpdate();
+            }
         }
 
         public override void Activate()

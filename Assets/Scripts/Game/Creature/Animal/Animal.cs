@@ -38,8 +38,8 @@ namespace Game.Creature
             }
 
             InitActionController();
-            edit?.Init(this);
 
+            edit?.Init(this);
             ActiveEdit(false);
         }
 

@@ -65,6 +65,11 @@ public class MainGameManager : Singleton<MainGameManager>
         GameCamera = iProvider.Get<InputManager>()?.GameCameraCtr?.GameCamera;
     }
 
+    private void Update()
+    {
+        placeMgr?.ChainUpdate();
+    }
+
     #region GameState
     public void SetGameState<T>() where T : Game.State.Base
     {

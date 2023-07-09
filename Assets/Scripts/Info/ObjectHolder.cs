@@ -13,8 +13,6 @@ namespace Info
         
         protected override string JsonFilePath => RootJsonFilePath + "/Info/Object_Place_{0}.json";
         
-        //public List<Info.Object> ObjectInfoList { get; private set; } = new();
-
         private Dictionary<int, List<Info.Object>> _objectInfoDic = new();
 
         public override void LoadInfo()

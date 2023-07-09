@@ -54,6 +54,13 @@ namespace Game
             yield break;
         }
 
+        public override void ChainUpdate()
+        {
+            base.ChainUpdate();
+
+            ActivityPlace?.ChainUpdate();
+        }
+
         //public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         //{
         //    //var activityAnimalMgr = iProvider?.Get<ActivityAnimalManager>();

@@ -29,25 +29,17 @@ namespace Game.Creature
         public override void ChainUpdate()
         {
             if (_data == null)
-            {
                 return;
-            }
 
             if (_data.EState == EState.End)
-            {
                 return;
-            }
 
             var animator = _data?.Animator;
             if (animator == null)
-            {
                 return;
-            }
 
-            if((System.DateTime.UtcNow - _time).TotalSeconds < _duration)
-            {
+            if ((System.DateTime.UtcNow - _time).TotalSeconds < _duration)
                 return;
-            }
 
             EndAction();
         }

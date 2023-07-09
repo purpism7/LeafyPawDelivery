@@ -19,6 +19,11 @@ namespace Game.Manager
             Initialize();
         }
 
+        public virtual void ChainUpdate()
+        {
+
+        }
+
         protected abstract void Initialize();
         public abstract IEnumerator CoInit(T data);
     }

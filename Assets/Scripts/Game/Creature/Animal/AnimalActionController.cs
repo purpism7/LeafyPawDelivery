@@ -20,7 +20,7 @@ namespace Game.Creature
             AnimalActionList.Add(CreateaAnimalAction<IdleAction>());
             AnimalActionList.Add(CreateaAnimalAction<WalkAction>());
 
-            StartRandomAction();
+            StartIdleAction();
         }
 
         private void StartRandomAction()
@@ -31,6 +31,13 @@ namespace Game.Creature
 
         public void ChainUpdate()
         {
+            if (MainGameManager.Instance.GameState.Type.Equals(typeof(Game.State.Edit)))
+            {
+                StartIdleAction();
+
+                return;
+            }
+
             _currentAnimalAction?.ChainUpdate();
         }
 
@@ -53,13 +60,28 @@ namespace Game.Creature
             get
             {
                 if(AnimalActionList == null)
-                {
                     return null;
-                }
 
                 var randomIndex = UnityEngine.Random.Range(0, AnimalActionList.Count);
 
                 return AnimalActionList[randomIndex] as AnimalAction;
+            }
+        }
+
+        private void StartIdleAction()
+        {
+            if (_currentAnimalAction is IdleAction)
+                return;
+
+            foreach(AnimalAction action in AnimalActionList)
+            {
+                if(action is IdleAction)
+                {
+                    _currentAnimalAction = action;
+                    action.StartAction();
+
+                    break;
+                }
             }
         }
 

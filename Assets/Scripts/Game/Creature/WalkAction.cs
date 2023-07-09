@@ -24,7 +24,17 @@ namespace Game.Creature
 
         private void MoveToTarget()
         {
-            MoveToTarget(new Vector3(Random.Range(-180, 180), Random.Range(-50, 100)));
+            Vector3 pos = Vector3.zero;
+            var camera = MainGameManager.Instance?.GameCamera;
+            if (camera)
+            {
+                pos = camera.transform.position + camera.transform.forward;
+            }
+
+            var halfWidth = Screen.width / 2f - 20f;
+            var halfHeight = Screen.height / 2f;
+
+            MoveToTarget(new Vector3(Random.Range(pos.x - halfWidth, pos.x + halfWidth), Random.Range(pos.y - halfHeight + 50f, pos.y)));
         }
 
         private void MoveToTarget(Vector3 targetPos)
@@ -40,6 +50,7 @@ namespace Game.Creature
                 return;
 
             _data.SprRenderer.flipX = animalTm.localPosition.x - targetPos.x < 0;
+
             _targetPos = targetPos;
 
             SetState(EState.InProgress);
@@ -67,6 +78,11 @@ namespace Game.Creature
             }
 
             animalTm.localPosition = Vector2.MoveTowards(animalTm.localPosition, _targetPos, 1f);
+
+            if(_data.SprRenderer != null)
+            {
+                _data.SprRenderer.sortingOrder = -(int)animalTm.localPosition.y;
+            }
 
             var distance = Vector2.Distance(animalTm.localPosition, _targetPos);
             if (distance <= 0)
