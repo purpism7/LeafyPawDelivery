@@ -56,6 +56,8 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             PlaceId = activityPlaceId,
         }));
+
+        placeMgr?.ActivityPlace?.Activate();
         
         Story = iProvider.Get<Game.Manager.Story>();
         OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();

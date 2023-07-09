@@ -21,11 +21,6 @@ namespace Game
 
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
-        //public Transform ActivityAreaRootTm;
-
-        //private Dictionary<int, ActivityArea> _activityAreaDic = new();
-        //private System.Action<int> _placeActivityAnimalAction = null;
-        //private int _selectedAnimalId = 0;
 
         public override void Initialize(Data data)
         {
@@ -34,13 +29,21 @@ namespace Game
             //_placeActivityAnimalAction = data?.PlaceActivityAnimalAction;
 
             //InitActivityAreaDic();
-            SetAnimalList();
-            SetObjectList();
+            
+            Deactivate();
         }
 
         public override void ChainUpdate()
         {
             return;
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            SetAnimalList();
+            SetObjectList();
         }
 
         public void AddAnimal(Game.Creature.Animal addAnimal)
@@ -149,6 +152,7 @@ namespace Game
                 {
                     resAnimal = new GameSystem.AnimalCreator()
                         .SetAnimalId(animalInfo.Id)
+                        .SetPos(animalInfo.Pos)
                         .Create();
 
                     _animalList.Add(resAnimal);

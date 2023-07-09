@@ -75,7 +75,7 @@ namespace Game
 
     public abstract class Base<T> : Base where T : BaseData
     {
-        readonly protected int _selectOrder = 1000;
+        readonly protected int _selectOrder = 500;
 
         protected T _data = default(T);
 

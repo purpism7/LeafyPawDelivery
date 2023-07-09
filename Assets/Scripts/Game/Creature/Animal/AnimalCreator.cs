@@ -13,6 +13,7 @@ namespace GameSystem
         private int _animalId = 0;
         private Transform _rootTm = null;
         private int _order = 0;
+        private Vector3 _pos = Vector3.zero;
         private System.Action<DropItem, Transform> _dropItemAction = null;
 
         public AnimalCreator SetAnimalId(int id)
@@ -25,6 +26,13 @@ namespace GameSystem
         public AnimalCreator SetOrder(int order)
         {
             _order = order;
+
+            return this;
+        }
+
+        public AnimalCreator SetPos(Vector3 pos)
+        {
+            _pos = pos;
 
             return this;
         }
@@ -50,18 +58,11 @@ namespace GameSystem
             if (animal == null)
                 return null;
 
-            Vector3 pos = Vector3.zero;
-            var camera = mainGameMgr.GameCamera;
-            if (camera)
-            {
-                pos = camera.transform.position + camera.transform.forward;
-            }
-
             animal.Initialize(new Game.Creature.Animal.Data()
             {
                 Id = _animalId,
                 Order = _order,
-                Pos = pos,
+                Pos = _pos,
             });
 
             MainGameManager.Instance?.AnimalMgr?.AddAnimal(_animalId);

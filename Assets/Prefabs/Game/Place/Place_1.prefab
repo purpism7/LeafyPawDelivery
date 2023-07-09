@@ -28,8 +28,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8702520262974792574}
-  m_RootOrder: 2
+  m_Father: {fileID: 1240173292099746398}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1917586752502459047
 GameObject:
@@ -191,8 +191,6 @@ Transform:
   m_Children:
   - {fileID: 1240173292099746398}
   - {fileID: 4928264168687630460}
-  - {fileID: 8331713420321853600}
-  - {fileID: 3621777883156634170}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -216,7 +214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c76ece8d3e924320b931fabf6d07cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootTm: {fileID: 0}
+  rootTm: {fileID: 1240173292099746398}
+  edit: {fileID: 0}
   Id: 1
   UId: 0
   objectRootTm: {fileID: 8331713420321853600}
@@ -326,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3621777883156634170}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AnimalRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -345,8 +344,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8702520262974792574}
-  m_RootOrder: 3
+  m_Father: {fileID: 1240173292099746398}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7223590494916999530
 GameObject:
@@ -377,6 +376,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6551645883020241128}
+  - {fileID: 8331713420321853600}
+  - {fileID: 3621777883156634170}
   m_Father: {fileID: 8702520262974792574}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

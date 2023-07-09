@@ -34,8 +34,16 @@ namespace UI.Component
             if(mainGameMgr == null)
                 return;
 
+            Vector3 pos = Vector3.zero;
+            var camera = mainGameMgr.GameCamera;
+            if (camera)
+            {
+                pos = camera.transform.position + camera.transform.forward;
+            }
+
             var animal = new GameSystem.AnimalCreator()
                 .SetAnimalId(_data.AnimalData.Id)
+                .SetPos(pos)
                 .Create();
 
             mainGameMgr.AddAnimalToPlace(animal);

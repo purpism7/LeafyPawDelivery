@@ -41,7 +41,15 @@ namespace Game
         {
             Debug.Log("PlaceManager CoInit");
 
-            
+            ActivityPlace = new GameSystem.PlaceCreator()
+               .SetPlaceId(data.StartPlaceId)
+               .SetRoot(RootTm)
+               .Create();
+
+            _placeList.Add(ActivityPlace);
+
+            Listener?.Invoke(ActivityPlaceId);
+
 
             yield break;
         }
