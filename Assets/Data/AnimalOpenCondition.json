@@ -1,0 +1,29 @@
+{
+  "Datas": {
+    "1": {
+      "AnimalCurrency": 0,
+      "ObjectCurrency": 0,
+      "Cash": 0
+    },
+    "2": {
+      "AnimalCurrency": 357,
+      "ObjectCurrency": 7616,
+      "Cash": 0
+    },
+    "3": {
+      "AnimalCurrency": 663,
+      "ObjectCurrency": 14114,
+      "Cash": 0
+    },
+    "4": {
+      "AnimalCurrency": 1020,
+      "ObjectCurrency": 21760,
+      "Cash": 0
+    },
+    "5": {
+      "AnimalCurrency": 1377,
+      "ObjectCurrency": 29376,
+      "Cash": 0
+    }
+  }
+}

@@ -9,11 +9,11 @@ PlayerSettings:
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
   defaultScreenOrientation: 4
-  targetDevice: 2
+  targetDevice: 1
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: TwoHundred
-  productName: Animals
+  companyName: popo
+  productName: leafypawdelivery
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -58,8 +58,8 @@ PlayerSettings:
   iosAllowHTTPDownload: 1
   allowedAutorotateToPortrait: 1
   allowedAutorotateToPortraitUpsideDown: 1
-  allowedAutorotateToLandscapeRight: 1
-  allowedAutorotateToLandscapeLeft: 1
+  allowedAutorotateToLandscapeRight: 0
+  allowedAutorotateToLandscapeLeft: 0
   useOSAutorotation: 1
   use32BitDisplayBuffer: 1
   preserveFramebufferAlpha: 0
