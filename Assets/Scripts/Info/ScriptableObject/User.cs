@@ -33,6 +33,16 @@ namespace Info
             
             return CurrencyList.Find(currency => currency.PlaceId == placeId);
         }
+
+        public Currency CurrenctCurrency
+        {
+            get
+            {
+                int placeId = MainGameManager.Instance.placeMgr.ActivityPlaceId;
+
+                return GetCurrency(placeId);
+            }
+        }
     }
 }
 
