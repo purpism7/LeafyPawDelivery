@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimalOpenConditionContainer : BaseContainer<AnimalOpenConditionContainer, AnimalOpeCondition>
+public class AnimalOpenConditionContainer : OpenConditionContainer<AnimalOpenConditionContainer, OpeCondition>
 {
     public bool Check(int id)
     {

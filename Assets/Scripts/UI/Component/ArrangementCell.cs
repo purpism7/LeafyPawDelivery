@@ -26,11 +26,15 @@ namespace UI.Component
             void Edit(Type.EMain eMain, int id);
         }
 
+        #region Inspector
         [SerializeField] private TextMeshProUGUI nameTMP;
-
-        [SerializeField] private RectTransform lockRootRectTm = null;
         [SerializeField] private Button arrangementBtn = null;
         [SerializeField] private Image iconImg = null;
+
+        [Header("Lock")]
+        [SerializeField] private RectTransform lockRootRectTm = null;
+        [SerializeField] private RectTransform openCondtionRootRectTm = null;
+        #endregion
 
         public override void Initialize(Data data)
         {
@@ -63,6 +67,25 @@ namespace UI.Component
             {
                 UIUtils.SetOriginColorImg(iconImg);
             }
+        }
+
+        private void SetLockData()
+        {
+            if (_data == null)
+                return;
+
+            if (!_data.Lock)
+                return;
+
+            if(_data.EMain == Type.EMain.Animal)
+            {
+                var openCondition = AnimalOpenConditionContainer.Instance.GetData(_data.Id);
+            }
+            else
+            {
+
+            }
+            
         }
 
         private void SetButtonState()

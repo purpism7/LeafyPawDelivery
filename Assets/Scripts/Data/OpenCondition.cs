@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class AnimalOpeCondition : Data.Base
+public class OpeCondition : Data.Base
 {
     public long AnimalCurrency = 0;
     public long ObjectCurrency = 0;
