@@ -1,29 +1,49 @@
 {
-  "Datas": {
-    "1": {
+  "Datas": [
+    {
+      "Id": 1,
+      "Type": "Starter",
       "AnimalCurrency": 0,
       "ObjectCurrency": 0,
-      "Cash": 0
+      "Cash": 0,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
     },
-    "2": {
+    {
+      "Id": 2,
+      "Type": "Buy",
       "AnimalCurrency": 357,
       "ObjectCurrency": 7616,
-      "Cash": 0
+      "Cash": 0,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": 6
     },
-    "3": {
+    {
+      "Id": 3,
+      "Type": "Buy",
       "AnimalCurrency": 663,
       "ObjectCurrency": 14114,
-      "Cash": 0
+      "Cash": 0,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
     },
-    "4": {
+    {
+      "Id": 4,
+      "Type": "Buy",
       "AnimalCurrency": 1020,
       "ObjectCurrency": 21760,
-      "Cash": 0
+      "Cash": 0,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
     },
-    "5": {
+    {
+      "Id": 5,
+      "Type": "Buy",
       "AnimalCurrency": 1377,
       "ObjectCurrency": 29376,
-      "Cash": 0
+      "Cash": 0,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
     }
-  }
+  ]
 }

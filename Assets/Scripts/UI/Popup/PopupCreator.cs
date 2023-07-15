@@ -6,7 +6,8 @@ using UnityEngine;
 
 namespace GameSystem
 {
-    public class PopupCreator<T, V> : BaseCreator<T> where T : UI.Base<V> where V : BaseData
+    public class PopupCreator<T, V>
+        : BaseCreator<T> where T : UI.Base<V> where V : BaseData
     {
         private V _data = null;
 
@@ -41,6 +42,8 @@ namespace GameSystem
             var popup = Game.UIManager.Instance?.Popup?.Instantiate<T, V>(_data, _coInit, _reInitialize);
             if (popup == null)
                 return default(T);
+
+            Sequencer.EnqueueTask(popup);
                                                                     
             return popup;
         }

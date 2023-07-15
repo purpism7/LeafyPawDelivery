@@ -68,7 +68,8 @@ namespace GameSystem
             if (AddressableAssetLoader == null)
                 return default(T);
 
-            var gameObj = AddressableAssetLoader.InstantiateGame(typeof(T).FullName, rootTm);
+            var fullName = typeof(T).FullName;
+            var gameObj = AddressableAssetLoader.InstantiateGame(fullName, rootTm);
             if (gameObj)
             {
                 return gameObj.GetComponent<T>();

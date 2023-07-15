@@ -37,9 +37,12 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
         _instance = (T)obj;
         
         var wrapper = JsonHelper.WrapperFromJson<V>(json);
-        if(wrapper != null)
+        if (wrapper != null)
         {
             _datas = wrapper.Datas;
+
+            var type = typeof(V);
+            //type?.GetMethod("Initialize", System.Reflection.BindingFlags.Public)?.Invoke(_instance, null);
         }
     }
 

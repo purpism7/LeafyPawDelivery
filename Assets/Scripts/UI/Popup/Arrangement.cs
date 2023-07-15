@@ -184,5 +184,13 @@ namespace UI
             Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(eMain == Type.EMain.Animal ? Type.ETab.Animal : Type.ETab.Object);
         }
         #endregion
+
+        public override void Begin()
+        {
+            base.Begin();
+
+            Debug.Log("Arrangement Popup");
+
+        }
     }
 }

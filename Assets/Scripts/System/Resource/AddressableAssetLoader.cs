@@ -118,11 +118,11 @@ namespace GameSystem
                 if (!resultGameObj)
                     return;
                 
-                var gameBase = resultGameObj.GetComponent<Game.Base>();
-                if (gameBase != null)
+                var gameCommon = resultGameObj.GetComponent<Game.Common>();
+                if (gameCommon != null)
                 {
                     // Debug.Log(gameBase.GetType().FullName);
-                    _gameObjDic.TryAdd(gameBase.GetType().FullName, resultGameObj);
+                    _gameObjDic.TryAdd(gameCommon.GetType().FullName, resultGameObj);
                 }
                 
                 _endLoad = true;
@@ -216,8 +216,6 @@ namespace GameSystem
             if(_gameObjByIdDic == null)
                 return null;
 
-            Debug.Log("id = " + id);
-            Debug.Log("typeKey = " + typeKey + " / " + _gameObjByIdDic[typeKey].Count);
             if(_gameObjByIdDic.TryGetValue(typeKey, out Dictionary<int, GameObject> dic))
             {
                 if(dic.TryGetValue(id, out GameObject gameObj))

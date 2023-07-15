@@ -18,10 +18,51 @@ namespace Game
 
     }
 
-    public abstract class Base : MonoBehaviour
+    public abstract class Common : MonoBehaviour, Sequencer.ITask
     {
         [SerializeField]
         private Transform rootTm = null;
+
+        public virtual void Activate()
+        {
+            UIUtils.SetActive(rootTm, true);
+        }
+
+        public virtual void Deactivate()
+        {
+            UIUtils.SetActive(rootTm, false);
+        }
+
+        public bool IsActivate
+        {
+            get
+            {
+                if (!rootTm)
+                    return false;
+
+                return rootTm.gameObject.activeSelf;
+            }
+        }
+
+        #region Sequencer.ITask
+        public virtual void Begin()
+        {
+
+        }
+
+        public virtual bool End
+        {
+            get
+            {
+                return true;
+            }
+        }
+        #endregion
+
+    }
+
+    public abstract class Base : Common
+    {
         [SerializeField]
         protected UI.Edit edit = null;
 
@@ -41,26 +82,6 @@ namespace Game
 
         }
 
-        public virtual void Activate()
-        {
-            UIUtils.SetActive(rootTm, true);
-        }
-
-        public virtual void Deactivate()
-        {
-            UIUtils.SetActive(rootTm, false);
-        }
-        
-        public bool IsActivate
-        {
-            get
-            {
-                if (!rootTm)
-                    return false;
-            
-                return rootTm.gameObject.activeSelf;
-            }
-        }
 
         public virtual void ChainUpdate()
         {

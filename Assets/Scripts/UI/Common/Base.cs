@@ -11,7 +11,7 @@ namespace UI
 
     }
 
-    public class Base : MonoBehaviour
+    public class Base : MonoBehaviour, Sequencer.ITask
     {
         [SerializeField]
         public RectTransform rootRectTm = null; 
@@ -48,6 +48,19 @@ namespace UI
                     return false;
             
                 return rootRectTm.gameObject.activeSelf;
+            }
+        }
+
+        public virtual void Begin()
+        {
+
+        }
+
+        public virtual bool End
+        {
+            get
+            {
+                return true;
             }
         }
     }

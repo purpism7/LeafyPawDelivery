@@ -12,7 +12,7 @@ namespace UI
     {
         [SerializeField] private Image iconImg = null;
         [SerializeField] private TextMeshProUGUI nameTMP = null;
-        
+
         public class Data : BaseData
         {
             public Type.EMain EMain = Type.EMain.None;
@@ -44,6 +44,21 @@ namespace UI
                 MainGameManager.Instance?.AddInfo(_data.EMain, _data.Id);
                 
                 _data?.ClickAction?.Invoke();
+            }
+        }
+
+        public override void Begin()
+        {
+            base.Begin();
+
+            Debug.Log("Begin");
+        }
+
+        public override bool End
+        {
+            get
+            {
+                return false;
             }
         }
 

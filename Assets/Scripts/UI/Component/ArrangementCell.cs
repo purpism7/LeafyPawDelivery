@@ -101,30 +101,32 @@ namespace UI.Component
 
             if (Enum.TryParse(_data.EMain.ToString(), out Type.EOpen eOpen))
             {
-                var openCondition = MainGameManager.Instance?.OpenCondition;
-                if (openCondition == null)
-                    return;
+
+                //OpenConditionContainer.Instance.a
+                //var openCondition = MainGameManager.Instance?.OpenCondition;
+                //if (openCondition == null)
+                //    return;
                 
-                if (openCondition.CheckOpenCondition(eOpen, _data.Id))
-                {
-                    new PopupCreator<Unlock, Unlock.Data>()
-                        .SetData(new Unlock.Data()
-                        {
-                            EMain = _data.EMain,
-                            Id = _data.Id,
-                            ClickAction = () =>
-                            {
+                //if (openCondition.CheckOpenCondition(eOpen, _data.Id))
+                //{
+                //    new PopupCreator<Unlock, Unlock.Data>()
+                //        .SetData(new Unlock.Data()
+                //        {
+                //            EMain = _data.EMain,
+                //            Id = _data.Id,
+                //            ClickAction = () =>
+                //            {
                         
-                            },
-                        })
-                        .SetCoInit(true)
-                        .SetReInitialize(true)
-                        .Create();
-                }
-                else
-                {
-                    Debug.Log("오픈 조건 미 충족.");
-                }
+                //            },
+                //        })
+                //        .SetCoInit(true)
+                //        .SetReInitialize(true)
+                //        .Create();
+                //}
+                //else
+                //{
+                //    Debug.Log("오픈 조건 미 충족.");
+                //}
             }
         }
 

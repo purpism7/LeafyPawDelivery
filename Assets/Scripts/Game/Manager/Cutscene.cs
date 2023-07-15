@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace Game.Manager
 {
-    public class Cutscene : Game.Base
+    public class Cutscene : Game.Common
     {
         #region Static
 
@@ -61,7 +61,7 @@ namespace Game.Manager
             if (!timelineRootTm)
             {
                 // 종료시키자.
-                End();
+                Finish();
 
                 return;
             }
@@ -94,7 +94,7 @@ namespace Game.Manager
             _playableDirector = timelineRootTm.GetComponentInChildren<PlayableDirector>();
             if (_playableDirector == null)
             {
-                End();
+                Finish();
 
                 return false;
             }
@@ -102,7 +102,7 @@ namespace Game.Manager
             _playableDirector.extrapolationMode = DirectorWrapMode.None;
             _playableDirector.playOnAwake = false;
 
-            _playableDirector.stopped += End;
+            _playableDirector.stopped += Finish;
 
             return true;
         }
@@ -125,22 +125,22 @@ namespace Game.Manager
             Fade.Create.In(() => { _playableDirector.Play(); });
         }
 
-        private void End(PlayableDirector playableDirector)
+        private void Finish(PlayableDirector playableDirector)
         {
-            StartCoroutine(CoEnd());
+            StartCoroutine(CoFinish());
         }
 
-        private IEnumerator CoEnd()
+        private IEnumerator CoFinish()
         {
             if (_data?.EndFunc != null)
             {
                 yield return new WaitUntil(() => _data.EndFunc.Invoke());
             }
 
-            End();
+            Finish();
         }
 
-        private void End()
+        private void Finish()
         {
             Fade.Create.Out(() =>
             {
@@ -153,6 +153,19 @@ namespace Game.Manager
                     Destroy(gameObject);
                 });
             });
+        }
+
+        public override void Begin()
+        {
+            base.Begin();
+        }
+
+        public override bool End
+        {
+            get
+            {
+                return false;
+            }
         }
     }
 }

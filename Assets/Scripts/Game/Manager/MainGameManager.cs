@@ -16,7 +16,7 @@ public class MainGameManager : Singleton<MainGameManager>
     public Game.AnimalManager AnimalMgr { get; private set; } = null;
 
     public Game.Manager.Story Story { get; private set; } = null;
-    public Game.Manager.OpenCondition OpenCondition { get; private set; } = null;
+    //public Game.Manager.OpenCondition OpenCondition { get; private set; } = null;
     
     public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
 
@@ -60,7 +60,7 @@ public class MainGameManager : Singleton<MainGameManager>
         placeMgr?.ActivityPlace?.Activate();
         
         Story = iProvider.Get<Game.Manager.Story>();
-        OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();
+        //OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();
 
         GameCamera = iProvider.Get<InputManager>()?.GameCameraCtr?.GameCamera;
     }

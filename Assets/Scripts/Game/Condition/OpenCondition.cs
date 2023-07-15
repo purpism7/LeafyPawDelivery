@@ -16,7 +16,7 @@ namespace Game.Manager
         private List<GameData.OpenCondition> _openConditionList = new();
         private int _placeId = 0;
         
-        public UnityEvent<int> Listener { get; private set; }= new();
+        public UnityEvent<int> Listener { get; private set; } = new();
 
         public override void Initialize()
         {
@@ -37,7 +37,7 @@ namespace Game.Manager
 
             yield return StartCoroutine(CoLoadOpenCondition());
 
-            Check();
+            //Check();
         }
         
         private IEnumerator CoLoadOpenCondition()

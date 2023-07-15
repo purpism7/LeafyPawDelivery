@@ -18,6 +18,7 @@ namespace GameSystem
             yield return StartCoroutine(MainGameManager.Instance.CoInit(iProvider));
             yield return StartCoroutine(Game.UIManager.Instance.CoInit(iProvider));
 
+            Sequencer.Create();
             DOTween.Init();
             
             yield return new WaitForEndOfFrame();
