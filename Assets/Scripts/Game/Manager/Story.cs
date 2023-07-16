@@ -13,7 +13,7 @@ namespace Game.Manager
         {
             None,
             
-            Start,
+            Begin,
             End,
         }
 
@@ -139,7 +139,7 @@ namespace Game.Manager
             Listener?.Invoke(new Data()
             {
                 Id = storyId,
-                EState = EState.Start,
+                EState = EState.Begin,
             });
         }
 

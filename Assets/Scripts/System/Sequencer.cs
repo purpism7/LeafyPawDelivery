@@ -27,21 +27,19 @@ public class Sequencer : Game.Common
         get { return Sequencer_ != null; }
     }
 
-    public static void EnqueueTask(ITask iTask)
+    public static void EnqueueTask(System.Func<ITask> func)
     {
         if (Sequencer_ == null)
             return;
 
-        if (Sequencer_._taskQueue == null)
+        if (Sequencer_._taskFuncQueue == null)
         {
-            Sequencer_._taskQueue = new();
+            Sequencer_._taskFuncQueue = new();
         }
 
-        
-        Sequencer_._taskQueue?.Enqueue(iTask);
+        Sequencer_._taskFuncQueue?.Enqueue(func);
         Sequencer_.Progress();
     }
-
     #endregion
 
     public interface ITask
@@ -57,7 +55,7 @@ public class Sequencer : Game.Common
         Progress,
     }
 
-    Queue<ITask> _taskQueue = new();
+    Queue<System.Func<ITask>> _taskFuncQueue = new();
 
     private void Progress()
     {
@@ -66,12 +64,25 @@ public class Sequencer : Game.Common
 
     IEnumerator CoProgressTask()
     {
-        if (_taskQueue.Count <= 0)
+        if (_taskFuncQueue.Count <= 0)
             yield break;
 
-        var iTask = _taskQueue.Dequeue();
-        if (iTask == null)
+        var taskFunc = _taskFuncQueue.Dequeue();
+        if (taskFunc == null)
+        {
+            Progress();
+
             yield break;
+        }
+            
+
+        var iTask = taskFunc();
+        if(iTask == null)
+        {
+            Progress();
+
+            yield break;
+        }
 
         Debug.Log("Sequence Begin Task = " + iTask.GetType().FullName);
         iTask.Begin();

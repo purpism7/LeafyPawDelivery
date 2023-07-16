@@ -7,6 +7,7 @@ namespace GameSystem
     public abstract class BaseCreator<T>
     {
         public abstract T Create();
+        //public abstract void Create();
     }
 }
 
