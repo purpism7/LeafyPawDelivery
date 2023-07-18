@@ -53,10 +53,17 @@ namespace UI
                 tabToggle.SetIsOnWithoutNotify(true);
             }
         }
-        
+
         public override void Deactivate()
         {
             base.Deactivate();
+        }
+
+        public override void ClickClose()
+        {
+            base.ClickClose();
+
+            _endTask = true;
         }
 
         private void SetAnimalList()
@@ -190,7 +197,9 @@ namespace UI
             base.Begin();
 
             Debug.Log("Arrangement Popup");
-
+            _endTask = false;
         }
+
+        public override bool End => _endTask;
     }
 }

@@ -17,7 +17,13 @@ namespace UI
         public RectTransform rootRectTm = null; 
         
         protected bool _isTouch = false;
-        
+        protected bool _endTask = true;
+
+        public virtual void ClickClose()
+        {
+
+        }
+
         public virtual void Activate()
         {
             if (!rootRectTm)
@@ -60,7 +66,7 @@ namespace UI
         {
             get
             {
-                return true;
+                return _endTask;
             }
         }
     }

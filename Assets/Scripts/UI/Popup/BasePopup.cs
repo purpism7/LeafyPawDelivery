@@ -26,7 +26,7 @@ namespace UI
                 .SetAutoKill(false)
                 .OnStart(() => { Activate();})
                 .Append(rootRectTm.DOScale(Vector3.one * 0.5f, 0f))
-                .Append(rootRectTm.DOScale(Vector3.one, 0.15f).SetEase(Ease.OutBounce))
+                .Append(rootRectTm.DOScale(Vector3.one, 0.15f).SetEase(Ease.Linear))
                 .OnComplete(() =>
                 {
                     

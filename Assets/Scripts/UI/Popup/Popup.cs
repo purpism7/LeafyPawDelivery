@@ -74,8 +74,6 @@ namespace UI
             if (popup == null)
                 yield break;
                 
-            // basePopup.Deactivate();
-            
             UIUtils.SetActive(basePopup.rootRectTm, false);
                 
             returnAction?.Invoke(popup);
@@ -205,7 +203,12 @@ namespace UI
         
         public void OnClickBackground()
         {
-            _popupStack?.Peek()?.Deactivate();
+            var uiBase = _popupStack?.Peek();
+            if (uiBase == null)
+                return;
+
+            uiBase.ClickClose();
+            uiBase.Deactivate();
         }
         #endregion
     }
