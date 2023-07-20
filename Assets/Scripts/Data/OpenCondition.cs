@@ -20,10 +20,4 @@ public class OpeCondition : Data.Base
     public int Cash = 0;
     public int[] ReqAnimalIds = null;
     public int[] ReqObjectIds = null;
-
-    public void Initialize()
-    {
-        Debug.Log("Initialize()");
-    }
-
 }

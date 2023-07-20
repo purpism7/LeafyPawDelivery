@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace Game.Manager
 {
-    public class Cutscene : Game.Common
+    public class Cutscene : Game.Common, Sequencer.ITask
     {
         #region Static
 

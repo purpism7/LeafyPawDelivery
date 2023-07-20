@@ -167,6 +167,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc3528a39d73d497b9b80b348103b4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _openConditionList: []
+  _placeId: 0
+  <Listener>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+    m_CallsDirty: 1
 --- !u!1 &104883388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,6 +1937,14 @@ PrefabInstance:
     - target: {fileID: 3200144071467234388, guid: 1578916129b034098b7f18225373ce94, type: 3}
       propertyPath: AssetLabel.m_LabelString
       value: Animal
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200144071467234388, guid: 1578916129b034098b7f18225373ce94, type: 3}
+      propertyPath: InitLoadLabelList.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3200144071467234388, guid: 1578916129b034098b7f18225373ce94, type: 3}
+      propertyPath: InitLoadLabelList.Array.data[6].m_LabelString
+      value: Cutscene
       objectReference: {fileID: 0}
     - target: {fileID: 3445968292566763857, guid: 1578916129b034098b7f18225373ce94, type: 3}
       propertyPath: m_Name

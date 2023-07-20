@@ -10,12 +10,14 @@ using GameSystem;
 
 public class MainGameManager : Singleton<MainGameManager>
 {
+    #region Inspector
     public Game.PlaceManager placeMgr = null;
+    #endregion
 
     public Game.ObjectManager ObjectMgr { get; private set; } = null;
     public Game.AnimalManager AnimalMgr { get; private set; } = null;
 
-    public Game.Manager.Story Story { get; private set; } = null;
+    public Game.StoryManager StoryMgr { get; private set; } = null; 
     //public Game.Manager.OpenCondition OpenCondition { get; private set; } = null;
     
     public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
@@ -58,8 +60,8 @@ public class MainGameManager : Singleton<MainGameManager>
         }));
 
         placeMgr?.ActivityPlace?.Activate();
-        
-        Story = iProvider.Get<Game.Manager.Story>();
+
+        StoryMgr = iProvider.Get<Game.StoryManager>();
         //OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();
 
         GameCamera = iProvider.Get<InputManager>()?.GameCameraCtr?.GameCamera;

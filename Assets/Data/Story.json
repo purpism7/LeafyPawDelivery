@@ -1,0 +1,32 @@
+{
+  "Datas": [
+    {
+      "Id": 1,
+      "PlaceId": 1,
+      "Name": "palmwood",
+      "Order": 1,
+      "PrefabName": "Story_Map01_1"
+    },
+    {
+      "Id": 2,
+      "PlaceId": 1,
+      "Name": "palmwood",
+      "Order": 2,
+      "PrefabName": "Story_Map01_2"
+    },
+    {
+      "Id": 3,
+      "PlaceId": 1,
+      "Name": "palmwood",
+      "Order": 3,
+      "PrefabName": "Story_Map01_3"
+    },
+    {
+      "Id": 4,
+      "PlaceId": 1,
+      "Name": "palmwood",
+      "Order": 4,
+      "PrefabName": "Story_Map01_4"
+    }
+  ]
+}

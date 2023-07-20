@@ -5,9 +5,9 @@ using GameSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Game.Manager
+namespace Game
 {
-    public class Story : GameSystem.Processing
+    public class StoryManager : GameSystem.Processing
     {
         public enum EState
         {
@@ -23,14 +23,14 @@ namespace Game.Manager
             public EState EState = EState.None;
         }
         
-        private Dictionary<int, GameData.Story> _storyDic = new();
+        private Dictionary<int, List<Story>> _storyListDic = new();
         private int _placeId = 0;
         
         public UnityEvent<Data> Listener = new();
 
         public override void Initialize()
         {
-            _storyDic.Clear();
+            _storyListDic.Clear();
             
             var mainGameMgr = MainGameManager.Instance;
             mainGameMgr?.AnimalMgr?.Listener.AddListener(OnChangedAnimalInfo);
@@ -50,15 +50,15 @@ namespace Game.Manager
 
             bool endLoad = false;
 
-            yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<GameData.Story>(
+            yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<Story>(
                 addressableAssetLoader.AssetLabelStory,
                 (asyncOperationHandle) =>
                 {
                     var result = asyncOperationHandle.Result;
                     if(result == null)
                         return;
-                    
-                    _storyDic.TryAdd(result.PlaceId, result);
+
+                    //_storyListDic.TryAdd(result.PlaceId, result);
                     
                     endLoad = true;
                 }));
@@ -71,52 +71,55 @@ namespace Game.Manager
             var mainGameMgr = MainGameManager.Instance;
             if (mainGameMgr == null)
                 return false;
-            
-            if (_storyDic.TryGetValue(_placeId, out GameData.Story story))
+
+
+            var storyList = StoryList;
+
+            //if (_storyListDic.TryGetValue(_placeId, out GameData.Story story))
             {
-                if (story == null)
-                    return false;
+                //if (story == null)
+                //    return false;
 
-                if (story.Datas == null)
-                    return false;
+                //if (story.Datas == null)
+                //    return false;
 
-                for (int i = 0; i < story.Datas.Length; ++i)
-                {
-                    var data = story.Datas[i];
-                    if(data == null)
-                        continue;
+                //for (int i = 0; i < story.Datas.Length; ++i)
+                //{
+                //    var data = story.Datas[i];
+                //    if(data == null)
+                //        continue;
                     
-                    if(data.Completed)
-                        continue;
+                //    if(data.Completed)
+                //        continue;
 
-                    if (data.ReqDatas == null)
-                        continue;
+                //    if (data.ReqDatas == null)
+                //        continue;
                     
-                    bool check = true;
+                //    bool check = true;
 
-                    foreach (var reqData in data.ReqDatas)
-                    {
-                        if(reqData == null)
-                            continue;
+                //    foreach (var reqData in data.ReqDatas)
+                //    {
+                //        if(reqData == null)
+                //            continue;
 
-                        if (Enum.TryParse(reqData.EOpenType.ToString(), out Type.EMain eMain))
-                        {
-                            if (!mainGameMgr.CheckExist(eMain, reqData.Id))
-                            {
-                                check = false;
+                //        if (Enum.TryParse(reqData.EOpenType.ToString(), out Type.EMain eMain))
+                //        {
+                //            if (!mainGameMgr.CheckExist(eMain, reqData.Id))
+                //            {
+                //                check = false;
 
-                                break;
-                            }
-                        }
-                    }
+                //                break;
+                //            }
+                //        }
+                //    }
    
-                    if (check)
-                    {
-                        StartStory(i + 1, data);
+                //    if (check)
+                //    {
+                //        StartStory(i + 1, data);
 
-                        break;
-                    }
-                }
+                //        break;
+                //    }
+                //}
             }
             
             return false;
@@ -127,7 +130,7 @@ namespace Game.Manager
             if (storyData == null)
                 return;
             
-            Cutscene.Create(new Cutscene.Data()
+            Game.Manager.Cutscene.Create(new Game.Manager.Cutscene.Data()
             {
                 TargetGameObj = storyData.PlayStory,
                 EndAction = () =>
@@ -159,27 +162,43 @@ namespace Game.Manager
 
         public bool CheckCompleted(int storyId)
         {
-            if (_storyDic.TryGetValue(_placeId, out GameData.Story story))
-            {
-                if (story == null)
-                    return false;
+            //if (_storyDic.TryGetValue(_placeId, out GameData.Story story))
+            //{
+                //if (story == null)
+                //    return false;
 
-                if (story.Datas == null)
-                    return false;
+                //if (story.Datas == null)
+                //    return false;
 
-                int index = storyId - 1;
-                if (story.Datas.Length <= index ||
-                    0 < index)
-                    return false;
+                //int index = storyId - 1;
+                //if (story.Datas.Length <= index ||
+                //    0 < index)
+                //    return false;
 
-                var storyData = story.Datas[index];
-                if (storyData == null)
-                    return false;
+                //var storyData = story.Datas[index];
+                //if (storyData == null)
+                //    return false;
                 
-                return storyData.Completed;
-            }
+                //return storyData.Completed;
+            //}
 
             return false;
+        }
+
+        private List<Story> StoryList
+        {
+            get
+            {
+                if (_storyListDic == null)
+                    return null;
+
+                if (_storyListDic.TryGetValue(_placeId, out List<Story> storyList))
+                {
+                    return storyList;
+                }
+
+                return null;
+            }
         }
 
         #region Listener

@@ -39,8 +39,6 @@ namespace Game
             {
                 PopupRootRectTm = Popup.popupRootRectTm,
             });
-            
-            var openConditionMgr = iProvider.Get<Game.Manager.OpenCondition>();
 
             yield return null;
         }

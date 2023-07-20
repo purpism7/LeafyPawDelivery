@@ -183,7 +183,6 @@ namespace UI
         }
 
         #region ArrangementCell.IListener
-
         void ArrangementCell.IListener.Edit(Type.EMain eMain, int id)
         {
             Deactivate();

@@ -5,5 +5,5 @@ using UnityEngine;
 [System.Serializable]
 public class Place : Data.Base
 {
-    public int Id = 0;  
+    
 }

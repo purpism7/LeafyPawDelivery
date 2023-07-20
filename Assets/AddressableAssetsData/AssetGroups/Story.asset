@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: ab86f773b9f728b49be3030583fb7395
   m_SerializeEntries:
-  - m_GUID: ec53ea11ea516ee41a2aa75b835814d0
-    m_Address: Assets/ScriptableObject/Story
+  - m_GUID: 011bda37535a84303a39e8e83dbc33d7
+    m_Address: Assets/Prefabs/Story
     m_ReadOnly: 0
     m_SerializedLabels:
     - Story
