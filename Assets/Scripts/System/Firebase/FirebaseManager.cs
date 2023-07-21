@@ -11,14 +11,23 @@ namespace GameSystem
         public Firebase.Auth Auth { get; private set; } = null;
         public Firebase.Database Database { get; private set; } = null;
 
+        private FirebaseApp _firebaseApp = null;
+
         protected override void Initialize()
         {
-            FirebaseApp.Create();
+            //FirebaseApp.Create();
         }
 
         public override IEnumerator CoInit()
         {
             yield return StartCoroutine(base.CoInit());
+
+            yield return FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
+                (task) =>
+                {
+                    if (task.Result != DependencyStatus.Available)
+                        return;
+                });
 
             Auth = gameObject.GetOrAddComponent<Firebase.Auth>();
             yield return StartCoroutine(Auth?.CoInit());

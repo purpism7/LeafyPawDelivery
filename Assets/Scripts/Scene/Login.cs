@@ -17,9 +17,9 @@ namespace Scene
         public override void Init(IListener iListener)
         {
             base.Init(iListener);
-            
+
             // SceneLoader.LoadWithLoading(loadData);
-  
+
             StartCoroutine(CoInit());
         }
 

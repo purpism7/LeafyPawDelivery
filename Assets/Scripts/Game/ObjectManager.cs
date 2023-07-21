@@ -41,21 +41,11 @@ namespace Game
             yield break;
         }
 
-        public void RemoveObject(int objectId, int objectUId)
-        {
-            _objectHolder?.RemoveObject(objectId, objectUId);
-        }
-
-        public void ArrangeObject(int objectUId, Vector3 pos, int placeId)
-        {
-            _objectHolder?.ArrangeObject(objectUId, pos, placeId);
-        }
-
         public void AddObject(int objectId)
         {
             if (_objectHolder == null)
                 return;
-            
+
             var objectInfo = new Info.Object()
             {
                 Id = objectId,
@@ -65,6 +55,16 @@ namespace Game
             {
                 Listener?.Invoke(objectInfo);
             }
+        }
+
+        public void RemoveObject(int objectId, int objectUId)
+        {
+            _objectHolder?.RemoveObject(objectId, objectUId);
+        }
+
+        public void ArrangeObject(int objectUId, Vector3 pos, int placeId)
+        {
+            _objectHolder?.ArrangeObject(objectUId, pos, placeId);
         }
 
         public bool CheckExist(int objectId)
