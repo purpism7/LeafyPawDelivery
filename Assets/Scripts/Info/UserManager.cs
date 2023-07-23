@@ -78,37 +78,7 @@ namespace Info
                     }
                     else if (data.Key.Equals("CurrencyList"))
                     {
-                        User.CurrencyList.Clear();
-
-                        var currencyList = data.Value as IList;
-                        foreach(IDictionary currencyDic in currencyList)
-                        {
-                            var currency = new User.Currency();
-
-                            var enumerator = currencyDic.GetEnumerator();
-                            while (enumerator.MoveNext())
-                            {
-                                DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
-    
-                                string key = dicEntry.Key.ToString();
-
-                                if(key.Equals("Animal"))
-                                {
-                                    currency.Animal = (long)dicEntry.Value;
-                                }
-                                else if(key.Equals("Object"))
-                                {
-                                    currency.Object = (long)dicEntry.Value;
-                                }
-                                else if (key.Equals("PlaceId"))
-                                {
-                                    var value = (long)dicEntry.Value;
-                                    currency.PlaceId = (int)value;
-                                }
-                            }
-
-                            User.CurrencyList.Add(currency);
-                        }
+                        SetCurrencyList(data);
                     }
                 }
             }
@@ -130,6 +100,57 @@ namespace Info
                     database?.Save(firebase.Auth.UserId, JsonUtility.ToJson(User));
                 }
             }
+        }
+
+        private void SetCurrencyList(Firebase.Database.DataSnapshot data)
+        {
+            if (data == null)
+                return;
+
+            User.CurrencyList.Clear();
+
+            var currencyList = data.Value as IList;
+            foreach (IDictionary currencyDic in currencyList)
+            {
+                var currency = new User.Currency();
+
+                var enumerator = currencyDic.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
+
+                    string key = dicEntry.Key.ToString();
+
+                    if (key.Equals("Animal"))
+                    {
+                        currency.Animal = (long)dicEntry.Value;
+                    }
+                    else if (key.Equals("Object"))
+                    {
+                        currency.Object = (long)dicEntry.Value;
+                    }
+                    else if (key.Equals("PlaceId"))
+                    {
+                        var value = (long)dicEntry.Value;
+                        currency.PlaceId = (int)value;
+                    }
+                }
+
+                User.CurrencyList.Add(currency);
+            }
+        }
+
+        public int GetLastStoryId(int placeId)
+        {
+            var storyList = User?.StoryList;
+            if (storyList == null)
+                return 0;
+
+            var index = placeId - 1;
+            if (storyList.Count < index)
+                return 1;
+
+            return storyList[index];
         }
     }
 }

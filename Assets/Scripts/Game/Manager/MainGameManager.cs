@@ -16,7 +16,6 @@ public class MainGameManager : Singleton<MainGameManager>
 
     public Game.ObjectManager ObjectMgr { get; private set; } = null;
     public Game.AnimalManager AnimalMgr { get; private set; } = null;
-
     public Game.StoryManager StoryMgr { get; private set; } = null; 
     //public Game.Manager.OpenCondition OpenCondition { get; private set; } = null;
     

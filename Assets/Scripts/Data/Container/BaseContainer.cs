@@ -41,9 +41,15 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
         {
             _datas = wrapper.Datas;
 
-            var type = typeof(V);
+            InternalInitialize();
+            //var type = typeof(V);
             //type?.GetMethod("Initialize", System.Reflection.BindingFlags.Public)?.Invoke(_instance, null);
         }
+    }
+
+    protected virtual void InternalInitialize()
+    {
+
     }
 
     public V GetData(int id)

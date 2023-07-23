@@ -24,6 +24,10 @@ namespace Game
 
             Listener = new UnityEvent<Info.Animal>();
             Listener.RemoveAllListeners();
+
+            var mainGameMgr = MainGameManager.Instance;
+            mainGameMgr?.ObjectMgr.Listener.AddListener(OnChangedObject);
+            mainGameMgr?.placeMgr?.Listener?.AddListener(OnChangedPlace);
         }
 
         public override IEnumerator CoInit(Data data)
@@ -85,6 +89,16 @@ namespace Game
         public Info.Animal GetAnimalInfo(int animalId)
         {
             return _animalHolder?.GetAnimalInfo(animalId);
+        }
+
+        private void OnChangedPlace(int placeId)
+        {
+            
+        }
+
+        private void OnChangedObject(Info.Object obj)
+        {
+
         }
     }
 }

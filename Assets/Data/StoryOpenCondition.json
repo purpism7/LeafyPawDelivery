@@ -1,0 +1,25 @@
+{
+  "Datas": [
+    {
+      "Id": 1,
+      "StoryId": 1,
+      "ReqAnimalIds": [
+        1,
+        ""
+      ],
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 2,
+      "StoryId": 2,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": 6
+    },
+    {
+      "Id": 3,
+      "StoryId": 3,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    }
+  ]
+}

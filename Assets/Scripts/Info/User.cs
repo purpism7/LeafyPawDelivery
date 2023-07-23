@@ -18,6 +18,7 @@ namespace Info
         }
 
         public List<Currency> CurrencyList = new();
+        public List<int> StoryList = new();
 
         public Currency GetCurrency(int placeId)
         {

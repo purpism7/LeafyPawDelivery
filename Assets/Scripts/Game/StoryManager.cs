@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameSystem;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
+
+using GameSystem;
+using Info;
 
 namespace Game
 {
@@ -22,15 +25,16 @@ namespace Game
             public int Id = 0;
             public EState EState = EState.None;
         }
-        
-        private Dictionary<int, List<Story>> _storyListDic = new();
+
+        private List<GameObject> _storyPrefabList = new();
+        private List<Story> _storyList = new();
         private int _placeId = 0;
-        
+
         public UnityEvent<Data> Listener = new();
 
         public override void Initialize()
         {
-            _storyListDic.Clear();
+            _storyPrefabList.Clear();
             
             var mainGameMgr = MainGameManager.Instance;
             mainGameMgr?.AnimalMgr?.Listener.AddListener(OnChangedAnimalInfo);
@@ -50,7 +54,7 @@ namespace Game
 
             bool endLoad = false;
 
-            yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<Story>(
+            yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<GameObject>(
                 addressableAssetLoader.AssetLabelStory,
                 (asyncOperationHandle) =>
                 {
@@ -58,164 +62,196 @@ namespace Game
                     if(result == null)
                         return;
 
-                    //_storyListDic.TryAdd(result.PlaceId, result);
-                    
+                    _storyPrefabList.Add(result);
+
                     endLoad = true;
                 }));
         
             yield return new WaitUntil(() => endLoad);
         }
 
-        private bool Check()
+        private void SetStoryList()
         {
+            if(_storyList == null)
+            {
+                _storyList = new();
+            }
+
+            _storyList.Clear();
+            _storyList = StoryContainer.Instance.GetStoryList(_placeId);
+            if(_storyList != null)
+            {
+                _storyList.OrderByDescending(story => story.Id);
+            }
+        }
+        
+        private bool Check(out Story currStory)
+        {
+            currStory = null;
+
             var mainGameMgr = MainGameManager.Instance;
             if (mainGameMgr == null)
                 return false;
 
+            if (_storyList == null)
+                return false;
 
-            var storyList = StoryList;
-
-            //if (_storyListDic.TryGetValue(_placeId, out GameData.Story story))
+            int lastStoryId = UserManager.Instance.GetLastStoryId(_placeId);
+            
+            foreach (var story in _storyList)
             {
-                //if (story == null)
-                //    return false;
+                if (story == null)
+                    continue;
 
-                //if (story.Datas == null)
-                //    return false;
+                if (story.Id <= lastStoryId)
+                    continue;
 
-                //for (int i = 0; i < story.Datas.Length; ++i)
-                //{
-                //    var data = story.Datas[i];
-                //    if(data == null)
-                //        continue;
-                    
-                //    if(data.Completed)
-                //        continue;
+                currStory = story;
 
-                //    if (data.ReqDatas == null)
-                //        continue;
-                    
-                //    bool check = true;
-
-                //    foreach (var reqData in data.ReqDatas)
-                //    {
-                //        if(reqData == null)
-                //            continue;
-
-                //        if (Enum.TryParse(reqData.EOpenType.ToString(), out Type.EMain eMain))
-                //        {
-                //            if (!mainGameMgr.CheckExist(eMain, reqData.Id))
-                //            {
-                //                check = false;
-
-                //                break;
-                //            }
-                //        }
-                //    }
-   
-                //    if (check)
-                //    {
-                //        StartStory(i + 1, data);
-
-                //        break;
-                //    }
-                //}
+                break;
             }
-            
-            return false;
+
+            if (currStory == null)
+                return false;
+
+            var storyOpenCondition =  StoryOpenConditionContainer.Instance.GetData(currStory.Id);
+            if(storyOpenCondition == null)
+                return false;
+
+            if (!CheckReqIds(mainGameMgr, Type.EMain.Animal, storyOpenCondition.ReqAnimalIds))
+                return false;
+
+            if (!CheckReqIds(mainGameMgr, Type.EMain.Object, storyOpenCondition.ReqObjectIds))
+                return false;
+
+            return true;
         }
 
-        private void StartStory(int storyId, GameData.Story.Data storyData)
+        private bool CheckReqIds(MainGameManager mainGameMgr, Type.EMain eMain, int[] ids)
         {
-            if (storyData == null)
-                return;
-            
-            Game.Manager.Cutscene.Create(new Game.Manager.Cutscene.Data()
+            if (ids != null)
             {
-                TargetGameObj = storyData.PlayStory,
-                EndAction = () =>
+                foreach (int id in ids)
                 {
-                    EndStory(storyId, storyData);
-                },
-            });
-                        
-            Listener?.Invoke(new Data()
-            {
-                Id = storyId,
-                EState = EState.Begin,
-            });
+                    if (!mainGameMgr.CheckExist(Type.EMain.Object, id))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
 
-        private void EndStory(int storyId, GameData.Story.Data storyData)
+        private void StartStory(Story story)
         {
-            if (storyData == null)
+            if (story == null)
+                return;
+                        
+            Sequencer.EnqueueTask(
+                () =>
+                {
+                    var cutscene = Game.Manager.Cutscene.Create(new Game.Manager.Cutscene.Data()
+                    {
+                        TargetGameObj = GetStoryGameObj(story.PrefabName),
+                        EndAction = () =>
+                        {
+                            EndStory(story);
+                        },
+                    });
+
+                    Listener?.Invoke(new Data()
+                    {
+                        Id = story.Id,
+                        EState = EState.Begin,
+                    });
+
+                    return cutscene;
+                });
+        }
+
+        private void EndStory(Story story)
+        {
+            if (story == null)
                 return;
             
             Listener?.Invoke(new Data()
             {
-                Id = storyId,
+                Id = story.Id,
                 EState = EState.End,
             });
 
-            storyData.Completed = true;
+            //storyData.Completed = true;
         }
 
-        public bool CheckCompleted(int storyId)
-        {
-            //if (_storyDic.TryGetValue(_placeId, out GameData.Story story))
-            //{
-                //if (story == null)
-                //    return false;
+        //public bool CheckCompleted(int storyId)
+        //{
+        //    //if (_storyDic.TryGetValue(_placeId, out GameData.Story story))
+        //    //{
+        //        //if (story == null)
+        //        //    return false;
 
-                //if (story.Datas == null)
-                //    return false;
+        //        //if (story.Datas == null)
+        //        //    return false;
 
-                //int index = storyId - 1;
-                //if (story.Datas.Length <= index ||
-                //    0 < index)
-                //    return false;
+        //        //int index = storyId - 1;
+        //        //if (story.Datas.Length <= index ||
+        //        //    0 < index)
+        //        //    return false;
 
-                //var storyData = story.Datas[index];
-                //if (storyData == null)
-                //    return false;
+        //        //var storyData = story.Datas[index];
+        //        //if (storyData == null)
+        //        //    return false;
                 
-                //return storyData.Completed;
-            //}
+        //        //return storyData.Completed;
+        //    //}
 
-            return false;
-        }
+        //    return false;
+        //}
 
-        private List<Story> StoryList
+        private GameObject GetStoryGameObj(string prefabName)
         {
-            get
-            {
-                if (_storyListDic == null)
-                    return null;
-
-                if (_storyListDic.TryGetValue(_placeId, out List<Story> storyList))
-                {
-                    return storyList;
-                }
-
+            if (_storyPrefabList == null)
                 return null;
+
+            foreach(GameObject storyGameObj in _storyPrefabList)
+            {
+                if (!storyGameObj)
+                    continue;
+
+                if (!storyGameObj.name.Equals(prefabName))
+                    continue;
+
+                return storyGameObj;
             }
+
+            return null;
         }
 
         #region Listener
         private void OnChangedAnimalInfo(Info.Animal animalInfo)
         {
             Debug.Log("Start Story Animal = " + animalInfo.Id);
-            Check();
+            //Check();
+            if (Check(out Story story))
+            {
+                StartStory(story);
+            }
         }
         
         private void OnChangedObjectInfo(Info.Object objectInfo)
         {
-            Check();
+            if(Check(out Story story))
+            {
+                StartStory(story);
+            }
         }
         
         private void OnChangedPlace(int placeId)
         {
             _placeId = placeId;
+
+            SetStoryList();
         }
         #endregion
     }
