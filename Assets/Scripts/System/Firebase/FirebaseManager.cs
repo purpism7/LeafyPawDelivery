@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Firebase;
+using Firebase.Analytics;
 
 namespace GameSystem
 {
@@ -27,6 +28,11 @@ namespace GameSystem
                 {
                     if (task.Result != DependencyStatus.Available)
                         return;
+
+                    //Debug.Log("Firebase Check = " + task.Result);
+                    //FirebaseApp.Create();
+
+                    //FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
                 });
 
             Auth = gameObject.GetOrAddComponent<Firebase.Auth>();

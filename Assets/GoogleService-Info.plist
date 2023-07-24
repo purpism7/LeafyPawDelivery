@@ -30,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:327674171124:ios:5a616dd89c067661f318a1</string>
+	<key>DATABASE_URL</key>
+	<string>https://leafypawdelivery-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

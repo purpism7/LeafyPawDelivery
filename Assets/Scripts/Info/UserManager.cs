@@ -27,6 +27,7 @@ namespace Info
         {
             yield return StartCoroutine(base.CoInit());
 
+            Debug.Log("CoLoadUserInfo");
             yield return StartCoroutine(CoLoadUserInfo());
 
             yield return null;
@@ -44,6 +45,7 @@ namespace Info
             if (database == null)
                 yield break;
 
+            Debug.Log("firebase.Auth.UserId = " + firebase.Auth.UserId);
             yield return StartCoroutine(database?.CoLoad(firebase.Auth.UserId,
                 (dataSnapshot) =>
                 {
@@ -63,6 +65,7 @@ namespace Info
                 return;
 
             User = new Info.User();
+            Debug.Log("SetUserInfo = " + dataSnapshot.Value);
             if (dataSnapshot.Value != null)
             {
                 foreach (var data in dataSnapshot.Children)

@@ -8,10 +8,10 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.Universal;
 
 using GameSystem;
 using GameSystem.Load;
-using Unity.VisualScripting;
 
 namespace GameSystem
 {
@@ -24,6 +24,7 @@ namespace GameSystem
 
         private UnityEngine.SceneManagement.Scene _scene;
         private Load.Base _loadData = null;
+        private UnityEngine.SceneManagement.Scene _activeScene;
         
         public void Init(UnityEngine.SceneManagement.Scene scene, Load.Base loadData)
         {
@@ -45,9 +46,14 @@ namespace GameSystem
         
         private void Load()
         {
-            var activeScene = SceneManager.GetActiveScene();
+            _activeScene = SceneManager.GetActiveScene();
+            if(!_loadData.ActiveLoading)
+            {
+                //var cameraData = _loadData.MainCamera.GetUniversalAdditionalCameraData();
+                //cameraData.
+            }
 
-            SceneManager.UnloadSceneAsync(activeScene);
+            //SceneManager.UnloadSceneAsync(activeScene);
             SceneLoader.Load(_loadData.SceneName, EndLoad);
         }
         
@@ -59,8 +65,10 @@ namespace GameSystem
         
         private void EndLoad(AsyncOperationHandle<SceneInstance> handle)
         {
-            var activeScene = SceneManager.GetActiveScene();
-            Debug.Log("ActiveScene = " + activeScene.name); 
+            SceneManager.UnloadSceneAsync(_activeScene);
+
+            _activeScene = SceneManager.GetActiveScene();
+            Debug.Log("ActiveScene = " + _activeScene.name); 
             //SceneManager.UnloadSceneAsync()
             Debug.Log(handle.Result.Scene.name);
 

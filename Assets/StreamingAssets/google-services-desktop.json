@@ -1,46 +1,36 @@
 {
-    "project_info": {
-        "project_number": "327674171124",
-        "project_id": "leafypawdelivery",
-        "storage_bucket": "leafypawdelivery.appspot.com",
-        "firebase_url": "https://leafypawdelivery-default-rtdb.firebaseio.com/"
-    },
+  "project_info": {
+    "project_number": "327674171124",
+    "firebase_url": "https://leafypawdelivery-default-rtdb.firebaseio.com",
+    "project_id": "leafypawdelivery",
+    "storage_bucket": "leafypawdelivery.appspot.com"
+  },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:327674171124:android:b29ed6ca3bf50b3af318a1",
+        "mobilesdk_app_id": "1:327674171124:ios:5a616dd89c067661f318a1",
         "android_client_info": {
           "package_name": "com.popo.leafypawdelivery"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "327674171124-k80gv4cirhlu3fuj774ni8r66tk6f6n2.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
       "api_key": [
         {
-          "current_key": "AIzaSyDwl3zTjtZjnWWHn6qg2EDWP_pmr4kc2yM"
+          "current_key": "AIzaSyC3z4gVOzhGaT_fsW2_1I3k6idg_NI-2AQ"
         }
       ],
       "services": {
+        "analytics_service": {
+          "status": 0
+        },
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "327674171124-k80gv4cirhlu3fuj774ni8r66tk6f6n2.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "327674171124-0m1k050sbjb00g7ie6891so38gprev62.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.popo.leafypawdelivery"
-              }
-            }
-          ]
+          "status": 1
         }
-      }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327674171124-0m1k050sbjb00g7ie6891so38gprev62.apps.googleusercontent.com"
+        }
+      ]
     }
   ],
   "configuration_version": "1"

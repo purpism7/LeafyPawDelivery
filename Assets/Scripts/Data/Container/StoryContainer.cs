@@ -13,6 +13,7 @@ public class StoryContainer : BaseContainer<StoryContainer, Story>
         if (_storyListDic == null)
         {
             _storyListDic = new Dictionary<int, List<Story>>();
+            _storyListDic.Clear();
         }
 
         foreach(var storyData in _datas)
@@ -23,10 +24,26 @@ public class StoryContainer : BaseContainer<StoryContainer, Story>
             List<Story> storyList = null;
             if (_storyListDic.TryGetValue(storyData.PlaceId, out storyList))
             {
-                var findStory = storyList.Find(story => story.Id == storyData.Id);
-                if (findStory == null)
+                if (storyList == null)
+                    return;
+
+                bool existStory = false;
+                foreach(var story in storyList)
                 {
-                    storyList.Add(findStory);
+                    if (story == null)
+                        continue;
+
+                    if(story.Id == storyData.Id)
+                    {
+                        existStory = true;
+
+                        break;
+                    }
+                }
+
+                if (!existStory)
+                {
+                    storyList.Add(storyData);
                 }
             }
             else
