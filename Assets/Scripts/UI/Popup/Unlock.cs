@@ -32,7 +32,7 @@ namespace UI
         {
             base.Activate();
             
-                
+            
         }
 
         public override void Deactivate()
@@ -51,14 +51,14 @@ namespace UI
         {
             base.Begin();
 
-            Debug.Log("Begin");
+            _endTask = false;
         }
 
         public override bool End
         {
             get
             {
-                return false;
+                return _endTask;
             }
         }
 
@@ -85,6 +85,8 @@ namespace UI
         public void OnClick()
         {
             Deactivate();
+
+            _endTask = true;
         }
     }
 }

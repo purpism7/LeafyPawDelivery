@@ -40,17 +40,17 @@ public class CreateOpenConditionWindow : EditorWindow
         {
             EditorGUILayout.BeginVertical("Box");
 
-            _openCondition.Starter = EditorGUILayout.Toggle("Starter", _openCondition.Starter);
-            if (!_openCondition.Starter)
-            {
-                _openCondition.ReqLeaf = EditorGUILayout.IntField("Req Leaf", _openCondition.ReqLeaf);
+            //_openCondition.Starter = EditorGUILayout.Toggle("Starter", _openCondition.Starter);
+            //if (!_openCondition.Starter)
+            //{
+            //    _openCondition.ReqLeaf = EditorGUILayout.IntField("Req Leaf", _openCondition.ReqLeaf);
             
-                var serializedObject = new SerializedObject(_openCondition);
-                serializedObject.Update();
-                var dataListProperty = serializedObject.FindProperty("Datas");
-                EditorGUILayout.PropertyField(dataListProperty);
-                serializedObject.ApplyModifiedProperties();
-            }
+            //    var serializedObject = new SerializedObject(_openCondition);
+            //    serializedObject.Update();
+            //    var dataListProperty = serializedObject.FindProperty("Datas");
+            //    EditorGUILayout.PropertyField(dataListProperty);
+            //    serializedObject.ApplyModifiedProperties();
+            //}
             
             EditorGUILayout.EndVertical();
         }
@@ -70,17 +70,17 @@ public class CreateOpenConditionWindow : EditorWindow
         if (File.Exists(filePath))
             return;
 
-        var openCondition = ScriptableObject.CreateInstance<GameData.OpenCondition>();
+        //var openCondition = ScriptableObject.CreateInstance<GameData.OpenCondition>();
 
-        openCondition.Starter = _openCondition.Starter;
-        if (!openCondition.Starter)
-        {
-            openCondition.ReqLeaf = _openCondition.ReqLeaf;
-            openCondition.ReqDatas = _openCondition.ReqDatas;
-        }
+        //openCondition.Starter = _openCondition.Starter;
+        //if (!openCondition.Starter)
+        //{
+        //    openCondition.ReqLeaf = _openCondition.ReqLeaf;
+        //    openCondition.ReqDatas = _openCondition.ReqDatas;
+        //}
 
-        AssetDatabase.CreateAsset(openCondition, filePath);
-        AssetDatabase.SaveAssets();
+        //AssetDatabase.CreateAsset(openCondition, filePath);
+        //AssetDatabase.SaveAssets();
 
         // animalData.OpenCondition = _openCondition;
 

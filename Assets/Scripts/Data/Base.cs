@@ -7,6 +7,11 @@ namespace Data
     public class Base
     {
         public int Id = 0;
+
+        public virtual void Initialize()
+        {
+
+        }
     }
 }
 

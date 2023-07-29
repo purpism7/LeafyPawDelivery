@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameSystem;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -64,8 +66,10 @@ namespace Game
 
             if (_animalHolder.AddAnimalInfo(animalInfo))
             {
-                Listener?.Invoke(animalInfo);
+                
             }
+
+            Listener?.Invoke(animalInfo);
         }
 
         public void RemoveAnimal(int id)
@@ -89,6 +93,57 @@ namespace Game
         public Info.Animal GetAnimalInfo(int animalId)
         {
             return _animalHolder?.GetAnimalInfo(animalId);
+        }
+
+        public void Check()
+        {
+            if (_data == null)
+                return;
+
+            var animalOpenConidtionDatas = AnimalOpenConditionContainer.Instance?.Datas;
+            if (animalOpenConidtionDatas == null)
+                return;
+
+            var animalContainer = AnimalContainer.Instance;
+
+            foreach(var data in animalOpenConidtionDatas)
+            {
+                if (data == null)
+                    continue;
+
+                var animalData = animalContainer?.GetData(data.Id);
+                if (animalData != null &&
+                    animalData.PlaceId != _data.PlaceId)
+                    continue;
+
+                if(data.EType_ == OpenCondition.EType.Starter)
+                {
+                    Sequencer.EnqueueTask(
+                        () =>
+                        {
+                            var popup = new PopupCreator<Unlock, Unlock.Data>()
+                                .SetData(new Unlock.Data()
+                                {
+                                    EMain = Type.EMain.Animal,
+                                    Id = data.Id,
+                                    ClickAction = () =>
+                                    {
+
+                                    },
+                                })
+                                .SetCoInit(true)
+                                .SetReInitialize(true)
+                                .Create();
+
+                            return popup;
+                        });
+
+                    
+                }
+                //Debug.Log(data.Type);
+
+                //if(data.Type == OpeCondition.EType.Starter)
+            }
         }
 
         private void OnChangedPlace(int placeId)

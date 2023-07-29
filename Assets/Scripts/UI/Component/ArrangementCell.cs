@@ -106,22 +106,22 @@ namespace UI.Component
                 //var openCondition = MainGameManager.Instance?.OpenCondition;
                 //if (openCondition == null)
                 //    return;
-                
+
                 //if (openCondition.CheckOpenCondition(eOpen, _data.Id))
                 //{
-                //    new PopupCreator<Unlock, Unlock.Data>()
-                //        .SetData(new Unlock.Data()
+                //new PopupCreator<Unlock, Unlock.Data>()
+                //    .SetData(new Unlock.Data()
+                //    {
+                //        EMain = _data.EMain,
+                //        Id = _data.Id,
+                //        ClickAction = () =>
                 //        {
-                //            EMain = _data.EMain,
-                //            Id = _data.Id,
-                //            ClickAction = () =>
-                //            {
-                        
-                //            },
-                //        })
-                //        .SetCoInit(true)
-                //        .SetReInitialize(true)
-                //        .Create();
+
+                //        },
+                //    })
+                //    .SetCoInit(true)
+                //    .SetReInitialize(true)
+                //    .Create();
                 //}
                 //else
                 //{

@@ -49,6 +49,7 @@ namespace Info
             yield return StartCoroutine(database?.CoLoad(firebase.Auth.UserId,
                 (dataSnapshot) =>
                 {
+                    Debug.Log("dataSnapshot = " + dataSnapshot);
                     SetUserInfo(dataSnapshot);
 
                     endLoad = true;

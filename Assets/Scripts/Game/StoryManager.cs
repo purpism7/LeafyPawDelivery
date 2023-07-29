@@ -103,7 +103,7 @@ namespace Game
                 if (story == null)
                     continue;
 
-                if (story.Id <= lastStoryId)
+                if (story.Order <= lastStoryId)
                     continue;
 
                 currStory = story;
@@ -133,10 +133,11 @@ namespace Game
             {
                 foreach (int id in ids)
                 {
-                    if (!mainGameMgr.CheckExist(Type.EMain.Object, id))
-                    {
+                    if (id <= 0)
+                        continue;
+
+                    if (!mainGameMgr.CheckExist(eMain, id))
                         return false;
-                    }
                 }
             }
 

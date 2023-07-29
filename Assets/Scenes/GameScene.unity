@@ -167,12 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc3528a39d73d497b9b80b348103b4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _openConditionList: []
-  _placeId: 0
-  <Listener>k__BackingField:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
 --- !u!1 &104883388
 GameObject:
   m_ObjectHideFlags: 0

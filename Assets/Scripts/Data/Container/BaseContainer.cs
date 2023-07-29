@@ -35,11 +35,20 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
     public override void Init(object obj, string json)
     {
         _instance = (T)obj;
-        
+
         var wrapper = JsonHelper.WrapperFromJson<V>(json);
         if (wrapper != null)
         {
-            _datas = wrapper.Datas;
+            var datas = wrapper.Datas;
+            if(datas != null)
+            {
+                foreach(Data.Base dataBase in datas)
+                {
+                    dataBase?.Initialize();
+                }
+            }
+
+            _datas = datas;
 
             InternalInitialize();
             //var type = typeof(V);

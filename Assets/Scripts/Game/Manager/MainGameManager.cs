@@ -64,6 +64,14 @@ public class MainGameManager : Singleton<MainGameManager>
         //OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();
 
         GameCamera = iProvider.Get<InputManager>()?.GameCameraCtr?.GameCamera;
+
+        yield return new WaitForEndOfFrame();
+    }
+
+    public void Starter()
+    {
+        Debug.Log("Starter");
+        AnimalMgr?.Check();
     }
 
     private void Update()

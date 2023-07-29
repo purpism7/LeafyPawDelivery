@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using GameSystem;
 using UI;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -51,6 +52,7 @@ namespace Game.Manager
 
         private Data _data = null;
         private PlayableDirector _playableDirector = null;
+        private bool _end = false;
 
         private void Initialize(Data data)
         {
@@ -145,7 +147,9 @@ namespace Game.Manager
             Fade.Create.Out(() =>
             {
                 Deactivate();
-                
+
+                _end = true;
+
                 Fade.Create.In(() =>
                 {
                     _data.EndAction();
@@ -158,13 +162,15 @@ namespace Game.Manager
         public override void Begin()
         {
             base.Begin();
+
+            _end = false;
         }
 
         public override bool End
         {
             get
             {
-                return false;
+                return _end;
             }
         }
     }
