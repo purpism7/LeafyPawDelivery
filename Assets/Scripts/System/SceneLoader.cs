@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
+using Game;
 
 namespace GameSystem
 {
@@ -20,6 +21,20 @@ namespace GameSystem
                     var loading = GameObject.FindObjectOfType<Loading>();
                     loading?.Init(handle.Result.Scene, loadData);
                 });
+        }
+
+        public static void LoadWithoutLoading(Load.Base loadData)
+        {
+            Load(loadData.SceneName,
+                (handle) =>
+                {
+                    SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+                });
+        }
+
+        public static void Load(Load.Base loadData)
+        {
+
         }
 
         public static void Load(string sceneName, System.Action<AsyncOperationHandle<SceneInstance>> completedAction)

@@ -46,8 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 757019243154122650}
-  Id: 0
-  UId: 0
   timelineRootTm: {fileID: 4677234167379180288}
   uiRootRectTm: {fileID: 4307619195347766419}
 --- !u!1 &1824200978547733478
@@ -74,7 +72,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824200978547733478}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20, y: 0, z: 10}
+  m_LocalPosition: {x: 100, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -107,7 +105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888407196058936669}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20, y: 0, z: 0}
+  m_LocalPosition: {x: 100, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -203,7 +201,7 @@ GameObject:
   - component: {fileID: 3754754574199879173}
   - component: {fileID: 6453510459483319222}
   - component: {fileID: 8303873670696918439}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,8 +246,8 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 1050415341
   m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &6453510459483319222
@@ -443,7 +441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4307619195347766419}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +514,7 @@ GameObject:
   - component: {fileID: 2647037763413667085}
   - component: {fileID: 6428816407891862441}
   - component: {fileID: 8679284782058461759}
-  m_Layer: 9
+  m_Layer: 5
   m_Name: Bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}

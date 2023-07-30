@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace Game.Manager
 {
-    public class Cutscene : Game.Common, Sequencer.ITask
+    public class Cutscene : Game.Common, Sequencer.ITask, Conversation.IListener
     {
         #region Static
 
@@ -52,6 +52,7 @@ namespace Game.Manager
 
         private Data _data = null;
         private PlayableDirector _playableDirector = null;
+        private Conversation _conversation = null;
         private bool _end = false;
 
         private void Initialize(Data data)
@@ -122,9 +123,28 @@ namespace Game.Manager
         {
             Activate();
 
+            CreateConvesation();
+
             yield return null;
 
-            Fade.Create.In(() => { _playableDirector.Play(); });
+            Fade.Create.In(
+                () =>
+                {
+                    _playableDirector.Play();
+
+                    _conversation?.StartTyping("안녕하세. 한승재 입니다.");
+                });
+        }
+
+        private void CreateConvesation()
+        {
+            _conversation = new UICreator<Conversation, Conversation.Data>()
+                .SetData(new Conversation.Data()
+                {
+                    IListener = this,
+                })
+               .SetRootRectTm(uiRootRectTm)
+               .Create();
         }
 
         private void Finish(PlayableDirector playableDirector)
@@ -173,6 +193,13 @@ namespace Game.Manager
                 return _end;
             }
         }
+
+        #region Conversation.IListener
+        void Conversation.IListener.FinishTyping()
+        {
+            Debug.Log("Conversation.IListener.FinishTyping()");
+        }
+        #endregion
     }
 }
 

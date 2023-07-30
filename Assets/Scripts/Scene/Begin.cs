@@ -23,7 +23,7 @@ namespace Scene
         {
             base.Init(iListener);
             
-            SceneLoader.LoadWithLoading(loadData);
+            SceneLoader.LoadWithoutLoading(loadData);
         }
     }
 }
