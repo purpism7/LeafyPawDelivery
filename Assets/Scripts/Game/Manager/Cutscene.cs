@@ -197,7 +197,7 @@ namespace Game.Manager
         #region Conversation.IListener
         void Conversation.IListener.FinishTyping()
         {
-            Debug.Log("Conversation.IListener.FinishTyping()");
+
         }
         #endregion
     }
