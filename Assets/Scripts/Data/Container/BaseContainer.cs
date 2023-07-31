@@ -51,8 +51,6 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
             _datas = datas;
 
             InternalInitialize();
-            //var type = typeof(V);
-            //type?.GetMethod("Initialize", System.Reflection.BindingFlags.Public)?.Invoke(_instance, null);
         }
     }
 

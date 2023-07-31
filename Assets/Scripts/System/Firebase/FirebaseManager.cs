@@ -23,7 +23,10 @@ namespace GameSystem
         {
             yield return StartCoroutine(base.CoInit());
 
-            yield return FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
+            FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+
+            bool check = false;
+            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
                 (task) =>
                 {
                     if (task.Result != DependencyStatus.Available)
@@ -33,13 +36,22 @@ namespace GameSystem
                     //FirebaseApp.Create();
 
                     //FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+                    Debug.Log("CheckAndFix");
+                    check = true;
                 });
 
+            yield return new WaitUntil(() => check);
+
             Auth = gameObject.GetOrAddComponent<Firebase.Auth>();
-            yield return StartCoroutine(Auth?.CoInit());
+            Debug.Log("Auth = " + Auth.name);
+            yield return StartCoroutine(Auth.CoInit());
 
             Database = gameObject.GetOrAddComponent<Firebase.Database>();
-            yield return StartCoroutine(Database?.CoInit());
+            Debug.Log("Database = " + Database.name);
+            yield return StartCoroutine(Database.CoInit());
+
+            //yield return new WaitUntil(() => check);
+            Debug.Log("End Init FirebaseManager");
         }
     }
 }

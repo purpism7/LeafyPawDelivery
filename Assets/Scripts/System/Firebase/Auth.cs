@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Firebase;
 using Firebase.Auth;
 
 
@@ -13,6 +14,13 @@ namespace GameSystem.Firebase
 
         private bool _endLoad = false;
 
+        private AppOptions _authOptions = new AppOptions
+        {
+            ApiKey = "",
+            AppId = "",
+            ProjectId = ""
+        };
+
         public bool IsValid
         {
             get
@@ -23,40 +31,45 @@ namespace GameSystem.Firebase
 
         public IEnumerator CoInit()
         {
-            var auth = FirebaseAuth.DefaultInstance;
+            Debug.Log("Auth CoInit");
+            //var auth = FirebaseAuth.DefaultInstance;
+            
+            var auth = FirebaseAuth.GetAuth(FirebaseApp.Create());
             var currUser = auth.CurrentUser;
-
-            UserId = currUser.UserId;
+            if(currUser != null)
+            {
+                UserId = currUser.UserId;
+            }
 
             Debug.Log("UserId = " + UserId);
-            if (!string.IsNullOrEmpty(UserId))
-                yield break;
-
-            //auth.StateChanged += OnStateChanged;
 
             // 익명으로 로그인 진행.
-            yield return auth?.SignInAnonymouslyAsync().ContinueWith(
-                task =>
-                {
-                    if (task.IsCanceled)
-                        return;
-
-                    if (task.IsFaulted)
-                        return;
-
-                    var result = task.Result;
-
-                    UserId = result.User.UserId;
-                    Debug.Log("UserId = " + UserId);
-
-                    _endLoad = true;
-                });
-
-
-            while (!_endLoad)
+            if (string.IsNullOrEmpty(UserId))
             {
-                yield return null;
+                auth?.SignInAnonymouslyAsync().ContinueWith(
+                    (task) =>
+                    {
+                        Debug.Log("task = " + task.Result);
+                        if (task.IsCanceled)
+                            return;
+
+                        if (task.IsFaulted)
+                            return;
+
+                        var result = task.Result;
+
+                        UserId = result.User.UserId;
+                        Debug.Log("UserId = " + UserId);
+
+                        _endLoad = true;
+                    });
             }
+            else
+            {
+                _endLoad = true;
+            }
+
+            yield return new WaitUntil(() => _endLoad);
         }
 
         //private void OnStateChanged(object sender, System.EventArgs eventArgs)

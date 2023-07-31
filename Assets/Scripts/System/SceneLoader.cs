@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using UI;
+
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
+
+using UI;
 using Game;
 
 namespace GameSystem
@@ -28,6 +30,10 @@ namespace GameSystem
             Load(loadData.SceneName,
                 (handle) =>
                 {
+                    var sceneType = System.Type.GetType("Scene." + loadData.SceneName);
+                    var scene = GameObject.FindObjectOfType(sceneType) as Scene.Base;
+                    scene?.Init(null);
+
                     SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
                 });
         }

@@ -23,6 +23,8 @@ namespace GameSystem.Firebase
 
 
         //}
+        private System.Action<DataSnapshot> _dataSnapshotAction = null;
+
 
         public IEnumerator CoInit()
         {
@@ -65,10 +67,12 @@ namespace GameSystem.Firebase
 
         public IEnumerator CoLoad(string pathStr, System.Action<DataSnapshot> resAction)
         {
+            _dataSnapshotAction = resAction;
+
             var database = FirebaseDatabase.DefaultInstance;
             if (database == null)
             {
-                resAction?.Invoke(null);
+                _dataSnapshotAction?.Invoke(null);
 
                 yield break;
             }
@@ -76,19 +80,19 @@ namespace GameSystem.Firebase
             var databaseRef = database.GetReference(pathStr);
             if (databaseRef == null)
             {
-                resAction?.Invoke(null);
+                _dataSnapshotAction?.Invoke(null);
 
                 yield break;
             }
 
             bool endLoad = false;
 
-            yield return databaseRef.GetValueAsync().ContinueWith(
-                task =>
+            databaseRef.GetValueAsync().ContinueWith(
+                (task) =>
                 {
                     var result = task.Result;
 
-                    resAction?.Invoke(result);
+                    _dataSnapshotAction.Invoke(result);
                   
                     Debug.Log("database value async");
 

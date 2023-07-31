@@ -35,18 +35,18 @@ namespace Info
 
         private IEnumerator CoLoadUserInfo()
         {
-            var firebase = GameSystem.FirebaseManager.Instance;
-            if (firebase == null)
+            var firebaseMgr = GameSystem.FirebaseManager.Instance;
+            if (firebaseMgr == null)
                 yield break;
 
             bool endLoad = false;
 
-            var database = firebase.Database;
+            var database = firebaseMgr.Database;
             if (database == null)
                 yield break;
 
-            Debug.Log("firebase.Auth.UserId = " + firebase.Auth.UserId);
-            yield return StartCoroutine(database?.CoLoad(firebase.Auth.UserId,
+            Debug.Log("firebase.Auth.UserId = " + firebaseMgr.Auth.UserId);
+            yield return StartCoroutine(database?.CoLoad(firebaseMgr.Auth.UserId,
                 (dataSnapshot) =>
                 {
                     Debug.Log("dataSnapshot = " + dataSnapshot);
@@ -147,7 +147,8 @@ namespace Info
         public int GetLastStoryId(int placeId)
         {
             var storyList = User?.StoryList;
-            if (storyList == null)
+            if (storyList == null ||
+                storyList.Count <= 0)
                 return 0;
 
             var index = placeId - 1;

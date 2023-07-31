@@ -29,8 +29,6 @@ namespace Scene
 
             yield return StartCoroutine(firebaseMgr.CoInit());
 
-            yield return null;
-
             _iListener?.EndLoad();
 
             if(firebaseMgr.Auth.IsValid)
