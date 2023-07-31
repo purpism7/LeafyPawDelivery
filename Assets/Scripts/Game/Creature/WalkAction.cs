@@ -77,7 +77,7 @@ namespace Game.Creature
                 return;
             }
 
-            animalTm.localPosition = Vector2.MoveTowards(animalTm.localPosition, _targetPos, Time.deltaTime);
+            animalTm.localPosition = Vector2.MoveTowards(animalTm.localPosition, _targetPos, Time.deltaTime * 50f);
 
             if(_data.SprRenderer != null)
             {

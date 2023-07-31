@@ -57,13 +57,13 @@ namespace UI
         public override void Deactivate()
         {
             base.Deactivate();
+
+            _endTask = true;
         }
 
         public override void ClickClose()
         {
             base.ClickClose();
-
-            _endTask = true;
         }
 
         private void SetAnimalList()

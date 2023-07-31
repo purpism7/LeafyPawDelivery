@@ -45,6 +45,8 @@ namespace UI
                 
                 _data?.ClickAction?.Invoke();
             }
+
+            _endTask = true;
         }
 
         public override void Begin()
@@ -85,8 +87,6 @@ namespace UI
         public void OnClick()
         {
             Deactivate();
-
-            _endTask = true;
         }
     }
 }
