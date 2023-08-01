@@ -7,7 +7,7 @@ using UI;
 
 namespace Game
 {
-    public class Object : Game.Base<Object.Data>, UI.Edit.IListener
+    public class Object : Game.Base<Object.Data>, UI.Element.IListener
     {
         public class Data : BaseData
         {
@@ -35,7 +35,7 @@ namespace Game
                 SetSortingOrder(-(int)transform.localPosition.y);
             }
 
-            edit?.Init(this);
+            element?.Init(this);
             ActiveEdit(false);
         }
 
@@ -113,8 +113,8 @@ namespace Game
         //}
         #endregion
 
-        #region Edit.IListener
-        void UI.Edit.IListener.Remove()
+        #region Element.IListener
+        void UI.Element.IListener.Remove()
         {
             EState_ = EState.Remove;
 
@@ -123,7 +123,7 @@ namespace Game
             ActiveEdit(false);
         }
 
-        void UI.Edit.IListener.Arrange()
+        void UI.Element.IListener.Arrange()
         {
             EState_ = EState.Arrange;
 

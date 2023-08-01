@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 {
-    public class Edit : Base
+    public class Element : Base
     {
         public interface IListener
         {
@@ -14,6 +14,7 @@ namespace UI
 
         #region Inspector
         public RectTransform CanvasRectTm = null;
+        public RectTransform EditRectTmRoot = null;
         #endregion
 
         private IListener _iListener = null;

@@ -5,7 +5,7 @@ using Game;
 
 namespace Game.Creature
 {
-    public class Animal : Base<Animal.Data>, UI.Edit.IListener
+    public class Animal : Base<Animal.Data>, UI.Element.IListener
     {
         public class Data : BaseData
         {
@@ -39,7 +39,7 @@ namespace Game.Creature
 
             InitActionController();
 
-            edit?.Init(this);
+            element?.Init(this);
             ActiveEdit(false);
         }
 
@@ -94,7 +94,7 @@ namespace Game.Creature
         }
 
         #region Edit.IListener
-        void UI.Edit.IListener.Remove()
+        void UI.Element.IListener.Remove()
         {
             EState_ = EState.Remove;
 
@@ -103,7 +103,7 @@ namespace Game.Creature
             ActiveEdit(false);
         }
 
-        void UI.Edit.IListener.Arrange()
+        void UI.Element.IListener.Arrange()
         {
             if (_data == null)
                 return;
