@@ -234,8 +234,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI.EditObject, Assembly-CSharp
+      - m_Target: {fileID: 2836999825161692166}
+        m_TargetAssemblyTypeName: UI.Element, Assembly-CSharp
         m_MethodName: OnClickArrange
         m_Mode: 1
         m_Arguments:
@@ -367,8 +367,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI.EditObject, Assembly-CSharp
+      - m_Target: {fileID: 2836999825161692166}
+        m_TargetAssemblyTypeName: UI.Element, Assembly-CSharp
         m_MethodName: OnClickRemove
         m_Mode: 1
         m_Arguments:
