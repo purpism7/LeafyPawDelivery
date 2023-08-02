@@ -18,6 +18,7 @@ public class OpenCondition : Data.Base
     public int AnimalCurrency = 0;
     public int ObjectCurrency = 0;
     public int Cash = 0;
+    public bool Advertising = false;
     public int[] ReqAnimalIds = null;
     public int[] ReqObjectIds = null;
 
