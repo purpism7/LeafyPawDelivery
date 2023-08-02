@@ -1,12 +1,12 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class GameUtils
 {
-    public static string GetName(Type.EMain eMain, int id)
+    public static string GetName(Type.EElement EElement, int id)
     {
-        if (eMain == Type.EMain.Animal)
+        if (EElement == Type.EElement.Animal)
         {
             var data = AnimalContainer.Instance?.GetData(id);
             if (data == null)
@@ -14,7 +14,7 @@ public static class GameUtils
 
             return data.Name;
         }
-        else if (eMain == Type.EMain.Object)
+        else if (EElement == Type.EElement.Object)
         {
             var data = ObjectContainer.Instance?.GetData(id);
             if (data == null)
@@ -26,13 +26,13 @@ public static class GameUtils
         return string.Empty;
     }
     
-    public static Sprite GetShortIconSprite(Type.EMain eMain, int id)
+    public static Sprite GetShortIconSprite(Type.EElement EElement, int id)
     {
         var atlasLoader = GameSystem.ResourceManager.Instance?.AtalsLoader;
         if (atlasLoader == null)
             return null;
 
-        if (eMain == Type.EMain.Animal)
+        if (EElement == Type.EElement.Animal)
         {
             var data = AnimalContainer.Instance?.GetData(id);
             if (data == null)
@@ -40,7 +40,7 @@ public static class GameUtils
 
             return atlasLoader?.GetSprite(atlasLoader.KeyAnimalIcon, data.ShortIconImgName);
         }
-        else if (eMain == Type.EMain.Object)
+        else if (EElement == Type.EElement.Object)
         {
             var data = ObjectContainer.Instance?.GetData(id);
             if (data == null)
@@ -52,13 +52,13 @@ public static class GameUtils
         return null;
     }
     
-     public static Sprite GetLargeIconSprite(Type.EMain eMain, int id)
+     public static Sprite GetLargeIconSprite(Type.EElement EElement, int id)
      {
          var atlasLoader = GameSystem.ResourceManager.Instance?.AtalsLoader;
          if (atlasLoader == null)
              return null;
     
-         if (eMain == Type.EMain.Animal)
+         if (EElement == Type.EElement.Animal)
          {
              var data = AnimalContainer.Instance?.GetData(id);
              if (data == null)
@@ -66,7 +66,7 @@ public static class GameUtils
     
              return atlasLoader.GetSprite(atlasLoader.KeyAnimalIcon, data.LargeIconImgName);
          }
-         else if (eMain == Type.EMain.Object)
+         else if (EElement == Type.EElement.Object)
          {
              var data = ObjectContainer.Instance?.GetData(id);
              if (data == null)

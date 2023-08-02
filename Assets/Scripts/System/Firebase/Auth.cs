@@ -14,13 +14,6 @@ namespace GameSystem.Firebase
 
         private bool _endLoad = false;
 
-        private AppOptions _authOptions = new AppOptions
-        {
-            ApiKey = "",
-            AppId = "",
-            ProjectId = ""
-        };
-
         public bool IsValid
         {
             get
@@ -31,10 +24,8 @@ namespace GameSystem.Firebase
 
         public IEnumerator CoInit()
         {
-            Debug.Log("Auth CoInit");
-            //var auth = FirebaseAuth.DefaultInstance;
-            
             var auth = FirebaseAuth.GetAuth(FirebaseApp.Create());
+
             var currUser = auth.CurrentUser;
             if(currUser != null)
             {

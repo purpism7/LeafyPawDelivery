@@ -57,11 +57,11 @@ namespace GameSystem
             SceneLoader.Load(_loadData.SceneName, EndLoad);
         }
         
-        private void LoadScene(string sceneName, System.Action<AsyncOperationHandle<SceneInstance>> completedAction)
-        {
-            AsyncOperationHandle<SceneInstance> sceneInstance = Addressables.LoadSceneAsync("Assets/Scenes/" + sceneName + "Scene.unity", LoadSceneMode.Additive);
-            sceneInstance.Completed += completedAction;
-        }
+        //private void LoadScene(string sceneName, System.Action<AsyncOperationHandle<SceneInstance>> completedAction)
+        //{
+        //    AsyncOperationHandle<SceneInstance> sceneInstance = Addressables.LoadSceneAsync("Assets/Scenes/" + sceneName + "Scene.unity", LoadSceneMode.Additive);
+        //    sceneInstance.Completed += completedAction;
+        //}
         
         private void EndLoad(AsyncOperationHandle<SceneInstance> handle)
         {

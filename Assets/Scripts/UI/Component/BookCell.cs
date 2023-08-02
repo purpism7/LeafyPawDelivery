@@ -13,7 +13,7 @@ namespace UI.Component
             public IListener IListener = null;
 
             public int Id = 0;
-            public Type.EMain EMain = Type.EMain.None;
+            public Type.EElement EElement = Type.EElement.None;
             public string Name = string.Empty;
             public bool Lock = true;
         }
@@ -47,7 +47,7 @@ namespace UI.Component
             if (iconImg == null)
                 return;
 
-            iconImg.sprite = GameUtils.GetLargeIconSprite(_data.EMain, _data.Id);
+            iconImg.sprite = GameUtils.GetLargeIconSprite(_data.EElement, _data.Id);
             
             if (_data.Lock)
             {
@@ -59,12 +59,12 @@ namespace UI.Component
             }
         }
         
-        public void Unlock(Type.EMain eMain, int id)
+        public void Unlock(Type.EElement EElement, int id)
         {
             if (_data == null)
                 return;
 
-            if (_data.EMain != eMain)
+            if (_data.EElement != EElement)
                 return;
 
             if (_data.Id != id)

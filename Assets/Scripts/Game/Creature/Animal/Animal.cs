@@ -12,6 +12,7 @@ namespace Game.Creature
             public int Id = 0;
             public int Order = 0;
             public Vector3 Pos = Vector3.zero;
+            public bool IsGame = true;
         }
 
         [SerializeField]
@@ -46,7 +47,7 @@ namespace Game.Creature
         private void InitActionController()
         {
             _actionCtr = gameObject.GetOrAddComponent<AnimalActionController>();
-            _actionCtr?.Init(animator, spriteRenderer);
+            _actionCtr?.Init(animator, spriteRenderer, _data.IsGame);
         }
 
         public override void ChainUpdate()
@@ -98,7 +99,7 @@ namespace Game.Creature
         {
             EState_ = EState.Remove;
 
-            Command.Remove.Execute(Type.EMain.Animal, _data.Id);
+            Command.Remove.Execute(Type.EElement.Animal, _data.Id);
 
             ActiveEdit(false);
         }
@@ -110,7 +111,7 @@ namespace Game.Creature
 
             EState_ = EState.Arrange;
 
-            Command.Arrange.Execute(Type.EMain.Animal, _data.Id, transform.localPosition);
+            Command.Arrange.Execute(Type.EElement.Animal, _data.Id, transform.localPosition);
 
             SetSortingOrder(-(int)transform.localPosition.y);
 

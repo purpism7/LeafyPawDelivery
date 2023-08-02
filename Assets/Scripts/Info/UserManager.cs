@@ -26,10 +26,7 @@ namespace Info
         public override IEnumerator CoInit()
         {
             yield return StartCoroutine(base.CoInit());
-
-            Debug.Log("CoLoadUserInfo");
             yield return StartCoroutine(CoLoadUserInfo());
-
             yield return null;
         }
 
@@ -90,11 +87,10 @@ namespace Info
             {
                 Debug.Log("No UserInfo");
 
-                User.CurrencyList.Add(
-                    new User.Currency()
-                    {
-                        PlaceId = Game.Data.Const.StartPlaceId,
-                    });
+                var placeId = Game.Data.Const.StartPlaceId;
+                var currency = Game.Data.Const.GetStartCurrency(placeId);
+
+                User.CurrencyList.Add(currency);
 
                 var firebase = GameSystem.FirebaseManager.Instance;
                 if (firebase != null)

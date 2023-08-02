@@ -12,13 +12,16 @@ namespace Game.Creature
         private SpriteRenderer _sprRenderer = null;
         private AnimalAction _currentAnimalAction = null;
 
-        public void Init(Animator animator, SpriteRenderer sprRenderer)
+        public void Init(Animator animator, SpriteRenderer sprRenderer, bool isGame)
         {
             _animator = animator;
             _sprRenderer = sprRenderer;
 
             AnimalActionList.Add(CreateaAnimalAction<IdleAction>());
-            AnimalActionList.Add(CreateaAnimalAction<WalkAction>());
+            if(isGame)
+            {
+                AnimalActionList.Add(CreateaAnimalAction<WalkAction>());
+            }
 
             StartIdleAction();
         }

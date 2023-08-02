@@ -13,3 +13,10 @@ MonoBehaviour:
   m_Name: Const
   m_EditorClassIdentifier: 
   StartPlaceId: 1
+  StartCurrencies:
+  - PlaceId: 1
+    Animal: 51
+    Object: 1088
+  - PlaceId: 2
+    Animal: 0
+    Object: 0

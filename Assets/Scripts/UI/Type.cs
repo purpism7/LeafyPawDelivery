@@ -10,7 +10,7 @@ public class Type
         Object,
     }
 
-    public enum EMain
+    public enum EElement
     {
         None,
         

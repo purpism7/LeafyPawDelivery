@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using GameData;
 using UnityEngine;
@@ -118,7 +118,7 @@ namespace Game
         {
             EState_ = EState.Remove;
 
-            Command.Remove.Execute(Type.EMain.Object, _data.ObjectId, ObjectUId);
+            Command.Remove.Execute(Type.EElement.Object, _data.ObjectId, ObjectUId);
 
             ActiveEdit(false);
         }
@@ -127,7 +127,7 @@ namespace Game
         {
             EState_ = EState.Arrange;
 
-            Command.Arrange.Execute(Type.EMain.Object, ObjectUId, transform.localPosition);
+            Command.Arrange.Execute(Type.EElement.Object, ObjectUId, transform.localPosition);
 
             SetSortingOrder(-(int)transform.localPosition.y);
 

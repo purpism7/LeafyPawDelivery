@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -89,7 +89,7 @@ namespace UI
                         IListener = this,
                         
                         Id = data.Id,
-                        EMain = Type.EMain.Animal,
+                        EElement = Type.EElement.Animal,
                         Name = data.Name,
                         Lock = animalInfo == null,
                     })
@@ -123,7 +123,7 @@ namespace UI
                       IListener = this,
                       
                       Id = data.Id,
-                      EMain = Type.EMain.Object,
+                      EElement = Type.EElement.Object,
                       Name = data.Name,
                       Lock = objectInfo == null,
                   })
@@ -140,14 +140,14 @@ namespace UI
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
         }
 
-        private void Unlock(Type.EMain eMain, int id)
+        private void Unlock(Type.EElement EElement, int id)
         {
             if (_arrangementCellList == null)
                 return;
 
             foreach (var cell in _arrangementCellList)
             {
-                cell?.Unlock(eMain, id);
+                cell?.Unlock(EElement, id);
             }
         }
         
@@ -156,7 +156,7 @@ namespace UI
             if (animalInfo == null)
                 return;
             
-            Unlock(Type.EMain.Animal, animalInfo.Id);
+            Unlock(Type.EElement.Animal, animalInfo.Id);
         }
         
         private void OnChangedObjectInfo(Info.Object objectInfo)
@@ -164,7 +164,7 @@ namespace UI
             if (objectInfo == null)
                 return;
             
-            Unlock(Type.EMain.Object, objectInfo.Id);
+            Unlock(Type.EElement.Object, objectInfo.Id);
         }
 
         public void OnChanged(string tabType)
@@ -183,11 +183,11 @@ namespace UI
         }
 
         #region ArrangementCell.IListener
-        void ArrangementCell.IListener.Edit(Type.EMain eMain, int id)
+        void ArrangementCell.IListener.Edit(Type.EElement EElement, int id)
         {
             Deactivate();
             
-            Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(eMain == Type.EMain.Animal ? Type.ETab.Animal : Type.ETab.Object);
+            Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(EElement == Type.EElement.Animal ? Type.ETab.Animal : Type.ETab.Object);
         }
         #endregion
 

@@ -26,10 +26,8 @@ namespace Game
         {
             base.Initialize(data);
 
-            //_placeActivityAnimalAction = data?.PlaceActivityAnimalAction;
+            //Info.UserManager.Instance.
 
-            //InitActivityAreaDic();
-            
             Deactivate();
         }
 

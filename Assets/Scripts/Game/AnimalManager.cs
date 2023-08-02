@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using GameSystem;
 using UI;
@@ -124,7 +124,7 @@ namespace Game
                             var popup = new PopupCreator<Unlock, Unlock.Data>()
                                 .SetData(new Unlock.Data()
                                 {
-                                    EMain = Type.EMain.Animal,
+                                    EElement = Type.EElement.Animal,
                                     Id = data.Id,
                                     ClickAction = () =>
                                     {

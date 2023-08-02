@@ -11,6 +11,7 @@ namespace UI.Component
         public class Data : BaseData
         {
             public string Text = string.Empty;
+            public bool IsPossible = false;
         }
 
         #region Inspector
@@ -23,6 +24,7 @@ namespace UI.Component
             base.Initialize(data);
 
             SetText(data.Text);
+            SetColor();
         }
 
         public override void Activate()
@@ -33,6 +35,11 @@ namespace UI.Component
         private void SetText(string text)
         {
             textTMP?.SetText(text);
+        }
+
+        private void SetColor()
+        {
+            textTMP.color = _data.IsPossible ? Color.black : Color.red;
         }
     }
 }

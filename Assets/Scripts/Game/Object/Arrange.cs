@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,25 +6,25 @@ namespace Game.Command
 {
     public class Arrange : EditCommand
     {
-        private Type.EMain _eMain = Type.EMain.None;
+        private Type.EElement _eElement = Type.EElement.None;
         private int _id = 0;
         private Vector3 _pos = Vector3.zero;
 
-        public static void Execute(Type.EMain eMain, int id, Vector3 pos)
+        public static void Execute(Type.EElement eElement, int id, Vector3 pos)
         {
-            new Arrange(eMain, id, pos)?.Execute();
+            new Arrange(eElement, id, pos)?.Execute();
         }
 
-        public Arrange(Type.EMain eMain, int id, Vector3 pos)
+        public Arrange(Type.EElement eElement, int id, Vector3 pos)
         {
-            _eMain = eMain;
+            _eElement = eElement;
             _id = id;
             _pos = pos;
         }
 
         public override void Execute()
         {
-            MainGameManager.Instance?.Arrange(_eMain, _id, _pos);
+            MainGameManager.Instance?.Arrange(_EElement, _id, _pos);
         }
     }
 }

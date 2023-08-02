@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -96,25 +96,25 @@ public class MainGameManager : Singleton<MainGameManager>
         _startEditAction = action;
     }
 
-    public void AddInfo(Type.EMain eMain, int id)
+    public void AddInfo(Type.EElement EElement, int id)
     {
-        if (eMain == Type.EMain.Animal)
+        if (EElement == Type.EElement.Animal)
         {
             AnimalMgr?.AddAnimal(id);
         }
-        else if (eMain == Type.EMain.Object)
+        else if (EElement == Type.EElement.Object)
         {
             ObjectMgr?.AddObject(id);
         }
     }
 
-    public bool CheckExist(Type.EMain eMain, int id)
+    public bool CheckExist(Type.EElement EElement, int id)
     {
-        if (eMain == Type.EMain.Animal)
+        if (EElement == Type.EElement.Animal)
         {
             return AnimalMgr.CheckExist(id);
         }
-        else if (eMain == Type.EMain.Object)
+        else if (EElement == Type.EElement.Object)
         {
             return ObjectMgr.CheckExist(id);
         }
@@ -146,11 +146,11 @@ public class MainGameManager : Singleton<MainGameManager>
     }
     #endregion
 
-    public void Remove(Type.EMain eMain, int id, int uId)
+    public void Remove(Type.EElement EElement, int id, int uId)
     {
-        switch (eMain)
+        switch (EElement)
         {
-            case Type.EMain.Animal:
+            case Type.EElement.Animal:
                 {
                     placeMgr?.ActivityPlace?.RemoveAnimal(id);
                     AnimalMgr?.RemoveAnimal(id);
@@ -160,7 +160,7 @@ public class MainGameManager : Singleton<MainGameManager>
                     break;
                 }
 
-            case Type.EMain.Object:
+            case Type.EElement.Object:
                 {
                     placeMgr?.ActivityPlace?.RemoveObject(uId);
                     ObjectMgr?.RemoveObject(id, uId);
@@ -172,7 +172,7 @@ public class MainGameManager : Singleton<MainGameManager>
         }
     }
 
-    public void Arrange(Type.EMain eMain, int id, Vector3 pos)
+    public void Arrange(Type.EElement EElement, int id, Vector3 pos)
     {
         int placeId = 0;
         if (placeMgr != null)
@@ -180,9 +180,9 @@ public class MainGameManager : Singleton<MainGameManager>
             placeId = placeMgr.ActivityPlace.Id;
         }
 
-        switch(eMain)
+        switch(EElement)
         {
-            case Type.EMain.Animal:
+            case Type.EElement.Animal:
                 {
                     AnimalMgr?.ArrangeAnimal(id, pos, placeId);
 
@@ -191,7 +191,7 @@ public class MainGameManager : Singleton<MainGameManager>
                     break;
                 }
 
-            case Type.EMain.Object:
+            case Type.EElement.Object:
                 {
 
                     ObjectMgr?.ArrangeObject(id, pos, placeId);

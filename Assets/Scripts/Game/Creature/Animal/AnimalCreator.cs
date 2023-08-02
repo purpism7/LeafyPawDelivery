@@ -14,7 +14,9 @@ namespace GameSystem
         private Transform _rootTm = null;
         private int _order = 0;
         private Vector3 _pos = Vector3.zero;
-        private System.Action<DropItem, Transform> _dropItemAction = null;
+        private bool _isGame = true;
+
+        //private System.Action<DropItem, Transform> _dropItemAction = null;
 
         public AnimalCreator SetAnimalId(int id)
         {
@@ -37,12 +39,19 @@ namespace GameSystem
             return this;
         }
 
-        public AnimalCreator SetDropItemAction(System.Action<DropItem, Transform> dropItemAction)
+        public AnimalCreator SetIsGame(bool isGame)
         {
-            _dropItemAction = dropItemAction;
+            _isGame = isGame;
 
             return this;
         }
+
+        //public AnimalCreator SetDropItemAction(System.Action<DropItem, Transform> dropItemAction)
+        //{
+        //    _dropItemAction = dropItemAction;
+
+        //    return this;
+        //}
 
         public override Game.Creature.Animal Create()
         {
@@ -63,6 +72,7 @@ namespace GameSystem
                 Id = _animalId,
                 Order = _order,
                 Pos = _pos,
+                IsGame = _isGame,
             });
 
             MainGameManager.Instance?.AnimalMgr?.AddAnimal(_animalId);

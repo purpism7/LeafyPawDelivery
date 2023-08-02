@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using GameSystem;
 using UnityEngine;
@@ -28,7 +28,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            iconImg.sprite = GameUtils.GetShortIconSprite(Type.EMain.Object, _data.ObjectId);
+            iconImg.sprite = GameUtils.GetShortIconSprite(Type.EElement.Object, _data.ObjectId);
         }
 
         public void OnClick()

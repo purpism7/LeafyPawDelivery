@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GameSystem;
@@ -89,7 +89,7 @@ namespace UI
                         IListener = this,
                         
                         Id = data.Id,
-                        EMain = Type.EMain.Animal,
+                        EElement = Type.EElement.Animal,
                         Name = data.Name,
                         Lock = animalInfo == null,
                     })
@@ -120,7 +120,7 @@ namespace UI
                         IListener = this,
                         
                         Id = data.Id,
-                        EMain = Type.EMain.Object,
+                        EElement = Type.EElement.Object,
                         Name = data.Name,
                         Lock = objectInfo == null,
                     })
@@ -137,14 +137,14 @@ namespace UI
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
         }
 
-        private void Unlock(Type.EMain eMain, int id)
+        private void Unlock(Type.EElement EElement, int id)
         {
             if (_bookCellList == null)
                 return;
 
             foreach (var cell in _bookCellList)
             {
-                cell?.Unlock(eMain, id);
+                cell?.Unlock(EElement, id);
             }
         }
         
@@ -153,7 +153,7 @@ namespace UI
             if (animalInfo == null)
                 return;
             
-            Unlock(Type.EMain.Animal, animalInfo.Id);
+            Unlock(Type.EElement.Animal, animalInfo.Id);
         }
         
         private void OnChangedObjectInfo(Info.Object objectInfo)
@@ -161,7 +161,7 @@ namespace UI
             if (objectInfo == null)
                 return;
             
-            Unlock(Type.EMain.Object, objectInfo.Id);
+            Unlock(Type.EElement.Object, objectInfo.Id);
         }
 
         public void OnChanged(string tabType)

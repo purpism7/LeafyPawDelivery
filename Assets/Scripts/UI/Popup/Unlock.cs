@@ -15,7 +15,7 @@ namespace UI
 
         public class Data : BaseData
         {
-            public Type.EMain EMain = Type.EMain.None;
+            public Type.EElement EElement = Type.EElement.None;
             public int Id = 0;
             public Action ClickAction = null;
         }
@@ -41,7 +41,7 @@ namespace UI
             
             if (_data != null)
             {
-                MainGameManager.Instance?.AddInfo(_data.EMain, _data.Id);
+                MainGameManager.Instance?.AddInfo(_data.EElement, _data.Id);
                 
                 _data?.ClickAction?.Invoke();
             }
@@ -72,7 +72,7 @@ namespace UI
             if (iconImg == null)
                 return;
 
-            var sprite = GameUtils.GetLargeIconSprite(_data.EMain, _data.Id);
+            var sprite = GameUtils.GetLargeIconSprite(_data.EElement, _data.Id);
             iconImg.sprite = sprite;
         }
 
@@ -81,7 +81,7 @@ namespace UI
             if (_data == null)
                 return;
             
-            nameTMP?.SetText(GameUtils.GetName(_data.EMain, _data.Id));
+            nameTMP?.SetText(GameUtils.GetName(_data.EElement, _data.Id));
         }
 
         public void OnClick()

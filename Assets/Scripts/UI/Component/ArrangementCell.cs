@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using GameSystem;
@@ -16,14 +16,14 @@ namespace UI.Component
             public IListener IListener = null;
             
             public int Id = 0;
-            public Type.EMain EMain = Type.EMain.None; 
+            public Type.EElement EElement = Type.EElement.None; 
             public string Name = string.Empty;
             public bool Lock = true;
         }
         
         public interface IListener
         {
-            void Edit(Type.EMain eMain, int id);
+            void Edit(Type.EElement EElement, int id);
         }
 
         #region Inspector
@@ -43,7 +43,8 @@ namespace UI.Component
             SetNameTMP();
             SetIconImg();
             SetButtonState();
-            
+            SetLockData();
+
             UIUtils.SetActive(lockRootRectTm, _data.Lock);
         }
 
@@ -57,7 +58,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            iconImg.sprite = GameUtils.GetShortIconSprite(_data.EMain, _data.Id);
+            iconImg.sprite = GameUtils.GetShortIconSprite(_data.EElement, _data.Id);
 
             if (_data.Lock)
             {
@@ -77,15 +78,80 @@ namespace UI.Component
             if (!_data.Lock)
                 return;
 
-            if(_data.EMain == Type.EMain.Animal)
+            if(_data.EElement == Type.EElement.Animal)
             {
-                var openCondition = AnimalOpenConditionContainer.Instance.GetData(_data.Id);
+                SetAnimalOpenCondition();
             }
             else
             {
-
+                SetObjectOpenCondition();
             }
-            
+        }
+
+        private void SetAnimalOpenCondition()
+        {
+            var animalOpenConditionContainer = AnimalOpenConditionContainer.Instance;
+            var openCondition = animalOpenConditionContainer?.GetData(_data.Id);
+            if (openCondition == null)
+                return;
+
+            var openConditionData = new OpenCondition.Data()
+            {
+                Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
+                IsPossible = animalOpenConditionContainer.CheckAnimalCurrency(_data.Id),
+            };
+
+            CreateOpenCondition(openConditionData);
+
+            openConditionData = new OpenCondition.Data()
+            {
+                Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
+                IsPossible = animalOpenConditionContainer.CheckObjectCurrency(_data.Id),
+            };
+
+            CreateOpenCondition(openConditionData);
+        }
+
+        private void SetObjectOpenCondition()
+        {
+            var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
+            var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
+            if (openCondition == null)
+                return;
+
+            var openConditionData = new OpenCondition.Data()
+            {
+                Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
+                IsPossible = objectOpenConditionContainer.CheckAnimalCurrency(_data.Id),
+            };
+
+            CreateOpenCondition(openConditionData);
+
+            openConditionData = new OpenCondition.Data()
+            {
+                Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
+                IsPossible = objectOpenConditionContainer.CheckObjectCurrency(_data.Id),
+            };
+
+            CreateOpenCondition(openConditionData);
+        }
+
+        private string GetReqAnimalCurrency(long currency)
+        {
+            return string.Format("Arcon x{0}", currency);
+        }
+
+        private string GetReqObjectCurrency(long currency)
+        {
+            return string.Format("Leaf x{0}", currency);
+        }
+
+        private UI.Component.OpenCondition CreateOpenCondition(OpenCondition.Data openConditionData)
+        {
+            return new ComponentCreator<OpenCondition, OpenCondition.Data>()
+                    .SetData(openConditionData)
+                    .SetRootRectTm(openCondtionRootRectTm)
+                    .Create();
         }
 
         private void SetButtonState()
@@ -99,7 +165,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            if (Enum.TryParse(_data.EMain.ToString(), out Type.EOpen eOpen))
+            if (Enum.TryParse(_data.EElement.ToString(), out Type.EOpen eOpen))
             {
 
                 //OpenConditionContainer.Instance.a
@@ -112,7 +178,7 @@ namespace UI.Component
                 //new PopupCreator<Unlock, Unlock.Data>()
                 //    .SetData(new Unlock.Data()
                 //    {
-                //        EMain = _data.EMain,
+                //        EElement = _data.EElement,
                 //        Id = _data.Id,
                 //        ClickAction = () =>
                 //        {
@@ -130,12 +196,12 @@ namespace UI.Component
             }
         }
 
-        public void Unlock(Type.EMain eMain, int id)
+        public void Unlock(Type.EElement EElement, int id)
         {
             if (_data == null)
                 return;
 
-            if (_data.EMain != eMain)
+            if (_data.EElement != EElement)
                 return;
 
             if (_data.Id != id)
@@ -159,7 +225,7 @@ namespace UI.Component
             if (_data == null)
                 return;
             
-            _data.IListener?.Edit(_data.EMain, _data.Id);
+            _data.IListener?.Edit(_data.EElement, _data.Id);
         }
     }
 }

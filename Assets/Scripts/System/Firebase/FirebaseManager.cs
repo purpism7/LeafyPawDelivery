@@ -32,11 +32,6 @@ namespace GameSystem
                     if (task.Result != DependencyStatus.Available)
                         return;
 
-                    //Debug.Log("Firebase Check = " + task.Result);
-                    //FirebaseApp.Create();
-
-                    //FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
-                    Debug.Log("CheckAndFix");
                     check = true;
                 });
 

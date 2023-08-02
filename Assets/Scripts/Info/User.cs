@@ -20,16 +20,22 @@ namespace Info
         public List<Currency> CurrencyList = new();
         public List<int> StoryList = new();
 
+
+        public static Currency GetInitializeCurrency(int placeId)
+        {
+            return new Currency()
+            {
+                PlaceId = placeId,
+                Animal = 0,
+                Object = 0,
+            };
+        }
+
         public Currency GetCurrency(int placeId)
         {
             if (CurrencyList == null)
             {
-                return new Currency()
-                {
-                    PlaceId = placeId,
-                    Animal = 0,
-                    Object = 0,
-                };
+                return GetInitializeCurrency(placeId);
             }
             
             return CurrencyList.Find(currency => currency.PlaceId == placeId);

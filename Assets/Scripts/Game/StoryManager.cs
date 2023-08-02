@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -118,16 +118,16 @@ namespace Game
             if(storyOpenCondition == null)
                 return false;
 
-            if (!CheckReqIds(mainGameMgr, Type.EMain.Animal, storyOpenCondition.ReqAnimalIds))
+            if (!CheckReqIds(mainGameMgr, Type.EElement.Animal, storyOpenCondition.ReqAnimalIds))
                 return false;
 
-            if (!CheckReqIds(mainGameMgr, Type.EMain.Object, storyOpenCondition.ReqObjectIds))
+            if (!CheckReqIds(mainGameMgr, Type.EElement.Object, storyOpenCondition.ReqObjectIds))
                 return false;
 
             return true;
         }
 
-        private bool CheckReqIds(MainGameManager mainGameMgr, Type.EMain eMain, int[] ids)
+        private bool CheckReqIds(MainGameManager mainGameMgr, Type.EElement eElement, int[] ids)
         {
             if (ids != null)
             {
@@ -136,7 +136,7 @@ namespace Game
                     if (id <= 0)
                         continue;
 
-                    if (!mainGameMgr.CheckExist(eMain, id))
+                    if (!mainGameMgr.CheckExist(eElement, id))
                         return false;
                 }
             }
