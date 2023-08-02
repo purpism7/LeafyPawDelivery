@@ -24,7 +24,7 @@ namespace Game.Command
 
         public override void Execute()
         {
-            MainGameManager.Instance?.Arrange(_EElement, _id, _pos);
+            MainGameManager.Instance?.Arrange(_eElement, _id, _pos);
         }
     }
 }
