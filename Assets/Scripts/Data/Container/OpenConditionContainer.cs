@@ -18,7 +18,7 @@ public class OpenConditionContainer<T> : BaseContainer<T, OpenCondition> where T
         if (currency == null)
             return false;
 
-        return currency.Animal > data.AnimalCurrency;
+        return currency.Animal >= data.AnimalCurrency;
     }
 
     public bool CheckObjectCurrency(int id)
@@ -35,6 +35,6 @@ public class OpenConditionContainer<T> : BaseContainer<T, OpenCondition> where T
         if (currency == null)
             return false;
 
-        return currency.Object > data.ObjectCurrency;
+        return currency.Object >= data.ObjectCurrency;
     }
 }
