@@ -5,14 +5,15 @@ using Game;
 
 namespace Game.Creature
 {
-    public class Animal : Base<Animal.Data>, UI.Element.IListener
+    public class Animal : Base<Animal.Data>, UI.Edit.IListener
     {
         public class Data : BaseData
         {
             public int Id = 0;
             public int Order = 0;
             public Vector3 Pos = Vector3.zero;
-            public bool IsGame = true;
+            public bool IsEdit = true;
+            public bool IsSpeechBubble = true;
         }
 
         [SerializeField]
@@ -31,6 +32,8 @@ namespace Game.Creature
 
             _animalRoot = GetComponentInChildren<AnimalRoot>();
 
+            CreateEdit();
+
             if (data != null)
             {
                 transform.localPosition = data.Pos;
@@ -39,15 +42,12 @@ namespace Game.Creature
             }
 
             InitActionController();
-
-            element?.Init(this);
-            ActiveEdit(false);
         }
 
         private void InitActionController()
         {
             _actionCtr = gameObject.GetOrAddComponent<AnimalActionController>();
-            _actionCtr?.Init(animator, spriteRenderer, _data.IsGame);
+            _actionCtr?.Initialize(animator, spriteRenderer, !_data.IsEdit);
         }
 
         public override void ChainUpdate()
@@ -86,6 +86,25 @@ namespace Game.Creature
             State = state;
         }
 
+        private void CreateEdit()
+        {
+            if (_data == null)
+                return;
+
+            if (!_data.IsEdit)
+                return;
+
+            edit = new GameSystem.UICreator<UI.Edit, UI.Edit.Data>()
+                .SetData(new UI.Edit.Data()
+                {
+                    IListener = this,
+                })
+                .SetRootRectTm(_animalRoot?.EditRootRectTm)
+                .Create();
+
+            ActiveEdit(false);
+        }
+
         private void SetSortingOrder(int order)
         {
             if (spriteRenderer == null)
@@ -95,7 +114,7 @@ namespace Game.Creature
         }
 
         #region Edit.IListener
-        void UI.Element.IListener.Remove()
+        void UI.Edit.IListener.Remove()
         {
             EState_ = EState.Remove;
 
@@ -104,7 +123,7 @@ namespace Game.Creature
             ActiveEdit(false);
         }
 
-        void UI.Element.IListener.Arrange()
+        void UI.Edit.IListener.Arrange()
         {
             if (_data == null)
                 return;

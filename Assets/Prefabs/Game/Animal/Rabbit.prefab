@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 3156741586909647920}
-  element: {fileID: 0}
+  edit: {fileID: 0}
   Id: 1
   UId: 0
   spriteRenderer: {fileID: 7920135936743495098}

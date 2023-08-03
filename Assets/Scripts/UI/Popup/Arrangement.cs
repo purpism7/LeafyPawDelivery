@@ -172,9 +172,7 @@ namespace UI
             if(System.Enum.TryParse(tabType, out Type.ETab eTabType))
             {
                 if(_currETabType == eTabType)
-                {
                     return;
-                }
 
                 _currETabType = eTabType;
 

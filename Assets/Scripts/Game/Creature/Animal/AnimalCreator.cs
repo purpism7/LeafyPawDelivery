@@ -14,7 +14,8 @@ namespace GameSystem
         private Transform _rootTm = null;
         private int _order = 0;
         private Vector3 _pos = Vector3.zero;
-        private bool _isGame = true;
+        private bool _isEdit = true;
+        private bool _isSpeechBubble = true;
 
         //private System.Action<DropItem, Transform> _dropItemAction = null;
 
@@ -39,9 +40,16 @@ namespace GameSystem
             return this;
         }
 
-        public AnimalCreator SetIsGame(bool isGame)
+        public AnimalCreator SetIsEdit(bool isEdit)
         {
-            _isGame = isGame;
+            _isEdit = isEdit;
+
+            return this;
+        }
+
+        public AnimalCreator SetIsSpeechBubble(bool isSpeechBubble)
+        {
+            _isSpeechBubble = isSpeechBubble;
 
             return this;
         }
@@ -72,7 +80,8 @@ namespace GameSystem
                 Id = _animalId,
                 Order = _order,
                 Pos = _pos,
-                IsGame = _isGame,
+                IsEdit = _isEdit,
+                IsSpeechBubble = _isSpeechBubble,
             });
 
             MainGameManager.Instance?.AnimalMgr?.AddAnimal(_animalId);

@@ -64,7 +64,7 @@ namespace Game
     public abstract class Base : Common
     {
         [SerializeField]
-        protected UI.Element element = null;
+        protected UI.Edit edit = null;
 
         public int Id = 0;
         [HideInInspector]
@@ -90,7 +90,7 @@ namespace Game
 
         public void ActiveEdit(bool active)
         {
-            UIUtils.SetActive(element?.EditRectTmRoot, active);
+            UIUtils.SetActive(edit?.CanvasRectTm, active);
         }
     }
 

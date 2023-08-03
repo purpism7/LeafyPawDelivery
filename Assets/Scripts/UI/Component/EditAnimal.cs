@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GameSystem;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.Component
 {
@@ -12,14 +13,24 @@ namespace UI.Component
             public Animal AnimalData = null;
         }
 
-        [SerializeField]
-        private TMPro.TextMeshProUGUI idTMP;
+        [SerializeField] private Image iconImg = null;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
-            idTMP?.SetText(data.AnimalData.Name.ToString());
+            SetIconImg();
+        }
+
+        private void SetIconImg()
+        {
+            if (_data == null)
+                return;
+
+            if (_data.AnimalData == null)
+                return;
+
+            iconImg.sprite = GameUtils.GetShortIconSprite(Type.EElement.Animal, _data.AnimalData.Id);
         }
 
         public void OnClick()

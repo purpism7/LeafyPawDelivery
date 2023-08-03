@@ -4,8 +4,13 @@ using UnityEngine;
 
 namespace UI
 {
-    public class Element : Base
+    public class Edit : Base<Edit.Data>
     {
+        public class Data : BaseData
+        {
+            public IListener IListener = null;
+        }
+
         public interface IListener
         {
             void Remove();
@@ -14,24 +19,21 @@ namespace UI
 
         #region Inspector
         public RectTransform CanvasRectTm = null;
-        public RectTransform EditRectTmRoot = null;
         #endregion
 
-        private IListener _iListener = null;
-
-        public void Init(IListener iListener)
+        public override void Initialize(Data data)
         {
-            _iListener = iListener;
+            base.Initialize(data);
         }
 
         public void OnClickRemove()
         {
-            _iListener?.Remove();
+            _data?.IListener?.Remove();
         }
 
         public void OnClickArrange()
         {
-            _iListener?.Arrange();
+            _data?.IListener?.Arrange();
         }
     }
 }

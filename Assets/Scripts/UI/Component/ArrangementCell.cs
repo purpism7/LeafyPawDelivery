@@ -27,11 +27,13 @@ namespace UI.Component
         }
 
         #region Inspector
-        [SerializeField] private TextMeshProUGUI nameTMP;
+        [SerializeField] private TextMeshProUGUI nameTMP = null;
+        [SerializeField] private TextMeshProUGUI descTMP = null;
         [SerializeField] private Button arrangementBtn = null;
         [SerializeField] private Image iconImg = null;
 
         [Header("Lock")]
+        [SerializeField] private TextMeshProUGUI lockNameTMP = null;
         [SerializeField] private RectTransform lockRootRectTm = null;
         [SerializeField] private RectTransform openCondtionRootRectTm = null;
         #endregion
@@ -41,6 +43,7 @@ namespace UI.Component
             base.Initialize(data);
 
             SetNameTMP();
+            SetDescTMP();
             SetIconImg();
             SetButtonState();
             SetLockData();
@@ -50,7 +53,19 @@ namespace UI.Component
 
         private void SetNameTMP()
         {
+            if (_data == null)
+                return;
+
             nameTMP?.SetText(_data.Name);
+            lockNameTMP?.SetText(_data.Name);
+        }
+
+        private void SetDescTMP()
+        {
+            if (_data == null)
+                return;
+
+            descTMP?.SetText(_data.Name + " is ..");
         }
 
         private void SetIconImg()
@@ -165,34 +180,41 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            if (Enum.TryParse(_data.EElement.ToString(), out Type.EOpen eOpen))
+            bool isPossibleUnlock = false;
+
+            switch(_data.EElement)
             {
+                case Type.EElement.Animal:
+                    {
+                        isPossibleUnlock = AnimalOpenConditionContainer.Instance.Check(_data.Id);
 
-                //OpenConditionContainer.Instance.a
-                //var openCondition = MainGameManager.Instance?.OpenCondition;
-                //if (openCondition == null)
-                //    return;
+                        break;
+                    }
 
-                //if (openCondition.CheckOpenCondition(eOpen, _data.Id))
-                //{
-                //new PopupCreator<Unlock, Unlock.Data>()
-                //    .SetData(new Unlock.Data()
-                //    {
-                //        EElement = _data.EElement,
-                //        Id = _data.Id,
-                //        ClickAction = () =>
-                //        {
+                case Type.EElement.Object:
+                    {
+                        isPossibleUnlock = ObjectOpenConditionContainer.Instance.Check(_data.Id);
 
-                //        },
-                //    })
-                //    .SetCoInit(true)
-                //    .SetReInitialize(true)
-                //    .Create();
-                //}
-                //else
-                //{
-                //    Debug.Log("오픈 조건 미 충족.");
-                //}
+                        break;
+                    }
+            }
+
+
+            if(isPossibleUnlock)
+            {
+                new PopupCreator<Unlock, Unlock.Data>()
+                    .SetData(new Unlock.Data()
+                    {
+                        EElement = _data.EElement,
+                        Id = _data.Id,
+                        ClickAction = () =>
+                        {
+
+                        },
+                    })
+                    .SetCoInit(true)
+                    .SetReInitialize(true)
+                    .Create();
             }
         }
 
@@ -217,6 +239,7 @@ namespace UI.Component
         
         public void OnClickUnlock()
         {
+            Debug.Log("OnClickUnlock");
             CreateUnlockPopup();
         }
         
