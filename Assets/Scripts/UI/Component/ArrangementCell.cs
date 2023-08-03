@@ -199,7 +199,6 @@ namespace UI.Component
                     }
             }
 
-
             if(isPossibleUnlock)
             {
                 new PopupCreator<Unlock, Unlock.Data>()

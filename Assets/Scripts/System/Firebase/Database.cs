@@ -115,21 +115,18 @@ namespace GameSystem.Firebase
             databaseRef.SetRawJsonValueAsync(jsonStr);
         }
 
-        public IEnumerator CoSave(string pathStr, string jsonStr)
+        public void SaveChild(string pathStr, string child, string jsonStr)
         {
-            Debug.Log("CoSave");
             var database = FirebaseDatabase.DefaultInstance;
             if (database == null)
-                yield break;
-
-            Debug.Log("database = " + pathStr);
+                return;
 
             var databaseRef = database.GetReference(pathStr);
-            Debug.Log("jsonStr = " + jsonStr);
-            databaseRef.SetRawJsonValueAsync(jsonStr);
 
-            yield return null;
+            databaseRef.Child(child).SetRawJsonValueAsync(jsonStr);
         }
+ 
+
     }
 }
 

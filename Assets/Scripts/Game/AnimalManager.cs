@@ -66,8 +66,10 @@ namespace Game
 
             if (_animalHolder.AddAnimalInfo(animalInfo))
             {
-                Listener?.Invoke(animalInfo);
+                
             }
+
+            Listener?.Invoke(animalInfo);
         }
 
         public void RemoveAnimal(int id)

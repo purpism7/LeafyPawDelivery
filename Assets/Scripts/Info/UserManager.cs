@@ -8,6 +8,8 @@ namespace Info
 {
     public class UserManager : Singleton<UserManager>
     {
+        private const string KeyUserStoryList = "StoryList";
+
 #if UNITY_EDITOR
         readonly private string _userInfoJsonFilePath = "Assets/Info/User.json";
 #else
@@ -73,13 +75,26 @@ namespace Info
 
                     Debug.Log("data = " + data);
 
-                    if (data.Key.Equals("Cash"))
+                    switch(data.Key)
                     {
-                        User.Cash = (long)data.Value;
-                    }
-                    else if (data.Key.Equals("CurrencyList"))
-                    {
-                        SetCurrencyList(data);
+                        case "Cash":
+                            {
+                                User.Cash = (long)data.Value;
+
+                                break;
+                            }
+
+                        case "CurrencyList":
+                            {
+                                SetCurrencyList(data);
+
+                                break;
+                            }
+
+                        case KeyUserStoryList:
+                            {
+                                break;
+                            }
                     }
                 }
             }
@@ -142,16 +157,45 @@ namespace Info
 
         public int GetLastStoryId(int placeId)
         {
-            var storyList = User?.StoryList;
-            if (storyList == null ||
-                storyList.Count <= 0)
+            var story = User?.GetStory(placeId);
+            if (story == null)
                 return 0;
 
-            var index = placeId - 1;
-            if (storyList.Count < index)
-                return 1;
+            return story.StoryId;
+        }
 
-            return storyList[index];
+        public void Save()
+        {
+            var firebaseMgr = GameSystem.FirebaseManager.Instance;
+            if (firebaseMgr == null)
+                return;
+
+            var userId = firebaseMgr.Auth?.UserId;
+            if (string.IsNullOrEmpty(userId))
+                return;
+
+            firebaseMgr?.Database?.Save(userId, JsonUtility.ToJson(User));
+        }
+
+        public void SaveStoryList(int storyId)
+        {
+            var placeMgr = MainGameManager.Instance?.placeMgr;
+            if (placeMgr == null)
+                return;
+
+            int placeId = placeMgr.ActivityPlaceId;
+
+            User?.AddStory(placeId, storyId);
+
+            var firebaseMgr = GameSystem.FirebaseManager.Instance;
+            if (firebaseMgr == null)
+                return;
+
+            var userId = firebaseMgr.Auth?.UserId;
+            if (string.IsNullOrEmpty(userId))
+                return;
+
+            firebaseMgr?.Database?.SaveChild(userId, KeyUserStoryList, JsonUtility.ToJson(User.StoryList));
         }
     }
 }

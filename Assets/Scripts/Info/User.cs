@@ -17,8 +17,15 @@ namespace Info
             public long Object = 0;
         }
 
+        [Serializable]
+        public class Story
+        {
+            public int PlaceId = 0;
+            public int StoryId = 0;
+        }
+
         public List<Currency> CurrencyList = new();
-        public List<int> StoryList = new();
+        public List<Story> StoryList = new();
 
 
         public static Currency GetInitializeCurrency(int placeId)
@@ -48,6 +55,40 @@ namespace Info
                 int placeId = MainGameManager.Instance.placeMgr.ActivityPlaceId;
 
                 return GetCurrency(placeId);
+            }
+        }
+
+        public Story GetStory(int placeId)
+        {
+            if (StoryList == null)
+            {
+                return new Story()
+                {
+                    PlaceId = placeId,
+                    StoryId = 0,
+                };
+            }
+
+            return StoryList.Find(story => story.PlaceId == placeId);
+        }
+
+        public void AddStory(int placeId, int storyId)
+        {
+            if(StoryList == null)
+            {
+                StoryList.Add(new Story()
+                {
+                    PlaceId = placeId,
+                    StoryId = storyId,
+                });
+
+                return;
+            }
+
+            var findIndex = StoryList.FindIndex(story => story.PlaceId == placeId);
+            if(findIndex >= 0)
+            {
+                StoryList[findIndex].StoryId = storyId;
             }
         }
     }

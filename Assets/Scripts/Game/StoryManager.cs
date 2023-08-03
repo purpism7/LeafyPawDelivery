@@ -167,6 +167,9 @@ namespace Game
                         EState = EState.Begin,
                     });
 
+
+                    UserManager.Instance?.SaveStoryList(story.Id);
+
                     return cutscene;
                 });
         }
