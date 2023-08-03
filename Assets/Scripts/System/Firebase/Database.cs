@@ -122,11 +122,14 @@ namespace GameSystem.Firebase
                 return;
 
             var databaseRef = database.GetReference(pathStr);
+            var childDatabaseRef = databaseRef.Child(child);
+            if(childDatabaseRef == null)
+            {
+                childDatabaseRef.Push();
+            }
 
-            databaseRef.Child(child).SetRawJsonValueAsync(jsonStr);
+            childDatabaseRef.SetRawJsonValueAsync(jsonStr);
         }
- 
-
     }
 }
 

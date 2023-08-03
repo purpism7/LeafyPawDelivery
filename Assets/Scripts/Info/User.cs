@@ -75,20 +75,20 @@ namespace Info
         public void AddStory(int placeId, int storyId)
         {
             if(StoryList == null)
+                return;
+
+            var findIndex = StoryList.FindIndex(story => story.PlaceId == placeId);
+            if(findIndex >= 0)
+            {
+                StoryList[findIndex].StoryId = storyId;
+            }
+            else
             {
                 StoryList.Add(new Story()
                 {
                     PlaceId = placeId,
                     StoryId = storyId,
                 });
-
-                return;
-            }
-
-            var findIndex = StoryList.FindIndex(story => story.PlaceId == placeId);
-            if(findIndex >= 0)
-            {
-                StoryList[findIndex].StoryId = storyId;
             }
         }
     }
