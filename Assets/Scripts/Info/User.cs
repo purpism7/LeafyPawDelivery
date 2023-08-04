@@ -27,7 +27,7 @@ namespace Info
         public List<Currency> CurrencyList = new();
         public List<Story> StoryList = new();
 
-
+        #region Currency
         public static Currency GetInitializeCurrency(int placeId)
         {
             return new Currency()
@@ -48,6 +48,55 @@ namespace Info
             return CurrencyList.Find(currency => currency.PlaceId == placeId);
         }
 
+        public void SetAnimalCurrency(int placeId, int value)
+        {
+            if (CurrencyList == null)
+            {
+                CurrencyList = new();
+                CurrencyList.Clear();
+            }
+
+            int findIndex = CurrencyList.FindIndex(findCurrency => findCurrency.PlaceId == placeId);
+            if (findIndex >= 0)
+            {
+                CurrencyList[findIndex].Animal += value;
+            }
+        }
+
+        public void SetObjectCurrency(int placeId, int value)
+        {
+            if(CurrencyList == null)
+            {
+                CurrencyList = new();
+                CurrencyList.Clear();
+            }
+
+            int findIndex = CurrencyList.FindIndex(findCurrency => findCurrency.PlaceId == placeId);
+            if(findIndex >= 0)
+            {
+                CurrencyList[findIndex].Object += value;
+            }
+        }
+
+        public void SetCurrency(Currency currency)
+        {
+            if (currency == null)
+                return;
+
+            if (CurrencyList == null)
+            {
+                CurrencyList = new();
+                CurrencyList.Clear();
+            }
+
+            int findIndex = CurrencyList.FindIndex(findCurrency => findCurrency.PlaceId == currency.PlaceId);
+            if (findIndex >= 0)
+            {
+                CurrencyList[findIndex].Animal += currency.Animal;
+                CurrencyList[findIndex].Object += currency.Object;
+            }
+        }
+
         public Currency CurrenctCurrency
         {
             get
@@ -57,7 +106,9 @@ namespace Info
                 return GetCurrency(placeId);
             }
         }
+        #endregion
 
+        #region Story
         public Story GetStory(int placeId)
         {
             if (StoryList == null)
@@ -72,7 +123,7 @@ namespace Info
             return StoryList.Find(story => story.PlaceId == placeId);
         }
 
-        public void AddStory(int placeId, int storyId)
+        public void SetStory(int placeId, int storyId)
         {
             if(StoryList == null)
                 return;
@@ -91,6 +142,7 @@ namespace Info
                 });
             }
         }
+        #endregion
     }
 }
 

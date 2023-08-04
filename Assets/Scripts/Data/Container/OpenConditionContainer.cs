@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpenConditionContainer<T> : BaseContainer<T, OpenCondition> where T : new()
+public class OpenConditionContainer<T> : BaseContainer<T, OpenConditionData> where T : new()
 {
     public bool Check(int id)
     {

@@ -59,30 +59,30 @@ namespace UI
                     
                     case EType.Arrangement:
                         {
-                            Sequencer.EnqueueTask(
-                                () =>
-                                {
+                            //Sequencer.EnqueueTask(
+                            //    () =>
+                            //    {
                                     var popup = new GameSystem.PopupCreator<Arrangement, Arrangement.Data>()
                                         .SetCoInit(true)
                                         .Create();
 
-                                    return popup;
-                                });
+                                //    return popup;
+                                //});
                             
                             break;
                         }
                     
                     case EType.Book:
                         {
-                            Sequencer.EnqueueTask(
-                               () =>
-                               {
+                            //Sequencer.EnqueueTask(
+                            //   () =>
+                            //   {
                                    var popup = new GameSystem.PopupCreator<Book, Book.Data>()
                                         .SetCoInit(true)
                                         .Create();
 
-                                   return popup;
-                               });
+                               //    return popup;
+                               //});
                         }
                         break;
                     

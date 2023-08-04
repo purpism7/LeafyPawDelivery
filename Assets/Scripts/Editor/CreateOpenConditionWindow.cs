@@ -13,7 +13,7 @@ public class CreateOpenConditionWindow : EditorWindow
     private Type.EOpen _eOpenType = Type.EOpen.None;
     private string _fileName = string.Empty;
     private int _id = 0;
-    private OpenCondition _openCondition = null;
+    private OpenConditionData _openCondition = null;
     
     [MenuItem("Animals/Create Open Condition Window")]
     private static void Open()

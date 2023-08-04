@@ -116,7 +116,7 @@ namespace Game
                     animalData.PlaceId != _data.PlaceId)
                     continue;
 
-                if(data.EType_ == OpenCondition.EType.Starter)
+                if(data.EType_ == OpenConditionData.EType.Starter)
                 {
                     Sequencer.EnqueueTask(
                         () =>
@@ -140,9 +140,6 @@ namespace Game
 
                     
                 }
-                //Debug.Log(data.Type);
-
-                //if(data.Type == OpeCondition.EType.Starter)
             }
         }
 

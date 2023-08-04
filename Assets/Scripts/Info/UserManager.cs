@@ -8,6 +8,7 @@ namespace Info
 {
     public class UserManager : Singleton<UserManager>
     {
+        private const string KeyUserCurrencyList = "CurrencyList";
         private const string KeyUserStoryList = "StoryList";
 
 #if UNITY_EDITOR
@@ -84,7 +85,7 @@ namespace Info
                                 break;
                             }
 
-                        case "CurrencyList":
+                        case KeyUserCurrencyList:
                             {
                                 SetCurrencyList(data);
 
@@ -177,15 +178,9 @@ namespace Info
             firebaseMgr?.Database?.Save(userId, JsonUtility.ToJson(User));
         }
 
-        public void SaveStoryList(int storyId)
+        public void SaveCurrencyList(User.Currency currency)
         {
-            var placeMgr = MainGameManager.Instance?.placeMgr;
-            if (placeMgr == null)
-                return;
-
-            int placeId = placeMgr.ActivityPlaceId;
-
-            User?.AddStory(placeId, storyId);
+            User?.SetCurrency(currency);
 
             var firebaseMgr = GameSystem.FirebaseManager.Instance;
             if (firebaseMgr == null)
@@ -195,7 +190,31 @@ namespace Info
             if (string.IsNullOrEmpty(userId))
                 return;
 
-            firebaseMgr?.Database?.SaveChild(userId, KeyUserStoryList, JsonUtility.ToJson(User.StoryList));
+            firebaseMgr?.Database?.SaveChild(userId, KeyUserCurrencyList, JsonUtility.ToJson(User.CurrencyList));
+        }
+
+        public void SaveStoryList(int storyId)
+        {
+            var placeMgr = MainGameManager.Instance?.placeMgr;
+            if (placeMgr == null)
+                return;
+
+            int placeId = placeMgr.ActivityPlaceId;
+
+            User?.SetStory(placeId, storyId);
+
+            var firebaseMgr = GameSystem.FirebaseManager.Instance;
+            if (firebaseMgr == null)
+                return;
+
+            var userId = firebaseMgr.Auth?.UserId;
+            if (string.IsNullOrEmpty(userId))
+                return;
+
+            var jsonStr = JsonUtility.ToJson(User.StoryList.ToArray());
+            Debug.Log("StoryList json str = " + jsonStr);
+
+            firebaseMgr?.Database?.SaveChild(userId, KeyUserStoryList, jsonStr);
         }
     }
 }

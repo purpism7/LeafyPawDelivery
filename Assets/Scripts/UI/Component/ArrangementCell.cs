@@ -180,13 +180,19 @@ namespace UI.Component
             if (_data == null)
                 return;
 
+            var placeMgr = MainGameManager.Instance?.placeMgr;
+            if (placeMgr == null)
+                return;
+
             bool isPossibleUnlock = false;
+            OpenConditionData openConditionData = null;
 
             switch(_data.EElement)
             {
                 case Type.EElement.Animal:
                     {
                         isPossibleUnlock = AnimalOpenConditionContainer.Instance.Check(_data.Id);
+                        openConditionData = AnimalOpenConditionContainer.Instance.GetData(_data.Id);
 
                         break;
                     }
@@ -194,27 +200,45 @@ namespace UI.Component
                 case Type.EElement.Object:
                     {
                         isPossibleUnlock = ObjectOpenConditionContainer.Instance.Check(_data.Id);
+                        openConditionData = ObjectOpenConditionContainer.Instance.GetData(_data.Id);
 
                         break;
                     }
             }
 
-            if(isPossibleUnlock)
-            {
-                new PopupCreator<Unlock, Unlock.Data>()
-                    .SetData(new Unlock.Data()
-                    {
-                        EElement = _data.EElement,
-                        Id = _data.Id,
-                        ClickAction = () =>
-                        {
+            if (openConditionData == null)
+                return;
 
-                        },
-                    })
-                    .SetCoInit(true)
-                    .SetReInitialize(true)
-                    .Create();
-            }
+            if (!isPossibleUnlock)
+                return;
+
+            Sequencer.EnqueueTask(
+                () =>
+                {
+                    var popup = new PopupCreator<Unlock, Unlock.Data>()
+                        .SetData(new Unlock.Data()
+                        {
+                            EElement = _data.EElement,
+                            Id = _data.Id,
+                            ClickAction = () =>
+                            {
+
+                            },
+                        })
+                        .SetCoInit(true)
+                        .SetReInitialize(true)
+                        .Create();
+
+
+                    Info.UserManager.Instance.SaveCurrencyList(new Info.User.Currency()
+                    {
+                        PlaceId = placeMgr.ActivityPlaceId,
+                        Animal = openConditionData.AnimalCurrency,
+                        Object = openConditionData.ObjectCurrency,
+                    });
+
+                    return popup;
+                });
         }
 
         public void Unlock(Type.EElement EElement, int id)
@@ -238,7 +262,6 @@ namespace UI.Component
         
         public void OnClickUnlock()
         {
-            Debug.Log("OnClickUnlock");
             CreateUnlockPopup();
         }
         
