@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GameSystem.Firebase;
 using UnityEngine;
 using System.Linq;
+using Firebase.Database;
 
 namespace Info
 {
@@ -69,6 +70,8 @@ namespace Info
             Debug.Log("SetUserInfo = " + dataSnapshot.Value);
             if (dataSnapshot.Value != null)
             {
+                const string KeyDatas = "Datas";
+
                 foreach (var data in dataSnapshot.Children)
                 {
                     if (data == null)
@@ -87,14 +90,14 @@ namespace Info
 
                         case KeyUserCurrency:
                             {
-                                SetCurrency(data.Child("Datas"));
+                                SetCurrency(data.Child(KeyDatas));
 
                                 break;
                             }
 
                         case KeyUserStory:
                             {
-                                //SetStory(data);
+                                SetStory(data.Child(KeyDatas));
 
                                 break;
                             }
@@ -118,14 +121,14 @@ namespace Info
             }
         }
 
-        private void SetCurrency(Firebase.Database.DataSnapshot data)
+        private void SetCurrency(Firebase.Database.DataSnapshot dataSnapshot)
         {
-            if (data == null)
+            if (dataSnapshot == null)
                 return;
 
-            User.CurrencyList.Clear();
+            User?.CurrencyList?.Clear();
 
-            var currencyList = data.Value as IList;
+            var currencyList = dataSnapshot.Value as IList;
             foreach (IDictionary currencyDic in currencyList)
             {
                 var currency = new User.Currency();
@@ -136,7 +139,7 @@ namespace Info
                     DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
 
                     string key = dicEntry.Key.ToString();
-                    Debug.Log(key);
+
                     if (key.Equals("Animal"))
                     {
                         currency.Animal = (long)dicEntry.Value;
@@ -152,7 +155,42 @@ namespace Info
                     }
                 }
 
-                User.CurrencyList.Add(currency);
+                User?.CurrencyList?.Add(currency);
+            }
+        }
+
+        private void SetStory(Firebase.Database.DataSnapshot dataSnapshot)
+        {
+            if (dataSnapshot == null)
+                return;
+
+            User?.StoryList?.Clear();
+
+            var storyList = dataSnapshot.Value as IList;
+            foreach (IDictionary storyDic in storyList)
+            {
+                var story = new User.Story();
+
+                var enumerator = storyDic.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
+
+                    string key = dicEntry.Key.ToString();
+
+                    if (key.Equals("StoryId"))
+                    {
+                        var value = (long)dicEntry.Value;
+                        story.StoryId = (int)value;
+                    }
+                    else if (key.Equals("PlaceId"))
+                    {
+                        var value = (long)dicEntry.Value;
+                        story.PlaceId = (int)value;
+                    }
+                }
+
+                User?.StoryList?.Add(story);
             }
         }
 
