@@ -8,8 +8,8 @@ namespace Info
 {
     public class UserManager : Singleton<UserManager>
     {
-        private const string KeyUserCurrencyList = "CurrencyList";
-        private const string KeyUserStoryList = "StoryList";
+        private const string KeyUserCurrency = "Currency";
+        private const string KeyUserStory = "Story";
 
 #if UNITY_EDITOR
         readonly private string _userInfoJsonFilePath = "Assets/Info/User.json";
@@ -85,15 +85,17 @@ namespace Info
                                 break;
                             }
 
-                        case KeyUserCurrencyList:
+                        case KeyUserCurrency:
                             {
-                                SetCurrencyList(data);
+                                SetCurrency(data.Child("Datas"));
 
                                 break;
                             }
 
-                        case KeyUserStoryList:
+                        case KeyUserStory:
                             {
+                                //SetStory(data);
+
                                 break;
                             }
                     }
@@ -103,22 +105,20 @@ namespace Info
             {
                 Debug.Log("No UserInfo");
 
+                var firebase = GameSystem.FirebaseManager.Instance;
+                if (firebase == null)
+                    return;
+
+                var database = firebase.Database;
+                database?.Save(firebase.Auth.UserId, JsonUtility.ToJson(User));
+
                 var placeId = Game.Data.Const.StartPlaceId;
                 var currency = Game.Data.Const.GetStartCurrency(placeId);
-
-                User.CurrencyList.Add(currency);
-
-                var firebase = GameSystem.FirebaseManager.Instance;
-                if (firebase != null)
-                {
-                    var database = firebase.Database;
-
-                    database?.Save(firebase.Auth.UserId, JsonUtility.ToJson(User));
-                }
+                SaveCurrency(currency);
             }
         }
 
-        private void SetCurrencyList(Firebase.Database.DataSnapshot data)
+        private void SetCurrency(Firebase.Database.DataSnapshot data)
         {
             if (data == null)
                 return;
@@ -136,7 +136,7 @@ namespace Info
                     DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
 
                     string key = dicEntry.Key.ToString();
-
+                    Debug.Log(key);
                     if (key.Equals("Animal"))
                     {
                         currency.Animal = (long)dicEntry.Value;
@@ -178,7 +178,7 @@ namespace Info
             firebaseMgr?.Database?.Save(userId, JsonUtility.ToJson(User));
         }
 
-        public void SaveCurrencyList(User.Currency currency)
+        public void SaveCurrency(User.Currency currency)
         {
             User?.SetCurrency(currency);
 
@@ -190,10 +190,10 @@ namespace Info
             if (string.IsNullOrEmpty(userId))
                 return;
 
-            firebaseMgr?.Database?.SaveChild(userId, KeyUserCurrencyList, JsonUtility.ToJson(User.CurrencyList));
+            firebaseMgr?.Database?.SaveChild(userId, KeyUserCurrency, JsonHelper.ToJson(User.CurrencyList.ToArray()));
         }
 
-        public void SaveStoryList(int storyId)
+        public void SaveStory(int storyId)
         {
             var placeMgr = MainGameManager.Instance?.placeMgr;
             if (placeMgr == null)
@@ -211,10 +211,10 @@ namespace Info
             if (string.IsNullOrEmpty(userId))
                 return;
 
-            var jsonStr = JsonUtility.ToJson(User.StoryList.ToArray());
+            var jsonStr = JsonHelper.ToJson(User.StoryList.ToArray());
             Debug.Log("StoryList json str = " + jsonStr);
 
-            firebaseMgr?.Database?.SaveChild(userId, KeyUserStoryList, jsonStr);
+            firebaseMgr?.Database?.SaveChild(userId, KeyUserStory, jsonStr);
         }
     }
 }

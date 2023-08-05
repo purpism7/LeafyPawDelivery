@@ -168,7 +168,7 @@ namespace Game
                     });
 
 
-                    UserManager.Instance?.SaveStoryList(story.Id);
+                    UserManager.Instance?.SaveStory(story.Id);
 
                     return cutscene;
                 });

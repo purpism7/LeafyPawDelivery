@@ -7,8 +7,6 @@ namespace Info
 {
     public class User
     {
-        public long Cash = 0;
-        
         [Serializable]
         public class Currency
         {
@@ -24,6 +22,8 @@ namespace Info
             public int StoryId = 0;
         }
 
+        public long Cash = 0;
+        
         public List<Currency> CurrencyList = new();
         public List<Story> StoryList = new();
 
@@ -94,6 +94,10 @@ namespace Info
             {
                 CurrencyList[findIndex].Animal += currency.Animal;
                 CurrencyList[findIndex].Object += currency.Object;
+            }
+            else
+            {
+                CurrencyList.Add(currency);
             }
         }
 

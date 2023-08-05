@@ -230,11 +230,11 @@ namespace UI.Component
                         .Create();
 
 
-                    Info.UserManager.Instance.SaveCurrencyList(new Info.User.Currency()
+                    Info.UserManager.Instance.SaveCurrency(new Info.User.Currency()
                     {
                         PlaceId = placeMgr.ActivityPlaceId,
-                        Animal = openConditionData.AnimalCurrency,
-                        Object = openConditionData.ObjectCurrency,
+                        Animal = -openConditionData.AnimalCurrency,
+                        Object = -openConditionData.ObjectCurrency,
                     });
 
                     return popup;
