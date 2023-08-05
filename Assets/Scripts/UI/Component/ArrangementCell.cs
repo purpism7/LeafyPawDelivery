@@ -237,6 +237,8 @@ namespace UI.Component
                         Object = -openConditionData.ObjectCurrency,
                     });
 
+                    Game.UIManager.Instance?.Top?.SetCurrency();
+
                     return popup;
                 });
         }

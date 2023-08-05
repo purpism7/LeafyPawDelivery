@@ -46,9 +46,14 @@ namespace UI
         // c=x1000000
         private void Initialize()
         {
+            SetCurrency();
+        }
+
+        public void SetCurrency()
+        {
             if (_data == null)
                 return;
-            
+
             var userInfo = Info.UserManager.Instance?.User;
             if (userInfo == null)
                 return;

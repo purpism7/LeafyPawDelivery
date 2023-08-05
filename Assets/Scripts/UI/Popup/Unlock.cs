@@ -31,8 +31,6 @@ namespace UI
         public override void Activate()
         {
             base.Activate();
-            
-            
         }
 
         public override void Deactivate()
