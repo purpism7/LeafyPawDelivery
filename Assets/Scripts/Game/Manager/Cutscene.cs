@@ -26,7 +26,7 @@ namespace Game.Manager
             
             if (Cutscene_ != null)
             {
-                Cutscene_.transform.position = new Vector3(-3000f, 0, 0);
+                Cutscene_.transform.position = new Vector3(0, 5000f, 0);
                 Cutscene_.Initialize(data);
             }
 
