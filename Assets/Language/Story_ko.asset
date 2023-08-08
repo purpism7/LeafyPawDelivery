@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Story_ko
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ko
+  m_SharedData: {fileID: 11400000, guid: 2ef5ff1d93e2444ceb2b71041913ef3d, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 8707964036208394253
+  m_TableData:
+  - m_Id: 366824382464
+    m_Localized: "\uC548\uB155, \uC598\uB4E4\uC544! \uD654\uAD00\uC774 \uCC38 \uC608\uC058\uB2E4.
+      \uB108\uD76C\uAC00 \uB9CC\uB4E0 \uAC70\uB2C8?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092476723200
+    m_Localized: "\uB124! \uC5B4\uC81C \uC5C4\uB9C8\uAC00 \uC54C\uB824\uC92C\uC5B4\uC694."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8707964036208394253
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00e0af3a02000000
