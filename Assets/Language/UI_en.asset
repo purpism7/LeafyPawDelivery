@@ -26,6 +26,14 @@ MonoBehaviour:
     m_Localized: Object
     m_Metadata:
       m_Items: []
+  - m_Id: 184285406420992
+    m_Localized: Arrangement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185593299460096
+    m_Localized: Book
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

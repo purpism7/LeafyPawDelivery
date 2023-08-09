@@ -23,6 +23,14 @@ MonoBehaviour:
     m_Key: object
     m_Metadata:
       m_Items: []
+  - m_Id: 184285406420992
+    m_Key: arrangement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 185593299460096
+    m_Key: book
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
