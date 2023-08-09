@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 79cb8416da90e4fdbb5435a7e4b847c3
   m_SerializeEntries:
   - m_GUID: e16e66eb164994bb5a18f3ca8466053c
-    m_Address: Assets/Language/New Table Shared Data.asset
+    m_Address: Assets/Language/Object Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -29,6 +29,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2ef5ff1d93e2444ceb2b71041913ef3d
     m_Address: Assets/Language/Story Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f0dd266c499d49e28037280b74facf3
+    m_Address: Assets/Language/UI Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

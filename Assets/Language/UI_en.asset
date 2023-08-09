@@ -10,16 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: Object_ja
+  m_Name: UI_en
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: ja
-  m_SharedData: {fileID: 11400000, guid: e16e66eb164994bb5a18f3ca8466053c, type: 2}
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 4f0dd266c499d49e28037280b74facf3, type: 2}
   m_Metadata:
     m_Items: []
   m_TableData:
-  - m_Id: 48904527872
-    m_Localized: 
+  - m_Id: 8500797440
+    m_Localized: Animal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1817155985408
+    m_Localized: Object
     m_Metadata:
       m_Items: []
   references:

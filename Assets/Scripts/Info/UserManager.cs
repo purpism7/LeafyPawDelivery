@@ -39,7 +39,7 @@ namespace Info
             var firebaseMgr = GameSystem.FirebaseManager.Instance;
             if (firebaseMgr == null)
                 yield break;
-
+            
             bool endLoad = false;
 
             var database = firebaseMgr.Database;

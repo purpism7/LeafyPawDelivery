@@ -10,14 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: Story_ja
+  m_Name: UI_ko
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: ja
-  m_SharedData: {fileID: 11400000, guid: 2ef5ff1d93e2444ceb2b71041913ef3d, type: 2}
+    m_Code: ko
+  m_SharedData: {fileID: 11400000, guid: 4f0dd266c499d49e28037280b74facf3, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 8500797440
+    m_Localized: "\uB3D9\uBB3C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1817155985408
+    m_Localized: "\uC624\uBE0C\uC81D\uD2B8"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Game
 {
+    [ExecuteAlways]
     public class UIManager : Singleton<UIManager>
     {
         public UI.Top Top;

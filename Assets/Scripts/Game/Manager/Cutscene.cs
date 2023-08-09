@@ -9,33 +9,54 @@ using UnityEngine.SceneManagement;
 
 namespace Game.Manager
 {
+    [ExecuteInEditMode]
     public class Cutscene : Game.Common, Sequencer.ITask, Conversation.IListener
     {
         #region Static
+        private static Cutscene _instance = null;
 
-        private static Cutscene Cutscene_ = null;
+        public static Cutscene Instance
+        {
+            get
+            {
+                if (Application.isEditor)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = FindObjectOfType<Cutscene>();
+                    }
+                }
+
+                return _instance;
+            }
+
+            private set
+            {
+                _instance = value;
+            } 
+        }
         public static Cutscene Create(Data data)
         {
             if (data == null)
                 return null;
             
-            if (Cutscene_ == null)
+            if (_instance == null)
             {
-                Cutscene_ = GameSystem.ResourceManager.Instance.InstantiateGame<Cutscene>(null);
+                _instance = GameSystem.ResourceManager.Instance.InstantiateGame<Cutscene>(null);
             }
             
-            if (Cutscene_ != null)
+            if (_instance != null)
             {
-                Cutscene_.transform.position = new Vector3(0, 5000f, 0);
-                Cutscene_.Initialize(data);
+                _instance.transform.position = new Vector3(0, 5000f, 0);
+                _instance.Initialize(data);
             }
 
-            return Cutscene_;
+            return _instance;
         }
 
         public static bool Validate
         {
-            get { return Cutscene_ != null; }
+            get { return Instance != null; }
         }
 
         #endregion
@@ -52,8 +73,9 @@ namespace Game.Manager
 
         private Data _data = null;
         private PlayableDirector _playableDirector = null;
-        private Conversation _conversation = null;
         private bool _end = false;
+
+        public Conversation Conversation { get; private set; } = null;
 
         private void Initialize(Data data)
         {
@@ -132,19 +154,21 @@ namespace Game.Manager
                 {
                     _playableDirector.Play();
 
-                    _conversation?.StartTyping("안녕하세. 한승재 입니다.");
+                    //_conversation?.StartTyping("안녕하세. 한승재 입니다.");
                 });
         }
 
         private void CreateConvesation()
         {
-            _conversation = new UICreator<Conversation, Conversation.Data>()
+            Conversation = new UICreator<Conversation, Conversation.Data>()
                 .SetData(new Conversation.Data()
                 {
                     IListener = this,
                 })
                .SetRootRectTm(uiRootRectTm)
                .Create();
+
+            Conversation?.Deactivate();
         }
 
         private void Finish(PlayableDirector playableDirector)
