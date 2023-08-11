@@ -9,24 +9,30 @@ namespace UI
     public class Fade : Base<BaseData>
     {
         #region Static
-        private static Fade Fade_ = null;
+        private static Fade _instance = null;
         public static Fade Create
         {
            get
            {
-               if (Fade_ == null)
+               if (_instance == null)
                {
-                   Fade_ = GameSystem.ResourceManager.Instance?.InstantiateUI<Fade>(null);
+                    var gameObj = Instantiate(Resources.Load("Fade")) as GameObject;
+                    if (gameObj)
+                    {
+                        _instance = gameObj.GetComponent<Fade>();
+                    }
+
+                    //_instance = GameSystem.ResourceManager.Instance?.InstantiateUI<Fade>(null);
                }
               
-               if (Fade_ != null)
+               if (_instance != null)
                {
-                   Fade_.transform.position = new Vector3(-3000f, -1000f);
-                   Fade_.transform.SetAsLastSibling();
-                   Fade_.Initialize(null);
+                    _instance.transform.position = new Vector3(-3000f, -1000f);
+                    _instance.transform.SetAsLastSibling();
+                    _instance.Initialize(null);
                }
 
-               return Fade_;
+               return _instance;
            }
         }
         #endregion
@@ -58,6 +64,7 @@ namespace UI
             SetColorAlpha(0);
             
             Activate();
+
             FadeInOut(1f, _duration,
                 () =>
                 {

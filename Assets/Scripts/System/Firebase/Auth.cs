@@ -10,9 +10,10 @@ namespace GameSystem.Firebase
 {
     public class Auth : MonoBehaviour
     {
-        public string UserId { get; private set; } = string.Empty;
-
         private bool _endLoad = false;
+
+        public string UserId { get; private set; } = string.Empty;
+        public bool IsFirst { get; private set; } = false;
 
         public bool IsValid
         {
@@ -51,6 +52,8 @@ namespace GameSystem.Firebase
 
                         UserId = result.User.UserId;
                         Debug.Log("UserId = " + UserId);
+
+                        IsFirst = true;
 
                         _endLoad = true;
                     });

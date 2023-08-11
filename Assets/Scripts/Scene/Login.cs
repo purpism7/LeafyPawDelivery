@@ -33,7 +33,7 @@ namespace Scene
 
             if(firebaseMgr.Auth.IsValid)
             {
-                yield return new WaitForSeconds(1f);
+                //yield return new WaitForSeconds(1f);
 
                 SceneLoader.LoadWithLoading(loadData);
 

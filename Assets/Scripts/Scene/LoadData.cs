@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace  GameSystem.Load
+namespace GameSystem.Load
 {
     public class LoadData : Base
     {

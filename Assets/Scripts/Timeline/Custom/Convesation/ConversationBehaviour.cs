@@ -49,7 +49,7 @@ public class ConversationBehaviour : PlayableBehaviour
             if (localData == null)
                 continue;
 
-            conversation.Add(new UI.Conversation.ConversationData()
+            conversation.Add(new UI.Conversation.Constituent()
             {
                 Sentence = LocalizationSettings.StringDatabase.GetLocalizedString(localData.Table, localData.Key, LocalizationSettings.SelectedLocale),
             });

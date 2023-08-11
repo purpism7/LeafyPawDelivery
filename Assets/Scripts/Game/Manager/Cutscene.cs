@@ -24,6 +24,11 @@ namespace Game.Manager
                     if (_instance == null)
                     {
                         _instance = FindObjectOfType<Cutscene>();
+
+                        if(_instance == null)
+                        {
+                            InstantiateCutscene();
+                        }
                     }
                 }
 
@@ -35,6 +40,16 @@ namespace Game.Manager
                 _instance = value;
             } 
         }
+
+        private static void InstantiateCutscene()
+        {
+            var gameObj = Instantiate(Resources.Load("Cutscene")) as GameObject;
+            if (!gameObj)
+                return;
+
+            _instance = gameObj.GetComponent<Cutscene>();
+        }
+
         public static Cutscene Create(Data data)
         {
             if (data == null)
@@ -42,7 +57,7 @@ namespace Game.Manager
             
             if (_instance == null)
             {
-                _instance = GameSystem.ResourceManager.Instance.InstantiateGame<Cutscene>(null);
+                InstantiateCutscene();
             }
             
             if (_instance != null)
@@ -63,9 +78,10 @@ namespace Game.Manager
 
         public class Data
         {
-            public GameObject TargetGameObj = null;
+            public GameObject TargetGameObj = null;            
             public Func<bool> EndFunc = null;
             public Action EndAction = null;
+            public bool IsConversation = true;
         }
 
         [SerializeField] private Transform timelineRootTm = null;
@@ -80,7 +96,7 @@ namespace Game.Manager
         private void Initialize(Data data)
         {
             _data = data;
-                
+
             Deactivate();
 
             if (!timelineRootTm)
@@ -91,15 +107,19 @@ namespace Game.Manager
                 return;
             }
 
-            GameObject.Instantiate(_data.TargetGameObj, timelineRootTm);
-
             DestoryAllChild();
+
+            GameObject.Instantiate(_data.TargetGameObj, timelineRootTm);
 
             if (InitPlayableDirector())
             {
                 DeactiveCameras();
 
-                Fade.Create.Out(() => { StartCoroutine(CoStart()); });
+                Fade.Create.Out(
+                    () =>
+                    {
+                        StartCoroutine(CoStart());
+                    });
             }
         }
 
@@ -110,7 +130,7 @@ namespace Game.Manager
                 if(!tm)
                     continue;
                 
-                GameObject.Destroy(tm);
+                GameObject.DestroyImmediate(tm.gameObject);
             }
         }
 
@@ -145,7 +165,10 @@ namespace Game.Manager
         {
             Activate();
 
-            CreateConvesation();
+            if(_data.IsConversation)
+            {
+                CreateConvesation();
+            }
 
             yield return null;
 
@@ -194,10 +217,10 @@ namespace Game.Manager
 
                 _end = true;
 
+                _data.EndAction();
+
                 Fade.Create.In(() =>
                 {
-                    _data.EndAction();
-                    
                     Destroy(gameObject);
                 });
             });

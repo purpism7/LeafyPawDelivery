@@ -23,6 +23,8 @@ namespace Game
         [SerializeField]
         private Transform rootTm = null;
 
+        protected bool _endTask = true;
+
         public virtual void Activate()
         {
             UIUtils.SetActive(rootTm, true);
@@ -54,7 +56,7 @@ namespace Game
         {
             get
             {
-                return true;
+                return _endTask;
             }
         }
         #endregion

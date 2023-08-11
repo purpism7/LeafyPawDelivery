@@ -20,7 +20,7 @@ namespace UI
             void FinishTyping();
         }
 
-        public class ConversationData
+        public class Constituent
         {
             public string Speaker = string.Empty;
             public string Sentence = string.Empty;
@@ -30,13 +30,20 @@ namespace UI
         [SerializeField] private TextMeshProUGUI typingTMP = null;
 
         private YieldInstruction _waitSec = new WaitForSeconds(0.02f);
-        private Queue<ConversationData> _conversationDataQueue = new();
+        private Queue<Constituent> _constituentQueue = new();
 
         public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
 
-            _conversationDataQueue?.Clear();
+            _constituentQueue?.Clear();
+        }
+
+        public override void Initialize(Data data)
+        {
+            base.Initialize(data);
+
+            _constituentQueue?.Clear();
         }
 
         public override void Activate()
@@ -46,18 +53,18 @@ namespace UI
             typingTMP?.SetText(string.Empty);
         }
 
-        private IEnumerator CoTyping(ConversationData data)
+        private IEnumerator CoTyping(Constituent constituent)
         {
             typingTMP?.SetText(string.Empty);
 
-            foreach (var typingChr in data.Sentence)
+            foreach (var typingChr in constituent.Sentence)
             {
                 yield return _waitSec;
 
                 typingTMP?.SetText(typingTMP.text + typingChr);
             }
 
-            yield return new WaitForSeconds(data.KeepDelay);
+            yield return new WaitForSeconds(constituent.KeepDelay);
 
             FinishTyping();
         }
@@ -71,27 +78,27 @@ namespace UI
 
         public void Clear()
         {
-            _conversationDataQueue?.Clear();
+            _constituentQueue?.Clear();
         }
 
-        public void Add(ConversationData data)
+        public void Add(Constituent constituent)
         {
-            _conversationDataQueue?.Enqueue(data);
+            _constituentQueue?.Enqueue(constituent);
         }
 
         public void StartTyping()
         {
-            if (_conversationDataQueue == null)
+            if (_constituentQueue == null)
                 return;
 
-            if (_conversationDataQueue.Count <= 0)
+            if (_constituentQueue.Count <= 0)
                 return;
 
-            var data = _conversationDataQueue.Dequeue();
-            if (data == null)
+            var constituent = _constituentQueue.Dequeue();
+            if (constituent == null)
                 return;
 
-            StartCoroutine(CoTyping(data));
+            StartCoroutine(CoTyping(constituent));
         }
     }
 }

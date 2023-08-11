@@ -1,38 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Manager;
 using UnityEngine;
 
 public class Sequencer : Game.Common
 {
     #region Static
 
-    private static Sequencer Sequencer_ = null;
+    private static Sequencer _instance = null;
     public static Sequencer Create()
     {
-        if (Sequencer_ == null)
+        if (_instance == null)
         {
-            Sequencer_ = GameSystem.ResourceManager.Instance.InstantiateGame<Sequencer>(null);
+            var gameObj = Instantiate(Resources.Load("Sequencer")) as GameObject;
+            if (!gameObj)
+                return null;
+
+            _instance = gameObj.GetComponent<Sequencer>();
         }
 
-        if(Sequencer_ != null)
+        if(_instance != null)
         {
-            DontDestroyOnLoad(Sequencer_);
+            DontDestroyOnLoad(_instance);
         }
 
-        return Sequencer_;
+        return _instance;
     }
 
     public static bool Validate
     {
-        get { return Sequencer_ != null; }
+        get { return _instance != null; }
     }
 
     public static void EnqueueTask(System.Func<ITask> func)
     {
-        if (Sequencer_ == null)
-            return;
+        if (_instance == null)
+        {
+            Create();
+        }
 
-        Sequencer_.Enqueue(func);
+        _instance.Enqueue(func);
     }
     #endregion
 
