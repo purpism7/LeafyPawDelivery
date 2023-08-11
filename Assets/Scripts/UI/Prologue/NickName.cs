@@ -32,8 +32,8 @@ namespace UI
 
                 return;
             }
-
-            PlayerPrefs.SetString("KeyNickName", nickName);
+             
+            PlayerPrefs.SetString(Game.Data.KeyNickName, nickName);
 
             _iListener?.Confirm();
 

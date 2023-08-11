@@ -31,6 +31,7 @@ namespace UI
            
             conversation?.Add(new Conversation.Constituent()
             {
+                Speaker = PlayerPrefs.GetString(Game.Data.KeyNickName),
                 Sentence = "먼저 어디?",
                 KeepDelay = 3f,
             });

@@ -27,6 +27,7 @@ namespace UI
             public float KeepDelay = 1.5f;
         }
 
+        [SerializeField] private TextMeshProUGUI speakerTMP = null;
         [SerializeField] private TextMeshProUGUI typingTMP = null;
 
         private YieldInstruction _waitSec = new WaitForSeconds(0.02f);
@@ -50,12 +51,20 @@ namespace UI
         {
             base.Activate();
 
+            SetEmptyText();
+        }
+
+        private void SetEmptyText()
+        {
+            speakerTMP?.SetText(string.Empty);
             typingTMP?.SetText(string.Empty);
         }
 
         private IEnumerator CoTyping(Constituent constituent)
         {
-            typingTMP?.SetText(string.Empty);
+            SetEmptyText();
+
+            speakerTMP?.SetText(constituent.Speaker);
 
             foreach (var typingChr in constituent.Sentence)
             {
