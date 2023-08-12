@@ -172,10 +172,12 @@ namespace Game.Manager
 
             yield return null;
 
+            _playableDirector.Play();
+
             Fade.Create.In(
                 () =>
                 {
-                    _playableDirector.Play();
+                    
 
                     //_conversation?.StartTyping("안녕하세. 한승재 입니다.");
                 });

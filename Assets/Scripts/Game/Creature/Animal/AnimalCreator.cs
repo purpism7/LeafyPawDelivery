@@ -26,6 +26,13 @@ namespace GameSystem
             return this;
         }
 
+        public AnimalCreator SetRootTm(Transform rootTm)
+        {
+            _rootTm = rootTm;
+
+            return this;
+        }
+
         public AnimalCreator SetOrder(int order)
         {
             _order = order;
@@ -67,11 +74,17 @@ namespace GameSystem
             if (mainGameMgr == null)
                 return null;
 
-            var activityPlace = mainGameMgr.placeMgr?.ActivityPlace;
-            if (activityPlace == null)
-                return null;
+            var rootTm = _rootTm;
+            if (!rootTm)
+            {
+                var activityPlace = mainGameMgr.placeMgr?.ActivityPlace;
+                if (activityPlace == null)
+                    return null;
 
-            var animal = ResourceManager.Instance?.Instantiate<Game.Creature.Animal>(_animalId, activityPlace.animalRootTm);
+                rootTm = activityPlace.animalRootTm;
+            }
+            
+            var animal = ResourceManager.Instance?.Instantiate<Game.Creature.Animal>(_animalId, rootTm);
             if (animal == null)
                 return null;
 

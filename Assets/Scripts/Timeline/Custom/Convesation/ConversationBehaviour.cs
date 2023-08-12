@@ -20,8 +20,6 @@ public class ConversationBehaviour : PlayableBehaviour
     {
         base.OnPlayableCreate(playable);
 
-        Debug.Log("OnPlayableCreate");
-
         var conversation = Game.Manager.Cutscene.Instance?.Conversation;
         if (conversation != null)
         {
@@ -32,9 +30,6 @@ public class ConversationBehaviour : PlayableBehaviour
     public override void OnBehaviourPlay(Playable playable, FrameData info)
     {
         base.OnBehaviourPlay(playable, info);
-
-        Debug.Log("ConversationBehaviour OnBehaviourPlay");
-        //Debug.Log("ConversationClip.duration  = " + ConversationClip.duration);
 
         var conversation = Game.Manager.Cutscene.Instance?.Conversation;
         if (conversation == null)

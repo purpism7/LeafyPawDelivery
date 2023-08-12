@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 public static class GameUtils
 {
     public static string GetName(Type.EElement EElement, int id)
     {
+        var name = string.Empty;
+
         if (EElement == Type.EElement.Animal)
         {
             var data = AnimalContainer.Instance?.GetData(id);
             if (data == null)
                 return string.Empty;
 
-            return data.Name;
+            name = data.Name;
         }
         else if (EElement == Type.EElement.Object)
         {
@@ -20,10 +23,10 @@ public static class GameUtils
             if (data == null)
                 return string.Empty;
 
-            return data.Name;
+            name = data.Name;
         }
 
-        return string.Empty;
+        return LocalizationSettings.StringDatabase.GetLocalizedString(EElement.ToString(), name, LocalizationSettings.SelectedLocale);
     }
     
     public static Sprite GetShortIconSprite(Type.EElement EElement, int id)

@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
+using static ConversationBehaviour;
+using UnityEngine.Localization.Settings;
 
 namespace UI
 {
@@ -17,6 +19,7 @@ namespace UI
         {
             public Type.EElement EElement = Type.EElement.None;
             public int Id = 0;
+            public string Name = string.Empty;
             public Action ClickAction = null;
         }
 
@@ -24,7 +27,7 @@ namespace UI
         {
             yield return StartCoroutine(base.CoInitialize(data));
 
-            SetIconImg();
+            SetRenderTexture();
             SetNameTMP();
         }
 
@@ -62,23 +65,30 @@ namespace UI
             }
         }
 
-        private void SetIconImg()
+        private void SetRenderTexture()
         {
             if (_data == null)
                 return;
 
-            if (iconImg == null)
-                return;
+            //if (iconImg == null)
+            //    return;
 
-            var sprite = GameUtils.GetLargeIconSprite(_data.EElement, _data.Id);
-            iconImg.sprite = sprite;
+            //var sprite = GameUtils.GetLargeIconSprite(_data.EElement, _data.Id);
+            //iconImg.sprite = sprite;
+
+            Game.RenderTextureElement.Create(
+                new Game.RenderTextureElement.Data()
+                {
+                    Id = _data.Id,
+                    EElement = _data.EElement,
+                });
         }
 
         private void SetNameTMP()
         {
             if (_data == null)
                 return;
-            
+
             nameTMP?.SetText(GameUtils.GetName(_data.EElement, _data.Id));
         }
 
