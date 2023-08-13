@@ -838,8 +838,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Arrangement
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 78cf637a8c846ed4dbc3f30a7a7de7e8, type: 2}
-  m_sharedMaterial: {fileID: -2008107277459295776, guid: 78cf637a8c846ed4dbc3f30a7a7de7e8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8441f0fc9ae15ab43b2285b3d61e76f9, type: 2}
+  m_sharedMaterial: {fileID: 2150698418341348605, guid: 8441f0fc9ae15ab43b2285b3d61e76f9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1361,6 +1361,10 @@ PrefabInstance:
     - target: {fileID: 1458303959644118984, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
       propertyPath: m_text
       value: Animal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5090493428456885421, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
       propertyPath: m_IsOn
