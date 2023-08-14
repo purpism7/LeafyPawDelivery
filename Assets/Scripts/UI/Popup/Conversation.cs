@@ -17,9 +17,10 @@ namespace UI
 
         public interface IListener
         {
-            void FinishTyping();
+            void FinishTyping(int remainCnt);
         }
 
+        [System.Serializable]
         public class Constituent
         {
             public string Speaker = string.Empty;
@@ -44,17 +45,17 @@ namespace UI
         {
             base.Initialize(data);
 
-            _constituentQueue?.Clear();
+            Clear();
         }
 
         public override void Activate()
         {
             base.Activate();
 
-            SetEmptyText();
+            SetEmptyTMP();
         }
 
-        private void SetEmptyText()
+        private void SetEmptyTMP()
         {
             speakerTMP?.SetText(string.Empty);
             typingTMP?.SetText(string.Empty);
@@ -62,10 +63,10 @@ namespace UI
 
         private IEnumerator CoTyping(Constituent constituent)
         {
-            SetEmptyText();
+            SetEmptyTMP();
 
             speakerTMP?.SetText(constituent.Speaker);
-
+            Debug.Log("CoTyping = " + constituent.Sentence);
             foreach (var typingChr in constituent.Sentence)
             {
                 yield return _waitSec;
@@ -80,7 +81,7 @@ namespace UI
 
         private void FinishTyping()
         {
-            _data?.IListener?.FinishTyping();
+            _data?.IListener?.FinishTyping(_constituentQueue.Count);
 
             StartTyping();
         }
@@ -90,7 +91,7 @@ namespace UI
             _constituentQueue?.Clear();
         }
 
-        public void Add(Constituent constituent)
+        public void Enqueue(Constituent constituent)
         {
             _constituentQueue?.Enqueue(constituent);
         }

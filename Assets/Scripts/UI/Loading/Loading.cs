@@ -29,10 +29,8 @@ namespace GameSystem
         public void Init(UnityEngine.SceneManagement.Scene scene, Load.Base loadData)
         {
             if (loadData == null)
-            {
                 return;
-            }
-            
+
             _scene = scene;
             _loadData = loadData;
 

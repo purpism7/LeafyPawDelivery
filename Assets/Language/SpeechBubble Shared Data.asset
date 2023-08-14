@@ -10,59 +10,47 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
-  m_Name: Story Shared Data
+  m_Name: SpeechBubble Shared Data
   m_EditorClassIdentifier: 
-  m_TableCollectionName: Story
-  m_TableCollectionNameGuidString: 2ef5ff1d93e2444ceb2b71041913ef3d
+  m_TableCollectionName: SpeechBubble
+  m_TableCollectionNameGuidString: 3dc31a86f8fef48be96204c21cf08a06
   m_Entries:
-  - m_Id: 366824382464
-    m_Key: 1_1_1
+  - m_Id: 213262524416
+    m_Key: prologue_story_1
     m_Metadata:
       m_Items: []
-  - m_Id: 1092476723200
-    m_Key: 1_1_2
+  - m_Id: 1502142783488
+    m_Key: prologue_story_2
     m_Metadata:
       m_Items: []
-  - m_Id: 590588305989632
-    m_Key: 1_1_3
+  - m_Id: 231133248741376
+    m_Key: prologue_story_3
     m_Metadata:
       m_Items: []
-  - m_Id: 686935356989440
-    m_Key: 1_1_4
+  - m_Id: 231209421496320
+    m_Key: prologue_story_4
     m_Metadata:
       m_Items: []
-  - m_Id: 698752900784128
-    m_Key: 1_1_5
+  - m_Id: 233815942356992
+    m_Key: prologue_story_5
     m_Metadata:
       m_Items: []
-  - m_Id: 698802372599808
-    m_Key: 1_1_6
+  - m_Id: 235290277961728
+    m_Key: prologue_story_6
     m_Metadata:
       m_Items: []
-  - m_Id: 698975416999936
-    m_Key: 1_1_7
-    m_Metadata:
-      m_Items: []
-  - m_Id: 699031771668480
-    m_Key: 1_1_8
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2395913996722176
-    m_Key: prologue_letter_1
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2397080424275968
-    m_Key: prologue_letter_2
+  - m_Id: 235361539186688
+    m_Key: prologue_story_7
     m_Metadata:
       m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
-    rid: 8707964036208394247
+    rid: 8707964174138081282
   references:
     version: 2
     RefIds:
-    - rid: 8707964036208394247
+    - rid: 8707964174138081282
       type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_CustomEpoch: 1691424157895
+        m_CustomEpoch: 1691936145060

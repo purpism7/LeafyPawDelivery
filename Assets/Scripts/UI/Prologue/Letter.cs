@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace UI
 {
@@ -12,6 +13,7 @@ namespace UI
         }
 
         [SerializeField] private Conversation conversation = null;
+        [SerializeField] private Conversation.Constituent[] constituents = null;
 
         private IListener _iListener = null;
 
@@ -23,23 +25,41 @@ namespace UI
             {
                 IListener = this,
             });
+
+            if(constituents != null)
+            {
+                foreach (var constituent in constituents)
+                {
+                    if (constituent == null)
+                        continue;
+
+                    conversation?.Enqueue(new Conversation.Constituent()
+                    {
+                        Speaker = PlayerPrefs.GetString(Game.Data.KeyNickName),
+                        Sentence = LocalizationSettings.StringDatabase.GetLocalizedString("Story", constituent.Sentence, LocalizationSettings.SelectedLocale),
+                        KeepDelay = constituent.KeepDelay,
+                    });
+                }
+            }
         }
 
         public override void Begin()
         {
             base.Begin();
-           
-            conversation?.Add(new Conversation.Constituent()
-            {
-                Speaker = PlayerPrefs.GetString(Game.Data.KeyNickName),
-                Sentence = "먼저 어디?",
-                KeepDelay = 3f,
-            });
+
             conversation?.StartTyping();
         }
 
-        void Conversation.IListener.FinishTyping()
+        private void EnqueueConversationConstituent(string sentenceKey, float keepDleay)
         {
+           
+        }
+
+        void Conversation.IListener.FinishTyping(int remainCnt)
+        {
+            if (remainCnt > 0)
+                return;
+
             _iListener?.End();
 
             _endTask = true;

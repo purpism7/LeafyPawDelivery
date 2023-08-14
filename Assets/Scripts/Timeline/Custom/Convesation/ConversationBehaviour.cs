@@ -44,13 +44,11 @@ public class ConversationBehaviour : PlayableBehaviour
             if (localData == null)
                 continue;
 
-            conversation.Add(new UI.Conversation.Constituent()
+            conversation.Enqueue(new UI.Conversation.Constituent()
             {
                 Sentence = LocalizationSettings.StringDatabase.GetLocalizedString(localData.Table, localData.Key, LocalizationSettings.SelectedLocale),
             });
         }
-
-        Debug.Log(LocalizationSettings.SelectedLocale.LocaleName);
 
         conversation.Activate();
         conversation.StartTyping();

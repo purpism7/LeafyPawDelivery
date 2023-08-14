@@ -128,6 +128,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 3231708603046716122}
   conversation: {fileID: 6944402291598646153}
+  constituents:
+  - Speaker: 
+    Sentence: prologue_letter_1
+    KeepDelay: 1
+  - Speaker: 
+    Sentence: prologue_letter_2
+    KeepDelay: 3
 --- !u!1 &4563035363519234549
 GameObject:
   m_ObjectHideFlags: 0
