@@ -34,6 +34,10 @@ MonoBehaviour:
     m_Localized: Book
     m_Metadata:
       m_Items: []
+  - m_Id: 2534073061859328
+    m_Localized: ok
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

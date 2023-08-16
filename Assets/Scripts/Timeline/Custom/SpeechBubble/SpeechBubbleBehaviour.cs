@@ -9,10 +9,8 @@ using UnityEngine.Playables;
 public class SpeechBubbleBehaviour : PlayableBehaviour
 {
     [System.Serializable]
-    public class LocalData
+    public class LocalData : BaseLocalData
     {
-        public string Table = string.Empty;
-        public string Key = string.Empty;
         public float KeepDelay = 1.5f;
     }
 
@@ -78,7 +76,7 @@ public class SpeechBubbleBehaviour : PlayableBehaviour
             if (localData == null)
                 continue;
 
-            var sentence = LocalizationSettings.StringDatabase.GetLocalizedString(localData.Table, localData.Key, locale);
+            var sentence = LocalizationSettings.StringDatabase.GetLocalizedString(localData.TableName, localData.Key, locale);
             
             _speechBubble.Enqueue(new UI.Component.SpeechBubble.Constituent()
             {

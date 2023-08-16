@@ -260,6 +260,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
+      propertyPath: localDatas.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
+      propertyPath: localDatas.Array.data[0].Key
+      value: animal_1_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
+      propertyPath: localDatas.Array.data[1].Key
+      value: animal_1_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
+      propertyPath: localDatas.Array.data[0].TableName
+      value: SpeechBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
+      propertyPath: localDatas.Array.data[1].TableName
+      value: SpeechBUbble
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
 --- !u!4 &5456980708318132840 stripped

@@ -10,14 +10,6 @@ namespace Game
         #region Static
         private static RenderTextureElement _instance = null;
 
-        //public static RenderTextureElement Instance
-        //{
-        //    get
-        //    {
-        //        return _instance;
-        //    }
-        //}
-
         public static RenderTextureElement Create(Data data)
         {
             if (data == null)

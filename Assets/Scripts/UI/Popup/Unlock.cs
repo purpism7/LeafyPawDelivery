@@ -42,8 +42,6 @@ namespace UI
             
             if (_data != null)
             {
-                MainGameManager.Instance?.AddInfo(_data.EElement, _data.Id);
-                
                 _data?.ClickAction?.Invoke();
             }
 

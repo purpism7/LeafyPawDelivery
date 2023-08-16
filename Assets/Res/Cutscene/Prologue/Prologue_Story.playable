@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Behaviour:
     LocalDatas:
-    - Table: SpeechBubble
+    - TableName: SpeechBubble
       Key: prologue_story_5
       KeepDelay: 3
 --- !u!114 &-5776509503311935970
@@ -99,10 +99,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Behaviour:
     LocalDatas:
-    - Table: SpeechBubble
+    - TableName: SpeechBubble
       Key: prologue_story_1
       KeepDelay: 2
-    - Table: SpeechBubble
+    - TableName: SpeechBubble
       Key: prologue_story_2
       KeepDelay: 2
 --- !u!114 &-5653622988046087171
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Behaviour:
     LocalDatas:
-    - Table: SpeechBubble
+    - TableName: SpeechBubble
       Key: prologue_story_3
       KeepDelay: 2
 --- !u!114 &-3590177214348498539
@@ -826,7 +826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Behaviour:
     LocalDatas:
-    - Table: SpeechBubble
+    - TableName: SpeechBubble
       Key: prologue_story_6
       KeepDelay: 3
 --- !u!114 &2321202704472282912
@@ -843,7 +843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Behaviour:
     LocalDatas:
-    - Table: SpeechBubble
+    - TableName: SpeechBubble
       Key: prologue_story_4
       KeepDelay: 3
 --- !u!114 &2824634848540133292
@@ -1871,6 +1871,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Behaviour:
     LocalDatas:
-    - Table: SpeechBubble
+    - TableName: SpeechBubble
       Key: prologue_story_7
       KeepDelay: 2

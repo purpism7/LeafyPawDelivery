@@ -140,10 +140,10 @@ Camera:
   field of view: 100
   orthographic: 1
   orthographic size: 1500
-  m_Depth: 10
+  m_Depth: 20
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 544
+    m_Bits: 800
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -247,7 +247,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 1050415341
+  m_SortingLayerID: 599298203
   m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &6453510459483319222

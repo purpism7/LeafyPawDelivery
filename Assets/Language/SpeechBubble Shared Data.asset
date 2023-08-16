@@ -43,6 +43,18 @@ MonoBehaviour:
     m_Key: prologue_story_7
     m_Metadata:
       m_Items: []
+  - m_Id: 745123150290944
+    m_Key: animal_1_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 751327113109504
+    m_Key: animal_1_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 751383484555264
+    m_Key: animal_2_1
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

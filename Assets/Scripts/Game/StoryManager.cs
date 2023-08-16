@@ -148,7 +148,7 @@ namespace Game
         {
             if (story == null)
                 return;
-                        
+
             Sequencer.EnqueueTask(
                 () =>
                 {
@@ -167,11 +167,10 @@ namespace Game
                         EState = EState.Begin,
                     });
 
-
-                    UserManager.Instance?.SaveStory(story.Id);
-
                     return cutscene;
                 });
+
+            UserManager.Instance?.SaveStory(story.Id);
         }
 
         private void EndStory(Story story)

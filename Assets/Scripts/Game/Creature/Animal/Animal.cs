@@ -113,6 +113,11 @@ namespace Game.Creature
             spriteRenderer.sortingOrder = order;
         }
 
+        public void ActivateSpeechBubble(System.Action endAction)
+        {
+            _animalRoot?.ActivateSpeechBubble(endAction);
+        }
+
         #region Edit.IListener
         void UI.Edit.IListener.Remove()
         {

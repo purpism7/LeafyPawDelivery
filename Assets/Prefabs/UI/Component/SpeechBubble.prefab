@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7702542423675110615}
   - component: {fileID: 5408607573927087921}
   - component: {fileID: 4123705467204313491}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 3852119426018845866}
   - component: {fileID: 5260541295853213280}
   - component: {fileID: 5818694084565779966}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 165050027226542379}
   - component: {fileID: 6619725242516867361}
   - component: {fileID: 6340402784271845760}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 1980918761
-  m_SortingOrder: 550
+  m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!114 &6619725242516867361
 MonoBehaviour:
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6340402784271845760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,7 +380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8890135315764139295}
   - component: {fileID: 2918845233454928180}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: SpeechBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 2454384942344751693}
   - component: {fileID: 4444056203723254606}
   - component: {fileID: 525528336480303930}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5165180990436983666}
   - component: {fileID: 9127759830473264834}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -241,6 +241,8 @@ namespace UI.Component
 
                     return popup;
                 });
+
+            MainGameManager.Instance?.AddInfo(_data.EElement, _data.Id);
         }
 
         public void Unlock(Type.EElement EElement, int id)

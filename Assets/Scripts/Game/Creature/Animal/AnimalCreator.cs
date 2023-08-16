@@ -97,8 +97,6 @@ namespace GameSystem
                 IsSpeechBubble = _isSpeechBubble,
             });
 
-            MainGameManager.Instance?.AnimalMgr?.AddAnimal(_animalId);
-
             return animal;
         }
     }

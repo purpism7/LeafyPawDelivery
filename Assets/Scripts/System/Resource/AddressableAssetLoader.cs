@@ -69,6 +69,8 @@ namespace GameSystem
 
         public IEnumerator CoLoadAssetAsync<T>(string labelKey, System.Action<AsyncOperationHandle<T>> action)
         {
+            
+
             var locationAsync = Addressables.LoadResourceLocationsAsync(labelKey);
             yield return StartCoroutine(locationAsync);
             
@@ -121,7 +123,7 @@ namespace GameSystem
                 var gameCommon = resultGameObj.GetComponent<Game.Common>();
                 if (gameCommon != null)
                 {
-                    // Debug.Log(gameBase.GetType().FullName);
+                     Debug.Log(gameCommon.GetType().FullName);
                     _gameObjDic.TryAdd(gameCommon.GetType().FullName, resultGameObj);
                 }
                 

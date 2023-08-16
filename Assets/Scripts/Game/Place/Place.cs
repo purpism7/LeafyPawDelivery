@@ -6,7 +6,7 @@ using GameSystem;
 
 namespace Game
 {
-    public class Place : Base<Place.Data>//, ActivityArea.IListener
+    public class Place : Base<Place.Data>
     {
         public class Data : BaseData
         {
@@ -21,12 +21,11 @@ namespace Game
 
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
+        private bool _activateSpeechBubble = false;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-
-            //Info.UserManager.Instance.
 
             Deactivate();
         }
@@ -36,6 +35,11 @@ namespace Game
             foreach(var animal in _animalList)
             {
                 animal?.ChainUpdate();
+            }
+
+            if(!_activateSpeechBubble)
+            {
+                SetRandomSpeechBubble();
             }
         }
 
@@ -227,81 +231,28 @@ namespace Game
             }
         }
 
-        //private void InitActivityAreaDic()
-        //{
-        //    _activityAreaDic.Clear();
+        private void SetRandomSpeechBubble()
+        {
+            if (_animalList == null)
+                return;
 
-        //    var activityAreas = GetComponentsInChildren<ActivityArea>();
-        //    if (activityAreas == null)
-        //    {
-        //        return;
-        //    }
+            if (_animalList.Count <= 0)
+                return;
 
-        //    foreach (var activityArea in activityAreas)
-        //    {
-        //        if (activityArea == null)
-        //        {
-        //            continue;
-        //        }
+            var randomIndex = UnityEngine.Random.Range(0, _animalList.Count);
+            var randomAnimal = _animalList[randomIndex];
+            if (randomAnimal == null)
+                return;
 
-        //        activityArea.Init(new ActivityArea.Data_()
-        //        {
-        //            IListener = this,
-        //        });
+            _activateSpeechBubble = true;
 
-        //        _activityAreaDic.TryAdd(activityArea.Id, activityArea);
-        //    }
-        //}
-
-        //public void EnableActivityArea(int animalId)
-        //{
-        //    _selectedAnimalId = animalId;
-
-        //    EnalbeAllActivityArea(true);
-        //}
-
-        //private void EnalbeAllActivityArea(bool enable)
-        //{
-        //    if (_activityAreaDic == null)
-        //    {
-        //        return;
-        //    }
-
-        //    foreach (var activityArea in _activityAreaDic.Values)
-        //    {
-        //        if (activityArea == null)
-        //        {
-        //            continue;
-        //        }
-
-        //        if(enable &&
-        //           activityArea.PlayingAnimal)
-        //        {
-        //            continue;
-        //        }
-
-        //        activityArea.Enable(enable);
-        //    }
-        //}
-
-        //#region ActivityArea.IListener
-        //void ActivityArea.IListener.PlaceAnimal(ActivityArea activityArea)
-        //{
-        //    if(activityArea == null)
-        //    {
-        //        return;
-        //    }
-
-        //    if(activityArea.PlaceAnimal(_selectedAnimalId))
-        //    {
-        //        EnalbeAllActivityArea(false);
-
-        //        _placeActivityAnimalAction?.Invoke(_selectedAnimalId);
-
-        //        _selectedAnimalId = 0;
-        //    }
-        //}
-        //#endregion
+            randomAnimal.ActivateSpeechBubble(
+                () =>
+                {
+                    _activateSpeechBubble = false;
+                    //SetRandomSpeechBubble();
+                });
+        }
     }
 }
 

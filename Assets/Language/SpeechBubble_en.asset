@@ -50,6 +50,21 @@ MonoBehaviour:
     m_Localized: ...
     m_Metadata:
       m_Items: []
+  - m_Id: 745123150290944
+    m_Localized: "\uC5B4\uC11C\uC640\uC694! \uC624\uB298 \uD558\uB298\uC774 \uC608\uC058\uB124\uC694."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 751327113109504
+    m_Localized: "\uB0B4\uC77C \uBE44\uAC00 \uC62C \uAC83 \uAC19\uB124\uC694. \uBE68\uB798
+      \uB110\uC5B4\uB454 \uC9C0 \uC5BC\uB9C8 \uC548\uB410\uB294\uB370..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 751383484555264
+    m_Localized: "-\uAC71\uC815\uD558\uB290\uB77C \uB0A0\uC744 \uC0DC\uC5B4. \uAC71\uC815\uD55C\uB2E4\uACE0
+      \uD574\uACB0\uC774 \uB418\uB294 \uAC74 \uC544\uB2D0\uD150\uB370. \uADF8\uAC8C
+      \uC798 \uC548 \uB3FC."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

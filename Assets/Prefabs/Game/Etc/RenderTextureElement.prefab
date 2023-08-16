@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7030532892359924392}
   - component: {fileID: 432835370943864586}
   - component: {fileID: 8003002094919552283}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1272093274412288538}
   - component: {fileID: 2692975167572228425}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RenderTextureElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3911483856587535583}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}

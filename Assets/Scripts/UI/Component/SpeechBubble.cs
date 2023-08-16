@@ -25,6 +25,7 @@ namespace UI.Component
         {
             public string Sentence = string.Empty;
             public float KeepDelay = 2f;
+            public System.Action EndAction = null;
         }
 
         #region Inspector
@@ -100,9 +101,12 @@ namespace UI.Component
         {
             Activate();
             SetSentence(constituent.Sentence);
-            Debug.Log("CoBegin begin = " + System.DateTime.Now.Second);
+            
             yield return new WaitForSeconds(constituent.KeepDelay);
-            Debug.Log("CoBegin end = " + System.DateTime.Now.Second);
+
+            constituent?.EndAction?.Invoke();
+
+            yield return new WaitForEndOfFrame();
 
             End();
         }
@@ -116,5 +120,4 @@ namespace UI.Component
             Begin();
         }
     }
-
 }
