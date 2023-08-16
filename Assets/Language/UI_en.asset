@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 184285406420992
-    m_Localized: Arrangement
+    m_Localized: Edit
     m_Metadata:
       m_Items: []
   - m_Id: 185593299460096
@@ -36,6 +36,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2534073061859328
     m_Localized: ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2544033091018752
+    m_Localized: Mission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547604247273472
+    m_Localized: Shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547962243702784
+    m_Localized: Map
     m_Metadata:
       m_Items: []
   references:

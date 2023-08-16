@@ -35,6 +35,18 @@ MonoBehaviour:
     m_Key: ok
     m_Metadata:
       m_Items: []
+  - m_Id: 2544033091018752
+    m_Key: mission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547604247273472
+    m_Key: shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2547962243702784
+    m_Key: map
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
