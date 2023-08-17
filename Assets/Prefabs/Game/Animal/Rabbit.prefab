@@ -46,10 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 3156741586909647920}
-  edit: {fileID: 0}
   Id: 1
   UId: 0
   spriteRenderer: {fileID: 7920135936743495098}
+  edit: {fileID: 0}
   animator: {fileID: 2020088319687372597}
 --- !u!1 &2487678514946157006
 GameObject:
@@ -278,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[1].TableName
-      value: SpeechBUbble
+      value: SpeechBubble
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
