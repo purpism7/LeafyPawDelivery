@@ -21,7 +21,7 @@ namespace Game.Command
                 return;
 
             _eElement = gameBaseElement.EElement;
-            _id = gameBaseElement.Id;
+            _id = _eElement == Type.EElement.Animal ? gameBaseElement.Id : gameBaseElement.UId;
             _pos = pos;
 
             gameBaseElement.SetOutline(0);

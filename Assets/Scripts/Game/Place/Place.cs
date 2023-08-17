@@ -77,9 +77,14 @@ namespace Game
             if (_objectList == null)
                 return;
 
-            var findObject = _objectList.Find(obj => obj != null && obj.UId == addObj.ObjectUId);
-            if (findObject != null)
-                return;
+            foreach(var obj in _objectList)
+            {
+                if (obj == null)
+                    continue;
+
+                if (obj.UId == addObj.ObjectUId)
+                    return;
+            }
 
             _objectList.Add(addObj);
         }
