@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 5a6db85ebb9466f4b90af9ebdd3c4fdc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -164,10 +164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 6281575790720672042}
-  edit: {fileID: 5349012442606307698}
   Id: 2
   UId: 0
-  ObjectSprRenderer: {fileID: 8198808596251828485}
+  spriteRenderer: {fileID: 8198808596251828485}
+  edit: {fileID: 5349012442606307698}
 --- !u!136 &7441345776543645308
 CapsuleCollider:
   m_ObjectHideFlags: 0

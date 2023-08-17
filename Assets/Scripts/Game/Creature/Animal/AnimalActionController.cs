@@ -34,7 +34,7 @@ namespace Game.Creature
 
         public void ChainUpdate()
         {
-            if (MainGameManager.Instance.GameState.Type.Equals(typeof(Game.State.Edit)))
+            if (MainGameManager.Instance.GameState.CheckState<Game.State.Edit>())
             {
                 StartIdleAction();
 

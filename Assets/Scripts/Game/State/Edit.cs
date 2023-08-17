@@ -6,12 +6,9 @@ namespace Game.State
 {
     public class Edit : Base
     {
-        public override bool CheckEditObject
+        public override void Initialize(MainGameManager mainGameMgr)
         {
-            get
-            {
-                return true;
-            }
+            mainGameMgr?.placeMgr?.ActivityPlace?.DeactivateAllSpeechBubble();
         }
     }
 }

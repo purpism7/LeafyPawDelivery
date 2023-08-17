@@ -14,7 +14,12 @@ namespace Game.State
             }
         }
 
-        public abstract bool CheckEditObject { get; }
+        public bool CheckState<T>() where T : Base
+        {
+            return Type.Equals(typeof(T));
+        }
+
+        public abstract void Initialize(MainGameManager mainGameMgr);
     }
 }
 

@@ -10,16 +10,21 @@ namespace Game.Command
         private int _id = 0;
         private int _uId = 0;
 
-        public static void Execute(Type.EElement eElement, int id, int uId = 0)
+        public static void Execute(Game.BaseElement gameBaseElement)
         {
-            new Remove(eElement, id, uId)?.Execute();
+            new Remove(gameBaseElement)?.Execute();
         }
 
-        public Remove(Type.EElement eElement, int id, int uId)
+        public Remove(Game.BaseElement gameBaseElement)
         {
-            _eElement = eElement;
-            _id = id;
-            _uId = uId;
+            if (gameBaseElement == null)
+                return;
+
+            _eElement = gameBaseElement.EElement;
+            _id = gameBaseElement.Id;
+            _uId = gameBaseElement.UId;
+
+            gameBaseElement.SetOutline(0);
         }
 
         public override void Execute()

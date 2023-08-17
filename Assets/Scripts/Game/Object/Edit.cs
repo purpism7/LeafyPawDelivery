@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class Edit<T> : BaseState<T> where T : Game.Base
+    public class Edit<T> : BaseState<T> where T : Game.BaseElement
     {
         private Camera _gameCamera = null;
         private int _overlapCnt = 0;
@@ -18,58 +18,56 @@ namespace Game
 
         public override void Apply(T t)
         {
-            _gameBase = t;
+            _gameBaseElement = t;
         }
 
         public override void Touch(Touch touch)
         {
-            if(_gameBase == null)
+            if(_gameBaseElement == null)
                 return;
 
-            if (_gameBase.EState_ != EState.Edit)
-            {
+            if (_gameBaseElement.EState_ != EState.Edit)
                 return;
-            }
 
             switch (touch.phase)
             {
                 case TouchPhase.Began:
                     {
-                        _gameBase.ActiveEdit(true);
+                        _gameBaseElement.ActiveEdit(true);
                     }
                     break;
 
                 case TouchPhase.Moved:
                     {
-                        DragObject(touch);
+                        Drag(touch);
 
-                        _gameBase.ActiveEdit(false);
+                        _gameBaseElement.ActiveEdit(false);
                     }
                     break;
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
-                        _gameBase.ActiveEdit(true);
+                        _gameBaseElement.ActiveEdit(true);
                     }
                     break;
             }
         }
 
-        private void DragObject(Touch touch)
+        private void Drag(Touch touch)
         {
-            if (_gameBase == null)
+            if (_gameBaseElement == null)
                 return;
 
-            var objectTm = _gameBase.transform;
+            var gameBaseTm = _gameBaseElement.transform;
 
-            float distance = _gameCamera.WorldToScreenPoint(objectTm.position).z;
+            float distance = _gameCamera.WorldToScreenPoint(gameBaseTm.position).z;
             Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);
             Vector3 pos = _gameCamera.ScreenToWorldPoint(movePos);
 
             pos.y = Mathf.Clamp(pos.y, _grid.Limit.y, _grid.Limit2.y);
 
-            objectTm.position = pos;
+            gameBaseTm.position = pos;
         }
 
         public void Overlap(int cnt)

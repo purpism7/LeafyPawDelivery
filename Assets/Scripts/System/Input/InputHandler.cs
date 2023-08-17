@@ -17,7 +17,7 @@ namespace GameSystem
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private Grid _grid = null;
 
-        private Game.Base _gameBase = null;
+        private Game.BaseElement _gameBaseElement = null;
         private bool _notTouchGameBase = false;
         private MainGameManager _mainGameMgr = null;
 
@@ -60,14 +60,14 @@ namespace GameSystem
                 }
             }
             
-            if (_mainGameMgr.GameState.Type.Equals(typeof(Game.State.Edit)))
+            if (_mainGameMgr.GameState.CheckState<Game.State.Edit>())
             {
                 if(!_notTouchGameBase)
                 {
-                    _gameBase?.OnTouch(touch);
+                    _gameBaseElement?.OnTouch(touch);
                 }
 
-                if(_gameBase != null)
+                if(_gameBaseElement != null)
                 {
                     EndEdit();
                 }
@@ -81,8 +81,8 @@ namespace GameSystem
                         
             _touchDateTime = DateTime.UtcNow;
             
-            Game.Base gameBase = null;
-            if (!CheckGetGameBase(raycastHit, out gameBase))
+            Game.BaseElement gameBaseElement = null;
+            if (!CheckGetGameBaseElement(raycastHit, out gameBaseElement))
                 return;
             
             var startPos = _gameCameraCtr.UICamera.ScreenToWorldPoint(touchPosition);
@@ -94,21 +94,21 @@ namespace GameSystem
         #region  Edit
         private bool CheckEdit(RaycastHit raycastHit)
         {
-            if (!_mainGameMgr.GameState.Type.Equals(typeof(Game.State.Edit)))
+            if (!_mainGameMgr.GameState.CheckState<Game.State.Edit>())
                 return false;
             
-            if (_gameBase == null)
+            if (_gameBaseElement == null)
             {
-                if(CheckGetGameBase(raycastHit, out Game.Base gameBase))
+                if(CheckGetGameBaseElement(raycastHit, out Game.BaseElement gameBaseElement))
                 {
-                    StartEdit(gameBase);
+                    StartEdit(gameBaseElement);
                 }                        
             }
             else
             {
-                if(CheckGetGameBase(raycastHit, out Game.Base gameBase))
+                if(CheckGetGameBaseElement(raycastHit, out Game.BaseElement gameBaseElement))
                 {
-                    _notTouchGameBase = _gameBase.UId != gameBase.UId;
+                    _notTouchGameBase = _gameBaseElement.UId != gameBaseElement.UId;
                 }
                 else
                 {
@@ -121,10 +121,10 @@ namespace GameSystem
             return true;
         }
 
-        private void StartEdit(Game.Base gameBase)
+        private void StartEdit(Game.BaseElement gameBaseElement)
         {
-            _gameBase = gameBase;
-            _gameBase?.OnTouchBegan(_gameCameraCtr.GameCamera, _grid);
+            _gameBaseElement = gameBaseElement;
+            _gameBaseElement?.OnTouchBegan(_gameCameraCtr.GameCamera, _grid);
 
             _notTouchGameBase = false;
             _gameCameraCtr.SetStopUpdate(true);
@@ -134,14 +134,14 @@ namespace GameSystem
 
         private void EndEdit()
         {
-            if(_gameBase == null)
+            if(_gameBaseElement == null)
                 return;
 
-            if(_gameBase.EState_ != Game.EState.Remove &&
-               _gameBase.EState_ != Game.EState.Arrange)
+            if(_gameBaseElement.EState_ != Game.EState.Remove &&
+               _gameBaseElement.EState_ != Game.EState.Arrange)
                 return;
 
-            _gameBase = null;
+            _gameBaseElement = null;
             _notTouchGameBase = false;
             _gameCameraCtr.SetStopUpdate(false);
 
@@ -149,16 +149,16 @@ namespace GameSystem
         }
         #endregion
 
-        private bool CheckGetGameBase(RaycastHit raycastHit, out Game.Base gameBase)
+        private bool CheckGetGameBaseElement(RaycastHit raycastHit, out Game.BaseElement gameBaseElement)
         {
-            gameBase = null;
+            gameBaseElement = null;
 
             var collider = raycastHit.collider;
             if (collider == null)
                 return false;
 
-            gameBase = collider.GetComponentInParent<Game.Base>();
-            if (gameBase == null)
+            gameBaseElement = collider.GetComponentInParent<Game.BaseElement>();
+            if (gameBaseElement == null)
                 return false;
 
             return true;

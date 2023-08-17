@@ -10,16 +10,21 @@ namespace Game.Command
         private int _id = 0;
         private Vector3 _pos = Vector3.zero;
 
-        public static void Execute(Type.EElement eElement, int id, Vector3 pos)
+        public static void Execute(Game.BaseElement gameBaseElement, Vector3 pos)
         {
-            new Arrange(eElement, id, pos)?.Execute();
+            new Arrange(gameBaseElement, pos)?.Execute();
         }
 
-        public Arrange(Type.EElement eElement, int id, Vector3 pos)
+        public Arrange(Game.BaseElement gameBaseElement, Vector3 pos)
         {
-            _eElement = eElement;
-            _id = id;
+            if (gameBaseElement == null)
+                return;
+
+            _eElement = gameBaseElement.EElement;
+            _id = gameBaseElement.Id;
             _pos = pos;
+
+            gameBaseElement.SetOutline(0);
         }
 
         public override void Execute()

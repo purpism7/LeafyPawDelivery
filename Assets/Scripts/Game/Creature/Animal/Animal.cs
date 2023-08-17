@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using Game;
+using UnityEngine.UI;
 
 namespace Game.Creature
 {
-    public class Animal : Base<Animal.Data>, UI.Edit.IListener
+    [ExecuteInEditMode]
+    public class Animal : BaseElement<Animal.Data>, UI.Edit.IListener
     {
         public class Data : BaseData
         {
@@ -17,8 +20,6 @@ namespace Game.Creature
         }
 
         [SerializeField]
-        private SpriteRenderer spriteRenderer = null;
-        [SerializeField]
         private Animator animator = null;
 
         private AnimalRoot _animalRoot = null;
@@ -29,6 +30,8 @@ namespace Game.Creature
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+
+            EElement = Type.EElement.Animal;
 
             _animalRoot = GetComponentInChildren<AnimalRoot>();
 
@@ -79,6 +82,8 @@ namespace Game.Creature
             if (state is Edit<Creature.Animal>)
             {
                 EState_ = EState.Edit;
+
+                SetOutline(5f);
             }
 
             state.Apply(this);
@@ -113,17 +118,24 @@ namespace Game.Creature
             spriteRenderer.sortingOrder = order;
         }
 
+        #region SpeechBubble
         public void ActivateSpeechBubble(System.Action endAction)
         {
             _animalRoot?.ActivateSpeechBubble(endAction);
         }
+
+        public void DeactivateSpeechBubble()
+        {
+            _animalRoot?.DeactivateSpeechBubble();
+        }
+        #endregion
 
         #region Edit.IListener
         void UI.Edit.IListener.Remove()
         {
             EState_ = EState.Remove;
 
-            Command.Remove.Execute(Type.EElement.Animal, _data.Id);
+            Command.Remove.Execute(this);
 
             ActiveEdit(false);
         }
@@ -135,7 +147,7 @@ namespace Game.Creature
 
             EState_ = EState.Arrange;
 
-            Command.Arrange.Execute(Type.EElement.Animal, _data.Id, transform.localPosition);
+            Command.Arrange.Execute(this, transform.localPosition);
 
             SetSortingOrder(-(int)transform.localPosition.y);
 

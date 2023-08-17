@@ -49,6 +49,7 @@ namespace Game.Creature
             }
         }
 
+        #region SpeechBubble
         public void ActivateSpeechBubble(System.Action endAction)
         {
             if (localDatas == null ||
@@ -84,6 +85,13 @@ namespace Game.Creature
 
             _speechBubble.Begin();
         }
+
+        public void DeactivateSpeechBubble()
+        {
+            _speechBubble?.Deactivate();
+        }
+
+        #endregion
 
         #region SpeechBubble.IListener
         void SpeechBubble.IListener.End()

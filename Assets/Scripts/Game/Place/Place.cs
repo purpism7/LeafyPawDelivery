@@ -21,7 +21,6 @@ namespace Game
 
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
-        private bool _activateSpeechBubble = false;
 
         public override void Initialize(Data data)
         {
@@ -35,11 +34,6 @@ namespace Game
             foreach(var animal in _animalList)
             {
                 animal?.ChainUpdate();
-            }
-
-            if(!_activateSpeechBubble)
-            {
-                SetRandomSpeechBubble();
             }
         }
 
@@ -83,7 +77,7 @@ namespace Game
             if (_objectList == null)
                 return;
 
-            var findObject = _objectList.Find(obj => obj.UId == addObj.ObjectUId);
+            var findObject = _objectList.Find(obj => obj != null && obj.UId == addObj.ObjectUId);
             if (findObject != null)
                 return;
 
@@ -231,8 +225,24 @@ namespace Game
             }
         }
 
+        public void ActivateRandomSpeechBubble()
+        {
+            SetRandomSpeechBubble();
+        }
+
+        public void DeactivateAllSpeechBubble()
+        {
+            foreach(var animal in _animalList)
+            {
+                animal?.DeactivateSpeechBubble();
+            }
+        }
+
         private void SetRandomSpeechBubble()
         {
+            if (MainGameManager.Instance.GameState.CheckState<Game.State.Edit>())
+                return;
+
             if (_animalList == null)
                 return;
 
@@ -244,13 +254,10 @@ namespace Game
             if (randomAnimal == null)
                 return;
 
-            _activateSpeechBubble = true;
-
             randomAnimal.ActivateSpeechBubble(
                 () =>
                 {
-                    _activateSpeechBubble = false;
-                    //SetRandomSpeechBubble();
+                    SetRandomSpeechBubble();
                 });
         }
     }

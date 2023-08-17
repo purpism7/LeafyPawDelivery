@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameSystem
 {
-    public class ObjectCreator<T, V> : BaseCreator<T> where T : Game.Base<V> where V : Game.BaseData
+    public class ObjectCreator<T, V> : BaseCreator<T> where T : Game.BaseElement<V> where V : Game.BaseData
     {
         private V _data = null;
         private int _id = 0;

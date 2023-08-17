@@ -65,41 +65,17 @@ namespace Game
 
     public abstract class Base : Common
     {
-        [SerializeField]
-        protected UI.Edit edit = null;
-
         public int Id = 0;
-        [HideInInspector]
-        public int UId = 0;
 
         public EState EState_ { get; protected set; } = EState.None;
 
-        public virtual void OnTouchBegan(Camera gameCamera, GameSystem.Grid grid)
-        {
-
-        }
-
-        public virtual void OnTouch(Touch touch)
-        {
-
-        }
-
-
-        public virtual void ChainUpdate()
-        {
-            
-        }
-
-        public void ActiveEdit(bool active)
-        {
-            UIUtils.SetActive(edit?.CanvasRectTm, active);
-        }
+        public virtual void OnTouchBegan(Camera gameCamera, GameSystem.Grid grid) { }
+        public virtual void OnTouch(Touch touch) { }
+        public virtual void ChainUpdate() { }
     }
 
     public abstract class Base<T> : Base where T : BaseData
     {
-        readonly protected int _selectOrder = 500;
-
         protected T _data = default(T);
 
         public virtual void Initialize(T data)

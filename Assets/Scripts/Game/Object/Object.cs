@@ -7,7 +7,7 @@ using UI;
 
 namespace Game
 {
-    public class Object : Game.Base<Object.Data>, UI.Edit.IListener
+    public class Object : Game.BaseElement<Object.Data>, UI.Edit.IListener
     {
         public class Data : BaseData
         {
@@ -16,16 +16,14 @@ namespace Game
             public Vector3 Pos = Vector3.zero;
         }
 
-        #region Inspector
-        public SpriteRenderer ObjectSprRenderer = null;
-        #endregion
-
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
         public BaseState<Game.Object> State { get; private set; } = null;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+
+            EElement = Type.EElement.Object;
 
             if(data != null)
             {
@@ -39,6 +37,7 @@ namespace Game
             {
                 IListener = this,
             });
+
             ActiveEdit(false);
         }
 
@@ -68,14 +67,14 @@ namespace Game
 
         public void SetState(BaseState<Game.Object> state)
         {
-            if(state == null)   
-            {
+            if(state == null)
                 return;
-            }
 
-            if(state is Game.Edit<Game.Object>)
+            if (state is Game.Edit<Game.Object>)
             {
                 EState_ = EState.Edit;
+
+                SetOutline(5f);
             }
 
             state.Apply(this);
@@ -85,10 +84,10 @@ namespace Game
 
         private void SetSortingOrder(int order)
         {
-            if (ObjectSprRenderer == null)
+            if (spriteRenderer == null)
                 return;
 
-            ObjectSprRenderer.sortingOrder = order;
+            spriteRenderer.sortingOrder = order;
         }
 
         #region Collision 
@@ -119,7 +118,7 @@ namespace Game
         {
             EState_ = EState.Remove;
 
-            Command.Remove.Execute(Type.EElement.Object, _data.ObjectId, ObjectUId);
+            Command.Remove.Execute(this);
 
             ActiveEdit(false);
         }
@@ -128,7 +127,7 @@ namespace Game
         {
             EState_ = EState.Arrange;
 
-            Command.Arrange.Execute(Type.EElement.Object, ObjectUId, transform.localPosition);
+            Command.Arrange.Execute(this, transform.localPosition);
 
             SetSortingOrder(-(int)transform.localPosition.y);
 

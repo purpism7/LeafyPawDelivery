@@ -17,15 +17,14 @@ public class MainGameManager : Singleton<MainGameManager>
     public Game.ObjectManager ObjectMgr { get; private set; } = null;
     public Game.AnimalManager AnimalMgr { get; private set; } = null;
     public Game.StoryManager StoryMgr { get; private set; } = null; 
-    //public Game.Manager.OpenCondition OpenCondition { get; private set; } = null;
     
     public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
 
     public Camera GameCamera { get; private set; } = null;
 
-    public Game.State.Base GameState { get; private set; } = new Game.State.Game();
+    public Game.State.Base GameState { get; private set; } = null;
 
-    private System.Action<Game.Base> _startEditAction = null;
+    private System.Action<Game.BaseElement> _startEditAction = null;
     
     protected override void Initialize()
     {
@@ -65,6 +64,8 @@ public class MainGameManager : Singleton<MainGameManager>
 
         GameCamera = iProvider.Get<InputManager>()?.GameCameraCtr?.GameCamera;
 
+        SetGameState<Game.State.Game>();
+
         yield return new WaitForEndOfFrame();
     }
 
@@ -82,16 +83,16 @@ public class MainGameManager : Singleton<MainGameManager>
     #region GameState
     public void SetGameState<T>() where T : Game.State.Base
     {
-        if (GameState.Type.Equals(typeof(T)))
-        {
+        if (GameState != null &&
+            GameState.Type.Equals(typeof(T)))
             return;
-        }
 
         GameState = System.Activator.CreateInstance<T>();
+        GameState?.Initialize(this);
     }
     #endregion
 
-    public void SetStartEditAction(System.Action<Game.Base> action)
+    public void SetStartEditAction(System.Action<Game.BaseElement> action)
     {
         _startEditAction = action;
     }
