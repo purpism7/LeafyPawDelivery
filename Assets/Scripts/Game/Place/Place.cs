@@ -21,6 +21,8 @@ namespace Game
 
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
+        private Coroutine _speechBubbleCoroutine = null;
+        private YieldInstruction _waitSecSpeechBubble = new WaitForSeconds(10f);
 
         public override void Initialize(Data data)
         {
@@ -230,41 +232,51 @@ namespace Game
             }
         }
 
+        #region SpeechBubble
         public void ActivateRandomSpeechBubble()
         {
-            SetRandomSpeechBubble();
+            _speechBubbleCoroutine = StartCoroutine(CoRandomSpeechBubble());
         }
 
         public void DeactivateAllSpeechBubble()
         {
-            foreach(var animal in _animalList)
+            StopCoroutine(_speechBubbleCoroutine);
+            _speechBubbleCoroutine = null;
+
+            foreach (var animal in _animalList)
             {
                 animal?.DeactivateSpeechBubble();
             }
         }
 
-        private void SetRandomSpeechBubble()
+        private IEnumerator CoRandomSpeechBubble()
         {
             if (MainGameManager.Instance.GameState.CheckState<Game.State.Edit>())
-                return;
+                yield break;
 
             if (_animalList == null)
-                return;
+                yield break;
 
             if (_animalList.Count <= 0)
-                return;
+                yield break;
+
+            yield return _waitSecSpeechBubble;
+
+            if (_speechBubbleCoroutine == null)
+                yield break;
 
             var randomIndex = UnityEngine.Random.Range(0, _animalList.Count);
             var randomAnimal = _animalList[randomIndex];
             if (randomAnimal == null)
-                return;
+                yield break;
 
             randomAnimal.ActivateSpeechBubble(
                 () =>
                 {
-                    SetRandomSpeechBubble();
+                    ActivateRandomSpeechBubble();
                 });
         }
+        #endregion 
     }
 }
 
