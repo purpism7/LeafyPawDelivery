@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using TMPro;
-using static Type;
 using UnityEngine.Localization.Settings;
 
 namespace UI.Component

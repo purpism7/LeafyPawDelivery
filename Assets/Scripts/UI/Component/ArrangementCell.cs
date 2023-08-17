@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using GameSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 
 using TMPro;
 
@@ -56,8 +57,10 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            nameTMP?.SetText(_data.Name);
-            lockNameTMP?.SetText(_data.Name);
+            var localName = LocalizationSettings.StringDatabase.GetLocalizedString(_data.EElement.ToString(), _data.Id, LocalizationSettings.SelectedLocale);
+
+            nameTMP?.SetText(localName);
+            lockNameTMP?.SetText(localName);
         }
 
         private void SetDescTMP()
@@ -65,7 +68,9 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            descTMP?.SetText(_data.Name + " is ..");
+            var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString(_data.EElement.ToString(), "description_" + _data.Id, LocalizationSettings.SelectedLocale);
+
+            descTMP?.SetText(localDesc);
         }
 
         private void SetIconImg()
