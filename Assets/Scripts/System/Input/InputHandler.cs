@@ -18,7 +18,7 @@ namespace GameSystem
         private Grid _grid = null;
 
         private Game.BaseElement _gameBaseElement = null;
-        private bool _notTouchGameBase = false;
+        private bool _notTouchGameBaseElement = false;
         private MainGameManager _mainGameMgr = null;
 
         private DateTime _touchDateTime;
@@ -62,7 +62,7 @@ namespace GameSystem
             
             if (_mainGameMgr.GameState.CheckState<Game.State.Edit>())
             {
-                if(!_notTouchGameBase)
+                if(!_notTouchGameBaseElement)
                 {
                     _gameBaseElement?.OnTouch(touch);
                 }
@@ -91,12 +91,12 @@ namespace GameSystem
             UIManager.Instance?.Top?.CollectCurrency(startPos);
         }
         
-        #region  Edit
+        #region Edit
         private bool CheckEdit(RaycastHit raycastHit)
         {
             if (!_mainGameMgr.GameState.CheckState<Game.State.Edit>())
                 return false;
-            
+
             if (_gameBaseElement == null)
             {
                 if(CheckGetGameBaseElement(raycastHit, out Game.BaseElement gameBaseElement))
@@ -108,14 +108,14 @@ namespace GameSystem
             {
                 if(CheckGetGameBaseElement(raycastHit, out Game.BaseElement gameBaseElement))
                 {
-                    _notTouchGameBase = _gameBaseElement.UId != gameBaseElement.UId;
+                    _notTouchGameBaseElement = _gameBaseElement.UId != gameBaseElement.UId;
                 }
                 else
                 {
-                    _notTouchGameBase = true;
+                    _notTouchGameBaseElement = true;
                 }
                         
-                _gameCameraCtr.SetStopUpdate(_notTouchGameBase == false);
+                _gameCameraCtr.SetStopUpdate(_notTouchGameBaseElement == false);
             }
 
             return true;
@@ -126,7 +126,7 @@ namespace GameSystem
             _gameBaseElement = gameBaseElement;
             _gameBaseElement?.OnTouchBegan(_gameCameraCtr.GameCamera, _grid);
 
-            _notTouchGameBase = false;
+            _notTouchGameBaseElement = false;
             _gameCameraCtr.SetStopUpdate(true);
 
             Game.UIManager.Instance?.Bottom?.DeactivateEditList();
@@ -142,7 +142,7 @@ namespace GameSystem
                 return;
 
             _gameBaseElement = null;
-            _notTouchGameBase = false;
+            _notTouchGameBaseElement = true;
             _gameCameraCtr.SetStopUpdate(false);
 
             Game.UIManager.Instance?.Bottom?.ActivateEditList();

@@ -34,23 +34,33 @@ namespace Game
                 case TouchPhase.Began:
                     {
                         _gameBaseElement.ActiveEdit(true);
+
+                        break;
                     }
-                    break;
 
                 case TouchPhase.Moved:
                     {
                         Drag(touch);
 
                         _gameBaseElement.ActiveEdit(false);
+
+                        break;
                     }
-                    break;
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
                         _gameBaseElement.ActiveEdit(true);
+
+                        break;
                     }
-                    break;
+
+                //default:
+                //    {
+                //        _gameBaseElement.ActiveEdit(true);
+
+                //        break;
+                //    }
             }
         }
 
