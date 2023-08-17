@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 using Game.Creature;
 using Data;
@@ -65,6 +66,8 @@ public class MainGameManager : Singleton<MainGameManager>
         GameCamera = iProvider.Get<InputManager>()?.GameCameraCtr?.GameCamera;
 
         SetGameState<Game.State.Game>();
+
+        LocalizationSettings.SelectedLocale = UnityEngine.Localization.Locale.CreateLocale("ko");
 
         yield return new WaitForEndOfFrame();
     }
