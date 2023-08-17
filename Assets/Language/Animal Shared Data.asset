@@ -16,11 +16,11 @@ MonoBehaviour:
   m_TableCollectionNameGuidString: 19cf67d94abc54609aa2c5bb84f6339b
   m_Entries:
   - m_Id: 69989294080
-    m_Key: 1
+    m_Key: name_1
     m_Metadata:
       m_Items: []
   - m_Id: 3530447756713984
-    m_Key: 2
+    m_Key: name_2
     m_Metadata:
       m_Items: []
   - m_Id: 3530700706799616
