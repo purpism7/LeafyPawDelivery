@@ -26,7 +26,7 @@ public static class GameUtils
             name = data.Name;
         }
 
-        return LocalizationSettings.StringDatabase.GetLocalizedString(EElement.ToString(), name, LocalizationSettings.SelectedLocale);
+        return LocalizationSettings.StringDatabase.GetLocalizedString(EElement.ToString(), "name_" + id, LocalizationSettings.SelectedLocale);
     }
     
     public static Sprite GetShortIconSprite(Type.EElement EElement, int id)

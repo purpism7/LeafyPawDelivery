@@ -48,10 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 3767939084258220311}
-  edit: {fileID: 0}
   Id: 2
   UId: 0
   spriteRenderer: {fileID: 2991612011475211171}
+  edit: {fileID: 0}
   animator: {fileID: 1654453176783347088}
 --- !u!114 &5860463453709640405
 MonoBehaviour:
@@ -129,7 +129,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 5a6db85ebb9466f4b90af9ebdd3c4fdc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

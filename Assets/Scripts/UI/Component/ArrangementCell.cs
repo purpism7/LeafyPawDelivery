@@ -57,7 +57,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            var localName = LocalizationSettings.StringDatabase.GetLocalizedString(_data.EElement.ToString(), _data.Id, LocalizationSettings.SelectedLocale);
+            var localName = GameUtils.GetName(_data.EElement, _data.Id);
 
             nameTMP?.SetText(localName);
             lockNameTMP?.SetText(localName);
