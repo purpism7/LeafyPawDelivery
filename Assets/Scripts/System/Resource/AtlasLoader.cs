@@ -41,6 +41,11 @@ namespace GameSystem
         {
             return GetSprite(KeyObjectIcon, name);
         }
+
+        public Sprite GetCurrencySprite(string name)
+        {
+            return GetSprite("Currency", name);
+        }
     }
 }
 

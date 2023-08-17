@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using TMPro;
 
@@ -10,11 +11,14 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
+            public Sprite ImgSprite = null;
             public string Text = string.Empty;
             public bool IsPossible = false;
         }
 
         #region Inspector
+        [SerializeField]
+        private Image img = null;
         [SerializeField]
         private TextMeshProUGUI textTMP = null;
         #endregion
@@ -23,13 +27,27 @@ namespace UI.Component
         {
             base.Initialize(data);
 
+            SetImg();
             SetText(data.Text);
+
             SetColor();
         }
 
         public override void Activate()
         {
             base.Activate();
+        }
+
+        private void SetImg()
+        {
+            if (img == null)
+                return;
+
+            var sprite = _data?.ImgSprite;
+            if (sprite == null)
+                return;
+
+            img.sprite = sprite;
         }
 
         private void SetText(string text)

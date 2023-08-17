@@ -36,4 +36,18 @@ public class Type
         Object,
         Story,
     }
+
+    public enum EAnimalCurrency
+    {
+        None,
+
+        Acorn,
+    }
+
+    public enum EObjectCurrency
+    {
+        None,
+
+        Leaf,
+    }
 }

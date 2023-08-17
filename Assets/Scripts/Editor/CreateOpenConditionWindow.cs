@@ -21,7 +21,6 @@ public class CreateOpenConditionWindow : EditorWindow
         var window = GetWindow<CreateOpenConditionWindow>();
     }
 
-
     private void OnEnable()
     {
         if (_openCondition == null)

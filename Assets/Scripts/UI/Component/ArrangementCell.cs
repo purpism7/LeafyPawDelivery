@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
 
 using TMPro;
+using static GameData.Const;
 
 namespace UI.Component
 {
@@ -115,8 +116,11 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
+            var currencyInfo = Game.Data.Const.GetCurrencyInfo(ActivityPlaceId);
+
             var openConditionData = new OpenCondition.Data()
             {
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.Animal.ToString()),
                 Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
                 IsPossible = animalOpenConditionContainer.CheckAnimalCurrency(_data.Id),
             };
@@ -125,6 +129,7 @@ namespace UI.Component
 
             openConditionData = new OpenCondition.Data()
             {
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.Object.ToString()),
                 Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
                 IsPossible = animalOpenConditionContainer.CheckObjectCurrency(_data.Id),
             };
@@ -139,8 +144,11 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
+            var currencyInfo = Game.Data.Const.GetCurrencyInfo(ActivityPlaceId);
+
             var openConditionData = new OpenCondition.Data()
             {
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.Animal.ToString()),
                 Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
                 IsPossible = objectOpenConditionContainer.CheckAnimalCurrency(_data.Id),
             };
@@ -149,6 +157,7 @@ namespace UI.Component
 
             openConditionData = new OpenCondition.Data()
             {
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.Object.ToString()),
                 Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
                 IsPossible = objectOpenConditionContainer.CheckObjectCurrency(_data.Id),
             };
@@ -158,12 +167,12 @@ namespace UI.Component
 
         private string GetReqAnimalCurrency(long currency)
         {
-            return string.Format("Arcon x{0}", currency);
+            return string.Format("x{0}", currency);
         }
 
         private string GetReqObjectCurrency(long currency)
         {
-            return string.Format("Leaf x{0}", currency);
+            return string.Format("x{0}", currency);
         }
 
         private UI.Component.OpenCondition CreateOpenCondition(OpenCondition.Data openConditionData)
@@ -180,13 +189,21 @@ namespace UI.Component
             UIUtils.SetActive(arrangementBtn?.gameObject, !_data.Lock);
         }
 
+        private int ActivityPlaceId
+        {
+            get
+            {
+                var placeMgr = MainGameManager.Instance?.placeMgr;
+                if (placeMgr == null)
+                    return 0;
+
+                return placeMgr.ActivityPlaceId;
+            }
+        }
+
         private void CreateUnlockPopup()
         {
             if (_data == null)
-                return;
-
-            var placeMgr = MainGameManager.Instance?.placeMgr;
-            if (placeMgr == null)
                 return;
 
             bool isPossibleUnlock = false;
@@ -237,7 +254,7 @@ namespace UI.Component
 
                     Info.UserManager.Instance.SaveCurrency(new Info.User.Currency()
                     {
-                        PlaceId = placeMgr.ActivityPlaceId,
+                        PlaceId = ActivityPlaceId,
                         Animal = -openConditionData.AnimalCurrency,
                         Object = -openConditionData.ObjectCurrency,
                     });
