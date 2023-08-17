@@ -19,7 +19,15 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 69989294080
-    m_Localized: Barnny
+    m_Localized: Barnie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3530447756713984
+    m_Localized: Sera
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3530700706799616
+    m_Localized: Warm hearted pink rabbit
     m_Metadata:
       m_Items: []
   references:
