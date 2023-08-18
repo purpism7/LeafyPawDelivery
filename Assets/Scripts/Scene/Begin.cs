@@ -26,7 +26,7 @@ namespace Scene
         {
             var firebaseMgr = FirebaseManager.Instance;
 
-            yield return StartCoroutine(firebaseMgr.CoInit());
+            //yield return StartCoroutine(firebaseMgr.CoInit());
 
             //_iListener?.EndLoad();
 
@@ -52,14 +52,14 @@ namespace Scene
                 }
             }
 
-            if (firebaseMgr.Auth.IsValid)
+            //if (firebaseMgr.Auth.IsValid)
             {
                 SceneLoader.LoadWithLoading(loadData);
 
                 yield break;
             }
 
-            Init(null);
+            //Init(null);
         }
 
         public override void Init(IListener iListener)
