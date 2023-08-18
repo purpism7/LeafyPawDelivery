@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GameSystem;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 using GameSystem.Load;
 using Game.Manager;
