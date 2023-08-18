@@ -55,6 +55,10 @@ MonoBehaviour:
     m_Key: prologue_letter_2
     m_Metadata:
       m_Items: []
+  - m_Id: 3834286938513408
+    m_Key: prologue_letter_3
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -23,6 +23,10 @@ MonoBehaviour:
     m_Key: prologue_story_2
     m_Metadata:
       m_Items: []
+  - m_Id: 1676002630557696
+    m_Key: prologue_story_3_1
+    m_Metadata:
+      m_Items: []
   - m_Id: 231133248741376
     m_Key: prologue_story_3
     m_Metadata:

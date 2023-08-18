@@ -64,7 +64,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2397080424275968
-    m_Localized: "\uB9C8\uC744\uC774\uAD6C\uB098. \uC232\uC73C\uB85C \uAC00\uC57C\uACA0\uB124."
+    m_Localized: "\uD31C\uC6B0\uC988 \uB9C8\uC744\uC774\uAD6C\uB098. \uC232\uC73C\uB85C
+      \uAC00\uC57C\uACA0\uB124."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3834286938513408
+    m_Localized: "\uC774\uB984\uC744 \uC54C\uB824\uC8FC\uC2DC\uACA0\uC5B4\uC694?"
     m_Metadata:
       m_Items: []
   references:

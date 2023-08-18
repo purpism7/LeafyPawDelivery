@@ -152,7 +152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6516871910256966288
 RectTransform:
   m_ObjectHideFlags: 0
@@ -393,6 +393,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3231708603046716122}
     m_Modifications:
+    - target: {fileID: 3383554752757939447, guid: 4de07602b24048c4a92678dde37167d5, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 3714596042573370617, guid: 4de07602b24048c4a92678dde37167d5, type: 3}
       propertyPath: m_Name
       value: Conversation
@@ -480,6 +484,14 @@ PrefabInstance:
     - target: {fileID: 5147772485461538666, guid: 4de07602b24048c4a92678dde37167d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871554809916999350, guid: 4de07602b24048c4a92678dde37167d5, type: 3}
+      propertyPath: m_fontSize
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 7871554809916999350, guid: 4de07602b24048c4a92678dde37167d5, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 33
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4de07602b24048c4a92678dde37167d5, type: 3}
