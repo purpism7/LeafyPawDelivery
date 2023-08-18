@@ -24,6 +24,8 @@ namespace Scene
 
         private IEnumerator Start()
         {
+            LocalizationSettings.SelectedLocale = UnityEngine.Localization.Locale.CreateLocale("ko");
+
             var firebaseMgr = FirebaseManager.Instance;
 
             //yield return StartCoroutine(firebaseMgr.CoInit());

@@ -65,9 +65,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         GameCamera = iProvider.Get<InputManager>()?.GameCameraCtr?.GameCamera;
 
-        SetGameState<Game.State.Game>();
-
-        LocalizationSettings.SelectedLocale = UnityEngine.Localization.Locale.CreateLocale("ko");
+        SetGameState<Game.State.Game>();       
 
         yield return new WaitForEndOfFrame();
     }
