@@ -33,6 +33,8 @@ namespace Scene
 
             //_iListener?.EndLoad();
 
+            yield return new WaitForSeconds(2f);
+
             var nickName = PlayerPrefs.GetString("KeyNickName");
 
             _endPrologue = false;
