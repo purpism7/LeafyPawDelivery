@@ -29,7 +29,7 @@ namespace Scene
 
             var firebaseMgr = FirebaseManager.Instance;
 
-            //yield return StartCoroutine(firebaseMgr.CoInit());
+            yield return StartCoroutine(firebaseMgr.CoInit());
 
             //_iListener?.EndLoad();
 
@@ -38,7 +38,7 @@ namespace Scene
             var nickName = PlayerPrefs.GetString("KeyNickName");
 
             _endPrologue = false;
-            //if(firebaseMgr.Auth.IsFirst)
+            if(firebaseMgr.Auth.IsFirst)
             {
                 var cutscene = Cutscene.Create(new Cutscene.Data()
                 {
@@ -57,7 +57,7 @@ namespace Scene
                 }
             }
 
-            //if (firebaseMgr.Auth.IsValid)
+            if (firebaseMgr.Auth.IsValid)
             {
                 SceneLoader.LoadWithLoading(loadData);
 

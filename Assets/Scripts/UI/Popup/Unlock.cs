@@ -93,6 +93,8 @@ namespace UI
         public void OnClick()
         {
             Deactivate();
+
+            Game.RenderTextureElement.Destroy();
         }
     }
 }

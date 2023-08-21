@@ -29,11 +29,18 @@ namespace Game
             return _instance;
         }
 
+        public static void Destroy()
+        {
+            if (_instance == null)
+                return;
+
+            _instance.Deactivate();
+        }
+
         public static bool Validate
         {
             get { return _instance != null; }
         }
-
         #endregion
 
         public class Data
@@ -79,6 +86,27 @@ namespace Game
                     .SetRootTm(targetRootTm)
                     .SetIsEdit(false)
                     .Create();
+            }
+        }
+
+        public override void Deactivate()
+        {
+            DeactivateTarget();
+
+            base.Deactivate();
+        }
+
+        private void DeactivateTarget()
+        {
+            if (!targetRootTm)
+                return;
+
+            foreach (Transform childTm in targetRootTm)
+            {
+                if (!childTm)
+                    continue;
+
+                childTm.gameObject.SetActive(false);
             }
         }
     }
