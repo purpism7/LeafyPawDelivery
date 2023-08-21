@@ -86,10 +86,10 @@ namespace GameSystem
         }
 
         private IEnumerator CoUnloadSceneAsync()
-        {
-            yield return new WaitForEndOfFrame();
-            
+        { 
             SceneManager.UnloadSceneAsync(_scene);
+
+            yield return null;
         }
     }
 }
