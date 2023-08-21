@@ -22,6 +22,22 @@ MonoBehaviour:
     m_Localized: Tree
     m_Metadata:
       m_Items: []
+  - m_Id: 191397617664
+    m_Localized: Lock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5241043397107712
+    m_Localized: Yellow berry bush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5241197336453120
+    m_Localized: white flower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5241642352107520
+    m_Localized: barnie's wash
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
