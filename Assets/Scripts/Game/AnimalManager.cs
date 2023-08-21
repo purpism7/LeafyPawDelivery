@@ -137,7 +137,7 @@ namespace Game
                             return popup;
                         });
 
-                    
+                    MainGameManager.Instance?.AddInfo(Type.EElement.Animal, data.Id);
                 }
             }
         }
