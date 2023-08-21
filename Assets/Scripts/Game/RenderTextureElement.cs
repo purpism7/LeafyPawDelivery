@@ -67,6 +67,7 @@ namespace Game
             _data = data;
 
             CreateTarget();
+            Activate();
         }
 
         private void CreateTarget()
