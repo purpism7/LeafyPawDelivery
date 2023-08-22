@@ -14,16 +14,12 @@ public static class GameUtils
             var data = AnimalContainer.Instance?.GetData(id);
             if (data == null)
                 return string.Empty;
-
-            name = data.Name;
         }
         else if (EElement == Type.EElement.Object)
         {
             var data = ObjectContainer.Instance?.GetData(id);
             if (data == null)
                 return string.Empty;
-
-            name = data.Name;
         }
 
         return LocalizationSettings.StringDatabase.GetLocalizedString(EElement.ToString(), "name_" + id, LocalizationSettings.SelectedLocale);
@@ -41,7 +37,7 @@ public static class GameUtils
             if (data == null)
                 return null;
 
-            return atlasLoader?.GetSprite(atlasLoader.KeyAnimalIcon, data.ShortIconImgName);
+            return atlasLoader?.GetAnimalIconSprite(data.ShortIconImgName);
         }
         else if (EElement == Type.EElement.Object)
         {
@@ -49,7 +45,7 @@ public static class GameUtils
             if (data == null)
                 return null;
 
-            return atlasLoader?.GetSprite(atlasLoader.KeyObjectIcon, data.ShortIconImgName);
+            return atlasLoader?.GetObjectIconSprite(data.ShortIconImgName);
         }
 
         return null;
@@ -67,7 +63,7 @@ public static class GameUtils
              if (data == null)
                  return null;
     
-             return atlasLoader.GetSprite(atlasLoader.KeyAnimalIcon, data.LargeIconImgName);
+             return atlasLoader.GetAnimalIconSprite(data.LargeIconImgName);
          }
          else if (EElement == Type.EElement.Object)
          {
@@ -75,7 +71,7 @@ public static class GameUtils
              if (data == null)
                  return null;
     
-             return atlasLoader.GetSprite(atlasLoader.KeyObjectIcon, data.LargeIconImgName);
+             return atlasLoader.GetObjectIconSprite(data.LargeIconImgName);
          }
     
          return null;

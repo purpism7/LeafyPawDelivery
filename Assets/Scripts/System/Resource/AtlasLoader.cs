@@ -34,12 +34,24 @@ namespace GameSystem
 
         public Sprite GetAnimalIconSprite(string name)
         {
-            return GetSprite(KeyAnimalIcon, name);
+            var placeMgr = MainGameManager.Instance.placeMgr;
+            if (placeMgr == null)
+                return null;
+
+            int placeId = placeMgr.ActivityPlaceId;
+
+            return GetSprite(KeyAnimalIcon + "_" + placeId, name);
         }
 
         public Sprite GetObjectIconSprite(string name)
         {
-            return GetSprite(KeyObjectIcon, name);
+            var placeMgr = MainGameManager.Instance.placeMgr;
+            if (placeMgr == null)
+                return null;
+
+            int placeId = placeMgr.ActivityPlaceId;
+
+            return GetSprite(KeyObjectIcon + "_" + placeId, name);
         }
 
         public Sprite GetCurrencySprite(string name)

@@ -14,7 +14,6 @@ namespace UI.Component
 
             public int Id = 0;
             public Type.EElement EElement = Type.EElement.None;
-            public string Name = string.Empty;
             public bool Lock = true;
         }
 
@@ -36,7 +35,12 @@ namespace UI.Component
 
         private void SetNameTMP()
         {
-            nameTMP?.SetText(_data.Name);
+            if (_data == null)
+                return;
+
+            var localName = GameUtils.GetName(_data.EElement, _data.Id);
+
+            nameTMP?.SetText(localName);
         }
 
         private void SetIconImg()

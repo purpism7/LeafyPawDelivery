@@ -90,7 +90,6 @@ namespace UI
                         
                         Id = data.Id,
                         EElement = Type.EElement.Animal,
-                        Name = data.Name,
                         Lock = animalInfo == null,
                     })
                     .SetRootRectTm(animalScrollRect.content)
@@ -116,6 +115,11 @@ namespace UI
                     continue;
 
                 var objectInfo = objectMgr.GetObjectInfoById(data.Id);
+                if (objectInfo == null)
+                {
+                    if (data.EGrade == Type.EObjectGrade.None)
+                        continue;
+                }
 
                 var cell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
                   .SetData(new ArrangementCell.Data()
@@ -124,7 +128,6 @@ namespace UI
                       
                       Id = data.Id,
                       EElement = Type.EElement.Object,
-                      Name = data.Name,
                       Lock = objectInfo == null,
                   })
                   .SetRootRectTm(objectScrollRect.content)

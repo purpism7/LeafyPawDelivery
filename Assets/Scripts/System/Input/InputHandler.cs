@@ -76,19 +76,22 @@ namespace GameSystem
 
         private void CollectCurrency(RaycastHit raycastHit, Vector2 touchPosition)
         {
-            if ((DateTime.UtcNow - _touchDateTime).TotalSeconds < TouchInterval)
-                return;
-                        
-            _touchDateTime = DateTime.UtcNow;
-            
             Game.BaseElement gameBaseElement = null;
             if (!CheckGetGameBaseElement(raycastHit, out gameBaseElement))
                 return;
-            
-            var startPos = _gameCameraCtr.UICamera.ScreenToWorldPoint(touchPosition);
-            startPos.z = 10f;
 
-            UIManager.Instance?.Top?.CollectCurrency(startPos);
+            if(gameBaseElement.EElement == Type.EElement.Object)
+            {
+                if ((DateTime.UtcNow - _touchDateTime).TotalSeconds < TouchInterval)
+                    return;
+
+                _touchDateTime = DateTime.UtcNow;
+
+                var startPos = _gameCameraCtr.UICamera.ScreenToWorldPoint(touchPosition);
+                startPos.z = 10f;
+
+                UIManager.Instance?.Top?.CollectCurrency(startPos);
+            }
         }
         
         #region Edit

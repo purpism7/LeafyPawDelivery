@@ -19,7 +19,6 @@ namespace UI
         {
             public Type.EElement EElement = Type.EElement.None;
             public int Id = 0;
-            public string Name = string.Empty;
             public Action ClickAction = null;
         }
 

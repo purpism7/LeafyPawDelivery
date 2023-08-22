@@ -124,7 +124,6 @@ namespace Game
                                 {
                                     EElement = Type.EElement.Animal,
                                     Id = data.Id,
-                                    Name = animalData.Name,
                                     ClickAction = () =>
                                     {
 

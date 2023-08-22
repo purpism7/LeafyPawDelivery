@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AnimalIcon_1
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 2007c250847bec34dbf686ae415b846c, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 6e2a7621e3359714cbbce1665c676d54, type: 3}
+  - {fileID: 21300000, guid: 97e332b15cab845fe91f0b23b022dcd9, type: 3}
+  - {fileID: 21300000, guid: d45f76f3ad19e4ce982b3c1570f16934, type: 3}
+  - {fileID: 21300000, guid: 41fa7e15ea323d249964a8c08728383f, type: 3}
+  - {fileID: 21300000, guid: 9e94afa64754b42a2b0fee9bc792c05d, type: 3}
+  - {fileID: 21300000, guid: 09d253b6430b0bf44b90682a5ec43274, type: 3}
+  - {fileID: 21300000, guid: 4c9c64670e4304081b2848dc5886fd22, type: 3}
+  - {fileID: 21300000, guid: 70721d18ec1f14d458c8c07349c12379, type: 3}
+  - {fileID: 21300000, guid: b04eca58c86c0486ea39ef91424ba07e, type: 3}
+  - {fileID: 21300000, guid: 0323974a3f8a6499d967e2776a2dbb8a, type: 3}
+  - {fileID: 21300000, guid: 4a0b5e6ab5137264e927da84d5601b55, type: 3}
+  - {fileID: 21300000, guid: 5595e85eedf5aba49b8b80da1a63b92b, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - BookIcon_Map01_Char_02
+  - EditIcon_Map01_Char_03
+  - EditIcon_Map01_Char_05
+  - BookIcon_Map01_Char_04
+  - EditIcon_Map01_Char_02
+  - BookIcon_Map01_Char_03
+  - BookIcon_Map01_Char_06
+  - EditIcon_Map01_Char_06
+  - EditIcon_Map01_Char_04
+  - EditIcon_Map01_Char_01
+  - BookIcon_Map01_Char_05
+  - BookIcon_Map01_Char_01
+  m_RenderDataMap: {}
+  m_Tag: AnimalIcon_1
+  m_IsVariant: 0
