@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Animal : Data.Base
+public class Animal : ElementData
 {
-    public int PlaceId = 0;
     public int Currency = 0;
-    public string ShortIconImgName = string.Empty;
-    public string LargeIconImgName = string.Empty;
+
+    public override int GetCurrency => Currency;
+    public override Type.EElement EElement => Type.EElement.Animal;
 }
 

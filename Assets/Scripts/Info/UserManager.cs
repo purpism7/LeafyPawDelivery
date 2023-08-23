@@ -22,6 +22,15 @@ namespace Info
 
         //private Dictionary<System.Type, Holder.Base> _holderDic = new();
 
+        private void OnApplicationPause(bool pause)
+        {
+            if(pause)
+            {
+                Debug.Log("UserManager OnApplicationPause");
+                Save();
+            }
+        }
+
         protected override void Initialize()
         {
             
@@ -46,19 +55,15 @@ namespace Info
             if (database == null)
                 yield break;
 
-            Debug.Log("firebase.Auth.UserId = " + firebaseMgr.Auth.UserId);
             yield return StartCoroutine(database?.CoLoad(firebaseMgr.Auth.UserId,
                 (dataSnapshot) =>
                 {
-                    Debug.Log("dataSnapshot = " + dataSnapshot);
                     SetUserInfo(dataSnapshot);
 
                     endLoad = true;
                 }));
 
             yield return new WaitUntil(() => endLoad);
-
-            Debug.Log("End Load CoLoadUserInfo");
         }
 
         private void SetUserInfo(Firebase.Database.DataSnapshot dataSnapshot)

@@ -48,7 +48,7 @@ namespace GameSystem
             var touch = Input.GetTouch(0);
             var touchPosition = touch.position;
             var ray = _gameCameraCtr.GameCamera.ScreenPointToRay(touchPosition);
-            
+
             if (Physics.Raycast(ray, out RaycastHit raycastHit))
             {
                 if (touch.phase == TouchPhase.Began)
@@ -80,8 +80,9 @@ namespace GameSystem
             if (!CheckGetGameBaseElement(raycastHit, out gameBaseElement))
                 return;
 
-            if(gameBaseElement.EElement == Type.EElement.Object)
-            {
+            Type.EElement eElement = gameBaseElement.EElement;
+            if (eElement == Type.EElement.Object)
+            { 
                 if ((DateTime.UtcNow - _touchDateTime).TotalSeconds < TouchInterval)
                     return;
 
@@ -90,8 +91,10 @@ namespace GameSystem
                 var startPos = _gameCameraCtr.UICamera.ScreenToWorldPoint(touchPosition);
                 startPos.z = 10f;
 
-                UIManager.Instance?.Top?.CollectCurrency(startPos);
-            }
+                var elementData = ObjectContainer.Instance?.GetData(gameBaseElement.Id);
+
+                UIManager.Instance?.Top?.CollectCurrency(startPos, eElement, elementData.GetCurrency);
+            } 
         }
         
         #region Edit

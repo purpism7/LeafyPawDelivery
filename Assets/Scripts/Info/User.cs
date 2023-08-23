@@ -78,6 +78,19 @@ namespace Info
             }
         }
 
+        public void SetCurrency(Type.EElement eElement, int currency)
+        {
+            int placeId = CurrentPlaceId;
+            if(eElement == Type.EElement.Animal)
+            {
+                SetAnimalCurrency(placeId, currency);
+            }
+            else if(eElement == Type.EElement.Object)
+            {
+                SetObjectCurrency(placeId, currency);
+            }
+        }
+
         public void SetCurrency(Currency currency)
         {
             if (currency == null)
@@ -105,9 +118,19 @@ namespace Info
         {
             get
             {
-                int placeId = MainGameManager.Instance.placeMgr.ActivityPlaceId;
+                return GetCurrency(CurrentPlaceId);
+            }
+        }
 
-                return GetCurrency(placeId);
+        private int CurrentPlaceId
+        {
+            get
+            {
+                var placeMgr = MainGameManager.Instance?.placeMgr;
+                if (placeMgr == null)
+                    return 0;
+
+                return placeMgr.ActivityPlaceId;
             }
         }
         #endregion

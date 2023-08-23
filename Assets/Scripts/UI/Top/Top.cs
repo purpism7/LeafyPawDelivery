@@ -68,7 +68,7 @@ namespace UI
             cashTMP?.SetText(userInfo.Cash + "");
         }
 
-        public void CollectCurrency(Vector3 startPos)
+        public void CollectCurrency(Vector3 startPos, Type.EElement eElement, int currency)
         {
             if (_collectCurrencyList == null)
                 return;
@@ -80,10 +80,13 @@ namespace UI
                 CollectEndAction =
                     () =>
                     {
-                        EndCollectCurrency();
+                        AddCurrency(eElement, currency);
                     },
             };
-            
+
+            // save currency value.
+            Info.UserManager.Instance?.User?.SetCurrency(eElement, currency);
+
             var collectCurrency = _collectCurrencyList.Find(collectCurrency => !collectCurrency.IsActivate);
             if (collectCurrency != null)
             {
@@ -100,12 +103,7 @@ namespace UI
             _collectCurrencyList.Add(component);
         }
         
-        private void EndCollectCurrency()
-        {
-            AddCurrency();
-        }
-
-        private void AddCurrency()
+        private void AddCurrency(Type.EElement eElement, int currency)
         {
             if (_addCurrencyList == null)
                 return;
@@ -117,9 +115,12 @@ namespace UI
             var data = new AddCurrency.Data()
             {
                 StartPos = startPos,
-                Currency = 1,
+                EElement = eElement,
+                Currency = currency,
             };
-            
+
+            SetCurrency();
+
             var addCurrency = _addCurrencyList.Find(addCurrency => !addCurrency.IsActivate);
             if (addCurrency != null)
             {

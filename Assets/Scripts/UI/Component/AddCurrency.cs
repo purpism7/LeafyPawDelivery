@@ -14,7 +14,9 @@ namespace UI.Component
         public class Data : BaseData
         {
             public Vector3 StartPos = Vector3.zero;
+            public Type.EElement EElement = Type.EElement.None;
             public int Currency = 0;
+            public System.Action CompleteAction = null;
         }
 
         public override void Initialize(Data data)
