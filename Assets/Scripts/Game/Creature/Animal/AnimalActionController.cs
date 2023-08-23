@@ -91,7 +91,7 @@ namespace Game.Creature
         #region Action.IListener
         void Action.IListener<AnimalAction>.StartAction(AnimalAction animalAction)
         {
-            Debug.Log("StartAction = " + animalAction.GetType());
+            //Debug.Log("StartAction = " + animalAction.GetType());
         }
 
         void Action.IListener<AnimalAction>.EndAction(AnimalAction animalAction)

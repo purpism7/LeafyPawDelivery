@@ -232,6 +232,25 @@ namespace Game
             }
         }
 
+        public void EnableCollider(bool enable)
+        {
+            if(_animalList != null)
+            {
+                foreach(var animal in _animalList)
+                {
+                    animal?.EnableCollider(enable);
+                }
+            }
+
+            if(_objectList != null)
+            {
+                foreach (var obj in _objectList)
+                {
+                    obj?.EnableCollider(enable);
+                }
+            }
+        }
+
         #region SpeechBubble
         public void ActivateRandomSpeechBubble()
         {
@@ -276,7 +295,7 @@ namespace Game
                     ActivateRandomSpeechBubble();
                 });
         }
-        #endregion 
+        #endregion
     }
 }
 

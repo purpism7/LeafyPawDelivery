@@ -33,14 +33,11 @@ namespace Game
 
         protected override void Initialize()
         {
-            Debug.Log("PlaceManager Initialize");
             Listener?.RemoveAllListeners();
         }
 
         public override IEnumerator CoInit(Data data)
         {
-            Debug.Log("PlaceManager CoInit");
-
             ActivityPlace = new GameSystem.PlaceCreator()
                .SetPlaceId(data.StartPlaceId)
                .SetRoot(RootTm)
@@ -49,7 +46,6 @@ namespace Game
             _placeList.Add(ActivityPlace);
 
             Listener?.Invoke(ActivityPlaceId);
-
 
             yield break;
         }

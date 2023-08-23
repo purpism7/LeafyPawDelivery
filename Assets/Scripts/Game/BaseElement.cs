@@ -13,6 +13,8 @@ namespace Game
         [SerializeField]
         protected UI.Edit edit = null;
 
+        private CapsuleCollider _collider = null;
+
         public Type.EElement EElement { get; protected set; } = Type.EElement.None;
 
         public void ActiveEdit(bool active)
@@ -27,6 +29,19 @@ namespace Game
 
             spriteRenderer?.material?.SetFloat("_Thickness", width);
         }
+
+        public void EnableCollider(bool enable)
+        {
+            if (_collider == null)
+            {
+                if (spriteRenderer == null)
+                    return;
+
+                _collider = spriteRenderer.GetComponent<CapsuleCollider>();
+            }
+
+            _collider.enabled = enable;
+        }
     }
 
     public abstract class BaseElement<T> : BaseElement where T : BaseData
@@ -37,14 +52,19 @@ namespace Game
 
         public virtual void Initialize(T data)
         {
-            _data = data;
+            InternalInitialize(data);
         }
 
         public virtual IEnumerator CoInitialze(T data)
         {
-            _data = data;
+            InternalInitialize(data);
 
             yield return null;
+        }
+
+        private void InternalInitialize(T data)
+        {
+            _data = data;
         }
     }
 }

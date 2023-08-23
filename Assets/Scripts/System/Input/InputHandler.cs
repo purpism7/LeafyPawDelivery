@@ -129,6 +129,9 @@ namespace GameSystem
 
         private void StartEdit(Game.BaseElement gameBaseElement)
         {
+            _mainGameMgr?.placeMgr?.ActivityPlace?.EnableCollider(false);
+            gameBaseElement?.EnableCollider(true);
+
             _gameBaseElement = gameBaseElement;
             _gameBaseElement?.OnTouchBegan(_gameCameraCtr.GameCamera, _grid);
 
@@ -147,11 +150,14 @@ namespace GameSystem
                _gameBaseElement.EState_ != Game.EState.Arrange)
                 return;
 
+           
+
             _gameBaseElement = null;
             _notTouchGameBaseElement = true;
             _gameCameraCtr.SetStopUpdate(false);
 
             Game.UIManager.Instance?.Bottom?.ActivateEditList();
+            _mainGameMgr?.placeMgr?.ActivityPlace?.EnableCollider(true) ;
         }
         #endregion
 
