@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>327674171124-0m1k050sbjb00g7ie6891so38gprev62.apps.googleusercontent.com</string>
+	<string>327674171124-217qug376p99513vou1ut2ehaqsfb107.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.327674171124-0m1k050sbjb00g7ie6891so38gprev62</string>
+	<string>com.googleusercontent.apps.327674171124-217qug376p99513vou1ut2ehaqsfb107</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC3z4gVOzhGaT_fsW2_1I3k6idg_NI-2AQ</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.popo.leafypawdelivery</string>
+	<string>com.popo.leafy-paw-delivery</string>
 	<key>PROJECT_ID</key>
 	<string>leafypawdelivery</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:327674171124:ios:5a616dd89c067661f318a1</string>
+	<string>1:327674171124:ios:7a7a60999bb94649f318a1</string>
 	<key>DATABASE_URL</key>
 	<string>https://leafypawdelivery-default-rtdb.firebaseio.com</string>
 </dict>
