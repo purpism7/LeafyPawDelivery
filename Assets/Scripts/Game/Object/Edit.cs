@@ -8,12 +8,12 @@ namespace Game
     {
         private Camera _gameCamera = null;
         private int _overlapCnt = 0;
-        private GameSystem.Grid _grid = null;
+        private GameSystem.IGridProvider _iGridProvider = null;
 
-        public Edit(Camera gameCamera, GameSystem.Grid grid)
+        public Edit(Camera gameCamera, GameSystem.IGridProvider iGridProvider)
         {
             _gameCamera = gameCamera;
-            _grid = grid;
+            _iGridProvider = iGridProvider;
         }
 
         public override void Apply(T t)
@@ -75,7 +75,7 @@ namespace Game
             Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);
             Vector3 pos = _gameCamera.ScreenToWorldPoint(movePos);
 
-            pos.y = Mathf.Clamp(pos.y, _grid.Limit.y, _grid.Limit2.y);
+            pos.y = Mathf.Clamp(pos.y, _iGridProvider.LimitBottom.y, _iGridProvider.LimitTop.y);
 
             gameBaseTm.position = pos;
         }

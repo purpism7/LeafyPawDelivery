@@ -17,7 +17,7 @@ namespace GameSystem
 
         public override void Initialize()
         {
-            
+            GameCameraCtr?.Initialize(grid);
         }
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)

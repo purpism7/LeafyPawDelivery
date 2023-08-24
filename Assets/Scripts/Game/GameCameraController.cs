@@ -16,18 +16,31 @@ namespace GameSystem
         private Vector3 _velocity = Vector3.zero;
 
         private Vector3 _prevPos = Vector3.zero;
-        private float _height = 0;
-        private float _width = 0;
+
+        public float Height { get; private set; } = 0;
+        public float Width { get; private set; } = 0;
+        public Vector3 Center { get { return GameCamera != null ? GameCamera.transform.position + GameCamera.transform.forward : Vector3.zero; }  }
 
         public bool StopUpdate { get; private set; } = false;
+        public IGridProvider IGridProvider { get; private set; } = null;
+
+        private float _halfHeight = 0;
+
+        public void Initialize(IGridProvider iGridProvider)
+        {
+            IGridProvider = iGridProvider;
+
+            if (GameCamera != null)
+            {
+                _halfHeight = GameCamera.orthographicSize;
+                Height = _halfHeight * 2f;
+                Width = Height * GameCamera.aspect;
+            }
+        }
 
         private void Start()
         {
-            if(GameCamera != null)
-            {
-                _height = GameCamera.orthographicSize;
-                _width = _height * Screen.width / Screen.height;
-            }
+            
         }
 
         private void FixedUpdate()
@@ -52,9 +65,19 @@ namespace GameSystem
 
         private void OnDrawGizmos()
         {
+            if (GameCamera == null)
+                return;
+
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(_center, _mapSize * 2f);
-            Gizmos.DrawWireSphere(GameCamera.transform.position + GameCamera.transform.forward,  30f);
+            Gizmos.DrawWireSphere(Center, 30f);
+
+            Gizmos.color = Color.yellow;
+
+            float height = GameCamera.orthographicSize * 2f;
+            float width = height * GameCamera.aspect;
+
+            Gizmos.DrawWireCube(Center, new Vector3(width - 100f, height - 700f));
         }
 
         private void Drag()
@@ -68,9 +91,8 @@ namespace GameSystem
             {
                 case TouchPhase.Began:
                     {
-
+                        break;
                     }
-                    break;
 
                 case TouchPhase.Moved:
                     {
@@ -78,24 +100,24 @@ namespace GameSystem
                         var cameraTm = GameCamera.transform;
                         var movePos = cameraTm.position - pos;
                         
-                        float x = _mapSize.x - _width;
+                        float x = _mapSize.x - Width;
                         float clampX = Mathf.Clamp(movePos.x, -x + _center.x, x + _center.x);
 
-                        float y = _mapSize.y - _height;
+                        float y = _mapSize.y - _halfHeight;
                         float clampY = Mathf.Clamp(movePos.y, -y + _center.y, y + _center.y);
 
                         cameraTm.position = new Vector3(clampX, clampY, 0);
                         // cameraTm.Translate(pos);
                         // cameraTm.position = Vector3.SmoothDamp(cameraTm.position, new Vector3(clampX, clampY, 0), ref _velocity, 0.01f);
+
+                        break;
                     }
-                    break;
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
-                        
+                        break;
                     }
-                    break;
             }
         }
 

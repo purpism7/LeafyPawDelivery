@@ -47,11 +47,11 @@ namespace Game
         }
 
         // object 최초 선택 시, 호출.
-        public override void OnTouchBegan(Camera gameCamera, GameSystem.Grid grid)
+        public override void OnTouchBegan(Camera gameCamera, GameSystem.IGridProvider iGridProvider)
         {
-            base.OnTouchBegan(gameCamera, grid);
+            base.OnTouchBegan(gameCamera, iGridProvider);
 
-            var edit = new Game.Edit<Game.Object>(gameCamera, grid);
+            var edit = new Game.Edit<Game.Object>(gameCamera, iGridProvider);
 
             SetState(edit);
 

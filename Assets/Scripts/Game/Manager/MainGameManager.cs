@@ -21,7 +21,7 @@ public class MainGameManager : Singleton<MainGameManager>
     
     public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
 
-    public Camera GameCamera { get; private set; } = null;
+    public GameCameraController GameCameraCtr { get; private set; } = null;
 
     public Game.State.Base GameState { get; private set; } = null;
 
@@ -63,7 +63,7 @@ public class MainGameManager : Singleton<MainGameManager>
         StoryMgr = iProvider.Get<Game.StoryManager>();
         //OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();
 
-        GameCamera = iProvider.Get<InputManager>()?.GameCameraCtr?.GameCamera;
+        GameCameraCtr = iProvider.Get<InputManager>()?.GameCameraCtr;
 
         SetGameState<Game.State.Game>();       
 

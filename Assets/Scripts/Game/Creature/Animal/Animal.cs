@@ -58,11 +58,11 @@ namespace Game.Creature
             _actionCtr?.ChainUpdate();
         }
 
-        public override void OnTouchBegan(Camera gameCamera, GameSystem.Grid grid)
+        public override void OnTouchBegan(Camera gameCamera, GameSystem.IGridProvider iGridProvider)
         {
-            base.OnTouchBegan(gameCamera, grid);
+            base.OnTouchBegan(gameCamera, iGridProvider);
 
-            SetState(new Edit<Creature.Animal>(gameCamera, grid));
+            SetState(new Edit<Creature.Animal>(gameCamera, iGridProvider));
 
             SetSortingOrder(_selectOrder);
         }

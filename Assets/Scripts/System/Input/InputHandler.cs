@@ -15,7 +15,7 @@ namespace GameSystem
         readonly private float TouchInterval = 0.3f;
         
         private GameSystem.GameCameraController _gameCameraCtr = null;
-        private Grid _grid = null;
+        private IGridProvider _iGridProvider = null;
 
         private Game.BaseElement _gameBaseElement = null;
         private bool _notTouchGameBaseElement = false;
@@ -23,10 +23,10 @@ namespace GameSystem
 
         private DateTime _touchDateTime;
 
-        public void Init(GameSystem.GameCameraController gameCameraCtr, Grid grid)
+        public void Init(GameSystem.GameCameraController gameCameraCtr, IGridProvider iGridProvider)
         {
             _gameCameraCtr = gameCameraCtr;
-            _grid = grid;
+            _iGridProvider = iGridProvider;
 
             _mainGameMgr = MainGameManager.Instance;
             _mainGameMgr?.SetStartEditAction(StartEdit);
@@ -133,7 +133,7 @@ namespace GameSystem
             gameBaseElement?.EnableCollider(true);
 
             _gameBaseElement = gameBaseElement;
-            _gameBaseElement?.OnTouchBegan(_gameCameraCtr.GameCamera, _grid);
+            _gameBaseElement?.OnTouchBegan(_gameCameraCtr.GameCamera, _iGridProvider);
 
             _notTouchGameBaseElement = false;
             _gameCameraCtr.SetStopUpdate(true);
@@ -149,8 +149,6 @@ namespace GameSystem
             if(_gameBaseElement.EState_ != Game.EState.Remove &&
                _gameBaseElement.EState_ != Game.EState.Arrange)
                 return;
-
-           
 
             _gameBaseElement = null;
             _notTouchGameBaseElement = true;

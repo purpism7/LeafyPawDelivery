@@ -4,7 +4,13 @@ using UnityEngine;
 
 namespace GameSystem
 {
-    public class Grid : MonoBehaviour
+    public interface IGridProvider
+    {
+        Vector3 LimitBottom { get; }
+        Vector3 LimitTop { get; }
+    }
+
+    public class Grid : MonoBehaviour, IGridProvider
     {
         public GridData GridData;
         public Cell Cell; 
@@ -69,7 +75,7 @@ namespace GameSystem
             }
         }
 
-        public Vector3 Limit
+        Vector3 IGridProvider.LimitBottom
         {
             get
             {
@@ -83,7 +89,7 @@ namespace GameSystem
             }
         }
 
-        public Vector3 Limit2
+        Vector3 IGridProvider.LimitTop
         {
             get
             {

@@ -69,7 +69,7 @@ namespace Game
 
         public EState EState_ { get; protected set; } = EState.None;
 
-        public virtual void OnTouchBegan(Camera gameCamera, GameSystem.Grid grid) { }
+        public virtual void OnTouchBegan(Camera gameCamera, GameSystem.IGridProvider iGridProvider) { }
         public virtual void OnTouch(Touch touch) { }
         public virtual void ChainUpdate() { }
     }

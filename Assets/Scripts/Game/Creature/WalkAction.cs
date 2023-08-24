@@ -25,16 +25,19 @@ namespace Game.Creature
         private void MoveToTarget()
         {
             Vector3 pos = Vector3.zero;
-            var camera = MainGameManager.Instance?.GameCamera;
-            if (camera)
-            {
-                pos = camera.transform.position + camera.transform.forward;
-            }
+            var gameCameraCtr = MainGameManager.Instance?.GameCameraCtr;
+            if (gameCameraCtr == null)
+                return;
 
-            var halfWidth = Screen.width / 2f - 20f;
-            var halfHeight = Screen.height / 2f;
+            var center = gameCameraCtr.Center;
+            var halfWidth = (gameCameraCtr.Width - 100f) / 2f;
+            var halfHeight = (gameCameraCtr.Height - 700f) / 2f;
 
-            MoveToTarget(new Vector3(Random.Range(pos.x - halfWidth, pos.x + halfWidth), Random.Range(pos.y - halfHeight + 50f, pos.y)));
+            var randomX = Random.Range(center.x - halfWidth, center.x + halfWidth);
+            var randomY = Random.Range(center.y - halfHeight, center.y + halfHeight);
+            randomY = Mathf.Clamp(randomY, gameCameraCtr.IGridProvider.LimitBottom.y, gameCameraCtr.IGridProvider.LimitTop.y);
+
+            MoveToTarget(new Vector3(randomX, randomY));
         }
 
         private void MoveToTarget(Vector3 targetPos)
@@ -78,6 +81,7 @@ namespace Game.Creature
             }
 
             animalTm.localPosition = Vector2.MoveTowards(animalTm.localPosition, _targetPos, Time.deltaTime * 50f);
+            Debug.DrawLine(animalTm.localPosition, _targetPos);
 
             if(_data.SprRenderer != null)
             {

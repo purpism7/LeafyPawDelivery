@@ -46,10 +46,10 @@ namespace UI.Component
                 return;
 
             Vector3 pos = Vector3.zero;
-            var camera = mainGameMgr.GameCamera;
-            if (camera)
+            var gameCameraCtr = mainGameMgr.GameCameraCtr;
+            if (gameCameraCtr != null)
             {
-                pos = camera.transform.position + camera.transform.forward;
+                pos = gameCameraCtr.Center;
             }
 
             var animal = new GameSystem.AnimalCreator()
