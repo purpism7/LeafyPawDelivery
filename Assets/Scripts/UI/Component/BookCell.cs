@@ -13,7 +13,7 @@ namespace UI.Component
             public IListener IListener = null;
 
             public int Id = 0;
-            public Type.EElement EElement = Type.EElement.None;
+            public Game.Type.EElement EElement = Game.Type.EElement.None;
             public bool Lock = true;
         }
 
@@ -63,7 +63,7 @@ namespace UI.Component
             }
         }
         
-        public void Unlock(Type.EElement EElement, int id)
+        public void Unlock(Game.Type.EElement EElement, int id)
         {
             if (_data == null)
                 return;

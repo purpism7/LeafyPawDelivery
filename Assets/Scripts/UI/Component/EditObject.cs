@@ -28,7 +28,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            iconImg.sprite = GameUtils.GetShortIconSprite(Type.EElement.Object, _data.ObjectId);
+            iconImg.sprite = GameUtils.GetShortIconSprite(Game.Type.EElement.Object, _data.ObjectId);
         }
 
         public void OnClick()

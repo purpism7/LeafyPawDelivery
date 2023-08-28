@@ -11,25 +11,20 @@ using UI.Component;
 namespace GameSystem
 {
     public class InputHandler : MonoBehaviour
-    {
-        readonly private float TouchInterval = 0.3f;
-        
+    {   
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private IGridProvider _iGridProvider = null;
-
-        private Game.BaseElement _gameBaseElement = null;
-        private bool _notTouchGameBaseElement = false;
         private MainGameManager _mainGameMgr = null;
-
-        private DateTime _touchDateTime;
-
+        private Game.Base _gameBase = null;
+        private bool _beganGameBase = false;
+        
         public void Init(GameSystem.GameCameraController gameCameraCtr, IGridProvider iGridProvider)
         {
             _gameCameraCtr = gameCameraCtr;
             _iGridProvider = iGridProvider;
 
             _mainGameMgr = MainGameManager.Instance;
-            _mainGameMgr?.SetStartEditAction(StartEdit);
+            _mainGameMgr?.SetStartEditAction(OnTouchBegan);
         }
 
         public void ChainUpdate()
@@ -49,126 +44,78 @@ namespace GameSystem
             var touchPosition = touch.position;
             var ray = _gameCameraCtr.GameCamera.ScreenPointToRay(touchPosition);
 
-            if (Physics.Raycast(ray, out RaycastHit raycastHit))
+            RaycastHit hitInfo;
+            bool isHitInfo = Physics.Raycast(ray, out hitInfo);
+            bool gameStateEdit = _mainGameMgr.GameState.CheckState<Game.State.Edit>();
+            Game.Base gameBase = null;
+            
+            if (touch.phase == TouchPhase.Began)
             {
-                if (touch.phase == TouchPhase.Began)
+                if (isHitInfo)
                 {
-                    if (!CheckEdit(raycastHit))
-                    { 
-                        CollectCurrency(raycastHit, touchPosition);
+                    if (CheckGetGameBase<Game.Base>(hitInfo, out gameBase))
+                    {
+                        OnTouchBegan(gameBase, gameStateEdit);
                     }
                 }
-            }
-            
-            if (_mainGameMgr.GameState.CheckState<Game.State.Edit>())
-            {
-                if(!_notTouchGameBaseElement)
-                {
-                    _gameBaseElement?.OnTouch(touch);
-                }
 
-                if(_gameBaseElement != null)
-                {
-                    EndEdit();
-                }
-            }
-        }
-
-        private void CollectCurrency(RaycastHit raycastHit, Vector2 touchPosition)
-        {
-            Game.BaseElement gameBaseElement = null;
-            if (!CheckGetGameBaseElement(raycastHit, out gameBaseElement))
-                return;
-
-            Type.EElement eElement = gameBaseElement.EElement;
-            if (eElement == Type.EElement.Object)
-            { 
-                if ((DateTime.UtcNow - _touchDateTime).TotalSeconds < TouchInterval)
+                if (!_beganGameBase)
                     return;
-
-                _touchDateTime = DateTime.UtcNow;
-
-                var startPos = _gameCameraCtr.UICamera.ScreenToWorldPoint(touchPosition);
-                startPos.z = 10f;
-
-                var elementData = ObjectContainer.Instance?.GetData(gameBaseElement.Id);
-
-                UIManager.Instance?.Top?.CollectCurrency(startPos, eElement, elementData.GetCurrency);
-            } 
-        }
-        
-        #region Edit
-        private bool CheckEdit(RaycastHit raycastHit)
-        {
-            if (!_mainGameMgr.GameState.CheckState<Game.State.Edit>())
-                return false;
-
-            if (_gameBaseElement == null)
-            {
-                if(CheckGetGameBaseElement(raycastHit, out Game.BaseElement gameBaseElement))
-                {
-                    StartEdit(gameBaseElement);
-                }                        
             }
             else
             {
-                if(CheckGetGameBaseElement(raycastHit, out Game.BaseElement gameBaseElement))
+                if (gameStateEdit)
                 {
-                    _notTouchGameBaseElement = _gameBaseElement.UId != gameBaseElement.UId;
+                    if (!_beganGameBase)
+                        return;
                 }
                 else
                 {
-                    _notTouchGameBaseElement = true;
+                    bool isGetGameBase = CheckGetGameBase<Game.Base>(hitInfo, out gameBase);
+                    if (!isGetGameBase)
+                        return;
                 }
-                        
-                _gameCameraCtr.SetStopUpdate(_notTouchGameBaseElement == false);
+
+                _gameBase?.OnTouch(touch);
+
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    ReleaseGameBase(gameStateEdit);
+                }
+                else if (touch.phase == TouchPhase.Canceled)
+                {
+                    ReleaseGameBase(gameStateEdit);
+                }
             }
-
-            return true;
         }
 
-        private void StartEdit(Game.BaseElement gameBaseElement)
+        private void OnTouchBegan(Game.Base gameBase, bool gameStateEdit)
         {
-            _mainGameMgr?.placeMgr?.ActivityPlace?.EnableCollider(false);
-            gameBaseElement?.EnableCollider(true);
+            _beganGameBase = true;
+            _gameBase = gameBase;
 
-            _gameBaseElement = gameBaseElement;
-            _gameBaseElement?.OnTouchBegan(_gameCameraCtr.GameCamera, _iGridProvider);
-
-            _notTouchGameBaseElement = false;
-            _gameCameraCtr.SetStopUpdate(true);
-
-            Game.UIManager.Instance?.Bottom?.DeactivateEditList();
+            gameBase?.OnTouchBegan(_gameCameraCtr, _iGridProvider);
         }
 
-        private void EndEdit()
+        private void ReleaseGameBase(bool gameStateEdit)
         {
-            if(_gameBaseElement == null)
+            if(_gameBase == null)
                 return;
 
-            if(_gameBaseElement.EState_ != Game.EState.Remove &&
-               _gameBaseElement.EState_ != Game.EState.Arrange)
-                return;
-
-            _gameBaseElement = null;
-            _notTouchGameBaseElement = true;
-            _gameCameraCtr.SetStopUpdate(false);
-
-            Game.UIManager.Instance?.Bottom?.ActivateEditList();
-            _mainGameMgr?.placeMgr?.ActivityPlace?.EnableCollider(true) ;
+            _beganGameBase = false;
+            _gameBase = null;
         }
-        #endregion
 
-        private bool CheckGetGameBaseElement(RaycastHit raycastHit, out Game.BaseElement gameBaseElement)
+        private bool CheckGetGameBase<T>(RaycastHit raycastHit, out T t)
         {
-            gameBaseElement = null;
+            t = default(T);
 
             var collider = raycastHit.collider;
             if (collider == null)
                 return false;
 
-            gameBaseElement = collider.GetComponentInParent<Game.BaseElement>();
-            if (gameBaseElement == null)
+            t = collider.GetComponentInParent<T>();
+            if (t == null)
                 return false;
 
             return true;

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using DG.Tweening;
-using Random = System.Random;
 
 namespace UI.Component
 {

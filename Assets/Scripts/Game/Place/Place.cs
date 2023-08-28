@@ -6,7 +6,8 @@ using GameSystem;
 
 namespace Game
 {
-    public class Place : Base<Place.Data>
+    public class
+        Place : Base<Place.Data>
     {
         public class Data : BaseData
         {
@@ -15,6 +16,8 @@ namespace Game
         
         [SerializeField]
         private Transform objectRootTm;
+        [SerializeField]
+        private Transform currencyRootTm = null;
         public Transform animalRootTm;
 
         public Transform ObjectRootTm { get { return objectRootTm; } }
@@ -23,6 +26,7 @@ namespace Game
         private List<Game.Creature.Animal> _animalList = new();
         private Coroutine _speechBubbleCoroutine = null;
         private YieldInstruction _waitSecSpeechBubble = new WaitForSeconds(10f);
+        private float _initPosZ = 0;
 
         public override void Initialize(Data data)
         {
@@ -43,8 +47,8 @@ namespace Game
         {
             base.Activate();
 
-            SetAnimalList();
             SetObjectList();
+            SetAnimalList();
         }
 
         public void AddAnimal(Game.Creature.Animal addAnimal)
@@ -130,6 +134,8 @@ namespace Game
                 if (!animalInfo.Arrangement)
                     continue;
 
+                animalInfo.Pos.z = ++_initPosZ;
+
                 var animalData = new Game.Creature.Animal.Data()
                 {
                     Id = data.Id,
@@ -191,7 +197,9 @@ namespace Game
                 
                 if(!objectInfo.Arrangement)
                     continue;
-                
+
+                objectInfo.Pos.z = ++_initPosZ;
+
                 var objectData = new Game.Object.Data()
                 {
                     ObjectId = objectInfo.Id,
@@ -254,13 +262,19 @@ namespace Game
         #region SpeechBubble
         public void ActivateRandomSpeechBubble()
         {
+            DeactivateAllSpeechBubble();
             _speechBubbleCoroutine = StartCoroutine(CoRandomSpeechBubble());
+
+            DropCurrency();
         }
 
         public void DeactivateAllSpeechBubble()
         {
-            StopCoroutine(_speechBubbleCoroutine);
-            _speechBubbleCoroutine = null;
+            if(_speechBubbleCoroutine != null)
+            {
+                StopCoroutine(_speechBubbleCoroutine);
+                _speechBubbleCoroutine = null;
+            }
 
             foreach (var animal in _animalList)
             {
@@ -294,6 +308,27 @@ namespace Game
                 {
                     ActivateRandomSpeechBubble();
                 });
+        }
+        #endregion
+
+        #region Drop Currency
+        private void DropCurrency()
+        {
+            var randomIndex = UnityEngine.Random.Range(0, _animalList.Count);
+            var randomAnimal = _animalList[randomIndex];
+            if (randomAnimal == null)
+                return;
+
+            
+
+            new DropItemCreator()
+                .SetRootTm(currencyRootTm)
+                .SetStartRootTm(randomAnimal.transform)
+                .Create();
+
+            //new ComponentCreator<UI.Component.CollectCurrency, UI.Component.CollectCurrency.Data>()
+            //    .SetRootRectTm(currencyRootTm)
+            //    .Create();
         }
         #endregion
     }

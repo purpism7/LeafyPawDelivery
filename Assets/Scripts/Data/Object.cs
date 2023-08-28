@@ -8,9 +8,9 @@ public class Object : ElementData
     public int Grade = 0;
     public int Count = 1;
 
-    public Type.EObjectGrade EGrade = Type.EObjectGrade.None;
+    public Game.Type.EObjectGrade EGrade = Game.Type.EObjectGrade.None;
 
-    public override Type.EElement EElement => Type.EElement.Object;
+    public override Game.Type.EElement EElement => Game.Type.EElement.Object;
 
     public override void Initialize()
     {
@@ -19,7 +19,7 @@ public class Object : ElementData
         System.Enum.TryParse(Grade.ToString(), out EGrade);
 
         Count = Grade;
-        if(EGrade == Type.EObjectGrade.None)
+        if(EGrade == Game.Type.EObjectGrade.None)
         {
             Count = 1;
         }
@@ -31,16 +31,16 @@ public class Object : ElementData
         {
             switch(EGrade)
             {
-                case Type.EObjectGrade.Epic:
+                case Game.Type.EObjectGrade.Epic:
                     return 10;
 
-                case Type.EObjectGrade.Unique:
+                case Game.Type.EObjectGrade.Unique:
                     return 5;
 
-                case Type.EObjectGrade.Rare:
+                case Game.Type.EObjectGrade.Rare:
                     return 3;
 
-                case Type.EObjectGrade.Normal:
+                case Game.Type.EObjectGrade.Normal:
                     return 1;
 
                 default:

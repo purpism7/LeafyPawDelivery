@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameSystem;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
 
 using TMPro;
 using static GameData.Const;
+
+using GameSystem;
 
 namespace UI.Component
 {
@@ -18,14 +19,14 @@ namespace UI.Component
             public IListener IListener = null;
             
             public int Id = 0;
-            public Type.EElement EElement = Type.EElement.None; 
+            public Game.Type.EElement EElement = Game.Type.EElement.None; 
             public string Name = string.Empty;
             public bool Lock = true;
         }
         
         public interface IListener
         {
-            void Edit(Type.EElement EElement, int id);
+            void Edit(Game.Type.EElement EElement, int id);
         }
 
         #region Inspector
@@ -99,7 +100,7 @@ namespace UI.Component
             if (!_data.Lock)
                 return;
 
-            if(_data.EElement == Type.EElement.Animal)
+            if(_data.EElement == Game.Type.EElement.Animal)
             {
                 SetAnimalOpenCondition();
             }
@@ -211,7 +212,7 @@ namespace UI.Component
 
             switch(_data.EElement)
             {
-                case Type.EElement.Animal:
+                case Game.Type.EElement.Animal:
                     {
                         isPossibleUnlock = AnimalOpenConditionContainer.Instance.Check(_data.Id);
                         openConditionData = AnimalOpenConditionContainer.Instance.GetData(_data.Id);
@@ -219,7 +220,7 @@ namespace UI.Component
                         break;
                     }
 
-                case Type.EElement.Object:
+                case Game.Type.EElement.Object:
                     {
                         isPossibleUnlock = ObjectOpenConditionContainer.Instance.Check(_data.Id);
                         openConditionData = ObjectOpenConditionContainer.Instance.GetData(_data.Id);
@@ -267,7 +268,7 @@ namespace UI.Component
             MainGameManager.Instance?.AddInfo(_data.EElement, _data.Id);
         }
 
-        public void Unlock(Type.EElement EElement, int id)
+        public void Unlock(Game.Type.EElement EElement, int id)
         {
             if (_data == null)
                 return;

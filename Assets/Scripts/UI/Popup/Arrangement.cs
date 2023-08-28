@@ -23,7 +23,7 @@ namespace UI
         [SerializeField] private ScrollRect animalScrollRect = null;
         [SerializeField] private ScrollRect objectScrollRect = null;
 
-        private Type.ETab _currETabType = Type.ETab.Animal;
+        private Game.Type.ETab _currETabType = Game.Type.ETab.Animal;
 
         private List<ArrangementCell> _arrangementCellList = new();
 
@@ -44,7 +44,7 @@ namespace UI
         {
             base.Activate();
             
-            _currETabType = Type.ETab.Animal;
+            _currETabType = Game.Type.ETab.Animal;
             ActiveContents();
 
             var tabToggle = tabToggles?.First();
@@ -89,7 +89,7 @@ namespace UI
                         IListener = this,
                         
                         Id = data.Id,
-                        EElement = Type.EElement.Animal,
+                        EElement = Game.Type.EElement.Animal,
                         Lock = animalInfo == null,
                     })
                     .SetRootRectTm(animalScrollRect.content)
@@ -117,7 +117,7 @@ namespace UI
                 var objectInfo = objectMgr.GetObjectInfoById(data.Id);
                 if (objectInfo == null)
                 {
-                    if (data.EGrade == Type.EObjectGrade.None)
+                    if (data.EGrade == Game.Type.EObjectGrade.None)
                         continue;
                 }
 
@@ -127,7 +127,7 @@ namespace UI
                       IListener = this,
                       
                       Id = data.Id,
-                      EElement = Type.EElement.Object,
+                      EElement = Game.Type.EElement.Object,
                       Lock = objectInfo == null,
                   })
                   .SetRootRectTm(objectScrollRect.content)
@@ -139,11 +139,11 @@ namespace UI
 
         private void ActiveContents()
         {
-            UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Type.ETab.Animal);
-            UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
+            UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Game.Type.ETab.Animal);
+            UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Game.Type.ETab.Object);
         }
 
-        private void Unlock(Type.EElement EElement, int id)
+        private void Unlock(Game.Type.EElement EElement, int id)
         {
             if (_arrangementCellList == null)
                 return;
@@ -159,7 +159,7 @@ namespace UI
             if (animalInfo == null)
                 return;
             
-            Unlock(Type.EElement.Animal, animalInfo.Id);
+            Unlock(Game.Type.EElement.Animal, animalInfo.Id);
         }
         
         private void OnChangedObjectInfo(Info.Object objectInfo)
@@ -167,12 +167,12 @@ namespace UI
             if (objectInfo == null)
                 return;
             
-            Unlock(Type.EElement.Object, objectInfo.Id);
+            Unlock(Game.Type.EElement.Object, objectInfo.Id);
         }
 
         public void OnChanged(string tabType)
         {
-            if(System.Enum.TryParse(tabType, out Type.ETab eTabType))
+            if(System.Enum.TryParse(tabType, out Game.Type.ETab eTabType))
             {
                 if(_currETabType == eTabType)
                     return;
@@ -184,11 +184,11 @@ namespace UI
         }
 
         #region ArrangementCell.IListener
-        void ArrangementCell.IListener.Edit(Type.EElement EElement, int id)
+        void ArrangementCell.IListener.Edit(Game.Type.EElement EElement, int id)
         {
             Deactivate();
             
-            Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(EElement == Type.EElement.Animal ? Type.ETab.Animal : Type.ETab.Object);
+            Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(EElement == Game.Type.EElement.Animal ? Game.Type.ETab.Animal : Game.Type.ETab.Object);
         }
         #endregion
 

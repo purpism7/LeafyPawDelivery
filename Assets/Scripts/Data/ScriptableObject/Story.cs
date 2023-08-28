@@ -11,7 +11,7 @@ namespace GameData
         [Serializable]
         public class ReqData
         {
-            public Type.EOpen EOpenType = Type.EOpen.None;
+            public Game.Type.EOpen EOpenType = Game.Type.EOpen.None;
             public int Id = 0;
         }
         

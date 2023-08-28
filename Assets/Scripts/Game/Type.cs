@@ -1,63 +1,65 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class Type
+namespace Game
 {
-    public enum ETab
+    public class Type
     {
-        Animal,
-        Object,
-    }
+        public enum ETab
+        {
+            Animal,
+            Object,
+        }
 
-    public enum EElement
-    {
-        None,
-        
-        Animal,
-        Object,
-    }
-    
-    public enum EScene
-    {
-        None,
+        public enum EElement
+        {
+            None,
 
-        Loading,
-        Logo,
-        Login,
-        Game,
-    }
+            Animal,
+            Object,
+        }
 
-    public enum EOpen
-    {
-        None,
-        
-        Animal,
-        Object,
-        Story,
-    }
+        public enum EScene
+        {
+            None,
 
-    public enum EAnimalCurrency
-    {
-        None,
+            Loading,
+            Logo,
+            Login,
+            Game,
+        }
 
-        Acorn,
-    }
+        public enum EOpen
+        {
+            None,
 
-    public enum EObjectCurrency
-    {
-        None,
+            Animal,
+            Object,
+            Story,
+        }
 
-        Leaf,
-    }
+        public enum EAnimalCurrency
+        {
+            None,
 
-    public enum EObjectGrade
-    {
-        None,
+            Acorn,
+        }
 
-        Unique,
-        Epic,
-        Rare,
-        Normal,
+        public enum EObjectCurrency
+        {
+            None,
+
+            Leaf,
+        }
+
+        public enum EObjectGrade
+        {
+            None,
+
+            Unique,
+            Epic,
+            Rare,
+            Normal,
+        }
     }
 }
+
+

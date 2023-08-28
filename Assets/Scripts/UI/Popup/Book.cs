@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameSystem;
-using UI.Component;
+
 using UnityEngine;
 using UnityEngine.UI;
+
+using Game;
+using UI.Component;
 
 namespace UI
 {

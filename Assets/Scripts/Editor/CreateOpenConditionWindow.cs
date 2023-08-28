@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 
 public class CreateOpenConditionWindow : EditorWindow
 {
-    private Type.EOpen _eOpenType = Type.EOpen.None;
+    private Game.Type.EOpen _eOpenType = Game.Type.EOpen.None;
     private string _fileName = string.Empty;
     private int _id = 0;
     private OpenConditionData _openCondition = null;
@@ -31,7 +31,7 @@ public class CreateOpenConditionWindow : EditorWindow
 
     private void OnGUI()
     {
-        _eOpenType = (Type.EOpen)EditorGUILayout.EnumPopup("Type", _eOpenType);
+        _eOpenType = (Game.Type.EOpen)EditorGUILayout.EnumPopup("Type", _eOpenType);
         _fileName = EditorGUILayout.TextField("File Name", _fileName);
         _id = EditorGUILayout.IntField("Id", _id);
 
@@ -62,7 +62,7 @@ public class CreateOpenConditionWindow : EditorWindow
 
     private void Create()
     {
-        if (_eOpenType == Type.EOpen.None)
+        if (_eOpenType == Game.Type.EOpen.None)
             return;
         
         var filePath = "Assets/ScriptableObject/OpenCondition/" + _eOpenType + "/" + _fileName + ".asset";

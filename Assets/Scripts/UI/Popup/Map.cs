@@ -16,7 +16,7 @@ namespace UI
         
         [SerializeField] private ScrollRect placeScrollRect = null;
         
-        private Type.ETab _currETabType = Type.ETab.Animal;
+        private Game.Type.ETab _currETabType = Game.Type.ETab.Animal;
 
         public override void Initialize(Data data)
         {

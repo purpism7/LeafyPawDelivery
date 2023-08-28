@@ -30,14 +30,14 @@ namespace Game.Creature
                 return;
 
             var center = gameCameraCtr.Center;
-            var halfWidth = (gameCameraCtr.Width - 100f) / 2f;
-            var halfHeight = (gameCameraCtr.Height - 700f) / 2f;
+            var halfWidth = (gameCameraCtr.Width - 200f) / 2f;
+            var halfHeight = (gameCameraCtr.Height - 850f) / 2f;
 
             var randomX = Random.Range(center.x - halfWidth, center.x + halfWidth);
             var randomY = Random.Range(center.y - halfHeight, center.y + halfHeight);
             randomY = Mathf.Clamp(randomY, gameCameraCtr.IGridProvider.LimitBottom.y, gameCameraCtr.IGridProvider.LimitTop.y);
 
-            MoveToTarget(new Vector3(randomX, randomY));
+            MoveToTarget(new Vector3(randomX, randomY, _initPosZ));
         }
 
         private void MoveToTarget(Vector3 targetPos)
@@ -70,17 +70,15 @@ namespace Game.Creature
                 return;
 
             if (_data.EState != EState.InProgress)
-            {
                 return;
-            }
 
             var animalTm = _data.Tm;
             if (!animalTm)
-            {
                 return;
-            }
-
+            
             animalTm.localPosition = Vector2.MoveTowards(animalTm.localPosition, _targetPos, Time.deltaTime * 50f);
+            //animalTm.localPosition = new Vector3(animalTm.localPosition.x, animalTm.localPosition.y, _initPosZ);
+
             Debug.DrawLine(animalTm.localPosition, _targetPos);
 
             if(_data.SprRenderer != null)

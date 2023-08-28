@@ -8,6 +8,6 @@ public class Animal : ElementData
     public int Currency = 0;
 
     public override int GetCurrency => Currency;
-    public override Type.EElement EElement => Type.EElement.Animal;
+    public override Game.Type.EElement EElement => Game.Type.EElement.Animal;
 }
 

@@ -10,7 +10,11 @@ namespace Game
         public class Data : BaseData
         {
             public Transform startRootTm = null;
+            public int Value = 0;
         }
+
+        [SerializeField]
+        private SpriteRenderer spriteRenderer = null;
 
         private Transform _startRootTm = null;
 
@@ -22,16 +26,12 @@ namespace Game
 
             if (_startRootTm)
             {
-                transform.position = new Vector3(_startRootTm.position.x, _startRootTm.position.y - 30f, 1f);
+                transform.position = new Vector3(_startRootTm.position.x, _startRootTm.position.y);
             }
 
-            Sequence sequence = DOTween.Sequence()
-                .Join(transform.DOLocalMoveZ(0f, 0f))
-                .Join(transform.DOLocalMoveX(70f, 1f).SetEase(Ease.OutQuad))
-                .Join(transform.DOLocalMoveY(-70f, 1f).SetEase(Ease.InQuad))
-                .Append(transform.DOLocalJump(new Vector3(80f, -80f, 0), 10f, 1, 1f));
+            spriteRenderer.gameObject.AddComponent<CapsuleCollider>();
 
-            sequence.Restart();
+            Drop();
         }
 
         public override void ChainUpdate()
@@ -43,6 +43,40 @@ namespace Game
         {
             base.OnTouch(touch);
 
+            Debug.Log("DropItem Touch");
+
+        }
+
+        private void SetSortingOrder()
+        {
+            if (_data == null)
+                return;
+
+            if (spriteRenderer == null)
+                return;
+
+            spriteRenderer.sortingOrder = -(int)transform.position.y - 40;
+        }
+
+        private void Drop()
+        {
+            float randomPosOffsetX = Random.Range(100f, 200f) * (Random.Range(0, 2) == 0 ? -1 : 1);
+            float randomPosOffsetY = Random.Range(-50f, 50f);
+            //randomPosX = 500f;
+            var jumpLcoalPos = new Vector3(transform.position.x + randomPosOffsetX, transform.position.y + randomPosOffsetY);
+            //Debug.Log("randomPosX" + randomPosOffsetX);
+            Sequence sequence = DOTween.Sequence()
+               .SetAutoKill(false)
+               //.Join(transform.DOLocalMoveZ(0f, 0f))
+               //.Join(transform.DOLocalMoveX(70f, 1f).SetEase(Ease.OutQuad))
+               //.Join(transform.DOLocalMoveY(-70f, 1f).SetEase(Ease.InQuad))
+               .Append(transform.DOJump(jumpLcoalPos, 20f, 1, 0.5f))
+               .OnComplete(() =>
+               {
+                   SetSortingOrder();
+               });
+
+            sequence.Restart();
         }
     }
 }

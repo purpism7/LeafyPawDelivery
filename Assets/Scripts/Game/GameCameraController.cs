@@ -25,6 +25,7 @@ namespace GameSystem
         public IGridProvider IGridProvider { get; private set; } = null;
 
         private float _halfHeight = 0;
+        private float _dragWidth = 0;
 
         public void Initialize(IGridProvider iGridProvider)
         {
@@ -35,6 +36,8 @@ namespace GameSystem
                 _halfHeight = GameCamera.orthographicSize;
                 Height = _halfHeight * 2f;
                 Width = Height * GameCamera.aspect;
+
+                _dragWidth = _halfHeight * Screen.width / Screen.height;
             }
         }
 
@@ -77,7 +80,7 @@ namespace GameSystem
             float height = GameCamera.orthographicSize * 2f;
             float width = height * GameCamera.aspect;
 
-            Gizmos.DrawWireCube(Center, new Vector3(width - 100f, height - 700f));
+            Gizmos.DrawWireCube(Center, new Vector3(width - 200f, height - 850f));
         }
 
         private void Drag()
@@ -100,13 +103,13 @@ namespace GameSystem
                         var cameraTm = GameCamera.transform;
                         var movePos = cameraTm.position - pos;
                         
-                        float x = _mapSize.x - Width;
+                        float x = _mapSize.x - _dragWidth;
                         float clampX = Mathf.Clamp(movePos.x, -x + _center.x, x + _center.x);
 
                         float y = _mapSize.y - _halfHeight;
                         float clampY = Mathf.Clamp(movePos.y, -y + _center.y, y + _center.y);
 
-                        cameraTm.position = new Vector3(clampX, clampY, 0);
+                        cameraTm.position = new Vector3(clampX, clampY, -1000f);
                         // cameraTm.Translate(pos);
                         // cameraTm.position = Vector3.SmoothDamp(cameraTm.position, new Vector3(clampX, clampY, 0), ref _velocity, 0.01f);
 

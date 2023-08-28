@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
+using Game;
+
 public static class GameUtils
 {
     public static string GetName(Type.EElement EElement, int id)

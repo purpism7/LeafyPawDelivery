@@ -10,8 +10,8 @@ namespace GameData
         [System.Serializable]
         public class CurrencyInfo
         {
-            public Type.EAnimalCurrency Animal = Type.EAnimalCurrency.None;
-            public Type.EObjectCurrency Object = Type.EObjectCurrency.None;
+            public Game.Type.EAnimalCurrency Animal = Game.Type.EAnimalCurrency.None;
+            public Game.Type.EObjectCurrency Object = Game.Type.EObjectCurrency.None;
             public Info.User.Currency StartValue = null;
            
             public int PlaceId

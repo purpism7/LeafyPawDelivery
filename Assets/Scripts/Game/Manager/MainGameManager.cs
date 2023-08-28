@@ -8,6 +8,7 @@ using Game.Creature;
 using Data;
 using GameData;
 using GameSystem;
+using Info;
 
 public class MainGameManager : Singleton<MainGameManager>
 {
@@ -25,7 +26,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
     public Game.State.Base GameState { get; private set; } = null;
 
-    private System.Action<Game.BaseElement> _startEditAction = null;
+    private System.Action<Game.Base, bool> _startEditAction = null;
     
     protected override void Initialize()
     {
@@ -62,7 +63,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         StoryMgr = iProvider.Get<Game.StoryManager>();
         //OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();
-
+        
         GameCameraCtr = iProvider.Get<InputManager>()?.GameCameraCtr;
 
         SetGameState<Game.State.Game>();       
@@ -93,30 +94,30 @@ public class MainGameManager : Singleton<MainGameManager>
     }
     #endregion
 
-    public void SetStartEditAction(System.Action<Game.BaseElement> action)
+    public void SetStartEditAction(System.Action<Game.Base, bool> action)
     {
         _startEditAction = action;
     }
 
-    public void AddInfo(Type.EElement EElement, int id)
+    public void AddInfo(Game.Type.EElement EElement, int id)
     {
-        if (EElement == Type.EElement.Animal)
+        if (EElement == Game.Type.EElement.Animal)
         {
             AnimalMgr?.AddAnimal(id);
         }
-        else if (EElement == Type.EElement.Object)
+        else if (EElement == Game.Type.EElement.Object)
         {
             ObjectMgr?.AddObject(id);
         }
     }
 
-    public bool CheckExist(Type.EElement EElement, int id)
+    public bool CheckExist(Game.Type.EElement EElement, int id)
     {
-        if (EElement == Type.EElement.Animal)
+        if (EElement == Game.Type.EElement.Animal)
         {
             return AnimalMgr.CheckExist(id);
         }
-        else if (EElement == Type.EElement.Object)
+        else if (EElement == Game.Type.EElement.Object)
         {
             return ObjectMgr.CheckExist(id);
         }
@@ -132,7 +133,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         placeMgr?.ActivityPlace?.AddAnimal(animal);
 
-        _startEditAction?.Invoke(animal);
+        _startEditAction?.Invoke(animal, GameState.CheckState<Game.State.Edit>());
     }
     #endregion
 
@@ -144,15 +145,15 @@ public class MainGameManager : Singleton<MainGameManager>
 
         placeMgr?.ActivityPlace?.AddObject(obj);
 
-        _startEditAction?.Invoke(obj);
+        _startEditAction?.Invoke(obj, GameState.CheckState<Game.State.Edit>());
     }
     #endregion
 
-    public void Remove(Type.EElement EElement, int id, int uId)
+    public void Remove(Game.Type.EElement EElement, int id, int uId)
     {
         switch (EElement)
         {
-            case Type.EElement.Animal:
+            case Game.Type.EElement.Animal:
                 {
                     placeMgr?.ActivityPlace?.RemoveAnimal(id);
                     AnimalMgr?.RemoveAnimal(id);
@@ -162,7 +163,7 @@ public class MainGameManager : Singleton<MainGameManager>
                     break;
                 }
 
-            case Type.EElement.Object:
+            case Game.Type.EElement.Object:
                 {
                     placeMgr?.ActivityPlace?.RemoveObject(uId);
                     ObjectMgr?.RemoveObject(id, uId);
@@ -174,7 +175,7 @@ public class MainGameManager : Singleton<MainGameManager>
         }
     }
 
-    public void Arrange(Type.EElement EElement, int id, Vector3 pos)
+    public void Arrange(Game.Type.EElement EElement, int id, Vector3 pos)
     {
         int placeId = 0;
         if (placeMgr != null)
@@ -184,7 +185,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         switch(EElement)
         {
-            case Type.EElement.Animal:
+            case Game.Type.EElement.Animal:
                 {
                     AnimalMgr?.ArrangeAnimal(id, pos, placeId);
 
@@ -193,7 +194,7 @@ public class MainGameManager : Singleton<MainGameManager>
                     break;
                 }
 
-            case Type.EElement.Object:
+            case Game.Type.EElement.Object:
                 {
 
                     ObjectMgr?.ArrangeObject(id, pos, placeId);

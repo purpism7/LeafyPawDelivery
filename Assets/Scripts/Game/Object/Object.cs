@@ -4,6 +4,7 @@ using GameData;
 using UnityEngine;
 
 using UI;
+using System;
 
 namespace Game
 {
@@ -16,16 +17,19 @@ namespace Game
             public Vector3 Pos = Vector3.zero;
         }
 
+        [SerializeField]
+        private int sortingOrderOffset = 0;
+
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
-        public BaseState<Game.Object> State { get; private set; } = null;
+        public Game.Element.State.BaseState<Object> State { get; private set; } = null;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
-            EElement = Type.EElement.Object;
+            ElementData = ObjectContainer.Instance?.GetData(Id);
 
-            if(data != null)
+            if (data != null)
             {
                 UId = ObjectUId;
                 transform.localPosition = data.Pos;
@@ -47,15 +51,24 @@ namespace Game
         }
 
         // object 최초 선택 시, 호출.
-        public override void OnTouchBegan(Camera gameCamera, GameSystem.IGridProvider iGridProvider)
+        public override void OnTouchBegan(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
         {
-            base.OnTouchBegan(gameCamera, iGridProvider);
+            base.OnTouchBegan(gameCameraCtr, iGridProvider);
 
-            var edit = new Game.Edit<Game.Object>(gameCamera, iGridProvider);
+            Game.State.Base gameState = MainGameManager.Instance?.GameState;
+            if (gameState == null)
+                return;
 
-            SetState(edit);
+            if(gameState.CheckState<Game.State.Edit>())
+            {
+                SetState(new Game.Element.State.Edit<Game.Object>()?.Create(gameCameraCtr, iGridProvider));
 
-            SetSortingOrder(_selectOrder);
+                SetSortingOrder(_selectOrder);
+            }
+            else
+            {
+                SetState(new Game.Element.State.Game<Game.Object>()?.Create(gameCameraCtr, iGridProvider));
+            }
         }
 
         public override void OnTouch(Touch touch)
@@ -65,19 +78,21 @@ namespace Game
             State?.Touch(touch);
         }
 
-        public void SetState(BaseState<Game.Object> state)
+        private void SetState(Game.Element.State.BaseState<Game.Object> state)
         {
-            if(state == null)
-                return;
-
-            if (state is Game.Edit<Game.Object>)
+            if(State != null &&
+               state != null) 
             {
-                EState_ = EState.Edit;
-
-                SetOutline(5f);
+                if (State.CheckEqual(state))
+                    return;
             }
 
-            state.Apply(this);
+            if (state is Game.Element.State.Edit<Game.Object>)
+            {
+                StartEdit();
+            }
+
+            state?.Apply(this);
 
             State = state;
         }
@@ -86,6 +101,8 @@ namespace Game
         {
             if (spriteRenderer == null)
                 return;
+
+            order += sortingOrderOffset;
 
             spriteRenderer.sortingOrder = order;
         }
@@ -117,21 +134,21 @@ namespace Game
         void UI.Edit.IListener.Remove()
         {
             EState_ = EState.Remove;
-
             Command.Remove.Execute(this);
 
             ActiveEdit(false);
+            SetState(null);
         }
 
         void UI.Edit.IListener.Arrange()
         {
             EState_ = EState.Arrange;
-
             Command.Arrange.Execute(this, transform.localPosition);
 
             SetSortingOrder(-(int)transform.localPosition.y);
 
             ActiveEdit(false);
+            SetState(null);
         }
         #endregion
     }

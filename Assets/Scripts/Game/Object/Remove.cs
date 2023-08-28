@@ -20,11 +20,14 @@ namespace Game.Command
             if (gameBaseElement == null)
                 return;
 
-            _eElement = gameBaseElement.EElement;
+            if (gameBaseElement.ElementData == null)
+                return;
+
+            _eElement = gameBaseElement.ElementData.EElement;
             _id = gameBaseElement.Id;
             _uId = gameBaseElement.UId;
 
-            gameBaseElement.SetOutline(0);
+            gameBaseElement.EndEdit();
         }
 
         public override void Execute()

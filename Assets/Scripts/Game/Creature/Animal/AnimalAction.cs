@@ -12,12 +12,18 @@ namespace Game.Creature
         }
 
         protected AnimalAction.Data _data = null;
+        protected float _initPosZ { get; private set; } = 0;
 
         protected abstract string ActionName { get; }
 
         public AnimalAction Create(AnimalAction.Data data)
         {
             _data = data;
+
+            if(data.Tm)
+            {
+                _initPosZ = data.Tm.localPosition.z;
+            }
 
             return this;
         }
@@ -27,15 +33,11 @@ namespace Game.Creature
         public virtual void StartAction()
         {
             if (_data == null)
-            {
                 return;
-            }
 
             var animator = _data?.Animator;
             if (animator == null)
-            {
                 return;
-            }
 
             //animator.ResetTrigger(ActionName);
             animator.SetTrigger(ActionName);

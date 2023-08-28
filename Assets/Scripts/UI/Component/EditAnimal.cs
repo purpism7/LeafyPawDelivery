@@ -30,7 +30,7 @@ namespace UI.Component
             if (_data.AnimalData == null)
                 return;
 
-            iconImg.sprite = GameUtils.GetShortIconSprite(Type.EElement.Animal, _data.AnimalData.Id);
+            iconImg.sprite = GameUtils.GetShortIconSprite(Game.Type.EElement.Animal, _data.AnimalData.Id);
         }
 
         public void OnClick()

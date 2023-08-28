@@ -12,22 +12,22 @@ namespace Game.Creature
         private SpriteRenderer _sprRenderer = null;
         private AnimalAction _currentAnimalAction = null;
 
-        //void OnDrawGizmos()
-        //{
-        //    Vector3 pos = Vector3.zero;
-        //    var gameCameraCtr = MainGameManager.Instance?.GameCameraCtr;
-        //    if (gameCameraCtr == null)
-        //        return;
+        void OnDrawGizmos()
+        {
+            Vector3 pos = Vector3.zero;
+            var gameCameraCtr = MainGameManager.Instance?.GameCameraCtr;
+            if (gameCameraCtr == null)
+                return;
 
-        //    var center = gameCameraCtr.Center;
-        //    var halfWidth = (gameCameraCtr.Width - 100f) / 2f;
-        //    var halfHeight = (gameCameraCtr.Height - 700f) / 2f;
+            var center = gameCameraCtr.Center;
+            var halfWidth = (gameCameraCtr.Width - 200f) / 2f;
+            var halfHeight = (gameCameraCtr.Height - 850f) / 2f;
 
-        //    Gizmos.color = Color.black;
-        //    var posY = center.y + halfHeight;
-        //    posY = Mathf.Clamp(posY, gameCameraCtr.IGridProvider.LimitBottom.y, gameCameraCtr.IGridProvider.LimitTop.y);
-        //    Gizmos.DrawLine(new Vector3(center.x - halfWidth, center.y - halfHeight), new Vector3(center.x + halfWidth, posY));
-        //}
+            Gizmos.color = Color.black;
+            var posY = center.y + halfHeight;
+            posY = Mathf.Clamp(posY, gameCameraCtr.IGridProvider.LimitBottom.y, gameCameraCtr.IGridProvider.LimitTop.y);
+            Gizmos.DrawLine(new Vector3(center.x - halfWidth, center.y - halfHeight), new Vector3(center.x + halfWidth, posY));
+        }
 
         public void Initialize(Animator animator, SpriteRenderer sprRenderer, bool onlyIdle)
         {

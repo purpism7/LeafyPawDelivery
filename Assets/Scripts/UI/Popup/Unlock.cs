@@ -17,7 +17,7 @@ namespace UI
 
         public class Data : BaseData
         {
-            public Type.EElement EElement = Type.EElement.None;
+            public Game.Type.EElement EElement = Game.Type.EElement.None;
             public int Id = 0;
             public Action ClickAction = null;
         }

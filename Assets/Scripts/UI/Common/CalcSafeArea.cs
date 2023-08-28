@@ -7,11 +7,18 @@ public class CalcSafeArea : MonoBehaviour
 {
     private void Awake()
     {
-      
+        Calc();
     }
 
-    private void OnEnable()
+    private void OnApplicationFocus(bool focus)
     {
+        Debug.Log("CalcSafeArea OnApplicationFocus");
+        Calc();
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        Debug.Log("CalcSafeArea OnApplicationPause");
         Calc();
     }
 

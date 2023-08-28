@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 
+using Type = Game.Type;
+
 namespace Scene
 {
     public class Game : Base, Preprocessing.IListener

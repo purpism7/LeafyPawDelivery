@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameSystem;
 using UnityEngine;
 
 namespace Game
@@ -15,19 +16,12 @@ namespace Game
 
         private CapsuleCollider _collider = null;
 
-        public Type.EElement EElement { get; protected set; } = Type.EElement.None;
+        public ElementData ElementData { get; protected set; } = null;
+        public int SortingOrder { get { return spriteRenderer != null ? spriteRenderer.sortingOrder : 1; } }
 
         public void ActiveEdit(bool active)
         {
             UIUtils.SetActive(edit?.CanvasRectTm, active);
-        }
-
-        public void SetOutline(float width)
-        {
-            if (spriteRenderer == null)
-                return;
-
-            spriteRenderer?.material?.SetFloat("_Thickness", width);
         }
 
         public void EnableCollider(bool enable)
@@ -41,6 +35,36 @@ namespace Game
             }
 
             _collider.enabled = enable;
+        }
+
+        protected void SetOutline(float width)
+        {
+            if (spriteRenderer == null)
+                return;
+
+            spriteRenderer?.material?.SetFloat("_Thickness", width);
+        }
+
+        protected void StartEdit()
+        {
+            EState_ = EState.Edit;
+
+            SetOutline(5f);
+
+            MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(false);
+            EnableCollider(true);
+
+            Game.UIManager.Instance?.Bottom?.DeactivateEditList();
+        }
+
+        public void EndEdit()
+        {
+            EState_ = EState.None;
+
+            SetOutline(0);
+
+            Game.UIManager.Instance?.Bottom?.ActivateEditList();
+            MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(true);
         }
     }
 

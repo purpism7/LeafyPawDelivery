@@ -18,6 +18,12 @@ namespace Game.Creature
             _time = System.DateTime.UtcNow;
             _duration = Random.Range(5f, 10f);
 
+            if(_data != null &&
+               _data.Tm)
+            {
+                _data.Tm.localPosition = new Vector3(_data.Tm.localPosition.x, _data.Tm.localPosition.y, _initPosZ);
+            }
+
             SetState(EState.InProgress);
         }
 

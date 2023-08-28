@@ -9,7 +9,7 @@ namespace GameSystem.Load
 {
     public class LoadData : Base
     {
-        [SerializeField] private Type.EScene loadSceneType = Type.EScene.None;
+        [SerializeField] private Game.Type.EScene loadSceneType = Game.Type.EScene.None;
         [SerializeField] private bool activeLoading = true;
 
         private void Start()

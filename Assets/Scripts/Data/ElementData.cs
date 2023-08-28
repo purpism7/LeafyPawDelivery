@@ -10,5 +10,5 @@ public abstract class ElementData : Data.Base
     public string LargeIconImgName = string.Empty;
 
     public abstract int GetCurrency { get; }
-    public abstract Type.EElement EElement { get; }
+    public abstract Game.Type.EElement EElement { get; }
 }

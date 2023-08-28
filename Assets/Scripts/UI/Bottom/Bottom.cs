@@ -51,7 +51,7 @@ namespace UI
         }
 
         #region EditList
-        public void ActivateEditList(Type.ETab eTabType)
+        public void ActivateEditList(Game.Type.ETab eTabType)
         {
             if(EditList == null)
             {
@@ -78,7 +78,7 @@ namespace UI
             MainGameManager.Instance.SetGameState<Game.State.Edit>();
         }
 
-        public void ActivateEditListAfterDeactivateBottom(Type.ETab eTabType)
+        public void ActivateEditListAfterDeactivateBottom(Game.Type.ETab eTabType)
         {
             DeactivateAnim(RootRectTm,
                 () =>

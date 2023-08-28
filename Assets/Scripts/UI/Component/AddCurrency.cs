@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+
 using DG.Tweening;
 using TMPro;
-using UnityEngine;
 
 
 namespace UI.Component
@@ -14,7 +15,7 @@ namespace UI.Component
         public class Data : BaseData
         {
             public Vector3 StartPos = Vector3.zero;
-            public Type.EElement EElement = Type.EElement.None;
+            public Game.Type.EElement EElement = Game.Type.EElement.None;
             public int Currency = 0;
             public System.Action CompleteAction = null;
         }

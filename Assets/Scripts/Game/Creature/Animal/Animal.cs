@@ -25,13 +25,13 @@ namespace Game.Creature
         private AnimalRoot _animalRoot = null;
         private AnimalActionController _actionCtr = null;
 
-        public BaseState<Creature.Animal> State { get; private set; } = null;
+        public Game.Element.State.BaseState<Creature.Animal> State { get; private set; } = null;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
-            EElement = Type.EElement.Animal;
+            ElementData = AnimalContainer.Instance?.GetData(Id);
 
             _animalRoot = GetComponentInChildren<AnimalRoot>();
 
@@ -58,13 +58,24 @@ namespace Game.Creature
             _actionCtr?.ChainUpdate();
         }
 
-        public override void OnTouchBegan(Camera gameCamera, GameSystem.IGridProvider iGridProvider)
+        public override void OnTouchBegan(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
         {
-            base.OnTouchBegan(gameCamera, iGridProvider);
+            base.OnTouchBegan(gameCameraCtr, iGridProvider);
 
-            SetState(new Edit<Creature.Animal>(gameCamera, iGridProvider));
+            Game.State.Base gameState = MainGameManager.Instance?.GameState;
+            if (gameState == null)
+                return;
 
-            SetSortingOrder(_selectOrder);
+            if (gameState.CheckState<Game.State.Edit>())
+            {
+                SetState(new Game.Element.State.Edit<Creature.Animal>()?.Create(gameCameraCtr, iGridProvider));
+
+                SetSortingOrder(_selectOrder);
+            }
+            else
+            {
+                SetState(new Game.Element.State.Game<Creature.Animal>()?.Create(gameCameraCtr, iGridProvider));
+            }
         }
 
         public override void OnTouch(Touch touch)
@@ -73,20 +84,22 @@ namespace Game.Creature
 
             State?.Touch(touch);
         }
-        
-        public void SetState(BaseState<Creature.Animal> state)
+
+        private void SetState(Game.Element.State.BaseState<Creature.Animal> state)
         {
-            if (state == null)
-                return;
-
-            if (state is Edit<Creature.Animal>)
+            if (State != null &&
+                state != null)
             {
-                EState_ = EState.Edit;
-
-                SetOutline(5f);
+                if (State.CheckEqual(state))
+                    return;
             }
 
-            state.Apply(this);
+            if (state is Game.Element.State.Edit<Creature.Animal>)
+            {
+                StartEdit();
+            }
+
+            state?.Apply(this);
 
             State = state;
         }
@@ -138,6 +151,7 @@ namespace Game.Creature
             Command.Remove.Execute(this);
 
             ActiveEdit(false);
+            SetState(null);
         }
 
         void UI.Edit.IListener.Arrange()
@@ -152,6 +166,7 @@ namespace Game.Creature
             SetSortingOrder(-(int)transform.localPosition.y);
 
             ActiveEdit(false);
+            SetState(null);
         }
         #endregion
     }

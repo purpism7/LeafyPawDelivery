@@ -78,14 +78,14 @@ namespace Info
             }
         }
 
-        public void SetCurrency(Type.EElement eElement, int currency)
+        public void SetCurrency(Game.Type.EElement eElement, int currency)
         {
             int placeId = CurrentPlaceId;
-            if(eElement == Type.EElement.Animal)
+            if(eElement == Game.Type.EElement.Animal)
             {
                 SetAnimalCurrency(placeId, currency);
             }
-            else if(eElement == Type.EElement.Object)
+            else if(eElement == Game.Type.EElement.Object)
             {
                 SetObjectCurrency(placeId, currency);
             }

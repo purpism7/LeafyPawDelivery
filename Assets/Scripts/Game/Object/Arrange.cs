@@ -17,14 +17,15 @@ namespace Game.Command
 
         public Arrange(Game.BaseElement gameBaseElement, Vector3 pos)
         {
-            if (gameBaseElement == null)
+            var elementData = gameBaseElement?.ElementData;
+            if (elementData == null)
                 return;
 
-            _eElement = gameBaseElement.EElement;
+            _eElement = elementData.EElement;
             _id = _eElement == Type.EElement.Animal ? gameBaseElement.Id : gameBaseElement.UId;
             _pos = pos;
 
-            gameBaseElement.SetOutline(0);
+            gameBaseElement.EndEdit();
         }
 
         public override void Execute()
