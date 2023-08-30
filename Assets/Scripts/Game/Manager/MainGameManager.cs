@@ -19,8 +19,6 @@ public class MainGameManager : Singleton<MainGameManager>
     public Game.ObjectManager ObjectMgr { get; private set; } = null;
     public Game.AnimalManager AnimalMgr { get; private set; } = null;
     public Game.StoryManager StoryMgr { get; private set; } = null; 
-    
-    public Transform ObjectRootTm { get { return placeMgr?.ActivityPlace?.ObjectRootTm; } }
 
     public GameCameraController GameCameraCtr { get; private set; } = null;
 
@@ -126,24 +124,63 @@ public class MainGameManager : Singleton<MainGameManager>
     }
 
     #region Animal
-    public void AddAnimalToPlace(Game.Creature.Animal animal)
+    public void AddAnimalToPlace(int id)
     {
+        Vector3 pos = Vector3.zero;
+        if (GameCameraCtr != null)
+        {
+            pos = GameCameraCtr.Center;
+        }
+
+        var animal = placeMgr?.ActivityPlace?.GetAnimal(id);
+        if(animal == null)
+        {
+            animal = new GameSystem.AnimalCreator()
+              .SetAnimalId(id)
+              .SetPos(pos)
+              .Create();
+
+            placeMgr?.ActivityPlace?.AddAnimal(animal);
+        }
+        else
+        {
+            animal?.SetPos(pos);
+        }
+
         if (animal == null)
             return;
-
-        placeMgr?.ActivityPlace?.AddAnimal(animal);
 
         _startEditAction?.Invoke(animal, GameState.CheckState<Game.State.Edit>());
     }
     #endregion
 
     #region Object
-    public void AddObjectToPlace(Game.Object obj)
+    public void AddObjectToPlace(int id, int uId)
     {
-        if (obj == null)
+        var activityPlace = placeMgr?.ActivityPlace;
+        if (activityPlace == null)
             return;
 
-        placeMgr?.ActivityPlace?.AddObject(obj);
+        Vector3 pos = Vector3.zero;
+        if (GameCameraCtr != null)
+        {
+            pos = GameCameraCtr.Center;
+        }
+
+        var objData = new Game.Object.Data()
+        {
+            ObjectId = id,
+            ObjectUId = uId,
+            Pos = pos,
+        };
+
+        var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
+            .SetData(objData)
+            .SetId(id)
+            .SetRootTm(activityPlace.ObjectRootTm)
+            .Create();
+
+        activityPlace.AddObject(obj);
 
         _startEditAction?.Invoke(obj, GameState.CheckState<Game.State.Edit>());
     }

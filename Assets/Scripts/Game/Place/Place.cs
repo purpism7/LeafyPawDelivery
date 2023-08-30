@@ -6,8 +6,7 @@ using GameSystem;
 
 namespace Game
 {
-    public class
-        Place : Base<Place.Data>
+    public class Place : Base<Place.Data>
     {
         public class Data : BaseData
         {
@@ -53,12 +52,20 @@ namespace Game
 
         public void AddAnimal(Game.Creature.Animal addAnimal)
         {
+            if (addAnimal == null)
+                return;
+
             if (_animalList == null)
                 return;
 
-            var findAnimal = _animalList.Find(animal => animal.Id == addAnimal.Id);
-            if (findAnimal != null)
-                return;
+            foreach (var animal in _animalList)
+            {
+                if (animal == null)
+                    continue;
+
+                if (animal.Id == addAnimal.Id)
+                    return;
+            }
 
             _animalList.Add(addAnimal);
         }
@@ -68,7 +75,7 @@ namespace Game
             if (_animalList == null)
                 return;
 
-            var findAnimal = _animalList.Find(animal => animal.Id == id);
+            var findAnimal = _animalList.Find(animal => animal?.Id == id);
             if (findAnimal == null)
                 return;
 
@@ -76,6 +83,11 @@ namespace Game
             {
                 findAnimal.Deactivate();
             }
+        }
+
+        public Game.Creature.Animal GetAnimal(int id)
+        {
+            return _animalList.Find(animal => animal.Id == id);
         }
 
         public void AddObject(Game.Object addObj)
@@ -100,13 +112,20 @@ namespace Game
             if(_objectList == null)
                 return;
 
-            var findObject = _objectList.Find(obj => obj.UId == objectUId);
-            if(findObject == null)
-                return;
-
-            if (_objectList.Remove(findObject))
+            foreach (var obj in _objectList)
             {
-                findObject.Deactivate();
+                if (obj == null)
+                    continue;
+
+                if (obj.UId == objectUId)
+                {
+                    if (_objectList.Remove(obj))
+                    {
+                        obj.Deactivate();
+
+                        break;
+                    }
+                }
             }
         }
 
@@ -319,11 +338,17 @@ namespace Game
             if (randomAnimal == null)
                 return;
 
-            
+            if (randomAnimal.ElementData == null)
+                return;
 
             new DropItemCreator()
                 .SetRootTm(currencyRootTm)
-                .SetStartRootTm(randomAnimal.transform)
+                .SetDropItemData(new DropItem.Data()
+                {
+                    startRootTm = randomAnimal.transform,
+                    EElement = Type.EElement.Animal,
+                    Value = randomAnimal.ElementData.GetCurrency,
+                })
                 .Create();
 
             //new ComponentCreator<UI.Component.CollectCurrency, UI.Component.CollectCurrency.Data>()

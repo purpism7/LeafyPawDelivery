@@ -173,3 +173,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootRectTm: {fileID: 3104531409507543827}
+  currencyImg: {fileID: 1573398820909133706}

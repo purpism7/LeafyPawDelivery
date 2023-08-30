@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using GameSystem;
 
 namespace Game
 {
@@ -10,6 +11,7 @@ namespace Game
         public class Data : BaseData
         {
             public Transform startRootTm = null;
+            public Game.Type.EElement EElement = Type.EElement.None;
             public int Value = 0;
         }
 
@@ -34,17 +36,27 @@ namespace Game
             Drop();
         }
 
-        public override void ChainUpdate()
+        public override void OnTouchBegan(Touch? touch, GameCameraController gameCameraCtr, IGridProvider iGridProvider)
         {
-            return;
+            base.OnTouchBegan(touch, gameCameraCtr, iGridProvider);
+
+            if (_data == null)
+                return;
+
+            if (!touch.HasValue)
+                return;
+
+            var startPos = gameCameraCtr.UICamera.ScreenToWorldPoint(touch.Value.position);
+            startPos.z = 10f;
+
+            UIManager.Instance?.Top?.CollectCurrency(startPos, _data.EElement, _data.Value);
+
+            Deactivate();
         }
 
         public override void OnTouch(Touch touch)
         {
             base.OnTouch(touch);
-
-            Debug.Log("DropItem Touch");
-
         }
 
         private void SetSortingOrder()
@@ -62,15 +74,11 @@ namespace Game
         {
             float randomPosOffsetX = Random.Range(100f, 200f) * (Random.Range(0, 2) == 0 ? -1 : 1);
             float randomPosOffsetY = Random.Range(-50f, 50f);
-            //randomPosX = 500f;
             var jumpLcoalPos = new Vector3(transform.position.x + randomPosOffsetX, transform.position.y + randomPosOffsetY);
-            //Debug.Log("randomPosX" + randomPosOffsetX);
+            
             Sequence sequence = DOTween.Sequence()
                .SetAutoKill(false)
-               //.Join(transform.DOLocalMoveZ(0f, 0f))
-               //.Join(transform.DOLocalMoveX(70f, 1f).SetEase(Ease.OutQuad))
-               //.Join(transform.DOLocalMoveY(-70f, 1f).SetEase(Ease.InQuad))
-               .Append(transform.DOJump(jumpLcoalPos, 20f, 1, 0.5f))
+               .Append(transform.DOJump(jumpLcoalPos, 30f, 1, 0.5f))
                .OnComplete(() =>
                {
                    SetSortingOrder();

@@ -7,6 +7,7 @@ using UnityEngine;
 
 using TMPro;
 using UI.Component;
+using static GameData.Const;
 
 namespace UI
 {
@@ -73,10 +74,21 @@ namespace UI
             if (_collectCurrencyList == null)
                 return;
 
+            var currencyInfo = Game.Data.Const.GetCurrencyInfo(_data.PlaceId);
+            if (currencyInfo == null)
+                return;
+
+            var currencyName = currencyInfo.Animal.ToString();
+            if(eElement == Type.EElement.Object)
+            {
+                currencyName = currencyInfo.Object.ToString();
+            }
+
             var data = new CollectCurrency.Data()
             {
                 StartPos = startPos,
-                EndPos = objectCurrencyRectTm.position,
+                EndPos = eElement == Type.EElement.Object ? objectCurrencyRectTm.position : animalCurrencyRectTm.position,
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyName),
                 CollectEndAction =
                     () =>
                     {
@@ -109,6 +121,15 @@ namespace UI
                 return;
 
             var startPos = objectCurrencyTMP.transform.position;
+            if (eElement == Type.EElement.Object)
+            {
+
+            }
+            else if(eElement == Type.EElement.Animal)
+            {
+                startPos = animalCurrencyTMP.transform.position;
+            }
+           
             startPos.x -= 5f;
             startPos.y += 20f;
             

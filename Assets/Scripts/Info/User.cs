@@ -38,22 +38,41 @@ namespace Info
             };
         }
 
+        private Currency InitializeCurrency(int placeId)
+        {
+            CurrencyList = new();
+            CurrencyList.Clear();
+
+            var currency = GetInitializeCurrency(placeId);
+            CurrencyList.Add(currency);
+
+            return currency;
+        }
+
         public Currency GetCurrency(int placeId)
         {
             if (CurrencyList == null)
             {
-                return GetInitializeCurrency(placeId);
+                return InitializeCurrency(placeId);
             }
-            
-            return CurrencyList.Find(currency => currency.PlaceId == placeId);
+
+            var findCurrency = CurrencyList.Find(currency => currency.PlaceId == placeId);
+            if (findCurrency == null)
+            {
+                var currency = GetInitializeCurrency(placeId);
+                CurrencyList.Add(currency);
+
+                return currency;
+            }
+
+            return findCurrency;
         }
 
         public void SetAnimalCurrency(int placeId, int value)
         {
             if (CurrencyList == null)
             {
-                CurrencyList = new();
-                CurrencyList.Clear();
+                InitializeCurrency(placeId);
             }
 
             int findIndex = CurrencyList.FindIndex(findCurrency => findCurrency.PlaceId == placeId);
@@ -67,8 +86,7 @@ namespace Info
         {
             if(CurrencyList == null)
             {
-                CurrencyList = new();
-                CurrencyList.Clear();
+                InitializeCurrency(placeId);
             }
 
             int findIndex = CurrencyList.FindIndex(findCurrency => findCurrency.PlaceId == placeId);

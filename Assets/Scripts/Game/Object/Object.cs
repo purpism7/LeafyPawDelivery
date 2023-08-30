@@ -45,15 +45,10 @@ namespace Game
             ActiveEdit(false);
         }
 
-        public override void ChainUpdate()
-        {
-            return;
-        }
-
         // object 최초 선택 시, 호출.
-        public override void OnTouchBegan(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
+        public override void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
         {
-            base.OnTouchBegan(gameCameraCtr, iGridProvider);
+            base.OnTouchBegan(touch, gameCameraCtr, iGridProvider);
 
             Game.State.Base gameState = MainGameManager.Instance?.GameState;
             if (gameState == null)
@@ -64,6 +59,7 @@ namespace Game
                 SetState(new Game.Element.State.Edit<Game.Object>()?.Create(gameCameraCtr, iGridProvider));
 
                 SetSortingOrder(_selectOrder);
+                ActiveEdit(true);
             }
             else
             {

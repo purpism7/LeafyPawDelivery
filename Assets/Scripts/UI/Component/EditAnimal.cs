@@ -45,19 +45,7 @@ namespace UI.Component
             if(mainGameMgr == null)
                 return;
 
-            Vector3 pos = Vector3.zero;
-            var gameCameraCtr = mainGameMgr.GameCameraCtr;
-            if (gameCameraCtr != null)
-            {
-                pos = gameCameraCtr.Center;
-            }
-
-            var animal = new GameSystem.AnimalCreator()
-                .SetAnimalId(_data.AnimalData.Id)
-                .SetPos(pos)
-                .Create();
-
-            mainGameMgr.AddAnimalToPlace(animal);
+            mainGameMgr.AddAnimalToPlace(_data.AnimalData.Id);
         }
     }
 }

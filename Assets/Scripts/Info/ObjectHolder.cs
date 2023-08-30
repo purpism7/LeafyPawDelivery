@@ -121,9 +121,7 @@ namespace Info
         {
             var objectInfo = GetObjectInfoByUId(objectUId, placeId);
             if(objectInfo == null)
-            {
                 return;
-            }
 
             objectInfo.Pos = pos;
             objectInfo.Arrangement = true;

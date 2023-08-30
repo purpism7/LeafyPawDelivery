@@ -13,16 +13,34 @@ namespace UI.Component
         {
             public Vector3 StartPos = Vector3.zero;
             public Vector3 EndPos = Vector3.zero;
+            public Sprite ImgSprite = null;
             public Action CollectEndAction = null;
         }
+
+        [SerializeField]
+        private UnityEngine.UI.Image currencyImg = null;
         
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-            
+
+            SetCurrencyImg();
+
             Deactivate();
             
             Collect();
+        }
+
+        private void SetCurrencyImg()
+        {
+            if (_data == null ||
+                _data.ImgSprite == null)
+                return;
+
+            if (currencyImg == null)
+                return;
+
+            currencyImg.sprite = _data.ImgSprite;
         }
 
         private void Collect()

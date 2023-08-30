@@ -8,8 +8,7 @@ namespace Game
     public class DropItemCreator : BaseCreator<DropItem>
     {
         private Transform _rootTm = null;
-        private Transform _startRootTm = null;
-        private DropItem _dropItemData = null;
+        private DropItem.Data _dropItemData = null;
 
         public DropItemCreator SetRootTm(Transform rootTm)
         {
@@ -18,14 +17,7 @@ namespace Game
             return this;
         }
 
-        public DropItemCreator SetStartRootTm(Transform startRootTm)
-        {
-            _startRootTm = startRootTm;
-
-            return this;
-        }
-
-        public DropItemCreator SetDropItemData(DropItem dropItemData)
+        public DropItemCreator SetDropItemData(DropItem.Data dropItemData)
         {
             _dropItemData = dropItemData;
 
@@ -35,10 +27,7 @@ namespace Game
         public override DropItem Create()
         {
             var dropItem = ResourceManager.Instance.InstantiateGame<DropItem>(_rootTm);
-            dropItem?.Initialize(new DropItem.Data()
-            {
-                startRootTm = _startRootTm,
-            });
+            dropItem?.Initialize(_dropItemData);
 
             return dropItem;
         }

@@ -187,8 +187,21 @@ namespace UI
         void ArrangementCell.IListener.Edit(Game.Type.EElement EElement, int id)
         {
             Deactivate();
-            
-            Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(EElement == Game.Type.EElement.Animal ? Game.Type.ETab.Animal : Game.Type.ETab.Object);
+
+            if (EElement == Game.Type.EElement.Animal)
+            {
+                Game.UIManager.Instance?.Bottom?.DeactivateBottom(
+                    () =>
+                    {
+                        MainGameManager.Instance?.AddAnimalToPlace(id);
+                    });
+            }
+            else if (EElement == Game.Type.EElement.Object)
+            {
+                //MainGameManager.Instance?.AddObjectToPlace(elementData.Id, 0);
+                var eTab = EElement == Game.Type.EElement.Animal ? Game.Type.ETab.Animal : Game.Type.ETab.Object;
+                Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(eTab);
+            }
         }
         #endregion
 
@@ -196,7 +209,6 @@ namespace UI
         {
             base.Begin();
 
-            Debug.Log("Arrangement Popup");
             _endTask = false;
         }
 

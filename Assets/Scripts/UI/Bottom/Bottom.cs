@@ -50,6 +50,17 @@ namespace UI
             }
         }
 
+        public void DeactivateBottom(System.Action endAction)
+        {
+            DeactivateAnim(RootRectTm,
+                () =>
+                {
+                    MainGameManager.Instance.SetGameState<Game.State.Edit>();
+
+                    endAction?.Invoke();
+                });
+        }
+
         #region EditList
         public void ActivateEditList(Game.Type.ETab eTabType)
         {
@@ -70,13 +81,13 @@ namespace UI
             MainGameManager.Instance.SetGameState<Game.State.Edit>();
         }
 
-        public void ActivateEditList()
-        {
-            EditList.Activate();
-            ActivateAnim(EditListRootRectTm, null);
+        //public void ActivateEditList()
+        //{
+        //    EditList.Activate();
+        //    ActivateAnim(EditListRootRectTm, null);
             
-            MainGameManager.Instance.SetGameState<Game.State.Edit>();
-        }
+        //    MainGameManager.Instance.SetGameState<Game.State.Edit>();
+        //}
 
         public void ActivateEditListAfterDeactivateBottom(Game.Type.ETab eTabType)
         {
@@ -136,9 +147,7 @@ namespace UI
         private void DeactivateAnim(RectTransform rectTm, System.Action completeAction)
         {
             if(!rectTm)
-            {
                 return;
-            }
 
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)

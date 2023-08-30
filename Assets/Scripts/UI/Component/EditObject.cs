@@ -40,27 +40,7 @@ namespace UI.Component
             if(mainGameMgr == null)
                 return;
 
-            Vector3 pos = Vector3.zero;
-            var camera = mainGameMgr.GameCameraCtr?.GameCamera;
-            if (camera)
-            {
-                pos = camera.transform.position + camera.transform.forward;
-            }
-            
-            var objData = new Game.Object.Data()
-            {
-                ObjectId = _data.ObjectId,
-                ObjectUId = _data.ObjectUId,
-                Pos = pos,
-            };
-            
-            var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
-                .SetData(objData)
-                .SetId(_data.ObjectId)
-                .SetRootTm(mainGameMgr.ObjectRootTm)
-                .Create();
-
-            mainGameMgr.AddObjectToPlace(obj);
+            mainGameMgr.AddObjectToPlace(_data.ObjectId, _data.ObjectUId);
         }
     }
 }

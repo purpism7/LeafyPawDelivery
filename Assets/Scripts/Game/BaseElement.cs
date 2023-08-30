@@ -63,7 +63,13 @@ namespace Game
 
             SetOutline(0);
 
-            Game.UIManager.Instance?.Bottom?.ActivateEditList();
+            var eTab = Game.Type.ETab.Animal;
+            if (ElementData != null)
+            {
+                eTab = ElementData.EElement == Game.Type.EElement.Animal? Game.Type.ETab.Animal : Game.Type.ETab.Object;
+            }
+             
+            Game.UIManager.Instance?.Bottom?.ActivateEditList(eTab);
             MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(true);
         }
     }

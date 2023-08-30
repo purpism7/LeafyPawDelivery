@@ -39,8 +39,7 @@ namespace Game.Creature
 
             if (data != null)
             {
-                transform.localPosition = data.Pos;
-
+                SetPos(data.Pos);
                 SetSortingOrder(-(int)transform.localPosition.y);
             }
 
@@ -58,9 +57,9 @@ namespace Game.Creature
             _actionCtr?.ChainUpdate();
         }
 
-        public override void OnTouchBegan(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
+        public override void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
         {
-            base.OnTouchBegan(gameCameraCtr, iGridProvider);
+            base.OnTouchBegan(touch, gameCameraCtr, iGridProvider);
 
             Game.State.Base gameState = MainGameManager.Instance?.GameState;
             if (gameState == null)
@@ -71,6 +70,7 @@ namespace Game.Creature
                 SetState(new Game.Element.State.Edit<Creature.Animal>()?.Create(gameCameraCtr, iGridProvider));
 
                 SetSortingOrder(_selectOrder);
+                ActiveEdit(true);
             }
             else
             {
@@ -129,6 +129,11 @@ namespace Game.Creature
                 return;
 
             spriteRenderer.sortingOrder = order;
+        }
+
+        public void SetPos(Vector3 pos)
+        {
+            transform.localPosition = pos;
         }
 
         #region SpeechBubble

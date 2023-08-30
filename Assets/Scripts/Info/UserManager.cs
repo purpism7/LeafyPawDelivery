@@ -53,7 +53,16 @@ namespace Info
 
             var database = firebaseMgr.Database;
             if (database == null)
+            {
+                if (Application.isEditor)
+                {
+                    User = new Info.User();
+                    var placeId = Game.Data.Const.StartPlaceId;
+                    var currency = Game.Data.Const.GetStartCurrency(placeId);
+                }
+
                 yield break;
+            }
 
             yield return StartCoroutine(database?.CoLoad(firebaseMgr.Auth.UserId,
                 (dataSnapshot) =>
