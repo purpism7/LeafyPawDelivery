@@ -43,7 +43,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 106c7ddc9c1f441a88621f8cb1b1596f, type: 3}
   m_PackedSpriteNamesToIndex:
   - Leaf
-  - ad
+  - Ad
   - Acorn
   m_RenderDataMap: {}
   m_Tag: Currency
