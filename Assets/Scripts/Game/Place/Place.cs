@@ -24,7 +24,9 @@ namespace Game
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
         private Coroutine _speechBubbleCoroutine = null;
+        private Coroutine _dropCurrencyCoroutine = null;
         private YieldInstruction _waitSecSpeechBubble = new WaitForSeconds(10f);
+        private YieldInstruction _waitSecDropCurrency = new WaitForSeconds(60f);
         private float _initPosZ = 0;
 
         public override void Initialize(Data data)
@@ -278,8 +280,24 @@ namespace Game
             }
         }
 
+        public void ProcessGame()
+        {
+            ActivateRandomSpeechBubble();
+
+            StartDropCurrency();
+            UIUtils.SetActive(currencyRootTm, true);
+        }
+
+        public void ProcessEdit()
+        {
+            DeactivateAllSpeechBubble();
+
+            StopDropCurrency();
+            UIUtils.SetActive(currencyRootTm, false);
+        }
+
         #region SpeechBubble
-        public void ActivateRandomSpeechBubble()
+        private void ActivateRandomSpeechBubble()
         {
             DeactivateAllSpeechBubble();
             _speechBubbleCoroutine = StartCoroutine(CoRandomSpeechBubble());
@@ -287,7 +305,7 @@ namespace Game
             DropCurrency();
         }
 
-        public void DeactivateAllSpeechBubble()
+        private void DeactivateAllSpeechBubble()
         {
             if(_speechBubbleCoroutine != null)
             {
@@ -331,6 +349,45 @@ namespace Game
         #endregion
 
         #region Drop Currency
+
+        private void StartDropCurrency()
+        {
+            StopDropCurrency();
+            _dropCurrencyCoroutine = StartCoroutine(CoDropCurrency());
+        }
+
+        private void StopDropCurrency()
+        {
+            if (_dropCurrencyCoroutine != null)
+            {
+                StopCoroutine(_dropCurrencyCoroutine);
+                _dropCurrencyCoroutine = null;
+            }
+        }
+
+        private IEnumerator CoDropCurrency()
+        {
+            if (MainGameManager.Instance.GameState.CheckState<Game.State.Edit>())
+                yield break;
+
+            if (_animalList == null)
+                yield break;
+
+            if (_animalList.Count <= 0)
+                yield break;
+
+            yield return _waitSecDropCurrency;
+
+            if (_dropCurrencyCoroutine == null)
+                yield break;
+
+            DropCurrency();
+
+            yield return null;
+
+            StartDropCurrency();
+        }
+
         private void DropCurrency()
         {
             var randomIndex = UnityEngine.Random.Range(0, _animalList.Count);
@@ -350,10 +407,6 @@ namespace Game
                     Value = randomAnimal.ElementData.GetCurrency,
                 })
                 .Create();
-
-            //new ComponentCreator<UI.Component.CollectCurrency, UI.Component.CollectCurrency.Data>()
-            //    .SetRootRectTm(currencyRootTm)
-            //    .Create();
         }
         #endregion
     }

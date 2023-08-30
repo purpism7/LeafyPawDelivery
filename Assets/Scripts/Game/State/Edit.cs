@@ -8,7 +8,11 @@ namespace Game.State
     {
         public override void Initialize(MainGameManager mainGameMgr)
         {
-            mainGameMgr?.placeMgr?.ActivityPlace?.DeactivateAllSpeechBubble();
+            var activityPlace = mainGameMgr?.placeMgr?.ActivityPlace;
+            if (activityPlace == null)
+                return;
+
+            activityPlace.ProcessEdit();
         }
     }
 }
