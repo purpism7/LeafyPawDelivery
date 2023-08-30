@@ -9,8 +9,8 @@ namespace Info
 {
     public class UserManager : Singleton<UserManager>
     {
-        private const string KeyUserCurrency = "Currency";
-        private const string KeyUserStory = "Story";
+        private const string KeyUserCurrency = "CurrencyList";
+        private const string KeyUserStory = "StoryList";
 
 #if UNITY_EDITOR
         readonly private string _userInfoJsonFilePath = "Assets/Info/User.json";
@@ -151,7 +151,7 @@ namespace Info
                     DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
 
                     string key = dicEntry.Key.ToString();
-
+                    Debug.Log("key = " + dicEntry.Value);
                     if (key.Equals("Animal"))
                     {
                         currency.Animal = (long)dicEntry.Value;
