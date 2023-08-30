@@ -70,9 +70,21 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString(_data.EElement.ToString(), "description_" + _data.Id, LocalizationSettings.SelectedLocale);
+            var text = string.Empty;
+            if(_data.EElement == Game.Type.EElement.Animal)
+            {
+                text = LocalizationSettings.StringDatabase.GetLocalizedString(_data.EElement.ToString(), "description_" + _data.Id, LocalizationSettings.SelectedLocale);
+            }
+            else if(_data.EElement == Game.Type.EElement.Object)
+            {
+                var objectData = ObjectContainer.Instance.GetData(_data.Id);
+                if(objectData != null)
+                {
+                    text = String.Format("x{0}", objectData.Count);
+                }
+            }
 
-            descTMP?.SetText(localDesc);
+            descTMP?.SetText(text);
         }
 
         private void SetIconImg()
