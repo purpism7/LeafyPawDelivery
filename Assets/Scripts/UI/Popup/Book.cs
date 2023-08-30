@@ -21,6 +21,7 @@ namespace UI
         [SerializeField] private Toggle[] tabToggles = null;
         [SerializeField] private ScrollRect animalScrollRect = null;
         [SerializeField] private ScrollRect objectScrollRect = null;
+        [SerializeField] private ScrollRect storyScrollRect = null;
 
         private Type.ETab _currETabType = Type.ETab.Animal;
         
@@ -141,6 +142,7 @@ namespace UI
         {
             UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Type.ETab.Animal);
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
+            UIUtils.SetActive(storyScrollRect?.gameObject, _currETabType == Type.ETab.Story);
         }
 
         private void Unlock(Type.EElement EElement, int id)

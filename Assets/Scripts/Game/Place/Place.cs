@@ -301,8 +301,6 @@ namespace Game
         {
             DeactivateAllSpeechBubble();
             _speechBubbleCoroutine = StartCoroutine(CoRandomSpeechBubble());
-
-            DropCurrency();
         }
 
         private void DeactivateAllSpeechBubble()

@@ -7,6 +7,7 @@ namespace Game
         {
             Animal,
             Object,
+            Story,
         }
 
         public enum EElement

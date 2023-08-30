@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 344, y: 136}
+  m_SizeDelta: {x: 224, y: 136}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2298562513146316143
 CanvasRenderer:
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2dc35b9b19d8741cb80a47276989f1f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 060904ca7e1a42645aff9d5d3c2dae03, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 64b3fb86271f4435a8025500c909cc7f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4695c9641f956984e924df25bd891ff3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -227,7 +227,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 60}
+  m_SizeDelta: {x: 180, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3986345375150740642
 CanvasRenderer:
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 705332468475314713}
   - component: {fileID: 657437519463423446}
   m_Layer: 0
-  m_Name: Tab
+  m_Name: Tab_Three
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -364,7 +364,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 324, y: 117}
+  m_SizeDelta: {x: 205, y: 117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5090493428456885421
 MonoBehaviour:
@@ -442,7 +442,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 64b3fb86271f4435a8025500c909cc7f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4695c9641f956984e924df25bd891ff3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

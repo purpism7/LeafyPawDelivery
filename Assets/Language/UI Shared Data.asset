@@ -47,6 +47,10 @@ MonoBehaviour:
     m_Key: map
     m_Metadata:
       m_Items: []
+  - m_Id: 7628379888017408
+    m_Key: story
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

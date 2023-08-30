@@ -114,7 +114,10 @@ namespace Game
                     animalData.PlaceId != _data.PlaceId)
                     continue;
 
-                if(data.EType_ == OpenConditionData.EType.Starter)
+                if (MainGameManager.Instance.CheckExist(Game.Type.EElement.Animal, data.Id))
+                    continue;
+
+                if (data.EType_ == OpenConditionData.EType.Starter)
                 {
                     Sequencer.EnqueueTask(
                         () =>

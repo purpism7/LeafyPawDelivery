@@ -91,8 +91,6 @@ namespace Info
                     if (data == null)
                         continue;
 
-                    Debug.Log("data = " + data);
-
                     switch(data.Key)
                     {
                         case "Cash":

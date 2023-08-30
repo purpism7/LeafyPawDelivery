@@ -13,6 +13,7 @@ namespace UI
     public class Unlock : BasePopup<Unlock.Data>
     {
         [SerializeField] private Image iconImg = null;
+        [SerializeField] private RectTransform renderTextureRootRectTm = null;
         [SerializeField] private TextMeshProUGUI nameTMP = null;
 
         public class Data : BaseData
@@ -26,8 +27,22 @@ namespace UI
         {
             yield return StartCoroutine(base.CoInitialize(data));
 
-            SetRenderTexture();
             SetNameTMP();
+
+            UIUtils.SetActive(iconImg?.gameObject, false);
+            UIUtils.SetActive(renderTextureRootRectTm, false);
+
+            if (data == null)
+                yield break;
+
+            if(data.EElement == Game.Type.EElement.Animal)
+            {
+                SetRenderTexture();
+            }
+            else if(data.EElement == Game.Type.EElement.Object)
+            {
+                SetImg();
+            }
         }
 
         public override void Activate()
@@ -67,18 +82,25 @@ namespace UI
             if (_data == null)
                 return;
 
-            //if (iconImg == null)
-            //    return;
-
-            //var sprite = GameUtils.GetLargeIconSprite(_data.EElement, _data.Id);
-            //iconImg.sprite = sprite;
-
             Game.RenderTextureElement.Create(
                 new Game.RenderTextureElement.Data()
                 {
                     Id = _data.Id,
                     EElement = _data.EElement,
                 });
+
+            UIUtils.SetActive(renderTextureRootRectTm, true);
+        }
+
+        private void SetImg()
+        {
+            if (iconImg == null)
+                return;
+
+            var sprite = GameUtils.GetLargeIconSprite(_data.EElement, _data.Id);
+            iconImg.sprite = sprite;
+
+            UIUtils.SetActive(iconImg?.gameObject, true);
         }
 
         private void SetNameTMP()
