@@ -19,15 +19,15 @@ namespace UI
         [SerializeField] private RectTransform renderTextureRootRectTm = null;
         [SerializeField] private TextMeshProUGUI nameTMP = null;
 
-        public override IEnumerator CoInitialize(Data data)
+        public override void Initialize(Data data)
         {
-            yield return StartCoroutine(base.CoInitialize(data));
+            base.Initialize(data);
 
             UIUtils.SetActive(iconImg?.gameObject, false);
             UIUtils.SetActive(renderTextureRootRectTm, false);
 
             if (data == null)
-                yield break;
+                return;
 
             SetNameTMP();
 

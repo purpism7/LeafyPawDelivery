@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 300}
+  m_SizeDelta: {x: 280, y: 330}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5262265640988587125
 CanvasRenderer:
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootRectTm: {fileID: 6059155048771174303}
   iconImg: {fileID: 4737985692532096860}
-  rendertextureRootRectTm: {fileID: 7892902456452273711}
+  renderTextureRootRectTm: {fileID: 0}
   nameTMP: {fileID: 8817967062472180177}
 --- !u!1 &2744219301616581312
 GameObject:
@@ -698,8 +698,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -25}
+  m_SizeDelta: {x: 0, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3524466309545752839
 CanvasRenderer:

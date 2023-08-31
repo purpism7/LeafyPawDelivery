@@ -189,6 +189,7 @@ namespace UI
         void BookCell.IListener.Click(Game.Type.EElement eElment, int id)
         {
             var popup = new PopupCreator<Profile, Profile.Data>()
+                .SetReInitialize(true)
                 .SetData(new Profile.Data()
                 {
                     EElement = eElment,
