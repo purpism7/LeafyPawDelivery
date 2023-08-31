@@ -19,7 +19,7 @@ namespace UI.Component
 
         public interface IListener
         {
-            void Click();
+            void Click(Game.Type.EElement eElment, int id);
         }
 
         [SerializeField] private TextMeshProUGUI nameTMP;
@@ -81,7 +81,10 @@ namespace UI.Component
 
         public void OnClick()
         {
-            _data?.IListener?.Click();
+            if (_data == null)
+                return;
+
+            _data.IListener?.Click(_data.EElement, _data.Id);
         }
     }
 }

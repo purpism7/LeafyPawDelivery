@@ -25,7 +25,7 @@ namespace UI
         {
             public string Speaker = string.Empty;
             public string Sentence = string.Empty;
-            public float KeepDelay = 1.5f;
+            public float KeepDelay = 2f;
         }
 
         [SerializeField] private TextMeshProUGUI speakerTMP = null;

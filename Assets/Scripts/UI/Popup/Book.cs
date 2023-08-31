@@ -186,8 +186,15 @@ namespace UI
         }
 
         #region BookCell.IListener
-        void BookCell.IListener.Click()
+        void BookCell.IListener.Click(Game.Type.EElement eElment, int id)
         {
+            var popup = new PopupCreator<Profile, Profile.Data>()
+                .SetData(new Profile.Data()
+                {
+                    EElement = eElment,
+                    Id = id,
+                })
+                .Create();
 
         }
         #endregion

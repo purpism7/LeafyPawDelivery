@@ -12,16 +12,16 @@ namespace UI
 {
     public class Unlock : BasePopup<Unlock.Data>
     {
-        [SerializeField] private Image iconImg = null;
-        [SerializeField] private RectTransform renderTextureRootRectTm = null;
-        [SerializeField] private TextMeshProUGUI nameTMP = null;
-
         public class Data : BaseData
         {
             public Game.Type.EElement EElement = Game.Type.EElement.None;
             public int Id = 0;
             public Action ClickAction = null;
         }
+
+        [SerializeField] private Image iconImg = null;
+        [SerializeField] private RectTransform renderTextureRootRectTm = null;
+        [SerializeField] private TextMeshProUGUI nameTMP = null;
 
         public override IEnumerator CoInitialize(Data data)
         {
