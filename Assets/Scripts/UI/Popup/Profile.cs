@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
+using UnityEngine.Localization.Settings;
 
 namespace UI
 {
@@ -18,6 +19,7 @@ namespace UI
         [SerializeField] private Image iconImg = null;
         [SerializeField] private RectTransform renderTextureRootRectTm = null;
         [SerializeField] private TextMeshProUGUI nameTMP = null;
+        [SerializeField] private TextMeshProUGUI descTMP = null;
 
         public override void Initialize(Data data)
         {
@@ -30,6 +32,7 @@ namespace UI
                 return;
 
             SetNameTMP();
+            SetDescTMP();
 
             if (data.EElement == Game.Type.EElement.Animal)
             {
@@ -41,6 +44,13 @@ namespace UI
             }
         }
 
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            Game.RenderTextureElement.Destroy();
+        }
+
         private void SetNameTMP()
         {
             if (_data == null)
@@ -49,6 +59,17 @@ namespace UI
             var localName = GameUtils.GetName(_data.EElement, _data.Id);
 
             nameTMP?.SetText(localName);
+        }
+
+        private void SetDescTMP()
+        {
+            var text = string.Empty;
+            if (_data.EElement == Game.Type.EElement.Animal)
+            {
+                text = LocalizationSettings.StringDatabase.GetLocalizedString(_data.EElement.ToString(), "description_" + _data.Id, LocalizationSettings.SelectedLocale);
+            }
+
+            descTMP?.SetText(text);
         }
 
         private void SetRenderTexture()

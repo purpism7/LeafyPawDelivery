@@ -53,6 +53,7 @@ namespace Game
         [SerializeField] private Transform targetRootTm = null;
         #endregion
 
+        private Dictionary<Data, BaseElement> _cachedElementDic = new();
         private Data _data = null;
 
         private void Initialize(Data data)
@@ -72,6 +73,17 @@ namespace Game
 
         private void CreateTarget()
         {
+            if(_cachedElementDic != null)
+            {
+                if(_cachedElementDic.TryGetValue(_data, out BaseElement baseElement))
+                {
+                    baseElement?.Activate();
+
+                    return;
+                }
+
+            }
+
             if(_data.EElement == Type.EElement.Animal)
             {
                 var animal = new GameSystem.AnimalCreator()
@@ -79,6 +91,8 @@ namespace Game
                     .SetRootTm(targetRootTm)
                     .SetIsEdit(false)
                     .Create();
+
+                _cachedElementDic.TryAdd(_data, animal);
             }
             else if(_data.EElement == Type.EElement.Object)
             {
@@ -87,6 +101,8 @@ namespace Game
                     .SetRootTm(targetRootTm)
                     .SetIsEdit(false)
                     .Create();
+
+                _cachedElementDic.TryAdd(_data, obj);
             }
         }
 
