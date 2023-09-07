@@ -11,6 +11,7 @@ namespace GameSystem
     public class AnimalCreator : BaseCreator<Game.Creature.Animal>
     {
         private int _animalId = 0;
+        private int _skinId = 0;
         private Transform _rootTm = null;
         private int _order = 0;
         private Vector3 _pos = Vector3.zero;
@@ -22,6 +23,13 @@ namespace GameSystem
         public AnimalCreator SetAnimalId(int id)
         {
             _animalId = id;
+
+            return this;
+        }
+
+        public AnimalCreator SetSkinId(int id)
+        {
+            _skinId = id;
 
             return this;
         }
@@ -84,13 +92,12 @@ namespace GameSystem
                 rootTm = activityPlace.animalRootTm;
             }
             
-            var animal = ResourceManager.Instance?.Instantiate<Game.Creature.Animal>(_animalId, rootTm);
+            var animal = ResourceManager.Instance?.InstantiateAnimal(_animalId, _skinId, rootTm);
             if (animal == null)
                 return null;
 
             animal.Initialize(new Game.Creature.Animal.Data()
             {
-                Id = _animalId,
                 Order = _order,
                 Pos = _pos,
                 IsEdit = _isEdit,

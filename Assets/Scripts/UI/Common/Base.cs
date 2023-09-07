@@ -31,7 +31,7 @@ namespace UI
 
             if (IsActivate)
                 return;
-
+            
             rootRectTm.SetActive(true);
         }
 

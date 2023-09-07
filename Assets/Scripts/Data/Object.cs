@@ -9,6 +9,8 @@ public class Object : ElementData
     public int Count = 1;
 
     public Game.Type.EObjectGrade EGrade = Game.Type.EObjectGrade.None;
+    public string ShortIconImgName = string.Empty;
+    public string LargeIconImgName = string.Empty;
 
     public override Game.Type.EElement EElement => Game.Type.EElement.Object;
 

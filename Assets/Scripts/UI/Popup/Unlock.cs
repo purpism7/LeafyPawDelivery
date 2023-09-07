@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
-using static ConversationBehaviour;
 using UnityEngine.Localization.Settings;
 
 namespace UI
@@ -23,6 +22,8 @@ namespace UI
         [SerializeField] private RectTransform renderTextureRootRectTm = null;
         [SerializeField] private TextMeshProUGUI nameTMP = null;
 
+        private int _skinId = 0;
+
         public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
@@ -37,6 +38,8 @@ namespace UI
 
             if(data.EElement == Game.Type.EElement.Animal)
             {
+                _skinId = Game.Data.Const.AnimalBaseSkinId;
+
                 SetRenderTexture();
             }
             else if(data.EElement == Game.Type.EElement.Object)
@@ -86,6 +89,7 @@ namespace UI
                 new Game.RenderTextureElement.Data()
                 {
                     Id = _data.Id,
+                    SkinId = _skinId,
                     EElement = _data.EElement,
                 });
 

@@ -77,6 +77,7 @@ namespace UI
                 var data = new Component.EditAnimal.Data()
                 {
                     AnimalData = AnimalContainer.Instance.GetData(info.Id),
+                    SkinId = info.SkinId,
                 };
 
                 CreateEditAnimal(data);

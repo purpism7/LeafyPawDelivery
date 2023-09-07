@@ -13,7 +13,10 @@ namespace GameData
             public Game.Type.EAnimalCurrency Animal = Game.Type.EAnimalCurrency.None;
             public Game.Type.EObjectCurrency Object = Game.Type.EObjectCurrency.None;
             public Info.User.Currency StartValue = null;
-           
+
+            public string AnimalSpriteName { get { return Animal.ToString().ToLower(); } }
+            public string ObjectSpriteName { get { return Object.ToString().ToLower(); } }
+
             public int PlaceId
             {
                 get
@@ -23,7 +26,9 @@ namespace GameData
             }
         }
 
+        public int AnimalBaseSkinId = 1;
         public int StartPlaceId = 1;
+        
         public CurrencyInfo[] CurrencyInfos = null;
 
         public Info.User.Currency GetStartCurrency(int placeId)

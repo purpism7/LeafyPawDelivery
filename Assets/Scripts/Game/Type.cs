@@ -60,6 +60,13 @@ namespace Game
             Rare,
             Normal,
         }
+
+        public enum EAnimalSkinType
+        {
+            None,
+
+            Base,
+        }
     }
 }
 

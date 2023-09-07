@@ -11,6 +11,7 @@ namespace UI.Component
         public class Data : BaseData
         {
             public Animal AnimalData = null;
+            public int SkinId = 0;
         }
 
         [SerializeField] private Image iconImg = null;
@@ -45,7 +46,7 @@ namespace UI.Component
             if(mainGameMgr == null)
                 return;
 
-            mainGameMgr.AddAnimalToPlace(_data.AnimalData.Id);
+            mainGameMgr.AddAnimalToPlace(_data.AnimalData.Id, _data.SkinId);
         }
     }
 }

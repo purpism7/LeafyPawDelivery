@@ -78,6 +78,21 @@ namespace GameSystem
             return default(T);
         }
 
+        public Game.Creature.Animal InstantiateAnimal(int animalId, int skinId, Transform rootTm)
+        {
+            if (AddressableAssetLoader == null)
+                return null;
+
+            //var fullName = typeof(Game.Creature.Animal).FullName;
+            var gameObj = AddressableAssetLoader.InstantiateAnimal(animalId, skinId, rootTm);
+            if (gameObj)
+            {
+                return gameObj.GetComponent<Game.Creature.Animal>();
+            }
+
+            return null;
+        }
+
         public T Instantiate<T>(int id, Transform rootTm) where T : Game.Base
         {
             if (AddressableAssetLoader == null)

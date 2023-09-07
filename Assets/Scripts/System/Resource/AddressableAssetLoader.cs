@@ -12,8 +12,9 @@ namespace GameSystem
 {
     public class AddressableAssetLoader : MonoBehaviour
     {
-        readonly public string AssetLabelUI = "UI";
+        public const string AssetLabelUI = "UI";
         readonly public string AssetLabelGame = "Game";
+        public const string AssetLabelAnimal = "Animal";
         readonly public string AssetLabelAtlas = "Atlas";
         readonly public string AssetLabelData = "Data";
         readonly public string AssetLabelCutscene = "Cutscene";
@@ -22,7 +23,8 @@ namespace GameSystem
 
         public List<AssetLabelReference> InitLoadLabelList;
 
-        private Dictionary<string, Dictionary<int, GameObject>> _gameObjByIdDic = new(); // Animal, Place, Object
+        private Dictionary<string, Dictionary<int, GameObject>> _gameObjByIdDic = new(); // Place, Object
+        private Dictionary<(int, int), GameObject> _animalGameObjDic = new(); // Animal
         private Dictionary<string, GameObject> _gameObjDic = new(); // Game
         private Dictionary<string, GameObject> _uiGameObjDic = new(); // UI
         private Dictionary<string, GameObject> _cutsceneGameObjDic = new(); // Cutscene
@@ -32,6 +34,7 @@ namespace GameSystem
         public IEnumerator CoInit()
         {
             _gameObjByIdDic.Clear();
+            _animalGameObjDic.Clear();
             _gameObjDic.Clear();
             _uiGameObjDic.Clear();
 
@@ -47,7 +50,7 @@ namespace GameSystem
                 Debug.Log("typeKey = " + typeKey);
 
                 _endLoad = false;
-                
+
                 if(typeKey == AssetLabelUI)
                 {
                     yield return StartCoroutine(CoLoadUIAsset());
@@ -59,6 +62,10 @@ namespace GameSystem
                 else if (typeKey == AssetLabelCutscene)
                 {
                     yield return StartCoroutine(CoLoadCutsceneAsset());
+                }
+                else if(typeKey == AssetLabelAnimal)
+                {
+                    yield return StartCoroutine(CoLoadAnimalAsset());
                 }
                 else
                 {
@@ -145,6 +152,24 @@ namespace GameSystem
             }));
         }
 
+        private IEnumerator CoLoadAnimalAsset()
+        {
+            yield return StartCoroutine(CoLoadAssetAsync<GameObject>(AssetLabelAnimal, (resourceLocation) =>
+            {
+                var resultGameObj = resourceLocation.Result;
+                if (!resultGameObj)
+                    return;
+
+                var animal = resultGameObj.GetComponent<Game.Creature.Animal>();
+                if (animal != null)
+                {
+                    _animalGameObjDic.TryAdd((animal.Id, animal.SkinId), resultGameObj);
+                }
+
+                _endLoad = true;
+            }));
+        }
+
         private IEnumerator CoLoadGameAssetById(string typeKey)
         {
             yield return StartCoroutine(CoLoadAssetAsync<GameObject>(typeKey, (resourceLocation) =>
@@ -225,6 +250,19 @@ namespace GameSystem
                     // Debug.Log("instantiate = " + gameObj.name);
                     return GameObject.Instantiate(gameObj, rootTm);
                 }
+            }
+
+            return null;
+        }
+
+        public GameObject InstantiateAnimal(int animalId, int skinId, Transform rootTm)
+        {
+            if (_animalGameObjDic == null)
+                return null;
+
+            if(_animalGameObjDic.TryGetValue((animalId, skinId), out GameObject gameObj))
+            {
+                return GameObject.Instantiate(gameObj, rootTm);
             }
 
             return null;

@@ -6,8 +6,6 @@ using UnityEngine;
 public abstract class ElementData : Data.Base
 {
     public int PlaceId = 0;
-    public string ShortIconImgName = string.Empty;
-    public string LargeIconImgName = string.Empty;
 
     public abstract int GetCurrency { get; }
     public abstract Game.Type.EElement EElement { get; }

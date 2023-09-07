@@ -12,19 +12,22 @@ namespace Game.Creature
     {
         public class Data : BaseData
         {
-            public int Id = 0;
             public int Order = 0;
             public Vector3 Pos = Vector3.zero;
             public bool IsEdit = true;
             public bool IsSpeechBubble = true;
         }
 
+        [Header("Skin")]
+        [SerializeField]
+        private int skinId = 0;
         [SerializeField]
         private Animator animator = null;
 
         private AnimalRoot _animalRoot = null;
         private AnimalActionController _actionCtr = null;
 
+        public int SkinId { get { return skinId; } }
         public Game.Element.State.BaseState<Creature.Animal> State { get; private set; } = null;
 
         public override void Initialize(Data data)

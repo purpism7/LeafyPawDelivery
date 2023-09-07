@@ -9,6 +9,8 @@ namespace Game
     {
         [HideInInspector]
         public int UId = 0;
+
+        [Header("Element")]
         [SerializeField]
         protected SpriteRenderer spriteRenderer = null;
         [SerializeField]

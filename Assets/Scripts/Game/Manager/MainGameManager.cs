@@ -124,7 +124,7 @@ public class MainGameManager : Singleton<MainGameManager>
     }
 
     #region Animal
-    public void AddAnimalToPlace(int id)
+    public void AddAnimalToPlace(int id, int skinId)
     {
         Vector3 pos = Vector3.zero;
         if (GameCameraCtr != null)
@@ -137,6 +137,7 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             animal = new GameSystem.AnimalCreator()
               .SetAnimalId(id)
+              .SetSkinId(skinId)
               .SetPos(pos)
               .Create();
 

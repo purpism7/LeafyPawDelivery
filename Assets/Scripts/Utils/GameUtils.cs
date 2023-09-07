@@ -35,7 +35,7 @@ public static class GameUtils
 
         if (EElement == Type.EElement.Animal)
         {
-            var data = AnimalContainer.Instance?.GetData(id);
+            var data = AnimalSkinContainer.Instance?.GetBaseData(id);
             if (data == null)
                 return null;
 
@@ -61,7 +61,7 @@ public static class GameUtils
     
          if (EElement == Type.EElement.Animal)
          {
-             var data = AnimalContainer.Instance?.GetData(id);
+             var data = AnimalSkinContainer.Instance?.GetBaseData(id);
              if (data == null)
                  return null;
     

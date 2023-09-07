@@ -159,7 +159,7 @@ namespace Game
 
                 var animalData = new Game.Creature.Animal.Data()
                 {
-                    Id = data.Id,
+                    //Id = data.Id,
                     Pos = animalInfo.Pos,
                 };
 
@@ -185,6 +185,7 @@ namespace Game
                 {
                     resAnimal = new GameSystem.AnimalCreator()
                         .SetAnimalId(animalInfo.Id)
+                        .SetSkinId(animalInfo.SkinId)
                         .SetPos(animalInfo.Pos)
                         .Create();
 

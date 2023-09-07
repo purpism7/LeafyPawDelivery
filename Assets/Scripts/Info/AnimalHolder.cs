@@ -85,6 +85,86 @@ namespace Info
             SaveInfo();
         }
 
+        #region Skin
+        public void AddASkin(int id, int skinId)
+        {
+            var animalInfo = GetAnimalInfo(id);
+            if (animalInfo == null)
+                return;
+
+            AddSkin(animalInfo, skinId);
+        }
+
+        private void AddSkin(Info.Animal animalInfo, int skinId)
+        {
+            if (animalInfo == null)
+                return;
+
+            if(animalInfo.SkinIdList == null)
+            {
+                animalInfo.SkinIdList = new();
+                animalInfo.SkinIdList.Clear();
+            }
+
+            foreach(int animalSkinId in animalInfo.SkinIdList)
+            {
+                if(animalSkinId == skinId)
+                {
+                    return;
+                }
+            }
+
+            animalInfo.SkinIdList.Add(skinId);
+
+            SaveInfo();
+        }
+
+        public void ApplySkin(int id, int skinId)
+        {
+            var animalInfo = GetAnimalInfo(id);
+            if (animalInfo == null)
+                return;
+
+            ApplySkin(animalInfo, skinId);
+        }
+
+        private void ApplySkin(Info.Animal animalInfo, int skinId)
+        {
+            var skinIdList = animalInfo?.SkinIdList;
+            if (skinIdList == null)
+                return;
+
+            foreach(int animalSkinId in skinIdList)
+            {
+                if(animalSkinId == skinId)
+                {
+
+                }
+            }
+        }
+
+        public bool CheckExist(int id, int skinId)
+        {
+            var animalInfo = GetAnimalInfo(id);
+            if (animalInfo == null)
+                return false;
+
+            var skinIdList = animalInfo?.SkinIdList;
+            if (skinIdList == null)
+                return false;
+
+            foreach (int animalSkinId in skinIdList)
+            {
+                if (animalSkinId == skinId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        #endregion
+
         public Info.Animal GetAnimalInfo(int id)
         {
             if(AnimalInfoList == null)

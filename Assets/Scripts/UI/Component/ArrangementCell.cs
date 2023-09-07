@@ -17,8 +17,8 @@ namespace UI.Component
         public class Data : BaseData
         {
             public IListener IListener = null;
-            
             public int Id = 0;
+            public int SkinId = 0;
             public Game.Type.EElement EElement = Game.Type.EElement.None; 
             public string Name = string.Empty;
             public bool Lock = true;
@@ -26,7 +26,7 @@ namespace UI.Component
         
         public interface IListener
         {
-            void Edit(Game.Type.EElement EElement, int id);
+            void Edit(Game.Type.EElement EElement, int id, int skinId);
         }
 
         #region Inspector
@@ -52,6 +52,13 @@ namespace UI.Component
             SetLockData();
 
             UIUtils.SetActive(lockRootRectTm, _data.Lock);
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            SetLockData();
         }
 
         private void SetNameTMP()
@@ -133,7 +140,7 @@ namespace UI.Component
 
             var openConditionData = new OpenCondition.Data()
             {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.Animal.ToString()),
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.AnimalSpriteName),
                 Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
                 IsPossible = animalOpenConditionContainer.CheckAnimalCurrency(_data.Id),
             };
@@ -142,7 +149,7 @@ namespace UI.Component
 
             openConditionData = new OpenCondition.Data()
             {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.Object.ToString()),
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.ObjectSpriteName),
                 Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
                 IsPossible = animalOpenConditionContainer.CheckObjectCurrency(_data.Id),
             };
@@ -161,7 +168,7 @@ namespace UI.Component
 
             var openConditionData = new OpenCondition.Data()
             {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.Animal.ToString()),
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.AnimalSpriteName),
                 Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
                 IsPossible = objectOpenConditionContainer.CheckAnimalCurrency(_data.Id),
             };
@@ -170,7 +177,7 @@ namespace UI.Component
 
             openConditionData = new OpenCondition.Data()
             {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.Object.ToString()),
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.ObjectSpriteName),
                 Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
                 IsPossible = objectOpenConditionContainer.CheckObjectCurrency(_data.Id),
             };
@@ -309,7 +316,7 @@ namespace UI.Component
             if (_data == null)
                 return;
             
-            _data.IListener?.Edit(_data.EElement, _data.Id);
+            _data.IListener?.Edit(_data.EElement, _data.Id, _data.SkinId);
         }
     }
 }

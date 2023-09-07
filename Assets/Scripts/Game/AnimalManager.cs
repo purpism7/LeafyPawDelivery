@@ -54,6 +54,7 @@ namespace Game
             }
         }
 
+        // Add 되는 Animal 의 Skin Id Base 인 1 일 것.
         public void AddAnimal(int animalId)
         {
             if (_animalHolder == null)
@@ -62,6 +63,7 @@ namespace Game
             var animalInfo = new Info.Animal()
             {
                 Id = animalId,
+                SkinId = 1,
             };
 
             if (_animalHolder.AddAnimalInfo(animalInfo))
@@ -143,6 +145,16 @@ namespace Game
                 }
             }
         }
+
+        #region Skin
+        public bool CheckExistSkin(int id, int skinId)
+        {
+            if (_animalHolder == null)
+                return false;
+
+            return _animalHolder.CheckExist(id, skinId);
+        }
+        #endregion
 
         private void OnChangedPlace(int placeId)
         {

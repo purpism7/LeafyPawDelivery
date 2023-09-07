@@ -46,6 +46,7 @@ namespace Game
         public class Data
         {
             public int Id = 0;
+            public int SkinId = 0;
             public Type.EElement EElement = Type.EElement.None;
         }
 
@@ -81,13 +82,13 @@ namespace Game
 
                     return;
                 }
-
             }
 
             if(_data.EElement == Type.EElement.Animal)
             {
                 var animal = new GameSystem.AnimalCreator()
                     .SetAnimalId(_data.Id)
+                    .SetSkinId(_data.SkinId)
                     .SetRootTm(targetRootTm)
                     .SetIsEdit(false)
                     .Create();

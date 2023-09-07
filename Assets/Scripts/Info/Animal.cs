@@ -10,5 +10,7 @@ namespace Info
         public int Id = 0;
         public Vector3 Pos = Vector3.zero;
         public bool Arrangement = false;
+        public int SkinId = 0;
+        public List<int> SkinIdList = null;
     }
 }
