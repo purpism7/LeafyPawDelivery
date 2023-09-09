@@ -43,7 +43,9 @@ namespace UI
         public override void Activate()
         {
             base.Activate();
-            
+
+            ActivateArrangementCellList();
+
             _currETabType = Game.Type.ETab.Animal;
             ActiveContents();
 
@@ -58,12 +60,36 @@ namespace UI
         {
             base.Deactivate();
 
+            DeactivateArrangementCellList();
+
             _endTask = true;
         }
 
         public override void ClickClose()
         {
             base.ClickClose();
+        }
+
+        private void ActivateArrangementCellList()
+        {
+            if (_arrangementCellList == null)
+                return;
+
+            foreach(var cell in _arrangementCellList)
+            {
+                cell?.Activate();
+            }
+        }
+
+        private void DeactivateArrangementCellList()
+        {
+            if (_arrangementCellList == null)
+                return;
+
+            foreach (var cell in _arrangementCellList)
+            {
+                cell?.Deactivate();
+            }
         }
 
         private void SetAnimalList()

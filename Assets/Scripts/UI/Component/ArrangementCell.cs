@@ -6,13 +6,12 @@ using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
 
 using TMPro;
-using static GameData.Const;
 
 using GameSystem;
 
 namespace UI.Component
 {
-    public class ArrangementCell : UI.Base<ArrangementCell.Data>
+    public class ArrangementCell : UI.BaseComponent<ArrangementCell.Data>
     {
         public class Data : BaseData
         {
@@ -41,9 +40,13 @@ namespace UI.Component
         [SerializeField] private RectTransform openCondtionRootRectTm = null;
         #endregion
 
+        private List<OpenCondition> _openConditionList = new();
+
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+
+            _openConditionList?.Clear();
 
             SetNameTMP();
             SetDescTMP();
@@ -58,7 +61,36 @@ namespace UI.Component
         {
             base.Activate();
 
-            SetLockData();
+            ActivateOpenConditionList();
+        }
+
+        public override void Deactivate()
+        {
+            DeactivateOpenConditionList();
+
+            base.Deactivate();
+        }
+
+        private void ActivateOpenConditionList()
+        {
+            if (_openConditionList == null)
+                return;
+
+            foreach(var openCondition in _openConditionList)
+            {
+                openCondition?.Activate();
+            }
+        }
+
+        private void DeactivateOpenConditionList()
+        {
+            if (_openConditionList == null)
+                return;
+
+            foreach (var openCondition in _openConditionList)
+            {
+                openCondition?.Deactivate();
+            }
         }
 
         private void SetNameTMP()
@@ -142,7 +174,7 @@ namespace UI.Component
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.AnimalSpriteName),
                 Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
-                IsPossible = animalOpenConditionContainer.CheckAnimalCurrency(_data.Id),
+                PossibleFunc = () => animalOpenConditionContainer.CheckAnimalCurrency(_data.Id),
             };
 
             CreateOpenCondition(openConditionData);
@@ -151,7 +183,7 @@ namespace UI.Component
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.ObjectSpriteName),
                 Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
-                IsPossible = animalOpenConditionContainer.CheckObjectCurrency(_data.Id),
+                PossibleFunc = () => animalOpenConditionContainer.CheckObjectCurrency(_data.Id),
             };
 
             CreateOpenCondition(openConditionData);
@@ -170,7 +202,7 @@ namespace UI.Component
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.AnimalSpriteName),
                 Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
-                IsPossible = objectOpenConditionContainer.CheckAnimalCurrency(_data.Id),
+                PossibleFunc = () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id),
             };
 
             CreateOpenCondition(openConditionData);
@@ -179,7 +211,7 @@ namespace UI.Component
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.ObjectSpriteName),
                 Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
-                IsPossible = objectOpenConditionContainer.CheckObjectCurrency(_data.Id),
+                PossibleFunc = () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id),
             };
 
             CreateOpenCondition(openConditionData);
@@ -197,10 +229,17 @@ namespace UI.Component
 
         private UI.Component.OpenCondition CreateOpenCondition(OpenCondition.Data openConditionData)
         {
-            return new ComponentCreator<OpenCondition, OpenCondition.Data>()
+            var openCondition = new ComponentCreator<OpenCondition, OpenCondition.Data>()
                     .SetData(openConditionData)
                     .SetRootRectTm(openCondtionRootRectTm)
                     .Create();
+
+            if(openCondition != null)
+            {
+                _openConditionList?.Add(openCondition);
+            }
+
+            return openCondition;
         }
 
         private void SetButtonState()

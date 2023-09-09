@@ -13,7 +13,7 @@ namespace UI.Component
         {
             public Sprite ImgSprite = null;
             public string Text = string.Empty;
-            public bool IsPossible = false;
+            public System.Func<bool> PossibleFunc = null;
         }
 
         #region Inspector
@@ -29,13 +29,13 @@ namespace UI.Component
 
             SetImg();
             SetText(data.Text);
-
-            SetColor();
         }
 
         public override void Activate()
         {
             base.Activate();
+
+            SetColor();
         }
 
         private void SetImg()
@@ -57,7 +57,13 @@ namespace UI.Component
 
         private void SetColor()
         {
-            textTMP.color = _data.IsPossible ? Color.black : Color.red;
+            if (_data == null)
+                return;
+
+            if (_data.PossibleFunc == null)
+                return;
+
+            textTMP.color = _data.PossibleFunc() ? Color.black : Color.red;
         }
     }
 }

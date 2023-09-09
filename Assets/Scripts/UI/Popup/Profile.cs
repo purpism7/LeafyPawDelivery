@@ -69,11 +69,11 @@ namespace UI
 
         public override void Deactivate()
         {
-            base.Deactivate();
-
+            DeactivateSkinCellList();
+            
             Game.RenderTextureElement.Destroy();
 
-            DeactivateSkinCellList();
+            base.Deactivate();
         }
 
         private void SetNameTMP()
