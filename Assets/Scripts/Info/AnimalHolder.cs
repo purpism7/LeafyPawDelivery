@@ -163,6 +163,15 @@ namespace Info
 
             return false;
         }
+
+        public int GetCurrenctSkinId(int id)
+        {
+            var animalInfo = GetAnimalInfo(id);
+            if (animalInfo == null)
+                return 0;
+
+            return animalInfo.SkinId;
+        }
         #endregion
 
         public Info.Animal GetAnimalInfo(int id)

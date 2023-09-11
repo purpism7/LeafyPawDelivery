@@ -151,8 +151,14 @@ namespace UI
             var skinList = AnimalSkinContainer.Instance.GetSkinList(_data.Id);
             if (skinList == null)
                 return;
-            
-            foreach(var animalSkin in skinList)
+
+            int currenctSkinId = MainGameManager.Instance.AnimalMgr.GetCurrenctSkinId(_data.Id);
+            if(currenctSkinId <= 0)
+            {
+                currenctSkinId = Game.Data.Const.AnimalBaseSkinId;
+            }
+
+            foreach (var animalSkin in skinList)
             {
                 if (animalSkin == null)
                     continue;
@@ -166,6 +172,7 @@ namespace UI
                     Id = animalSkin.Id,
                     Sprite = ResourceManager.Instance.AtalsLoader.GetSprite("AnimalSkinIcon_1", animalSkin.ImgName),
                     ToggleGroup = skinToggleGroup,
+                    ToggleOn = currenctSkinId == animalSkin.Id,
                 };
 
                 var findSkinCell = _skinCellList?.Find(skinCell => skinCell != null && !skinCell.IsActivate);

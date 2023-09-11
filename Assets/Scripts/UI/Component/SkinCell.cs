@@ -13,6 +13,7 @@ namespace UI.Component
             public int Id = 0;
             public Sprite Sprite = null;
             public ToggleGroup ToggleGroup = null;
+            public bool ToggleOn = false;
         }
 
         public interface IListener
@@ -65,7 +66,7 @@ namespace UI.Component
                 return;
 
             toggle.group = _data.ToggleGroup;
-            toggle.SetIsOnWithoutNotify(false);
+            toggle.SetIsOnWithoutNotify(_data.ToggleOn);
         }
 
         private void EnableBuyRoot(bool enable)

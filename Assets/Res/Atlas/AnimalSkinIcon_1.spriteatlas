@@ -40,12 +40,20 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 368a1281b0b6347fbbc9db3989978d99, type: 3}
   - {fileID: 21300000, guid: 07868eb356f394cea976f7701b06726f, type: 3}
+  - {fileID: 21300000, guid: 2a87ca17195524ab7aa524cb1ae480ba, type: 3}
   - {fileID: 21300000, guid: 12b78a098906b407b9a294ea0f02e8ff, type: 3}
+  - {fileID: 21300000, guid: 7a04d0997c8f74722aa9c1a267906900, type: 3}
+  - {fileID: 21300000, guid: e0c2aada8f2e4451db2b939f4e7b8217, type: 3}
+  - {fileID: 21300000, guid: 1a1580dd4cfee4372b632b17c5d023cd, type: 3}
   - {fileID: 21300000, guid: 5b2787cf3d6be4a619613fb33c7a336a, type: 3}
   m_PackedSpriteNamesToIndex:
   - Barnie_Icon
   - UI_Book_Profile_BarnieSkin_02
+  - Gnar_Icon
   - UI_Book_Profile_BarnieSkin_01
+  - Lea_Icon
+  - Hale_Icon
+  - Laura_Icon
   - UI_Book_Profile_BarnieSkin_03
   m_RenderDataMap: {}
   m_Tag: AnimalSkinIcon_1

@@ -154,6 +154,14 @@ namespace Game
 
             return _animalHolder.CheckExist(id, skinId);
         }
+
+        public int GetCurrenctSkinId(int id)
+        {
+            if (_animalHolder == null)
+                return 0;
+
+            return _animalHolder.GetCurrenctSkinId(id);
+        }
         #endregion
 
         private void OnChangedPlace(int placeId)
