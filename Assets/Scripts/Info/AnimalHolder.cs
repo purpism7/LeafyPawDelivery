@@ -51,6 +51,8 @@ namespace Info
                 return false;
             
             AnimalInfoList.Add(animalInfo);
+
+            AddSkin(animalInfo, Game.Data.Const.AnimalBaseSkinId);
             
             SaveInfo();
 
@@ -109,9 +111,7 @@ namespace Info
             foreach(int animalSkinId in animalInfo.SkinIdList)
             {
                 if(animalSkinId == skinId)
-                {
                     return;
-                }
             }
 
             animalInfo.SkinIdList.Add(skinId);

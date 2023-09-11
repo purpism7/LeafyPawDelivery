@@ -36,16 +36,14 @@ SpriteAtlas:
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
-    packedSpriteRenderDataKeys:
-    - 07868eb356f394cea976f7701b06726f: 21300000
-    - 12b78a098906b407b9a294ea0f02e8ff: 21300000
-    - 5b2787cf3d6be4a619613fb33c7a336a: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 368a1281b0b6347fbbc9db3989978d99, type: 3}
   - {fileID: 21300000, guid: 07868eb356f394cea976f7701b06726f, type: 3}
   - {fileID: 21300000, guid: 12b78a098906b407b9a294ea0f02e8ff, type: 3}
   - {fileID: 21300000, guid: 5b2787cf3d6be4a619613fb33c7a336a, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Barnie_Icon
   - UI_Book_Profile_BarnieSkin_02
   - UI_Book_Profile_BarnieSkin_01
   - UI_Book_Profile_BarnieSkin_03

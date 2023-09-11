@@ -17,13 +17,15 @@ namespace UI.Component
 
         public interface IListener
         {
-            void Select(int id, bool isOn);
+            void Select(int id, System.Action<bool> enableBuyRootAction);
         }
 
         [SerializeField]
         private Image iconImg = null;
         [SerializeField]
         private Toggle toggle = null;
+        [SerializeField]
+        private RectTransform buyRootRectTm = null;
 
         public override void Initialize(Data data)
         {
@@ -31,6 +33,8 @@ namespace UI.Component
 
             SetToggle();
             SetIconImg();
+
+            EnableBuyRoot(false);   
         }
 
         public override void Activate()
@@ -64,6 +68,11 @@ namespace UI.Component
             toggle.SetIsOnWithoutNotify(false);
         }
 
+        private void EnableBuyRoot(bool enable)
+        {
+            UIUtils.SetActive(buyRootRectTm, enable);
+        }
+
         public void OnValuChanged()
         {
             if (_data == null)
@@ -72,7 +81,12 @@ namespace UI.Component
             if (toggle == null)
                 return;
 
-            _data.IListener?.Select(_data.Id, toggle.isOn);
+            if(!toggle.isOn)
+            {
+                EnableBuyRoot(false);
+            }
+            
+            _data.IListener?.Select(_data.Id, EnableBuyRoot);
         }
     }
 }
