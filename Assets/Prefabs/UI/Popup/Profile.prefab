@@ -776,7 +776,7 @@ GameObject:
   - component: {fileID: 5608999919915046529}
   - component: {fileID: 2653961201454611191}
   - component: {fileID: 7741135421977457303}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SkinRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

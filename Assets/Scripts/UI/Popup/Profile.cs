@@ -31,7 +31,7 @@ namespace UI
         private ToggleGroup skinToggleGroup = null;
 
         private List<SkinCell> _skinCellList = new();
-        private List<Toggle> _skinToggleList = new List<Toggle>();
+        private int _selectSkinId = -1;
 
         public override void Initialize(Data data)
         {
@@ -157,8 +157,8 @@ namespace UI
                 if (animalSkin == null)
                     continue;
 
-                if (animalSkin.EAnimalSkinType == Game.Type.EAnimalSkinType.Base)
-                    continue;
+                //if (animalSkin.EAnimalSkinType == Game.Type.EAnimalSkinType.Base)
+                //    continue;
 
                 var skinCellData = new SkinCell.Data()
                 {
@@ -197,7 +197,7 @@ namespace UI
             }
         }
 
-        void SkinCell.IListener.Select(int id, bool isOn)
+        void SkinCell.IListener.Select(int id, System.Action<bool> enableBuyRootAction)
         {
             if (_data == null)
                 return;
@@ -213,27 +213,27 @@ namespace UI
             // skin 을 보유하고 있을 경우, 선택 시 바로 적용.
             if (animalMgr.CheckExistSkin(_data.Id, id))
             {
-                if(isOn)
-                {
+                if (_selectSkinId == id)
+                    return;
 
-                }
-                else
-                {
-
-                }
+                SetRenderTexture(id);
             }
             else
             {
                 // 미리보기.
-                if(isOn)
+                if (_selectSkinId == id)
                 {
-                    SetRenderTexture(id);
+                    // 한 번 더 클릭으로 구매.
+
+                    return;
                 }
-                else
-                {
-                    SetRenderTexture(Game.Data.Const.AnimalBaseSkinId);
-                }
+
+                SetRenderTexture(id);
+
+                enableBuyRootAction?.Invoke(true);
             }
+
+            _selectSkinId = id;
         }
         #endregion
     }
