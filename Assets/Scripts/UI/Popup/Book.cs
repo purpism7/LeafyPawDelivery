@@ -188,6 +188,9 @@ namespace UI
         #region BookCell.IListener
         void BookCell.IListener.Click(Game.Type.EElement eElment, int id)
         {
+            if (eElment == Type.EElement.Object)
+                return;
+
             if (eElment == Type.EElement.Animal &&
                !MainGameManager.Instance.AnimalMgr.CheckExist(id))
                 return;

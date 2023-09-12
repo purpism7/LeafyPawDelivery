@@ -84,7 +84,7 @@ namespace Info
             Debug.Log("SetUserInfo = " + dataSnapshot.Value);
             if (dataSnapshot.Value != null)
             {
-                const string KeyDatas = "Datas";
+                //const string KeyDatas = "Datas";
 
                 foreach (var data in dataSnapshot.Children)
                 {
@@ -102,14 +102,14 @@ namespace Info
 
                         case KeyUserCurrency:
                             {
-                                SetCurrency(data.Child(KeyDatas));
+                                SetCurrency(data);
 
                                 break;
                             }
 
                         case KeyUserStory:
                             {
-                                SetStory(data.Child(KeyDatas));
+                                SetStory(data);
 
                                 break;
                             }
@@ -240,7 +240,7 @@ namespace Info
             if (string.IsNullOrEmpty(userId))
                 return;
 
-            firebaseMgr?.Database?.SaveChild(userId, KeyUserCurrency, JsonHelper.ToJson(User.CurrencyList.ToArray()));
+            firebaseMgr?.Database?.SaveChild(userId, KeyUserCurrency, JsonUtility.ToJson(User.CurrencyList.ToArray()));
         }
 
         public void SaveStory(int storyId)
