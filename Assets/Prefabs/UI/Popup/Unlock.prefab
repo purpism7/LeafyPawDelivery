@@ -406,7 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootRectTm: {fileID: 6059155048771174303}
   iconImg: {fileID: 4737985692532096860}
-  renderTextureRootRectTm: {fileID: 0}
+  renderTextureRootRectTm: {fileID: 7892902456452273711}
   nameTMP: {fileID: 8817967062472180177}
 --- !u!1 &2744219301616581312
 GameObject:
