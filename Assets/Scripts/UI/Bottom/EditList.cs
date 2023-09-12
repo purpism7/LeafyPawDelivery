@@ -160,7 +160,11 @@ namespace UI
 
         public void RefreshAnimalList()
         {
-            var infoList = MainGameManager.Instance?.AnimalMgr?.AnimalInfoList;
+            var animalMgr = MainGameManager.Instance?.AnimalMgr;
+            if (animalMgr == null)
+                return;
+
+            var infoList = animalMgr.AnimalInfoList;
             if (infoList == null)
                 return;
 
@@ -180,6 +184,8 @@ namespace UI
                 var data = new Component.EditAnimal.Data()
                 {
                     AnimalData = animalData,
+                    //SkinId = animalMgr.GetCurrenctSkinId(info.Id),
+                    SkinId = Game.Data.Const.AnimalBaseSkinId,
                 };
 
                 if (_editAnimalList?.Count > i)
