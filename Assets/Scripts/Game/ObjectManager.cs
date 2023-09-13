@@ -23,7 +23,7 @@ namespace Game
             }
         }
 
-        public UnityEvent<Info.Object> Listener { get; private set; } = new();
+        public UnityEvent<int> Listener { get; private set; } = new();
 
         protected override void Initialize()
         {
@@ -41,20 +41,20 @@ namespace Game
             yield break;
         }
 
-        public void AddObject(int objectId)
+        public void AddObject(int id)
         {
             if (_objectHolder == null)
                 return;
 
-            var objectInfo = new Info.Object()
+            if (_objectHolder.AddObjectInfo(id))
             {
-                Id = objectId,
-            };
-
-            if (_objectHolder.AddObjectInfo(objectInfo))
-            {
-                Listener?.Invoke(objectInfo);
+                Listener?.Invoke(id);
             }
+        }
+
+        public Info.EditObject GetAddEditObject(int id)
+        {
+            return _objectHolder?.GetAddEditObject(id);
         }
 
         public void RemoveObject(int objectId, int objectUId)
@@ -62,9 +62,9 @@ namespace Game
             _objectHolder?.RemoveObject(objectId, objectUId);
         }
 
-        public void ArrangeObject(int objectUId, Vector3 pos, int placeId)
+        public void ArrangeObject(int id, int objectUId, Vector3 pos, int placeId)
         {
-            _objectHolder?.ArrangeObject(objectUId, pos, placeId);
+            _objectHolder?.ArrangeObject(id, objectUId, pos, placeId);
         }
 
         public bool CheckExist(int objectId)
@@ -84,6 +84,14 @@ namespace Game
                 return null;
             
             return _objectHolder.GetObjectInfoById(objectId, _data.PlaceId);
+        }
+
+        public int GetRemainCount(int id)
+        {
+            if (_objectHolder == null)
+                return 0;
+
+            return _objectHolder.GetRemainCount(id);
         }
     }
 }

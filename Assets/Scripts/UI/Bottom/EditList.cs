@@ -92,22 +92,32 @@ namespace UI
 
             _editObjectList.Clear();
 
-            var objectInfoList = MainGameManager.Instance?.ObjectMgr?.ObjectInfoList;
-            if(objectInfoList == null)
+            var objectMgr = MainGameManager.Instance?.ObjectMgr;
+            if (objectMgr == null)
                 return;
 
-            foreach(var objectInfo in objectInfoList)
+            var infoList = objectMgr.ObjectInfoList;
+            if (infoList == null)
+                return;
+
+            foreach(var objectInfo in infoList)
             {
                 if(objectInfo == null)
                     continue;
 
-                if(objectInfo.Arrangement)
+                var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
+                if (objectData == null)
+                    continue;
+
+                int reaminCount = objectMgr.GetRemainCount(objectInfo.Id);
+                if (reaminCount <= 0)
                     continue;
 
                 var data = new Component.EditObject.Data()
                 {
                     ObjectId = objectInfo.Id,
-                    ObjectUId = objectInfo.UId,
+                    Count = objectData.Count,
+                    RemainCount = reaminCount,
                 };
 
                 CreateEditObject(data);
@@ -210,7 +220,11 @@ namespace UI
 
         public void RefreshObjectList()
         {
-            var infoList = MainGameManager.Instance?.ObjectMgr?.ObjectInfoList;
+            var objectMgr = MainGameManager.Instance?.ObjectMgr;
+            if (objectMgr == null)
+                return;
+
+            var infoList = objectMgr.ObjectInfoList;
             if (infoList == null)
                 return;
 
@@ -222,13 +236,19 @@ namespace UI
                 if (objectInfo == null)
                     continue;
 
-                if (objectInfo.Arrangement)
+                var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
+                if (objectData == null)
+                    continue;
+
+                int remainCount = objectMgr.GetRemainCount(objectInfo.Id);
+                if (remainCount <= 0)
                     continue;
 
                 var data = new Component.EditObject.Data()
                 {
                     ObjectId = objectInfo.Id,
-                    ObjectUId = objectInfo.UId,
+                    Count = objectData.Count,
+                    RemainCount = remainCount,
                 };
 
                 if(_editObjectList?.Count > i)

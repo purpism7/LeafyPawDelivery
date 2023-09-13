@@ -151,7 +151,7 @@ namespace Info
                     DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
 
                     string key = dicEntry.Key.ToString();
-                    Debug.Log("key = " + dicEntry.Value);
+                    
                     if (key.Equals("Animal"))
                     {
                         currency.Animal = (long)dicEntry.Value;

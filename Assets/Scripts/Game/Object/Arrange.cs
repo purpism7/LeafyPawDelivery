@@ -6,8 +6,7 @@ namespace Game.Command
 {
     public class Arrange : EditCommand
     {
-        private Type.EElement _eElement = Type.EElement.None;
-        private int _id = 0;
+        private Game.BaseElement _gameBaseElement = null;
         private Vector3 _pos = Vector3.zero;
 
         public static void Execute(Game.BaseElement gameBaseElement, Vector3 pos)
@@ -21,8 +20,7 @@ namespace Game.Command
             if (elementData == null)
                 return;
 
-            _eElement = elementData.EElement;
-            _id = _eElement == Type.EElement.Animal ? gameBaseElement.Id : gameBaseElement.UId;
+            _gameBaseElement = gameBaseElement;
             _pos = pos;
 
             gameBaseElement.EndEdit();
@@ -30,7 +28,7 @@ namespace Game.Command
 
         public override void Execute()
         {
-            MainGameManager.Instance?.Arrange(_eElement, _id, _pos);
+            MainGameManager.Instance?.Arrange(_gameBaseElement, _pos);
         }
     }
 }

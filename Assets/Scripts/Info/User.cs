@@ -106,7 +106,7 @@ namespace Info
             else if(eElement == Game.Type.EElement.Object)
             {
                 SetObjectCurrency(placeId, currency);
-            }
+            } 
         }
 
         public void SetCurrency(Currency currency)

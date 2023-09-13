@@ -187,12 +187,9 @@ namespace UI
             Unlock(Game.Type.EElement.Animal, animalInfo.Id);
         }
         
-        private void OnChangedObjectInfo(Info.Object objectInfo)
+        private void OnChangedObjectInfo(int id)
         {
-            if (objectInfo == null)
-                return;
-            
-            Unlock(Game.Type.EElement.Object, objectInfo.Id);
+            Unlock(Game.Type.EElement.Object, id);
         }
 
         public void OnChanged(string tabType)

@@ -12,35 +12,47 @@ namespace Info
         private readonly string ObjectUIdKey = "Object_UId_Key";
         
         protected override string JsonFilePath => RootJsonFilePath + "/Info/Object_Place_{0}.json";
-        
+
+        // Key = Place Id
         private Dictionary<int, List<Info.Object>> _objectInfoDic = new();
+        private List<int> _objectIdList = new();
 
         public override void LoadInfo()
         {
-            _objectInfoDic.Clear();
+            //_objectInfoDic.Clear();
 
-            for(int i = 1; i < 10; ++i)
+
+            int placeId = MainGameManager.Instance.placeMgr.ActivityPlaceId;
+
+            var jsonfilePath = string.Format(JsonFilePath, placeId);
+            if (!System.IO.File.Exists(jsonfilePath))
+                return;
+
+            var jsonString = System.IO.File.ReadAllText(jsonfilePath);
+            var objectInfos = JsonHelper.FromJson<Info.Object>(jsonString);
+            if (objectInfos == null)
+                return;
+
+            foreach (var objectInfo in objectInfos)
             {
-                var jsonfilePath = string.Format(JsonFilePath, i);
-                if (!System.IO.File.Exists(jsonfilePath))
+                if (objectInfo == null)
                     continue;
 
-                var jsonString = System.IO.File.ReadAllText(jsonfilePath);
-                var objectInfos = JsonHelper.FromJson<Info.Object>(jsonString);
-
-                if (objectInfos == null)
+                var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
+                if (objectData == null)
                     continue;
 
-                foreach (var objectInfo in objectInfos)
+                AddObject(objectData.PlaceId, objectInfo.Id);
+
+                //objectInfo.EditObjectList.Add(objectInfo.EditObjectList)
+
+                if (_objectInfoDic.TryGetValue(objectData.PlaceId, out List<Info.Object> objectInfoList))
                 {
-                    if (objectInfo == null)
-                        continue;
-
-                    var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
-                    if (objectData == null)
-                        continue;
-
-                    AddObject(objectData.PlaceId, objectInfo);
+                    var findObjectInfo = objectInfoList.Find(info => info != null ? info.Id == objectInfo.Id : false);
+                    if (findObjectInfo != null)
+                    {
+                        findObjectInfo.EditObjectList.AddRange(objectInfo.EditObjectList);
+                    }
                 }
             }
         }
@@ -63,33 +75,39 @@ namespace Info
             }
         }
 
-        public bool AddObjectInfo(Info.Object objectInfo)
+        public bool AddObjectInfo(int id)
         {
-            if (objectInfo == null)
-                return false;
-
-            var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
+            var objectData = ObjectContainer.Instance.GetData(id);
             if (objectData == null)
                 return false;
 
-            int objectUId = PlayerPrefs.GetInt(ObjectUIdKey, 0);
-            objectInfo.UId = ++objectUId;
+            //int objectUId = PlayerPrefs.GetInt(ObjectUIdKey, 0);
+            //editObject.UId = ++objectUId;
 
-            AddObject(objectData.PlaceId, objectInfo);
+            AddObject(objectData.PlaceId, id);
 
-            PlayerPrefs.SetInt(ObjectUIdKey, objectUId);
+            //PlayerPrefs.SetInt(ObjectUIdKey, objectUId);
 
             SaveInfo(objectData.PlaceId);
 
             return true;
         }
 
-        private void AddObject(int placeId, Object objectInfo)
+        private void AddObject(int placeId, int id)
         {
+            var objectInfo = new Object()
+            {
+                Id = id,
+            };
+
             List<Object> objectInfoList = null;
             if (_objectInfoDic.TryGetValue(placeId, out objectInfoList))
             {
-                objectInfoList.Add(objectInfo);
+                var findObjectInfo = objectInfoList.Find(info => info != null ? info.Id == id : false);
+                if(findObjectInfo == null)
+                {
+                    objectInfoList.Add(objectInfo);
+                }
             }
             else
             {
@@ -99,46 +117,113 @@ namespace Info
 
                 _objectInfoDic.Add(placeId, objectInfoList);
             }
+
+            _objectIdList.Add(id);
         }
 
-        public void RemoveObject(int objectId, int objectUId)
+        public EditObject GetAddEditObject(int id)
         {
-            var objectData = ObjectContainer.Instance.GetData(objectId);
+            int placeId = MainGameManager.Instance.placeMgr.ActivityPlaceId;
+
+            var objectInfo = GetObjectInfoById(id, placeId);
+            if (objectInfo == null)
+                return null;
+
+            if(objectInfo.EditObjectList != null)
+            {
+                foreach(var editObject in objectInfo.EditObjectList)
+                {
+                    if (editObject == null)
+                        continue;
+
+                    if (editObject.Arrangement)
+                        continue;
+
+                    return editObject;
+                }
+            }
+            else
+            {
+                objectInfo.EditObjectList = new();
+                objectInfo.EditObjectList.Clear();
+            }
+
+            var addEditObject = new EditObject()
+            {
+                UId = objectInfo.EditObjectList.Count + 1,
+            };
+
+            objectInfo.EditObjectList.Add(addEditObject);
+
+            return addEditObject;
+        }
+
+        public void RemoveObject(int id, int objectUId)
+        {
+            var objectData = ObjectContainer.Instance.GetData(id);
             if (objectData == null)
                 return;
 
-            var objectInfo = GetObjectInfoByUId(objectUId, objectData.PlaceId);
-            if (objectInfo == null)
+            var editObject = GetEditObject(id, objectUId, objectData.PlaceId);
+            if (editObject == null)
                 return;
-            
-            objectInfo.Pos = Vector3.zero;
-            objectInfo.Arrangement = false;
+
+            editObject.Pos = Vector3.zero;
+            editObject.Arrangement = false;
 
             SaveInfo(objectData.PlaceId);
         }
 
-        public void ArrangeObject(int objectUId, Vector3 pos, int placeId)
+        public void ArrangeObject(int id, int objectUId, Vector3 pos, int placeId)
         {
-            var objectInfo = GetObjectInfoByUId(objectUId, placeId);
+            var objectInfo = GetObjectInfoById(id, placeId);
             if(objectInfo == null)
                 return;
 
-            objectInfo.Pos = pos;
-            objectInfo.Arrangement = true;
+            if (objectInfo.EditObjectList == null)
+                return;
+
+            foreach(var editObject in objectInfo.EditObjectList)
+            {
+                if (editObject == null)
+                    continue;
+
+                if (editObject.UId != objectUId)
+                    continue;
+
+                editObject.Pos = pos;
+                editObject.Arrangement = true;
+
+                break;
+            }
 
             SaveInfo(placeId);
         }
 
-        public Info.Object GetObjectInfoByUId(int objectUId, int placeId)
+        public Info.EditObject GetEditObject(int id, int objectUId, int placeId)
         {
             if(_objectInfoDic == null)
                 return null;
 
-            var objectInfoList = GetObjectInfoList(placeId);
-            if (objectInfoList == null)
+            var objectInfo = GetObjectInfoById(id, placeId);
+            if (objectInfo == null)
                 return null;
-            
-            return objectInfoList.Find(objectInfo => objectInfo.UId == objectUId);
+
+            if (objectInfo.EditObjectList == null)
+                return null;
+
+            foreach(var editObject in objectInfo.EditObjectList)
+            {
+                if (editObject == null)
+                    continue;
+
+                if (editObject.UId != objectUId)
+                    continue;
+
+                return editObject;
+            }
+
+            return null;
         }
 
         public Info.Object GetObjectInfoById(int objectId, int placeId)
@@ -165,6 +250,51 @@ namespace Info
 
             return null;
         }
+
+        public int GetRemainCount(int id)
+        {
+            int placeId = MainGameManager.Instance.placeMgr.ActivityPlaceId;
+
+            var objectInfo = GetObjectInfoById(id, placeId);
+            if (objectInfo == null)
+                return 0;
+
+            if (objectInfo.EditObjectList == null)
+                return 0;
+
+            var objectData = ObjectContainer.Instance?.GetData(id);
+            if (objectData == null)
+                return 0;
+
+            int count = 0;
+            foreach(var editObject in objectInfo.EditObjectList)
+            {
+                if (editObject == null)
+                    continue;
+
+                if (!editObject.Arrangement)
+                    continue;
+
+                ++count;
+            }
+
+            return objectData.Count - count;
+        }
+
+        #region Firebase
+        public void Save()
+        {
+            var firebaseMgr = GameSystem.FirebaseManager.Instance;
+            if (firebaseMgr == null)
+                return;
+
+            var userId = firebaseMgr.Auth?.UserId;
+            if (string.IsNullOrEmpty(userId))
+                return;
+
+            firebaseMgr?.Database?.Save(userId, JsonUtility.ToJson(_objectIdList));
+        }
+        #endregion
     }
 }
 

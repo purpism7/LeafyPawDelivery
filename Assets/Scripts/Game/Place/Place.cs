@@ -212,56 +212,65 @@ namespace Game
                 var objectInfo = objectInfoList[i];
                 if(objectInfo == null)
                     continue;
-                
+
+                if (objectInfo.EditObjectList == null)
+                    continue;
+
                 var data = ObjectContainer.Instance.GetData(objectInfo.Id);
                 if(data == null)
                     continue;
                 
                 if (data.PlaceId != Id)
                     continue;
-                
-                if(!objectInfo.Arrangement)
-                    continue;
 
-                objectInfo.Pos.z = ++_initPosZ;
-
-                var objectData = new Game.Object.Data()
+                foreach(var editObject in objectInfo.EditObjectList)
                 {
-                    ObjectId = objectInfo.Id,
-                    ObjectUId = objectInfo.UId,
-                    Pos = objectInfo.Pos,
-                };
-
-                Game.Object resObj = null;
-                foreach(var obj in _objectList)
-                {
-                    if (obj == null)
+                    if (editObject == null)
                         continue;
 
-                    if (obj.IsActivate)
+                    if (!editObject.Arrangement)
                         continue;
 
-                    if (objectInfo.Id != obj.Id)
-                        continue;
+                    editObject.Pos.z = ++_initPosZ;
 
-                    resObj = obj;
-                    resObj?.Initialize(objectData);
+                    var objectData = new Game.Object.Data()
+                    {
+                        ObjectId = objectInfo.Id,
+                        ObjectUId = editObject.UId,
+                        Pos = editObject.Pos,
+                    };
 
-                    break;
+                    Game.Object resObj = null;
+                    foreach (var obj in _objectList)
+                    {
+                        if (obj == null)
+                            continue;
+
+                        if (obj.IsActivate)
+                            continue;
+
+                        if (objectInfo.Id != obj.Id)
+                            continue;
+
+                        resObj = obj;
+                        resObj?.Initialize(objectData);
+
+                        break;
+                    }
+
+                    if (resObj == null)
+                    {
+                        resObj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
+                            .SetData(objectData)
+                            .SetId(objectInfo.Id)
+                            .SetRootTm(objectRootTm)
+                            .Create();
+
+                        _objectList.Add(resObj);
+                    }
+
+                    resObj?.Activate();
                 }
-
-                if(resObj == null)
-                {
-                    resObj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
-                        .SetData(objectData)
-                        .SetId(objectInfo.Id)
-                        .SetRootTm(objectRootTm)
-                        .Create();
-
-                    _objectList.Add(resObj);
-                }
-
-                resObj?.Activate();
             }
         }
 

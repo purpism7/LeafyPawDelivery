@@ -8,6 +8,13 @@ namespace Info
     public class Object
     {
         public int Id = 0;
+
+        public List<EditObject> EditObjectList = new();
+    }
+
+    [System.Serializable]
+    public class EditObject
+    {
         public int UId = 0;
         public Vector3 Pos = Vector3.zero;
         public bool Arrangement = false;

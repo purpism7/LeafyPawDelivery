@@ -28,7 +28,7 @@ namespace Game
             Listener.RemoveAllListeners();
 
             var mainGameMgr = MainGameManager.Instance;
-            mainGameMgr?.ObjectMgr.Listener.AddListener(OnChangedObject);
+            mainGameMgr?.ObjectMgr.Listener.AddListener(OnChangedObjectInfo);
             mainGameMgr?.placeMgr?.Listener?.AddListener(OnChangedPlace);
         }
 
@@ -169,7 +169,7 @@ namespace Game
             
         }
 
-        private void OnChangedObject(Info.Object obj)
+        private void OnChangedObjectInfo(int id)
         {
 
         }

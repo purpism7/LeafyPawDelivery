@@ -156,7 +156,7 @@ public class MainGameManager : Singleton<MainGameManager>
     #endregion
 
     #region Object
-    public void AddObjectToPlace(int id, int uId)
+    public void AddObjectToPlace(int id)
     {
         var activityPlace = placeMgr?.ActivityPlace;
         if (activityPlace == null)
@@ -168,10 +168,11 @@ public class MainGameManager : Singleton<MainGameManager>
             pos = GameCameraCtr.Center;
         }
 
+        var editObject = ObjectMgr?.GetAddEditObject(id);
         var objData = new Game.Object.Data()
         {
             ObjectId = id,
-            ObjectUId = uId,
+            ObjectUId = editObject.UId,
             Pos = pos,
         };
 
@@ -213,19 +214,23 @@ public class MainGameManager : Singleton<MainGameManager>
         }
     }
 
-    public void Arrange(Game.Type.EElement EElement, int id, Vector3 pos)
+    public void Arrange(Game.BaseElement gameBaseElement, Vector3 pos)
     {
+        if (gameBaseElement == null ||
+            gameBaseElement.ElementData == null)
+            return;
+
         int placeId = 0;
         if (placeMgr != null)
         {
             placeId = placeMgr.ActivityPlace.Id;
         }
 
-        switch(EElement)
+        switch(gameBaseElement.ElementData.EElement)
         {
             case Game.Type.EElement.Animal:
                 {
-                    AnimalMgr?.ArrangeAnimal(id, pos, placeId);
+                    AnimalMgr?.ArrangeAnimal(gameBaseElement.Id, pos, placeId);
 
                     Game.UIManager.Instance?.Bottom?.EditList?.RefreshAnimalList();
 
@@ -235,7 +240,7 @@ public class MainGameManager : Singleton<MainGameManager>
             case Game.Type.EElement.Object:
                 {
 
-                    ObjectMgr?.ArrangeObject(id, pos, placeId);
+                    ObjectMgr?.ArrangeObject(gameBaseElement.Id, gameBaseElement.UId, pos, placeId);
 
                     Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
 
