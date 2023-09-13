@@ -35,10 +35,7 @@ namespace UI
 
         public override void Initialize(Data data)
         {
-            base.Initialize(data);
-
-            SetAnimalList();
-            SetObjectList();
+            base.Initialize(data);            
         }
 
         public override void Activate()
@@ -46,6 +43,9 @@ namespace UI
             base.Activate();
             
             ActiveContents();
+
+            SetAnimalList();
+            SetObjectList();
         }
 
         public EditList Setup(Type.ETab eTabType)
@@ -60,6 +60,8 @@ namespace UI
 
         private void SetAnimalList()
         {
+            DeactviateAllAnimal();
+
             _editAnimalList.Clear();
 
             var infoList = MainGameManager.Instance?.AnimalMgr?.AnimalInfoList;
@@ -86,6 +88,8 @@ namespace UI
         
         private void SetObjectList()
         {
+            DeactviateAllObject();
+
             _editObjectList.Clear();
 
             var objectInfoList = MainGameManager.Instance?.ObjectMgr?.ObjectInfoList;

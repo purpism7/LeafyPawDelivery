@@ -94,6 +94,9 @@ namespace Game
 
         public void AddObject(Game.Object addObj)
         {
+            if (addObj == null)
+                return;
+
             if (_objectList == null)
                 return;
 
