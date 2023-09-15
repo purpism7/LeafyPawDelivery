@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameData.Const;
 
 namespace UI.Component
 {
@@ -10,7 +11,7 @@ namespace UI.Component
         public class Data : BaseData
         {
             public IListener IListener = null;
-            public int Id = 0;
+            public AnimalSkin AnimalSkin = null;
             public Sprite Sprite = null;
             public ToggleGroup ToggleGroup = null;
             public bool ToggleOn = false;
@@ -27,6 +28,8 @@ namespace UI.Component
         private Toggle toggle = null;
         [SerializeField]
         private RectTransform buyRootRectTm = null;
+        [SerializeField]
+        private OpenCondition openCondition = null;
 
         public override void Initialize(Data data)
         {
@@ -34,6 +37,7 @@ namespace UI.Component
 
             SetToggle();
             SetIconImg();
+            SetOpenCondition();
 
             EnableBuyRoot(false);   
         }
@@ -69,6 +73,25 @@ namespace UI.Component
             toggle.SetIsOnWithoutNotify(_data.ToggleOn);
         }
 
+        private void SetOpenCondition()
+        {
+            var animalSkin = _data?.AnimalSkin;
+            if (animalSkin == null)
+                return;
+
+            if (openCondition == null)
+                return;
+
+            var openConditionData = new OpenCondition.Data()
+            {
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite("berry"),
+                Text = "x" + animalSkin.Cash
+                //PossibleFunc = () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id),
+            };
+
+            openCondition.Initialize(openConditionData);
+        }
+
         private void EnableBuyRoot(bool enable)
         {
             UIUtils.SetActive(buyRootRectTm, enable);
@@ -87,7 +110,7 @@ namespace UI.Component
                 EnableBuyRoot(false);
             }
             
-            _data.IListener?.Select(_data.Id, EnableBuyRoot);
+            _data.IListener?.Select(_data.AnimalSkin.Id, EnableBuyRoot);
         }
     }
 }

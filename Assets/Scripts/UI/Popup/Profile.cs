@@ -163,13 +163,10 @@ namespace UI
                 if (animalSkin == null)
                     continue;
 
-                //if (animalSkin.EAnimalSkinType == Game.Type.EAnimalSkinType.Base)
-                //    continue;
-
                 var skinCellData = new SkinCell.Data()
                 {
                     IListener = this,
-                    Id = animalSkin.Id,
+                    AnimalSkin = animalSkin,
                     Sprite = ResourceManager.Instance.AtalsLoader.GetSprite("AnimalSkinIcon_1", animalSkin.ImgName),
                     ToggleGroup = skinToggleGroup,
                     ToggleOn = currenctSkinId == animalSkin.Id,
