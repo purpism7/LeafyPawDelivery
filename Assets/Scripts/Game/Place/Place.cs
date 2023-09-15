@@ -23,6 +23,7 @@ namespace Game
 
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
+
         private Coroutine _speechBubbleCoroutine = null;
         private Coroutine _dropCurrencyCoroutine = null;
         private YieldInstruction _waitSecSpeechBubble = new WaitForSeconds(10f);
@@ -52,24 +53,38 @@ namespace Game
             SetAnimalList();
         }
 
-        public void AddAnimal(Game.Creature.Animal addAnimal)
+        #region Animal
+        public Creature.Animal AddAnimal(int id, int skinId, Vector3 pos)
         {
-            if (addAnimal == null)
-                return;
-
             if (_animalList == null)
-                return;
+                return null;
 
             foreach (var animal in _animalList)
             {
                 if (animal == null)
                     continue;
 
-                if (animal.Id == addAnimal.Id)
-                    return;
+                if (animal.Id != id)
+                    continue;
+
+                if (animal.SkinId != skinId)
+                    continue;
+
+                animal.SetPos(pos);
+                animal.Activate();
+
+                return animal;
             }
 
+            var addAnimal = new GameSystem.AnimalCreator()
+                 .SetAnimalId(id)
+                 .SetSkinId(skinId)
+                 .SetPos(pos)
+                 .Create();
+
             _animalList.Add(addAnimal);
+
+            return addAnimal;
         }
 
         public void RemoveAnimal(int id)
@@ -81,16 +96,31 @@ namespace Game
             if (findAnimal == null)
                 return;
 
-            if (_animalList.Remove(findAnimal))
-            {
-                findAnimal.Deactivate();
-            }
+            findAnimal.Deactivate();
         }
 
-        public Game.Creature.Animal GetAnimal(int id)
+        public void ChangeAnimalSkin(int id, int skinId, Vector3 pos, int currSkinId)
         {
-            return _animalList.Find(animal => animal.Id == id);
+            foreach (var animal in _animalList)
+            {
+                if (animal == null)
+                    continue;
+
+                if (!animal.IsActivate)
+                    continue;
+
+                if (animal.SkinId != currSkinId)
+                    continue;
+
+                pos = animal.transform.localPosition;
+                animal.Deactivate();
+
+                break;
+            }
+
+            AddAnimal(id, skinId, pos);
         }
+        #endregion
 
         public Game.Object AddObject(int id, Vector3 pos, int uId)
         {
@@ -364,8 +394,9 @@ namespace Game
             if (_speechBubbleCoroutine == null)
                 yield break;
 
-            var randomIndex = UnityEngine.Random.Range(0, _animalList.Count);
-            var randomAnimal = _animalList[randomIndex];
+            var activateAnimalList = _animalList.FindAll(animal => animal != null ? animal.IsActivate : false);
+            var randomIndex = UnityEngine.Random.Range(0, activateAnimalList.Count);
+            var randomAnimal = activateAnimalList[randomIndex];
             if (randomAnimal == null)
                 yield break;
 
@@ -419,8 +450,9 @@ namespace Game
 
         private void DropCurrency()
         {
-            var randomIndex = UnityEngine.Random.Range(0, _animalList.Count);
-            var randomAnimal = _animalList[randomIndex];
+            var activateAnimalList = _animalList.FindAll(animal => animal != null ? animal.IsActivate : false);
+            var randomIndex = UnityEngine.Random.Range(0, activateAnimalList.Count);
+            var randomAnimal = activateAnimalList[randomIndex];
             if (randomAnimal == null)
                 return;
 

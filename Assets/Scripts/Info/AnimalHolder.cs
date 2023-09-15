@@ -125,22 +125,9 @@ namespace Info
             if (animalInfo == null)
                 return;
 
-            ApplySkin(animalInfo, skinId);
-        }
+            animalInfo.SkinId = skinId;
 
-        private void ApplySkin(Info.Animal animalInfo, int skinId)
-        {
-            var skinIdList = animalInfo?.SkinIdList;
-            if (skinIdList == null)
-                return;
-
-            foreach(int animalSkinId in skinIdList)
-            {
-                if(animalSkinId == skinId)
-                {
-
-                }
-            }
+            SaveInfo();
         }
 
         public bool CheckExist(int id, int skinId)

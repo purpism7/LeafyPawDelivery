@@ -43,6 +43,11 @@ namespace Game.Creature
             StartIdleAction();
         }
 
+        public void Deactivate()
+        {
+            StartIdleAction();
+        }
+
         private void StartRandomAction()
         {
             _currentAnimalAction = RandomAnimalAction;

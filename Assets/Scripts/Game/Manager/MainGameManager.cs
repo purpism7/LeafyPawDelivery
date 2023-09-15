@@ -132,26 +132,29 @@ public class MainGameManager : Singleton<MainGameManager>
             pos = GameCameraCtr.Center;
         }
 
-        var animal = placeMgr?.ActivityPlace?.GetAnimal(id);
-        if(animal == null)
-        {
-            animal = new GameSystem.AnimalCreator()
-              .SetAnimalId(id)
-              .SetSkinId(skinId)
-              .SetPos(pos)
-              .Create();
-
-            placeMgr?.ActivityPlace?.AddAnimal(animal);
-        }
-        else
-        {
-            animal?.SetPos(pos);
-        }
-
+        var animal = placeMgr?.ActivityPlace?.AddAnimal(id, skinId, pos);
         if (animal == null)
             return;
 
         _startEditAction?.Invoke(animal, GameState.CheckState<Game.State.Edit>());
+    }
+
+    public void ChangeAnimalSkinToPlace(int id, int skinId)
+    {
+        if (AnimalMgr == null)
+            return;
+
+        Vector3 pos = Vector3.zero;
+        if (GameCameraCtr != null)
+        {
+            pos = GameCameraCtr.Center;
+        }
+
+        int currSkinId = AnimalMgr.GetCurrenctSkinId(id);
+
+        placeMgr?.ActivityPlace?.ChangeAnimalSkin(id, skinId, pos, currSkinId);
+        AnimalMgr?.ApplySkin(id, skinId);
+
     }
     #endregion
 
@@ -170,9 +173,11 @@ public class MainGameManager : Singleton<MainGameManager>
 
         var editObject = ObjectMgr?.GetAddEditObject(id);
 
-        var addObj = activityPlace.AddObject(id, pos, editObject.UId);
+        var obj = activityPlace.AddObject(id, pos, editObject.UId);
+        if (obj == null)
+            return;
 
-        _startEditAction?.Invoke(addObj, GameState.CheckState<Game.State.Edit>());
+        _startEditAction?.Invoke(obj, GameState.CheckState<Game.State.Edit>());
     }
     #endregion
 

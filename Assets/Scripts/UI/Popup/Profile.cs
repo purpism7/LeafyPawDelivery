@@ -209,7 +209,11 @@ namespace UI
             if (_data == null)
                 return;
 
-            var animalMgr = MainGameManager.Instance?.AnimalMgr;
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                return;
+
+            var animalMgr = mainGameMgr.AnimalMgr;
             if (animalMgr == null)
                 return;
 
@@ -224,6 +228,8 @@ namespace UI
                     return;
 
                 SetRenderTexture(id);
+
+                mainGameMgr.ChangeAnimalSkinToPlace(_data.Id, id);
             }
             else
             {

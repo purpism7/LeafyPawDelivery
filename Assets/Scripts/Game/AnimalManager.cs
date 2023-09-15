@@ -162,6 +162,14 @@ namespace Game
 
             return _animalHolder.GetCurrenctSkinId(id);
         }
+
+        public void ApplySkin(int id, int skinId)
+        {
+            if (_animalHolder == null)
+                return;
+
+            _animalHolder.ApplySkin(id, skinId);
+        }
         #endregion
 
         private void OnChangedPlace(int placeId)

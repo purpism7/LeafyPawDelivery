@@ -49,6 +49,14 @@ namespace Game.Creature
             InitActionController();
         }
 
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            _actionCtr?.Deactivate();
+            DeactivateSpeechBubble();
+        }
+
         private void InitActionController()
         {
             _actionCtr = gameObject.GetOrAddComponent<AnimalActionController>();
@@ -57,6 +65,9 @@ namespace Game.Creature
 
         public override void ChainUpdate()
         {
+            if (!IsActivate)
+                return;
+
             _actionCtr?.ChainUpdate();
         }
 
