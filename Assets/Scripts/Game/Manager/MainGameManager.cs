@@ -169,22 +169,10 @@ public class MainGameManager : Singleton<MainGameManager>
         }
 
         var editObject = ObjectMgr?.GetAddEditObject(id);
-        var objData = new Game.Object.Data()
-        {
-            ObjectId = id,
-            ObjectUId = editObject.UId,
-            Pos = pos,
-        };
 
-        var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
-            .SetData(objData)
-            .SetId(id)
-            .SetRootTm(activityPlace.ObjectRootTm)
-            .Create();
+        var addObj = activityPlace.AddObject(id, pos, editObject.UId);
 
-        activityPlace.AddObject(obj);
-
-        _startEditAction?.Invoke(obj, GameState.CheckState<Game.State.Edit>());
+        _startEditAction?.Invoke(addObj, GameState.CheckState<Game.State.Edit>());
     }
     #endregion
 
@@ -204,7 +192,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
             case Game.Type.EElement.Object:
                 {
-                    placeMgr?.ActivityPlace?.RemoveObject(uId);
+                    placeMgr?.ActivityPlace?.RemoveObject(id, uId);
                     ObjectMgr?.RemoveObject(id, uId);
 
                     Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();

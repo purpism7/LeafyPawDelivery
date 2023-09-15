@@ -19,7 +19,7 @@ namespace Game
         private Transform currencyRootTm = null;
         public Transform animalRootTm;
 
-        public Transform ObjectRootTm { get { return objectRootTm; } }
+        //public Transform ObjectRootTm { get { return objectRootTm; } }
 
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
@@ -92,27 +92,47 @@ namespace Game
             return _animalList.Find(animal => animal.Id == id);
         }
 
-        public void AddObject(Game.Object addObj)
+        public Game.Object AddObject(int id, Vector3 pos, int uId)
         {
-            if (addObj == null)
-                return;
-
             if (_objectList == null)
-                return;
+                return null;
 
             foreach(var obj in _objectList)
             {
                 if (obj == null)
                     continue;
 
-                if (obj.UId == addObj.ObjectUId)
-                    return;
+                if (obj.IsActivate)
+                    continue;
+
+                if (obj.Id != id)
+                    continue;
+
+                obj.UId = uId;
+                obj.Activate();
+
+                return obj;
             }
 
+            var objData = new Game.Object.Data()
+            {
+                ObjectId = id,
+                ObjectUId = uId,
+                Pos = pos,
+            };
+
+            var addObj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
+                .SetData(objData)
+                .SetId(id)
+                .SetRootTm(objectRootTm)
+                .Create();
+
             _objectList.Add(addObj);
+
+            return addObj;
         }
 
-        public void RemoveObject(int objectUId)
+        public void RemoveObject(int id, int objectUId)
         {
             if(_objectList == null)
                 return;
@@ -122,15 +142,13 @@ namespace Game
                 if (obj == null)
                     continue;
 
-                if (obj.UId == objectUId)
-                {
-                    if (_objectList.Remove(obj))
-                    {
-                        obj.Deactivate();
+                if (obj.Id != id)
+                    continue;
 
-                        break;
-                    }
-                }
+                if (obj.UId != objectUId)
+                    continue;
+
+                obj.Deactivate();
             }
         }
 
