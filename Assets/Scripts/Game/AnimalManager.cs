@@ -63,7 +63,7 @@ namespace Game
             var animalInfo = new Info.Animal()
             {
                 Id = animalId,
-                SkinId = 1,
+                SkinId = Game.Data.Const.AnimalBaseSkinId,
             };
 
             if (_animalHolder.AddAnimalInfo(animalInfo))
@@ -77,9 +77,9 @@ namespace Game
             _animalHolder?.RemoveAnimal(id);
         }
 
-        public void ArrangeAnimal(int id, Vector3 pos, int placeId)
+        public void ArrangeAnimal(int id, Vector3 pos)
         {
-            _animalHolder?.ArrangeAnimal(id, pos, placeId);
+            _animalHolder?.ArrangeAnimal(id, pos);
         }
 
         public bool CheckExist(int animalId)

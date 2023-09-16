@@ -79,7 +79,6 @@ namespace UI
                 var data = new Component.EditAnimal.Data()
                 {
                     AnimalData = AnimalContainer.Instance.GetData(info.Id),
-                    SkinId = info.SkinId,
                 };
 
                 CreateEditAnimal(data);
@@ -199,7 +198,6 @@ namespace UI
                 {
                     AnimalData = animalData,
                     //SkinId = animalMgr.GetCurrenctSkinId(info.Id),
-                    SkinId = Game.Data.Const.AnimalBaseSkinId,
                 };
 
                 if (_editAnimalList?.Count > i)

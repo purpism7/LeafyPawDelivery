@@ -105,12 +105,14 @@ namespace UI.Component
             if (toggle == null)
                 return;
 
-            if(!toggle.isOn)
+            if(toggle.isOn)
+            {
+                _data.IListener?.Select(_data.AnimalSkin.Id, EnableBuyRoot);
+            }
+            else
             {
                 EnableBuyRoot(false);
-            }
-            
-            _data.IListener?.Select(_data.AnimalSkin.Id, EnableBuyRoot);
+            }   
         }
     }
 }

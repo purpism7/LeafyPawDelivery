@@ -124,15 +124,23 @@ public class MainGameManager : Singleton<MainGameManager>
     }
 
     #region Animal
-    public void AddAnimalToPlace(int id, int skinId)
+    public void AddAnimalToPlace(int id)
     {
+        var animalInfo = AnimalMgr?.GetAnimalInfo(id);
+        if (animalInfo == null)
+            return;
+
+        var activityPlace = placeMgr?.ActivityPlace;
+        if (activityPlace == null)
+            return;
+
         Vector3 pos = Vector3.zero;
         if (GameCameraCtr != null)
         {
             pos = GameCameraCtr.Center;
         }
 
-        var animal = placeMgr?.ActivityPlace?.AddAnimal(id, skinId, pos);
+        var animal = activityPlace.AddAnimal(id, animalInfo.SkinId, pos);
         if (animal == null)
             return;
 
@@ -144,6 +152,10 @@ public class MainGameManager : Singleton<MainGameManager>
         if (AnimalMgr == null)
             return;
 
+        var activityPlace = placeMgr?.ActivityPlace;
+        if (activityPlace == null)
+            return;
+
         Vector3 pos = Vector3.zero;
         if (GameCameraCtr != null)
         {
@@ -152,9 +164,10 @@ public class MainGameManager : Singleton<MainGameManager>
 
         int currSkinId = AnimalMgr.GetCurrenctSkinId(id);
 
-        placeMgr?.ActivityPlace?.ChangeAnimalSkin(id, skinId, pos, currSkinId);
-        AnimalMgr?.ApplySkin(id, skinId);
-
+        if(activityPlace.ChangeAnimalSkin(id, skinId, pos, currSkinId))
+        {
+            AnimalMgr?.ApplySkin(id, skinId);
+        }
     }
     #endregion
 
@@ -223,7 +236,7 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             case Game.Type.EElement.Animal:
                 {
-                    AnimalMgr?.ArrangeAnimal(gameBaseElement.Id, pos, placeId);
+                    AnimalMgr?.ArrangeAnimal(gameBaseElement.Id, pos);
 
                     Game.UIManager.Instance?.Bottom?.EditList?.RefreshAnimalList();
 

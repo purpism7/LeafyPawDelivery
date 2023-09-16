@@ -71,11 +71,12 @@ namespace Info
 
             animalInfo.Pos = Vector3.zero;
             animalInfo.Arrangement = false;
+            animalInfo.SkinId = Game.Data.Const.AnimalBaseSkinId;
 
             SaveInfo();
         }
 
-        public void ArrangeAnimal(int id, Vector3 pos, int placeId)
+        public void ArrangeAnimal(int id, Vector3 pos)
         {
             var animalInfo = GetAnimalInfo(id);
             if (animalInfo == null)
@@ -119,6 +120,7 @@ namespace Info
             SaveInfo();
         }
 
+        // 배치 된 경우, 변경된 스킨 적용.
         public void ApplySkin(int id, int skinId)
         {
             var animalInfo = GetAnimalInfo(id);

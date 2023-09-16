@@ -17,7 +17,6 @@ namespace UI.Component
         {
             public IListener IListener = null;
             public int Id = 0;
-            public int SkinId = 0;
             public Game.Type.EElement EElement = Game.Type.EElement.None; 
             public string Name = string.Empty;
             public bool Lock = true;
@@ -25,7 +24,7 @@ namespace UI.Component
         
         public interface IListener
         {
-            void Edit(Game.Type.EElement EElement, int id, int skinId);
+            void Edit(Game.Type.EElement EElement, int id);
         }
 
         #region Inspector
@@ -349,13 +348,14 @@ namespace UI.Component
         {
             CreateUnlockPopup();
         }
-        
+
+        // 배치 버튼 클릭 시,
         public void OnClick()
         {
             if (_data == null)
                 return;
             
-            _data.IListener?.Edit(_data.EElement, _data.Id, _data.SkinId);
+            _data.IListener?.Edit(_data.EElement, _data.Id);
         }
     }
 }

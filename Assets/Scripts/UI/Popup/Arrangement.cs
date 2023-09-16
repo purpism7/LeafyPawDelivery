@@ -114,7 +114,6 @@ namespace UI
                     {
                         IListener = this,
                         Id = data.Id,
-                        SkinId = animalInfo != null ? animalInfo.SkinId : Game.Data.Const.AnimalBaseSkinId,
                         EElement = Game.Type.EElement.Animal,
                         Lock = animalInfo == null,
                     })
@@ -206,7 +205,7 @@ namespace UI
         }
 
         #region ArrangementCell.IListener
-        void ArrangementCell.IListener.Edit(Game.Type.EElement EElement, int id, int skinId)
+        void ArrangementCell.IListener.Edit(Game.Type.EElement EElement, int id)
         {
             Deactivate();
 
@@ -215,7 +214,7 @@ namespace UI
                 Game.UIManager.Instance?.Bottom?.DeactivateBottom(
                     () =>
                     {
-                        MainGameManager.Instance?.AddAnimalToPlace(id, skinId);
+                        MainGameManager.Instance?.AddAnimalToPlace(id);
                     });
             }
             else if (EElement == Game.Type.EElement.Object)

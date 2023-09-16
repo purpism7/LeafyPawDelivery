@@ -92,15 +92,22 @@ namespace Game
             if (_animalList == null)
                 return;
 
-            var findAnimal = _animalList.Find(animal => animal?.Id == id);
-            if (findAnimal == null)
-                return;
+            foreach(var animal in _animalList)
+            {
+                if (animal == null)
+                    continue;
 
-            findAnimal.Deactivate();
+                if (animal.Id != id)
+                    continue;
+
+                animal.Deactivate();
+            }
         }
 
-        public void ChangeAnimalSkin(int id, int skinId, Vector3 pos, int currSkinId)
+        public bool ChangeAnimalSkin(int id, int skinId, Vector3 pos, int currSkinId)
         {
+            bool existAnimal = false;
+
             foreach (var animal in _animalList)
             {
                 if (animal == null)
@@ -113,12 +120,20 @@ namespace Game
                     continue;
 
                 pos = animal.transform.localPosition;
+
                 animal.Deactivate();
+
+                existAnimal = true;
 
                 break;
             }
 
-            AddAnimal(id, skinId, pos);
+            if(existAnimal)
+            {
+                AddAnimal(id, skinId, pos);
+            }
+
+            return existAnimal;
         }
         #endregion
 
