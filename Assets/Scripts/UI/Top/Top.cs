@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Coffee.UIExtensions;
-using Game;
-using GameSystem;
 using UnityEngine;
 
 using TMPro;
+
+using Game;
+using GameSystem;
 using UI.Component;
-using static GameData.Const;
 
 namespace UI
 {

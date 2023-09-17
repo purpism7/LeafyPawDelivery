@@ -24,7 +24,7 @@ namespace UI
 
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
-                .OnStart(() => { Activate();})
+                .OnStart(() => { Activate(); })
                 .Append(rootRectTm.DOScale(Vector3.one * 0.5f, 0f))
                 .Append(rootRectTm.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutSine))
                 .OnComplete(() =>

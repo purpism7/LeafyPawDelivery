@@ -11,7 +11,7 @@ using UI.Component;
 
 namespace UI
 {
-    public class Book : BasePopup<Book.Data>, BookCell.IListener
+    public class Book : BasePopup<Book.Data>, BookCell.IListener, StoryCell.IListener
     {
         public class Data : BaseData
         {
@@ -26,6 +26,7 @@ namespace UI
         private Type.ETab _currETabType = Type.ETab.Animal;
         
         private List<BookCell> _bookCellList = new();
+        private List<StoryCell> _storyCellList = new();
 
         public override void Initialize(Data data)
         {
@@ -52,12 +53,15 @@ namespace UI
             
             SetAnimalList();
             SetObjectList();
+            SetStoryList();
         }
 
         public override void Activate()
         {
             base.Activate();
-            
+
+            ActivateStoryCellList();
+
             _currETabType = Type.ETab.Animal;
             ActiveContents();
 
@@ -71,6 +75,17 @@ namespace UI
         public override void Deactivate()
         {
             base.Deactivate();
+        }
+
+        private void ActivateStoryCellList()
+        {
+            if (_storyCellList == null)
+                return;
+
+            foreach(var storyCell in _storyCellList)
+            {
+                storyCell?.Activate();
+            }
         }
 
         private void SetAnimalList()
@@ -138,6 +153,40 @@ namespace UI
             }
         }
 
+        private void SetStoryList()
+        {
+            _storyCellList.Clear();
+
+            var placeMgr = MainGameManager.Instance?.placeMgr;
+            if (placeMgr == null)
+                return;
+
+            int activityPlaceId = placeMgr.ActivityPlaceId;
+
+            var storyList = StoryContainer.Instance.GetStoryList(activityPlaceId);
+            if (storyList == null)
+                return;
+
+            foreach(var story in storyList)
+            {
+                if (story == null)
+                    continue;
+
+                var cell = new ComponentCreator<StoryCell, StoryCell.Data>()
+                   .SetData(new StoryCell.Data()
+                   {
+                       IListener = this,
+                       Story = story,
+                       PlaceId = activityPlaceId,
+
+                   })
+                   .SetRootRectTm(storyScrollRect?.content)
+                   .Create();
+
+                _storyCellList.Add(cell);
+            }
+        }
+
         private void ActiveContents()
         {
             UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Type.ETab.Animal);
@@ -201,6 +250,13 @@ namespace UI
                 })
                 .Create();
 
+        }
+        #endregion
+
+        #region StoryCell.IListener
+        void StoryCell.IListener.Select(Story story)
+        {
+            MainGameManager.Instance?.StoryMgr?.PlayStory(story);
         }
         #endregion
     }

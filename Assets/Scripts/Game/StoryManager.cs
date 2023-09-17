@@ -144,6 +144,21 @@ namespace Game
             return true;
         }
 
+        public void PlayStory(Story story)
+        {
+            if (story == null)
+                return;
+
+            Game.Manager.Cutscene.Create(new Game.Manager.Cutscene.Data()
+            {
+                TargetGameObj = GetStoryGameObj(story.PrefabName),
+                EndAction = () =>
+                {
+                    EndStory(story);
+                },
+            });
+        }
+
         private void StartStory(Story story)
         {
             if (story == null)

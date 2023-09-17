@@ -193,7 +193,9 @@ namespace Game.Manager
                .SetRootRectTm(uiRootRectTm)
                .Create();
 
-            Conversation?.Deactivate();
+
+            UIUtils.SetActive(Conversation?.rootRectTm, false);
+            //Conversation?.Deactivate();
         }
 
         private void Finish(PlayableDirector playableDirector)
