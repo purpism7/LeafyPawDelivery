@@ -27,7 +27,7 @@ namespace Game
         private Coroutine _speechBubbleCoroutine = null;
         private Coroutine _dropCurrencyCoroutine = null;
         private YieldInstruction _waitSecSpeechBubble = new WaitForSeconds(10f);
-        private YieldInstruction _waitSecDropCurrency = new WaitForSeconds(60f);
+        private YieldInstruction _waitSecDropCurrency = new WaitForSeconds(30f);
         private float _initPosZ = 0;
 
         public override void Initialize(Data data)

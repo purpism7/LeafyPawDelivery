@@ -51,7 +51,7 @@ namespace UI.Component
                 .SetAutoKill(false)
                 .Append(rectTm.DOMove(_data.StartPos, 0))
                 .AppendCallback(() => { Activate(); })
-                .Append(rectTm.DOLocalMoveY(60f, 1f).SetEase(Ease.OutCirc))
+                .Append(rectTm.DOLocalMoveY(60f, 1.2f).SetEase(Ease.OutCirc))
                 .Append(currencyTMP.DOFade(0, 0.3f))
                 .OnComplete(() =>
                 {
