@@ -34,16 +34,16 @@ public class Object : ElementData
             switch(EGrade)
             {
                 case Game.Type.EObjectGrade.Epic:
-                    return 1000;
+                    return 100;
 
                 case Game.Type.EObjectGrade.Unique:
-                    return 800;
+                    return 80;
 
                 case Game.Type.EObjectGrade.Rare:
-                    return 700;
+                    return 70;
 
                 case Game.Type.EObjectGrade.Normal:
-                    return 450;
+                    return 45;
 
                 default:
                     return 0;
