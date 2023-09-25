@@ -54,6 +54,10 @@ MonoBehaviour:
     m_Localized: Story
     m_Metadata:
       m_Items: []
+  - m_Id: 17205335382024192
+    m_Localized: Skin
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -51,6 +51,10 @@ MonoBehaviour:
     m_Key: story
     m_Metadata:
       m_Items: []
+  - m_Id: 17205335382024192
+    m_Key: skin
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
