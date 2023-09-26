@@ -33,17 +33,17 @@ namespace GameSystem
 
             if (GameCamera != null)
             {
-                _halfHeight = GameCamera.orthographicSize;
-                Height = _halfHeight * 2f;
-                Width = Height * GameCamera.aspect;
-
-                _dragWidth = _halfHeight * Screen.width / Screen.height;
+                SetSize();
             }
         }
 
-        private void Start()
+        private void SetSize()
         {
-            
+            _halfHeight = GameCamera.orthographicSize;
+            Height = _halfHeight * 2f;
+            Width = Height * GameCamera.aspect;
+
+            _dragWidth = _halfHeight * Screen.width / Screen.height;
         }
 
         private void FixedUpdate()
@@ -63,7 +63,7 @@ namespace GameSystem
                 return;
 
             Drag();
-            // ZoomInOut();
+            ZoomInOut();
         }
 
         private void OnDrawGizmos()
@@ -109,6 +109,10 @@ namespace GameSystem
                         float y = _mapSize.y - _halfHeight;
                         float clampY = Mathf.Clamp(movePos.y, -y + _center.y, y + _center.y);
 
+                        var targetPos = new Vector3(clampX, clampY, -1000f);
+
+
+                        //cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, Time.deltaTime * 100f);
                         cameraTm.position = new Vector3(clampX, clampY, -1000f);
                         // cameraTm.Translate(pos);
                         // cameraTm.position = Vector3.SmoothDamp(cameraTm.position, new Vector3(clampX, clampY, 0), ref _velocity, 0.01f);
@@ -137,8 +141,9 @@ namespace GameSystem
             var secMag = (secTouch.position - secTouch.deltaPosition).sqrMagnitude;
 
             float res = firMag - secMag;
-
+            Debug.Log("res = " + res);
             GameCamera.orthographicSize += res * 1f;
+            Mathf.Clamp(GameCamera.orthographicSize, 1000, 2000);
         }
 
         public void SetStopUpdate(bool stopUpdate)

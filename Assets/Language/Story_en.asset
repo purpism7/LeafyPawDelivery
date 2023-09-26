@@ -31,6 +31,10 @@ MonoBehaviour:
     m_Localized: Tell me your name!
     m_Metadata:
       m_Items: []
+  - m_Id: 18097604322648064
+    m_Localized: Barnie
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
