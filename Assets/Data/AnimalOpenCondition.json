@@ -12,7 +12,7 @@
     {
       "Id": 2,
       "Type": "Buy",
-      "AnimalCurrency": 357,
+      "AnimalCurrency": 170,
       "ObjectCurrency": 7616,
       "Cash": 0,
       "ReqAnimalIds": null,
