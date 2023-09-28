@@ -116,6 +116,9 @@ namespace Game
                 if (!animal.IsActivate)
                     continue;
 
+                if (animal.Id != id)
+                    continue;
+
                 if (animal.SkinId != currSkinId)
                     continue;
 

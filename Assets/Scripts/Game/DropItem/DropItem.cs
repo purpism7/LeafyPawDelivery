@@ -31,7 +31,7 @@ namespace Game
                 transform.position = new Vector3(_startRootTm.position.x, _startRootTm.position.y);
             }
 
-            spriteRenderer.gameObject.AddComponent<CapsuleCollider>();
+            SetCollider();
 
             Drop();
         }
@@ -57,6 +57,15 @@ namespace Game
         public override void OnTouch(Touch touch)
         {
             base.OnTouch(touch);
+        }
+
+        private void SetCollider()
+        {
+            var collider = spriteRenderer.gameObject.GetOrAddComponent<CapsuleCollider>();
+            if (collider == null)
+                return;
+
+            collider.radius += 5f;
         }
 
         private void SetSortingOrder()
