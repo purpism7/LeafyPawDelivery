@@ -24,12 +24,15 @@ namespace UI
         public class Constituent
         {
             public string Speaker = string.Empty;
+            public string SpeakerSpriteName = string.Empty;
             public string Sentence = string.Empty;
             public float KeepDelay = 2f;
         }
 
         [SerializeField] private TextMeshProUGUI speakerTMP = null;
         [SerializeField] private TextMeshProUGUI typingTMP = null;
+        [SerializeField]
+        private UnityEngine.UI.Image speakerImg = null;
 
         private YieldInstruction _waitSec = new WaitForSeconds(0.02f);
         private Queue<Constituent> _constituentQueue = new();
@@ -61,11 +64,29 @@ namespace UI
             typingTMP?.SetText(string.Empty);
         }
 
+        private void SetSpeakerImg(string spriteName)
+        {
+            if (string.IsNullOrEmpty(spriteName))
+                return;
+
+            if (speakerImg == null)
+                return;
+
+            var speakerSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetAnimalIconSprite(spriteName);
+            if (speakerSprite == null)
+                return;
+
+            speakerImg.sprite = speakerSprite;
+            speakerImg.SetNativeSize();
+        }
+
         private IEnumerator CoTyping(Constituent constituent)
         {
             SetEmptyTMP();
 
             speakerTMP?.SetText(constituent.Speaker);
+            SetSpeakerImg(constituent?.SpeakerSpriteName);
+
             Debug.Log("CoTyping = " + constituent.Sentence);
             foreach (var typingChr in constituent.Sentence)
             {

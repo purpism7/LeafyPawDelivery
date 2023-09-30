@@ -25,6 +25,9 @@ public class MainGameManager : Singleton<MainGameManager>
     public Game.State.Base GameState { get; private set; } = null;
 
     private System.Action<Game.Base, bool> _startEditAction = null;
+    private IUpdate _iUpdateInputMgr = null;
+    private IUpdate _iUpdateGameCameraCtr = null;
+    
     
     protected override void Initialize()
     {
@@ -61,8 +64,12 @@ public class MainGameManager : Singleton<MainGameManager>
 
         StoryMgr = iProvider.Get<Game.StoryManager>();
         //OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();
-        
-        GameCameraCtr = iProvider.Get<InputManager>()?.GameCameraCtr;
+
+        var inputMgr = iProvider.Get<InputManager>();
+        GameCameraCtr = inputMgr?.GameCameraCtr;
+
+        _iUpdateInputMgr = inputMgr;
+        _iUpdateGameCameraCtr = GameCameraCtr;
 
         SetGameState<Game.State.Game>();       
 
@@ -77,6 +84,9 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private void Update()
     {
+        _iUpdateInputMgr?.ChainUpdate();
+        _iUpdateGameCameraCtr?.ChainUpdate();
+
         placeMgr?.ChainUpdate();
     }
 

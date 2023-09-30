@@ -6,7 +6,7 @@ using DG.Tweening;
 
 namespace GameSystem
 {
-    public class GameCameraController : MonoBehaviour
+    public class GameCameraController : MonoBehaviour, IUpdate
     {
         public Camera GameCamera = null;
         public Camera UICamera = null;
@@ -46,12 +46,18 @@ namespace GameSystem
             _dragWidth = _halfHeight * Screen.width / Screen.height;
         }
 
-        private void FixedUpdate()
+        public void ChainFixedUpdate()
+        {
+
+        }
+
+        #region IUpdate
+        void IUpdate.ChainUpdate()
         {
             if (GameCamera is null)
                 return;
-            
-            if(StopUpdate)
+
+            if (StopUpdate)
                 return;
 
             int touchCnt = Input.touchCount;
@@ -63,8 +69,8 @@ namespace GameSystem
                 return;
 
             Drag();
-            ZoomInOut();
         }
+        #endregion
 
         private void OnDrawGizmos()
         {

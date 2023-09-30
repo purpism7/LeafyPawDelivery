@@ -13,6 +13,7 @@ public class ConversationBehaviour : PlayableBehaviour
         public string Table = string.Empty;
         public string Key = string.Empty;
         public string SpeakerKey = string.Empty;
+        public string SpeakerSpriteName = string.Empty;
     }
 
     public LocalData[] LocalDatas = null;
@@ -49,6 +50,7 @@ public class ConversationBehaviour : PlayableBehaviour
             {
                 Speaker = LocalizationSettings.StringDatabase.GetLocalizedString(localData.Table, localData.SpeakerKey, LocalizationSettings.SelectedLocale),
                 Sentence = LocalizationSettings.StringDatabase.GetLocalizedString(localData.Table, localData.Key, LocalizationSettings.SelectedLocale),
+                SpeakerSpriteName = localData.SpeakerSpriteName,
             });
         }
 

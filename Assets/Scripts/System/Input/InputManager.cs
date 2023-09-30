@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace GameSystem
 {
-    public class InputManager : GameSystem.Processing
+    public class InputManager : GameSystem.Processing, IUpdate
     {
         #region Inspector
         public GameSystem.GameCameraController GameCameraCtr = null;
@@ -27,22 +27,20 @@ namespace GameSystem
             yield return null;
         }
 
-        private void Update()
+        #region IUpdate
+        void IUpdate.ChainUpdate()
         {
             int touchCnt = Input.touchCount;
             if (touchCnt <= 0)
-            {
                 return;
-            }
 
             var touch = Input.GetTouch(0);
             if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-            {
                 return;
-            }
 
             InputHandler?.ChainUpdate();
         }
+        #endregion
     }
 }
 
