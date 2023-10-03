@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace GameSystem
 {
-    public class InputManager : GameSystem.Processing, IUpdate
+    public class InputManager : GameSystem.Processing, IUpdater
     {
         #region Inspector
         public GameSystem.GameCameraController GameCameraCtr = null;
@@ -28,7 +28,7 @@ namespace GameSystem
         }
 
         #region IUpdate
-        void IUpdate.ChainUpdate()
+        void IUpdater.ChainUpdate()
         {
             int touchCnt = Input.touchCount;
             if (touchCnt <= 0)

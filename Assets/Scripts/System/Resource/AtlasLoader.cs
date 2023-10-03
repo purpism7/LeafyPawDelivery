@@ -58,6 +58,11 @@ namespace GameSystem
         {
             return GetSprite("Currency", name);
         }
+
+        public Sprite GetCurrencyCashSprite()
+        {
+            return GetCurrencySprite("berry");
+        }
     }
 }
 

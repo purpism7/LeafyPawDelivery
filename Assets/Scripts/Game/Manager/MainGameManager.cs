@@ -25,8 +25,8 @@ public class MainGameManager : Singleton<MainGameManager>
     public Game.State.Base GameState { get; private set; } = null;
 
     private System.Action<Game.Base, bool> _startEditAction = null;
-    private IUpdate _iUpdateInputMgr = null;
-    private IUpdate _iUpdateGameCameraCtr = null;
+    private IUpdater _iUpdateInputMgr = null;
+    private IUpdater _iUpdateGameCameraCtr = null;
     
     
     protected override void Initialize()

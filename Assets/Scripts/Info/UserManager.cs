@@ -10,6 +10,7 @@ namespace Info
     public class UserManager : Singleton<UserManager>
     {
         private const string KeyUserCurrency = "CurrencyList";
+        private const string KeyUserCash = "Cash";
         private const string KeyUserStory = "StoryList";
 
 #if UNITY_EDITOR
@@ -19,8 +20,6 @@ namespace Info
 #endif
         
         public User User { get; private set; } = null;
-
-        //private Dictionary<System.Type, Holder.Base> _holderDic = new();
 
         private void OnApplicationPause(bool pause)
         {
@@ -241,6 +240,21 @@ namespace Info
                 return;
 
             firebaseMgr?.Database?.SaveChild(userId, KeyUserCurrency, JsonUtility.ToJson(User.CurrencyList.ToArray()));
+        }
+
+        public void SaveCash(long cash)
+        {
+            User?.SetCash(cash);
+
+            var firebaseMgr = GameSystem.FirebaseManager.Instance;
+            if (firebaseMgr == null)
+                return;
+
+            var userId = firebaseMgr.Auth?.UserId;
+            if (string.IsNullOrEmpty(userId))
+                return;
+
+            firebaseMgr?.Database?.SaveChild(userId, KeyUserCash, JsonUtility.ToJson(User.Cash));
         }
 
         public void SaveStory(int storyId)

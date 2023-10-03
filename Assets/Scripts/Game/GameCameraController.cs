@@ -6,7 +6,7 @@ using DG.Tweening;
 
 namespace GameSystem
 {
-    public class GameCameraController : MonoBehaviour, IUpdate
+    public class GameCameraController : MonoBehaviour, IUpdater
     {
         public Camera GameCamera = null;
         public Camera UICamera = null;
@@ -52,7 +52,7 @@ namespace GameSystem
         }
 
         #region IUpdate
-        void IUpdate.ChainUpdate()
+        void IUpdater.ChainUpdate()
         {
             if (GameCamera is null)
                 return;

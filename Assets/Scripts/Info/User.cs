@@ -68,6 +68,11 @@ namespace Info
             return findCurrency;
         }
 
+        public void SetCash(long value)
+        {
+            Cash += value;
+        }
+
         public void SetAnimalCurrency(int placeId, int value)
         {
             if (CurrencyList == null)

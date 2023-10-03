@@ -10,7 +10,7 @@ using GameSystem;
 
 namespace UI
 {
-    public class Profile : BasePopup<Profile.Data>, SkinCell.IListener
+    public class Profile : BasePopup<Profile.Data>, SkinCell.IListener, BuyCash.IListener
     {
         public class Data : BaseData
         {
@@ -72,6 +72,8 @@ namespace UI
             DeactivateSkinCellList();
             
             Game.RenderTextureElement.Destroy();
+
+            _selectSkinId = -1;
 
             base.Deactivate();
         }
@@ -234,6 +236,14 @@ namespace UI
                 if (_selectSkinId == id)
                 {
                     // 한 번 더 클릭으로 구매.
+                    new PopupCreator<BuyCash, BuyCash.Data>()
+                        .SetReInitialize(true)
+                        .SetData(new BuyCash.Data()
+                        {
+                            IListener = this,
+                            Cash = animalSkinData.Cash,
+                        })
+                        .Create();
 
                     return;
                 }
@@ -244,6 +254,34 @@ namespace UI
             }
 
             _selectSkinId = id;
+        }
+        #endregion
+
+        #region BuyCash.IListener
+        void BuyCash.IListener.Buy()
+        {
+            if (_data == null)
+                return;
+
+            var animalId = _data.Id;
+
+            var animalSkinData = AnimalSkinContainer.Instance?.GetData(_selectSkinId, animalId);
+            if (animalSkinData == null)
+                return;
+
+            var userMgr = Info.UserManager.Instance;
+            if (userMgr == null)
+                return;
+
+            var userInfo = userMgr.User;
+            if (userInfo == null)
+                return;
+
+            if (userInfo.Cash < animalSkinData.Cash)
+                return;
+
+            userMgr.SaveCash(-animalSkinData.Cash);
+            MainGameManager.Instance?.AnimalMgr?.AddSkin(animalId, _selectSkinId);
         }
         #endregion
     }

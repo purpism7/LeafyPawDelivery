@@ -170,6 +170,14 @@ namespace Game
 
             _animalHolder.ApplySkin(id, skinId);
         }
+
+        public void AddSkin(int id, int skinId)
+        {
+            if (_animalHolder == null)
+                return;
+
+            _animalHolder.AddASkin(id, skinId);
+        }
         #endregion
 
         private void OnChangedPlace(int placeId)

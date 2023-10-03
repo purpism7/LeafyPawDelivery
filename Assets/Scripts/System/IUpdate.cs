@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameSystem
 {
-    public interface IUpdate
+    public interface IUpdater
     {
         void ChainUpdate();
     }

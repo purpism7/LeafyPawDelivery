@@ -29,6 +29,7 @@ namespace UI.Component
 
             SetImg();
             SetText(data.Text);
+            SetColor();
         }
 
         public override void Activate()

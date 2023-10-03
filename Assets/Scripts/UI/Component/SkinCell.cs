@@ -45,6 +45,8 @@ namespace UI.Component
         public override void Activate()
         {
             base.Activate();
+
+            openCondition?.Activate();
         }
 
         private void SetIconImg()
@@ -82,11 +84,18 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
+            var user = Info.UserManager.Instance?.User;
+            long userCash = 0;
+            if(user != null)
+            {
+                userCash = user.Cash;
+            }
+
             var openConditionData = new OpenCondition.Data()
             {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite("berry"),
-                Text = "x" + animalSkin.Cash
-                //PossibleFunc = () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id),
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencyCashSprite(),
+                Text = "x" + animalSkin.Cash,
+                PossibleFunc = () => userCash >= animalSkin.Cash,
             };
 
             openCondition.Initialize(openConditionData);
