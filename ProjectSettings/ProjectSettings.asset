@@ -135,8 +135,11 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 1.0.2
-  preloadedAssets: []
+  bundleVersion: 1.0.3
+  preloadedAssets:
+  - {fileID: 11400000, guid: b725200179d5f4e1bb784d1ed461c4d6, type: 2}
+  - {fileID: 8421263368358385619, guid: 61065a90afb814f21a510bef56ba9408, type: 2}
+  - {fileID: 11400000, guid: 6c53165d38e394f4683ddf58a46b309f, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -235,10 +238,10 @@ PlayerSettings:
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: 5M5Q4Z8A77
-  iOSManualSigningProvisioningProfileID: 5e8d04e1-b6f4-471d-b4e5-f5d1fa6d0552
+  iOSManualSigningProvisioningProfileID: efa92eed-d7dc-4791-9427-5cb2a9e8264e
   tvOSManualSigningProvisioningProfileID: 
   VisionOSManualSigningProvisioningProfileID: 
-  iOSManualSigningProvisioningProfileType: 1
+  iOSManualSigningProvisioningProfileType: 2
   tvOSManualSigningProvisioningProfileType: 0
   VisionOSManualSigningProvisioningProfileType: 0
   appleEnableAutomaticSigning: 2
