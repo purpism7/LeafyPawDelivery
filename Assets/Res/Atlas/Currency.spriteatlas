@@ -39,17 +39,20 @@ SpriteAtlas:
     packedSpriteRenderDataKeys:
     - 3b6a2d03b4b5841e5af90ea96614ce68: 21300000
     - 9276c095267a84c8a8180849bb83df83: 21300000
+    - 3fa687b7cd6634ee3b500c6b242252ce: 21300000
     - cb07d4e875ab743629f22f2157ffb0d9: 21300000
     - 106c7ddc9c1f441a88621f8cb1b1596f: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 3b6a2d03b4b5841e5af90ea96614ce68, type: 3}
   - {fileID: 21300000, guid: 9276c095267a84c8a8180849bb83df83, type: 3}
+  - {fileID: 21300000, guid: 3fa687b7cd6634ee3b500c6b242252ce, type: 3}
   - {fileID: 21300000, guid: cb07d4e875ab743629f22f2157ffb0d9, type: 3}
   - {fileID: 21300000, guid: 106c7ddc9c1f441a88621f8cb1b1596f, type: 3}
   m_PackedSpriteNamesToIndex:
   - leaf
   - berry
+  - letter
   - ad
   - acorn
   m_RenderDataMap: {}

@@ -107,7 +107,7 @@ CapsuleCollider:
   m_Radius: 139.7
   m_Height: 395
   m_Direction: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 138, z: 0}
 --- !u!1 &7157655937583819985
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,7 +223,7 @@ MonoBehaviour:
   UId: 0
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 8860893258269408253}
-  sortingOrderOffset: 63
+  sortingOrderOffset: 0
 --- !u!1001 &3742574807698289868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -278,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5863624380499047944, guid: 3ffb9563ff655480892336c12015f8c4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -250
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 5863624380499047944, guid: 3ffb9563ff655480892336c12015f8c4, type: 3}
       propertyPath: m_LocalPosition.z

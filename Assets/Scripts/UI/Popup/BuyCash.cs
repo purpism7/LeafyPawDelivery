@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using UI.Component;
 
@@ -12,6 +13,7 @@ namespace UI
         {
             public IListener IListener = null;
             public int Cash = 0;
+            public Sprite targetSprite = null;
         }
 
         public interface IListener
@@ -20,12 +22,15 @@ namespace UI
         }
 
         [SerializeField]
+        private Image buyTargetImg = null;
+        [SerializeField]
         private Component.OpenCondition openCondition = null;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
+            SetImg();
             SetOpenCondition();
         }
 
@@ -34,6 +39,18 @@ namespace UI
             base.Activate();
 
             openCondition?.Activate();
+        }
+
+        private void SetImg()
+        {
+            if (buyTargetImg == null)
+                return;
+
+            if (_data == null)
+                return;
+
+            buyTargetImg.sprite = _data.targetSprite;
+            buyTargetImg.SetNativeSize();
         }
 
         private void SetOpenCondition()

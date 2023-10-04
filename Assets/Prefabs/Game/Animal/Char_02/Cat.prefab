@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7096527063377470850}
   - component: {fileID: 4673291588887461157}
-  - component: {fileID: 5860463453709640405}
-  - component: {fileID: 2164901631972730589}
   m_Layer: 6
   m_Name: Cat
   m_TagString: Untagged
@@ -54,27 +52,7 @@ MonoBehaviour:
   edit: {fileID: 0}
   skinId: 1
   animator: {fileID: 1654453176783347088}
---- !u!114 &5860463453709640405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 469242948407617688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 632d4a2312dc2443ebea33a4a23e0cb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AnimalActionList: []
---- !u!222 &2164901631972730589
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 469242948407617688}
-  m_CullTransparentMesh: 1
+  collider: {fileID: 1742199152941368207}
 --- !u!1 &3476158958628761677
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +162,7 @@ CapsuleCollider:
   m_Radius: 57
   m_Height: 134
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 72, z: 0}
 --- !u!95 &1654453176783347088
 Animator:
   serializedVersion: 5

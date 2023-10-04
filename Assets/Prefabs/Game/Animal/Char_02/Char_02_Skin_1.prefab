@@ -53,6 +53,7 @@ MonoBehaviour:
   edit: {fileID: 0}
   skinId: 2
   animator: {fileID: 1654453176783347088}
+  collider: {fileID: 1742199152941368207}
 --- !u!222 &2164901631972730589
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -167,10 +168,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 57
+  m_Radius: 54.2
   m_Height: 144
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 81, z: 0}
 --- !u!95 &1654453176783347088
 Animator:
   serializedVersion: 5
@@ -326,7 +327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[0].Key
-      value: animal_2_1
+      value: animal_2_2
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[0].TableName

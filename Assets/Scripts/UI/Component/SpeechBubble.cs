@@ -13,6 +13,7 @@ namespace UI.Component
         {
             //public string Sentence = string.Empty;
             public IListener IListener = null;
+            public float PosY = 240f;
         }
 
         public interface IListener
@@ -38,6 +39,8 @@ namespace UI.Component
         {
             yield return StartCoroutine(base.CoInitialize(data));
 
+            InitializePos();
+
             Clear();
         }
 
@@ -46,6 +49,14 @@ namespace UI.Component
             base.Activate();
 
             SetEmptyTMP();
+        }
+
+        private void InitializePos()
+        {
+            if (_data == null)
+                return;
+
+            transform.localPosition = new Vector3(transform.localPosition.x, _data.PosY, transform.localPosition.z);
         }
 
         private void SetEmptyTMP()

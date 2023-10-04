@@ -63,6 +63,17 @@ namespace GameSystem
         {
             return GetCurrencySprite("berry");
         }
+
+        public Sprite GetAnimalSkinSprite(string name)
+        {
+            var placeMgr = MainGameManager.Instance.placeMgr;
+            if (placeMgr == null)
+                return null;
+
+            int placeId = placeMgr.ActivityPlaceId;
+
+            return GetSprite("AnimalSkinIcon_" + placeId, name);
+        }
     }
 }
 

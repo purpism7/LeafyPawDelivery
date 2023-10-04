@@ -85,6 +85,7 @@ MonoBehaviour:
   edit: {fileID: 0}
   skinId: 1
   animator: {fileID: 4174672820065212756}
+  collider: {fileID: 3836284014760317629}
 --- !u!1 &3850015810755828206
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,10 +212,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 75.5
+  m_Radius: 67.4
   m_Height: 145
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 71, z: 0}
 --- !u!1001 &2804595851780993576
 PrefabInstance:
   m_ObjectHideFlags: 0

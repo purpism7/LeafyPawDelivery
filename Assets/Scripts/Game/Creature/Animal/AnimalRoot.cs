@@ -11,14 +11,20 @@ namespace Game.Creature
 {
     public class AnimalRoot : MonoBehaviour, SpeechBubble.IListener
     {
-        public Transform RewardRootTm = null;
+        //public Transform RewardRootTm = null;
         [SerializeField] private RectTransform editRootRectTm = null;
         [SerializeField] private RectTransform speechBubbleRootRectTm = null;
         [SerializeField] private BaseLocalData[] localDatas = null;
 
         private SpeechBubble _speechBubble = null;
+        private float _animalHeigh = 0;
 
         public RectTransform EditRootRectTm { get { return editRootRectTm; } }
+
+        public void Initialize(float animalHeigh)
+        {
+            _animalHeigh = animalHeigh;
+        }
 
         private void CreateSpeechBubble()
         {
@@ -29,6 +35,7 @@ namespace Game.Creature
                 .SetData(new UI.Component.SpeechBubble.Data()
                 {
                     IListener = this,
+                    PosY = _animalHeigh,
                 })
                 .SetRootRectTm(speechBubbleRootRectTm)
                 .Create();

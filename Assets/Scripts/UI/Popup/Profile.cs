@@ -169,7 +169,7 @@ namespace UI
                 {
                     IListener = this,
                     AnimalSkin = animalSkin,
-                    Sprite = ResourceManager.Instance.AtalsLoader.GetSprite("AnimalSkinIcon_1", animalSkin.ImgName),
+                    Sprite = ResourceManager.Instance.AtalsLoader.GetAnimalSkinSprite(animalSkin.ImgName),
                     ToggleGroup = skinToggleGroup,
                     ToggleOn = currenctSkinId == animalSkin.Id,
                 };
@@ -242,6 +242,7 @@ namespace UI
                         {
                             IListener = this,
                             Cash = animalSkinData.Cash,
+                            targetSprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalSkinSprite(animalSkinData.ImgName),
                         })
                         .Create();
 

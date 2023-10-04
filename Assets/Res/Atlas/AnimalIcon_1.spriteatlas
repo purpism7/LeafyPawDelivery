@@ -42,6 +42,7 @@ SpriteAtlas:
     - 893baff15f5044698aaa192e93c046c1: 21300000
     - d45f76f3ad19e4ce982b3c1570f16934: 21300000
     - 41fa7e15ea323d249964a8c08728383f: 21300000
+    - 599edaa5963704dadb6e31cfdb1225ea: 21300000
     - 9e94afa64754b42a2b0fee9bc792c05d: 21300000
     - 09d253b6430b0bf44b90682a5ec43274: 21300000
     - 4c9c64670e4304081b2848dc5886fd22: 21300000
@@ -59,6 +60,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 893baff15f5044698aaa192e93c046c1, type: 3}
   - {fileID: 21300000, guid: d45f76f3ad19e4ce982b3c1570f16934, type: 3}
   - {fileID: 21300000, guid: 41fa7e15ea323d249964a8c08728383f, type: 3}
+  - {fileID: 21300000, guid: 599edaa5963704dadb6e31cfdb1225ea, type: 3}
   - {fileID: 21300000, guid: 9e94afa64754b42a2b0fee9bc792c05d, type: 3}
   - {fileID: 21300000, guid: 09d253b6430b0bf44b90682a5ec43274, type: 3}
   - {fileID: 21300000, guid: 4c9c64670e4304081b2848dc5886fd22, type: 3}
@@ -75,6 +77,7 @@ SpriteAtlas:
   - StoryIcon_Map01_Kara
   - EditIcon_Map01_Char_05
   - BookIcon_Map01_Char_04
+  - StoryIcon_Map01_Player
   - EditIcon_Map01_Char_02
   - BookIcon_Map01_Char_03
   - BookIcon_Map01_Char_06

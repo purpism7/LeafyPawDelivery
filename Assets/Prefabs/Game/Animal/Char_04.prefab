@@ -129,7 +129,7 @@ CapsuleCollider:
   m_Radius: 50
   m_Height: 111
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 55, z: 0}
 --- !u!1 &5034679396573058153
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,6 +182,7 @@ MonoBehaviour:
   edit: {fileID: 0}
   skinId: 1
   animator: {fileID: 2799154114294592222}
+  collider: {fileID: 5949323127203510622}
 --- !u!1 &7638000593402345012
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[0].Key
-      value: animal_3_1
+      value: animal_4_1
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[1].Key

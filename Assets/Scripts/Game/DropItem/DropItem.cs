@@ -76,7 +76,7 @@ namespace Game
             if (spriteRenderer == null)
                 return;
 
-            spriteRenderer.sortingOrder = -(int)transform.position.y - 40;
+            spriteRenderer.sortingOrder = -(int)transform.position.y;
         }
 
         private void Drop()

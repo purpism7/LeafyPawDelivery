@@ -28,7 +28,7 @@
       "Cash": 0,
       "Advertising": null,
       "ReqAnimalIds": null,
-      "ReqObjectIds": null
+      "ReqObjectIds": 2
     },
     {
       "Id": 4,
@@ -55,6 +55,246 @@
       "Type": "Buy",
       "AnimalCurrency": 306,
       "ObjectCurrency": 6528,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 7,
+      "Type": "Buy",
+      "AnimalCurrency": 408,
+      "ObjectCurrency": 8704,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 8,
+      "Type": "Buy",
+      "AnimalCurrency": 459,
+      "ObjectCurrency": 9792,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 9,
+      "Type": "Buy",
+      "AnimalCurrency": 510,
+      "ObjectCurrency": 10880,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 10,
+      "Type": "Buy",
+      "AnimalCurrency": 561,
+      "ObjectCurrency": 11968,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 11,
+      "Type": "Buy",
+      "AnimalCurrency": 612,
+      "ObjectCurrency": 13056,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 12,
+      "Type": "Buy",
+      "AnimalCurrency": 714,
+      "ObjectCurrency": 15232,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 13,
+      "Type": "Buy",
+      "AnimalCurrency": 765,
+      "ObjectCurrency": 16320,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 14,
+      "Type": "Buy",
+      "AnimalCurrency": 816,
+      "ObjectCurrency": 17408,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 15,
+      "Type": "Buy",
+      "AnimalCurrency": 867,
+      "ObjectCurrency": 18496,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 16,
+      "Type": "Buy",
+      "AnimalCurrency": 918,
+      "ObjectCurrency": 19584,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 17,
+      "Type": "Buy",
+      "AnimalCurrency": 969,
+      "ObjectCurrency": 20672,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 18,
+      "Type": "Buy",
+      "AnimalCurrency": 1071,
+      "ObjectCurrency": 22848,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 19,
+      "Type": "Buy",
+      "AnimalCurrency": 1122,
+      "ObjectCurrency": 23936,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 20,
+      "Type": "Buy",
+      "AnimalCurrency": 1173,
+      "ObjectCurrency": 25024,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 21,
+      "Type": "Buy",
+      "AnimalCurrency": 1224,
+      "ObjectCurrency": 26112,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 22,
+      "Type": "Buy",
+      "AnimalCurrency": 1275,
+      "ObjectCurrency": 27200,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 23,
+      "Type": "Buy",
+      "AnimalCurrency": 1326,
+      "ObjectCurrency": 28288,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 24,
+      "Type": "Buy",
+      "AnimalCurrency": 1428,
+      "ObjectCurrency": 30464,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 25,
+      "Type": "Buy",
+      "AnimalCurrency": 1479,
+      "ObjectCurrency": 31552,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 26,
+      "Type": "Buy",
+      "AnimalCurrency": 1530,
+      "ObjectCurrency": 32640,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 27,
+      "Type": "Buy",
+      "AnimalCurrency": 1581,
+      "ObjectCurrency": 33728,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 28,
+      "Type": "Buy",
+      "AnimalCurrency": 1632,
+      "ObjectCurrency": 34816,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 29,
+      "Type": "Buy",
+      "AnimalCurrency": 1683,
+      "ObjectCurrency": 35904,
+      "Cash": 0,
+      "Advertising": null,
+      "ReqAnimalIds": null,
+      "ReqObjectIds": null
+    },
+    {
+      "Id": 30,
+      "Type": "Buy",
+      "AnimalCurrency": 1734,
+      "ObjectCurrency": 36992,
       "Cash": 0,
       "Advertising": null,
       "ReqAnimalIds": null,
