@@ -9,6 +9,8 @@ namespace Game
     [ExecuteAlways]
     public class UIManager : Singleton<UIManager>
     {
+        [SerializeField]
+        private RectTransform uiRootRectTm = null;
         public UI.Top Top;
         public UI.Bottom Bottom;
         public UI.Popup Popup;
@@ -52,6 +54,11 @@ namespace Game
         private void OpenCountListener(int count)
         {
             Debug.Log("OpenCount " + count);
+        }
+
+        public void EnalbeUIRoot(bool enable)
+        {
+            UIUtils.SetActive(uiRootRectTm, enable);
         }
     }
 }

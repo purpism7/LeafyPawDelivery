@@ -177,9 +177,7 @@ namespace Game.Manager
             Fade.Create.In(
                 () =>
                 {
-                    
-
-                    //_conversation?.StartTyping("안녕하세. 한승재 입니다.");
+                    UIManager.Instance?.EnalbeUIRoot(false);
                 });
         }
 
@@ -217,6 +215,8 @@ namespace Game.Manager
         {
             Fade.Create.Out(() =>
             {
+                UIManager.Instance?.EnalbeUIRoot(true);
+
                 Deactivate();
 
                 _end = true;

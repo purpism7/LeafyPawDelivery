@@ -19,7 +19,7 @@ namespace UI.Component
 
         public interface IListener
         {
-            void Select(int id, System.Action<bool> enableBuyRootAction);
+            void Select(SkinCell skinCell);
         }
 
         [SerializeField]
@@ -30,6 +30,18 @@ namespace UI.Component
         private RectTransform buyRootRectTm = null;
         [SerializeField]
         private OpenCondition openCondition = null;
+
+        public int SkinId
+        {
+            get
+            {
+                var animalSkin = _data?.AnimalSkin;
+                if (animalSkin == null)
+                    return 0;
+
+                return  _data.AnimalSkin.Id;
+            }
+        }
 
         public override void Initialize(Data data)
         {
@@ -101,7 +113,7 @@ namespace UI.Component
             openCondition.Initialize(openConditionData);
         }
 
-        private void EnableBuyRoot(bool enable)
+        public void EnableBuyRoot(bool enable)
         {
             UIUtils.SetActive(buyRootRectTm, enable);
         }
@@ -116,7 +128,7 @@ namespace UI.Component
 
             if(toggle.isOn)
             {
-                _data.IListener?.Select(_data.AnimalSkin.Id, EnableBuyRoot);
+                _data.IListener?.Select(this);
             }
             else
             {

@@ -2315,6 +2315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e067ea0e7614855881ce617579432e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiRootRectTm: {fileID: 311464501}
   Top: {fileID: 923999650}
   Bottom: {fileID: 229178124}
   Popup: {fileID: 1404788286}
