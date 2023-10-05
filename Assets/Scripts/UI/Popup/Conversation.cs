@@ -27,6 +27,19 @@ namespace UI
             public string SpeakerSpriteName = string.Empty;
             public string Sentence = string.Empty;
             public float KeepDelay = 2f;
+
+            public void Initialize()
+            {
+                if(string.IsNullOrEmpty(Speaker))
+                {
+                    Speaker = PlayerPrefs.GetString("KeyNickName");
+                }
+
+                if (string.IsNullOrEmpty(SpeakerSpriteName))
+                {
+                    SpeakerSpriteName = "StoryIcon_Map01_Player";
+                }
+            }
         }
 
         [SerializeField] private TextMeshProUGUI speakerTMP = null;
@@ -89,6 +102,8 @@ namespace UI
         {
             SetEmpty();
 
+            constituent?.Initialize();
+            
             speakerTMP?.SetText(constituent.Speaker);
             SetSpeakerImg(constituent?.SpeakerSpriteName);
 

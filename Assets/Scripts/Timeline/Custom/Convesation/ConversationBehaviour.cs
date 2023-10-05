@@ -46,9 +46,11 @@ public class ConversationBehaviour : PlayableBehaviour
             if (localData == null)
                 continue;
 
+            var speaker = string.IsNullOrEmpty(localData.SpeakerKey) ? string.Empty : LocalizationSettings.StringDatabase.GetLocalizedString(localData.Table, localData.SpeakerKey, LocalizationSettings.SelectedLocale);
+
             conversation.Enqueue(new UI.Conversation.Constituent()
             {
-                Speaker = LocalizationSettings.StringDatabase.GetLocalizedString(localData.Table, localData.SpeakerKey, LocalizationSettings.SelectedLocale),
+                Speaker = speaker,
                 Sentence = LocalizationSettings.StringDatabase.GetLocalizedString(localData.Table, localData.Key, LocalizationSettings.SelectedLocale),
                 SpeakerSpriteName = localData.SpeakerSpriteName,
             });
