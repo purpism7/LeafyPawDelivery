@@ -59,6 +59,10 @@ MonoBehaviour:
     m_Key: profile
     m_Metadata:
       m_Items: []
+  - m_Id: 20704382197686272
+    m_Key: achievements
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

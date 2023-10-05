@@ -62,6 +62,10 @@ MonoBehaviour:
     m_Localized: Profile
     m_Metadata:
       m_Items: []
+  - m_Id: 20704382197686272
+    m_Localized: Achievements
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
