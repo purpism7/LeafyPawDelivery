@@ -278,6 +278,10 @@ namespace UI
             if (_data == null)
                 return;
 
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                return;
+
             var animalId = _data.Id;
             int selectSkinId = SelectSkinId;
 
@@ -297,7 +301,8 @@ namespace UI
                 return;
 
             userMgr.SaveCash(-animalSkinData.Cash);
-            MainGameManager.Instance?.AnimalMgr?.AddSkin(animalId, selectSkinId);
+            mainGameMgr.AnimalMgr?.AddSkin(animalId, selectSkinId);
+            mainGameMgr.ChangeAnimalSkinToPlace(animalId, selectSkinId);
 
             _selectSkinCell?.EnableBuyRoot(false);
         }
