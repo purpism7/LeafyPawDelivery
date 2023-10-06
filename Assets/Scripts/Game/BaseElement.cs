@@ -16,7 +16,7 @@ namespace Game
         [SerializeField]
         protected UI.Edit edit = null;
 
-        private CapsuleCollider _collider = null;
+        private Collider _collider = null;
 
         public ElementData ElementData { get; protected set; } = null;
         public int SortingOrder { get { return spriteRenderer != null ? spriteRenderer.sortingOrder : 1; } }
@@ -33,7 +33,7 @@ namespace Game
                 if (spriteRenderer == null)
                     return;
 
-                _collider = spriteRenderer.GetComponent<CapsuleCollider>();
+                _collider = spriteRenderer.GetComponent<Collider>();
             }
 
             _collider.enabled = enable;
