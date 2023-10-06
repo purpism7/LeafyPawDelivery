@@ -61,11 +61,19 @@ namespace Game
             Normal,
         }
 
-        public enum EAnimalSkinType
+        public enum EAnimalSkin
         {
             None,
 
             Base,
+        }
+
+        public enum EItem
+        {
+            None,
+
+            Currency,
+            Letter,
         }
     }
 }

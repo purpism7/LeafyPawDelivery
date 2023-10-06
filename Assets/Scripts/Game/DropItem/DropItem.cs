@@ -6,13 +6,19 @@ using GameSystem;
 
 namespace Game
 {
-    public class DropItem : Game.Base<DropItem.Data>
+    public partial class DropItem : Game.Base<DropItem.Data>
     {
         public class Data : BaseData
         {
+            public Game.Type.EItem EItem = Type.EItem.None;
             public Transform startRootTm = null;
-            public Game.Type.EElement EElement = Type.EElement.None;
+           
             public int Value = 0;
+
+            public Data(Type.EItem eItem)
+            {
+                EItem = eItem;
+            }
         }
 
         [SerializeField]
@@ -84,7 +90,10 @@ namespace Game
             var startPos = gameCameraCtr.UICamera.ScreenToWorldPoint(touch.Value.position);
             startPos.z = 10f;
 
-            UIManager.Instance?.Top?.CollectCurrency(startPos, _data.EElement, _data.Value);
+
+            var currencyData = _data as CurrencyData;
+
+            UIManager.Instance?.Top?.CollectCurrency(startPos, currencyData.EElement, _data.Value);
         }
 
         private void Drop()

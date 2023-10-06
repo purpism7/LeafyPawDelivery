@@ -55,7 +55,7 @@ public class AnimalSkinContainer : BaseContainer<AnimalSkinContainer, AnimalSkin
             if (data.AnimalId != animalId)
                 continue;
 
-            if (data.EAnimalSkinType != Game.Type.EAnimalSkinType.Base)
+            if (data.EAnimalSkin != Game.Type.EAnimalSkin.Base)
                 continue;
 
             return data;

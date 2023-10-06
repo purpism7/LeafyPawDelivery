@@ -479,7 +479,7 @@ namespace Game
 
             new DropItemCreator()
                 .SetRootTm(currencyRootTm)
-                .SetDropItemData(new DropItem.Data()
+                .SetDropItemData(new DropItem.CurrencyData()
                 {
                     startRootTm = randomAnimal.transform,
                     EElement = Type.EElement.Animal,

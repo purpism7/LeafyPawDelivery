@@ -13,13 +13,13 @@ public class AnimalSkin : Data.Base
     public string ShortIconImgName = string.Empty;
     public string LargeIconImgName = string.Empty;
 
-    public Game.Type.EAnimalSkinType EAnimalSkinType = Game.Type.EAnimalSkinType.Base;
+    public Game.Type.EAnimalSkin EAnimalSkin = Game.Type.EAnimalSkin.Base;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        System.Enum.TryParse(Type, out EAnimalSkinType);
+        System.Enum.TryParse(Type, out EAnimalSkin);
 
         //if(string.IsNullOrEmpty(ShortIconImgName))
         //{
