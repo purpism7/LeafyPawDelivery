@@ -46,10 +46,7 @@ namespace Game
             if (!touch.HasValue)
                 return;
 
-            var startPos = gameCameraCtr.UICamera.ScreenToWorldPoint(touch.Value.position);
-            startPos.z = 10f;
-
-            UIManager.Instance?.Top?.CollectCurrency(startPos, _data.EElement, _data.Value);
+            Collect(touch, gameCameraCtr);
 
             Deactivate();
         }
@@ -77,6 +74,17 @@ namespace Game
                 return;
 
             spriteRenderer.sortingOrder = -(int)transform.position.y;
+        }
+
+        private void Collect(Touch? touch, GameCameraController gameCameraCtr)
+        {
+            if (gameCameraCtr == null)
+                return;
+
+            var startPos = gameCameraCtr.UICamera.ScreenToWorldPoint(touch.Value.position);
+            startPos.z = 10f;
+
+            UIManager.Instance?.Top?.CollectCurrency(startPos, _data.EElement, _data.Value);
         }
 
         private void Drop()
