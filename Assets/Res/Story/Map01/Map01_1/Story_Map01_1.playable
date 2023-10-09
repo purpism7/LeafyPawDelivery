@@ -248,20 +248,20 @@ MonoBehaviour:
       SpeakerSpriteName: StoryIcon_Map01_BabyRabbits
     - Table: Story
       Key: 1_1_3
+      SpeakerKey: 
+      SpeakerSpriteName: 
+    - Table: Story
+      Key: 1_1_4
       SpeakerKey: baby_rabbits
       SpeakerSpriteName: StoryIcon_Map01_BabyRabbits
     - Table: Story
-      Key: 1_1_4
+      Key: 1_1_5
       SpeakerKey: 
       SpeakerSpriteName: 
-    - Table: Story
-      Key: 1_1_5
-      SpeakerKey: baby_rabbit_1
-      SpeakerSpriteName: StoryIcon_Map01_BabyRabbits
     - Table: Story
       Key: 1_1_6
-      SpeakerKey: 
-      SpeakerSpriteName: 
+      SpeakerKey: baby_rabbit_1
+      SpeakerSpriteName: StoryIcon_Map01_BabyRabbits
     - Table: Story
       Key: 1_1_7
       SpeakerKey: baby_rabbit_2

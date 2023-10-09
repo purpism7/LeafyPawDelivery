@@ -18,7 +18,8 @@ public class MainGameManager : Singleton<MainGameManager>
 
     public Game.ObjectManager ObjectMgr { get; private set; } = null;
     public Game.AnimalManager AnimalMgr { get; private set; } = null;
-    public Game.StoryManager StoryMgr { get; private set; } = null; 
+    public Game.StoryManager StoryMgr { get; private set; } = null;
+    public Game.Manager.Acquire AcquireMgr { get; private set; } = null;
 
     public GameCameraController GameCameraCtr { get; private set; } = null;
 
@@ -33,6 +34,7 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
         AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
+        AcquireMgr = gameObject.GetOrAddComponent<Game.Manager.Acquire>();
     }
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
@@ -63,7 +65,6 @@ public class MainGameManager : Singleton<MainGameManager>
         placeMgr?.ActivityPlace?.Activate();
 
         StoryMgr = iProvider.Get<Game.StoryManager>();
-        //OpenCondition = iProvider.Get<Game.Manager.OpenCondition>();
 
         var inputMgr = iProvider.Get<InputManager>();
         GameCameraCtr = inputMgr?.GameCameraCtr;

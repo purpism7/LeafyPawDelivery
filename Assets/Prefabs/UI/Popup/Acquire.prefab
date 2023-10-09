@@ -83,8 +83,9 @@ GameObject:
   m_Component:
   - component: {fileID: 715175923608640553}
   - component: {fileID: 4538592769003199826}
+  - component: {fileID: 6486508054189665928}
   m_Layer: 5
-  m_Name: Mission
+  m_Name: Acquire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,6 +119,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828780707347133183}
   m_CullTransparentMesh: 1
+--- !u!114 &6486508054189665928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828780707347133183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1fa44d609b394f329ec4712f5c9776e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootRectTm: {fileID: 6059155048771174303}
+  tabToggles:
+  - {fileID: 4377991250723215870}
+  - {fileID: 7056301399087855777}
 --- !u!1 &2164343630762203042
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,6 +1245,17 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &7056301399087855777 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5090493428456885421, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
+  m_PrefabInstance: {fileID: 2830534845226759180}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8819366477837768019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1425,6 +1453,17 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &4377991250723215870 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5090493428456885421, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
+  m_PrefabInstance: {fileID: 8819366477837768019}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7651723458173686242 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1176792883252249777, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}

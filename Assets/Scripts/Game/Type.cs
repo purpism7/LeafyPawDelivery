@@ -8,6 +8,8 @@ namespace Game
             Animal,
             Object,
             Story,
+            DailyMission,
+            Achievements,
         }
 
         public enum EElement
@@ -74,6 +76,26 @@ namespace Game
 
             Currency,
             Letter,
+        }
+
+        public enum EAcquire
+        {
+            None,
+
+            Animal,
+            Object,
+            AnimalCurrency,
+            ObjectCurrency,
+            AnimalSkin,
+            Story,
+        }
+
+        public enum EAcquireAction
+        {
+            None,
+
+            Obtain, // 재화 획득, 스토리 최초 보기.
+            Use, // 재화 사용, 동물/오브젝트 배치.
         }
     }
 }

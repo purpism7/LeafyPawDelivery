@@ -15,6 +15,7 @@ namespace UI
             Shop,
             Arrangement,
             Book,
+            Acquire,
             Map,
         }
 
@@ -81,18 +82,31 @@ namespace UI
                                         .SetCoInit(true)
                                         .Create();
 
-                               //    return popup;
-                               //});
+                            //    return popup;
+                            //});
+
+                            break;
                         }
-                        break;
+                        
+
+                    case EType.Acquire:
+                        {
+
+                            var popup = new GameSystem.PopupCreator<Acquire, Acquire.Data>()
+                                        .SetCoInit(true)
+                                        .Create();
+
+                            break;
+                        }
                     
                     case EType.Map:
                         {
                             var popup = new GameSystem.PopupCreator<Map, Map.Data>()
                                 .SetCoInit(true)
                                 .Create();
+
+                            break;
                         }
-                        break;
 
                     default:
                         {
