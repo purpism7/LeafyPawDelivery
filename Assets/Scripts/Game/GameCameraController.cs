@@ -8,6 +8,10 @@ namespace GameSystem
 {
     public class GameCameraController : MonoBehaviour, IUpdater
     {
+        private const float MaxOrthographicSize = 1800f;
+        private const float MinOrthographicSize = 1200f;
+
+
         public Camera GameCamera = null;
         public Camera UICamera = null;
         
@@ -31,14 +35,14 @@ namespace GameSystem
         {
             IGridProvider = iGridProvider;
 
-            if (GameCamera != null)
-            {
-                SetSize();
-            }
+            SetSize();
         }
 
         private void SetSize()
         {
+            if (GameCamera == null)
+                return;
+
             _halfHeight = GameCamera.orthographicSize;
             Height = _halfHeight * 2f;
             Width = Height * GameCamera.aspect;
@@ -68,6 +72,7 @@ namespace GameSystem
             if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                 return;
 
+            ZoomInOut();
             Drag();
         }
         #endregion
@@ -115,11 +120,11 @@ namespace GameSystem
                         float y = _mapSize.y - _halfHeight;
                         float clampY = Mathf.Clamp(movePos.y, -y + _center.y, y + _center.y);
 
+                        var time = Time.deltaTime * 100f;
+
                         var targetPos = new Vector3(clampX, clampY, -1000f);
-
-
-                        //cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, Time.deltaTime * 100f);
-                        cameraTm.position = new Vector3(clampX, clampY, -1000f);
+                        cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, time);
+                        //cameraTm.position = targetPos;
                         // cameraTm.Translate(pos);
                         // cameraTm.position = Vector3.SmoothDamp(cameraTm.position, new Vector3(clampX, clampY, 0), ref _velocity, 0.01f);
 
@@ -137,8 +142,36 @@ namespace GameSystem
         private void ZoomInOut()
         {
             int touchCnt = Input.touchCount;
-            if (touchCnt != 2)
+            if (touchCnt != 1)
                 return;
+
+            var touch = Input.GetTouch(0);
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    {
+                        GameCamera.orthographicSize -= 10f;
+                        GameCamera.orthographicSize = Mathf.Clamp(GameCamera.orthographicSize, MinOrthographicSize, MaxOrthographicSize);
+
+                        SetSize();
+
+                        break;
+                    }
+
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    {
+                        break;
+                    }
+            }
+
+            return;
+
+
+
+            //int touchCnt = Input.touchCount;
+            //if (touchCnt != 2)
+            //    return;
             
             var firTouch = Input.GetTouch(0);
             var secTouch = Input.GetTouch(1);
@@ -149,7 +182,9 @@ namespace GameSystem
             float res = firMag - secMag;
             Debug.Log("res = " + res);
             GameCamera.orthographicSize += res * 1f;
-            Mathf.Clamp(GameCamera.orthographicSize, 1000, 2000);
+            GameCamera.orthographicSize = Mathf.Clamp(GameCamera.orthographicSize, MinOrthographicSize, MaxOrthographicSize);
+
+
         }
 
         public void SetStopUpdate(bool stopUpdate)
