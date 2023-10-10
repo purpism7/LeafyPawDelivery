@@ -24,6 +24,8 @@ namespace UI
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+
+            SetDailyMissionList();
         }
 
         public override void Activate()

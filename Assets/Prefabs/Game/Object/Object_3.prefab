@@ -104,9 +104,9 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 97
-  m_Height: 298
-  m_Direction: 0
+  m_Radius: 95
+  m_Height: 34.8
+  m_Direction: 1
   m_Center: {x: 0, y: 97, z: 0}
 --- !u!1 &7157655937583819985
 GameObject:
@@ -224,6 +224,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 8860893258269408253}
   sortingOrderOffset: 0
+  IsOverlap: 0
 --- !u!1001 &3742574807698289868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -235,6 +236,10 @@ PrefabInstance:
     - target: {fileID: 1501515256231064632, guid: 3ffb9563ff655480892336c12015f8c4, type: 3}
       propertyPath: m_Name
       value: Edit
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501515256231064632, guid: 3ffb9563ff655480892336c12015f8c4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2481245905034253825, guid: 3ffb9563ff655480892336c12015f8c4, type: 3}
       propertyPath: m_AnchorMax.y

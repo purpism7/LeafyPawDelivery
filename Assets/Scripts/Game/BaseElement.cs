@@ -16,8 +16,7 @@ namespace Game
         [SerializeField]
         protected UI.Edit edit = null;
 
-        protected Collider _collider = null;
-
+        public Collider Collider { get; private set; } = null;
         public ElementData ElementData { get; protected set; } = null;
         public int SortingOrder { get { return spriteRenderer != null ? spriteRenderer.sortingOrder : 1; } }
 
@@ -28,15 +27,15 @@ namespace Game
 
         public void EnableCollider(bool enable)
         {
-            if (_collider == null)
+            if (Collider == null)
             {
                 if (spriteRenderer == null)
                     return;
 
-                _collider = spriteRenderer.GetComponent<Collider>();
+                Collider = spriteRenderer.GetComponent<Collider>();
             }
 
-            _collider.enabled = enable;
+            Collider.enabled = enable;
         }
 
         protected void SetOutline(float width)

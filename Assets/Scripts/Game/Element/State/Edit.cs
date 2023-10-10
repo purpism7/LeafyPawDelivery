@@ -8,7 +8,6 @@ namespace Game.Element.State
     {
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private GameSystem.IGridProvider _iGridProvider = null;
-        private int _overlapCnt = 0;
 
         public override BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
         {
@@ -37,6 +36,8 @@ namespace Game.Element.State
                     {
                         _gameBaseElement.ActiveEdit(true);
 
+                        MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(true);
+
                         break;
                     }
 
@@ -48,6 +49,14 @@ namespace Game.Element.State
 
                         _gameCameraCtr?.SetStopUpdate(true);
 
+                        Overlap();
+
+                        break;
+                    }
+                case TouchPhase.Stationary:
+                    {
+                        Overlap();
+
                         break;
                     }
 
@@ -57,6 +66,9 @@ namespace Game.Element.State
                         _gameBaseElement.ActiveEdit(true);
 
                         _gameCameraCtr?.SetStopUpdate(false);
+
+                        MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(false);
+                        _gameBaseElement.EnableCollider(true);
 
                         break;
                     }
@@ -90,9 +102,67 @@ namespace Game.Element.State
             gameBaseTm.position = pos;
         }
 
-        public void Overlap(int cnt)
+        private void Overlap()
         {
-            _overlapCnt += cnt;
+            if (_gameBaseElement == null)
+                return;
+
+            if(_gameBaseElement is Game.Object)
+            {
+                var obj = _gameBaseElement as Game.Object;
+                if (!obj.IsOverlap)
+                    return;
+            }
+
+            var gameBaseTm = _gameBaseElement.transform;
+            var gameBaseCollider = _gameBaseElement.Collider;
+
+            Collider[] colliders = null;
+            switch(gameBaseCollider)
+            {
+                case CapsuleCollider capsuleCollider:
+                    {
+                        var height = capsuleCollider.direction == 0 ? capsuleCollider.center.y * 2f : capsuleCollider.height;
+                        var startPos = new Vector3(gameBaseTm.position.x, gameBaseTm.position.y, gameBaseTm.position.z);
+                        var endPos = new Vector3(gameBaseTm.position.x, gameBaseTm.position.y + height, gameBaseTm.position.z);
+
+                        Debug.DrawLine(startPos, endPos, Color.cyan);
+                        colliders = Physics.OverlapCapsule(startPos, endPos, capsuleCollider.radius);
+
+                        break;
+                    }
+
+                case BoxCollider boxCollider:
+                    {
+                        colliders = Physics.OverlapBox(boxCollider.center + gameBaseTm.position, boxCollider.size);
+
+                        break;
+                    }
+            }
+
+            if (colliders == null)
+                return;
+
+            foreach (var collider in colliders)
+            {
+                var obj = collider.gameObject.GetComponentInParent<Game.Object>();
+                if (obj != null)
+                {
+                    if (obj.Id == _gameBaseElement.Id &&
+                        obj.UId == _gameBaseElement.UId)
+                        continue;
+
+                    Debug.Log(obj.name);
+
+                    continue;
+                }
+
+                var animal = collider.gameObject.GetComponentInParent<Game.Creature.Animal>();
+                if (animal != null)
+                {
+
+                }
+            }
         }
     }
 }

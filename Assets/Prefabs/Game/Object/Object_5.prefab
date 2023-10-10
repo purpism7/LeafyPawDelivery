@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5082999346628738462}
   - component: {fileID: 8198808596251828485}
-  - component: {fileID: 7595845289630220207}
+  - component: {fileID: 8029137508150866719}
   m_Layer: 7
   m_Name: Img
   m_TagString: Untagged
@@ -85,8 +85,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!136 &7595845289630220207
-CapsuleCollider:
+--- !u!65 &8029137508150866719
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,11 +103,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 139.7
-  m_Height: 395
-  m_Direction: 0
-  m_Center: {x: 0, y: 138, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 354, y: 260, z: 0}
+  m_Center: {x: 0, y: 134, z: 0}
 --- !u!1 &7157655937583819985
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +222,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 8860893258269408253}
   sortingOrderOffset: 0
-  IsOverlap: 0
+  IsOverlap: 1
 --- !u!1001 &3742574807698289868
 PrefabInstance:
   m_ObjectHideFlags: 0

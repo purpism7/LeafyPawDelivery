@@ -79,14 +79,10 @@ namespace GameSystem
 
                 if (touch.phase == TouchPhase.Ended)
                 {
-                    _gameBase?.OnTouchEnded();
-
                     ReleaseGameBase();
                 }
                 else if (touch.phase == TouchPhase.Canceled)
                 {
-                    _gameBase?.OnTouchEnded();
-
                     ReleaseGameBase();
                 }
             }

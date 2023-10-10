@@ -135,6 +135,8 @@ MonoBehaviour:
   tabToggles:
   - {fileID: 4377991250723215870}
   - {fileID: 7056301399087855777}
+  dailyMissionScrollRect: {fileID: 7954188329468993619}
+  achievementsScrollRect: {fileID: 4654141842415474688}
 --- !u!1 &2164343630762203042
 GameObject:
   m_ObjectHideFlags: 0
