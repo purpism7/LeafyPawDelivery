@@ -16,7 +16,7 @@ namespace Game
         [SerializeField]
         protected UI.Edit edit = null;
 
-        private Collider _collider = null;
+        protected Collider _collider = null;
 
         public ElementData ElementData { get; protected set; } = null;
         public int SortingOrder { get { return spriteRenderer != null ? spriteRenderer.sortingOrder : 1; } }

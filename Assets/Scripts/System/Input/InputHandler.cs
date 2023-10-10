@@ -54,7 +54,7 @@ namespace GameSystem
                 {
                     if (CheckGetGameBase<Game.Base>(hitInfo, out gameBase))
                     {
-                        OnTouchBegan(touch, gameBase, gameStateEdit);
+                        OnTouchBegan(touch, gameBase);
                     }
                 }
 
@@ -79,16 +79,20 @@ namespace GameSystem
 
                 if (touch.phase == TouchPhase.Ended)
                 {
-                    ReleaseGameBase(gameStateEdit);
+                    _gameBase?.OnTouchEnded();
+
+                    ReleaseGameBase();
                 }
                 else if (touch.phase == TouchPhase.Canceled)
                 {
-                    ReleaseGameBase(gameStateEdit);
+                    _gameBase?.OnTouchEnded();
+
+                    ReleaseGameBase();
                 }
             }
         }
 
-        private void OnTouchBegan(Touch? touch, Game.Base gameBase, bool gameStateEdit)
+        private void OnTouchBegan(Touch? touch, Game.Base gameBase)
         {
             _beganGameBase = true;
             _gameBase = gameBase;
@@ -96,12 +100,12 @@ namespace GameSystem
             gameBase?.OnTouchBegan(touch, _gameCameraCtr, _iGridProvider);
         }
 
-        private void OnTouchBegan(Game.Base gameBase, bool gameStateEdit)
+        private void OnTouchBegan(Game.Base gameBase)
         {
-            OnTouchBegan(null, gameBase, gameStateEdit);
+            OnTouchBegan(null, gameBase);
         }
 
-        private void ReleaseGameBase(bool gameStateEdit)
+        private void ReleaseGameBase()
         {
             if(_gameBase == null)
                 return;

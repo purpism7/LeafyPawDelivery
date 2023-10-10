@@ -17,8 +17,11 @@ namespace Game
             public Vector3 Pos = Vector3.zero;
         }
 
+        #region Inspector
         [SerializeField]
         private int sortingOrderOffset = 0;
+        public bool IsOverlap = false;
+        #endregion
 
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
         public Game.Element.State.BaseState<Object> State { get; private set; } = null;
@@ -60,6 +63,8 @@ namespace Game
 
                 SetSortingOrder(_selectOrder);
                 ActiveEdit(true);
+
+                MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(true);
             }
             else
             {
@@ -72,6 +77,50 @@ namespace Game
             base.OnTouch(touch);
 
             State?.Touch(touch);
+
+            if(_collider is CapsuleCollider)
+            {
+                var capsuleCollider = _collider as CapsuleCollider;
+
+
+
+                //float halfHeigh = capsuleCollider.height * 0.5f;
+                var height = capsuleCollider.direction == 0 ? capsuleCollider.center.y * 2f : capsuleCollider.height;
+                var startPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                var endPos = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
+
+                Debug.DrawLine(startPos, endPos, Color.cyan);
+                var colliders = Physics.OverlapCapsule(startPos, endPos, capsuleCollider.radius);
+                Debug.Log(colliders.Length);
+
+                foreach(var collider in colliders)
+                {
+                    var obj = collider.gameObject.GetComponentInParent<Game.Object>();
+                    if (obj == null)
+                        continue;
+
+                    if (obj.Id == Id &&
+                       obj.UId == UId)
+                        continue;
+
+                    Debug.Log(obj.name);
+                }
+            }
+
+            //Physics.OverlapCapsule(_collider.)
+            //var obj = collision.gameObject.GetComponent<Game.Object>();
+            //if (obj != null)
+            //{
+            //    Debug.Log(obj.name);
+            //}
+        }
+
+        public override void OnTouchEnded()
+        {
+            base.OnTouchEnded();
+
+            MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(false);
+            EnableCollider(true);
         }
 
         private void SetState(Game.Element.State.BaseState<Game.Object> state)
@@ -118,10 +167,10 @@ namespace Game
         //{
         //    //Debug.Log("OnCollisionStay = " + collision.gameObject.name);
 
-        //    var cell = collision.gameObject.GetComponent<GameSystem.Cell>();
-        //    if(cell != null)
+        //    var obj = collision.gameObject.GetComponent<Game.Object>();
+        //    if (obj != null)
         //    {
-        //        //Debug.Log(cell.Data_?.Column);
+        //        Debug.Log(obj.name);
         //    }
         //}
         #endregion

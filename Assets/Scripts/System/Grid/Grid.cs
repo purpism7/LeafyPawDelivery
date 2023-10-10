@@ -10,7 +10,7 @@ namespace GameSystem
         Vector3 LimitTop { get; }
     }
 
-    public class Grid : MonoBehaviour, IGridProvider
+    public class Grid : MonoBehaviour, IGridProvider, IUpdater, Cell.IListener
     {
         public GridData GridData;
         public Cell Cell; 
@@ -44,9 +44,7 @@ namespace GameSystem
         private void Generated()
         {
             if(GridData == null)
-            {
                 return;
-            }
 
             _cellArray = new Cell[GridData.Row, GridData.Column];
 
@@ -62,6 +60,7 @@ namespace GameSystem
 
                     cell.Init(new Cell.Data()
                     {
+                        IListener = this,
                         Row = row,
                         Column = column,
                         CellSize = GridData.CellSize,
@@ -102,6 +101,29 @@ namespace GameSystem
                 return cell.transform.position;
             }
         }
+
+        #region IUpdater
+        void IUpdater.ChainUpdate()
+        {
+            foreach (var gridCell in _cellArray)
+            {
+                gridCell?.ChainUpdate();
+            }
+        }
+        #endregion
+
+        #region Cell.IListener
+        void Cell.IListener.Overlap(List<GameObject> list)
+        {
+            foreach(var gameObj in list)
+            {
+                if (!gameObj)
+                    continue;
+
+                
+            }
+        }
+        #endregion
 
         //private void InitLineRenderer()
         //{

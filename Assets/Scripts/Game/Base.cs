@@ -71,6 +71,7 @@ namespace Game
 
         public virtual void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider) { }
         public virtual void OnTouch(Touch touch) { }
+        public virtual void OnTouchEnded() { }
         public virtual void ChainUpdate() { }
     }
 

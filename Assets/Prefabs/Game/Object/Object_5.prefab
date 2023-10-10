@@ -224,6 +224,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 8860893258269408253}
   sortingOrderOffset: 0
+  IsOverlap: 0
 --- !u!1001 &3742574807698289868
 PrefabInstance:
   m_ObjectHideFlags: 0

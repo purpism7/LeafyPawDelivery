@@ -25,9 +25,10 @@ public class MainGameManager : Singleton<MainGameManager>
 
     public Game.State.Base GameState { get; private set; } = null;
 
-    private System.Action<Game.Base, bool> _startEditAction = null;
+    private System.Action<Game.Base> _startEditAction = null;
     private IUpdater _iUpdateInputMgr = null;
     private IUpdater _iUpdateGameCameraCtr = null;
+    private IUpdater _iUpdateGrid = null;
     
     
     protected override void Initialize()
@@ -71,6 +72,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         _iUpdateInputMgr = inputMgr;
         _iUpdateGameCameraCtr = GameCameraCtr;
+        _iUpdateGrid = inputMgr?.grid;
 
         SetGameState<Game.State.Game>();       
 
@@ -89,6 +91,8 @@ public class MainGameManager : Singleton<MainGameManager>
         _iUpdateGameCameraCtr?.ChainUpdate();
 
         placeMgr?.ChainUpdate();
+
+        _iUpdateGrid?.ChainUpdate();
     }
 
     #region GameState
@@ -103,7 +107,7 @@ public class MainGameManager : Singleton<MainGameManager>
     }
     #endregion
 
-    public void SetStartEditAction(System.Action<Game.Base, bool> action)
+    public void SetStartEditAction(System.Action<Game.Base> action)
     {
         _startEditAction = action;
     }
@@ -155,7 +159,7 @@ public class MainGameManager : Singleton<MainGameManager>
         if (animal == null)
             return;
 
-        _startEditAction?.Invoke(animal, GameState.CheckState<Game.State.Edit>());
+        _startEditAction?.Invoke(animal);
     }
 
     public void ChangeAnimalSkinToPlace(int id, int skinId)
@@ -201,7 +205,7 @@ public class MainGameManager : Singleton<MainGameManager>
         if (obj == null)
             return;
 
-        _startEditAction?.Invoke(obj, GameState.CheckState<Game.State.Edit>());
+        _startEditAction?.Invoke(obj);
     }
     #endregion
 

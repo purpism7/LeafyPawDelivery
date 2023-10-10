@@ -8,11 +8,9 @@ namespace GameSystem
     public class InputManager : GameSystem.Processing, IUpdater
     {
         #region Inspector
-        public GameSystem.GameCameraController GameCameraCtr = null;
         public InputHandler InputHandler = null;
-
-        [SerializeField]
-        private Grid grid = null;
+        public GameSystem.GameCameraController GameCameraCtr = null;
+        public Grid grid = null;
         #endregion
 
         public override void Initialize()

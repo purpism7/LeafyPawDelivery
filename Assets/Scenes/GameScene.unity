@@ -1281,8 +1281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc933d6ead9fa45d680a4b8067dd9875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameCameraCtr: {fileID: 1092409047}
   InputHandler: {fileID: 678568158}
+  GameCameraCtr: {fileID: 1092409047}
   grid: {fileID: 1682716005}
 --- !u!1 &719496058
 GameObject:
