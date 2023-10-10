@@ -78,34 +78,9 @@ namespace Game
 
             State?.Touch(touch);
 
-            if(_collider is CapsuleCollider)
-            {
-                var capsuleCollider = _collider as CapsuleCollider;
 
 
-
-                //float halfHeigh = capsuleCollider.height * 0.5f;
-                var height = capsuleCollider.direction == 0 ? capsuleCollider.center.y * 2f : capsuleCollider.height;
-                var startPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-                var endPos = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
-
-                Debug.DrawLine(startPos, endPos, Color.cyan);
-                var colliders = Physics.OverlapCapsule(startPos, endPos, capsuleCollider.radius);
-                Debug.Log(colliders.Length);
-
-                foreach(var collider in colliders)
-                {
-                    var obj = collider.gameObject.GetComponentInParent<Game.Object>();
-                    if (obj == null)
-                        continue;
-
-                    if (obj.Id == Id &&
-                       obj.UId == UId)
-                        continue;
-
-                    Debug.Log(obj.name);
-                }
-            }
+            Overlap();
 
             //Physics.OverlapCapsule(_collider.)
             //var obj = collision.gameObject.GetComponent<Game.Object>();
@@ -121,6 +96,52 @@ namespace Game
 
             MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(false);
             EnableCollider(true);
+        }
+
+        private void Overlap()
+        {
+            if (!IsOverlap)
+                return;
+
+            if (_collider is CapsuleCollider)
+            {
+                var capsuleCollider = _collider as CapsuleCollider;
+
+
+
+                //float halfHeigh = capsuleCollider.height * 0.5f;
+                var height = capsuleCollider.direction == 0 ? capsuleCollider.center.y * 2f : capsuleCollider.height;
+                var startPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                var endPos = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
+
+                Debug.DrawLine(startPos, endPos, Color.cyan);
+                var colliders = Physics.OverlapCapsule(startPos, endPos, capsuleCollider.radius);
+
+                foreach (var collider in colliders)
+                {
+                    var obj = collider.gameObject.GetComponentInParent<Game.Object>();
+                    if (obj != null)
+                    {
+                        if (obj.Id == Id &&
+                            obj.UId == UId)
+                            continue;
+
+                        Debug.Log(obj.name);
+
+                        continue;
+                    }
+
+                    var animal = collider.gameObject.GetComponentInParent<Game.Creature.Animal>();
+                    if (animal != null)
+                    {
+
+                    }
+                }
+
+                return;
+            }
+
+
         }
 
         private void SetState(Game.Element.State.BaseState<Game.Object> state)
