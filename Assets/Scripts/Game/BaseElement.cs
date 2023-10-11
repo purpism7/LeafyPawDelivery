@@ -18,7 +18,7 @@ namespace Game
 
         public Collider Collider { get; private set; } = null;
         public ElementData ElementData { get; protected set; } = null;
-        public int SortingOrder { get { return spriteRenderer != null ? spriteRenderer.sortingOrder : 1; } }
+        //public int SortingOrder { get { return spriteRenderer != null ? spriteRenderer.sortingOrder : 1; } }
 
         public void ActiveEdit(bool active)
         {
@@ -32,10 +32,18 @@ namespace Game
                 if (spriteRenderer == null)
                     return;
 
-                Collider = spriteRenderer.GetComponent<Collider>();
+                Collider = transform.GetComponentInChildren<Collider>();
             }
 
             Collider.enabled = enable;
+        }
+
+        public void SetColor(Color color)
+        {
+            if (spriteRenderer == null)
+                return;
+
+            spriteRenderer.color = color;
         }
 
         protected void SetOutline(float width)
@@ -72,6 +80,14 @@ namespace Game
              
             Game.UIManager.Instance?.Bottom?.ActivateEditList(eTab);
             MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(true);
+        }
+
+        public void InteractableArrangeBtn(bool interactable)
+        {
+            if (edit == null)
+                return;
+
+            edit.InteractableArrangeBtn(interactable);
         }
     }
 

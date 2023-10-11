@@ -8,11 +8,15 @@ namespace Game.Element.State
     {
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private GameSystem.IGridProvider _iGridProvider = null;
+        private bool _enableColliders = false;
+        private bool _isOverlap = false;
 
         public override BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
         {
             _gameCameraCtr = gameCameraCtr;
             _iGridProvider = iGridProvider;
+
+            _enableColliders = false;
 
             return this;
         }
@@ -35,8 +39,6 @@ namespace Game.Element.State
                 case TouchPhase.Began:
                     {
                         _gameBaseElement.ActiveEdit(true);
-
-                        MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(true);
 
                         break;
                     }
@@ -67,19 +69,32 @@ namespace Game.Element.State
 
                         _gameCameraCtr?.SetStopUpdate(false);
 
-                        MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(false);
+                        EnableColliders(false);
                         _gameBaseElement.EnableCollider(true);
 
                         break;
                     }
-
-                //default:
-                //    {
-                //        _gameBaseElement.ActiveEdit(true);
-
-                //        break;
-                //    }
             }
+        }
+
+        private void EnableColliders(bool enable)
+        {
+            if (_enableColliders == enable)
+                return;
+
+            _enableColliders = enable;
+
+            MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(enable);
+        }
+
+        private void SetIsOverlap(bool isOverlap)
+        {
+            if (_isOverlap == isOverlap)
+                return;
+
+            _gameBaseElement.SetColor(isOverlap ? Color.gray : Color.white);
+
+            _isOverlap = isOverlap;
         }
 
         private void Drag(Touch touch)
@@ -97,7 +112,7 @@ namespace Game.Element.State
             Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);
             Vector3 pos = gameCamera.ScreenToWorldPoint(movePos);
 
-            pos.y = Mathf.Clamp(pos.y, _iGridProvider.LimitBottom.y, _iGridProvider.LimitTop.y);
+            pos.y = _iGridProvider.LimitPosY(pos.y);
 
             gameBaseTm.position = pos;
         }
@@ -113,6 +128,9 @@ namespace Game.Element.State
                 if (!obj.IsOverlap)
                     return;
             }
+
+            bool isOverlap = false;
+            EnableColliders(true);
 
             var gameBaseTm = _gameBaseElement.transform;
             var gameBaseCollider = _gameBaseElement.Collider;
@@ -134,35 +152,40 @@ namespace Game.Element.State
 
                 case BoxCollider boxCollider:
                     {
-                        colliders = Physics.OverlapBox(boxCollider.center + gameBaseTm.position, boxCollider.size);
+                        colliders = Physics.OverlapBox(boxCollider.center + gameBaseTm.position, boxCollider.size * 0.5f);
 
                         break;
                     }
             }
 
-            if (colliders == null)
-                return;
-
-            foreach (var collider in colliders)
+            if (colliders != null)
             {
-                var obj = collider.gameObject.GetComponentInParent<Game.Object>();
-                if (obj != null)
+                foreach (var collider in colliders)
                 {
-                    if (obj.Id == _gameBaseElement.Id &&
-                        obj.UId == _gameBaseElement.UId)
+                    var obj = collider.gameObject.GetComponentInParent<Game.Object>();
+                    if (obj != null)
+                    {
+                        if (obj.Id == _gameBaseElement.Id &&
+                            obj.UId == _gameBaseElement.UId)
+                            continue;
+
+                        Debug.Log(obj.name);
+                        isOverlap = true;
+
                         continue;
+                    }
 
-                    Debug.Log(obj.name);
+                    var animal = collider.gameObject.GetComponentInParent<Game.Creature.Animal>();
+                    if (animal != null)
+                    {
 
-                    continue;
-                }
-
-                var animal = collider.gameObject.GetComponentInParent<Game.Creature.Animal>();
-                if (animal != null)
-                {
-
+                    }
                 }
             }
+
+            SetIsOverlap(isOverlap);
+
+            _gameBaseElement.InteractableArrangeBtn(!isOverlap);
         }
     }
 }

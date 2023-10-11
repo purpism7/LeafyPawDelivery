@@ -74,9 +74,9 @@ public class MainGameManager : Singleton<MainGameManager>
         _iUpdateGameCameraCtr = GameCameraCtr;
         _iUpdateGrid = inputMgr?.grid;
 
-        SetGameState<Game.State.Game>();       
+        SetGameState<Game.State.Game>();
 
-        yield return new WaitForEndOfFrame();
+        yield return null;
     }
 
     public void Starter()

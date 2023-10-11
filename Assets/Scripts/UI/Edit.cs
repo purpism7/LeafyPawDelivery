@@ -17,6 +17,9 @@ namespace UI
             void Arrange();
         }
 
+        [SerializeField]
+        private UnityEngine.UI.Button arrangeBtn = null;
+
         #region Inspector
         public RectTransform CanvasRectTm = null;
         #endregion
@@ -24,6 +27,14 @@ namespace UI
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+        }
+
+        public void InteractableArrangeBtn(bool interactable)
+        {
+            if (arrangeBtn == null)
+                return;
+
+            arrangeBtn.interactable = interactable;
         }
 
         public void OnClickRemove()

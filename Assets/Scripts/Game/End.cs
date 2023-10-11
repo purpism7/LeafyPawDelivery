@@ -20,8 +20,8 @@ namespace GameSystem
 
             Sequencer.Create();
             DOTween.Init();
-            
-            yield return new WaitForEndOfFrame();
+
+            yield return null;
         }
     }
 }

@@ -6,8 +6,7 @@ namespace GameSystem
 {
     public interface IGridProvider
     {
-        Vector3 LimitBottom { get; }
-        Vector3 LimitTop { get; }
+        float LimitPosY(float posY);
     }
 
     public class Grid : MonoBehaviour, IGridProvider, IUpdater, Cell.IListener
@@ -74,7 +73,7 @@ namespace GameSystem
             }
         }
 
-        Vector3 IGridProvider.LimitBottom
+        Vector3 LimitBottom
         {
             get
             {
@@ -88,7 +87,7 @@ namespace GameSystem
             }
         }
 
-        Vector3 IGridProvider.LimitTop
+        Vector3 LimitTop
         {
             get
             {
@@ -101,6 +100,13 @@ namespace GameSystem
                 return cell.transform.position;
             }
         }
+
+        #region IGridProvider
+        float IGridProvider.LimitPosY(float posY)
+        {
+            return Mathf.Clamp(posY, LimitBottom.y, LimitTop.y);
+        }
+        #endregion
 
         #region IUpdater
         void IUpdater.ChainUpdate()
