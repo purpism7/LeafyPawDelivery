@@ -26,6 +26,20 @@ namespace Game
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
         public Game.Element.State.BaseState<Object> State { get; private set; } = null;
 
+        private void OnDrawGizmos()
+        {
+            //if (Collider != null)
+            //{
+            //    var capsuleCollider = Collider as CapsuleCollider;
+
+            //    if (capsuleCollider != null)
+            //    {
+            //        Gizmos.color = Color.blue;
+            //        Gizmos.DrawWireSphere(capsuleCollider.center + transform.position, capsuleCollider.radius);
+            //    }
+            //}
+        }
+
         public override void Initialize(Data data)
         {
             base.Initialize(data);
@@ -75,17 +89,6 @@ namespace Game
             base.OnTouch(touch);
 
             State?.Touch(touch);
-
-
-
-            //Overlap();
-
-            //Physics.OverlapCapsule(_collider.)
-            //var obj = collision.gameObject.GetComponent<Game.Object>();
-            //if (obj != null)
-            //{
-            //    Debug.Log(obj.name);
-            //}
         }
 
         private void SetState(Game.Element.State.BaseState<Game.Object> state)
@@ -128,16 +131,16 @@ namespace Game
         //    //Debug.Log("OnCollisionExit = " + collision.gameObject.name);
         //}
 
-        //private void OnCollisionStay(Collision collision)
-        //{
-        //    //Debug.Log("OnCollisionStay = " + collision.gameObject.name);
+        private void OnCollisionStay(Collision collision)
+        {
+            //Debug.Log("OnCollisionStay = " + collision.gameObject.name);
 
-        //    var obj = collision.gameObject.GetComponent<Game.Object>();
-        //    if (obj != null)
-        //    {
-        //        Debug.Log(obj.name);
-        //    }
-        //}
+            var obj = collision.gameObject.GetComponent<Game.Object>();
+            if (obj != null)
+            {
+                Debug.Log(obj.name);
+            }
+        }
         #endregion
 
         #region Edit.IListener

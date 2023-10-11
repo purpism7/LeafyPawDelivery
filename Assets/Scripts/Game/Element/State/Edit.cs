@@ -122,11 +122,11 @@ namespace Game.Element.State
             if (_gameBaseElement == null)
                 return;
 
-            if(_gameBaseElement is Game.Object)
+            bool isOverlapTarget = false;
+            if (_gameBaseElement is Game.Object)
             {
                 var obj = _gameBaseElement as Game.Object;
-                if (!obj.IsOverlap)
-                    return;
+                isOverlapTarget = obj.IsOverlap;
             }
 
             bool isOverlap = false;
@@ -135,17 +135,22 @@ namespace Game.Element.State
             var gameBaseTm = _gameBaseElement.transform;
             var gameBaseCollider = _gameBaseElement.Collider;
 
+           
+
             Collider[] colliders = null;
             switch(gameBaseCollider)
             {
                 case CapsuleCollider capsuleCollider:
                     {
-                        var height = capsuleCollider.direction == 0 ? capsuleCollider.center.y * 2f : capsuleCollider.height;
+                        var height = capsuleCollider.direction == 0 ? capsuleCollider.center.y : capsuleCollider.height;
                         var startPos = new Vector3(gameBaseTm.position.x, gameBaseTm.position.y, gameBaseTm.position.z);
                         var endPos = new Vector3(gameBaseTm.position.x, gameBaseTm.position.y + height, gameBaseTm.position.z);
-
-                        Debug.DrawLine(startPos, endPos, Color.cyan);
+                        Debug.DrawLine(startPos, endPos, Color.black);
                         colliders = Physics.OverlapCapsule(startPos, endPos, capsuleCollider.radius);
+
+                        
+
+                        //Physics.Ca
 
                         break;
                     }
@@ -169,10 +174,17 @@ namespace Game.Element.State
                             obj.UId == _gameBaseElement.UId)
                             continue;
 
-                        Debug.Log(obj.name);
+                        if (!isOverlapTarget)
+                        {
+                            if (!obj.IsOverlap)
+                                continue;
+                        }
+
+                        Debug.Log("obj.name = " + obj.name);
+                         
                         isOverlap = true;
 
-                        continue;
+                        break;
                     }
 
                     var animal = collider.gameObject.GetComponentInParent<Game.Creature.Animal>();
