@@ -131,16 +131,16 @@ namespace Game
         //    //Debug.Log("OnCollisionExit = " + collision.gameObject.name);
         //}
 
-        private void OnCollisionStay(Collision collision)
-        {
-            //Debug.Log("OnCollisionStay = " + collision.gameObject.name);
+        //private void OnCollisionStay(Collision collision)
+        //{
+        //    //Debug.Log("OnCollisionStay = " + collision.gameObject.name);
 
-            var obj = collision.gameObject.GetComponent<Game.Object>();
-            if (obj != null)
-            {
-                Debug.Log(obj.name);
-            }
-        }
+        //    var obj = collision.gameObject.GetComponent<Game.Object>();
+        //    if (obj != null)
+        //    {
+        //        Debug.Log(obj.name);
+        //    }
+        //}
         #endregion
 
         #region Edit.IListener

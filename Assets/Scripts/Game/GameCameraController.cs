@@ -11,7 +11,6 @@ namespace GameSystem
         private const float MaxOrthographicSize = 1800f;
         private const float MinOrthographicSize = 1200f;
 
-
         public Camera GameCamera = null;
         public Camera UICamera = null;
         

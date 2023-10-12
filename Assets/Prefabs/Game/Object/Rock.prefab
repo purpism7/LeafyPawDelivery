@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5779303429795524582}
+  - component: {fileID: 7693934736436038391}
   m_Layer: 7
   m_Name: Collider
   m_TagString: Untagged
@@ -31,6 +32,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6281575790720672042}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7693934736436038391
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461745406983964888}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 192
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 89.8
+  m_Center: {x: 0, y: 87.5, z: 0}
 --- !u!1 &3858688592560586698
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +63,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5082999346628738462}
   - component: {fileID: 8198808596251828485}
-  - component: {fileID: 2998537142621224930}
   m_Layer: 7
   m_Name: Img
   m_TagString: Untagged
@@ -116,29 +137,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!136 &2998537142621224930
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3858688592560586698}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 76.2
-  m_Height: 219.3
-  m_Direction: 0
-  m_Center: {x: 0, y: 87.5, z: 0}
 --- !u!1 &8059279621757282250
 GameObject:
   m_ObjectHideFlags: 0

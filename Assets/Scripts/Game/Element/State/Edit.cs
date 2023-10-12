@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Game.Element.State
@@ -39,6 +40,8 @@ namespace Game.Element.State
                 case TouchPhase.Began:
                     {
                         _gameBaseElement.ActiveEdit(true);
+
+                        Overlap();
 
                         break;
                     }
@@ -135,29 +138,45 @@ namespace Game.Element.State
             var gameBaseTm = _gameBaseElement.transform;
             var gameBaseCollider = _gameBaseElement.Collider;
 
-           
-
             Collider[] colliders = null;
             switch(gameBaseCollider)
             {
-                case CapsuleCollider capsuleCollider:
+                case CapsuleCollider collider:
                     {
-                        var height = capsuleCollider.direction == 0 ? capsuleCollider.center.y : capsuleCollider.height;
-                        var startPos = new Vector3(gameBaseTm.position.x, gameBaseTm.position.y, gameBaseTm.position.z);
-                        var endPos = new Vector3(gameBaseTm.position.x, gameBaseTm.position.y + height, gameBaseTm.position.z);
-                        Debug.DrawLine(startPos, endPos, Color.black);
-                        colliders = Physics.OverlapCapsule(startPos, endPos, capsuleCollider.radius);
+                        //var height = collider.direction == 0 ? collider.center.y : collider.height;
 
-                        
 
-                        //Physics.Ca
+                        //Debug.Log(gameBaseTm.position);
+                        //var startPos = new Vector3(gameBaseTm.position.x, gameBaseTm.position.y, gameBaseTm.position.z);
+                        //var endPos = new Vector3(gameBaseTm.position.x, gameBaseTm.position.y + height, gameBaseTm.position.z);
+                        //Debug.DrawLine(startPos, endPos, Color.black);
+                        var direction = new Vector3 { [collider.direction] = 1 };
+                        var offset = collider.height / 2 - collider.radius;
+                        var localPoint0 = collider.center - direction * offset;
+                        var localPoint1 = collider.center + direction * offset;
+
+                        var startPos = gameBaseTm.TransformPoint(localPoint0);
+                        var endPos = gameBaseTm.TransformPoint(localPoint1);
+
+                        var r = gameBaseTm.TransformVector(collider.radius, collider.radius, collider.radius);
+                        var radius = Enumerable.Range(0, 3).Select(xyz => xyz == collider.direction ? 0 : r[xyz]).Select(Mathf.Abs).Max();
+
+
+                        colliders = Physics.OverlapCapsule(startPos, endPos, collider.radius);
 
                         break;
                     }
 
-                case BoxCollider boxCollider:
+                case BoxCollider collider:
                     {
-                        colliders = Physics.OverlapBox(boxCollider.center + gameBaseTm.position, boxCollider.size * 0.5f);
+                        colliders = Physics.OverlapBox(collider.center + gameBaseTm.position, collider.size * 0.5f, gameBaseTm.rotation);
+
+                        break;
+                    }
+
+                case SphereCollider collider:
+                    {
+                        colliders = Physics.OverlapSphere(gameBaseTm.position + collider.center, collider.radius);
 
                         break;
                     }

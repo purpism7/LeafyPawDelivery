@@ -30,7 +30,6 @@ public class MainGameManager : Singleton<MainGameManager>
     private IUpdater _iUpdateGameCameraCtr = null;
     private IUpdater _iUpdateGrid = null;
     
-    
     protected override void Initialize()
     {
         ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
@@ -177,6 +176,9 @@ public class MainGameManager : Singleton<MainGameManager>
             pos = GameCameraCtr.Center;
         }
 
+        float posZ = id * 0.01f;
+        pos.z = posZ;
+
         int currSkinId = AnimalMgr.GetCurrenctSkinId(id);
 
         if(activityPlace.ChangeAnimalSkin(id, skinId, pos, currSkinId))
@@ -193,13 +195,24 @@ public class MainGameManager : Singleton<MainGameManager>
         if (activityPlace == null)
             return;
 
+        var editObject = ObjectMgr?.GetAddEditObject(id);
+        if (editObject == null)
+            return;
+
         Vector3 pos = Vector3.zero;
         if (GameCameraCtr != null)
         {
             pos = GameCameraCtr.Center;
         }
 
-        var editObject = ObjectMgr?.GetAddEditObject(id);
+        float posZ = id * 0.001f;
+        var objData = ObjectContainer.Instance?.GetData(id);
+        if (objData != null)
+        {
+            posZ += (objData.Count - ObjectMgr.GetRemainCount(id)) * 0.0001f;
+        }
+
+        pos.z = posZ;
 
         var obj = activityPlace.AddObject(id, pos, editObject.UId);
         if (obj == null)
