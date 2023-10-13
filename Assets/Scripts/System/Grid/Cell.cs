@@ -30,6 +30,7 @@ namespace GameSystem
         private BoxCollider boxCollider = null;
 
         private List<GameObject> _overlapList = new List<GameObject>();
+        private Vector3 _halfExtnents = Vector3.one * 0.5f;
 
         public Data Data_ { get; private set; } = null;
 
@@ -52,6 +53,8 @@ namespace GameSystem
                 return;
 
             boxCollider.size = new Vector3(Data_.CellSize, Data_.CellSize, 0);
+
+            _halfExtnents = boxCollider.size * 0.5f;
         }
 
         private void SetLocalPosition()
@@ -59,32 +62,53 @@ namespace GameSystem
             gameObject.transform.localPosition = new Vector3(Data_.Row, Data_.Column, 0) * Data_.CellSize;
         }
 
-        private void Overlap()
+        private bool IsOverlap
         {
-            _overlapList.Clear();
-
-            var colliders = Physics.OverlapBox(boxCollider.center + transform.position, boxCollider.size / 2f);
-
-            foreach (var collider in colliders)
+            get
             {
-                if (collider == null)
-                    continue;
+                if (boxCollider == null)
+                    return false;
 
-                var cell = collider.GetComponentInParent<Cell>();
-                if (cell != null)
-                    continue;
+                _overlapList.Clear();
 
-                //Debug.Log(obj.gameObject.name);
+                var colliders = Physics.OverlapBox(boxCollider.center + transform.position, _halfExtnents, Quaternion.identity);
+                //Debug.Log("colliders = "  + colliders.Length);
+                foreach (var collider in colliders)
+                {
+                    if (collider == null)
+                        continue;
 
-                _overlapList.Add(collider.gameObject);
+                    // cell 들은 제외.
+                    var cell = collider.GetComponentInParent<Cell>();
+                    if (cell != null)
+                        continue;
+
+                    var animal = collider.GetComponentInParent<Game.Creature.Animal>();
+                    if (animal != null)
+                        continue;
+
+                    //_overlapList.Add(collider.gameObject);
+                    return true;
+                }
+
+                return false;
             }
+           
 
-            Data_?.IListener?.Overlap(_overlapList);
+            //Data_?.IListener?.Overlap(_overlapList);
+        }
+
+        public bool CheckOverlap
+        {
+            get
+            {
+                return IsOverlap;
+            }
         }
 
         public void ChainUpdate()
         {
-            Overlap();
+            //Overlap();
         }
     }
 }

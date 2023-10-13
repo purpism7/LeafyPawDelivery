@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 259597223564843546}
   - component: {fileID: 4925136638443601653}
-  m_Layer: 0
-  m_Name: Collider
+  m_Layer: 8
+  m_Name: CellCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8939383965714384205}
   - component: {fileID: 965002505458947083}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}

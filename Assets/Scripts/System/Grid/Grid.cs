@@ -7,6 +7,7 @@ namespace GameSystem
     public interface IGridProvider
     {
         float LimitPosY(float posY);
+        void Overlap();
     }
 
     public class Grid : MonoBehaviour, IGridProvider, IUpdater, Cell.IListener
@@ -101,10 +102,28 @@ namespace GameSystem
             }
         }
 
+        private void Overlap()
+        {
+            for (int column = 0; column < GridData.Column; ++column)
+            {
+                for (int row = 0; row < GridData.Row; ++row)
+                {
+                    var cell = _cellArray[row, column];
+                    cell.name = "[" + row + ", " + column + "] Overlap = " + cell.CheckOverlap;
+                    //Debug.Log("cell = " + row + " / " + column + " = " + cell.CheckOverlap);
+                }
+            }
+        }
+
         #region IGridProvider
         float IGridProvider.LimitPosY(float posY)
         {
             return Mathf.Clamp(posY, LimitBottom.y, LimitTop.y);
+        }
+
+        void IGridProvider.Overlap()
+        {
+            Overlap();
         }
         #endregion
 
