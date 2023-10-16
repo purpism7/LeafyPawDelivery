@@ -1,0 +1,1 @@
+{"Datas":[{"Id":1,"Type":"AnimalCurrency","Action":"Obtain","Value":250,"RewardId":null},{"Id":2,"Type":"ObjectCurrency","Action":"Obtain","Value":15,"RewardId":null},{"Id":3,"Type":"Letter","Action":"Obtain","Value":15,"RewardId":null},{"Id":4,"Type":"Animal","Action":"Use","Value":10,"RewardId":null},{"Id":5,"Type":null,"Action":null,"Value":null,"RewardId":null}]}

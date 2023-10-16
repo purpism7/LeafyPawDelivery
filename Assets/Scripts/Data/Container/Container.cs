@@ -51,7 +51,7 @@ public class Container : GameSystem.Processing
                     var container = System.Activator.CreateInstance(type);
                     var baseContainer = container as BaseContainer;
                     
-                    baseContainer?.Init(container, result.text);
+                    baseContainer?.Initialize(container, result.text);
                 }
 
                 endLoad = true;

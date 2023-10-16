@@ -19,13 +19,16 @@ namespace UI
         [SerializeField] private ScrollRect dailyMissionScrollRect = null;
         [SerializeField] private ScrollRect achievementsScrollRect = null;
 
-        private Type.ETab _currETabType = Type.ETab.Animal;
+        private Type.ETab _currETabType = Type.ETab.DailyMission;
+        private List<Component.DailyMissionCell> _dailyMissionCellList = new();
+        private List<Component.AchievementCell> _achievementCellList = new();
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
             SetDailyMissionList();
+            SetAchievementList();
         }
 
         public override void Activate()
@@ -43,6 +46,38 @@ namespace UI
 
         private void SetDailyMissionList()
         {
+            var dailyMissions = DailyMissionContainer.Instance?.Datas;
+            if (dailyMissions == null)
+                return;
+
+            foreach (var dailyMission in dailyMissions)
+            {
+                if (dailyMission == null)
+                    continue;
+
+                var cell = new GameSystem.ComponentCreator<Component.DailyMissionCell, Component.DailyMissionCell.Data>()
+                   .SetData(new Component.DailyMissionCell.Data()
+                   {
+                      
+                   })
+                   .SetRootRectTm(dailyMissionScrollRect.content)
+                   .Create();
+
+                _dailyMissionCellList.Add(cell);
+            }
+        }
+
+        private void SetAchievementList()
+        {
+            var achievementDatas = AchievementContainer.Instance?.Datas;
+            if (achievementDatas == null)
+                return;
+
+            foreach(var achievementData in achievementDatas)
+            {
+                if (achievementData == null)
+                    continue;
+            }
 
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseContainer
 {
-    public abstract void Init(object obj, string json);
+    public abstract void Initialize(object obj, string json);
 }
 
 public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.Base
@@ -19,11 +19,11 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
         {
             if (_instance == null)
                 _instance = new T();
-            
+
             return _instance;
         }
     }
-    
+
     public V[] Datas 
     {
         get
@@ -32,7 +32,7 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
         }
     }
 
-    public override void Init(object obj, string json)
+    public override void Initialize(object obj, string json)
     {
         _instance = (T)obj;
 
