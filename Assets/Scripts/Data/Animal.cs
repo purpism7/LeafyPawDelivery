@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Animal : ElementData
 {
-    public int Currency = 0;
+    [SerializeField]
+    private int Currency = 0;
 
     public override int GetCurrency => Currency;
     public override Game.Type.EElement EElement => Game.Type.EElement.Animal;

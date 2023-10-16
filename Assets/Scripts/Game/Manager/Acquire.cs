@@ -11,6 +11,8 @@ namespace Game.Manager
 
         }
 
+        private Dictionary<Type.EAcquire, AcquireData> _acquireDataDic = new();
+
         protected override void Initialize()
         {
             
@@ -19,6 +21,11 @@ namespace Game.Manager
         public override IEnumerator CoInit(Data data)
         {
             yield return null;
+        }
+
+        public void Do(Type.EAcquire eAcquire, AcquireData acquireData)
+        {
+
         }
     }
 }

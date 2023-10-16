@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Object : ElementData
 {
-    public int Grade = 0;
+    [SerializeField]
+    private int Grade = 0;
     public int Count = 1;
 
     public Game.Type.EObjectGrade EGrade = Game.Type.EObjectGrade.None;
@@ -33,10 +34,10 @@ public class Object : ElementData
         {
             switch(EGrade)
             {
-                case Game.Type.EObjectGrade.Epic:
+                case Game.Type.EObjectGrade.Unique:
                     return 50;
 
-                case Game.Type.EObjectGrade.Unique:
+                case Game.Type.EObjectGrade.Epic:
                     return 40;
 
                 case Game.Type.EObjectGrade.Rare:
