@@ -10,6 +10,30 @@ namespace UI
 {
     public abstract class BasePopup<T> : Base<T> where T : BaseData
     {
+        protected System.Action _componentActivateAction = null;
+
+        protected void InitializeComponent()
+        {
+            _componentActivateAction = null;
+
+            var baseComponents = rootRectTm.GetComponentsInChildren<Base>();
+
+            foreach(var baseComponent in baseComponents)
+            {
+                if (baseComponent == null)
+                    continue;
+
+                _componentActivateAction += baseComponent.Activate;
+            }
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            _componentActivateAction?.Invoke();
+        }
+
         public override void Deactivate()
         {
             base.Deactivate();

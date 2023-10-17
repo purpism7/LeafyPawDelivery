@@ -93,8 +93,8 @@ namespace UI
                         {
 
                             var popup = new GameSystem.PopupCreator<Acquire, Acquire.Data>()
-                                        .SetCoInit(true)
-                                        .Create();
+                                    .SetCoInit(true)
+                                    .Create();
 
                             break;
                         }

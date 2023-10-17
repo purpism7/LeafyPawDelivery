@@ -11,7 +11,8 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
-
+            public int Id = 0;
+            public List<Achievement> AchievementList = null;
         }
 
         [SerializeField]
@@ -25,7 +26,17 @@ namespace UI.Component
         {
             base.Initialize(data);
 
-           
+            SetTitleTMP();
+        }
+
+        private void SetTitleTMP()
+        {
+            if (_data == null)
+                return;
+
+            //LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", _data.TitleLocalKey, LocalizationSettings.SelectedLocale);
+
+            titleTMP?.SetText(_data.Id.ToString());
         }
     }
 }

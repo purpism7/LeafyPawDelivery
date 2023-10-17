@@ -9,7 +9,7 @@ namespace Game
             Object,
             Story,
             DailyMission,
-            Achievements,
+            Achievement,
         }
 
         public enum EElement
