@@ -90,7 +90,6 @@ namespace Game
             var startPos = gameCameraCtr.UICamera.ScreenToWorldPoint(touch.Value.position);
             startPos.z = 10f;
 
-
             var currencyData = _data as CurrencyData;
 
             UIManager.Instance?.Top?.CollectCurrency(startPos, currencyData.EElement, _data.Value);

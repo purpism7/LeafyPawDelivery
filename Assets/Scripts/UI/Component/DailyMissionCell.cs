@@ -13,7 +13,7 @@ namespace UI.Component
         public class Data : BaseData
         {
             public int Id = 0;
-            public string TitleLocalKey = string.Empty;
+            public int Value = 0;
             public int RewardId = 0;
         }
 
@@ -23,6 +23,8 @@ namespace UI.Component
         private Image progressImg = null;
         [SerializeField]
         private TextMeshProUGUI progressTMP = null;
+        [SerializeField]
+        private OpenConditionVertical openCondition = null;
 
         public override void Initialize(Data data)
         {
@@ -43,9 +45,10 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", _data.TitleLocalKey, LocalizationSettings.SelectedLocale);
+            string localKey = "dailymission_" + _data.Id;
+            var title = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", localKey, LocalizationSettings.SelectedLocale), _data.Value);
 
-            titleTMP?.SetText(_data.Id.ToString());
+            titleTMP?.SetText(title);
         }
     }
 }

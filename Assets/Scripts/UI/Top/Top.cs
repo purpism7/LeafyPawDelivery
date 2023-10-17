@@ -120,11 +120,7 @@ namespace UI
                 return;
 
             var startPos = objectCurrencyTMP.transform.position;
-            if (eElement == Type.EElement.Object)
-            {
-
-            }
-            else if(eElement == Type.EElement.Animal)
+            if(eElement == Type.EElement.Animal)
             {
                 startPos = animalCurrencyTMP.transform.position;
             }

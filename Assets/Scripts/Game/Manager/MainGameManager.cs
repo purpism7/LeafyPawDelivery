@@ -29,6 +29,8 @@ public class MainGameManager : Singleton<MainGameManager>
     private IUpdater _iUpdateInputMgr = null;
     private IUpdater _iUpdateGameCameraCtr = null;
     private IUpdater _iUpdateGrid = null;
+
+    private Game.RecordContainer _recordContainer = null;
     
     protected override void Initialize()
     {
@@ -74,6 +76,8 @@ public class MainGameManager : Singleton<MainGameManager>
         _iUpdateGrid = inputMgr?.grid;
 
         SetGameState<Game.State.Game>();
+
+        _recordContainer = new();
 
         yield return null;
     }

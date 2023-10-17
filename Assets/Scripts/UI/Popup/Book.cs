@@ -46,7 +46,7 @@ namespace UI
 
         private void InternalInit()
         {
-            MainGameManager.Instance?.AnimalMgr?.Listener?.AddListener(OnChangedAnimalInfo);
+            Game.AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
             MainGameManager.Instance?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
             
             _bookCellList.Clear();

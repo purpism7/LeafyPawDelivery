@@ -66,6 +66,7 @@ namespace UI
                    .SetData(new Component.DailyMissionCell.Data()
                    {
                        Id = dailyMission.Id,
+                       Value = dailyMission.Value,
                        RewardId = dailyMission.RewardId,
                    })
                    .SetRootRectTm(dailyMissionScrollRect.content)

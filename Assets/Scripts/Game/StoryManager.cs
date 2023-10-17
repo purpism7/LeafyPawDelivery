@@ -37,7 +37,7 @@ namespace Game
             _storyPrefabList.Clear();
             
             var mainGameMgr = MainGameManager.Instance;
-            mainGameMgr?.AnimalMgr?.Listener.AddListener(OnChangedAnimalInfo);
+            AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
             mainGameMgr?.placeMgr?.Listener?.AddListener(OnChangedPlace);
         }
 

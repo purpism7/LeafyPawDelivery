@@ -31,7 +31,7 @@ namespace UI
         {
             yield return StartCoroutine(base.CoInitialize(data));
             
-            MainGameManager.Instance?.AnimalMgr?.Listener?.AddListener(OnChangedAnimalInfo);
+            Game.AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
             MainGameManager.Instance?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
             
             _arrangementCellList.Clear();

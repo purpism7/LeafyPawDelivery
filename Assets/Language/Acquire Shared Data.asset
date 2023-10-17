@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Acquire Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Acquire
+  m_TableCollectionNameGuidString: 2276bcf6cba09470daaf56ee429a8064
+  m_Entries:
+  - m_Id: 111001198592
+    m_Key: dailymission_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2114716688384
+    m_Key: dailymission_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2298481729536
+    m_Key: dailymission_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2392367030272
+    m_Key: dailymission_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3136776298496
+    m_Key: dailymission_5
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 8726016046243250176
+  references:
+    version: 2
+    RefIds:
+    - rid: 8726016046243250176
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1697548844888

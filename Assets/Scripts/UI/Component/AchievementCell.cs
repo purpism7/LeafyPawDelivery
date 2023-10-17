@@ -21,6 +21,8 @@ namespace UI.Component
         private Image progressImg = null;
         [SerializeField]
         private TextMeshProUGUI progressTMP = null;
+        [SerializeField]
+        private OpenConditionVertical openCondition = null;
 
         public override void Initialize(Data data)
         {

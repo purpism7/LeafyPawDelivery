@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class AcquireData : Data.Base
@@ -8,6 +7,7 @@ public class AcquireData : Data.Base
     private string Type = string.Empty;
     [SerializeField]
     private string Action = string.Empty;
+    public int Value = 0;
 
     public Game.Type.EAcquire EAcquireType = Game.Type.EAcquire.None;
     public Game.Type.EAcquireAction EAcquireActionType = Game.Type.EAcquireAction.None;
