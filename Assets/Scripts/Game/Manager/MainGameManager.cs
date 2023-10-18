@@ -25,12 +25,12 @@ public class MainGameManager : Singleton<MainGameManager>
 
     public Game.State.Base GameState { get; private set; } = null;
 
+    public Game.RecordContainer RecordContainer { get; private set; } = null;
+
     private System.Action<Game.Base> _startEditAction = null;
     private IUpdater _iUpdateInputMgr = null;
     private IUpdater _iUpdateGameCameraCtr = null;
     private IUpdater _iUpdateGrid = null;
-
-    private Game.RecordContainer _recordContainer = null;
     
     protected override void Initialize()
     {
@@ -77,7 +77,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         SetGameState<Game.State.Game>();
 
-        _recordContainer = new();
+        RecordContainer = new();
 
         yield return null;
     }

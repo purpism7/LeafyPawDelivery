@@ -9,7 +9,7 @@ namespace Game
         protected override string JsonFilePath => RootJsonFilePath + "/Info/";
         private string JsonFileName = "Record.json";
 
-        private List<Info.BaseRecord> _recordList = new();
+        private List<Info.Record> _recordList = new();
 
         public RecordContainer()
         {
@@ -33,60 +33,74 @@ namespace Game
             System.IO.File.WriteAllText(JsonFilePath + JsonFileName, jsonString);
         }
 
-        public void AddRecord(Info.BaseRecord baseRecord)
+        private int GetFindIndex(Info.Record record)
         {
-            if (baseRecord == null)
-                return;
+            if (record == null)
+                return -1;
 
-            int findIndex = GetFindIndex(baseRecord);
-            if (findIndex <= -1)
-            {
-                _recordList.Add(baseRecord);
-            }
-            else
-            {
-                _recordList[findIndex].Value += baseRecord.Value;
-            }
-
-            SaveInfo();
-        }
-
-        private int GetFindIndex(Info.BaseRecord baseRecord)
-        {
-            switch (baseRecord)
-            {
-                case Info.AcquireRecord record:
-                    return GetFindIndex(record);
-
-                default:
-                    return -1;
-            }
-        }
-
-        private int GetFindIndex(Info.AcquireRecord acquireRecord)
-        {
             if (_recordList == null)
                 return -1;
 
             for(int i = 0; i < _recordList.Count; ++i)
             {
-                var record = _recordList[i];
-                if (record == null)
+                var compRecord = _recordList[i];
+                if (compRecord == null)
                     continue;
 
-                if (!(record is Info.AcquireRecord))
-                    continue;
-
-                var compRecord = record as Info.AcquireRecord;
-
-                if (acquireRecord.EAcquire != compRecord.EAcquire ||
-                    acquireRecord.EAcquireAction != compRecord.EAcquireAction)
+                if (record.EAcquire != compRecord.EAcquire ||
+                    record.EAcquireAction != compRecord.EAcquireAction)
                     continue;
 
                 return i;
             }
 
             return -1;
+        }
+
+        private void Add(Info.Record record)
+        {
+            if (record == null)
+                return;
+
+            int findIndex = GetFindIndex(record);
+            if (findIndex <= -1)
+            {
+                _recordList.Add(record);
+            }
+            else
+            {
+                _recordList[findIndex].Value += record.Value;
+            }
+
+            SaveInfo();
+        }
+
+        public void Add(Type.EElement eElement, Type.EAcquireAction eAcquireAction, int value)
+        {
+            Add(new Info.Record(eElement == Type.EElement.Animal ? Type.EAcquire.AnimalCurrency : Type.EAcquire.ObjectCurrency, eAcquireAction)
+            {
+                Value = value,
+            });
+        }
+
+        public Info.Record Get(Type.EAcquire eAcquire, Type.EAcquireAction eAcquireAction)
+        {
+            if (_recordList == null)
+                return null;
+
+            foreach(var record in _recordList)
+            {
+                if (record == null)
+                    continue;
+
+                if (record.EAcquire != eAcquire ||
+                    record.EAcquireAction != eAcquireAction)
+                    continue;
+
+                return record;
+            }
+
+            return null;
         }
 
         private void OnChangedAnimalInfo(Info.Animal animalInfo)

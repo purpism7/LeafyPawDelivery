@@ -12,9 +12,7 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
-            public int Id = 0;
-            public int Value = 0;
-            public int RewardId = 0;
+            public DailyMission DailyMissionData = null;
         }
 
         [SerializeField]
@@ -38,17 +36,32 @@ namespace UI.Component
             base.Activate();
 
             Debug.Log("DailyMissionCell Activate");
+            SetProgress();
         }
 
         private void SetTitleTMP()
         {
-            if (_data == null)
+            var dailyMissionData = _data?.DailyMissionData;
+            if (dailyMissionData == null)
                 return;
 
-            string localKey = "dailymission_" + _data.Id;
-            var title = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", localKey, LocalizationSettings.SelectedLocale), _data.Value);
+            string localKey = "dailymission_" + dailyMissionData.Id;
+            var title = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", localKey, LocalizationSettings.SelectedLocale), dailyMissionData.Value);
 
             titleTMP?.SetText(title);
+        }
+
+        private void SetProgress()
+        {
+            var dailyMissionData = _data?.DailyMissionData;
+            float value = dailyMissionData != null ? dailyMissionData.Value : 0;
+
+            var record = MainGameManager.Instance?.RecordContainer?.Get(dailyMissionData.EAcquireType, dailyMissionData.EAcquireActionType);
+            float recordValue = record != null ? record.Value : 0;
+            float resValue = recordValue > value ? value : recordValue;
+
+            progressImg.fillAmount = resValue / value;
+            progressTMP?.SetText(resValue + " / " + value);
         }
     }
 }

@@ -97,6 +97,7 @@ namespace UI
 
             // save currency value.
             Info.UserManager.Instance?.User?.SetCurrency(eElement, currency);
+            MainGameManager.Instance?.RecordContainer?.Add(eElement, Type.EAcquireAction.Obtain, 1);
 
             var collectCurrency = _collectCurrencyList.Find(collectCurrency => !collectCurrency.IsActivate);
             if (collectCurrency != null)

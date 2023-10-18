@@ -65,9 +65,7 @@ namespace UI
                 var cell = new GameSystem.ComponentCreator<Component.DailyMissionCell, Component.DailyMissionCell.Data>()
                    .SetData(new Component.DailyMissionCell.Data()
                    {
-                       Id = dailyMission.Id,
-                       Value = dailyMission.Value,
-                       RewardId = dailyMission.RewardId,
+                       DailyMissionData = dailyMission,
                    })
                    .SetRootRectTm(dailyMissionScrollRect.content)
                    .Create();

@@ -11,7 +11,7 @@ namespace Game.Manager
 
         }
 
-        private Dictionary<Type.EAcquire, AcquireData> _acquireDataDic = new();
+        private Info.AcquireHolder _acquireHolder = new();
 
         protected override void Initialize()
         {
@@ -20,12 +20,9 @@ namespace Game.Manager
 
         public override IEnumerator CoInit(Data data)
         {
-            yield return null;
-        }
+            _acquireHolder?.LoadInfo();
 
-        public void Do(Type.EAcquire eAcquire, AcquireData acquireData)
-        {
-
+            yield break;
         }
     }
 }
