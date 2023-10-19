@@ -13,6 +13,8 @@ namespace Game.Manager
 
         private Info.AcquireHolder _acquireHolder = new();
 
+        
+
         protected override void Initialize()
         {
             
@@ -23,6 +25,11 @@ namespace Game.Manager
             _acquireHolder?.LoadInfo();
 
             yield break;
+        }
+
+        public void Add(Type.EAcquire eAcquire, Type.EAcquireAction eAcquireAction, int value)
+        {
+            _acquireHolder?.Add(eAcquire, eAcquireAction, value);
         }
     }
 }

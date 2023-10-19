@@ -26,7 +26,6 @@ namespace Info
         
         public List<Currency> CurrencyList = new();
         public List<Story> StoryList = new();
-        public Acquire Acquire = new Acquire();
 
         #region Currency
         public static Currency GetInitializeCurrency(int placeId)

@@ -226,6 +226,7 @@ public class MainGameManager : Singleton<MainGameManager>
     }
     #endregion
 
+    #region Edit
     public void Remove(Game.Type.EElement EElement, int id, int uId)
     {
         switch (EElement)
@@ -286,5 +287,16 @@ public class MainGameManager : Singleton<MainGameManager>
                 }
         }
     }
-}   
+    #endregion
+
+    #region Acquire
+    public void AddAcquire(Game.Type.EElement eElement, Game.Type.EAcquireAction eAcquireAction, int value)
+    {
+        var eAcquire = eElement == Game.Type.EElement.Animal ? Game.Type.EAcquire.AnimalCurrency : Game.Type.EAcquire.ObjectCurrency;
+
+        AcquireMgr?.Add(eAcquire, eAcquireAction, value);
+        RecordContainer?.Add(eAcquire, eAcquireAction, value);
+    }
+    #endregion
+}
 

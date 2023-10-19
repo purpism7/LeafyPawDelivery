@@ -57,6 +57,9 @@ namespace UI
             if (dailyMissions == null)
                 return;
 
+
+            //MainGameManager.Instance?.AcquireMgr
+
             foreach (var dailyMission in dailyMissions)
             {
                 if (dailyMission == null)

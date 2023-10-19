@@ -21,8 +21,46 @@ namespace Info
             public int Progress = 0;
         }
 
-        public List<Achievement> AchievementList = new();
-        public List<DailyMission> DailyMissionList = new(); 
+        public List<Achievement> AchievementInfoList = new();
+        public List<DailyMission> DailyMissionInfoList = new();
+
+        public void AddDailyMission(Game.Type.EAcquire eAcquire, Game.Type.EAcquireAction eAcquireAction, int value)
+        {
+            var dailyMissionData = DailyMissionContainer.Instance?.GetData(eAcquire, eAcquireAction);
+            if (dailyMissionData == null)
+                return;
+
+            DailyMission dailyMissionInfo = null;
+            foreach (var info in DailyMissionInfoList)
+            {
+                if (info == null)
+                    continue;
+
+                if(info.Id != dailyMissionData.Id)
+                    continue;
+
+                dailyMissionInfo = info;
+                info.Progress += value;
+
+                if (dailyMissionData.Value <= info.Progress)
+                {
+                    info.Progress = dailyMissionData.Value;
+                }
+
+                break;
+            }
+
+            if(dailyMissionInfo ==null)
+            {
+                DailyMissionInfoList.Add(
+                    new DailyMission()
+                    {
+                        Id = dailyMissionData.Id,
+                        Progress = value,
+                    });
+            }
+            
+        }
     }
 }
 

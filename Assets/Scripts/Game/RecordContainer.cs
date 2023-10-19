@@ -75,9 +75,9 @@ namespace Game
             SaveInfo();
         }
 
-        public void Add(Type.EElement eElement, Type.EAcquireAction eAcquireAction, int value)
+        public void Add(Type.EAcquire eAcquire, Type.EAcquireAction eAcquireAction, int value)
         {
-            Add(new Info.Record(eElement == Type.EElement.Animal ? Type.EAcquire.AnimalCurrency : Type.EAcquire.ObjectCurrency, eAcquireAction)
+            Add(new Info.Record(eAcquire, eAcquireAction)
             {
                 Value = value,
             });
