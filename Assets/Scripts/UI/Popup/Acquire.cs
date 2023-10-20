@@ -33,7 +33,8 @@ namespace UI
             SetDailyMissionList();
             SetAchievementList();
 
-            InitializeComponent();
+            InitializeChildComponent();
+
             yield return null;
         }
 
@@ -48,7 +49,7 @@ namespace UI
             if (tabToggle != null)
             {
                 tabToggle.SetIsOnWithoutNotify(true);
-            }
+            }           
         }
 
         private void SetDailyMissionList()
@@ -56,9 +57,6 @@ namespace UI
             var dailyMissions = DailyMissionContainer.Instance?.Datas;
             if (dailyMissions == null)
                 return;
-
-
-            //MainGameManager.Instance?.AcquireMgr
 
             foreach (var dailyMission in dailyMissions)
             {
@@ -89,7 +87,7 @@ namespace UI
                   .SetData(new Component.AchievementCell.Data()
                   {
                       Id = pair.Key,
-                      AchievementList = pair.Value,
+                      AchievementDataList = pair.Value,
                   })
                   .SetRootRectTm(achievementsScrollRect.content)
                   .Create();
@@ -100,6 +98,8 @@ namespace UI
 
         private void ActiveContents()
         {
+            ActivateChildComponent(_currETabType == Game.Type.ETab.DailyMission ? typeof(Component.DailyMissionCell) : typeof(Component.AchievementCell));
+
             UIUtils.SetActive(dailyMissionScrollRect?.gameObject, _currETabType == Game.Type.ETab.DailyMission);
             UIUtils.SetActive(achievementsScrollRect?.gameObject, _currETabType == Game.Type.ETab.Achievement);
         }

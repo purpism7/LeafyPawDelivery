@@ -31,6 +31,16 @@ namespace Game.Manager
         {
             _acquireHolder?.Add(eAcquire, eAcquireAction, value);
         }
+
+        public Info.Acquire.DailyMission GetDailyMission(int id)
+        {
+            return _acquireHolder?.GetDailyMission(id);
+        }
+
+        public Info.Acquire.Achievement GetAchievement(int id)
+        {
+            return _acquireHolder?.GetAchievement(id);
+        }
     }
 }
 

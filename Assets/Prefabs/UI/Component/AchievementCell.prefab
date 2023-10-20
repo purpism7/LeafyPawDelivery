@@ -495,6 +495,7 @@ MonoBehaviour:
   titleTMP: {fileID: 9036643580066779562}
   progressImg: {fileID: 3204678282556713992}
   progressTMP: {fileID: 5225297206241416530}
+  openCondition: {fileID: 1884986161208141668}
 --- !u!1 &4772600495821022324
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,6 +922,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d906ad74957d4a89b4bbda15bcaa484, type: 3}
+--- !u!114 &1884986161208141668 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2261886977838631991, guid: 4d906ad74957d4a89b4bbda15bcaa484, type: 3}
+  m_PrefabInstance: {fileID: 381406109055970131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36add927387a8498d838001bcd13d9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8679995079756127439 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9024808330885953436, guid: 4d906ad74957d4a89b4bbda15bcaa484, type: 3}

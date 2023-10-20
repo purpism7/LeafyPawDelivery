@@ -79,7 +79,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         RecordContainer = new();
 
-        yield return null;
+        yield return StartCoroutine(AcquireMgr?.CoInit(null));
     }
 
     public void Starter()

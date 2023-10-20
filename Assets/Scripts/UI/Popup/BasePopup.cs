@@ -10,11 +10,12 @@ namespace UI
 {
     public abstract class BasePopup<T> : Base<T> where T : BaseData
     {
-        protected System.Action _componentActivateAction = null;
+        protected Dictionary<System.Type, System.Action> _compActivateActionDic = new();
 
-        protected void InitializeComponent()
+        protected void InitializeChildComponent()
         {
             _componentActivateAction = null;
+            _compActivateActionDic.Clear();
 
             var baseComponents = rootRectTm.GetComponentsInChildren<Base>();
 
@@ -23,15 +24,22 @@ namespace UI
                 if (baseComponent == null)
                     continue;
 
-                _componentActivateAction += baseComponent.Activate;
+                System.Type type = baseComponent.GetType();
+
+                _compActivateActionDic.TryAdd(type, null);
+                _compActivateActionDic[type] += baseComponent.Activate;
             }
+        }
+
+        protected void ActivateChildComponent(System.Type type)
+        {
+            var activateAction = _compActivateActionDic[type];
+            activateAction?.Invoke();
         }
 
         public override void Activate()
         {
             base.Activate();
-
-            _componentActivateAction?.Invoke();
         }
 
         public override void Deactivate()

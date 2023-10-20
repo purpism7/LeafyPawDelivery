@@ -29,6 +29,7 @@ namespace UI.Component
             base.Initialize(data);
 
             SetTitleTMP();
+            SetOpenCondition();
         }
 
         public override void Activate()
@@ -56,12 +57,29 @@ namespace UI.Component
             var dailyMissionData = _data?.DailyMissionData;
             float value = dailyMissionData != null ? dailyMissionData.Value : 0;
 
-            var record = MainGameManager.Instance?.RecordContainer?.Get(dailyMissionData.EAcquireType, dailyMissionData.EAcquireActionType);
-            float recordValue = record != null ? record.Value : 0;
-            float resValue = recordValue > value ? value : recordValue;
+            var dailyMissionInfo = MainGameManager.Instance?.AcquireMgr?.GetDailyMission(dailyMissionData.Id);
+
+            float infoProgress = dailyMissionInfo != null ? dailyMissionInfo.Progress : 0;
+            float resValue = infoProgress > value ? value : infoProgress;
 
             progressImg.fillAmount = resValue / value;
             progressTMP?.SetText(resValue + " / " + value);
+        }
+
+        private void SetOpenCondition()
+        {
+            if (openCondition == null)
+                return;
+
+            var dailyMissionData = _data?.DailyMissionData;
+
+            var openConditionData = new OpenCondition.Data()
+            {
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencyCashSprite(),
+                Text = "x5",
+            };
+
+            openCondition.Initialize(openConditionData);
         }
     }
 }

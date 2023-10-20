@@ -24,6 +24,7 @@ namespace Info
         public List<Achievement> AchievementInfoList = new();
         public List<DailyMission> DailyMissionInfoList = new();
 
+        #region DailyMission
         public void AddDailyMission(Game.Type.EAcquire eAcquire, Game.Type.EAcquireAction eAcquireAction, int value)
         {
             var dailyMissionData = DailyMissionContainer.Instance?.GetData(eAcquire, eAcquireAction);
@@ -59,8 +60,64 @@ namespace Info
                         Progress = value,
                     });
             }
-            
         }
+
+        public DailyMission GetDailyMission(int id)
+        {
+            if (DailyMissionInfoList == null)
+                return null;
+
+            return DailyMissionInfoList.Find(dailyMission => dailyMission.Id == id);
+        }
+        #endregion
+
+        #region Achievement
+        public void AddAchievement(Game.Type.EAcquire eAcquire, Game.Type.EAcquireAction eAcquireAction, int value)
+        {
+            var achievementData = AchievementContainer.Instance?.GetData(1, eAcquire, eAcquireAction);
+            if (achievementData == null)
+                return;
+
+            Achievement achievementInfo = null;
+            foreach (var info in AchievementInfoList)
+            {
+                if (info == null)
+                    continue;
+
+                if (info.Id != achievementData.Id)
+                    continue;
+
+                achievementInfo = info;
+                info.Progress += value;
+
+                if (achievementData.Value <= info.Progress)
+                {
+                    info.Progress = achievementData.Value;
+                }
+
+                break;
+            }
+
+            if (achievementInfo == null)
+            {
+                AchievementInfoList.Add(
+                    new Achievement()
+                    {
+                        Id = achievementData.Id,
+                        Step = 1,
+                        Progress = value,
+                    });
+            }
+        }
+
+        public Achievement GetAchievement(int id)
+        {
+            if (AchievementInfoList == null)
+                return null;
+
+            return AchievementInfoList.Find(achievement => achievement.Id == id);
+        }
+        #endregion
     }
 }
 

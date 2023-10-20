@@ -10,7 +10,7 @@ namespace Info
         private readonly string DailyMissionJsonFileName = "DailyMission.json";
         readonly private string AchievementJsonFileName = "Achievement.json";
 
-        public Acquire Acquire { get; private set; } = new();
+        private Acquire _acquire = new();
 
         public override void LoadInfo()
         {
@@ -20,6 +20,7 @@ namespace Info
             }
 
             LoadDailyMissionInfo();
+            LoadAchievementInfo();
         }
 
         private void LoadDailyMissionInfo()
@@ -31,7 +32,19 @@ namespace Info
             var jsonString = System.IO.File.ReadAllText(fullPath);
             var dailyMissionInfos  = JsonHelper.FromJson<Acquire.DailyMission>(jsonString);
 
-            Acquire?.DailyMissionInfoList?.AddRange(dailyMissionInfos);
+            _acquire?.DailyMissionInfoList?.AddRange(dailyMissionInfos);
+        }
+
+        private void LoadAchievementInfo()
+        {
+            var fullPath = JsonFilePath + AchievementJsonFileName;
+            if (!System.IO.File.Exists(fullPath))
+                return;
+
+            var jsonString = System.IO.File.ReadAllText(fullPath);
+            var achievementInfos = JsonHelper.FromJson<Acquire.Achievement>(jsonString);
+
+            _acquire?.AchievementInfoList?.AddRange(achievementInfos);
         }
 
         private void SaveInfo<T>(string jsonFileName, List<T> list)
@@ -42,33 +55,36 @@ namespace Info
             System.IO.File.WriteAllText(JsonFilePath + jsonFileName, jsonString);
         }
 
-        private void SaveInfo()
-        {
-            var jsonString = JsonUtility.ToJson(Acquire);
-            Debug.Log("jsonString = " + jsonString);
-
-            System.IO.File.WriteAllText(JsonFilePath + "Acquire.json", jsonString);
-        }
-
         private void SaveDailyMissionInfo()
         {
-            SaveInfo(DailyMissionJsonFileName, Acquire.DailyMissionInfoList);
+            SaveInfo(DailyMissionJsonFileName, _acquire.DailyMissionInfoList);
         }
 
         private void SaveAchievementInfo()
         {
-
+            SaveInfo(AchievementJsonFileName, _acquire.AchievementInfoList);
         }
 
         public void Add(Game.Type.EAcquire eAcquire, Game.Type.EAcquireAction eAcquireAction, int value)
         {
-            if (Acquire == null)
+            if (_acquire == null)
                 return;
 
-            Acquire.AddDailyMission(eAcquire, eAcquireAction, value);
+            _acquire.AddDailyMission(eAcquire, eAcquireAction, value);
+            _acquire.AddAchievement(eAcquire, eAcquireAction, value);
 
-            //SaveInfo();
             SaveDailyMissionInfo();
+            SaveAchievementInfo();
+        }
+
+        public Acquire.DailyMission GetDailyMission(int id)
+        {
+            return _acquire?.GetDailyMission(id);
+        }
+
+        public Acquire.Achievement GetAchievement(int id)
+        {
+            return _acquire?.GetAchievement(id);
         }
     }
 }
