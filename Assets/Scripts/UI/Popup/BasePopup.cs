@@ -14,7 +14,6 @@ namespace UI
 
         protected void InitializeChildComponent()
         {
-            _componentActivateAction = null;
             _compActivateActionDic.Clear();
 
             var baseComponents = rootRectTm.GetComponentsInChildren<Base>();
