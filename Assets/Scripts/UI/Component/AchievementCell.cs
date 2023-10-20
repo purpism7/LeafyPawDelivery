@@ -23,14 +23,19 @@ namespace UI.Component
         [SerializeField]
         private TextMeshProUGUI progressTMP = null;
         [SerializeField]
+        private Button getRewardBtn = null;
+        [SerializeField]
         private OpenConditionVertical openCondition = null;
+
+        private int _step = 1;
+        private float _progress = 0;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-
-            SetTitleTMP();
+            
             SetOpenCondition();
+            SetTitleTMP();
         }
 
         public override void Activate()
@@ -47,23 +52,33 @@ namespace UI.Component
 
             //LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", _data.TitleLocalKey, LocalizationSettings.SelectedLocale);
 
-            titleTMP?.SetText(_data.Id.ToString());
+            titleTMP?.SetText(_data.Id.ToString() + " - " + _step);
         }
 
         private void SetProgress()
         {
-            var achievementInfo = MainGameManager.Instance?.AcquireMgr?.GetAchievement(_data.Id);
-            int step = achievementInfo != null ? achievementInfo.Step : 1;
+            int id = _data != null ? _data.Id : 0;
 
-            var achievementDatas = _data?.AchievementDataList?.OrderBy(data => data.Step);
-            var achievementData = achievementDatas != null && achievementDatas.Count() >= step ? achievementDatas.ToArray()[step - 1] : null;
-            float value = achievementData != null ? achievementData.Value : 0;
+            var achievementInfo = MainGameManager.Instance?.AcquireMgr?.GetAchievement(id);
+            _step = achievementInfo != null ? achievementInfo.Step : 1;
 
+            float dataProgress = DataProgress;
             float infoProgress = achievementInfo != null ? achievementInfo.Progress : 0;
-            float resValue = infoProgress > value ? value : infoProgress;
+            _progress = infoProgress > dataProgress ? dataProgress : infoProgress;
 
-            progressImg.fillAmount = resValue / value;
-            progressTMP?.SetText(resValue + " / " + value);
+            progressImg.fillAmount = _progress / dataProgress;
+            progressTMP?.SetText(_progress + " / " + dataProgress);
+        }
+
+        private float DataProgress
+        {
+            get
+            {
+                var achievementDatas = _data?.AchievementDataList?.OrderBy(data => data.Step);
+                var achievementData = achievementDatas != null && achievementDatas.Count() >= _step ? achievementDatas.ToArray()[_step - 1] : null;
+
+                return achievementData != null ? achievementData.Value : 0;
+            }
         }
 
         private void SetOpenCondition()
@@ -80,6 +95,11 @@ namespace UI.Component
             };
 
             openCondition.Initialize(openConditionData);
+        }
+
+        public void OnClickGetReward()
+        {
+
         }
     }
 }

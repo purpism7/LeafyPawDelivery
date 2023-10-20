@@ -22,7 +22,11 @@ namespace UI.Component
         [SerializeField]
         private TextMeshProUGUI progressTMP = null;
         [SerializeField]
+        private Button getRewardBtn = null;
+        [SerializeField]
         private OpenConditionVertical openCondition = null;
+
+        private float _progress = 0;
 
         public override void Initialize(Data data)
         {
@@ -36,8 +40,12 @@ namespace UI.Component
         {
             base.Activate();
 
-            Debug.Log("DailyMissionCell Activate");
             SetProgress();
+
+            if(getRewardBtn != null)
+            {
+                getRewardBtn.interactable = _progress >= DataProgress;
+            }
         }
 
         private void SetTitleTMP()
@@ -55,15 +63,17 @@ namespace UI.Component
         private void SetProgress()
         {
             var dailyMissionData = _data?.DailyMissionData;
-            float value = dailyMissionData != null ? dailyMissionData.Value : 0;
 
-            var dailyMissionInfo = MainGameManager.Instance?.AcquireMgr?.GetDailyMission(dailyMissionData.Id);
+            float dataProgress = DataProgress;
+            int id = dailyMissionData != null ? dailyMissionData.Id : 0;
+
+            var dailyMissionInfo = MainGameManager.Instance?.AcquireMgr?.GetDailyMission(id);
 
             float infoProgress = dailyMissionInfo != null ? dailyMissionInfo.Progress : 0;
-            float resValue = infoProgress > value ? value : infoProgress;
+            _progress = infoProgress > dataProgress ? dataProgress : infoProgress;
 
-            progressImg.fillAmount = resValue / value;
-            progressTMP?.SetText(resValue + " / " + value);
+            progressImg.fillAmount = _progress / dataProgress;
+            progressTMP?.SetText(_progress + " / " + dataProgress);
         }
 
         private void SetOpenCondition()
@@ -80,6 +90,24 @@ namespace UI.Component
             };
 
             openCondition.Initialize(openConditionData);
+        }
+
+        private float DataProgress
+        {
+            get
+            {
+                var dailyMissionData = _data?.DailyMissionData;
+
+                return dailyMissionData != null ? dailyMissionData.Value : 0;
+            }
+        }
+
+        public void OnClickGetReward()
+        {
+            if (_progress < DataProgress)
+                return;
+
+
         }
     }
 }
