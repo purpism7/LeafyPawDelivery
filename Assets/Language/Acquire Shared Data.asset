@@ -35,6 +35,42 @@ MonoBehaviour:
     m_Key: dailymission_5
     m_Metadata:
       m_Items: []
+  - m_Id: 1709034729103360
+    m_Key: achievement_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1709230405967872
+    m_Key: achievement_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1986566317662208
+    m_Key: achievement_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1986826804912128
+    m_Key: achievement_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1987347221569536
+    m_Key: achievement_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1987624062410752
+    m_Key: achievement_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1987715980582912
+    m_Key: achievement_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1987858083602432
+    m_Key: achievement_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1987963016699904
+    m_Key: achievement_9
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -70,7 +70,7 @@ namespace UI
 
             var openConditionData = new OpenCondition.Data()
             {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencyCashSprite(),
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
                 Text = "x" + _data.Cash,
                 PossibleFunc = () => userCash >= _data.Cash,
             };

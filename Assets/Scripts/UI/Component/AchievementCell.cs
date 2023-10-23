@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.Localization.Settings;
 
 using TMPro;
 
@@ -35,14 +36,23 @@ namespace UI.Component
             base.Initialize(data);
             
             SetOpenCondition();
-            SetTitleTMP();
         }
 
         public override void Activate()
         {
             base.Activate();
 
+            SetStep();
+            SetTitleTMP();
             SetProgress();
+        }
+
+        private void SetStep()
+        {
+            int id = _data != null ? _data.Id : 0;
+            var achievementInfo = MainGameManager.Instance?.AcquireMgr?.GetAchievement(id);
+
+            _step = achievementInfo != null ? achievementInfo.Step : 1;
         }
 
         private void SetTitleTMP()
@@ -50,17 +60,17 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            //LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", _data.TitleLocalKey, LocalizationSettings.SelectedLocale);
+            string localKey = "achievement_" + _data.Id;
+            var title = LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", localKey, LocalizationSettings.SelectedLocale);
+            title = string.Format(title, DataProgress);
 
-            titleTMP?.SetText(_data.Id.ToString() + " - " + _step);
+            titleTMP?.SetText(title);
         }
 
         private void SetProgress()
         {
             int id = _data != null ? _data.Id : 0;
-
-            var achievementInfo = MainGameManager.Instance?.AcquireMgr?.GetAchievement(id);
-            _step = achievementInfo != null ? achievementInfo.Step : 1;
+            var achievementInfo = MainGameManager.Instance?.AcquireMgr?.GetAchievement(_data.Id);
 
             float dataProgress = DataProgress;
             float infoProgress = achievementInfo != null ? achievementInfo.Progress : 0;
@@ -90,7 +100,7 @@ namespace UI.Component
 
             var openConditionData = new OpenCondition.Data()
             {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencyCashSprite(),
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
                 Text = "x5",
             };
 
@@ -99,7 +109,7 @@ namespace UI.Component
 
         public void OnClickGetReward()
         {
-
+            
         }
     }
 }

@@ -27,6 +27,7 @@ namespace UI
         
         [SerializeField] private RectTransform objectCurrencyRectTm = null;
         [SerializeField] private RectTransform animalCurrencyRectTm = null;
+        [SerializeField] private RectTransform cashCurrencyRectTm = null;
 
         private List<CollectCurrency> _collectCurrencyList = new();
         private List<AddCurrency> _addCurrencyList = new();
@@ -68,6 +69,22 @@ namespace UI
             cashTMP?.SetText(userInfo.Cash + "");
         }
 
+        #region Collect Currency (Move Action Currnecy)
+        public void CollectCashCurrency(Vector3 startPos, int currency)
+        {
+            var data = new CollectCurrency.Data()
+            {
+                StartPos = startPos,
+                EndPos = cashCurrencyRectTm.position,
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
+                CollectEndAction =
+                    () =>
+                    {
+                        AddCashCurrency(currency);
+                    },
+            };
+        }
+
         public void CollectCurrency(Vector3 startPos, Type.EElement eElement, int currency)
         {
             if (_collectCurrencyList == null)
@@ -95,9 +112,17 @@ namespace UI
                     },
             };
 
+            CollectCurrency(data);
+
             // save currency value.
             Info.UserManager.Instance?.User?.SetCurrency(eElement, currency);
-            MainGameManager.Instance?.AddAcquire(eElement, Game.Type.EAcquireAction.Obtain, 1);
+            MainGameManager.Instance?.AddAcquire(eElement, Game.Type.EAcquireAction.Obtain, 1); 
+        }
+
+        private void CollectCurrency(CollectCurrency.Data data)
+        {
+            if (data == null)
+                return;
 
             var collectCurrency = _collectCurrencyList.Find(collectCurrency => !collectCurrency.IsActivate);
             if (collectCurrency != null)
@@ -106,15 +131,17 @@ namespace UI
 
                 return;
             }
-            
+
             var component = new ComponentCreator<CollectCurrency, CollectCurrency.Data>()
                 .SetData(data)
                 .SetRootRectTm(collectCurrencyRootRectTm)
                 .Create();
-            
+
             _collectCurrencyList.Add(component);
         }
-        
+        #endregion
+
+        #region Add Currency (Action Currency Text)
         private void AddCurrency(Type.EElement eElement, int currency)
         {
             if (_addCurrencyList == null)
@@ -126,15 +153,42 @@ namespace UI
                 startPos = animalCurrencyTMP.transform.position;
             }
            
-            startPos.x -= 5f;
-            startPos.y += 20f;
-            
             var data = new AddCurrency.Data()
             {
                 StartPos = startPos,
                 EElement = eElement,
                 Currency = currency,
             };
+
+            AddCurrency(data);
+        }
+
+        private void AddCashCurrency(int currency)
+        {
+            if (_addCurrencyList == null)
+                return;
+
+            if (cashTMP == null)
+                return;
+
+            var startPos = cashTMP.transform.position;
+
+            var data = new AddCurrency.Data()
+            {
+                StartPos = startPos,
+                Currency = currency,
+            };
+
+            AddCurrency(data);
+        }
+
+        private void AddCurrency(AddCurrency.Data data)
+        {
+            if (data == null)
+                return;
+
+            data.StartPos.x -= 5f;
+            data.StartPos.y += 20f;
 
             SetCurrency();
 
@@ -145,14 +199,15 @@ namespace UI
 
                 return;
             }
-            
+
             var component = new ComponentCreator<AddCurrency, AddCurrency.Data>()
                 .SetData(data)
                 .SetRootRectTm(addCurrencyRootRectTm)
                 .Create();
-            
+
             _addCurrencyList.Add(component);
         }
+        #endregion
     }
 }
 

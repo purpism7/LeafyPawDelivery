@@ -59,9 +59,12 @@ namespace GameSystem
             return GetSprite("Currency", name);
         }
 
-        public Sprite GetCurrencyCashSprite()
+        public Sprite CurrencyCashSprite
         {
-            return GetCurrencySprite("berry");
+            get
+            {
+                return GetCurrencySprite("berry");
+            }
         }
 
         public Sprite GetAnimalSkinSprite(string name)
