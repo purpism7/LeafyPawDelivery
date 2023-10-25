@@ -110,6 +110,36 @@ namespace Info
             }
         }
 
+        public void SetNextStep(int id)
+        {
+            if (AchievementInfoList == null)
+                return;
+
+            foreach(var achievementInfo in AchievementInfoList)
+            {
+                if (achievementInfo == null)
+                    continue;
+
+                if (achievementInfo.Id != id)
+                    continue;
+
+                var achievementData = AchievementContainer.Instance.GetData(id, achievementInfo.Step);
+                if (achievementData == null)
+                    continue;
+
+                if (achievementInfo.Progress < achievementData.Value)
+                    continue;
+
+                achievementData = AchievementContainer.Instance.GetData(id, achievementInfo.Step + 1);
+                if (achievementData != null)
+                {
+                    achievementInfo.Step = achievementData.Step;
+
+                    break;
+                }
+            }
+        }
+
         public Achievement GetAchievement(int id)
         {
             if (AchievementInfoList == null)

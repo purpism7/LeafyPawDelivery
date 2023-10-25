@@ -77,6 +77,16 @@ namespace Info
             SaveAchievementInfo();
         }
 
+        public void SetNextStep(int id)
+        {
+            if (_acquire == null)
+                return;
+
+            _acquire.SetNextStep(id);
+
+            SaveAchievementInfo();
+        }
+
         public Acquire.DailyMission GetDailyMission(int id)
         {
             return _acquire?.GetDailyMission(id);

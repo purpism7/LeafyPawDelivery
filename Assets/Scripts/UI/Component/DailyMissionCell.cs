@@ -25,6 +25,8 @@ namespace UI.Component
         private Button getRewardBtn = null;
         [SerializeField]
         private OpenConditionVertical openCondition = null;
+        [SerializeField]
+        private RectTransform completedRootRectTm = null;
 
         private float _progress = 0;
 
@@ -42,10 +44,12 @@ namespace UI.Component
 
             SetProgress();
 
-            if(getRewardBtn != null)
-            {
-                getRewardBtn.interactable = _progress >= DataProgress;
-            }
+            //if(getRewardBtn != null)
+            //{
+            //    getRewardBtn.interactable = _progress < DataProgress;
+            //}
+
+            UIUtils.SetActive(completedRootRectTm, _progress >= DataProgress);
         }
 
         private void SetTitleTMP()
@@ -108,6 +112,8 @@ namespace UI.Component
                 return;
 
             Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, 5);
+
+            UIUtils.SetActive(completedRootRectTm, true);
         }
     }
 }

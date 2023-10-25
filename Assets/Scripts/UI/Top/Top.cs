@@ -88,6 +88,9 @@ namespace UI
             };
 
             CollectCurrency(data);
+
+            // save currency value.
+            Info.UserManager.Instance?.User?.SetCash(currency);
         }
 
         public void CollectCurrency(Vector3 startPos, Type.EElement eElement, int currency)

@@ -113,6 +113,15 @@ namespace UI.Component
                 return;
 
             Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, 5);
+
+            if(_data != null)
+            {
+                MainGameManager.Instance?.AcquireMgr?.SetNextStep(_data.Id);
+            }
+
+            SetStep();
+            SetTitleTMP();
+            SetProgress();
         }
     }
 }

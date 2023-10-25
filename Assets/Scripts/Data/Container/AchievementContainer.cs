@@ -34,6 +34,22 @@ public class AchievementContainer : BaseContainer<AchievementContainer, Achievem
         }
     }
 
+    public Achievement GetData(int id, int step)
+    {
+        if (AchievementListDic == null)
+            return null;
+
+        if(AchievementListDic.TryGetValue(id, out List<Achievement> achievementList))
+        {
+            if (achievementList == null)
+                return null;
+
+            return achievementList.Find(achievement => achievement.Step == step);
+        }
+
+        return null;
+    }
+
     public Achievement GetData(int step, Game.Type.EAcquire eAcquire, Game.Type.EAcquireAction eAcquireAction)
     {
         if (_datas == null)

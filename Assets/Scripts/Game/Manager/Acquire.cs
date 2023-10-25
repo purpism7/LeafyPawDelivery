@@ -32,6 +32,11 @@ namespace Game.Manager
             _acquireHolder?.Add(eAcquire, eAcquireAction, value);
         }
 
+        public void SetNextStep(int id)
+        {
+            _acquireHolder?.SetNextStep(id);
+        }
+
         public Info.Acquire.DailyMission GetDailyMission(int id)
         {
             return _acquireHolder?.GetDailyMission(id);

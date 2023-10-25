@@ -63,7 +63,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20704382197686272
-    m_Localized: Achievements
+    m_Localized: Achievement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28078646320160768
+    m_Localized: Completed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28080266466549760
+    m_Localized: Daily Mission
     m_Metadata:
       m_Items: []
   references:
