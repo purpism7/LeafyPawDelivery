@@ -109,7 +109,11 @@ namespace UI.Component
 
         public void OnClickGetReward()
         {
-            if (_progress < DataProgress)
+            var dataProgress = DataProgress;
+            if (dataProgress <= 0)
+                return;
+
+            if (_progress < dataProgress)
                 return;
 
             Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, 5);

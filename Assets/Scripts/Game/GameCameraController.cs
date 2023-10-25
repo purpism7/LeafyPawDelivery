@@ -162,6 +162,7 @@ namespace GameSystem
             GameCamera.orthographicSize = Mathf.Clamp(GameCamera.orthographicSize, MinOrthographicSize, MaxOrthographicSize);
 
             SetSize();
+            // 카메라 영역 제한하는 부분 다시 체크 할 것. (그대로 쓸 것인지 여부.)
             Move(firTouch);
         }
 
