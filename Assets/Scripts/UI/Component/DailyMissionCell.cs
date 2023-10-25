@@ -107,7 +107,7 @@ namespace UI.Component
             if (_progress < DataProgress)
                 return;
 
-
+            Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, 5);
         }
     }
 }

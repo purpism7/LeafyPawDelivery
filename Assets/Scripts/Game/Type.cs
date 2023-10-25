@@ -88,6 +88,7 @@ namespace Game
             ObjectCurrency,
             AnimalSkin,
             Story,
+            Stamp,
         }
 
         public enum EAcquireAction

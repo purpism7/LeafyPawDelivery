@@ -72,6 +72,9 @@ namespace UI
         #region Collect Currency (Move Action Currnecy)
         public void CollectCashCurrency(Vector3 startPos, int currency)
         {
+            if (_collectCurrencyList == null)
+                return;
+
             var data = new CollectCurrency.Data()
             {
                 StartPos = startPos,
@@ -83,6 +86,8 @@ namespace UI
                         AddCashCurrency(currency);
                     },
             };
+
+            CollectCurrency(data);
         }
 
         public void CollectCurrency(Vector3 startPos, Type.EElement eElement, int currency)
