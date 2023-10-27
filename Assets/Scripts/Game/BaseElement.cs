@@ -16,6 +16,8 @@ namespace Game
         [SerializeField]
         protected UI.Edit edit = null;
 
+        public bool IsOverlap = false;
+
         public Collider Collider { get; private set; } = null;
         public ElementData ElementData { get; protected set; } = null;
         //public int SortingOrder { get { return spriteRenderer != null ? spriteRenderer.sortingOrder : 1; } }

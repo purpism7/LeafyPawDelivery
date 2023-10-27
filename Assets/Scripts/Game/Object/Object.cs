@@ -20,7 +20,6 @@ namespace Game
         #region Inspector
         [SerializeField]
         private int sortingOrderOffset = 0;
-        public bool IsOverlap = false;
         #endregion
 
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }

@@ -90,16 +90,6 @@ namespace Game.Element.State
             MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(enable);
         }
 
-        private void SetIsOverlap(bool isOverlap)
-        {
-            if (_isOverlap == isOverlap)
-                return;
-
-            _gameBaseElement.SetColor(isOverlap ? Color.gray : Color.white);
-
-            _isOverlap = isOverlap;
-        }
-
         private void Drag(Touch touch)
         {
             if (_gameBaseElement == null)
@@ -118,6 +108,17 @@ namespace Game.Element.State
             pos.y = _iGridProvider.LimitPosY(pos.y);
 
             gameBaseTm.position = pos;
+        }
+
+        #region Overlap
+        private void SetIsOverlap(bool isOverlap)
+        {
+            if (_isOverlap == isOverlap)
+                return;
+
+            _gameBaseElement.SetColor(isOverlap ? Color.gray : Color.white);
+
+            _isOverlap = isOverlap;
         }
 
         private void Overlap()
@@ -218,6 +219,7 @@ namespace Game.Element.State
 
             _gameBaseElement.InteractableArrangeBtn(!isOverlap);
         }
+        #endregion
     }
 }
 

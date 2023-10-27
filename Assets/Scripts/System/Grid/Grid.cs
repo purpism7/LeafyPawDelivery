@@ -21,10 +21,6 @@ namespace GameSystem
 
         private void Start()
         {
-            //_lineRenderer = GetComponent<LineRenderer>();
-
-            //InitLineRenderer();
-            //Make();
             Generated();
         }
 
@@ -54,9 +50,7 @@ namespace GameSystem
                 {
                     var cell = GameObject.Instantiate(Cell, transform);
                     if(cell == null)
-                    {
                         continue;
-                    }
 
                     cell.Init(new Cell.Data()
                     {
@@ -67,9 +61,6 @@ namespace GameSystem
                     });
 
                     _cellArray[row, column] = cell;
-
-                    //gameObj.transform.localPosition = new Vector3(i, j, 0) * GridData.CellSize;
-                    //gameObj.name = "[" + i + ", " + j + "]";
                 }
             }
         }
@@ -108,9 +99,7 @@ namespace GameSystem
             {
                 for (int row = 0; row < GridData.Row; ++row)
                 {
-                    var cell = _cellArray[row, column];
-                    cell.name = "[" + row + ", " + column + "] Overlap = " + cell.CheckOverlap;
-                    //Debug.Log("cell = " + row + " / " + column + " = " + cell.CheckOverlap);
+                    _cellArray[row, column]?.SetOverlap();
                 }
             }
         }
@@ -133,19 +122,6 @@ namespace GameSystem
             foreach (var gridCell in _cellArray)
             {
                 gridCell?.ChainUpdate();
-            }
-        }
-        #endregion
-
-        #region Cell.IListener
-        void Cell.IListener.Overlap(List<GameObject> list)
-        {
-            foreach(var gameObj in list)
-            {
-                if (!gameObj)
-                    continue;
-
-                
             }
         }
         #endregion

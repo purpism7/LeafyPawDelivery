@@ -216,9 +216,8 @@ namespace UI
             }
         }
 
-        public void RefreshObjectList()
+        public void RefreshObjectList(ObjectManager objectMgr)
         {
-            var objectMgr = MainGameManager.Instance?.ObjectMgr;
             if (objectMgr == null)
                 return;
 

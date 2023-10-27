@@ -23,16 +23,23 @@ namespace GameSystem
 
         public interface IListener
         {
-            void Overlap(List<GameObject> list);
+            //void Overlap(List<GameObject> list);
         }
 
         [SerializeField]
         private BoxCollider boxCollider = null;
 
-        private List<GameObject> _overlapList = new List<GameObject>();
+        //private List<GameObject> _overlapList = new List<GameObject>();
         private Vector3 _halfExtnents = Vector3.one * 0.5f;
 
         public Data Data_ { get; private set; } = null;
+        public bool IsOverlap { get; private set; } = false;
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = IsOverlap ? new Color(1, 0, 0, 1f) : new Color(0, 0, 1, 1f);
+            Gizmos.DrawWireCube(transform.position, boxCollider.size);
+        }
 
         public void Init(Data data)
         {
@@ -52,7 +59,7 @@ namespace GameSystem
             if(boxCollider == null)
                 return;
 
-            boxCollider.size = new Vector3(Data_.CellSize, Data_.CellSize, 0);
+            boxCollider.size = new Vector3(Data_.CellSize, Data_.CellSize, 10f);
 
             _halfExtnents = boxCollider.size * 0.5f;
         }
@@ -62,47 +69,35 @@ namespace GameSystem
             gameObject.transform.localPosition = new Vector3(Data_.Row, Data_.Column, 0) * Data_.CellSize;
         }
 
-        private bool IsOverlap
+        public void SetOverlap()
         {
-            get
+            if (boxCollider == null)
+                return;
+
+            IsOverlap = false;
+
+            var colliders = Physics.OverlapBox(boxCollider.center + transform.position, _halfExtnents, Quaternion.identity);
+
+            foreach (var collider in colliders)
             {
-                if (boxCollider == null)
-                    return false;
+                if (collider == null)
+                    continue;
 
-                _overlapList.Clear();
+                // cell 들은 제외.
+                var cell = collider.GetComponentInParent<Cell>();
+                if (cell != null)
+                    continue;
 
-                var colliders = Physics.OverlapBox(boxCollider.center + transform.position, _halfExtnents, Quaternion.identity);
-                //Debug.Log("colliders = "  + colliders.Length);
-                foreach (var collider in colliders)
+                var gameBaseElement = collider.GetComponentInParent<Game.BaseElement>();
+                if (gameBaseElement != null)
                 {
-                    if (collider == null)
+                    if (!gameBaseElement.IsOverlap)
                         continue;
-
-                    // cell 들은 제외.
-                    var cell = collider.GetComponentInParent<Cell>();
-                    if (cell != null)
-                        continue;
-
-                    var animal = collider.GetComponentInParent<Game.Creature.Animal>();
-                    if (animal != null)
-                        continue;
-
-                    //_overlapList.Add(collider.gameObject);
-                    return true;
                 }
 
-                return false;
-            }
-           
+                IsOverlap = true;
 
-            //Data_?.IListener?.Overlap(_overlapList);
-        }
-
-        public bool CheckOverlap
-        {
-            get
-            {
-                return IsOverlap;
+                break;
             }
         }
 

@@ -31,6 +31,7 @@ public class MainGameManager : Singleton<MainGameManager>
     private IUpdater _iUpdateInputMgr = null;
     private IUpdater _iUpdateGameCameraCtr = null;
     private IUpdater _iUpdateGrid = null;
+    private IGridProvider _iGridProvider = null;
     
     protected override void Initialize()
     {
@@ -74,6 +75,9 @@ public class MainGameManager : Singleton<MainGameManager>
         _iUpdateInputMgr = inputMgr;
         _iUpdateGameCameraCtr = GameCameraCtr;
         _iUpdateGrid = inputMgr?.grid;
+
+        _iGridProvider = inputMgr?.grid;
+        _iGridProvider?.Overlap();
 
         SetGameState<Game.State.Game>();
 
@@ -246,11 +250,13 @@ public class MainGameManager : Singleton<MainGameManager>
                     placeMgr?.ActivityPlace?.RemoveObject(id, uId);
                     ObjectMgr?.RemoveObject(id, uId);
 
-                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
+                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList(ObjectMgr);
 
                     break;
                 }
         }
+
+        _iGridProvider?.Overlap();
     }
 
     public void Arrange(Game.BaseElement gameBaseElement, Vector3 pos)
@@ -265,7 +271,7 @@ public class MainGameManager : Singleton<MainGameManager>
             placeId = placeMgr.ActivityPlace.Id;
         }
 
-        switch(gameBaseElement.ElementData.EElement)
+        switch (gameBaseElement.ElementData.EElement)
         {
             case Game.Type.EElement.Animal:
                 {
@@ -278,14 +284,15 @@ public class MainGameManager : Singleton<MainGameManager>
 
             case Game.Type.EElement.Object:
                 {
-
                     ObjectMgr?.ArrangeObject(gameBaseElement.Id, gameBaseElement.UId, pos, placeId);
 
-                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
+                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList(ObjectMgr);
 
                     break;
                 }
         }
+
+        _iGridProvider?.Overlap();
     }
     #endregion
 

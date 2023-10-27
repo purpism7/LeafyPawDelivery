@@ -219,7 +219,6 @@ namespace UI
             }
             else if (EElement == Game.Type.EElement.Object)
             {
-                //MainGameManager.Instance?.AddObjectToPlace(elementData.Id, 0);
                 var eTab = EElement == Game.Type.EElement.Animal ? Game.Type.ETab.Animal : Game.Type.ETab.Object;
                 Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(eTab);
             }

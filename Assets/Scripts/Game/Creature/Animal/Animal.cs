@@ -23,9 +23,8 @@ namespace Game.Creature
         private int skinId = 0;
         [SerializeField]
         private Animator animator = null;
-        [SerializeField]
-        private CapsuleCollider collider = null;
 
+        private CapsuleCollider _collider = null;
         private AnimalRoot _animalRoot = null;
         private AnimalActionController _actionCtr = null;
 
@@ -38,8 +37,10 @@ namespace Game.Creature
 
             ElementData = AnimalContainer.Instance?.GetData(Id);
 
+            _collider = GetComponentInChildren<CapsuleCollider>();
             _animalRoot = GetComponentInChildren<AnimalRoot>();
-            _animalRoot?.Initialize(collider.center.y + collider.height);
+
+            _animalRoot?.Initialize(_collider.center.y + _collider.height);
 
             CreateEdit();
 

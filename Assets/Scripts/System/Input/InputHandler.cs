@@ -44,7 +44,7 @@ namespace GameSystem
             var ray = _gameCameraCtr.GameCamera.ScreenPointToRay(touchPosition);
 
             RaycastHit hitInfo;
-            bool isHitInfo = Physics.Raycast(ray, out hitInfo);
+            bool isHitInfo = Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Game", "Animal", "Object"));
             bool gameStateEdit = _mainGameMgr.GameState.CheckState<Game.State.Edit>();
             Game.Base gameBase = null;
             
@@ -79,11 +79,11 @@ namespace GameSystem
 
                 if (touch.phase == TouchPhase.Ended)
                 {
-                    ReleaseGameBase();
+                    OnTouchEnded(touch);
                 }
                 else if (touch.phase == TouchPhase.Canceled)
                 {
-                    ReleaseGameBase();
+                    OnTouchEnded(touch);
                 }
             }
         }
@@ -101,9 +101,16 @@ namespace GameSystem
             OnTouchBegan(null, gameBase);
         }
 
+        private void OnTouchEnded(Touch? touch)
+        {
+            _gameBase?.OnTouchEnded(touch, _iGridProvider);
+
+            ReleaseGameBase();
+        }
+
         private void ReleaseGameBase()
         {
-            if(_gameBase == null)
+            if (_gameBase == null)
                 return;
 
             _beganGameBase = false;
