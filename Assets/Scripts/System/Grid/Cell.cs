@@ -6,30 +6,17 @@ namespace GameSystem
 {
     public class Cell : MonoBehaviour
     {
-        public enum EState
-        {
-            None,
-
-
-        }
-
         public class Data
         {
-            public IListener IListener = null;
+            public int Id = 0;
             public int Row = 0;
             public int Column = 0;
             public float CellSize = 0;
         }
 
-        public interface IListener
-        {
-            //void Overlap(List<GameObject> list);
-        }
-
         [SerializeField]
         private BoxCollider boxCollider = null;
 
-        //private List<GameObject> _overlapList = new List<GameObject>();
         private Vector3 _halfExtnents = Vector3.one * 0.5f;
 
         public Data Data_ { get; private set; } = null;
@@ -48,7 +35,7 @@ namespace GameSystem
 
             Data_ = data;
 
-            name = "[" + data.Row + ", " + data.Column + "]"; 
+            name = "[" + data.Row + ", " + data.Column + " = " + Data_.Id + "]"; 
 
             SetColliderSize();
             SetLocalPosition();

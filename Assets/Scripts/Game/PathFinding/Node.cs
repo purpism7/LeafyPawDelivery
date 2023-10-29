@@ -7,6 +7,8 @@ namespace Game.PathFinding
 {
     public class Node
     {
+        public int Id { get; private set; } = 0;
+
         public bool IsWalkAble { get; private set; } = false;
         public int GCost { get; private set; } = 0;
         public int HCost { get; private set; } = 0;

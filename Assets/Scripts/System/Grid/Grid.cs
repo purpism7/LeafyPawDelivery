@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Linq;
+
 namespace GameSystem
 {
     public interface IGridProvider
     {
         float LimitPosY(float posY);
         void Overlap();
+        Cell GetCell(int id);
+        public List<Cell> GridCellList { get; }
     }
 
-    public class Grid : MonoBehaviour, IGridProvider, IUpdater, Cell.IListener
+    public class Grid : MonoBehaviour, IGridProvider, IUpdater
     {
         public GridData GridData;
         public Cell Cell; 
@@ -42,6 +46,8 @@ namespace GameSystem
             if(GridData == null)
                 return;
 
+            int index = 0;
+
             _cellArray = new Cell[GridData.Row, GridData.Column];
 
             for (int column = 0; column < GridData.Column; ++column)
@@ -54,7 +60,7 @@ namespace GameSystem
 
                     cell.Init(new Cell.Data()
                     {
-                        IListener = this,
+                        Id = index++,
                         Row = row,
                         Column = column,
                         CellSize = GridData.CellSize,
@@ -113,6 +119,30 @@ namespace GameSystem
         void IGridProvider.Overlap()
         {
             Overlap();
+        }
+
+        Cell IGridProvider.GetCell(int id)
+        {
+            foreach(var cell in _cellArray)
+            {
+                var data = cell?.Data_;
+                if (data == null)
+                    continue;
+
+                if(data.Id == id)
+                    return cell;
+            }
+
+            return null;
+        }
+
+        List<Cell> IGridProvider.GridCellList
+        {
+            get
+            {
+                //_cellArray
+                return null;
+            }
         }
         #endregion
 
