@@ -74,40 +74,61 @@ namespace Info
         #region Achievement
         public void AddAchievement(Game.Type.EAcquire eAcquire, Game.Type.EAcquireAction eAcquireAction, int value)
         {
-            var achievementData = AchievementContainer.Instance?.GetData(1, eAcquire, eAcquireAction);
-            if (achievementData == null)
+            var achievementContainer = AchievementContainer.Instance;
+            if (achievementContainer == null)
                 return;
 
-            Achievement achievementInfo = null;
-            foreach (var info in AchievementInfoList)
-            {
-                if (info == null)
-                    continue;
-
-                if (info.Id != achievementData.Id)
-                    continue;
-
-                achievementInfo = info;
-                info.Progress += value;
-
-                if (achievementData.Value <= info.Progress)
-                {
-                    info.Progress = achievementData.Value;
-                }
-
-                break;
-            }
-
-            if (achievementInfo == null)
+            int id = achievementContainer.GetDataId(eAcquire, eAcquireAction);
+            var achievementInfo = GetAchievement(id);
+            if(achievementInfo == null)
             {
                 AchievementInfoList.Add(
                     new Achievement()
                     {
-                        Id = achievementData.Id,
+                        Id = id,
                         Step = 1,
                         Progress = value,
                     });
+
+                return;
             }
+
+            var achievementData = achievementContainer.GetData(id, achievementInfo.Step);
+            if (achievementData == null)
+                return;
+
+            achievementInfo.Progress += value;
+            if (achievementData.Value <= achievementInfo.Progress)
+            {
+                achievementInfo.Progress = achievementData.Value;
+            }
+
+           
+
+            //Achievement achievementInfo = null;
+            //foreach (var info in AchievementInfoList)
+            //{
+            //    if (info == null)
+            //        continue;
+
+            //    if (info.Id != achievementData.Id)
+            //        continue;
+
+                
+
+            //    break;
+            //}
+
+            //if (achievementInfo == null)
+            //{
+            //    AchievementInfoList.Add(
+            //        new Achievement()
+            //        {
+            //            Id = achievementData.Id,
+            //            Step = 1,
+            //            Progress = value,
+            //        });
+            //}
         }
 
         public void SetNextStep(int id)
