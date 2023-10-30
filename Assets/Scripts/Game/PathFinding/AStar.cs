@@ -48,23 +48,23 @@ namespace Game.PathFinding
                 }
 
                 var neighbourNodeList = findNeighbourNodeFunc?.Invoke(currentNode.Id);
-                foreach(var node in neighbourNodeList)
+                foreach(var neighbourNode in neighbourNodeList)
                 {
-                    if (!node.IsWalkAble ||
-                        closedSet.Contains(node))
+                    if (!neighbourNode.IsWalkAble ||
+                        closedSet.Contains(neighbourNode))
                         continue;
 
-                    int cost = currentNode.GCost + GetDistanceCost(currentNode, node);
-                    if(cost < node.GCost ||
-                      !openList.Contains(node))
+                    int cost = currentNode.GCost + GetDistanceCost(currentNode, neighbourNode);
+                    if(cost < neighbourNode.GCost ||
+                      !openList.Contains(neighbourNode))
                     {
-                        node.GCost = cost;
-                        node.HCost = GetDistanceCost(node, targetNode);
-                        node.ParentNode = currentNode;
+                        neighbourNode.GCost = cost;
+                        neighbourNode.HCost = GetDistanceCost(neighbourNode, targetNode);
+                        neighbourNode.ParentNode = currentNode;
 
-                        if(!openList.Contains(node))
+                        if(!openList.Contains(neighbourNode))
                         {
-                            openList.Add(node);
+                            openList.Add(neighbourNode);
                         }
                     }
                 }
