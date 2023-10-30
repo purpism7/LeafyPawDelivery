@@ -9,13 +9,13 @@ namespace Game.Element.State
         readonly private float TouchInterval = 0.3f;
 
         private GameSystem.GameCameraController _gameCameraCtr = null;
-        private GameSystem.IGridProvider _iGridProvider = null;
+        private GameSystem.IGrid _iGrid = null;
         private DateTime _touchDateTime;
 
-        public override BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
+        public override BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             _gameCameraCtr = gameCameraCtr;
-            _iGridProvider = iGridProvider;
+            _iGrid = iGrid;
 
             return this;
         }

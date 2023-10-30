@@ -42,9 +42,9 @@ namespace Game
             Drop();
         }
 
-        public override void OnTouchBegan(Touch? touch, GameCameraController gameCameraCtr, IGridProvider iGridProvider)
+        public override void OnTouchBegan(Touch? touch, GameCameraController gameCameraCtr, IGrid iGrid)
         {
-            base.OnTouchBegan(touch, gameCameraCtr, iGridProvider);
+            base.OnTouchBegan(touch, gameCameraCtr, iGrid);
 
             if (_data == null)
                 return;

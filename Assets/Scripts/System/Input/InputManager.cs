@@ -20,7 +20,7 @@ namespace GameSystem
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
-            InputHandler?.Init(GameCameraCtr, grid);
+            InputHandler?.Init(GameCameraCtr);
 
             yield return null;
         }

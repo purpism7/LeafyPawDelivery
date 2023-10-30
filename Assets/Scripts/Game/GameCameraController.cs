@@ -16,23 +16,21 @@ namespace GameSystem
         
         private Vector2 _center = Vector2.zero;
         private Vector2 _mapSize = new Vector2(2000f, 2000f);
-        private Vector3 _velocity = Vector3.zero;
 
         private Vector3 _prevPos = Vector3.zero;
-
-        public float Height { get; private set; } = 0;
-        public float Width { get; private set; } = 0;
-        public Vector3 Center { get { return GameCamera != null ? GameCamera.transform.position + GameCamera.transform.forward : Vector3.zero; }  }
-
-        public bool StopUpdate { get; private set; } = false;
-        public IGridProvider IGridProvider { get; private set; } = null;
 
         private float _halfHeight = 0;
         private float _dragWidth = 0;
 
-        public void Initialize(IGridProvider iGridProvider)
+        public float Height { get; private set; } = 0;
+        public float Width { get; private set; } = 0;
+        public Vector3 Center { get { return GameCamera != null ? GameCamera.transform.position + GameCamera.transform.forward : Vector3.zero; } }
+        public IGrid IGrid { get; private set; } = null;
+        public bool StopUpdate { get; private set; } = false;
+
+        public void Initialize(IGrid iGrid)
         {
-            IGridProvider = iGridProvider;
+            IGrid = iGrid;
 
             SetSize();
         }

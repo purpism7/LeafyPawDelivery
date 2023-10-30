@@ -26,7 +26,7 @@ namespace Game.Creature
             Gizmos.color = Color.black;
             var posY = center.y + halfHeight;
             
-            posY = gameCameraCtr.IGridProvider.LimitPosY(posY);
+            posY = gameCameraCtr.IGrid.LimitPosY(posY);
             Gizmos.DrawLine(new Vector3(center.x - halfWidth, center.y - halfHeight), new Vector3(center.x + halfWidth, posY));
         }
 

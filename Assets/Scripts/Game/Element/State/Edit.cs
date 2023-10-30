@@ -8,14 +8,14 @@ namespace Game.Element.State
     public class Edit<T> : BaseState<T> where T : Game.BaseElement
     {
         private GameSystem.GameCameraController _gameCameraCtr = null;
-        private GameSystem.IGridProvider _iGridProvider = null;
+        private GameSystem.IGrid _iGrid = null;
         private bool _enableColliders = false;
         private bool _isOverlap = false;
 
-        public override BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
+        public override BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             _gameCameraCtr = gameCameraCtr;
-            _iGridProvider = iGridProvider;
+            _iGrid = iGrid;
 
             _enableColliders = false;
 
@@ -105,7 +105,7 @@ namespace Game.Element.State
             Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);
             Vector3 pos = gameCamera.ScreenToWorldPoint(movePos);
 
-            pos.y = _iGridProvider.LimitPosY(pos.y);
+            pos.y = _iGrid.LimitPosY(pos.y);
 
             gameBaseTm.position = pos;
         }

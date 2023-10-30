@@ -18,9 +18,13 @@ namespace GameSystem
         private BoxCollider boxCollider = null;
 
         private Vector3 _halfExtnents = Vector3.one * 0.5f;
-
-        public Data Data_ { get; private set; } = null;
+        private Data _data = null;
+        
         public bool IsOverlap { get; private set; } = false;
+
+        public int Id { get { return _data != null ? _data.Id : 0; } }
+        public int Row { get { return _data != null ? _data.Row : 0; } }
+        public int Column { get { return _data != null ? _data.Column : 0; } }
 
         private void OnDrawGizmos()
         {
@@ -33,9 +37,9 @@ namespace GameSystem
             if (data == null)
                 return;
 
-            Data_ = data;
+            _data = data;
 
-            name = "[" + data.Row + ", " + data.Column + " = " + Data_.Id + "]"; 
+            name = "[" + data.Row + ", " + data.Column + " = " + _data.Id + "]"; 
 
             SetColliderSize();
             SetLocalPosition();
@@ -46,14 +50,14 @@ namespace GameSystem
             if(boxCollider == null)
                 return;
 
-            boxCollider.size = new Vector3(Data_.CellSize, Data_.CellSize, 10f);
+            boxCollider.size = new Vector3(_data.CellSize, _data.CellSize, 10f);
 
             _halfExtnents = boxCollider.size * 0.5f;
         }
 
         private void SetLocalPosition()
         {
-            gameObject.transform.localPosition = new Vector3(Data_.Row, Data_.Column, 0) * Data_.CellSize;
+            gameObject.transform.localPosition = new Vector3(_data.Row, _data.Column, 0) * _data.CellSize;
         }
 
         public void SetOverlap()

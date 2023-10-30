@@ -62,9 +62,9 @@ namespace Game
         }
 
         // object 최초 선택 시, 호출.
-        public override void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
+        public override void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
-            base.OnTouchBegan(touch, gameCameraCtr, iGridProvider);
+            base.OnTouchBegan(touch, gameCameraCtr, iGrid);
 
             Game.State.Base gameState = MainGameManager.Instance?.GameState;
             if (gameState == null)
@@ -72,14 +72,14 @@ namespace Game
 
             if(gameState.CheckState<Game.State.Edit>())
             {
-                SetState(new Game.Element.State.Edit<Game.Object>()?.Create(gameCameraCtr, iGridProvider));
+                SetState(new Game.Element.State.Edit<Game.Object>()?.Create(gameCameraCtr, iGrid));
 
                 SetSortingOrder(_selectOrder);
                 ActiveEdit(true);
             }
             else
             {
-                SetState(new Game.Element.State.Game<Game.Object>()?.Create(gameCameraCtr, iGridProvider));
+                SetState(new Game.Element.State.Game<Game.Object>()?.Create(gameCameraCtr, iGrid));
             }
         }
 

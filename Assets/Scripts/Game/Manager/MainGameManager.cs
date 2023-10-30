@@ -31,7 +31,7 @@ public class MainGameManager : Singleton<MainGameManager>
     private IUpdater _iUpdateInputMgr = null;
     private IUpdater _iUpdateGameCameraCtr = null;
     private IUpdater _iUpdateGrid = null;
-    private IGridProvider _iGridProvider = null;
+    private IGrid _iGrid = null;
     
     protected override void Initialize()
     {
@@ -76,8 +76,10 @@ public class MainGameManager : Singleton<MainGameManager>
         _iUpdateGameCameraCtr = GameCameraCtr;
         _iUpdateGrid = inputMgr?.grid;
 
-        _iGridProvider = inputMgr?.grid;
-        _iGridProvider?.Overlap();
+        _iGrid = inputMgr?.grid;
+        _iGrid?.Overlap();
+
+        Game.Carrier.Create(inputMgr?.grid);
 
         SetGameState<Game.State.Game>();
 
@@ -256,7 +258,7 @@ public class MainGameManager : Singleton<MainGameManager>
                 }
         }
 
-        _iGridProvider?.Overlap();
+        _iGrid?.Overlap();
     }
 
     public void Arrange(Game.BaseElement gameBaseElement, Vector3 pos)
@@ -292,7 +294,7 @@ public class MainGameManager : Singleton<MainGameManager>
                 }
         }
 
-        _iGridProvider?.Overlap();
+        _iGrid?.Overlap();
     }
     #endregion
 

@@ -12,15 +12,15 @@ namespace GameSystem
     public class InputHandler : MonoBehaviour
     {   
         private GameSystem.GameCameraController _gameCameraCtr = null;
-        private IGridProvider _iGridProvider = null;
+        private IGrid _iGrid = null;
         private MainGameManager _mainGameMgr = null;
         private Game.Base _gameBase = null;
         private bool _beganGameBase = false;
         
-        public void Init(GameSystem.GameCameraController gameCameraCtr, IGridProvider iGridProvider)
+        public void Init(GameSystem.GameCameraController gameCameraCtr)
         {
             _gameCameraCtr = gameCameraCtr;
-            _iGridProvider = iGridProvider;
+            _iGrid = _gameCameraCtr.IGrid;
 
             _mainGameMgr = MainGameManager.Instance;
             _mainGameMgr?.SetStartEditAction(OnTouchBegan);
@@ -93,7 +93,7 @@ namespace GameSystem
             _beganGameBase = true;
             _gameBase = gameBase;
 
-            gameBase?.OnTouchBegan(touch, _gameCameraCtr, _iGridProvider);
+            gameBase?.OnTouchBegan(touch, _gameCameraCtr, _iGrid);
         }
 
         private void OnTouchBegan(Game.Base gameBase)
@@ -103,7 +103,7 @@ namespace GameSystem
 
         private void OnTouchEnded(Touch? touch)
         {
-            _gameBase?.OnTouchEnded(touch, _iGridProvider);
+            _gameBase?.OnTouchEnded(touch, _iGrid);
 
             ReleaseGameBase();
         }

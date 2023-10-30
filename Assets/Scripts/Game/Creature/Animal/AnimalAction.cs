@@ -11,12 +11,12 @@ namespace Game.Creature
             public SpriteRenderer SprRenderer = null;
         }
 
-        protected AnimalAction.Data _data = null;
+        protected Data _data = null;
         protected float _initPosZ { get; private set; } = 0;
 
         protected abstract string ActionName { get; }
 
-        public AnimalAction Create(AnimalAction.Data data)
+        public AnimalAction Create(Data data)
         {
             _data = data;
 

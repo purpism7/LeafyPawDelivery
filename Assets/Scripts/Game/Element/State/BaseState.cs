@@ -21,7 +21,7 @@ namespace Game.Element.State
             return Type.Equals(state.Type);
         }
 
-        public abstract BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider);
+        public abstract BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid);
         public abstract void Apply(T t);
         public abstract void Touch(Touch touch);
     }

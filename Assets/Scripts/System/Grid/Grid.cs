@@ -6,18 +6,22 @@ using System.Linq;
 
 namespace GameSystem
 {
-    public interface IGridProvider
+    public interface IGrid
     {
         float LimitPosY(float posY);
         void Overlap();
-        Cell GetCell(int id);
-        public List<Cell> GridCellList { get; }
     }
 
-    public class Grid : MonoBehaviour, IGridProvider, IUpdater
+    public interface IGridCell
+    {
+        Cell GetCell(Vector3 pos);
+        List<Cell> GetNeighbourList(int id);
+    }
+
+    public class Grid : MonoBehaviour, IGrid, IGridCell, IUpdater
     {
         public GridData GridData;
-        public Cell Cell; 
+        public Cell Cell;
 
         private Cell[,] _cellArray = null;
 
@@ -43,7 +47,7 @@ namespace GameSystem
 
         private void Generated()
         {
-            if(GridData == null)
+            if (GridData == null)
                 return;
 
             int index = 0;
@@ -52,10 +56,10 @@ namespace GameSystem
 
             for (int column = 0; column < GridData.Column; ++column)
             {
-                for(int row = 0; row < GridData.Row; ++row)
+                for (int row = 0; row < GridData.Row; ++row)
                 {
                     var cell = GameObject.Instantiate(Cell, transform);
-                    if(cell == null)
+                    if (cell == null)
                         continue;
 
                     cell.Init(new Cell.Data()
@@ -111,38 +115,105 @@ namespace GameSystem
         }
 
         #region IGridProvider
-        float IGridProvider.LimitPosY(float posY)
+        float IGrid.LimitPosY(float posY)
         {
             return Mathf.Clamp(posY, LimitBottom.y, LimitTop.y);
         }
 
-        void IGridProvider.Overlap()
+        void IGrid.Overlap()
         {
             Overlap();
         }
+        #endregion
 
-        Cell IGridProvider.GetCell(int id)
+        #region IGridCell
+
+        Cell IGridCell.GetCell(Vector3 pos)
         {
-            foreach(var cell in _cellArray)
-            {
-                var data = cell?.Data_;
-                if (data == null)
-                    continue;
+            var cellHalfSize = GridData.CellSize * 0.5f;
 
-                if(data.Id == id)
+            for (int column = 0; column < GridData.Column; ++column)
+            {
+                for (int row = 0; row < GridData.Row; ++row)
+                {
+                    var cell = _cellArray[row, column];
+                    if (cell == null)
+                        continue;
+
+                    var cellPos = cell.transform.position;
+
+                    if (cellPos.x - cellHalfSize >= pos.x ||
+                        cellPos.x + cellHalfSize < pos.x)
+                        continue;
+
+                    if (cellPos.y - cellHalfSize >= pos.y ||
+                        cellPos.y + cellHalfSize < pos.y)
+                        continue;
+
                     return cell;
+                }
             }
 
             return null;
         }
 
-        List<Cell> IGridProvider.GridCellList
+        List<Cell> IGridCell.GetNeighbourList(int id)
         {
-            get
+            List<Cell> cellList = new List<Cell>();
+            cellList.Clear();
+
+            for (int column = 0; column < GridData.Column; ++column)
             {
-                //_cellArray
-                return null;
+                for (int row = 0; row < GridData.Row; ++row)
+                {
+                    var cell = _cellArray[row, column];
+                    if (cell == null)
+                        continue;
+
+                    if (!CheckNeighbour(id, cell.Id))
+                        continue;
+
+                    cellList.Add(cell);
+                }
             }
+
+            return cellList;
+        }
+
+        private bool CheckNeighbour(int targetId, int cellId)
+        {
+            int row = GridData.Row;
+
+            int left = targetId - 1;
+            int right = targetId + 1;
+            int down = targetId - row;
+            int up = targetId + row;
+            int leftDown = down - 1;
+            int rightDown = down + 1;
+            int leftUp = up - 1;
+            int rightUp = up + 1;
+
+            if (cellId == up ||
+               cellId == down)
+                return true;
+
+            if (cellId == left ||
+               cellId == right)
+                return cellId / row == targetId / row;
+
+            if(cellId == leftDown)
+                return down / row == leftDown / row;
+
+            if(cellId == rightDown)
+                return down / row == rightDown / row;
+
+            if (cellId == leftUp)
+                return up / row == leftUp / row;
+
+            if (cellId == rightUp)
+                return up / row == rightUp / row;
+
+            return false;
         }
         #endregion
 

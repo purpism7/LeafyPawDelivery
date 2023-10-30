@@ -35,7 +35,7 @@ namespace Game.Creature
 
             var randomX = Random.Range(center.x - halfWidth, center.x + halfWidth);
             var randomY = Random.Range(center.y - halfHeight, center.y + halfHeight);
-            randomY = gameCameraCtr.IGridProvider.LimitPosY(randomY);
+            randomY = gameCameraCtr.IGrid.LimitPosY(randomY);
 
             MoveToTarget(new Vector3(randomX, randomY, _initPosZ));
         }

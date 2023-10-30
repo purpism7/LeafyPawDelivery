@@ -75,9 +75,9 @@ namespace Game.Creature
             _actionCtr?.ChainUpdate();
         }
 
-        public override void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGridProvider iGridProvider)
+        public override void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
-            base.OnTouchBegan(touch, gameCameraCtr, iGridProvider);
+            base.OnTouchBegan(touch, gameCameraCtr, iGrid);
 
             Game.State.Base gameState = MainGameManager.Instance?.GameState;
             if (gameState == null)
@@ -85,14 +85,14 @@ namespace Game.Creature
 
             if (gameState.CheckState<Game.State.Edit>())
             {
-                SetState(new Game.Element.State.Edit<Creature.Animal>()?.Create(gameCameraCtr, iGridProvider));
+                SetState(new Game.Element.State.Edit<Creature.Animal>()?.Create(gameCameraCtr, iGrid));
 
                 SetSortingOrder(_selectOrder);
                 ActiveEdit(true);
             }
             else
             {
-                SetState(new Game.Element.State.Game<Creature.Animal>()?.Create(gameCameraCtr, iGridProvider));
+                SetState(new Game.Element.State.Game<Creature.Animal>()?.Create(gameCameraCtr, iGrid));
             }
         }
 

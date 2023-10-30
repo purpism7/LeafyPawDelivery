@@ -6,70 +6,83 @@ using GameSystem;
 
 namespace Game.PathFinding
 {
-    public class AStar : MonoBehaviour
+    public class AStar
     {
-        private static AStar _instance = null;
+        public List<Node> Path { get; private set; } = new();
 
-        public static void Create(IGridProvider iGridProvider)
+        public void FindPath(Node startNode, Node targetNode, System.Func<int, List<Node>> findNeighbourNodeFunc)
         {
-            if(_instance == null)
-            {
-                var gameObj = new GameObject(typeof(AStar).Name);
-                _instance = gameObj.AddComponent<AStar>();
+            Path.Clear();
 
-                _instance?.Initialize(iGridProvider);
-            }
-        }
-
-        private void Initialize(IGridProvider iGridProvider)
-        {
-
-        }
-
-        public static void FindPath(Node startNode, Node targetNode)
-        {
             var openList = new List<Node>();
             openList.Clear();
             openList.Add(startNode);
 
-            var closedList = new HashSet<Node>();
+            var closedSet = new HashSet<Node>();
 
             while(openList?.Count > 0)
             {
                 var currentNode = openList[0];
 
-                foreach(var node in openList)
+                for(int i = 0; i < openList.Count; ++i)
                 {
-                    if(node.FCost < currentNode.FCost ||
-                       node.FCost == currentNode.FCost && node.HCost < currentNode.HCost)
+                    var node = openList[i];
+                    if (node == null)
+                        continue;
+
+                    if (node.FCost < currentNode.FCost ||
+                        node.FCost == currentNode.FCost && node.HCost < currentNode.HCost)
                     {
                         currentNode = node;
                     }
                 }
 
                 openList.Remove(currentNode);
-                closedList.Add(currentNode);
+                closedSet.Add(currentNode);
 
                 if(currentNode.Id == targetNode.Id)
                 {
-                    _instance?.RetracePath(startNode, targetNode);
+                    RetracePath(startNode, targetNode);
 
                     break;
                 }
 
-                //foreach()
+                var neighbourNodeList = findNeighbourNodeFunc?.Invoke(currentNode.Id);
+                foreach(var node in neighbourNodeList)
+                {
+                    if (!node.IsWalkAble ||
+                        closedSet.Contains(node))
+                        continue;
+
+                    int cost = currentNode.GCost + GetDistanceCost(currentNode, node);
+                    if(cost < node.GCost ||
+                      !openList.Contains(node))
+                    {
+                        node.GCost = cost;
+                        node.HCost = GetDistanceCost(node, targetNode);
+                        node.ParentNode = currentNode;
+
+                        if(!openList.Contains(node))
+                        {
+                            openList.Add(node);
+                        }
+                    }
+                }
             }
         }
 
-        private List<Node> GetNeighbourList(Node node)
+        private int GetDistanceCost(Node node, Node compNode)
         {
-            var neighbourList = new List<Node>();
-            neighbourList.Clear();
+            int distX = Mathf.Abs(node.X - compNode.X);
+            int distY = Mathf.Abs(node.Y - compNode.Y);
 
-            return neighbourList;
+            if (distX > distY)
+                return 14 * distY + 10 * (distX - distY);
+
+            return 14 * distX + 10 * (distY - distX);
         }
 
-        // 탐색 종료  최종 노드들의 parentNode 를 추적하 리스트에 담는다.
+        // 탐색 종료 최종 노드들의 parentNode 를 추적하여 리스트에 담는다.
         private void RetracePath(Node startNode, Node targetNode)
         {
             var path = new List<Node>();
@@ -80,10 +93,14 @@ namespace Game.PathFinding
             while(currentNode.Id != startNode.Id)
             {
                 path.Add(currentNode);
+
+                Debug.Log(currentNode.Id);
                 currentNode = currentNode.ParentNode;
             }
 
             path.Reverse();
+
+            Path = path;
         }
     }
 }
