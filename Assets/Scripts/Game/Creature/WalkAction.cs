@@ -10,11 +10,13 @@ namespace Game.Creature
 
         private Vector3 _targetPos = Vector3.zero;
 
+        private Queue<Vector3> _posQueue = new();
+
         public override void StartAction()
         {
             base.StartAction();
 
-            MoveToTarget();
+            Move();
         }
 
         protected override void EndAction()
@@ -22,41 +24,54 @@ namespace Game.Creature
             base.EndAction();
         }
 
-        private void MoveToTarget()
+        private void Move()
         {
-            Vector3 pos = Vector3.zero;
-            var gameCameraCtr = MainGameManager.Instance?.GameCameraCtr;
-            if (gameCameraCtr == null)
-                return;
+            if (Carrier.Move(_data.Tm.localPosition, out List<Vector3> pathPosList))
+            {
+                _posQueue.Clear();
 
-            var center = gameCameraCtr.Center;
-            var halfWidth = (gameCameraCtr.Width - 200f) / 2f;
-            var halfHeight = (gameCameraCtr.Height - 850f) / 2f;
+                foreach(Vector3 pos in pathPosList)
+                {
+                    _posQueue.Enqueue(pos);
+                }
 
-            var randomX = Random.Range(center.x - halfWidth, center.x + halfWidth);
-            var randomY = Random.Range(center.y - halfHeight, center.y + halfHeight);
-            randomY = gameCameraCtr.IGrid.LimitPosY(randomY);
-
-            MoveToTarget(new Vector3(randomX, randomY, _initPosZ));
+                if(_posQueue.Count > 0)
+                {
+                    MoveToTarget();
+                }
+                else
+                {
+                    EndAction();
+                }
+            }
+            else
+            {
+                EndAction();
+            }
         }
 
-        private void MoveToTarget(Vector3 targetPos)
+        private bool MoveToTarget()
         {
-            if(_data == null)
-                return;
+            if (_posQueue.Count <= 0)
+                return false;
+
+            if (_data == null)
+                return false;
 
             if (_data.SprRenderer == null)
-                return;
+                return false;
 
             var animalTm = _data.Tm;
             if (!animalTm)
-                return;
+                return false;
 
-            _data.SprRenderer.flipX = animalTm.localPosition.x - targetPos.x < 0;
+            _targetPos = _posQueue.Dequeue();
 
-            _targetPos = targetPos;
+            _data.SprRenderer.flipX = animalTm.localPosition.x - _targetPos.x < 0;
 
             SetState(EState.InProgress);
+
+            return true;
         }
 
         public override void ChainUpdate()
@@ -89,7 +104,10 @@ namespace Game.Creature
             var distance = Vector2.Distance(animalTm.localPosition, _targetPos);
             if (distance <= 0)
             {
-                EndAction();
+                if(!MoveToTarget())
+                {
+                    EndAction();
+                }
             }
         }
     }

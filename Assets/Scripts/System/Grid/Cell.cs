@@ -26,10 +26,18 @@ namespace GameSystem
         public int Row { get { return _data != null ? _data.Row : 0; } }
         public int Column { get { return _data != null ? _data.Column : 0; } }
 
+        //public bool Path = false;
+
         private void OnDrawGizmos()
         {
             Gizmos.color = IsOverlap ? new Color(1, 0, 0, 1f) : new Color(0, 0, 1, 1f);
             Gizmos.DrawWireCube(transform.position, boxCollider.size);
+
+            //if(Path)
+            //{
+            //    Gizmos.color = Color.black;
+            //    Gizmos.DrawCube(transform.position, boxCollider.size);
+            //}
         }
 
         public void Init(Data data)

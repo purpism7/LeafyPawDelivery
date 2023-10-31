@@ -30,8 +30,8 @@ namespace Game.PathFinding
                     if (node == null)
                         continue;
 
-                    if (node.FCost < currentNode.FCost ||
-                        node.FCost == currentNode.FCost && node.HCost < currentNode.HCost)
+                    if (//node.FCost < currentNode.FCost ||
+                        node.FCost <= currentNode.FCost && node.HCost < currentNode.HCost)
                     {
                         currentNode = node;
                     }
@@ -42,8 +42,8 @@ namespace Game.PathFinding
 
                 if(currentNode.Id == targetNode.Id)
                 {
-                    RetracePath(startNode, targetNode);
-
+                    RetracePath(startNode, currentNode);
+      
                     break;
                 }
 
@@ -94,7 +94,6 @@ namespace Game.PathFinding
             {
                 path.Add(currentNode);
 
-                Debug.Log(currentNode.Id);
                 currentNode = currentNode.ParentNode;
             }
 

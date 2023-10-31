@@ -21,21 +21,18 @@ namespace Game
             }
         }
 
-        public static bool Move(Vector3 targetPos)
+        public static bool Move(Vector3 targetPos, out List<Vector3> pathPosList)
         {
+            pathPosList = null;
+
             if (_instance == null)
                 return false;
 
-            return _instance.MoveByAStar(targetPos);
+            return _instance.MoveByAStar(targetPos, out pathPosList);
         }
 
         private IGridCell _iGridCell = null;
         private PathFinding.AStar _aStar = null;
-
-        private void OnDrawGizmos()
-        {
-            
-        }
 
         private void Initialize(IGridCell iGridCell)
         {
@@ -44,8 +41,10 @@ namespace Game
             _aStar = new();
         }
 
-        private bool MoveByAStar(Vector3 targetPos)
+        private bool MoveByAStar(Vector3 targetPos, out List<Vector3> pathPosList)
         {
+            pathPosList = null;
+
             var iGridCell = _iGridCell;
             if (iGridCell == null)
                 return false;
@@ -66,9 +65,25 @@ namespace Game
             var startNode = new PathFinding.Node(cell.Id, !cell.IsOverlap, cell.Row, cell.Column);
             var targetNode = new PathFinding.Node(targetCell.Id, true, targetCell.Row, targetCell.Column);
 
+            //_iGridCell.Reset();
+
             _aStar.FindPath(startNode, targetNode, GetNeighbourNodeList);
 
-            Debug.Log(_aStar.Path.Count);
+            pathPosList = new();
+            pathPosList.Clear();
+
+            foreach (var path in _aStar.Path)
+            {
+                if (path == null)
+                    continue;
+
+                var pathCell = _iGridCell?.GetCell(path.Id);
+                if (pathCell == null)
+                    continue;
+
+                //pathCell.Path = true;
+                pathPosList.Add(pathCell.transform.position);
+            }
 
             return true;
         }

@@ -77,8 +77,7 @@ public class MainGameManager : Singleton<MainGameManager>
         _iUpdateGrid = inputMgr?.grid;
 
         _iGrid = inputMgr?.grid;
-        _iGrid?.Overlap();
-
+ 
         Game.Carrier.Create(inputMgr?.grid);
 
         SetGameState<Game.State.Game>();
@@ -86,6 +85,10 @@ public class MainGameManager : Singleton<MainGameManager>
         RecordContainer = new();
 
         yield return StartCoroutine(AcquireMgr?.CoInit(null));
+
+        yield return null;
+
+        _iGrid?.Overlap();
     }
 
     public void Starter()

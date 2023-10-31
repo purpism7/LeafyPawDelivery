@@ -14,6 +14,8 @@ namespace GameSystem
 
     public interface IGridCell
     {
+        //void Reset();
+        Cell GetCell(int id);
         Cell GetCell(Vector3 pos);
         List<Cell> GetNeighbourList(int id);
     }
@@ -127,6 +129,40 @@ namespace GameSystem
         #endregion
 
         #region IGridCell
+        //void IGridCell.Reset()
+        //{
+        //    for (int column = 0; column < GridData.Column; ++column)
+        //    {
+        //        for (int row = 0; row < GridData.Row; ++row)
+        //        {
+        //            var cell = _cellArray[row, column];
+        //            if (cell == null)
+        //                continue;
+
+        //            cell.Path = false;
+        //        }
+        //    }
+        //}
+
+        Cell IGridCell.GetCell(int id)
+        {
+            for (int column = 0; column < GridData.Column; ++column)
+            {
+                for (int row = 0; row < GridData.Row; ++row)
+                {
+                    var cell = _cellArray[row, column];
+                    if (cell == null)
+                        continue;
+
+                    if (cell.Id != id)
+                        continue;
+
+                    return cell;
+                }
+            }
+
+            return null;
+        }
 
         Cell IGridCell.GetCell(Vector3 pos)
         {
