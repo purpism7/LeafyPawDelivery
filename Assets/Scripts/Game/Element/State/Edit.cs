@@ -187,6 +187,9 @@ namespace Game.Element.State
             {
                 foreach (var collider in colliders)
                 {
+                    if (collider == null)
+                        continue;
+
                     var obj = collider.gameObject.GetComponentInParent<Game.Object>();
                     if (obj != null)
                     {
@@ -208,6 +211,9 @@ namespace Game.Element.State
                     var animal = collider.gameObject.GetComponentInParent<Game.Creature.Animal>();
                     if (animal != null)
                     {
+                        if (animal.Id == _gameBaseElement.Id)
+                            continue;
+
                         isOverlap = true;
 
                         break;

@@ -167,6 +167,8 @@ public class MainGameManager : Singleton<MainGameManager>
             pos = GameCameraCtr.Center;
         }
 
+        pos.z = GetPosZ(id);
+
         var animal = activityPlace.AddAnimal(id, animalInfo.SkinId, pos);
         if (animal == null)
             return;
@@ -189,8 +191,7 @@ public class MainGameManager : Singleton<MainGameManager>
             pos = GameCameraCtr.Center;
         }
 
-        float posZ = id * 0.01f;
-        pos.z = posZ;
+        pos.z = GetPosZ(id);
 
         int currSkinId = AnimalMgr.GetCurrenctSkinId(id);
 
@@ -198,6 +199,11 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             AnimalMgr?.ApplySkin(id, skinId);
         }
+    }
+
+    private float GetPosZ(int id)
+    {
+        return id * 0.01f;
     }
     #endregion
 
