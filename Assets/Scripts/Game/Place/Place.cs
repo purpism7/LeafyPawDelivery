@@ -6,7 +6,13 @@ using GameSystem;
 
 namespace Game
 {
-    public class Place : Base<Place.Data>
+    public interface IPlace
+    {
+        List<Game.Creature.Animal> AnimalList { get; }
+        Transform CurrencyRootTm { get; }
+    }
+
+    public class Place : Base<Place.Data>, IPlace
     {
         public class Data : BaseData
         {
@@ -19,20 +25,17 @@ namespace Game
         private Transform currencyRootTm = null;
         public Transform animalRootTm;
 
-        //public Transform ObjectRootTm { get { return objectRootTm; } }
-
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
-
-        private Coroutine _speechBubbleCoroutine = null;
-        private Coroutine _dropCurrencyCoroutine = null;
-        private YieldInstruction _waitSecSpeechBubble = new WaitForSeconds(10f);
-        private YieldInstruction _waitSecDropCurrency = new WaitForSeconds(30f);
         private float _initPosZ = 0;
+
+        private PlaceEventController _placeEventCtr = new();
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+
+            _placeEventCtr?.Initialize(this);
 
             Deactivate();
         }
@@ -361,131 +364,33 @@ namespace Game
 
         public void ProcessGame()
         {
-            ActivateRandomSpeechBubble();
+            _placeEventCtr?.Start();
 
-            StartDropCurrency();
             UIUtils.SetActive(currencyRootTm, true);
         }
 
         public void ProcessEdit()
         {
-            DeactivateAllSpeechBubble();
+            _placeEventCtr?.End();
 
-            StopDropCurrency();
             UIUtils.SetActive(currencyRootTm, false);
         }
 
-        #region SpeechBubble
-        private void ActivateRandomSpeechBubble()
+        #region IPlace
+        List<Creature.Animal> IPlace.AnimalList
         {
-            DeactivateAllSpeechBubble();
-            _speechBubbleCoroutine = StartCoroutine(CoRandomSpeechBubble());
-        }
-
-        private void DeactivateAllSpeechBubble()
-        {
-            if(_speechBubbleCoroutine != null)
+            get
             {
-                StopCoroutine(_speechBubbleCoroutine);
-                _speechBubbleCoroutine = null;
-            }
-
-            foreach (var animal in _animalList)
-            {
-                animal?.DeactivateSpeechBubble();
+                return _animalList;
             }
         }
 
-        private IEnumerator CoRandomSpeechBubble()
+        Transform IPlace.CurrencyRootTm
         {
-            if (MainGameManager.Instance.GameState.CheckState<Game.State.Edit>())
-                yield break;
-
-            if (_animalList == null)
-                yield break;
-
-            if (_animalList.Count <= 0)
-                yield break;
-
-            yield return _waitSecSpeechBubble;
-
-            if (_speechBubbleCoroutine == null)
-                yield break;
-
-            var activateAnimalList = _animalList.FindAll(animal => animal != null ? animal.IsActivate : false);
-            var randomIndex = UnityEngine.Random.Range(0, activateAnimalList.Count);
-            var randomAnimal = activateAnimalList[randomIndex];
-            if (randomAnimal == null)
-                yield break;
-
-            randomAnimal.ActivateSpeechBubble(
-                () =>
-                {
-                    ActivateRandomSpeechBubble();
-                });
-        }
-        #endregion
-
-        #region Drop Currency
-
-        private void StartDropCurrency()
-        {
-            StopDropCurrency();
-            _dropCurrencyCoroutine = StartCoroutine(CoDropCurrency());
-        }
-
-        private void StopDropCurrency()
-        {
-            if (_dropCurrencyCoroutine != null)
+            get
             {
-                StopCoroutine(_dropCurrencyCoroutine);
-                _dropCurrencyCoroutine = null;
+                return currencyRootTm;
             }
-        }
-
-        private IEnumerator CoDropCurrency()
-        {
-            if (MainGameManager.Instance.GameState.CheckState<Game.State.Edit>())
-                yield break;
-
-            if (_animalList == null)
-                yield break;
-
-            if (_animalList.Count <= 0)
-                yield break;
-
-            yield return _waitSecDropCurrency;
-
-            if (_dropCurrencyCoroutine == null)
-                yield break;
-
-            DropCurrency();
-
-            yield return null;
-
-            StartDropCurrency();
-        }
-
-        private void DropCurrency()
-        {
-            var activateAnimalList = _animalList.FindAll(animal => animal != null ? animal.IsActivate : false);
-            var randomIndex = UnityEngine.Random.Range(0, activateAnimalList.Count);
-            var randomAnimal = activateAnimalList[randomIndex];
-            if (randomAnimal == null)
-                return;
-
-            if (randomAnimal.ElementData == null)
-                return;
-
-            new DropItemCreator()
-                .SetRootTm(currencyRootTm)
-                .SetDropItemData(new DropItem.CurrencyData()
-                {
-                    startRootTm = randomAnimal.transform,
-                    EElement = Type.EElement.Animal,
-                    Value = randomAnimal.ElementData.GetCurrency,
-                })
-                .Create();
         }
         #endregion
     }
