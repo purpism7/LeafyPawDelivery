@@ -19,6 +19,11 @@ namespace Game.Creature
             Move();
         }
 
+        protected override void InProgressAction()
+        {
+            base.InProgressAction();
+        }
+
         protected override void EndAction()
         {
             base.EndAction();
@@ -37,6 +42,8 @@ namespace Game.Creature
 
                 if(_posQueue.Count > 0)
                 {
+                    InProgressAction();
+
                     MoveToTarget();
                 }
                 else
@@ -69,7 +76,7 @@ namespace Game.Creature
 
             _data.SprRenderer.flipX = animalTm.localPosition.x - _targetPos.x < 0;
 
-            SetState(EState.InProgress);
+            //SetState(EState.InProgress);
 
             return true;
         }
@@ -84,8 +91,8 @@ namespace Game.Creature
             if (_data == null)
                 return;
 
-            if (_data.EState != EState.InProgress)
-                return;
+            //if (_data.EState != EState.InProgress)
+            //    return;
 
             var animalTm = _data.Tm;
             if (!animalTm)

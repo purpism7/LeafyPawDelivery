@@ -24,7 +24,7 @@ namespace Game.Creature
                 _data.Tm.localPosition = new Vector3(_data.Tm.localPosition.x, _data.Tm.localPosition.y, _initPosZ);
             }
 
-            SetState(EState.InProgress);
+            InProgressAction();
         }
 
         protected override void EndAction()
@@ -35,9 +35,6 @@ namespace Game.Creature
         public override void ChainUpdate()
         {
             if (_data == null)
-                return;
-
-            if (_data.EState == EState.End)
                 return;
 
             var animator = _data?.Animator;

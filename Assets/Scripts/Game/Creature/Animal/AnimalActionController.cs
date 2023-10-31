@@ -64,7 +64,11 @@ namespace Game.Creature
                 return;
             }
 
-            _currentAnimalAction?.ChainUpdate();
+            if(_currentAnimalAction != null &&
+               _currentAnimalAction.IsUpdate)
+            {
+                _currentAnimalAction.ChainUpdate();
+            }
         }
 
         private AnimalAction CreateaAnimalAction<T>() where T : AnimalAction, new()

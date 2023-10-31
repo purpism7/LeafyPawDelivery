@@ -200,8 +200,6 @@ namespace Game.Element.State
                                 continue;
                         }
 
-                        Debug.Log("obj.name = " + obj.name);
-                         
                         isOverlap = true;
 
                         break;
@@ -210,7 +208,9 @@ namespace Game.Element.State
                     var animal = collider.gameObject.GetComponentInParent<Game.Creature.Animal>();
                     if (animal != null)
                     {
+                        isOverlap = true;
 
+                        break;
                     }
                 }
             }

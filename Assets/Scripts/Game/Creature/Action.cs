@@ -13,21 +13,11 @@ namespace Game.Creature
             void EndAction(T t);
         }
 
-        public enum EState
-        {
-            None,
-
-            Start,
-            InProgress,
-            End,
-        }
-
         public class Data<T> where T : Action
         {
             public IListener<T> IListener = null;
             public Transform Tm = null;
             public Animator Animator = null;
-            public EState EState = EState.None;
         }
     }
 }

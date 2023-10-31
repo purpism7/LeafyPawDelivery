@@ -52,6 +52,8 @@ namespace Game
             if (_aStar == null)
                 return false;
 
+            _aStar.Path.Clear();
+
             var cell = _iGridCell.GetCell(targetPos);
             if (cell == null)
                 return false;

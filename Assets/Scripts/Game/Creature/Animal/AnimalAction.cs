@@ -16,6 +16,8 @@ namespace Game.Creature
 
         protected abstract string ActionName { get; }
 
+        public bool IsUpdate { get; private set; } = false;
+
         public AnimalAction Create(Data data)
         {
             _data = data;
@@ -35,32 +37,34 @@ namespace Game.Creature
             if (_data == null)
                 return;
 
+            _data.IListener?.StartAction(this);
+        }
+
+        protected virtual void InProgressAction()
+        {
             var animator = _data?.Animator;
             if (animator == null)
                 return;
 
-            //animator.ResetTrigger(ActionName);
+            IsUpdate = true;
+
             animator.SetTrigger(ActionName);
-
-            SetState(EState.Start);
-
-            _data.IListener?.StartAction(this);
         }
 
         protected virtual void EndAction()
         {
-            SetState(EState.End);
+            IsUpdate = false;
 
             _data?.IListener?.EndAction(this);
         }
 
-        protected void SetState(EState eState)
-        {
-            if(_data != null)
-            {
-                _data.EState = eState;
-            }
-        }
+        //protected void SetState(EState eState)
+        //{
+        //    if(_data != null)
+        //    {
+        //        _data.EState = eState;
+        //    }
+        //}
     }
 }
 
