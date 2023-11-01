@@ -95,7 +95,7 @@ namespace GameSystem
         {
             get
             {
-                var cell = _cellArray[GridData.Row - 2, GridData.Column - 2];
+                var cell = _cellArray[GridData.Row - 2, GridData.Column - 3];
                 if (cell == null)
                 {
                     //return V;
