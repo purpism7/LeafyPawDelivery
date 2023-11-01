@@ -51,6 +51,10 @@ namespace Game.PlaceEvent
                 yield break;
 
             var activateAnimalList = animalList.FindAll(animal => animal != null ? animal.IsActivate : false);
+            if (activateAnimalList == null ||
+                activateAnimalList.Count <= 0)
+                yield break;
+
             var randomIndex = UnityEngine.Random.Range(0, activateAnimalList.Count);
             var randomAnimal = activateAnimalList[randomIndex];
             if (randomAnimal == null)

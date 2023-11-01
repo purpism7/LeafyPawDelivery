@@ -51,6 +51,10 @@ namespace Game.PlaceEvent
         private void Drop()
         {
             var activateAnimalList = _iPlace.AnimalList.FindAll(animal => animal != null ? animal.IsActivate : false);
+            if (activateAnimalList == null ||
+                activateAnimalList.Count <= 0)
+                return;
+
             var randomIndex = UnityEngine.Random.Range(0, activateAnimalList.Count);
             var randomAnimal = activateAnimalList[randomIndex];
             if (randomAnimal == null)
