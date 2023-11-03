@@ -16,7 +16,7 @@ public class Sequencer : Game.Common
             if (!gameObj)
                 return null;
 
-            _instance = gameObj.GetComponent<Sequencer>();
+            _instance = gameObj.GetOrAddComponent<Sequencer>();
         }
 
         if(_instance != null)

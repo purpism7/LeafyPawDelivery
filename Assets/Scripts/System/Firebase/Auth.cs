@@ -8,7 +8,7 @@ using Firebase.Auth;
 
 namespace GameSystem.Firebase
 {
-    public class Auth : MonoBehaviour
+    public class Auth : Base
     {
         private bool _endLoad = false;
 
@@ -23,7 +23,7 @@ namespace GameSystem.Firebase
             }
         }
 
-        public IEnumerator CoInit()
+        public override IEnumerator CoInit()
         {
             var auth = FirebaseAuth.GetAuth(FirebaseApp.Create());
 

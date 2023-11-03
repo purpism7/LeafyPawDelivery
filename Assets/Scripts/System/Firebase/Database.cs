@@ -6,7 +6,7 @@ using Firebase.Database;
 
 namespace GameSystem.Firebase
 {
-    public class Database : MonoBehaviour
+    public class Database : Base
     {
 
         //public async void Init()
@@ -26,7 +26,7 @@ namespace GameSystem.Firebase
         private System.Action<DataSnapshot> _dataSnapshotAction = null;
 
 
-        public IEnumerator CoInit()
+        public override IEnumerator CoInit()
         {
             //var rootRef = FirebaseDatabase.DefaultInstance?.RootReference;
 

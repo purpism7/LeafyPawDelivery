@@ -19,6 +19,7 @@ namespace GameSystem
             yield return StartCoroutine(Game.UIManager.Instance.CoInit(iProvider));
 
             Sequencer.Create();
+            AdMob.Create();
             DOTween.Init();
 
             yield return null;
