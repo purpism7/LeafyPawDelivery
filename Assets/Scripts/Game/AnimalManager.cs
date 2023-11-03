@@ -32,7 +32,7 @@ namespace Game
             mainGameMgr?.placeMgr?.Listener?.AddListener(OnChangedPlace);
         }
 
-        public override IEnumerator CoInit(Data data)
+        public override IEnumerator CoInitialize(Data data)
         {
             _data = data;
             

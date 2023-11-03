@@ -28,6 +28,7 @@ namespace Game
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
         private float _initPosZ = 0;
+        private bool _initialize = false;
 
         private PlaceEventController _placeEventCtr = new();
 
@@ -35,6 +36,7 @@ namespace Game
         {
             base.Initialize(data);
 
+            _initialize = true;
             _placeEventCtr?.Initialize(this);
 
             Deactivate();
@@ -42,6 +44,9 @@ namespace Game
 
         public override void ChainUpdate()
         {
+            if (!IsActivate)
+                return;
+
             foreach(var animal in _animalList)
             {
                 animal?.ChainUpdate();
@@ -52,8 +57,22 @@ namespace Game
         {
             base.Activate();
 
-            SetObjectList();
-            SetAnimalList();
+            if(_initialize)
+            {
+                _initialize = false;
+
+                SetObjectList();
+                SetAnimalList();
+            }
+
+            Boom();
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            Bust();
         }
 
         #region Animal
@@ -362,14 +381,14 @@ namespace Game
             }
         }
 
-        public void ProcessGame()
+        public void Boom()
         {
             _placeEventCtr?.Start();
 
             UIUtils.SetActive(currencyRootTm, true);
         }
 
-        public void ProcessEdit()
+        public void Bust()
         {
             _placeEventCtr?.End();
 

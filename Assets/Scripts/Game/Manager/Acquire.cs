@@ -14,13 +14,12 @@ namespace Game.Manager
         private Info.AcquireHolder _acquireHolder = new();
 
         
-
         protected override void Initialize()
         {
             
         }
 
-        public override IEnumerator CoInit(Data data)
+        public override IEnumerator CoInitialize(Data data)
         {
             _acquireHolder?.LoadInfo();
 

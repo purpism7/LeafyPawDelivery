@@ -113,7 +113,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: cbf2e79f38f4e4b4c80e6c522b522b86, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7269e41b04a041f9a6a41130eb109ac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 3718263694354982799}
   - component: {fileID: 5363291773601785696}
   m_Layer: 8
-  m_Name: Place_1
+  m_Name: Place_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 1240173292099746398}
-  Id: 1
+  Id: 2
   objectRootTm: {fileID: 8331713420321853600}
   currencyRootTm: {fileID: 9165708623665845932}
   animalRootTm: {fileID: 3621777883156634170}

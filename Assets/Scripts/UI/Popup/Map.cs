@@ -7,16 +7,15 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class Map : BasePopup<Map.Data>
+    public class Map : BasePopup<Map.Data>, MapIcon.IListener
     {
         public class Data : BaseData
         {
 
         }
-        
-        [SerializeField] private ScrollRect placeScrollRect = null;
-        
-        private Game.Type.ETab _currETabType = Game.Type.ETab.Animal;
+
+        [SerializeField]
+        private MapIcon[] mapIcons = null;
 
         public override void Initialize(Data data)
         {
@@ -36,54 +35,31 @@ namespace UI
 
         private void InternalInitialize()
         {
-            SetPlaceList();
+            SetMapIcons();
         }
 
-        private void SetPlaceList()
+        private void SetMapIcons()
         {
-            var datas = PlaceContainer.Instance.Datas;
-            if (datas == null)
+            if (mapIcons == null)
                 return;
 
-            foreach (var data in datas)
+            foreach(var mapIcon in mapIcons)
             {
-                // var cell = new ComponentCreator<BookCell, BookCell.Data>()
-                //     .SetData(new BookCell.Data()
-                //     {
-                //         IListener = this,
-                //         Name = data.Name,
-                //         IconSprite = GameSystem.ResourceManager.Instance.AtalsLoader.GetAnimalIconSprite(data.IconImgName),
-                //     })
-                //     .SetRootRectTm(animalScrollRect?.content)
-                //     .Create();
+                if (mapIcon == null)
+                    continue;
+
+                mapIcon?.Initialize(new MapIcon.Data()
+                {
+                    IListener = this,
+                });
             }
         }
 
-        // private void SetObjectList()
-        // {
-        //     var datas = ObjectContainer.Instance?.Datas;
-        //     if (datas == null)
-        //         return;
-        //
-        //     foreach (var data in datas)
-        //     {
-        //         var cell = new ComponentCreator<BookCell, BookCell.Data>()
-        //             .SetData(new BookCell.Data()
-        //             {
-        //                 IListener = this,
-        //                 Name = data.Name,
-        //                 IconSprite = GameSystem.ResourceManager.Instance.AtalsLoader.GetObjectIconSprite(data.IconImgName),
-        //             })
-        //             .SetRootRectTm(objectScrollRect?.content)
-        //             .Create();
-        //     }
-        // }
-    
         public override void Deactivate()
         {
             base.Deactivate();
         }
-        
+
         // public void OnChanged(string tabType)
         // {
         //     if(System.Enum.TryParse(tabType, out Type.ETab eTabType))
@@ -98,5 +74,14 @@ namespace UI
         //         ActiveContents();
         //     }
         // }
+
+        #region MapIcon.IListener
+        void MapIcon.IListener.SelectPlace(int id)
+        {
+            Deactivate();
+
+            MainGameManager.Instance?.MovePlace(id);
+        }
+        #endregion
     }
 }

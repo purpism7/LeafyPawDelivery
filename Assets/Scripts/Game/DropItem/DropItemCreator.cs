@@ -7,6 +7,20 @@ namespace Game
 {
     public class DropItemCreator : BaseCreator<DropItem>
     {
+        private static DropItemCreator _instance = null;
+        public static DropItemCreator Get
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new DropItemCreator();
+                }
+
+                return _instance;
+            }
+        }
+
         private Transform _rootTm = null;
         private DropItem.Data _dropItemData = null;
 

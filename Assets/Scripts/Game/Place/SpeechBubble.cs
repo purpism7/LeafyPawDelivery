@@ -35,7 +35,11 @@ namespace Game.PlaceEvent
 
         private IEnumerator CoRandomSpeechBubble()
         {
-            if (MainGameManager.Instance.GameState.CheckState<Game.State.Edit>())
+            var gameState = MainGameManager.Instance?.GameState;
+            if (gameState == null)
+                yield break;
+
+            if (gameState.CheckState<Game.State.Edit>())
                 yield break;
 
             var animalList = _iPlace?.AnimalList;

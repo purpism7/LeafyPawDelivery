@@ -168,6 +168,8 @@ namespace UI.Component
                 return;
 
             var currencyInfo = Game.Data.Const.GetCurrencyInfo(ActivityPlaceId);
+            if (currencyInfo == null)
+                return;
 
             var openConditionData = new OpenCondition.Data()
             {
@@ -196,6 +198,8 @@ namespace UI.Component
                 return;
 
             var currencyInfo = Game.Data.Const.GetCurrencyInfo(ActivityPlaceId);
+            if (currencyInfo == null)
+                return;
 
             var openConditionData = new OpenCondition.Data()
             {

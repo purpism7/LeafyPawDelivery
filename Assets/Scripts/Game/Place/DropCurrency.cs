@@ -26,7 +26,11 @@ namespace Game.PlaceEvent
 
         private IEnumerator CoDrop()
         {
-            if (MainGameManager.Instance.GameState.CheckState<Game.State.Edit>())
+            var gameState = MainGameManager.Instance?.GameState;
+            if (gameState == null)
+                yield break;
+
+            if (gameState.CheckState<Game.State.Edit>())
                 yield break;
 
             var animalList = _iPlace?.AnimalList;
@@ -63,7 +67,7 @@ namespace Game.PlaceEvent
             if (randomAnimal.ElementData == null)
                 return;
 
-            new DropItemCreator()
+            DropItemCreator.Get
                 .SetRootTm(_iPlace.CurrencyRootTm)
                 .SetDropItemData(new DropItem.CurrencyData()
                 {

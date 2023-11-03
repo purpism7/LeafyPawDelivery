@@ -13,7 +13,7 @@ namespace Game
     {
         public class Data : Manager.BaseData
         {
-            public int StartPlaceId = 0;
+            public int PlaceId = 0;
         }
 
         public Transform RootTm;
@@ -36,18 +36,33 @@ namespace Game
             Listener?.RemoveAllListeners();
         }
 
-        public override IEnumerator CoInit(Data data)
+        public override IEnumerator CoInitialize(Data data)
         {
-            ActivityPlace = new GameSystem.PlaceCreator()
-               .SetPlaceId(data.StartPlaceId)
-               .SetRoot(RootTm)
-               .Create();
-
-            _placeList.Add(ActivityPlace);
-
-            Listener?.Invoke(ActivityPlaceId);
+            SetActivityPlace(data);
 
             yield break;
+        }
+
+        private void SetActivityPlace(Data data)
+        {
+            ActivityPlace?.Deactivate();
+
+            var place = _placeList?.Find(place => place.Id == data.PlaceId);
+            if (place != null)
+            {
+                ActivityPlace = place;
+            }
+            else
+            {
+                ActivityPlace = new GameSystem.PlaceCreator()
+                  .SetPlaceId(data.PlaceId)
+                  .SetRoot(RootTm)
+                  .Create();
+
+                _placeList?.Add(ActivityPlace);
+            }
+
+            Listener?.Invoke(ActivityPlaceId);
         }
 
         public override void ChainUpdate()

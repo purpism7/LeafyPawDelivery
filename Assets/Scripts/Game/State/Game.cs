@@ -12,7 +12,7 @@ namespace Game.State
             if (activityPlace == null)
                 return;
 
-            activityPlace.ProcessGame();
+            activityPlace.Boom();
         }
     }
 }

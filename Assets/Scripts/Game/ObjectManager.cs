@@ -32,7 +32,7 @@ namespace Game
             Listener?.RemoveAllListeners();
         }
 
-        public override IEnumerator CoInit(Data data)
+        public override IEnumerator CoInitialize(Data data)
         {
             _data = data;
   

@@ -25,7 +25,7 @@ namespace Game.Manager
         }
 
         protected abstract void Initialize();
-        public abstract IEnumerator CoInit(T data);
+        public abstract IEnumerator CoInitialize(T data);
     }
 }
 

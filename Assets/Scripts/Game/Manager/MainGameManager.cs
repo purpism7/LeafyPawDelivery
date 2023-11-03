@@ -46,26 +46,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         var activityPlaceId = Game.Data.Const.StartPlaceId;//placeMgr.ActivityPlaceId; 
 
-        if (placeMgr != null)
-        {
-            yield return StartCoroutine(placeMgr.CoInit(
-                new Game.PlaceManager.Data()
-                {
-                    StartPlaceId = activityPlaceId,
-                }));
-        }
-
-        yield return StartCoroutine(ObjectMgr?.CoInit(new Game.ObjectManager.Data
-        {
-            PlaceId = activityPlaceId,
-        }));
-        
-        yield return StartCoroutine(AnimalMgr?.CoInit(new Game.AnimalManager.Data
-        {
-            PlaceId = activityPlaceId,
-        }));
-
-        placeMgr?.ActivityPlace?.Activate();
+        yield return StartCoroutine(CoInitializeManager(activityPlaceId));
 
         StoryMgr = iProvider.Get<Game.StoryManager>();
 
@@ -84,11 +65,35 @@ public class MainGameManager : Singleton<MainGameManager>
 
         RecordContainer = new();
 
-        yield return StartCoroutine(AcquireMgr?.CoInit(null));
+        yield return StartCoroutine(AcquireMgr?.CoInitialize(null));
 
         yield return null;
 
         _iGrid?.Overlap();
+    }
+
+    private IEnumerator CoInitializeManager(int placeId)
+    {
+        if (placeMgr != null)
+        {
+            yield return StartCoroutine(placeMgr.CoInitialize(
+                new Game.PlaceManager.Data()
+                {
+                    PlaceId = placeId,
+                }));
+        }
+
+        yield return StartCoroutine(ObjectMgr?.CoInitialize(new Game.ObjectManager.Data
+        {
+            PlaceId = placeId,
+        }));
+
+        yield return StartCoroutine(AnimalMgr?.CoInitialize(new Game.AnimalManager.Data
+        {
+            PlaceId = placeId,
+        }));
+
+        placeMgr?.ActivityPlace?.Activate();
     }
 
     public void Starter()
@@ -149,6 +154,22 @@ public class MainGameManager : Singleton<MainGameManager>
 
         return false;
     }
+
+    #region Place
+    public void MovePlace(int placeId)
+    {
+        StartCoroutine(CoMovePlace(placeId));
+    }
+
+    private IEnumerator CoMovePlace(int placeId)
+    {
+        yield return StartCoroutine(CoInitializeManager(placeId));
+
+        _iGrid?.Overlap();
+
+        yield return null;
+    }
+    #endregion
 
     #region Animal
     public void AddAnimalToPlace(int id)
