@@ -5,22 +5,18 @@ using UnityEngine.UI;
 
 public static class UIUtils
 {
-    public static void SetActive(this Transform tm, bool active)
+    public static void SetActive(this RectTransform rectTm, bool active)
     {
-        if(!tm)
-        {
+        if(!rectTm)
             return;
-        }
 
-        SetActive(tm.gameObject, active);
+        SetActive(rectTm.gameObject, active);
     }
 
     public static void SetActive(this GameObject gameObj, bool active)
     { 
         if(!gameObj)
-        {
             return;
-        }
 
         gameObj.SetActive(active);
     }

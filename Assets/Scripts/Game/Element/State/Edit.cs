@@ -12,19 +12,16 @@ namespace Game.Element.State
         private bool _enableColliders = false;
         private bool _isOverlap = false;
 
-        public override BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
+        protected override BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
+            base.Initialize(gameCameraCtr, iGrid);
+
             _gameCameraCtr = gameCameraCtr;
             _iGrid = iGrid;
 
             _enableColliders = false;
 
             return this;
-        }
-
-        public override void Apply(T t)
-        {
-            _gameBaseElement = t;
         }
 
         public override void Touch(Touch touch)

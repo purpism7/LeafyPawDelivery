@@ -27,12 +27,12 @@ namespace Game
 
         public virtual void Activate()
         {
-            UIUtils.SetActive(rootTm, true);
+            GameUtils.SetActive(rootTm, true);
         }
 
         public virtual void Deactivate()
         {
-            UIUtils.SetActive(rootTm, false);
+            GameUtils.SetActive(rootTm, false);
         }
 
         public bool IsActivate

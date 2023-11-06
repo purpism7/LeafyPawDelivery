@@ -12,13 +12,27 @@ namespace Game
         Transform CurrencyRootTm { get; }
     }
 
-    public class Place : Base<Place.Data>, IPlace
+    public interface IPlaceState
+    {
+        public enum EType
+        {
+            None,
+
+            Active,
+            Deactive,
+            Edit,
+        }
+
+        EType State { get; }
+    }
+
+    public class Place : Base<Place.Data>, IPlace, IPlaceState
     {
         public class Data : BaseData
         {
             public int Id = 0;
         }
-        
+
         [SerializeField]
         private Transform objectRootTm;
         [SerializeField]
@@ -31,6 +45,7 @@ namespace Game
         private bool _initialize = false;
 
         private PlaceEventController _placeEventCtr = new();
+        private IPlaceState.EType _state = IPlaceState.EType.None;
 
         public override void Initialize(Data data)
         {
@@ -57,7 +72,7 @@ namespace Game
         {
             base.Activate();
 
-            if(_initialize)
+            if (_initialize)
             {
                 _initialize = false;
 
@@ -65,14 +80,22 @@ namespace Game
                 SetAnimalList();
             }
 
+            GameUtils.SetActive(animalRootTm, true);
+
             Boom();
+
+            _state = IPlaceState.EType.Active;
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
 
+            GameUtils.SetActive(animalRootTm, false);
+
             Bust();
+
+            _state = IPlaceState.EType.Deactive;
         }
 
         #region Animal
@@ -102,6 +125,7 @@ namespace Game
                  .SetAnimalId(id)
                  .SetSkinId(skinId)
                  .SetPos(pos)
+                 .SetIPlaceState(this)
                  .Create();
 
             _animalList.Add(addAnimal);
@@ -250,8 +274,8 @@ namespace Game
 
                 var animalData = new Game.Creature.Animal.Data()
                 {
-                    //Id = data.Id,
                     Pos = animalInfo.Pos,
+                    IPlaceState = this,   
                 };
 
                 Game.Creature.Animal resAnimal = null;
@@ -278,6 +302,7 @@ namespace Game
                         .SetAnimalId(animalInfo.Id)
                         .SetSkinId(animalInfo.SkinId)
                         .SetPos(animalInfo.Pos)
+                        .SetIPlaceState(this)
                         .Create();
 
                     _animalList.Add(resAnimal);
@@ -304,7 +329,7 @@ namespace Game
                 if (objectInfo.EditObjectList == null)
                     continue;
 
-                var data = ObjectContainer.Instance.GetData(objectInfo.Id);
+                var data = ObjectContainer.Instance?.GetData(objectInfo.Id);
                 if(data == null)
                     continue;
                 
@@ -385,14 +410,16 @@ namespace Game
         {
             _placeEventCtr?.Start();
 
-            UIUtils.SetActive(currencyRootTm, true);
+            currencyRootTm.SetActive(true);
         }
 
         public void Bust()
         {
+            _state = IPlaceState.EType.Edit;
+
             _placeEventCtr?.End();
 
-            UIUtils.SetActive(currencyRootTm, false);
+            currencyRootTm.SetActive(false);
         }
 
         #region IPlace
@@ -409,6 +436,16 @@ namespace Game
             get
             {
                 return currencyRootTm;
+            }
+        }
+        #endregion
+
+        #region IPlaceState
+        IPlaceState.EType IPlaceState.State
+        {
+            get
+            {
+                return _state;
             }
         }
         #endregion

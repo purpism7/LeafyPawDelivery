@@ -7,6 +7,38 @@ using Game;
 
 public static class GameUtils
 {
+    public static void SetActive(this Transform tm, bool active)
+    {
+        if (!tm)
+            return;
+
+        SetActive(tm.gameObject, active);
+    }
+
+    public static void SetActive(this GameObject gameObj, bool active)
+    {
+        if (!gameObj)
+            return;
+
+        gameObj.SetActive(active);
+    }
+
+    public static bool IsActive(this GameObject gameObj)
+    {
+        if (!gameObj)
+            return false;
+
+        return gameObj.activeSelf;
+    }
+
+    public static bool IsActive(this Transform tm)
+    {
+        if (!tm)
+            return false;
+
+        return tm.gameObject.activeSelf;
+    }
+
     public static string GetName(Type.EElement EElement, int id)
     {
         var name = string.Empty;

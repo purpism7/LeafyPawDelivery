@@ -17,6 +17,7 @@ namespace GameSystem
         private Vector3 _pos = Vector3.zero;
         private bool _isEdit = true;
         private bool _isSpeechBubble = true;
+        private IPlaceState _iPlaceState = null;
 
         //private System.Action<DropItem, Transform> _dropItemAction = null;
 
@@ -69,6 +70,13 @@ namespace GameSystem
             return this;
         }
 
+        public AnimalCreator SetIPlaceState(IPlaceState iPlaceState)
+        {
+            _iPlaceState = iPlaceState;
+
+            return this;
+        }
+
         //public AnimalCreator SetDropItemAction(System.Action<DropItem, Transform> dropItemAction)
         //{
         //    _dropItemAction = dropItemAction;
@@ -102,6 +110,7 @@ namespace GameSystem
                 Pos = _pos,
                 IsEdit = _isEdit,
                 IsSpeechBubble = _isSpeechBubble,
+                IPlaceState = _iPlaceState,
             });
 
             return animal;

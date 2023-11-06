@@ -75,12 +75,12 @@ namespace UI
         {
             speakerTMP?.SetText(string.Empty);
             typingTMP?.SetText(string.Empty);
-            UIUtils.SetActive(speakerImg?.transform, false);
+            UIUtils.SetActive(speakerImg?.rectTransform, false);
         }
 
         private void SetSpeakerImg(string spriteName)
         {
-            UIUtils.SetActive(speakerImg?.transform, false);
+            UIUtils.SetActive(speakerImg?.rectTransform, false);
 
             if (string.IsNullOrEmpty(spriteName))
                 return;
@@ -95,7 +95,7 @@ namespace UI
             speakerImg.sprite = speakerSprite;
             speakerImg.SetNativeSize();
 
-            UIUtils.SetActive(speakerImg?.transform, true);
+            UIUtils.SetActive(speakerImg?.rectTransform, true);
         }
 
         private IEnumerator CoTyping(Constituent constituent)

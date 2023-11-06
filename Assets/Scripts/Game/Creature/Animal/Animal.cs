@@ -16,6 +16,7 @@ namespace Game.Creature
             public Vector3 Pos = Vector3.zero;
             public bool IsEdit = true;
             public bool IsSpeechBubble = true;
+            public IPlaceState IPlaceState = null;
         }
 
         [Header("Skin")]
@@ -30,6 +31,8 @@ namespace Game.Creature
 
         public int SkinId { get { return skinId; } }
         public Game.Element.State.BaseState<Creature.Animal> State { get; private set; } = null;
+
+        private IPlaceState.EType _iPlaceState = IPlaceState.EType.None;
 
         public override void Initialize(Data data)
         {
@@ -57,8 +60,13 @@ namespace Game.Creature
         {
             base.Deactivate();
 
+            DeactivateChild();
+        }
+
+        private void DeactivateChild()
+        {
             _actionCtr?.Deactivate();
-            DeactivateSpeechBubble();
+            //DeactivateSpeechBubble();
         }
 
         private void InitActionController()
@@ -69,6 +77,18 @@ namespace Game.Creature
 
         public override void ChainUpdate()
         {
+            var iPlaceState = _data?.IPlaceState;
+            if (iPlaceState != null)
+            {
+                SetPlaceState(iPlaceState.State);
+            }
+
+            if (_iPlaceState != IPlaceState.EType.Active)
+                return;
+
+            //if (!(State is Element.State.Game<Animal>))
+            //    return;
+
             if (!IsActivate)
                 return;
 
@@ -85,14 +105,14 @@ namespace Game.Creature
 
             if (gameState.CheckState<Game.State.Edit>())
             {
-                SetState(new Game.Element.State.Edit<Creature.Animal>()?.Create(gameCameraCtr, iGrid));
+                SetState(Element.State.Edit<Animal>.Create(gameCameraCtr, iGrid));
 
                 SetSortingOrder(_selectOrder);
                 ActiveEdit(true);
             }
             else
             {
-                SetState(new Game.Element.State.Game<Creature.Animal>()?.Create(gameCameraCtr, iGrid));
+                SetState(Element.State.Game<Animal>.Create(gameCameraCtr, iGrid));
             }
         }
 
@@ -192,6 +212,32 @@ namespace Game.Creature
             SetState(null);
         }
         #endregion
+
+        private void SetPlaceState(IPlaceState.EType state)
+        {
+            if (_iPlaceState == state)
+                return;
+
+            _iPlaceState = state;
+
+            switch(state)
+            {
+                case IPlaceState.EType.Deactive:
+                    {
+                        SetState(Element.State.Deactive<Animal>.Create());
+
+                        DeactivateChild();
+
+                        break;
+                    }
+                case IPlaceState.EType.Edit:
+                    {
+                        DeactivateChild();
+
+                        break;
+                    }
+            }
+        }
     }
 }
 

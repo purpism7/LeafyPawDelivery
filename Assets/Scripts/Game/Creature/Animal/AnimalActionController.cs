@@ -57,13 +57,6 @@ namespace Game.Creature
 
         public void ChainUpdate()
         {
-            if (MainGameManager.Instance.GameState.CheckState<Game.State.Edit>())
-            {
-                StartIdleAction();
-
-                return;
-            }
-
             if(_currentAnimalAction != null &&
                _currentAnimalAction.IsUpdate)
             {

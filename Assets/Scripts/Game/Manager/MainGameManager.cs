@@ -46,30 +46,24 @@ public class MainGameManager : Singleton<MainGameManager>
 
         var activityPlaceId = Game.Data.Const.StartPlaceId;//placeMgr.ActivityPlaceId; 
 
-        yield return StartCoroutine(CoInitializeManager(activityPlaceId));
-
-        StoryMgr = iProvider.Get<Game.StoryManager>();
-
         var inputMgr = iProvider.Get<InputManager>();
         GameCameraCtr = inputMgr?.GameCameraCtr;
+
+        _iGrid = inputMgr?.grid;
+
+        yield return StartCoroutine(CoInitializeManager(activityPlaceId));
+
+        StoryMgr = iProvider.Get<Game.StoryManager>();       
 
         _iUpdateInputMgr = inputMgr;
         _iUpdateGameCameraCtr = GameCameraCtr;
         _iUpdateGrid = inputMgr?.grid;
 
-        _iGrid = inputMgr?.grid;
- 
-        Game.Carrier.Create(inputMgr?.grid);
-
         SetGameState<Game.State.Game>();
 
         RecordContainer = new();
 
-        yield return StartCoroutine(AcquireMgr?.CoInitialize(null));
-
-        yield return null;
-
-        _iGrid?.Overlap();
+        yield return StartCoroutine(AcquireMgr?.CoInitialize(null));        
     }
 
     private IEnumerator CoInitializeManager(int placeId)
@@ -94,6 +88,18 @@ public class MainGameManager : Singleton<MainGameManager>
         }));
 
         placeMgr?.ActivityPlace?.Activate();
+
+        yield return null;
+
+        var iGridCell = _iGrid as IGridCell;
+        if(iGridCell != null)
+        {
+            Game.Carrier.Create(iGridCell);
+        }
+
+        yield return null;
+
+        _iGrid?.Overlap();
     }
 
     public void Starter()
