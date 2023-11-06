@@ -11,14 +11,14 @@ namespace Game.Element.State
         public static BaseState<T> Create()
         {
             _instance = new BaseState<T>();
-
+            Debug.Log("_instance = " + _instance.GetType());
             return _instance?.Initialize();
         }
 
         public static BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             _instance = new BaseState<T>();
-
+            
             return _instance?.Initialize(gameCameraCtr, iGrid);
         }
 
@@ -37,12 +37,12 @@ namespace Game.Element.State
             return Type.Equals(state.Type);
         }
 
-        protected virtual BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
+        public virtual BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             return this;
         }
 
-        protected virtual BaseState<T> Initialize()
+        public virtual BaseState<T> Initialize()
         { 
             return this;
         }

@@ -12,7 +12,7 @@ namespace Game.Element.State
         private GameSystem.IGrid _iGrid = null;
         private DateTime _touchDateTime;
 
-        protected override BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
+        public override BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             _gameCameraCtr = gameCameraCtr;
             _iGrid = iGrid;

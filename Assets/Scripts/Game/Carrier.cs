@@ -14,10 +14,16 @@ namespace Game
         {
             if (_instance == null)
             {
+                Debug.Log("Carrier Create");
                 var gameObj = new GameObject(typeof(Carrier).Name);
-                _instance = gameObj.AddComponent<Carrier>();
+                _instance = gameObj.GetOrAddComponent<Carrier>();
                 
                 _instance?.Initialize(iGridCell);
+            }
+
+            if (_instance != null)
+            {
+                DontDestroyOnLoad(_instance);
             }
         }
 

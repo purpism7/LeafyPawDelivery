@@ -12,7 +12,7 @@ namespace Game.Element.State
         private bool _enableColliders = false;
         private bool _isOverlap = false;
 
-        protected override BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
+        public override BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             base.Initialize(gameCameraCtr, iGrid);
 

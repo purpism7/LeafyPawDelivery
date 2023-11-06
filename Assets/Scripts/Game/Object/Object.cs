@@ -72,14 +72,14 @@ namespace Game
 
             if(gameState.CheckState<Game.State.Edit>())
             {
-                SetState(Game.Element.State.Edit<Game.Object>.Create(gameCameraCtr, iGrid));
+                SetState(new Game.Element.State.Edit<Game.Object>()?.Initialize(gameCameraCtr, iGrid));
 
                 SetSortingOrder(_selectOrder);
                 ActiveEdit(true);
             }
             else
             {
-                SetState(Game.Element.State.Game<Game.Object>.Create(gameCameraCtr, iGrid));
+                SetState(new Game.Element.State.Game<Game.Object>()?.Initialize(gameCameraCtr, iGrid));
             }
         }
 

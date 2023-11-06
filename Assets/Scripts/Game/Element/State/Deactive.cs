@@ -6,7 +6,7 @@ namespace Game.Element.State
 {
     public class Deactive<T> : BaseState<T> where T : Game.BaseElement
     {
-        protected override BaseState<T> Initialize()
+        public override BaseState<T> Initialize()
         {
             base.Initialize();
 

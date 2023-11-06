@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Game;
-using UnityEngine.UI;
 
 namespace Game.Creature
 {
@@ -105,14 +104,14 @@ namespace Game.Creature
 
             if (gameState.CheckState<Game.State.Edit>())
             {
-                SetState(Element.State.Edit<Animal>.Create(gameCameraCtr, iGrid));
+                SetState(new Element.State.Edit<Animal>()?.Initialize(gameCameraCtr, iGrid));
 
                 SetSortingOrder(_selectOrder);
                 ActiveEdit(true);
             }
             else
             {
-                SetState(Element.State.Game<Animal>.Create(gameCameraCtr, iGrid));
+                SetState(new Element.State.Game<Animal>()?.Initialize(gameCameraCtr, iGrid));
             }
         }
 
@@ -224,7 +223,7 @@ namespace Game.Creature
             {
                 case IPlaceState.EType.Deactive:
                     {
-                        SetState(Element.State.Deactive<Animal>.Create());
+                        SetState(new Element.State.Deactive<Animal>()?.Initialize());
 
                         DeactivateChild();
 
