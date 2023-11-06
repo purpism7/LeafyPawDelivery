@@ -81,12 +81,9 @@ namespace Game.Creature
             {
                 SetPlaceState(iPlaceState.State);
             }
-
+            
             if (_iPlaceState != IPlaceState.EType.Active)
                 return;
-
-            //if (!(State is Element.State.Game<Animal>))
-            //    return;
 
             if (!IsActivate)
                 return;
@@ -218,7 +215,7 @@ namespace Game.Creature
                 return;
 
             _iPlaceState = state;
-
+            
             switch(state)
             {
                 case IPlaceState.EType.Deactive:

@@ -61,4 +61,18 @@ public static class UIUtils
         
         img.color = Color.white;
     }
+
+    public static void DestoryChild(this RectTransform rootTm)
+    {
+        if (!rootTm)
+            return;
+
+        foreach (RectTransform rectTm in rootTm)
+        {
+            if (!rectTm)
+                continue;
+
+            GameObject.DestroyImmediate(rectTm.gameObject);
+        }
+    }
 }

@@ -59,9 +59,6 @@ namespace Game
 
         public override void ChainUpdate()
         {
-            if (!IsActivate)
-                return;
-
             foreach(var animal in _animalList)
             {
                 animal?.ChainUpdate();
@@ -408,6 +405,8 @@ namespace Game
 
         public void Boom()
         {
+            _state = IPlaceState.EType.Active;
+
             _placeEventCtr?.Start();
 
             currencyRootTm.SetActive(true);

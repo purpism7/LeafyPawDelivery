@@ -24,6 +24,8 @@ namespace UI
             void ClickBottomMenu();
         }
 
+        private int _placeId = 0;
+
         public class Data : BaseData
         {
             public IListener ILisener = null;
@@ -44,8 +46,28 @@ namespace UI
             base.Activate();
         }
 
+        private bool CheckReInitialize
+        {
+            get
+            {
+                bool reInitialize = false;
+
+                var placeMgr = MainGameManager.Instance?.placeMgr;
+                if (placeMgr != null)
+                {
+                    reInitialize = _placeId != placeMgr.ActivityPlaceId;
+
+                    _placeId = placeMgr.ActivityPlaceId;
+                }
+
+                return reInitialize;
+            }
+        }
+
         public void OnClick()
         {
+            bool reInitialize = CheckReInitialize;
+
             Debug.Log(gameObject.name);
             if (System.Enum.TryParse(gameObject.name, out EType eType))
             {
@@ -65,6 +87,11 @@ namespace UI
                             //    {
                                     var popup = new GameSystem.PopupCreator<Arrangement, Arrangement.Data>()
                                         .SetCoInit(true)
+                                        .SetReInitialize(reInitialize)
+                                        .SetData(new Arrangement.Data()
+                                        {
+                                            PlaceId = _placeId,
+                                        })
                                         .Create();
 
                                 //    return popup;
@@ -80,6 +107,7 @@ namespace UI
                             //   {
                                    var popup = new GameSystem.PopupCreator<Book, Book.Data>()
                                         .SetCoInit(true)
+                                        .SetReInitialize(reInitialize)
                                         .Create();
 
                             //    return popup;

@@ -16,7 +16,7 @@ namespace UI
     {
         public class Data : BaseData
         {
-
+            public int PlaceId = 0;
         }
 
         [SerializeField] private Toggle[] tabToggles = null;
@@ -26,16 +26,18 @@ namespace UI
         private Game.Type.ETab _currETabType = Game.Type.ETab.Animal;
 
         private List<ArrangementCell> _arrangementCellList = new();
+        private int _placeId = 0;
 
         public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
+
+            InitializeListener();
+
+            _placeId = data.PlaceId;
             
-            Game.AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
-            MainGameManager.Instance?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
-            
-            _arrangementCellList.Clear();
-            
+            _arrangementCellList?.Clear();
+
             SetAnimalList();
             SetObjectList();
         }
@@ -70,6 +72,15 @@ namespace UI
             base.ClickClose();
         }
 
+        private void InitializeListener()
+        {
+            Game.AnimalManager.Listener?.RemoveListener(OnChangedAnimalInfo);
+            Game.AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
+
+            MainGameManager.Instance?.ObjectMgr?.Listener?.RemoveListener(OnChangedObjectInfo);
+            MainGameManager.Instance?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
+        }
+
         private void ActivateArrangementCellList()
         {
             if (_arrangementCellList == null)
@@ -94,7 +105,9 @@ namespace UI
 
         private void SetAnimalList()
         {
-            var datas = AnimalContainer.Instance?.Datas;
+            animalScrollRect?.content?.DestoryChild();
+
+            var datas = AnimalContainer.Instance?.GetDataListByPlaceId(_placeId);
             if (datas == null)
                 return;
 
@@ -126,7 +139,9 @@ namespace UI
 
         private void SetObjectList()
         {
-            var datas = ObjectContainer.Instance?.Datas;
+            objectScrollRect?.content?.DestoryChild();
+
+            var datas = ObjectContainer.Instance?.GetDataListByPlaceId(_placeId);
             if (datas == null)
                 return;
 

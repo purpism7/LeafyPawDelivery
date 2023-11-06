@@ -104,7 +104,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 300, y: 275, z: 0.2}
+  m_Size: {x: 300, y: 275, z: 20}
   m_Center: {x: 0, y: 153.3, z: 0}
 --- !u!1 &7157655937583819985
 GameObject:
@@ -221,6 +221,7 @@ MonoBehaviour:
   UId: 0
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 8860893258269408253}
+  IsOverlap: 0
   sortingOrderOffset: 0
 --- !u!1001 &3742574807698289868
 PrefabInstance:

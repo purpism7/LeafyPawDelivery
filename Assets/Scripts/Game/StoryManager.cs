@@ -36,9 +36,8 @@ namespace Game
         {
             _storyPrefabList.Clear();
             
-            var mainGameMgr = MainGameManager.Instance;
             AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
-            mainGameMgr?.placeMgr?.Listener?.AddListener(OnChangedPlace);
+            Game.PlaceManager.Listener?.AddListener(OnChangedPlace);
         }
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)

@@ -16,12 +16,12 @@ namespace Game
             public int PlaceId = 0;
         }
 
+        public static UnityEvent<int> Listener { get; private set; } = null;
+
         public Transform RootTm;
 
         private List<Place> _placeList = new List<Place>();
 
-        public UnityEvent<int> Listener { get; private set; } = new();
-        
         public Place ActivityPlace { get; private set; } = null;
         public int ActivityPlaceId 
         {
@@ -33,6 +33,7 @@ namespace Game
 
         protected override void Initialize()
         {
+            Listener = new UnityEvent<int>();
             Listener?.RemoveAllListeners();
         }
 

@@ -13,12 +13,13 @@ namespace Game
         {
             public int PlaceId = 0;
         }
-        
+
+        public static UnityEvent<Info.Animal> Listener { get; private set; } = null;
+
         private Data _data = null;
         private Info.AnimalHolder _animalHolder = new();
 
         public List<Info.Animal> AnimalInfoList => _animalHolder?.AnimalInfoList;
-        public static UnityEvent<Info.Animal> Listener { get; private set; } = new();
 
         protected override void Initialize()
         {
@@ -29,7 +30,7 @@ namespace Game
 
             var mainGameMgr = MainGameManager.Instance;
             mainGameMgr?.ObjectMgr.Listener.AddListener(OnChangedObjectInfo);
-            mainGameMgr?.placeMgr?.Listener?.AddListener(OnChangedPlace);
+            Game.PlaceManager.Listener?.AddListener(OnChangedPlace);
         }
 
         public override IEnumerator CoInitialize(Data data)
