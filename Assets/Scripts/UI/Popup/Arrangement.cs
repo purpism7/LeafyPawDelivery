@@ -94,7 +94,7 @@ namespace UI
 
         private void SetAnimalList()
         {
-            var datas = AnimalContainer.Instance.Datas;
+            var datas = AnimalContainer.Instance?.Datas;
             if (datas == null)
                 return;
 
@@ -126,7 +126,7 @@ namespace UI
 
         private void SetObjectList()
         {
-            var datas = ObjectContainer.Instance.Datas;
+            var datas = ObjectContainer.Instance?.Datas;
             if (datas == null)
                 return;
 

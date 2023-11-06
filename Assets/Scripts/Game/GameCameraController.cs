@@ -21,6 +21,7 @@ namespace GameSystem
 
         private float _halfHeight = 0;
         private float _dragWidth = 0;
+        private Vector3 _velocity = Vector3.zero;
 
         public float Height { get; private set; } = 0;
         public float Width { get; private set; } = 0;
@@ -120,22 +121,34 @@ namespace GameSystem
             }
         }
 
+        private float GetClampX(float posX)
+        {
+            float x = _mapSize.x - _dragWidth;
+
+            return Mathf.Clamp(posX, -x + _center.x, x + _center.x);
+        }
+
+        private float GetClampY(float posY)
+        {
+            float y = _mapSize.y - _halfHeight;
+
+            return Mathf.Clamp(posY, -y + _center.y, y + _center.y);
+        }
+
         private void Move(Touch touch)
         {
             var pos = new Vector3(touch.deltaPosition.x, touch.deltaPosition.y, 0);
             var cameraTm = GameCamera.transform;
             var movePos = cameraTm.position - pos;
 
-            float x = _mapSize.x - _dragWidth;
-            float clampX = Mathf.Clamp(movePos.x, -x + _center.x, x + _center.x);
+            float clampX = GetClampX(movePos.x);
+            float clampY = GetClampY(movePos.y);
 
-            float y = _mapSize.y - _halfHeight;
-            float clampY = Mathf.Clamp(movePos.y, -y + _center.y, y + _center.y);
-
-            var time = Time.deltaTime * 50f;
+            //var time = Time.deltaTime * 50f;
 
             var targetPos = new Vector3(clampX, clampY, -1000f);
-            cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, time);
+            //cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, time);
+            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, 0.01f);
         }
 
         private void ZoomInOut()
@@ -160,8 +173,13 @@ namespace GameSystem
             GameCamera.orthographicSize = Mathf.Clamp(GameCamera.orthographicSize, MinOrthographicSize, MaxOrthographicSize);
 
             SetSize();
-            // 카메라 영역 제한하는 부분 다시 체크 할 것. (그대로 쓸 것인지 여부.)
-            Move(firTouch);
+            
+            var cameraTm = GameCamera.transform;
+
+            float clampX = GetClampX(cameraTm.position.x);
+            float clampY = GetClampY(cameraTm.position.y);
+            var targetPos = new Vector3(clampX, clampY, -1000f);
+            cameraTm.position = targetPos;
         }
 
         public void SetStopUpdate(bool stopUpdate)
