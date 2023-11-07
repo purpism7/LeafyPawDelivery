@@ -3,29 +3,33 @@
     {
       "Id": 1,
       "StoryId": 1,
-      "ReqAnimalIds": [
-        1,
-        ""
-      ],
+      "ReqAnimalIds": 1,
       "ReqObjectIds": null
     },
     {
       "Id": 2,
       "StoryId": 2,
-      "ReqAnimalIds": null,
+      "ReqAnimalIds": 1,
       "ReqObjectIds": 4
     },
     {
-        "Id": 3,
-        "StoryId": 3,
-        "ReqAnimalIds": null,
-        "ReqObjectIds": 13
+      "Id": 3,
+      "StoryId": 3,
+      "ReqAnimalIds": 1,
+      "ReqObjectIds": [
+        4,
+        13
+      ]
     },
     {
-        "Id": 4,
-        "StoryId": 4,
-        "ReqAnimalIds": null,
-        "ReqObjectIds": 25
+      "Id": 4,
+      "StoryId": 4,
+      "ReqAnimalIds": 1,
+      "ReqObjectIds": [
+        4,
+        13,
+        25
+      ]
     }
   ]
 }
