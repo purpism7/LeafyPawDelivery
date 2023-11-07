@@ -16,10 +16,16 @@
       "ReqObjectIds": 4
     },
     {
-      "Id": 3,
-      "StoryId": 3,
-      "ReqAnimalIds": null,
-      "ReqObjectIds": null
+        "Id": 3,
+        "StoryId": 3,
+        "ReqAnimalIds": null,
+        "ReqObjectIds": 13
+    },
+    {
+        "Id": 4,
+        "StoryId": 4,
+        "ReqAnimalIds": null,
+        "ReqObjectIds": 25
     }
   ]
 }
