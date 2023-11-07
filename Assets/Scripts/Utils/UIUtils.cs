@@ -72,7 +72,7 @@ public static class UIUtils
             if (!rectTm)
                 continue;
 
-            GameObject.DestroyImmediate(rectTm.gameObject);
+            GameObject.Destroy(rectTm.gameObject);
         }
     }
 }

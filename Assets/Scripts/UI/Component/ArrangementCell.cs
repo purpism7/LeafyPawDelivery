@@ -45,8 +45,6 @@ namespace UI.Component
         {
             base.Initialize(data);
 
-            _openConditionList?.Clear();
-
             SetNameTMP();
             SetDescTMP();
             SetIconImg();
@@ -68,6 +66,17 @@ namespace UI.Component
             DeactivateOpenConditionList();
 
             base.Deactivate();
+        }
+
+        private void DeactiveAllOpenConditionList()
+        {
+            foreach(var openCondition in _openConditionList)
+            {
+                if (openCondition == null)
+                    continue;
+
+                openCondition.gameObject.SetActive(false);
+            }
         }
 
         private void ActivateOpenConditionList()
@@ -144,6 +153,8 @@ namespace UI.Component
 
         private void SetLockData()
         {
+            DeactiveAllOpenConditionList();
+
             if (_data == null)
                 return;
 
@@ -171,23 +182,25 @@ namespace UI.Component
             if (currencyInfo == null)
                 return;
 
-            var openConditionData = new OpenCondition.Data()
-            {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.AnimalSpriteName),
-                Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
-                PossibleFunc = () => animalOpenConditionContainer.CheckAnimalCurrency(_data.Id),
-            };
+            AddOpenCondition(currencyInfo.AnimalSpriteName, openCondition.AnimalCurrency, () => animalOpenConditionContainer.CheckAnimalCurrency(_data.Id));
+            AddOpenCondition(currencyInfo.ObjectSpriteName, openCondition.ObjectCurrency, () => animalOpenConditionContainer.CheckObjectCurrency(_data.Id));
+            //var openConditionData = new OpenCondition.Data()
+            //{
+            //    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.AnimalSpriteName),
+            //    Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
+            //    PossibleFunc = () => animalOpenConditionContainer.CheckAnimalCurrency(_data.Id),
+            //};
 
-            CreateOpenCondition(openConditionData);
+            //CreateOpenCondition(openConditionData);
 
-            openConditionData = new OpenCondition.Data()
-            {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.ObjectSpriteName),
-                Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
-                PossibleFunc = () => animalOpenConditionContainer.CheckObjectCurrency(_data.Id),
-            };
+            //openConditionData = new OpenCondition.Data()
+            //{
+            //    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.ObjectSpriteName),
+            //    Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
+            //    PossibleFunc = () => animalOpenConditionContainer.CheckObjectCurrency(_data.Id),
+            //};
 
-            CreateOpenCondition(openConditionData);
+            //CreateOpenCondition(openConditionData);
         }
 
         private void SetObjectOpenCondition()
@@ -201,44 +214,72 @@ namespace UI.Component
             if (currencyInfo == null)
                 return;
 
+            AddOpenCondition(currencyInfo.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
+            AddOpenCondition(currencyInfo.ObjectSpriteName, openCondition.ObjectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
+            //var openConditionData = new OpenCondition.Data()
+            //{
+            //    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.AnimalSpriteName),
+            //    Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
+            //    PossibleFunc = () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id),
+            //};
+
+            //CreateOpenCondition(openConditionData);
+
+            //openConditionData = new OpenCondition.Data()
+            //{
+            //    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.ObjectSpriteName),
+            //    Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
+            //    PossibleFunc = () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id),
+            //};
+
+            //CreateOpenCondition(openConditionData);
+        }
+
+        private string GetRequireCurrency(long currency)
+        {
+            return string.Format("x{0}", currency);
+        }
+
+        private void AddOpenCondition(string spriteName, int currency, Func<bool> possibleFunc)
+        {
             var openConditionData = new OpenCondition.Data()
             {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.AnimalSpriteName),
-                Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
-                PossibleFunc = () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id),
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(spriteName),
+                Text = GetRequireCurrency(currency),
+                PossibleFunc = possibleFunc,
             };
 
             CreateOpenCondition(openConditionData);
-
-            openConditionData = new OpenCondition.Data()
-            {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.ObjectSpriteName),
-                Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
-                PossibleFunc = () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id),
-            };
-
-            CreateOpenCondition(openConditionData);
-        }
-
-        private string GetReqAnimalCurrency(long currency)
-        {
-            return string.Format("x{0}", currency);
-        }
-
-        private string GetReqObjectCurrency(long currency)
-        {
-            return string.Format("x{0}", currency);
         }
 
         private UI.Component.OpenCondition CreateOpenCondition(OpenCondition.Data openConditionData)
         {
-            var openCondition = new ComponentCreator<OpenCondition, OpenCondition.Data>()
+            _openConditionList?.Reverse();
+
+            UI.Component.OpenCondition openCondition = null;
+            foreach (var component in _openConditionList)
+            {
+                if (component == null)
+                    continue;
+
+                if (component.gameObject.IsActive())
+                    continue;
+
+                openCondition = component;
+            }
+
+            if(openCondition != null)
+            {
+                openCondition.Initialize(openConditionData);
+                openCondition.gameObject.SetActive(true);
+            }
+            else
+            {
+                openCondition = new ComponentCreator<OpenCondition, OpenCondition.Data>()
                     .SetData(openConditionData)
                     .SetRootRectTm(openCondtionRootRectTm)
                     .Create();
 
-            if(openCondition != null)
-            {
                 _openConditionList?.Add(openCondition);
             }
 

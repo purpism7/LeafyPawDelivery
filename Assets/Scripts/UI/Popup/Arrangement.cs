@@ -35,9 +35,8 @@ namespace UI
             InitializeListener();
 
             _placeId = data.PlaceId;
-            
-            _arrangementCellList?.Clear();
 
+            AllDeactiveArrangementCellList();
             SetAnimalList();
             SetObjectList();
         }
@@ -103,53 +102,96 @@ namespace UI
             }
         }
 
+        private void AllDeactiveArrangementCellList()
+        {
+            if (_arrangementCellList == null)
+                return;
+
+            foreach(var cell in _arrangementCellList)
+            {
+                cell?.SetActive(false);
+            }
+        }
+
+        private ArrangementCell DeactiveArrangementCell
+        {
+            get
+            {
+                foreach (var cell in _arrangementCellList)
+                {
+                    if (cell == null)
+                        continue;
+
+                    if (cell.gameObject.IsActive())
+                        continue;
+
+                    return cell;
+                }
+
+                return null;
+            }
+        }
+
+        private void AddArrangementCell(int id, Game.Type.EElement eElement, bool isLock, RectTransform rootRectTm)
+        {
+            ArrangementCell arrangementCell = DeactiveArrangementCell;
+            var cellData = new ArrangementCell.Data()
+            {
+                IListener = this,
+                Id = id,
+                EElement = eElement,
+                Lock = isLock,
+            };
+
+            if (arrangementCell != null)
+            {
+                arrangementCell.Initialize(cellData);
+                arrangementCell.SetParent(rootRectTm);
+                arrangementCell.SetActive(true);
+            }
+            else
+            {
+                arrangementCell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
+                    .SetData(cellData)
+                    .SetRootRectTm(rootRectTm)
+                    .Create();
+
+                _arrangementCellList.Add(arrangementCell);
+            }
+        }
+
         private void SetAnimalList()
         {
-            animalScrollRect?.content?.DestoryChild();
-
-            var datas = AnimalContainer.Instance?.GetDataListByPlaceId(_placeId);
-            if (datas == null)
+            var dataList = AnimalContainer.Instance?.GetDataListByPlaceId(_placeId);
+            if (dataList == null)
                 return;
 
             var animalMgr = MainGameManager.Instance?.AnimalMgr;
             if (animalMgr == null)
                 return;
    
-            foreach (var data in datas)
+            foreach (var data in dataList)
             {
                 if (data == null)
                     continue;
 
                 var animalInfo = animalMgr.GetAnimalInfo(data.Id);
 
-                var cell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
-                    .SetData(new ArrangementCell.Data()
-                    {
-                        IListener = this,
-                        Id = data.Id,
-                        EElement = Game.Type.EElement.Animal,
-                        Lock = animalInfo == null,
-                    })
-                    .SetRootRectTm(animalScrollRect.content)
-                    .Create();
-                
-                _arrangementCellList.Add(cell);
+                AddArrangementCell(data.Id, Game.Type.EElement.Animal, animalInfo == null, animalScrollRect.content);
             }
         }
 
         private void SetObjectList()
         {
-            objectScrollRect?.content?.DestoryChild();
-
-            var datas = ObjectContainer.Instance?.GetDataListByPlaceId(_placeId);
-            if (datas == null)
+            var dataList = ObjectContainer.Instance?.GetDataListByPlaceId(_placeId);
+            if (dataList == null)
                 return;
 
             var objectMgr = MainGameManager.Instance?.ObjectMgr;
             if (objectMgr == null)
                 return;
             
-            foreach (var data in datas)
+            foreach (var data in dataList)
             {
                 if (data == null)
                     continue;
@@ -161,18 +203,7 @@ namespace UI
                         continue;
                 }
 
-                var cell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
-                  .SetData(new ArrangementCell.Data()
-                  {
-                      IListener = this,
-                      Id = data.Id,
-                      EElement = Game.Type.EElement.Object,
-                      Lock = objectInfo == null,
-                  })
-                  .SetRootRectTm(objectScrollRect.content)
-                  .Create();
-                
-                _arrangementCellList.Add(cell);
+                AddArrangementCell(data.Id, Game.Type.EElement.Object, objectInfo == null, objectScrollRect.content);
             }
         }
 
@@ -206,6 +237,7 @@ namespace UI
             Unlock(Game.Type.EElement.Object, id);
         }
 
+        // 탭 변경 콜백.
         public void OnChanged(string tabType)
         {
             if(System.Enum.TryParse(tabType, out Game.Type.ETab eTabType))
