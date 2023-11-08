@@ -21,8 +21,8 @@ MonoBehaviour:
       PlaceId: 1
       Animal: 51
       Object: 1088
-  - Animal: 1
-    Object: 1
+  - Animal: 2
+    Object: 2
     StartValue:
       PlaceId: 2
       Animal: 51

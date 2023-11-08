@@ -44,6 +44,7 @@ namespace Game
             None,
 
             Acorn,
+            Star,
         }
 
         public enum EObjectCurrency
@@ -51,6 +52,7 @@ namespace Game
             None,
 
             Leaf,
+            Moon,
         }
 
         public enum EObjectGrade
