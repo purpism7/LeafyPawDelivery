@@ -17,14 +17,13 @@ namespace Game
                 Debug.Log("Carrier Create");
                 var gameObj = new GameObject(typeof(Carrier).Name);
                 _instance = gameObj.GetOrAddComponent<Carrier>();
-                
-                _instance?.Initialize(iGridCell);
             }
 
-            if (_instance != null)
-            {
-                DontDestroyOnLoad(_instance);
-            }
+            _instance?.Initialize(iGridCell);
+            //if (_instance != null)
+            //{
+            //    DontDestroyOnLoad(_instance);
+            //}
         }
 
         public static bool Move(Vector3 targetPos, out List<Vector3> pathPosList)

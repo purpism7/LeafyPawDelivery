@@ -80,7 +80,14 @@ namespace UI
         {
             Deactivate();
 
-            MainGameManager.Instance?.MovePlace(id);
+            new PopupCreator<Loading, Loading.Data>()
+                .SetReInitialize(true)
+                .SetAnimActivate(false)
+                .SetData(new Loading.Data()
+                {
+                    PlaceId = id,
+                })
+                .Create();
         }
         #endregion
     }

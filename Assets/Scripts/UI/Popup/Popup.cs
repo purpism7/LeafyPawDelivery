@@ -12,29 +12,39 @@ namespace UI
 {
     public class Popup : Base
     {
+        public class InitData
+        {
+            public bool CoInitialzie = false;
+            public bool ReInitialize = false;
+            public bool AnimActivate = true;
+        }
+
         public RectTransform popupRootRectTm;
         [SerializeField] private Image backgroundImg = null;
         
         private List<UI.Base> _opendPopupList = new();
         private Stack<UI.Base> _popupStack = new();
 
-        public T Instantiate<T, V>(V vData, bool coInit, bool reInitialize) 
+        public T Instantiate<T, V>(V vData, InitData initData) 
             where T :UI.Base<V> where V : BaseData
         {
             T resPopup = null;
 
-            if(_opendPopupList != null)
+            if (initData == null)
+                return resPopup;
+
+            if (_opendPopupList != null)
             {
                 if(CheckGetOpendPopup<T>(out UI.Base uiBase))
                 {
                     var basePopup = uiBase.GetComponent<UI.BasePopup<V>>();
                     if (basePopup != null)
                     {
-                        if (!reInitialize)
+                        if (!initData.ReInitialize)
                         {
                             resPopup = basePopup.GetComponent<T>();
                         
-                            AnimActivatePopup<T, V>(uiBase);
+                            ActivatePopup<T, V>(uiBase, initData.AnimActivate);
                             
                             return resPopup;
                         }
@@ -47,12 +57,12 @@ namespace UI
                 {
                     resPopup = popup;
 
-                }, vData, coInit));
+                }, vData, initData));
             
             return resPopup;
         }
         
-        private IEnumerator CoInstantiate<T, V>(System.Action<T> returnAction, V vData, bool coInit)  
+        private IEnumerator CoInstantiate<T, V>(System.Action<T> returnAction, V vData, InitData initData)  
             where T :UI.Base<V> where V : BaseData
         {
             UI.Base uIBase = null;
@@ -78,7 +88,7 @@ namespace UI
                 
             returnAction?.Invoke(popup);
 
-            if (coInit)
+            if (initData.CoInitialzie)
             {
                 yield return StartCoroutine(popup.CoInitialize(vData));
             }
@@ -86,11 +96,11 @@ namespace UI
             {
                 popup.Initialize(vData);
             }
-            
-            AnimActivatePopup<T, V>(uIBase);
+
+            ActivatePopup<T, V>(uIBase, initData.AnimActivate);
         }
         
-        private void AnimActivatePopup<T, V>(UI.Base uiBase) where T :UI.Base<V> where V : BaseData
+        private void ActivatePopup<T, V>(UI.Base uiBase, bool animActivate) where T :UI.Base<V> where V : BaseData
         {
             if (uiBase == null)
                 return;
@@ -102,7 +112,14 @@ namespace UI
                 return;
 
             FadeOutBackground();
-            basePopup.AnimActivate();
+            if(animActivate)
+            {
+                basePopup.AnimActivate();
+            }
+            else
+            {
+                basePopup.Activate();
+            }
 
             if (_popupStack.Count > 0)
             {

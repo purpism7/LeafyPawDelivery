@@ -162,18 +162,18 @@ public class MainGameManager : Singleton<MainGameManager>
     }
 
     #region Place
-    public void MovePlace(int placeId)
+    public void MovePlace(int placeId, System.Action endMoveAction)
     {
-        StartCoroutine(CoMovePlace(placeId));
+        StartCoroutine(CoMovePlace(placeId, endMoveAction));
     }
 
-    private IEnumerator CoMovePlace(int placeId)
+    private IEnumerator CoMovePlace(int placeId, System.Action endMoveAction)
     {
         yield return StartCoroutine(CoInitializeManager(placeId));
+        Debug.Log("End Initialize");
+        yield return new WaitForSeconds(1f);
 
-        _iGrid?.Overlap();
-
-        yield return null;
+        endMoveAction?.Invoke();
     }
     #endregion
 

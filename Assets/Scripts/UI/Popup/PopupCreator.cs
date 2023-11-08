@@ -10,9 +10,10 @@ namespace GameSystem
     {
         private V _data = null;
 
-        private bool _coInit = false;
+        private bool _coInitialize = false;
 
         private bool _reInitialize = false;
+        private bool _animActivate = true;
         // private RectTransform _rootRecTm = null;
 
         //public static T a<T, V>() where T : UI.Base<V> where V : BaseData
@@ -29,7 +30,7 @@ namespace GameSystem
 
         public PopupCreator<T, V> SetCoInit(bool CoInit)
         {
-            _coInit = CoInit;
+            _coInitialize = CoInit;
 
             return this;
         }
@@ -41,9 +42,23 @@ namespace GameSystem
             return this;
         }
 
+        public PopupCreator<T, V> SetAnimActivate(bool animActivate)
+        {
+            _animActivate = animActivate;
+
+            return this;
+        }
+
         public override T Create()
         {
-            var popup = Game.UIManager.Instance?.Popup?.Instantiate<T, V>(_data, _coInit, _reInitialize);
+            var initData = new UI.Popup.InitData()
+            {
+                CoInitialzie = _coInitialize,
+                ReInitialize = _reInitialize,
+                AnimActivate = _animActivate,
+            };
+
+            var popup = Game.UIManager.Instance?.Popup?.Instantiate<T, V>(_data, initData);
             if (popup == null)
                 return default(T);
 

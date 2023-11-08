@@ -8,7 +8,8 @@ namespace UI
 {
     public class BaseData
     {
-
+        protected bool CoInitialzie = false;
+        protected bool ReInitalize = false;
     }
 
     public class Base : MonoBehaviour, Sequencer.ITask
