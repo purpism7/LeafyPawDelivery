@@ -38,12 +38,22 @@ namespace Info
             };
         }
 
+        private Currency GetStartCurrency(int placeId)
+        {
+            return Game.Data.Const.GetStartCurrency(placeId);
+        }
+
         private Currency InitializeCurrency(int placeId)
         {
             CurrencyList = new();
             CurrencyList.Clear();
 
-            var currency = GetInitializeCurrency(placeId);
+            var currency = GetStartCurrency(placeId);
+            if (currency == null)
+            {
+                currency = GetInitializeCurrency(placeId);
+            }
+
             CurrencyList.Add(currency);
 
             return currency;
@@ -59,7 +69,12 @@ namespace Info
             var findCurrency = CurrencyList.Find(currency => currency.PlaceId == placeId);
             if (findCurrency == null)
             {
-                var currency = GetInitializeCurrency(placeId);
+                var currency = GetStartCurrency(placeId);
+                if (currency == null)
+                {
+                    currency = GetInitializeCurrency(placeId);
+                }
+
                 CurrencyList.Add(currency);
 
                 return currency;
