@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using TMPro;
 
@@ -14,13 +15,16 @@ namespace UI
     {
         public class Data : BaseData
         {
-            public int PlaceId = 0;
+            
         }
         
         [SerializeField] private TextMeshProUGUI lvTMP = null;
         [SerializeField] private TextMeshProUGUI animalCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI objectCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI cashTMP = null;
+
+        [SerializeField] private Image animalCurrencyImg = null;
+        [SerializeField] private Image objectCurrencyImg = null;
 
         [SerializeField] private RectTransform collectCurrencyRootRectTm = null;
         [SerializeField] private RectTransform addCurrencyRootRectTm = null;
@@ -35,7 +39,10 @@ namespace UI
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-            
+
+            PlaceManager.Listener?.RemoveListener(OnChangedPlace);
+            PlaceManager.Listener?.AddListener(OnChangedPlace);
+
             _collectCurrencyList?.Clear();
             _addCurrencyList?.Clear();
             
@@ -47,19 +54,17 @@ namespace UI
         // c=x1000000
         private void Initialize()
         {
+            SetCurrencyImg();
             SetCurrency();
         }
 
         public void SetCurrency()
         {
-            if (_data == null)
-                return;
-
             var userInfo = Info.UserManager.Instance?.User;
             if (userInfo == null)
                 return;
 
-            var currency = userInfo.GetCurrency(_data.PlaceId);
+            var currency = userInfo.GetCurrency(GameUtils.ActivityPlaceId);
             if (currency != null)
             {
                 animalCurrencyTMP?.SetText(currency.Animal + "");
@@ -67,6 +72,28 @@ namespace UI
             }
 
             cashTMP?.SetText(userInfo.Cash + "");
+        }
+
+        private void SetCurrencyImg()
+        {
+            var currencyInfo = Game.Data.Const.GetCurrencyInfo(GameUtils.ActivityPlaceId);
+            if (currencyInfo == null)
+                return;
+
+            SetCurrencyImg(animalCurrencyImg, currencyInfo.AnimalSpriteName);
+            SetCurrencyImg(objectCurrencyImg, currencyInfo.ObjectSpriteName);
+        }
+
+        private void SetCurrencyImg(Image img, string currency)
+        {
+            if (img == null)
+                return;
+
+            var atlasLoader = GameSystem.ResourceManager.Instance?.AtalsLoader;
+            if (atlasLoader == null)
+                return;
+
+            img.sprite = atlasLoader.GetCurrencySprite(currency);
         }
 
         #region Collect Currency (Move Action Currnecy)
@@ -98,7 +125,7 @@ namespace UI
             if (_collectCurrencyList == null)
                 return;
 
-            var currencyInfo = Game.Data.Const.GetCurrencyInfo(_data.PlaceId);
+            var currencyInfo = Game.Data.Const.GetCurrencyInfo(GameUtils.ActivityPlaceId);
             if (currencyInfo == null)
                 return;
 
@@ -216,6 +243,12 @@ namespace UI
             _addCurrencyList.Add(component);
         }
         #endregion
+
+        private void OnChangedPlace(int placeId)
+        {
+            Debug.Log("Top OnChangedPlace = " + placeId);
+            Initialize();
+        }
     }
 }
 

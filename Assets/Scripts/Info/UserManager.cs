@@ -56,8 +56,8 @@ namespace Info
                 if (Application.isEditor)
                 {
                     User = new Info.User();
-                    var placeId = Game.Data.Const.StartPlaceId;
-                    var currency = Game.Data.Const.GetStartCurrency(placeId);
+                    //var placeId = Game.Data.Const.StartPlaceId;
+                    //var currency = Game.Data.Const.GetStartCurrency(placeId);
                 }
 
                 yield break;

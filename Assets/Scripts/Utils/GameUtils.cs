@@ -85,29 +85,45 @@ public static class GameUtils
         return null;
     }
     
-     public static Sprite GetLargeIconSprite(Type.EElement EElement, int id)
-     {
-         var atlasLoader = GameSystem.ResourceManager.Instance?.AtalsLoader;
-         if (atlasLoader == null)
-             return null;
+    public static Sprite GetLargeIconSprite(Type.EElement EElement, int id)
+    {
+        var atlasLoader = GameSystem.ResourceManager.Instance?.AtalsLoader;
+        if (atlasLoader == null)
+            return null;
     
-         if (EElement == Type.EElement.Animal)
-         {
-             var data = AnimalSkinContainer.Instance?.GetBaseData(id);
-             if (data == null)
-                 return null;
+        if (EElement == Type.EElement.Animal)
+        {
+            var data = AnimalSkinContainer.Instance?.GetBaseData(id);
+            if (data == null)
+                return null;
     
-             return atlasLoader.GetAnimalIconSprite(data.LargeIconImgName);
-         }
-         else if (EElement == Type.EElement.Object)
-         {
-             var data = ObjectContainer.Instance?.GetData(id);
-             if (data == null)
-                 return null;
+            return atlasLoader.GetAnimalIconSprite(data.LargeIconImgName);
+        }
+        else if (EElement == Type.EElement.Object)
+        {
+            var data = ObjectContainer.Instance?.GetData(id);
+            if (data == null)
+                return null;
     
-             return atlasLoader.GetObjectIconSprite(data.LargeIconImgName);
-         }
+            return atlasLoader.GetObjectIconSprite(data.LargeIconImgName);
+        }
     
-         return null;
-     }
+        return null;
+    }
+
+
+    /// <summary>
+    /// 현재 활성화 상태인 Place Id.
+    /// </summary>
+    public static int ActivityPlaceId
+    {
+        get
+        {
+            var placeMgr = MainGameManager.Instance?.placeMgr;
+            if (placeMgr == null)
+                return 0;
+
+            return placeMgr.ActivityPlaceId;
+        }
+    }
 }

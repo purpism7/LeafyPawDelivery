@@ -779,6 +779,8 @@ MonoBehaviour:
   animalCurrencyTMP: {fileID: 1184800537530304502}
   objectCurrencyTMP: {fileID: 5197083202406173486}
   cashTMP: {fileID: 5278897631640219088}
+  animalCurrencyImg: {fileID: 5355895461610914970}
+  objectCurrencyImg: {fileID: 521168942589389771}
   collectCurrencyRootRectTm: {fileID: 4757803008134759927}
   addCurrencyRootRectTm: {fileID: 4627736380213755255}
   objectCurrencyRectTm: {fileID: 524485580336170409}

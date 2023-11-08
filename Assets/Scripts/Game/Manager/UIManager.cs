@@ -24,19 +24,7 @@ namespace Game
         {
             yield return StartCoroutine(base.CoInit(iProvider));
 
-            int activityPlaceId = 1;
-            var placeMgr = MainGameManager.Instance?.placeMgr;
-            if (placeMgr != null)
-            {
-                activityPlaceId = placeMgr.ActivityPlaceId;
-            }
-
-            //MainGameManager.Instance?.placeMgr.ActivityPlaceId;
-            
-            Top?.Initialize(new UI.Top.Data()
-            {
-                PlaceId = activityPlaceId,
-            });
+            Top?.Initialize(null);
 
             Bottom?.Initialize(new UI.Bottom.Data()
             {

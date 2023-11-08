@@ -178,7 +178,7 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
-            var currencyInfo = Game.Data.Const.GetCurrencyInfo(ActivityPlaceId);
+            var currencyInfo = Game.Data.Const.GetCurrencyInfo(GameUtils.ActivityPlaceId);
             if (currencyInfo == null)
                 return;
 
@@ -210,7 +210,7 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
-            var currencyInfo = Game.Data.Const.GetCurrencyInfo(ActivityPlaceId);
+            var currencyInfo = Game.Data.Const.GetCurrencyInfo(GameUtils.ActivityPlaceId);
             if (currencyInfo == null)
                 return;
 
@@ -292,18 +292,6 @@ namespace UI.Component
             UIUtils.SetActive(arrangementBtn?.gameObject, !_data.Lock);
         }
 
-        private int ActivityPlaceId
-        {
-            get
-            {
-                var placeMgr = MainGameManager.Instance?.placeMgr;
-                if (placeMgr == null)
-                    return 0;
-
-                return placeMgr.ActivityPlaceId;
-            }
-        }
-
         private void CreateUnlockPopup()
         {
             if (_data == null)
@@ -357,7 +345,7 @@ namespace UI.Component
 
                     Info.UserManager.Instance.SaveCurrency(new Info.User.Currency()
                     {
-                        PlaceId = ActivityPlaceId,
+                        PlaceId = GameUtils.ActivityPlaceId,
                         Animal = -openConditionData.AnimalCurrency,
                         Object = -openConditionData.ObjectCurrency,
                     });
