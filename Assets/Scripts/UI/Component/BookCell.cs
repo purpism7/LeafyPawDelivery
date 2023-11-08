@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UI.Component
 {
-    public class BookCell : UI.Base<BookCell.Data>
+    public class BookCell : BaseComponent<BookCell.Data>
     {
         public class Data : BaseData
         {

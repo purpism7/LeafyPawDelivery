@@ -80,14 +80,20 @@ namespace UI
         {
             Deactivate();
 
-            new PopupCreator<Loading, Loading.Data>()
-                .SetReInitialize(true)
-                .SetAnimActivate(false)
-                .SetData(new Loading.Data()
+            Sequencer.EnqueueTask(
+                () =>
                 {
-                    PlaceId = id,
-                })
-                .Create();
+                    var loading = new PopupCreator<Loading, Loading.Data>()
+                       .SetReInitialize(true)
+                       .SetAnimActivate(false)
+                       .SetData(new Loading.Data()
+                       {
+                           PlaceId = id,
+                       })
+                       .Create();
+
+                    return loading;
+                }); 
         }
         #endregion
     }

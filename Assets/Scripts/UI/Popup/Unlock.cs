@@ -72,14 +72,6 @@ namespace UI
             _endTask = false;
         }
 
-        public override bool End
-        {
-            get
-            {
-                return _endTask;
-            }
-        }
-
         private void SetRenderTexture()
         {
             if (_data == null)

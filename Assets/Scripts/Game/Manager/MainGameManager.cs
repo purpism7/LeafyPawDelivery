@@ -51,9 +51,9 @@ public class MainGameManager : Singleton<MainGameManager>
 
         _iGrid = inputMgr?.grid;
 
-        yield return StartCoroutine(CoInitializeManager(activityPlaceId));
+        StoryMgr = iProvider.Get<Game.StoryManager>();
 
-        StoryMgr = iProvider.Get<Game.StoryManager>();       
+        yield return StartCoroutine(CoInitializeManager(activityPlaceId));
 
         _iUpdateInputMgr = inputMgr;
         _iUpdateGameCameraCtr = GameCameraCtr;
@@ -170,10 +170,14 @@ public class MainGameManager : Singleton<MainGameManager>
     private IEnumerator CoMovePlace(int placeId, System.Action endMoveAction)
     {
         yield return StartCoroutine(CoInitializeManager(placeId));
-        Debug.Log("End Initialize");
-        yield return new WaitForSeconds(1f);
+        
+        yield return new WaitForSeconds(2f);
 
         endMoveAction?.Invoke();
+
+        yield return null;
+
+        Starter();
     }
     #endregion
 

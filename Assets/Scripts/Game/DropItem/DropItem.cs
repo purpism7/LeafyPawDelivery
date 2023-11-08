@@ -37,6 +37,7 @@ namespace Game
                 transform.position = new Vector3(_startRootTm.position.x, _startRootTm.position.y);
             }
 
+            SetCurrencySprite();
             SetCollider();
 
             Drop();
@@ -60,6 +61,18 @@ namespace Game
         public override void OnTouch(Touch touch)
         {
             base.OnTouch(touch);
+        }
+
+        private void SetCurrencySprite()
+        {
+            if (spriteRenderer == null)
+                return;
+
+            var currencySprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalCurrencySpriteByPlaceId(GameUtils.ActivityPlaceId);
+            if (currencySprite == null)
+                return;
+
+            spriteRenderer.SetSpritie(currencySprite);
         }
 
         private void SetCollider()

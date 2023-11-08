@@ -15,7 +15,7 @@ namespace UI
     {
         public class Data : BaseData
         {
-
+            public int PlaceId = 0;
         }
         
         [SerializeField] private Toggle[] tabToggles = null;
@@ -27,6 +27,7 @@ namespace UI
         
         private List<BookCell> _bookCellList = new();
         private List<StoryCell> _storyCellList = new();
+        private int _placeId = 0;
 
         public override void Initialize(Data data)
         {
@@ -48,9 +49,10 @@ namespace UI
         {
             Game.AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
             MainGameManager.Instance?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
-            
-            _bookCellList.Clear();
-            
+
+            _placeId = _data.PlaceId;
+
+            AllDeactiveBookCellList();
             SetAnimalList();
             SetObjectList();
             SetStoryList();
@@ -88,47 +90,93 @@ namespace UI
             }
         }
 
+        private void AllDeactiveBookCellList()
+        {
+            if (_bookCellList == null)
+                return;
+
+            foreach (var cell in _bookCellList)
+            {
+                cell?.SetActive(false);
+            }
+        }
+
+        private BookCell DeactiveBookCell
+        {
+            get
+            {
+                foreach (var cell in _bookCellList)
+                {
+                    if (cell == null)
+                        continue;
+
+                    if (cell.gameObject.IsActive())
+                        continue;
+
+                    return cell;
+                }
+
+                return null;
+            }
+        }
+
+        private void AddBookCell(int id, Game.Type.EElement eElement, bool isLock, RectTransform rootRectTm)
+        {
+            BookCell bookCell = DeactiveBookCell;
+            var cellData = new BookCell.Data()
+            {
+                IListener = this,
+                Id = id,
+                EElement = eElement,
+                Lock = isLock,
+            };
+
+            if (bookCell != null)
+            {
+                bookCell.Initialize(cellData);
+                bookCell.SetParent(rootRectTm);
+                bookCell.SetActive(true);
+            }
+            else
+            {
+                bookCell = new ComponentCreator<BookCell, BookCell.Data>()
+                    .SetData(cellData)
+                    .SetRootRectTm(rootRectTm)
+                    .Create();
+
+                _bookCellList.Add(bookCell);
+            }
+        }
+
         private void SetAnimalList()
         {
-            var datas = AnimalContainer.Instance.Datas;
-            if (datas == null)
+            var dataList = AnimalContainer.Instance?.GetDataListByPlaceId(_placeId);
+            if (dataList == null)
                 return;
 
             var animalMgr = MainGameManager.Instance?.AnimalMgr;
             if (animalMgr == null)
                 return;
             
-            foreach (var data in datas)
+            foreach (var data in dataList)
             {
                 var animalInfo = animalMgr.GetAnimalInfo(data.Id);
-                
-                var cell = new ComponentCreator<BookCell, BookCell.Data>()
-                    .SetData(new BookCell.Data()
-                    {
-                        IListener = this,
-                        
-                        Id = data.Id,
-                        EElement = Type.EElement.Animal,
-                        Lock = animalInfo == null,
-                    })
-                    .SetRootRectTm(animalScrollRect?.content)
-                    .Create();
-                
-                _bookCellList.Add(cell);
+
+                AddBookCell(data.Id, Game.Type.EElement.Animal, animalInfo == null, animalScrollRect.content);
             }
         }
 
         private void SetObjectList()
         {
-            var datas = ObjectContainer.Instance?.Datas;
-            if (datas == null)
+            var dataList = ObjectContainer.Instance?.GetDataListByPlaceId(_placeId);
+            if (dataList == null)
                 return;
 
             var objectMgr = MainGameManager.Instance?.ObjectMgr;
             if (objectMgr == null)
                 return;
             
-            foreach (var data in datas)
+            foreach (var data in dataList)
             {
                 var objectInfo = objectMgr.GetObjectInfoById(data.Id);
                 if (objectInfo == null)
@@ -137,31 +185,72 @@ namespace UI
                         continue;
                 }
 
-                var cell = new ComponentCreator<BookCell, BookCell.Data>()
-                    .SetData(new BookCell.Data()
-                    {
-                        IListener = this,
-                        
-                        Id = data.Id,
-                        EElement = Type.EElement.Object,
-                        Lock = objectInfo == null,
-                    })
-                    .SetRootRectTm(objectScrollRect?.content)
-                    .Create();
-                
-                _bookCellList.Add(cell);
+                AddBookCell(data.Id, Game.Type.EElement.Object, objectInfo == null, objectScrollRect.content);
+            }
+        }
+
+        #region Story
+        private void AllDeacitveStoryCellList()
+        {
+            if (_storyCellList == null)
+                return;
+
+            foreach (var cell in _storyCellList)
+            {
+                cell?.SetActive(false);
+            }
+        }
+
+        private StoryCell DeactiveStoryCell
+        {
+            get
+            {
+                foreach (var cell in _storyCellList)
+                {
+                    if (cell == null)
+                        continue;
+
+                    if (cell.gameObject.IsActive())
+                        continue;
+
+                    return cell;
+                }
+
+                return null;
+            }
+        }
+
+        private void AddStoryCell(Story story, int placeId)
+        {
+            StoryCell storyCell = DeactiveStoryCell;
+            var cellData = new StoryCell.Data()
+            {
+                IListener = this,
+                Story = story,
+                PlaceId = placeId,
+            };
+
+            if (storyCell != null)
+            {
+                storyCell.Initialize(cellData);
+                storyCell.SetActive(true);
+            }
+            else
+            {
+                storyCell = new ComponentCreator<StoryCell, StoryCell.Data>()
+                   .SetData(cellData)
+                   .SetRootRectTm(storyScrollRect?.content)
+                   .Create();
+
+                _storyCellList.Add(storyCell);
             }
         }
 
         private void SetStoryList()
         {
-            _storyCellList.Clear();
+            AllDeacitveStoryCellList();
 
-            var placeMgr = MainGameManager.Instance?.placeMgr;
-            if (placeMgr == null)
-                return;
-
-            int activityPlaceId = placeMgr.ActivityPlaceId;
+            int activityPlaceId = GameUtils.ActivityPlaceId;
 
             var storyList = StoryContainer.Instance.GetStoryList(activityPlaceId);
             if (storyList == null)
@@ -172,20 +261,10 @@ namespace UI
                 if (story == null)
                     continue;
 
-                var cell = new ComponentCreator<StoryCell, StoryCell.Data>()
-                   .SetData(new StoryCell.Data()
-                   {
-                       IListener = this,
-                       Story = story,
-                       PlaceId = activityPlaceId,
-
-                   })
-                   .SetRootRectTm(storyScrollRect?.content)
-                   .Create();
-
-                _storyCellList.Add(cell);
+                AddStoryCell(story, activityPlaceId);
             }
         }
+        #endregion
 
         private void ActiveContents()
         {

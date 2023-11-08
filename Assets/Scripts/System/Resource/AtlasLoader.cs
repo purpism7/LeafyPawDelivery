@@ -34,22 +34,14 @@ namespace GameSystem
 
         public Sprite GetAnimalIconSprite(string name)
         {
-            var placeMgr = MainGameManager.Instance.placeMgr;
-            if (placeMgr == null)
-                return null;
-
-            int placeId = placeMgr.ActivityPlaceId;
+            int placeId = GameUtils.ActivityPlaceId;
 
             return GetSprite(KeyAnimalIcon + "_" + placeId, name);
         }
 
         public Sprite GetObjectIconSprite(string name)
         {
-            var placeMgr = MainGameManager.Instance.placeMgr;
-            if (placeMgr == null)
-                return null;
-
-            int placeId = placeMgr.ActivityPlaceId;
+            int placeId = GameUtils.ActivityPlaceId;
 
             return GetSprite(KeyObjectIcon + "_" + placeId, name);
         }
@@ -57,6 +49,15 @@ namespace GameSystem
         public Sprite GetCurrencySprite(string name)
         {
             return GetSprite("Currency", name);
+        }
+
+        public Sprite GetAnimalCurrencySpriteByPlaceId(int placeId)
+        {
+            var currencyInfo = Game.Data.Const.GetCurrencyInfo(placeId);
+            if (currencyInfo == null)
+                return null;
+
+            return GetCurrencySprite(currencyInfo.AnimalSpriteName);
         }
 
         public Sprite CurrencyCashSprite

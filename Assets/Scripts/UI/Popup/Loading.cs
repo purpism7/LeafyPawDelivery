@@ -68,7 +68,16 @@ namespace UI
               () =>
               {
                   Deactivate();
+
+                  _endTask = true;
               });
+        }
+
+        public override void Begin()
+        {
+            base.Begin();
+
+            _endTask = false;
         }
     }
 }

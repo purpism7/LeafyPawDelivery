@@ -328,7 +328,7 @@ namespace UI.Component
             Sequencer.EnqueueTask(
                 () =>
                 {
-                    var popup = new PopupCreator<Unlock, Unlock.Data>()
+                    var unlock = new PopupCreator<Unlock, Unlock.Data>()
                         .SetData(new Unlock.Data()
                         {
                             EElement = _data.EElement,
@@ -352,7 +352,7 @@ namespace UI.Component
 
                     Game.UIManager.Instance?.Top?.SetCurrency();
 
-                    return popup;
+                    return unlock;
                 });
 
             MainGameManager.Instance?.AddInfo(_data.EElement, _data.Id);

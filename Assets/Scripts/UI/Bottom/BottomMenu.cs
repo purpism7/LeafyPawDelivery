@@ -108,6 +108,10 @@ namespace UI
                                    var popup = new GameSystem.PopupCreator<Book, Book.Data>()
                                         .SetCoInit(true)
                                         .SetReInitialize(reInitialize)
+                                        .SetData(new Book.Data()
+                                        {
+                                            PlaceId = _placeId,
+                                        })
                                         .Create();
 
                             //    return popup;
