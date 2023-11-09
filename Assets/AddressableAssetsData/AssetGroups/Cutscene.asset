@@ -16,13 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 99d2586853ca26847bd2380bc72e508b
-  m_SerializeEntries:
-  - m_GUID: c05cd326fe738464cb919be581cbc7e0
-    m_Address: Assets/Prefabs/Cutscene
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Cutscene
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e7d7ed8f5841242acbc2f114c52db5f7, type: 2}
   m_SchemaSet:

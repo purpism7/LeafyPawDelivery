@@ -37,6 +37,9 @@ namespace Game
         private Transform objectRootTm;
         [SerializeField]
         private Transform currencyRootTm = null;
+        [SerializeField]
+        private BGMPlayer bgmPlayer = null;
+
         public Transform animalRootTm;
 
         private List<Game.Object> _objectList = new();
@@ -82,6 +85,8 @@ namespace Game
             Boom();
 
             _state = IPlaceState.EType.Active;
+
+            bgmPlayer?.Play();
         }
 
         public override void Deactivate()
@@ -93,6 +98,8 @@ namespace Game
             Bust();
 
             _state = IPlaceState.EType.Deactive;
+
+            bgmPlayer?.Stop();
         }
 
         #region Animal

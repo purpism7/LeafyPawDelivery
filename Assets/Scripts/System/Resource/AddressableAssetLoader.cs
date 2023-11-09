@@ -13,13 +13,14 @@ namespace GameSystem
     public class AddressableAssetLoader : MonoBehaviour
     {
         public const string AssetLabelUI = "UI";
-        readonly public string AssetLabelGame = "Game";
+        public const string AssetLabelGame = "Game";
         public const string AssetLabelAnimal = "Animal";
-        readonly public string AssetLabelAtlas = "Atlas";
-        readonly public string AssetLabelData = "Data";
-        readonly public string AssetLabelCutscene = "Cutscene";
-        readonly public string AssetLabelOpenCondition = "OpenCondition";
-        readonly public string AssetLabelStory = "Story";
+        public const string AssetLabelAtlas = "Atlas";
+        public const string AssetLabelCutscene = "Cutscene";
+        public const string AssetLabelOpenCondition = "OpenCondition";
+
+        public string AssetLabelData { get { return "Data"; } }
+        public string AssetLabelStory { get { return "Story"; } }
 
         public List<AssetLabelReference> InitLoadLabelList;
 
@@ -51,26 +52,63 @@ namespace GameSystem
 
                 _endLoad = false;
 
-                if(typeKey == AssetLabelUI)
+                switch(typeKey)
                 {
-                    yield return StartCoroutine(CoLoadUIAsset());
+                    case AssetLabelUI:
+                        {
+                            yield return StartCoroutine(CoLoadUIAsset());
+
+                            break;
+                        }
+
+                    case AssetLabelGame:
+                        {
+                            yield return StartCoroutine(CoLoadGameAsset());
+
+                            break;
+                        }
+
+                    case AssetLabelCutscene:
+                        {
+                            yield return StartCoroutine(CoLoadCutsceneAsset());
+
+                            break;
+                        }
+
+                    case AssetLabelAnimal:
+                        {
+                            yield return StartCoroutine(CoLoadAnimalAsset());
+
+                            break;
+                        }
+
+                    default:
+                        {
+                            yield return StartCoroutine(CoLoadGameAssetById(typeKey));
+
+                            break;
+                        }
                 }
-                else if (typeKey == AssetLabelGame)
-                {
-                    yield return StartCoroutine(CoLoadGameAsset());
-                }
-                else if (typeKey == AssetLabelCutscene)
-                {
-                    yield return StartCoroutine(CoLoadCutsceneAsset());
-                }
-                else if(typeKey == AssetLabelAnimal)
-                {
-                    yield return StartCoroutine(CoLoadAnimalAsset());
-                }
-                else
-                {
-                    yield return StartCoroutine(CoLoadGameAssetById(typeKey));
-                }
+                //if(typeKey == AssetLabelUI)
+                //{
+                //    yield return StartCoroutine(CoLoadUIAsset());
+                //}
+                //else if (typeKey == AssetLabelGame)
+                //{
+                //    yield return StartCoroutine(CoLoadGameAsset());
+                //}
+                //else if (typeKey == AssetLabelCutscene)
+                //{
+                //    yield return StartCoroutine(CoLoadCutsceneAsset());
+                //}
+                //else if(typeKey == AssetLabelAnimal)
+                //{
+                //    yield return StartCoroutine(CoLoadAnimalAsset());
+                //}
+                //else
+                //{
+                //    yield return StartCoroutine(CoLoadGameAssetById(typeKey));
+                //}
             }
         }
 
@@ -193,6 +231,25 @@ namespace GameSystem
                     }
                 }
                 
+                _endLoad = true;
+            }));
+        }
+
+        private IEnumerator CoLoadSound()
+        {
+            yield return StartCoroutine(CoLoadAssetAsync<AudioSource>("Sound", (resourceLocation) =>
+            {
+                var audioSource = resourceLocation.Result;
+                if (!audioSource)
+                    return;
+
+
+                //var animal = resultGameObj.GetComponent<Game.Creature.Animal>();
+                //if (animal != null)
+                //{
+                //    _animalGameObjDic.TryAdd((animal.Id, animal.SkinId), resultGameObj);
+                //}
+
                 _endLoad = true;
             }));
         }
