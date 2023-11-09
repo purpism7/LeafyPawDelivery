@@ -78,6 +78,9 @@ namespace UI
         #region MapIcon.IListener
         void MapIcon.IListener.SelectPlace(int id)
         {
+            if (GameUtils.ActivityPlaceId == id)
+                return;
+
             Deactivate();
 
             Sequencer.EnqueueTask(
