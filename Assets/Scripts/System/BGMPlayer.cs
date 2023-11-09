@@ -24,6 +24,12 @@ namespace GameSystem
 
         public void Play()
         {
+            if (audioClips == null)
+                return;
+
+            if (audioClips.Length <= 0)
+                return;
+
             var audioClip = audioSource?.clip;
             if (audioClip == null)
             {
