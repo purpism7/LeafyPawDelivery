@@ -91,6 +91,9 @@ namespace GameSystem
                 if (audioClips == null)
                     return null;
 
+                if (audioClips.Length <= 0)
+                    return null;
+
                 switch (ePlayType)
                 {
                     case EPlayType.Sequence:
