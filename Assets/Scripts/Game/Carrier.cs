@@ -20,10 +20,11 @@ namespace Game
             }
 
             _instance?.Initialize(iGridCell);
-            //if (_instance != null)
-            //{
-            //    DontDestroyOnLoad(_instance);
-            //}
+
+            if (_instance != null)
+            {
+                DontDestroyOnLoad(_instance);
+            }
         }
 
         public static bool Move(Vector3 targetPos, out List<Vector3> pathPosList)

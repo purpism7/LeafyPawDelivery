@@ -64,7 +64,7 @@ namespace GameSystem
         {
             get
             {
-                return GetCurrencySprite("berry");
+                return GetCurrencySprite("jewel");
             }
         }
 
