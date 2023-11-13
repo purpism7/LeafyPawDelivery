@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -10,6 +11,9 @@ namespace UI
         {
 
         }
+
+        [SerializeField]
+        private ScrollRect itemScrollRect = null;
 
         public override IEnumerator CoInitialize(Data data)
         {
@@ -23,6 +27,11 @@ namespace UI
         public override void Deactivate()
         {
             base.Deactivate();
+        }
+
+        private void SetItemList()
+        {
+
         }
     }
 }

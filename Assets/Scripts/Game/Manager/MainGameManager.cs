@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
+using Cysharp.Threading.Tasks;
+
 using Game.Creature;
 using Data;
 using GameData;
@@ -165,12 +167,14 @@ public class MainGameManager : Singleton<MainGameManager>
     public void MovePlace(int placeId, System.Action endMoveAction)
     {
         StartCoroutine(CoMovePlace(placeId, endMoveAction));
+
+        //AsyncMovePlace(placeId, endMoveAction).Forget();
     }
 
     private IEnumerator CoMovePlace(int placeId, System.Action endMoveAction)
     {
         yield return StartCoroutine(CoInitializeManager(placeId));
-        
+
         yield return new WaitForSeconds(2f);
 
         endMoveAction?.Invoke();
@@ -179,6 +183,19 @@ public class MainGameManager : Singleton<MainGameManager>
 
         Starter();
     }
+
+    //private async UniTask AsyncMovePlace(int placeId, System.Action endMoveAction)
+    //{
+    //    //yield return StartCoroutine(CoInitializeManager(placeId));
+
+    //    await UniTask.Delay(2100);
+
+    //    endMoveAction?.Invoke();
+
+    //    await UniTask.Yield();
+
+    //    Starter();
+    //}
     #endregion
 
     #region Animal
