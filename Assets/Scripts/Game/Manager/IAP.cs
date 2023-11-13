@@ -8,6 +8,9 @@ namespace Game.Manager
 {
     public class IAP : Singleton<IAP>, IDetailedStoreListener
     {
+        private IStoreController _iStoreCtr = null;
+        private IExtensionProvider _iExtensionProvider = null;
+
         protected override void Initialize()
         {
             InitializeIAP();
@@ -22,32 +25,33 @@ namespace Game.Manager
 
         void IDetailedStoreListener.OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         void IStoreListener.OnInitializeFailed(InitializationFailureReason error)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         void IStoreListener.OnInitializeFailed(InitializationFailureReason error, string message)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         PurchaseProcessingResult IStoreListener.ProcessPurchase(PurchaseEventArgs purchaseEvent)
         {
-            throw new System.NotImplementedException();
+            return PurchaseProcessingResult.Complete;
         }
 
         void IStoreListener.OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
         {
-            throw new System.NotImplementedException();
+
         }
 
         void IStoreListener.OnInitialized(IStoreController controller, IExtensionProvider extensions)
         {
-            throw new System.NotImplementedException();
+            _iStoreCtr = controller;
+            _iExtensionProvider = extensions;
         }
     }
 }
