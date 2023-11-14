@@ -26,24 +26,31 @@ namespace GameSystem
                 DontDestroyOnLoad(_instance);
             }
         }
-
-        // These ad units are configured to always serve test ads.
-#if UNITY_ANDROID
-  private string _adUnitId = "ca-app-pub-3940256099942544/5354046379";
-#elif UNITY_IPHONE
-        private string _adUnitId = "ca-app-pub-3940256099942544/6978759866";
-#else
-  private string _adUnitId = "unused";
-#endif
-
+        
         private RewardedInterstitialAd _rewardedInterstitialAd = null;
+
+        public string AdUnitId { get; private set; } = string.Empty;
 
         private void Initialize()
         {
             MobileAds.Initialize((InitializationStatus status) =>
             {
                 Debug.Log("AdMob InitializationStatus = " + status);
+
+                SetAdUnitId();
             });
+        }
+
+        private void SetAdUnitId()
+        {
+            if(Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                AdUnitId = "ca-app-pub-3940256099942544/6978759866";
+            }
+            else
+            {
+                AdUnitId = "ca-app-pub-3940256099942544/5354046379";
+            }
         }
 
         /// Loads the rewarded interstitial ad.
@@ -64,7 +71,7 @@ namespace GameSystem
             adRequest.Keywords.Add("unity-admob-sample");
 
             // send the request to load the ad.
-            RewardedInterstitialAd.Load(_adUnitId, adRequest, AdLoadCallback);
+            RewardedInterstitialAd.Load(AdUnitId, adRequest, AdLoadCallback);
               //  (RewardedInterstitialAd ad, LoadAdError error) =>
               //  {
               //// if error is not null, the load request failed.
@@ -95,6 +102,11 @@ namespace GameSystem
                       + ad.GetResponseInfo());
 
             _rewardedInterstitialAd = ad;
+
+            //if(_rewardedInterstitialAd.CanShowAd())
+            //{
+            //    _rewardedInterstitialAd.
+            //}
         }
     }
 }
