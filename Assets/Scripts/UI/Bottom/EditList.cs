@@ -197,16 +197,23 @@ namespace UI
 
             DeactviateAllAnimal();
 
+            int placeId = GameUtils.ActivityPlaceId;
+
             for (int i = 0; i < infoList.Count; ++i)
             {
                 var info = infoList[i];
                 if (info == null)
                     continue;
 
-                if (info.Arrangement)
+                var animalData = AnimalContainer.Instance.GetData(info.Id);
+                if (animalData == null)
                     continue;
 
-                var animalData = AnimalContainer.Instance.GetData(info.Id);
+                if (animalData.PlaceId != placeId)
+                    continue;
+
+                if (info.Arrangement)
+                    continue;
 
                 var data = new Component.EditAnimal.Data()
                 {
@@ -241,6 +248,8 @@ namespace UI
 
             DeactviateAllObject();
 
+            int placeId = GameUtils.ActivityPlaceId;
+
             for (int i = 0; i < infoList.Count; ++i)
             {
                 var objectInfo = infoList[i];
@@ -249,6 +258,9 @@ namespace UI
 
                 var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
                 if (objectData == null)
+                    continue;
+
+                if (objectData.PlaceId != placeId)
                     continue;
 
                 int remainCount = objectMgr.GetRemainCount(objectInfo.Id);
