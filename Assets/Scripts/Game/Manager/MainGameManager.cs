@@ -215,8 +215,6 @@ public class MainGameManager : Singleton<MainGameManager>
             pos = GameCameraCtr.Center;
         }
 
-        pos.z = GetPosZ(id);
-
         var animal = activityPlace.AddAnimal(id, animalInfo.SkinId, pos);
         if (animal == null)
             return;
@@ -239,19 +237,12 @@ public class MainGameManager : Singleton<MainGameManager>
             pos = GameCameraCtr.Center;
         }
 
-        pos.z = GetPosZ(id);
-
         int currSkinId = AnimalMgr.GetCurrenctSkinId(id);
 
         if(activityPlace.ChangeAnimalSkin(id, skinId, pos, currSkinId))
         {
             AnimalMgr?.ApplySkin(id, skinId);
         }
-    }
-
-    private float GetPosZ(int id)
-    {
-        return id * 0.01f;
     }
     #endregion
 
@@ -271,15 +262,6 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             pos = GameCameraCtr.Center;
         }
-
-        float posZ = id * 0.001f;
-        var objData = ObjectContainer.Instance?.GetData(id);
-        if (objData != null)
-        {
-            posZ += (objData.Count - ObjectMgr.GetRemainCount(id)) * 0.0001f;
-        }
-
-        pos.z = posZ;
 
         var obj = activityPlace.AddObject(id, pos, editObject.UId);
         if (obj == null)

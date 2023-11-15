@@ -21,10 +21,7 @@ namespace Info
         {
             //_objectInfoDic.Clear();
 
-
-            int placeId = MainGameManager.Instance.placeMgr.ActivityPlaceId;
-
-            var jsonfilePath = string.Format(JsonFilePath, placeId);
+            var jsonfilePath = string.Format(JsonFilePath, GameUtils.ActivityPlaceId);
             if (!System.IO.File.Exists(jsonfilePath))
                 return;
 
@@ -123,14 +120,27 @@ namespace Info
 
         public EditObject GetAddEditObject(int id)
         {
-            int placeId = MainGameManager.Instance.placeMgr.ActivityPlaceId;
-
-            var objectInfo = GetObjectInfoById(id, placeId);
+            var objectInfo = GetObjectInfoById(id, GameUtils.ActivityPlaceId);
             if (objectInfo == null)
                 return null;
 
-            if(objectInfo.EditObjectList != null)
+            var editObjectList = objectInfo.EditObjectList;
+            if (editObjectList != null)
             {
+                //for(int i = 0; i < editObjectList.Count; ++i)
+                //{
+                //    for(int j = 0; j < editObjectList.Count; ++j)
+                //    {
+                //        if (i == j)
+                //            continue;
+
+                //        if(editObjectList[i].UId == editObjectList[j].UId)
+                //        {
+                //            editObjectList[j].UId = j;
+                //        }
+                //    }
+                //}
+
                 foreach(var editObject in objectInfo.EditObjectList)
                 {
                     if (editObject == null)
@@ -152,7 +162,7 @@ namespace Info
             {
                 UId = objectInfo.EditObjectList.Count + 1,
             };
-
+            //Debug.Log("ObjectHolder GetAddEditObject = " + addEditObject.UId);
             objectInfo.EditObjectList.Add(addEditObject);
 
             return addEditObject;

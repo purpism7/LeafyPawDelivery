@@ -44,7 +44,6 @@ namespace Game
 
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
-        private float _initPosZ = 0;
         private bool _initialize = false;
 
         private PlaceEventController _placeEventCtr = new();
@@ -107,6 +106,8 @@ namespace Game
         {
             if (_animalList == null)
                 return null;
+
+            pos.z = GetAnimalPosZ(id);
 
             foreach (var animal in _animalList)
             {
@@ -183,13 +184,21 @@ namespace Game
 
             if(existAnimal)
             {
+                pos.z = GetAnimalPosZ(id);
+
                 AddAnimal(id, skinId, pos);
             }
 
             return existAnimal;
         }
+
+        private float GetAnimalPosZ(int id)
+        {
+            return id * 0.01f;
+        }
         #endregion
 
+        #region Object
         public Game.Object AddObject(int id, Vector3 pos, int uId)
         {
             if (_objectList == null)
@@ -211,6 +220,8 @@ namespace Game
 
                 return obj;
             }
+
+            pos.z = GetObjectPosZ(id);
 
             var objData = new Game.Object.Data()
             {
@@ -250,6 +261,25 @@ namespace Game
             }
         }
 
+        private float GetObjectPosZ(int id)
+        {
+            float offset = 0.0001f;
+            float posZ = id * offset;
+
+            var objMgr = MainGameManager.Instance?.ObjectMgr;
+            if (objMgr == null)
+                return posZ;
+
+            var objData = ObjectContainer.Instance?.GetData(id);
+            if (objData == null)
+                return posZ;
+
+            posZ += (objData.Count - objMgr.GetRemainCount(id)) * offset;
+
+            return posZ;
+        }
+        #endregion
+
         private void SetAnimalList()
         {
             _animalList.Clear();
@@ -274,7 +304,7 @@ namespace Game
                 if (!animalInfo.Arrangement)
                     continue;
 
-                animalInfo.Pos.z = ++_initPosZ;
+                animalInfo.Pos.z = GetAnimalPosZ(animalInfo.Id);
 
                 var animalData = new Game.Creature.Animal.Data()
                 {
@@ -330,6 +360,7 @@ namespace Game
                 if(objectInfo == null)
                     continue;
 
+                var editObjectList = objectInfo.EditObjectList;
                 if (objectInfo.EditObjectList == null)
                     continue;
 
@@ -340,7 +371,7 @@ namespace Game
                 if (data.PlaceId != Id)
                     continue;
 
-                foreach(var editObject in objectInfo.EditObjectList)
+                foreach(var editObject in editObjectList)
                 {
                     if (editObject == null)
                         continue;
@@ -348,8 +379,7 @@ namespace Game
                     if (!editObject.Arrangement)
                         continue;
 
-                    editObject.Pos.z = ++_initPosZ;
-
+                    editObject.Pos.z = GetObjectPosZ(objectInfo.Id);
                     var objectData = new Game.Object.Data()
                     {
                         ObjectId = objectInfo.Id,
