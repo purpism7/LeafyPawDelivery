@@ -68,17 +68,26 @@ namespace UI
             if(infoList == null)
                 return;
 
-            foreach(var info in infoList)
+            int placeId = GameUtils.ActivityPlaceId;
+
+            foreach (var info in infoList)
             {
                 if(info == null)
                     continue;
 
-                if(info.Arrangement)
+                var animalData = AnimalContainer.Instance?.GetData(info.Id);
+                if (animalData == null)
+                    continue;
+
+                if (animalData.PlaceId != placeId)
+                    continue;
+
+                if (info.Arrangement)
                     continue;
 
                 var data = new Component.EditAnimal.Data()
                 {
-                    AnimalData = AnimalContainer.Instance.GetData(info.Id),
+                    AnimalData = animalData,
                 };
 
                 CreateEditAnimal(data);
@@ -99,13 +108,18 @@ namespace UI
             if (infoList == null)
                 return;
 
-            foreach(var objectInfo in infoList)
+            int placeId = GameUtils.ActivityPlaceId;
+
+            foreach (var objectInfo in infoList)
             {
                 if(objectInfo == null)
                     continue;
 
                 var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
                 if (objectData == null)
+                    continue;
+
+                if (objectData.PlaceId != placeId)
                     continue;
 
                 int reaminCount = objectMgr.GetRemainCount(objectInfo.Id);
