@@ -263,7 +263,7 @@ namespace Game
 
         private float GetObjectPosZ(int id)
         {
-            float offset = 0.0001f;
+            float offset = 0.00001f;
             float posZ = id * offset;
 
             var objMgr = MainGameManager.Instance?.ObjectMgr;
