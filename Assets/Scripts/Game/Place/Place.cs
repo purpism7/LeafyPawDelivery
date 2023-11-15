@@ -274,7 +274,7 @@ namespace Game
             if (objData == null)
                 return posZ;
 
-            posZ += (objData.Count - objMgr.GetRemainCount(id)) * offset;
+            posZ += (objData.Count - objMgr.GetRemainCount(id)) * offset * 0.1f;
 
             return posZ;
         }

@@ -9,6 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3905ac0c1bc86407d8129a215771de4d, type: 3}
-  m_Name: Dog
+  m_Script: {fileID: 11500000, guid: c73aae51cc0c047adb9a974b8d13a3ec, type: 3}
+  m_Name: AdData
   m_EditorClassIdentifier: 
+  AdDataList:
+  - Key: com.popo.leafypawdelivery_free_jewel_10
+    Id: ca-app-pub-4768455296560255/9551829061
