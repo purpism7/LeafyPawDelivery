@@ -221,7 +221,7 @@ namespace Game
                 return obj;
             }
 
-            pos.z = GetObjectPosZ(id);
+            pos.z = GetObjectPosZ(id, uId);
 
             var objData = new Game.Object.Data()
             {
@@ -261,9 +261,9 @@ namespace Game
             }
         }
 
-        private float GetObjectPosZ(int id)
+        private float GetObjectPosZ(int id, int uId)
         {
-            float offset = 0.00001f;
+            float offset = 0.0001f;
             float posZ = id * offset;
 
             var objMgr = MainGameManager.Instance?.ObjectMgr;
@@ -274,7 +274,7 @@ namespace Game
             if (objData == null)
                 return posZ;
 
-            posZ += (objData.Count - objMgr.GetRemainCount(id)) * offset * 0.1f;
+            posZ += uId * offset * 0.1f;
 
             return posZ;
         }
@@ -379,7 +379,7 @@ namespace Game
                     if (!editObject.Arrangement)
                         continue;
 
-                    editObject.Pos.z = GetObjectPosZ(objectInfo.Id);
+                    editObject.Pos.z = GetObjectPosZ(objectInfo.Id, editObject.UId);
                     var objectData = new Game.Object.Data()
                     {
                         ObjectId = objectInfo.Id,

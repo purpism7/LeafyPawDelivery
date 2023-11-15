@@ -27,7 +27,7 @@ namespace GameSystem
 
             bool endLoad = false;
 
-            yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<GameData.Const>(
+            yield return StartCoroutine(addressableAssetLoader.CoLoadAssetAsync<Const>(
                 "Const",
                 (asyncOperationHandle) =>
                 {

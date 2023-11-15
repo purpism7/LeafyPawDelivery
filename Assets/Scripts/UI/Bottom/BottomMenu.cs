@@ -75,8 +75,9 @@ namespace UI
                 {
                     case EType.Shop:
                         {
-                            //var popup = new GameSystem.PopupCreator<Shop, Shop.Data>()
-                            //    .Create();
+                            var popup = new GameSystem.PopupCreator<Shop, Shop.Data>()
+                                .SetCoInit(true)
+                                .Create();
                         }
                         break;
                     

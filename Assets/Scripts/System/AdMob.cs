@@ -20,42 +20,26 @@ namespace GameSystem
                 _instance = gameObj.GetOrAddComponent<AdMob>();
                 _instance?.Initialize();
             }
-
-            if (_instance != null)
-            {
-                DontDestroyOnLoad(_instance);
-            }
         }
-        
+
         private RewardedInterstitialAd _rewardedInterstitialAd = null;
 
-        public string AdUnitId { get; private set; } = string.Empty;
+        //public AdMob()
+        //{
+        //    Initialize();
+        //}
 
         private void Initialize()
         {
             MobileAds.Initialize((InitializationStatus status) =>
             {
                 Debug.Log("AdMob InitializationStatus = " + status);
-
-                SetAdUnitId();
             });
-        }
-
-        private void SetAdUnitId()
-        {
-            if(Application.platform == RuntimePlatform.IPhonePlayer)
-            {
-                AdUnitId = "ca-app-pub-3940256099942544/6978759866";
-            }
-            else
-            {
-                AdUnitId = "ca-app-pub-3940256099942544/5354046379";
-            }
         }
 
         /// Loads the rewarded interstitial ad.
         /// </summary>
-        public void LoadRewardedInterstitialAd()
+        public void LoadRewardedInterstitialAd(string id)
         {
             // Clean up the old ad before loading a new one.
             if (_rewardedInterstitialAd != null)
@@ -71,7 +55,7 @@ namespace GameSystem
             adRequest.Keywords.Add("unity-admob-sample");
 
             // send the request to load the ad.
-            RewardedInterstitialAd.Load(AdUnitId, adRequest, AdLoadCallback);
+            RewardedInterstitialAd.Load(id, adRequest, AdLoadCallback);
               //  (RewardedInterstitialAd ad, LoadAdError error) =>
               //  {
               //// if error is not null, the load request failed.
@@ -103,10 +87,15 @@ namespace GameSystem
 
             _rewardedInterstitialAd = ad;
 
-            //if(_rewardedInterstitialAd.CanShowAd())
-            //{
-            //    _rewardedInterstitialAd.
-            //}
+            if(_rewardedInterstitialAd.CanShowAd())
+            {
+                //_rewardedInterstitialAd.
+                _rewardedInterstitialAd.Show(
+                    (Reward reward) =>
+                    {
+                        Debug.Log(reward.Type + " / " + reward.Amount);
+                    });
+            }
         }
     }
 }

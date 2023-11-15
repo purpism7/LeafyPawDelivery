@@ -8,7 +8,7 @@ namespace Game
     {
         readonly public static string KeyNickName = "KeyNickName";
 
-        public static GameData.Const Const = null;
+        public static Const Const = null;
     }
 }
 

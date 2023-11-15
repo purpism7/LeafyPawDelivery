@@ -219,10 +219,11 @@ namespace Info
             if (objectInfo == null)
                 return null;
 
-            if (objectInfo.EditObjectList == null)
+            var editObjectList = objectInfo.EditObjectList;
+            if (editObjectList == null)
                 return null;
 
-            foreach(var editObject in objectInfo.EditObjectList)
+            foreach(var editObject in editObjectList)
             {
                 if (editObject == null)
                     continue;
