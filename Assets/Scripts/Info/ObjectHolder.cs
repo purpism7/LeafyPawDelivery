@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO.IsolatedStorage;
 using UnityEngine;
 
 using Game;
@@ -21,7 +20,7 @@ namespace Info
         {
             _objectInfoDic?.Clear();
 
-            for(int i = 0; i < Game.Data.Const.TotalPlaceCount; ++i)
+            for(int i = 1; i <= Game.Data.Const.TotalPlaceCount; ++i)
             {
                 var jsonfilePath = string.Format(JsonFilePath, i);
                 if (!System.IO.File.Exists(jsonfilePath))
@@ -31,7 +30,7 @@ namespace Info
                 var objectInfos = JsonHelper.FromJson<Info.Object>(jsonString);
                 if (objectInfos == null)
                     break;
-
+                
                 foreach (var objectInfo in objectInfos)
                 {
                     if (objectInfo == null)

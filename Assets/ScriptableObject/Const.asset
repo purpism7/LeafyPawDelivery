@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0088febb0dc6640bdb4611bc95f4038f, type: 3}
   m_Name: Const
   m_EditorClassIdentifier: 
-  AnimalBaseSkinId: 1
-  StartPlaceId: 1
+  animalBaseSkinId: 1
+  startPlaceId: 1
   CurrencyInfos:
   - Animal: 1
     Object: 1
