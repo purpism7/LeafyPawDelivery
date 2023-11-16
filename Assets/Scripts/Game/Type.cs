@@ -100,6 +100,22 @@ namespace Game
             Obtain, // 재화 획득, 스토리 최초 보기.
             Use, // 재화 사용, 동물/오브젝트 배치.
         }
+
+        public enum EPayment
+        {
+            None,
+
+            Buy,
+            Advertising,
+        }
+
+        public enum ECategory
+        {
+            None,
+
+            Cash,
+            AnimalCurrency,
+        }
     }
 }
 

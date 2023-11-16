@@ -70,13 +70,21 @@ namespace GameSystem
 
         public Sprite GetAnimalSkinSprite(string name)
         {
-            var placeMgr = MainGameManager.Instance.placeMgr;
-            if (placeMgr == null)
-                return null;
-
-            int placeId = placeMgr.ActivityPlaceId;
+            int placeId = GameUtils.ActivityPlaceId;
 
             return GetSprite("AnimalSkinIcon_" + placeId, name);
+        }
+
+        public Sprite GetShopBuyCashSprite(string name)
+        {
+            return GetSprite("Shop", name);
+        }
+
+        public Sprite GetShopItemSprite(string name)
+        {
+            int placeId = GameUtils.ActivityPlaceId;
+
+            return GetSprite("Shop", name);
         }
     }
 }

@@ -8,7 +8,9 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
-
+            public int Id = 0;
+            public string IconImgName = string.Empty;
+            public int Value = 0;
         }
 
         private GameSystem.AdMob _adMob = new();
