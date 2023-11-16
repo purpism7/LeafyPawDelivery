@@ -24,8 +24,16 @@ public class Const : ScriptableObject
         }
     }
 
-    public int AnimalBaseSkinId = 1;
-    public int StartPlaceId = 1;
+    [SerializeField]
+    private int animalBaseSkinId = 1;
+    [SerializeField]
+    private int startPlaceId = 1;
+    [SerializeField]
+    private int totalPlaceCount = 1;
+
+    public int AnimalBaseSkinId { get { return animalBaseSkinId; } }
+    public int StartPlaceId { get { return startPlaceId; } }
+    public int TotalPlaceCount { get { return totalPlaceCount; } }
 
     public CurrencyInfo[] CurrencyInfos = null;
 

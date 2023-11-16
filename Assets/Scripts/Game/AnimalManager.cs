@@ -31,13 +31,13 @@ namespace Game
             var mainGameMgr = MainGameManager.Instance;
             mainGameMgr?.ObjectMgr.Listener.AddListener(OnChangedObjectInfo);
             Game.PlaceManager.Listener?.AddListener(OnChangedPlace);
+
+            _animalHolder?.LoadInfo();
         }
 
         public override IEnumerator CoInitialize(Data data)
         {
             _data = data;
-            
-            _animalHolder?.LoadInfo();
 
             Debug.Log("AnimalManager CoInit");
             

@@ -19,36 +19,39 @@ namespace Info
 
         public override void LoadInfo()
         {
-            //_objectInfoDic.Clear();
+            _objectInfoDic?.Clear();
 
-            var jsonfilePath = string.Format(JsonFilePath, GameUtils.ActivityPlaceId);
-            if (!System.IO.File.Exists(jsonfilePath))
-                return;
-
-            var jsonString = System.IO.File.ReadAllText(jsonfilePath);
-            var objectInfos = JsonHelper.FromJson<Info.Object>(jsonString);
-            if (objectInfos == null)
-                return;
-
-            foreach (var objectInfo in objectInfos)
+            for(int i = 0; i < Game.Data.Const.TotalPlaceCount; ++i)
             {
-                if (objectInfo == null)
-                    continue;
+                var jsonfilePath = string.Format(JsonFilePath, i);
+                if (!System.IO.File.Exists(jsonfilePath))
+                    break;
 
-                var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
-                if (objectData == null)
-                    continue;
+                var jsonString = System.IO.File.ReadAllText(jsonfilePath);
+                var objectInfos = JsonHelper.FromJson<Info.Object>(jsonString);
+                if (objectInfos == null)
+                    break;
 
-                AddObject(objectData.PlaceId, objectInfo.Id);
-
-                //objectInfo.EditObjectList.Add(objectInfo.EditObjectList)
-
-                if (_objectInfoDic.TryGetValue(objectData.PlaceId, out List<Info.Object> objectInfoList))
+                foreach (var objectInfo in objectInfos)
                 {
-                    var findObjectInfo = objectInfoList.Find(info => info != null ? info.Id == objectInfo.Id : false);
-                    if (findObjectInfo != null)
+                    if (objectInfo == null)
+                        continue;
+
+                    var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
+                    if (objectData == null)
+                        continue;
+
+                    AddObject(objectData.PlaceId, objectInfo.Id);
+
+                    //objectInfo.EditObjectList.Add(objectInfo.EditObjectList)
+
+                    if (_objectInfoDic.TryGetValue(objectData.PlaceId, out List<Info.Object> objectInfoList))
                     {
-                        findObjectInfo.EditObjectList.AddRange(objectInfo.EditObjectList);
+                        var findObjectInfo = objectInfoList.Find(info => info != null ? info.Id == objectInfo.Id : false);
+                        if (findObjectInfo != null)
+                        {
+                            findObjectInfo.EditObjectList.AddRange(objectInfo.EditObjectList);
+                        }
                     }
                 }
             }
@@ -141,7 +144,7 @@ namespace Info
                 //    }
                 //}
 
-                foreach(var editObject in objectInfo.EditObjectList)
+                foreach(var editObject in editObjectList)
                 {
                     if (editObject == null)
                         continue;

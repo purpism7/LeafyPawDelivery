@@ -111,7 +111,6 @@ public static class GameUtils
         return null;
     }
 
-
     /// <summary>
     /// 현재 활성화 상태인 Place Id.
     /// </summary>

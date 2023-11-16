@@ -30,13 +30,13 @@ namespace Game
             Debug.Log("ObjectManager Initialize");
             
             Listener?.RemoveAllListeners();
+
+            _objectHolder?.LoadInfo();
         }
 
         public override IEnumerator CoInitialize(Data data)
         {
             _data = data;
-  
-            _objectHolder?.LoadInfo();
 
             yield break;
         }

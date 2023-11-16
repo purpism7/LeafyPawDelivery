@@ -19,7 +19,10 @@ namespace Game.Element.State
             _gameCameraCtr = gameCameraCtr;
             _iGrid = iGrid;
 
+            _isOverlap = false;
             _enableColliders = false;
+
+            _gameBaseElement?.SetColor(Color.white);
 
             return this;
         }
