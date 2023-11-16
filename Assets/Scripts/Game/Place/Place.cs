@@ -194,7 +194,7 @@ namespace Game
 
         private float GetAnimalPosZ(int id)
         {
-            return id * 0.01f;
+            return 0.1f * id / 10;
         }
         #endregion
 
@@ -264,7 +264,7 @@ namespace Game
         private float GetObjectPosZ(int id, int uId)
         {
             float offset = 0.0001f;
-            float posZ = id * offset;
+            float posZ = (id * 10 + uId) * offset;
 
             var objMgr = MainGameManager.Instance?.ObjectMgr;
             if (objMgr == null)
@@ -274,7 +274,7 @@ namespace Game
             if (objData == null)
                 return posZ;
 
-            posZ += uId * offset * 0.1f;
+            //posZ += uId * offset * 0.1f;
 
             return posZ;
         }

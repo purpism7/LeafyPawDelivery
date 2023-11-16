@@ -58,7 +58,7 @@ namespace GameSystem
             if(boxCollider == null)
                 return;
 
-            boxCollider.size = new Vector3(_data.CellSize, _data.CellSize, 100f);
+            boxCollider.size = new Vector3(_data.CellSize, _data.CellSize, 50f);
 
             _halfExtnents = boxCollider.size * 0.5f;
         }
