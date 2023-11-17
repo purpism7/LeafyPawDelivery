@@ -264,17 +264,7 @@ namespace Game
         private float GetObjectPosZ(int id, int uId)
         {
             float offset = 0.0001f;
-            float posZ = (id * 10 + uId) * offset;
-
-            var objMgr = MainGameManager.Instance?.ObjectMgr;
-            if (objMgr == null)
-                return posZ;
-
-            var objData = ObjectContainer.Instance?.GetData(id);
-            if (objData == null)
-                return posZ;
-
-            //posZ += uId * offset * 0.1f;
+            float posZ = (id * 100 + uId) * offset;
 
             return posZ;
         }

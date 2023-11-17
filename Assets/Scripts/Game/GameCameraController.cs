@@ -10,14 +10,13 @@ namespace GameSystem
     {
         private const float MaxOrthographicSize = 1800f;
         private const float MinOrthographicSize = 1200f;
+        private const float InitPosZ = -1000f;
 
         public Camera GameCamera = null;
         public Camera UICamera = null;
         
         private Vector2 _center = Vector2.zero;
         private Vector2 _mapSize = new Vector2(2000f, 2000f);
-
-        private Vector3 _prevPos = Vector3.zero;
 
         private float _halfHeight = 0;
         private float _dragWidth = 0;
@@ -146,7 +145,7 @@ namespace GameSystem
 
             //var time = Time.deltaTime * 50f;
 
-            var targetPos = new Vector3(clampX, clampY, -1000f);
+            var targetPos = new Vector3(clampX, clampY, InitPosZ);
             //cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, time);
             cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, 0.01f);
         }
@@ -178,7 +177,7 @@ namespace GameSystem
 
             float clampX = GetClampX(cameraTm.position.x);
             float clampY = GetClampY(cameraTm.position.y);
-            var targetPos = new Vector3(clampX, clampY, -1000f);
+            var targetPos = new Vector3(clampX, clampY, InitPosZ);
             cameraTm.position = targetPos;
         }
 

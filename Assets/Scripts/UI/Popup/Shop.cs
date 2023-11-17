@@ -8,9 +8,9 @@ using GameSystem;
 
 namespace UI
 {
-    public class Shop : BasePopup<Shop.Data>
+    public class Shop : BasePopup<Shop.Data_>, ShopItemCell.IListener
     {
-        public class Data : BaseData
+        public class Data_ : BaseData
         {
 
         }
@@ -18,7 +18,7 @@ namespace UI
         [SerializeField]
         private ScrollRect itemScrollRect = null;
 
-        public override IEnumerator CoInitialize(Data data)
+        public override IEnumerator CoInitialize(Data_ data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
 
@@ -43,17 +43,26 @@ namespace UI
                 if (data == null)
                     continue;
 
-                var shopItemCellData = new ShopItemCell.Data()
+                var shopItemCellData = new ShopItemCell.Data_()
                 {
-                    Id = data.Id,
+                    IListener = this,
+                    ShopData = data,
                 };
 
-
-                var cell = new ComponentCreator<ShopItemCell, ShopItemCell.Data>()
+                var cell = new ComponentCreator<ShopItemCell, ShopItemCell.Data_>()
                     .SetData(shopItemCellData)
                     .SetRootRectTm(itemScrollRect?.content)
                     .Create();
             }
+        }
+
+        void ShopItemCell.IListener.Buy(Data.Shop shopData, System.Action endAction)
+        {
+            if (shopData == null)
+                return;
+
+
+            endAction?.Invoke();
         }
     }
 }

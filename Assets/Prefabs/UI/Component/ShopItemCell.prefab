@@ -50,6 +50,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootRectTm: {fileID: 5165180990436983666}
+  iconImg: {fileID: 6082806331686416354}
+  valueTMP: {fileID: 2033328674195777589}
+  paymentValueTMP: {fileID: 6089705920319160488}
 --- !u!1 &5123362539970142363
 GameObject:
   m_ObjectHideFlags: 0

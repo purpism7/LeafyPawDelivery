@@ -75,16 +75,16 @@ namespace GameSystem
             return GetSprite("AnimalSkinIcon_" + placeId, name);
         }
 
-        public Sprite GetShopBuyCashSprite(string name)
+        public Sprite GetShopItemSprite(Game.Type.ECategory eCategory, string name)
         {
-            return GetSprite("Shop", name);
-        }
+            if(eCategory == Game.Type.ECategory.Cash)
+            {
+                return GetSprite("Shop", name);
+            }
 
-        public Sprite GetShopItemSprite(string name)
-        {
             int placeId = GameUtils.ActivityPlaceId;
 
-            return GetSprite("Shop", name);
+            return GetSprite("Shop", string.Format(name, placeId));
         }
     }
 }

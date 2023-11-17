@@ -2,33 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Shop : Data.Base
+namespace Data
 {
-    [SerializeField]
-    private string Category = string.Empty;
-    [SerializeField]
-    private string Payment = string.Empty;
-    [SerializeField]
-    private int PaymentValue = 0;
-    [SerializeField]
-    private int Value = 0;
-
-    public Game.Type.ECategory ECategory { get; private set; } = Game.Type.ECategory.None;
-    public Game.Type.EPayment EPayment { get; private set; } = Game.Type.EPayment.None;
-
-    public override void Initialize()
+    [System.Serializable]
+    public class Shop : Data.Base
     {
-        base.Initialize();
+        [SerializeField]
+        private string Category = string.Empty;
+        [SerializeField]
+        private string Payment = string.Empty;
+        
+        public int PaymentValue = 0;
+        public int Value = 0;
+        public string IconImg = string.Empty;
 
-        if(System.Enum.TryParse(Category, out Game.Type.ECategory eCategory))
-        {
-            ECategory = eCategory;
-        }
+        public Game.Type.ECategory ECategory { get; private set; } = Game.Type.ECategory.None;
+        public Game.Type.EPayment EPayment { get; private set; } = Game.Type.EPayment.None;
 
-        if (System.Enum.TryParse(Payment, out Game.Type.EPayment ePayment))
+        public override void Initialize()
         {
-            EPayment = ePayment;
+            base.Initialize();
+
+            if (System.Enum.TryParse(Category, out Game.Type.ECategory eCategory))
+            {
+                ECategory = eCategory;
+            }
+
+            if (System.Enum.TryParse(Payment, out Game.Type.EPayment ePayment))
+            {
+                EPayment = ePayment;
+            }
         }
     }
 }
+
+
