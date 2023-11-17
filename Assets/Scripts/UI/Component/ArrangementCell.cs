@@ -33,10 +33,14 @@ namespace UI.Component
         [SerializeField] private Button arrangementBtn = null;
         [SerializeField] private Image iconImg = null;
 
-        [Header("Lock")]
-        [SerializeField] private TextMeshProUGUI lockNameTMP = null;
+        [SerializeField]
+        private RectTransform openRootRectTm = null;
+        [SerializeField]
+        private RectTransform openConditionRootRectTm = null;
+        [SerializeField]
+        private TextMeshProUGUI openNameTMP = null;
+
         [SerializeField] private RectTransform lockRootRectTm = null;
-        [SerializeField] private RectTransform openCondtionRootRectTm = null;
         #endregion
 
         private List<OpenCondition> _openConditionList = new();
@@ -109,7 +113,7 @@ namespace UI.Component
             var localName = GameUtils.GetName(_data.EElement, _data.Id);
 
             nameTMP?.SetText(localName);
-            lockNameTMP?.SetText(localName);
+            openNameTMP?.SetText(localName);
         }
 
         private void SetDescTMP()
@@ -184,23 +188,6 @@ namespace UI.Component
 
             AddOpenCondition(currencyInfo.AnimalSpriteName, openCondition.AnimalCurrency, () => animalOpenConditionContainer.CheckAnimalCurrency(_data.Id));
             AddOpenCondition(currencyInfo.ObjectSpriteName, openCondition.ObjectCurrency, () => animalOpenConditionContainer.CheckObjectCurrency(_data.Id));
-            //var openConditionData = new OpenCondition.Data()
-            //{
-            //    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.AnimalSpriteName),
-            //    Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
-            //    PossibleFunc = () => animalOpenConditionContainer.CheckAnimalCurrency(_data.Id),
-            //};
-
-            //CreateOpenCondition(openConditionData);
-
-            //openConditionData = new OpenCondition.Data()
-            //{
-            //    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.ObjectSpriteName),
-            //    Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
-            //    PossibleFunc = () => animalOpenConditionContainer.CheckObjectCurrency(_data.Id),
-            //};
-
-            //CreateOpenCondition(openConditionData);
         }
 
         private void SetObjectOpenCondition()
@@ -216,23 +203,6 @@ namespace UI.Component
 
             AddOpenCondition(currencyInfo.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
             AddOpenCondition(currencyInfo.ObjectSpriteName, openCondition.ObjectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
-            //var openConditionData = new OpenCondition.Data()
-            //{
-            //    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.AnimalSpriteName),
-            //    Text = GetReqAnimalCurrency(openCondition.AnimalCurrency),
-            //    PossibleFunc = () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id),
-            //};
-
-            //CreateOpenCondition(openConditionData);
-
-            //openConditionData = new OpenCondition.Data()
-            //{
-            //    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(currencyInfo.ObjectSpriteName),
-            //    Text = GetReqObjectCurrency(openCondition.ObjectCurrency),
-            //    PossibleFunc = () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id),
-            //};
-
-            //CreateOpenCondition(openConditionData);
         }
 
         private string GetRequireCurrency(long currency)
@@ -277,7 +247,7 @@ namespace UI.Component
             {
                 openCondition = new ComponentCreator<OpenCondition, OpenCondition.Data>()
                     .SetData(openConditionData)
-                    .SetRootRectTm(openCondtionRootRectTm)
+                    .SetRootRectTm(openConditionRootRectTm)
                     .Create();
 
                 _openConditionList?.Add(openCondition);
