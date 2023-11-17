@@ -40,7 +40,7 @@ namespace Scene
         {
             _iListener?.EndLoad();
 
-            //MainGameManager.Instance?.Starter();
+            MainGameManager.Instance?.Starter();
         }
     }
 }

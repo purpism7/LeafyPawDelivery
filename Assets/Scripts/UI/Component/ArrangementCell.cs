@@ -55,7 +55,7 @@ namespace UI.Component
             SetButtonState();
             SetLockData();
 
-            UIUtils.SetActive(lockRootRectTm, _data.Lock);
+            UIUtils.SetActive(openRootRectTm, _data.Lock);
         }
 
         public override void Activate()
@@ -344,7 +344,7 @@ namespace UI.Component
             SetIconImg();
             SetButtonState();
             
-            UIUtils.SetActive(lockRootRectTm, _data.Lock);
+            UIUtils.SetActive(openRootRectTm, _data.Lock);
         }
         
         public void OnClickUnlock()

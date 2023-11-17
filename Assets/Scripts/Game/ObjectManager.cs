@@ -93,6 +93,60 @@ namespace Game
 
             return _objectHolder.GetRemainCount(id);
         }
+
+        public void Check(MainGameManager mainGameMgr)
+        {
+            if (_data == null)
+                return;
+
+            if (mainGameMgr == null)
+                return;
+
+            var openConditionDatas = ObjectOpenConditionContainer.Instance?.Datas;
+            if (openConditionDatas == null)
+                return;
+
+            var objectContainer = ObjectContainer.Instance;
+
+            foreach (var data in openConditionDatas)
+            {
+                if (data == null)
+                    continue;
+
+                var objectData = objectContainer?.GetData(data.Id);
+                if (objectData != null &&
+                    objectData.PlaceId != _data.PlaceId)
+                    continue;
+
+                if (mainGameMgr.CheckExist(Game.Type.EElement.Object, data.Id))
+                    continue;
+
+                if (data.EType_ == OpenConditionData.EType.Starter)
+                {
+                    Sequencer.EnqueueTask(
+                        () =>
+                        {
+                            var popup = new GameSystem.PopupCreator<UI.Unlock, UI.Unlock.Data>()
+                                .SetData(new UI.Unlock.Data()
+                                {
+                                    EElement = Type.EElement.Object,
+                                    Id = data.Id,
+                                    ClickAction = () =>
+                                    {
+
+                                    },
+                                })
+                                .SetCoInit(true)
+                                .SetReInitialize(true)
+                                .Create();
+
+                            return popup;
+                        });
+
+                    mainGameMgr.AddInfo(Type.EElement.Object, data.Id);
+                }
+            }
+        }
     }
 }
 

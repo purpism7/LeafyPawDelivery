@@ -6,11 +6,9 @@ using UnityEngine.Localization.Settings;
 
 using Cysharp.Threading.Tasks;
 
-using Game.Creature;
-using Data;
-using GameData;
 using GameSystem;
-using Info;
+
+
 
 public class MainGameManager : Singleton<MainGameManager>
 {
@@ -108,6 +106,7 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         Debug.Log("Starter");
         AnimalMgr?.Check();
+        ObjectMgr?.Check(this);
     }
 
     private void Update()
