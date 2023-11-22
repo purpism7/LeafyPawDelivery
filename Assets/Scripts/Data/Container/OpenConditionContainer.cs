@@ -14,9 +14,7 @@ public class OpenConditionContainer<T> : BaseContainer<T, OpenConditionData> whe
         if (user == null)
             return false;
 
-        int activityPlaceId = MainGameManager.Instance.placeMgr.ActivityPlaceId;
-
-        var currency = user.GetCurrency(activityPlaceId);
+        var currency = user.GetCurrency(GameUtils.ActivityPlaceId);
         if (currency == null)
             return false;
 
@@ -67,5 +65,42 @@ public class OpenConditionContainer<T> : BaseContainer<T, OpenConditionData> whe
             return false;
 
         return currency.Object >= data.ObjectCurrency;
+    }
+
+    public bool CheckReq(int id)
+    {
+        var data = GetData(id);
+        if (data == null)
+            return false;
+
+        var animalMgr = MainGameManager.Get<Game.AnimalManager>();
+        if (animalMgr == null)
+            return false;
+
+        var objectMgr = MainGameManager.Get<Game.ObjectManager>();
+        if (objectMgr == null)
+            return false;
+
+        var reqIds = data.ReqAnimalIds;
+        if (reqIds != null)
+        {
+            foreach (int animalId in reqIds)
+            {
+                if(!animalMgr.CheckExist(animalId))
+                    return false;
+            }
+        }
+
+        reqIds = data.ReqObjectIds;
+        if (reqIds != null)
+        {
+            foreach (int objectId in reqIds)
+            {
+                if (!objectMgr.CheckExist(objectId))
+                    return false;
+            }
+        }
+
+        return true;
     }
 }

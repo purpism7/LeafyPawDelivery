@@ -918,9 +918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e46aa757a2329a54187938a3a1d727eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Listener:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &393371010 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7162719068015017088, guid: bbd43f10373f941c5a5341b6e3720d7a, type: 3}

@@ -81,7 +81,7 @@ namespace Game
             if (collider == null)
                 return;
 
-            collider.radius += 5f;
+            //collider.radius += 5f;
         }
 
         private void SetSortingOrder()
@@ -92,7 +92,7 @@ namespace Game
             if (spriteRenderer == null)
                 return;
 
-            spriteRenderer.sortingOrder = -(int)transform.position.y;
+            spriteRenderer.sortingOrder = -(int)transform.position.y - 13;
         }
 
         private void Collect(Touch? touch, GameCameraController gameCameraCtr)

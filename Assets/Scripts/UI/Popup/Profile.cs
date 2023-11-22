@@ -48,7 +48,7 @@ namespace UI
 
             if (_data.EElement == Game.Type.EElement.Animal)
             {
-                var animalInfo = MainGameManager.Instance?.AnimalMgr.GetAnimalInfo(data.Id);
+                var animalInfo = MainGameManager.Get<Game.AnimalManager>()?.GetAnimalInfo(data.Id);
                 if (animalInfo == null)
                     return;
 
@@ -155,6 +155,10 @@ namespace UI
             if (_data == null)
                 return;
 
+            var animalMgr = MainGameManager.Get<Game.AnimalManager>();
+            if (animalMgr == null)
+                return;
+
             if (_data.EElement != Game.Type.EElement.Animal)
                 return;
 
@@ -162,7 +166,7 @@ namespace UI
             if (skinList == null)
                 return;
 
-            int currenctSkinId = MainGameManager.Instance.AnimalMgr.GetCurrenctSkinId(_data.Id);
+            int currenctSkinId = animalMgr.GetCurrenctSkinId(_data.Id);
             if(currenctSkinId <= 0)
             {
                 currenctSkinId = Game.Data.Const.AnimalBaseSkinId;
@@ -223,7 +227,7 @@ namespace UI
             if (mainGameMgr == null)
                 return;
 
-            var animalMgr = mainGameMgr.AnimalMgr;
+            var animalMgr = MainGameManager.Get<Game.AnimalManager>();
             if (animalMgr == null)
                 return;
 
@@ -282,6 +286,10 @@ namespace UI
             if (mainGameMgr == null)
                 return;
 
+            var animalMgr = MainGameManager.Get<Game.AnimalManager>();
+            if (animalMgr == null)
+                return;
+
             var animalId = _data.Id;
             int selectSkinId = SelectSkinId;
 
@@ -301,7 +309,7 @@ namespace UI
                 return;
 
             userMgr.SaveCash(-animalSkinData.Cash);
-            mainGameMgr.AnimalMgr?.AddSkin(animalId, selectSkinId);
+            animalMgr.AddSkin(animalId, selectSkinId);
             mainGameMgr.ChangeAnimalSkinToPlace(animalId, selectSkinId);
 
             _selectSkinCell?.EnableBuyRoot(false);

@@ -39,8 +39,6 @@ namespace Scene
         void Preprocessing.IListener.End()
         {
             _iListener?.EndLoad();
-
-            MainGameManager.Instance?.Starter();
         }
     }
 }

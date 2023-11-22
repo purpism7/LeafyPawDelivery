@@ -8,7 +8,7 @@ namespace Game.State
     {
         public override void Initialize(MainGameManager mainGameMgr)
         {
-            var activityPlace = mainGameMgr?.placeMgr?.ActivityPlace;
+            var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
             if (activityPlace == null)
                 return;
 

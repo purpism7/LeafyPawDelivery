@@ -259,13 +259,7 @@ namespace Info
 
         public void SaveStory(int storyId)
         {
-            var placeMgr = MainGameManager.Instance?.placeMgr;
-            if (placeMgr == null)
-                return;
-
-            int placeId = placeMgr.ActivityPlaceId;
-
-            User?.SetStory(placeId, storyId);
+            User?.SetStory(GameUtils.ActivityPlaceId, storyId);
 
             var firebaseMgr = GameSystem.FirebaseManager.Instance;
             if (firebaseMgr == null)

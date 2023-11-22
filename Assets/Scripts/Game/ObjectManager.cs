@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Game 
+namespace Game
 {
-    public class ObjectManager : Manager.Base<ObjectManager.Data>
+    public class ObjectManager : Manager.BaseElement<ObjectManager.Data>, IStarter
     {
         public class Data : Game.Manager.BaseData
         {
             public int PlaceId = 0;
         }
+
+        public static UnityEvent<Game.Event.ObjectData> Listener { get; private set; } = new();
 
         private Data _data = null;
         private Info.ObjectHolder _objectHolder = new();
@@ -23,12 +25,8 @@ namespace Game
             }
         }
 
-        public UnityEvent<int> Listener { get; private set; } = new();
-
         protected override void Initialize()
         {
-            Debug.Log("ObjectManager Initialize");
-            
             Listener?.RemoveAllListeners();
 
             _objectHolder?.LoadInfo();
@@ -41,15 +39,35 @@ namespace Game
             yield break;
         }
 
-        public void AddObject(int id)
+        public override void Add(int id)
         {
             if (_objectHolder == null)
                 return;
 
             if (_objectHolder.AddObjectInfo(id))
             {
-                Listener?.Invoke(id);
+                Listener?.Invoke(
+                    new Event.ObjectData()
+                    {
+                        Id = id,
+                    });
             }
+        }
+
+        public override void Remove(int id, int uId)
+        {
+            _objectHolder?.Remove(id, uId);
+        }
+
+        public override bool CheckExist(int objectId)
+        {
+            if (_data == null)
+                return false;
+
+            if (ObjectInfoList == null)
+                return false;
+
+            return GetObjectInfoById(objectId) != null;
         }
 
         public Info.EditObject GetAddEditObject(int id)
@@ -57,25 +75,9 @@ namespace Game
             return _objectHolder?.GetAddEditObject(id);
         }
 
-        public void RemoveObject(int objectId, int objectUId)
-        {
-            _objectHolder?.RemoveObject(objectId, objectUId);
-        }
-
         public void ArrangeObject(int id, int objectUId, Vector3 pos, int placeId)
         {
             _objectHolder?.ArrangeObject(id, objectUId, pos, placeId);
-        }
-
-        public bool CheckExist(int objectId)
-        {
-            if (_data == null)
-                return false;
-            
-            if (ObjectInfoList == null)
-                return false;
-            
-            return GetObjectInfoById(objectId) != null;
         }
 
         public Info.Object GetObjectInfoById(int objectId)
@@ -94,11 +96,12 @@ namespace Game
             return _objectHolder.GetRemainCount(id);
         }
 
-        public void Check(MainGameManager mainGameMgr)
+        void IStarter.Check()
         {
             if (_data == null)
                 return;
 
+            var mainGameMgr = MainGameManager.Instance;
             if (mainGameMgr == null)
                 return;
 
@@ -118,7 +121,7 @@ namespace Game
                     objectData.PlaceId != _data.PlaceId)
                     continue;
 
-                if (mainGameMgr.CheckExist(Game.Type.EElement.Object, data.Id))
+                if (CheckExist(data.Id))
                     continue;
 
                 if (data.EType_ == OpenConditionData.EType.Starter)
@@ -126,8 +129,8 @@ namespace Game
                     Sequencer.EnqueueTask(
                         () =>
                         {
-                            var popup = new GameSystem.PopupCreator<UI.Unlock, UI.Unlock.Data>()
-                                .SetData(new UI.Unlock.Data()
+                            var popup = new GameSystem.PopupCreator<UI.Obtain, UI.Obtain.Data>()
+                                .SetData(new UI.Obtain.Data()
                                 {
                                     EElement = Type.EElement.Object,
                                     Id = data.Id,
@@ -143,7 +146,7 @@ namespace Game
                             return popup;
                         });
 
-                    mainGameMgr.AddInfo(Type.EElement.Object, data.Id);
+                    Add(data.Id);
                 }
             }
         }

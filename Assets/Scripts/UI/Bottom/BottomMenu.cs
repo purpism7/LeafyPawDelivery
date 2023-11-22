@@ -52,7 +52,7 @@ namespace UI
             {
                 bool reInitialize = false;
 
-                var placeMgr = MainGameManager.Instance?.placeMgr;
+                var placeMgr = MainGameManager.Get<Game.PlaceManager>();
                 if (placeMgr != null)
                 {
                     reInitialize = _placeId != placeMgr.ActivityPlaceId;

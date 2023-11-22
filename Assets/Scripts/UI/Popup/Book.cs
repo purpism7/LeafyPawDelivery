@@ -48,7 +48,7 @@ namespace UI
         private void InternalInit()
         {
             Game.AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
-            MainGameManager.Instance?.ObjectMgr?.Listener?.AddListener(OnChangedObjectInfo);
+            ObjectManager.Listener?.AddListener(OnChangedObjectInfo);
 
             _placeId = _data.PlaceId;
 
@@ -154,7 +154,7 @@ namespace UI
             if (dataList == null)
                 return;
 
-            var animalMgr = MainGameManager.Instance?.AnimalMgr;
+            var animalMgr = MainGameManager.Get<AnimalManager>();
             if (animalMgr == null)
                 return;
             
@@ -172,7 +172,7 @@ namespace UI
             if (dataList == null)
                 return;
 
-            var objectMgr = MainGameManager.Instance?.ObjectMgr;
+            var objectMgr = MainGameManager.Get<ObjectManager>();
             if (objectMgr == null)
                 return;
             
@@ -292,9 +292,12 @@ namespace UI
             Unlock(Type.EElement.Animal, animalInfo.Id);
         }
         
-        private void OnChangedObjectInfo(int id)
+        private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
         {
-            Unlock(Type.EElement.Object, id);
+            if (objectData == null)
+                return;
+
+            Unlock(Type.EElement.Object, objectData.Id);
         }
 
         public void OnChanged(string tabType)
@@ -311,20 +314,20 @@ namespace UI
         }
 
         #region BookCell.IListener
-        void BookCell.IListener.Click(Game.Type.EElement eElment, int id)
+        void BookCell.IListener.Click(Game.Type.EElement eElement, int id)
         {
-            if (eElment == Type.EElement.Object)
+            if (eElement == Type.EElement.Object)
                 return;
 
-            if (eElment == Type.EElement.Animal &&
-               !MainGameManager.Instance.AnimalMgr.CheckExist(id))
+            if (eElement == Type.EElement.Animal &&
+               !MainGameManager.Instance.CheckExist(eElement, id))
                 return;
 
             var popup = new PopupCreator<Profile, Profile.Data>()
                 .SetReInitialize(true)
                 .SetData(new Profile.Data()
                 {
-                    EElement = eElment,
+                    EElement = eElement,
                     Id = id,
                 })
                 .Create();
@@ -335,7 +338,7 @@ namespace UI
         #region StoryCell.IListener
         void StoryCell.IListener.Select(Story story)
         {
-            MainGameManager.Instance?.StoryMgr?.PlayStory(story);
+            MainGameManager.Get<Game.StoryManager>()?.PlayStory(story);
         }
         #endregion
     }

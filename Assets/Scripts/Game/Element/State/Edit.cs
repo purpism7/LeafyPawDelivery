@@ -87,7 +87,7 @@ namespace Game.Element.State
 
             _enableColliders = enable;
 
-            MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(enable);
+            MainGameManager.Get<PlaceManager>()?.ActivityPlace?.EnableCollider(enable);
         }
 
         private void Drag(Touch touch)

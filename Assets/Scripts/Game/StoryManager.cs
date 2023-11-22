@@ -30,7 +30,7 @@ namespace Game
         private List<Story> _storyList = new();
         private int _placeId = 0;
 
-        public UnityEvent<Data> Listener = new();
+        public static UnityEvent<Data> Listener = new();
 
         public override void Initialize()
         {

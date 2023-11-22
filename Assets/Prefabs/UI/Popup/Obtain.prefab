@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 4538592769003199826}
   - component: {fileID: 7095182087919751372}
   m_Layer: 5
-  m_Name: Unlock
+  m_Name: Obtain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

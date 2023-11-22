@@ -50,7 +50,7 @@ namespace UI.Component
         private void SetStep()
         {
             int id = _data != null ? _data.Id : 0;
-            var achievementInfo = MainGameManager.Instance?.AcquireMgr?.GetAchievement(id);
+            var achievementInfo = MainGameManager.Get<Game.Manager.Acquire>()?.GetAchievement(id);
 
             _step = achievementInfo != null ? achievementInfo.Step : 1;
         }
@@ -70,7 +70,7 @@ namespace UI.Component
         private void SetProgress()
         {
             int id = _data != null ? _data.Id : 0;
-            var achievementInfo = MainGameManager.Instance?.AcquireMgr?.GetAchievement(_data.Id);
+            var achievementInfo = MainGameManager.Get<Game.Manager.Acquire>()?.GetAchievement(_data.Id);
 
             float dataProgress = DataProgress;
             float infoProgress = achievementInfo != null ? achievementInfo.Progress : 0;
@@ -120,7 +120,7 @@ namespace UI.Component
 
             if(_data != null)
             {
-                MainGameManager.Instance?.AcquireMgr?.SetNextStep(_data.Id);
+                MainGameManager.Get<Game.Manager.Acquire>()?.SetNextStep(_data.Id);
             }
 
             SetStep();

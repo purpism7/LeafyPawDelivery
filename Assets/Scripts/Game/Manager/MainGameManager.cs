@@ -8,23 +8,20 @@ using Cysharp.Threading.Tasks;
 
 using GameSystem;
 
-
+public interface IStarter
+{
+    void Check();
+}
 
 public class MainGameManager : Singleton<MainGameManager>
 {
     #region Inspector
-    public Game.PlaceManager placeMgr = null;
+    [SerializeField]
+    private Game.PlaceManager placeMgr = null;
     #endregion
 
-    public Game.ObjectManager ObjectMgr { get; private set; } = null;
-    public Game.AnimalManager AnimalMgr { get; private set; } = null;
-    public Game.StoryManager StoryMgr { get; private set; } = null;
-    public Game.Manager.Acquire AcquireMgr { get; private set; } = null;
-
     public GameCameraController GameCameraCtr { get; private set; } = null;
-
     public Game.State.Base GameState { get; private set; } = null;
-
     public Game.RecordContainer RecordContainer { get; private set; } = null;
 
     private System.Action<Game.Base> _startEditAction = null;
@@ -32,12 +29,29 @@ public class MainGameManager : Singleton<MainGameManager>
     private IUpdater _iUpdateGameCameraCtr = null;
     private IUpdater _iUpdateGrid = null;
     private IGrid _iGrid = null;
-    
+
+    private static Dictionary<Type, MonoBehaviour> _managerDic = new();
+
+    public static T Get<T>()
+    {
+        if (_managerDic == null)
+            return default(T);
+
+        var manager = _managerDic[typeof(T)];
+        if (manager == null)
+            return default(T);
+
+        return manager.GetComponent<T>();
+    }
+
     protected override void Initialize()
     {
-        ObjectMgr = gameObject.GetOrAddComponent<Game.ObjectManager>();
-        AnimalMgr = gameObject.GetOrAddComponent<Game.AnimalManager>();
-        AcquireMgr = gameObject.GetOrAddComponent<Game.Manager.Acquire>();
+        _managerDic.Clear();
+
+        AddManager(typeof(Game.PlaceManager), placeMgr);
+        AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>());
+        AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>());
+        AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
     }
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
@@ -51,19 +65,30 @@ public class MainGameManager : Singleton<MainGameManager>
 
         _iGrid = inputMgr?.grid;
 
-        StoryMgr = iProvider.Get<Game.StoryManager>();
-
-        yield return StartCoroutine(CoInitializeManager(activityPlaceId));
+        AddManager(typeof(Game.StoryManager), iProvider.Get<Game.StoryManager>());
 
         _iUpdateInputMgr = inputMgr;
         _iUpdateGameCameraCtr = GameCameraCtr;
         _iUpdateGrid = inputMgr?.grid;
 
-        SetGameState<Game.State.Game>();
-
         RecordContainer = new();
 
-        yield return StartCoroutine(AcquireMgr?.CoInitialize(null));        
+        var acquireMgr = Get<Game.Manager.Acquire>();
+        yield return StartCoroutine(acquireMgr?.CoInitialize(null));
+
+        yield return StartCoroutine(CoInitializeManager(activityPlaceId));
+
+        yield return null;
+
+        EndLoad();
+    }
+
+    private void AddManager(Type type, MonoBehaviour monoBehaviour)
+    {
+        if (monoBehaviour == null)
+            return;
+
+        _managerDic.TryAdd(type, monoBehaviour);
     }
 
     private IEnumerator CoInitializeManager(int placeId)
@@ -77,15 +102,19 @@ public class MainGameManager : Singleton<MainGameManager>
                 }));
         }
 
-        yield return StartCoroutine(ObjectMgr?.CoInitialize(new Game.ObjectManager.Data
-        {
-            PlaceId = placeId,
-        }));
+        var objectMgr = Get<Game.ObjectManager>();
+        yield return StartCoroutine(objectMgr?.CoInitialize(
+            new Game.ObjectManager.Data
+            {
+                PlaceId = placeId,
+            }));
 
-        yield return StartCoroutine(AnimalMgr?.CoInitialize(new Game.AnimalManager.Data
-        {
-            PlaceId = placeId,
-        }));
+        var animalMgr = Get<Game.AnimalManager>();
+        yield return StartCoroutine(animalMgr?.CoInitialize(
+            new Game.AnimalManager.Data
+            {
+                PlaceId = placeId,
+            }));
 
         placeMgr?.ActivityPlace?.Activate();
 
@@ -97,16 +126,30 @@ public class MainGameManager : Singleton<MainGameManager>
             Game.Carrier.Create(iGridCell);
         }
 
+        SetGameState<Game.State.Game>();
+
         yield return null;
 
         _iGrid?.Overlap();
     }
 
-    public void Starter()
+    private void EndLoad()
+    {
+        Starter();
+    }
+
+    private void Starter()
     {
         Debug.Log("Starter");
-        AnimalMgr?.Check();
-        ObjectMgr?.Check(this);
+
+        foreach(var manager in _managerDic.Values)
+        {
+            var iStarter = manager as IStarter;
+            if (iStarter == null)
+                continue;
+
+            iStarter.Check();
+        }
     }
 
     private void Update()
@@ -136,15 +179,15 @@ public class MainGameManager : Singleton<MainGameManager>
         _startEditAction = action;
     }
 
-    public void AddInfo(Game.Type.EElement EElement, int id)
+    public void Add(Game.Type.EElement EElement, int id)
     {
         if (EElement == Game.Type.EElement.Animal)
         {
-            AnimalMgr?.AddAnimal(id);
+            Get<Game.AnimalManager>()?.Add(id);
         }
         else if (EElement == Game.Type.EElement.Object)
         {
-            ObjectMgr?.AddObject(id);
+            Get<Game.ObjectManager>()?.Add(id);
         }
     }
 
@@ -152,11 +195,11 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         if (EElement == Game.Type.EElement.Animal)
         {
-            return AnimalMgr.CheckExist(id);
+            return Get<Game.AnimalManager>().CheckExist(id);
         }
         else if (EElement == Game.Type.EElement.Object)
         {
-            return ObjectMgr.CheckExist(id);
+            return Get<Game.ObjectManager>().CheckExist(id);
         }
 
         return false;
@@ -180,7 +223,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         yield return null;
 
-        Starter();
+        EndLoad();
     }
 
     //private async UniTask AsyncMovePlace(int placeId, System.Action endMoveAction)
@@ -200,7 +243,7 @@ public class MainGameManager : Singleton<MainGameManager>
     #region Animal
     public void AddAnimalToPlace(int id)
     {
-        var animalInfo = AnimalMgr?.GetAnimalInfo(id);
+        var animalInfo = Get<Game.AnimalManager>()?.GetAnimalInfo(id);
         if (animalInfo == null)
             return;
 
@@ -223,7 +266,8 @@ public class MainGameManager : Singleton<MainGameManager>
 
     public void ChangeAnimalSkinToPlace(int id, int skinId)
     {
-        if (AnimalMgr == null)
+        var animalMgr = Get<Game.AnimalManager>();
+        if (animalMgr == null)
             return;
 
         var activityPlace = placeMgr?.ActivityPlace;
@@ -236,11 +280,11 @@ public class MainGameManager : Singleton<MainGameManager>
             pos = GameCameraCtr.Center;
         }
 
-        int currSkinId = AnimalMgr.GetCurrenctSkinId(id);
+        int currSkinId = animalMgr.GetCurrenctSkinId(id);
 
         if(activityPlace.ChangeAnimalSkin(id, skinId, pos, currSkinId))
         {
-            AnimalMgr?.ApplySkin(id, skinId);
+            animalMgr?.ApplySkin(id, skinId);
         }
     }
     #endregion
@@ -252,7 +296,7 @@ public class MainGameManager : Singleton<MainGameManager>
         if (activityPlace == null)
             return;
 
-        var editObject = ObjectMgr?.GetAddEditObject(id);
+        var editObject = Get<Game.ObjectManager>()?.GetAddEditObject(id);
         if (editObject == null)
             return;
 
@@ -278,7 +322,7 @@ public class MainGameManager : Singleton<MainGameManager>
             case Game.Type.EElement.Animal:
                 {
                     placeMgr?.ActivityPlace?.RemoveAnimal(id);
-                    AnimalMgr?.RemoveAnimal(id);
+                    Get<Game.AnimalManager>()?.Remove(id);
 
                     Game.UIManager.Instance?.Bottom?.EditList?.RefreshAnimalList();
 
@@ -287,10 +331,12 @@ public class MainGameManager : Singleton<MainGameManager>
 
             case Game.Type.EElement.Object:
                 {
-                    placeMgr?.ActivityPlace?.RemoveObject(id, uId);
-                    ObjectMgr?.RemoveObject(id, uId);
+                    var objectMgr = Get<Game.ObjectManager>();
 
-                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList(ObjectMgr);
+                    placeMgr?.ActivityPlace?.RemoveObject(id, uId);
+                    objectMgr?.Remove(id, uId);
+
+                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList(objectMgr);
 
                     break;
                 }
@@ -315,7 +361,7 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             case Game.Type.EElement.Animal:
                 {
-                    AnimalMgr?.ArrangeAnimal(gameBaseElement.Id, pos);
+                    Get<Game.AnimalManager>()?.ArrangeAnimal(gameBaseElement.Id, pos);
 
                     Game.UIManager.Instance?.Bottom?.EditList?.RefreshAnimalList();
 
@@ -324,9 +370,11 @@ public class MainGameManager : Singleton<MainGameManager>
 
             case Game.Type.EElement.Object:
                 {
-                    ObjectMgr?.ArrangeObject(gameBaseElement.Id, gameBaseElement.UId, pos, placeId);
+                    var objectMgr = Get<Game.ObjectManager>();
 
-                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList(ObjectMgr);
+                    objectMgr?.ArrangeObject(gameBaseElement.Id, gameBaseElement.UId, pos, placeId);
+
+                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList(objectMgr);
 
                     break;
                 }
@@ -341,7 +389,7 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         var eAcquire = eElement == Game.Type.EElement.Animal ? Game.Type.EAcquire.AnimalCurrency : Game.Type.EAcquire.ObjectCurrency;
 
-        AcquireMgr?.Add(eAcquire, eAcquireAction, value);
+        Get<Game.Manager.Acquire>()?.Add(eAcquire, eAcquireAction, value);
         RecordContainer?.Add(eAcquire, eAcquireAction, value);
     }
     #endregion

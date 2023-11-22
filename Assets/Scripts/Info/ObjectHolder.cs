@@ -170,7 +170,7 @@ namespace Info
             return addEditObject;
         }
 
-        public void RemoveObject(int id, int objectUId)
+        public void Remove(int id, int objectUId)
         {
             var objectData = ObjectContainer.Instance.GetData(id);
             if (objectData == null)
@@ -266,9 +266,7 @@ namespace Info
 
         public int GetRemainCount(int id)
         {
-            int placeId = MainGameManager.Instance.placeMgr.ActivityPlaceId;
-
-            var objectInfo = GetObjectInfoById(id, placeId);
+            var objectInfo = GetObjectInfoById(id, GameUtils.ActivityPlaceId);
             if (objectInfo == null)
                 return 0;
 

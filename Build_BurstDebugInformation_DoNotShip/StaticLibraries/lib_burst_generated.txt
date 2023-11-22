@@ -27,6 +27,7 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
 --assembly-defines=Newtonsoft.Json;
+--assembly-defines=Purchasing.Common;
 --assembly-defines=System.Configuration;
 --assembly-defines=System.Core;
 --assembly-defines=System.Data;
@@ -50,6 +51,15 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=Unity.RenderPipelines.Core.Runtime;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.ResourceManager;
+--assembly-defines=Unity.Services.Core.Configuration;
+--assembly-defines=Unity.Services.Core.Device;
+--assembly-defines=Unity.Services.Core;
+--assembly-defines=Unity.Services.Core.Environments.Internal;
+--assembly-defines=Unity.Services.Core.Internal;
+--assembly-defines=Unity.Services.Core.Registration;
+--assembly-defines=Unity.Services.Core.Scheduler;
+--assembly-defines=Unity.Services.Core.Telemetry;
+--assembly-defines=Unity.Services.Core.Threading;
 --assembly-defines=Unity.Subsystem.Registration;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.Timeline;
@@ -96,6 +106,7 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
 --assembly-defines=Newtonsoft.Json;
+--assembly-defines=Purchasing.Common;
 --assembly-defines=System.Configuration;
 --assembly-defines=System.Core;
 --assembly-defines=System.Data;
@@ -119,6 +130,15 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=Unity.RenderPipelines.Core.Runtime;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.ResourceManager;
+--assembly-defines=Unity.Services.Core.Configuration;
+--assembly-defines=Unity.Services.Core.Device;
+--assembly-defines=Unity.Services.Core;
+--assembly-defines=Unity.Services.Core.Environments.Internal;
+--assembly-defines=Unity.Services.Core.Internal;
+--assembly-defines=Unity.Services.Core.Registration;
+--assembly-defines=Unity.Services.Core.Scheduler;
+--assembly-defines=Unity.Services.Core.Telemetry;
+--assembly-defines=Unity.Services.Core.Threading;
 --assembly-defines=Unity.Subsystem.Registration;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.Timeline;

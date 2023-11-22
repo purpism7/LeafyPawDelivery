@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
 
 using TMPro;
+using DG.Tweening;
 
 using GameSystem;
 
@@ -19,6 +20,7 @@ namespace UI.Component
             public int Id = 0;
             public Game.Type.EElement EElement = Game.Type.EElement.None; 
             public string Name = string.Empty;
+            public bool Owned = false;
             public bool Lock = true;
         }
         
@@ -40,7 +42,13 @@ namespace UI.Component
         [SerializeField]
         private TextMeshProUGUI openNameTMP = null;
 
-        [SerializeField] private RectTransform lockRootRectTm = null;
+        [Header("Lock")]
+        [SerializeField]
+        private RectTransform lockRootRectTm = null;
+        [SerializeField]
+        private Image lockImg = null;
+        [SerializeField]
+        private Image lockBgImg = null;
         #endregion
 
         private List<OpenCondition> _openConditionList = new();
@@ -53,9 +61,10 @@ namespace UI.Component
             SetDescTMP();
             SetIconImg();
             SetButtonState();
-            SetLockData();
+            SetOpenConditionData();
 
-            UIUtils.SetActive(openRootRectTm, _data.Lock);
+            UIUtils.SetActive(openRootRectTm, !_data.Owned);
+            UIUtils.SetActive(lockRootRectTm, _data.Lock);
         }
 
         public override void Activate()
@@ -155,15 +164,15 @@ namespace UI.Component
             }
         }
 
-        private void SetLockData()
+        private void SetOpenConditionData()
         {
             DeactiveAllOpenConditionList();
 
             if (_data == null)
                 return;
 
-            if (!_data.Lock)
-                return;
+            //if (!_data.Lock)
+            //    return;
 
             if(_data.EElement == Game.Type.EElement.Animal)
             {
@@ -262,19 +271,19 @@ namespace UI.Component
             UIUtils.SetActive(arrangementBtn?.gameObject, !_data.Lock);
         }
 
-        private void CreateUnlockPopup()
+        private void CreateObtainPopup()
         {
             if (_data == null)
                 return;
 
-            bool isPossibleUnlock = false;
+            bool isPossibleObtain = false;
             OpenConditionData openConditionData = null;
 
             switch(_data.EElement)
             {
                 case Game.Type.EElement.Animal:
                     {
-                        isPossibleUnlock = AnimalOpenConditionContainer.Instance.Check(_data.Id);
+                        isPossibleObtain = AnimalOpenConditionContainer.Instance.Check(_data.Id);
                         openConditionData = AnimalOpenConditionContainer.Instance.GetData(_data.Id);
 
                         break;
@@ -282,7 +291,7 @@ namespace UI.Component
 
                 case Game.Type.EElement.Object:
                     {
-                        isPossibleUnlock = ObjectOpenConditionContainer.Instance.Check(_data.Id);
+                        isPossibleObtain = ObjectOpenConditionContainer.Instance.Check(_data.Id);
                         openConditionData = ObjectOpenConditionContainer.Instance.GetData(_data.Id);
 
                         break;
@@ -292,14 +301,14 @@ namespace UI.Component
             if (openConditionData == null)
                 return;
 
-            if (!isPossibleUnlock)
+            if (!isPossibleObtain)
                 return;
 
             Sequencer.EnqueueTask(
                 () =>
                 {
-                    var unlock = new PopupCreator<Unlock, Unlock.Data>()
-                        .SetData(new Unlock.Data()
+                    var obtain = new PopupCreator<Obtain, Obtain.Data>()
+                        .SetData(new Obtain.Data()
                         {
                             EElement = _data.EElement,
                             Id = _data.Id,
@@ -322,34 +331,81 @@ namespace UI.Component
 
                     Game.UIManager.Instance?.Top?.SetCurrency();
 
-                    return unlock;
+                    return obtain;
                 });
 
-            MainGameManager.Instance?.AddInfo(_data.EElement, _data.Id);
+            MainGameManager.Instance?.Add(_data.EElement, _data.Id);
         }
 
-        public void Unlock(Game.Type.EElement EElement, int id)
+        public void Obtain(Game.Type.EElement eElement, int id)
         {
             if (_data == null)
                 return;
 
-            if (_data.EElement != EElement)
+            Unlock(eElement, id);
+
+            if (_data.EElement != eElement)
                 return;
 
             if (_data.Id != id)
                 return;
-            
-            _data.Lock = false;
-            
+
+            _data.Owned = true;
+
             SetIconImg();
             SetButtonState();
-            
-            UIUtils.SetActive(openRootRectTm, _data.Lock);
+
+            UIUtils.SetActive(openRootRectTm, !_data.Owned);
+        }
+
+        private void Unlock(Game.Type.EElement eElement, int id)
+        {
+            if (_data == null)
+                return;
+
+            if (!_data.Lock)
+                return;
+
+            if (eElement != Game.Type.EElement.Object)
+                return;
+
+            _data.Lock = !ObjectOpenConditionContainer.Instance.CheckReq(_data.Id);
+            if (_data.Lock)
+                return;
+
+            _openConditionList?.ForEach(
+                openCondition =>
+                {
+                    openCondition?.Activate();
+                });
+
+            AnimUnlock();
+        }
+
+        private void AnimUnlock()
+        {
+            Sequencer.EnqueueTask(
+                () =>
+                {
+                    Sequence sequence = DOTween.Sequence()
+                       .SetAutoKill(false)
+                       .OnStart(() => { _endTask = false; })
+                       .Append(lockBgImg.DOFade(0, 1f))
+                       .OnComplete(() =>
+                       {
+                           UIUtils.SetActive(lockRootRectTm, _data.Lock);
+
+                           _endTask = true;
+                       });
+                     sequence.Restart();
+
+                    return this;
+                });
         }
         
-        public void OnClickUnlock()
+        public void OnClickObtain()
         {
-            CreateUnlockPopup();
+            CreateObtainPopup();
         }
 
         // 배치 버튼 클릭 시,

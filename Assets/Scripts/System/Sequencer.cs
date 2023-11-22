@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Game.Manager;
 using UnityEngine;
+
+using Cysharp.Threading.Tasks;
+
+using Game.Manager;
 
 public class Sequencer : Game.Common
 {
@@ -80,7 +83,46 @@ public class Sequencer : Game.Common
     {
         _eTaskState = ETaskState.Progress;
 
-        StartCoroutine(CoProgressTask());
+        //StartCoroutine(CoProgressTask());
+
+        AsyncProgressTask().Forget();
+    }
+
+    private async UniTask AsyncProgressTask()
+    {
+        if (_taskFuncQueue.Count <= 0)
+        {
+            _eTaskState = ETaskState.None;
+
+            return;
+        }
+
+        var taskFunc = _taskFuncQueue.Dequeue();
+        if (taskFunc == null)
+        {
+            Progress();
+
+            return;
+        }
+
+        var iTask = taskFunc();
+        if (iTask == null)
+        {
+            Progress();
+
+            return;
+        }
+
+        _eTaskState = ETaskState.Begin;
+        Debug.Log("Sequence Begin Task = " + iTask.GetType().FullName);
+        iTask.Begin();
+
+        await UniTask.WaitUntil(() => iTask.End);
+
+        _eTaskState = ETaskState.End;
+        Debug.Log("Sequence End Task");
+
+        Progress();
     }
 
     private IEnumerator CoProgressTask()

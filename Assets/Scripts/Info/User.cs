@@ -164,7 +164,7 @@ namespace Info
         {
             get
             {
-                var placeMgr = MainGameManager.Instance?.placeMgr;
+                var placeMgr = MainGameManager.Get<Game.PlaceManager>();
                 if (placeMgr == null)
                     return 0;
 

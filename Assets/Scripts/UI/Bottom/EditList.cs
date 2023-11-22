@@ -64,7 +64,7 @@ namespace UI
 
             _editAnimalList.Clear();
 
-            var infoList = MainGameManager.Instance?.AnimalMgr?.AnimalInfoList;
+            var infoList = MainGameManager.Get<AnimalManager>()?.AnimalInfoList;
             if(infoList == null)
                 return;
 
@@ -100,7 +100,7 @@ namespace UI
 
             _editObjectList.Clear();
 
-            var objectMgr = MainGameManager.Instance?.ObjectMgr;
+            var objectMgr = MainGameManager.Get<ObjectManager>();
             if (objectMgr == null)
                 return;
 
@@ -187,7 +187,7 @@ namespace UI
 
         public void RefreshAnimalList()
         {
-            var animalMgr = MainGameManager.Instance?.AnimalMgr;
+            var animalMgr = MainGameManager.Get<AnimalManager>();
             if (animalMgr == null)
                 return;
 

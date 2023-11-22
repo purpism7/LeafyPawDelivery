@@ -71,7 +71,7 @@ namespace UI.Component
             float dataProgress = DataProgress;
             int id = dailyMissionData != null ? dailyMissionData.Id : 0;
 
-            var dailyMissionInfo = MainGameManager.Instance?.AcquireMgr?.GetDailyMission(id);
+            var dailyMissionInfo = MainGameManager.Get<Game.Manager.Acquire>()?.GetDailyMission(id);
 
             float infoProgress = dailyMissionInfo != null ? dailyMissionInfo.Progress : 0;
             _progress = infoProgress > dataProgress ? dataProgress : infoProgress;

@@ -274,7 +274,7 @@ namespace Game
         {
             _animalList.Clear();
 
-            var animalInfoList = MainGameManager.Instance?.AnimalMgr?.AnimalInfoList;
+            var animalInfoList = MainGameManager.Get<AnimalManager>()?.AnimalInfoList;
             if (animalInfoList == null)
                 return;
 
@@ -340,7 +340,7 @@ namespace Game
         {
             _objectList.Clear();
 
-            var objectInfoList = MainGameManager.Instance?.ObjectMgr?.ObjectInfoList;
+            var objectInfoList = MainGameManager.Get<ObjectManager>()?.ObjectInfoList;
             if (objectInfoList == null)
                 return;
 

@@ -9,7 +9,7 @@ using UnityEngine.Localization.Settings;
 
 namespace UI
 {
-    public class Unlock : BasePopup<Unlock.Data>
+    public class Obtain : BasePopup<Obtain.Data>
     {
         public class Data : BaseData
         {

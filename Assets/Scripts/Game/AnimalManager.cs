@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 namespace Game
 {
-    public class AnimalManager : Manager.Base<AnimalManager.Data>
+    public class AnimalManager : Manager.BaseElement<AnimalManager.Data>, IStarter
     {
         public class Data : Game.Manager.BaseData
         {
@@ -29,7 +29,7 @@ namespace Game
             Listener.RemoveAllListeners();
 
             var mainGameMgr = MainGameManager.Instance;
-            mainGameMgr?.ObjectMgr.Listener.AddListener(OnChangedObjectInfo);
+            Game.ObjectManager.Listener.AddListener(OnChangedObjectInfo);
             Game.PlaceManager.Listener?.AddListener(OnChangedPlace);
 
             _animalHolder?.LoadInfo();
@@ -56,14 +56,14 @@ namespace Game
         }
 
         // Add 되는 Animal 의 Skin Id Base 인 1 일 것.
-        public void AddAnimal(int animalId)
+        public override void Add(int id)
         {
             if (_animalHolder == null)
                 return;
             
             var animalInfo = new Info.Animal()
             {
-                Id = animalId,
+                Id = id,
                 SkinId = Game.Data.Const.AnimalBaseSkinId,
             };
 
@@ -73,9 +73,17 @@ namespace Game
             }
         }
 
-        public void RemoveAnimal(int id)
+        public override void Remove(int id, int uId = 0)
         {
             _animalHolder?.RemoveAnimal(id);
+        }
+
+        public override bool CheckExist(int id)
+        {
+            if (AnimalInfoList == null)
+                return false;
+
+            return GetAnimalInfo(id) != null;
         }
 
         public void ArrangeAnimal(int id, Vector3 pos)
@@ -83,20 +91,14 @@ namespace Game
             _animalHolder?.ArrangeAnimal(id, pos);
         }
 
-        public bool CheckExist(int animalId)
-        {
-            if (AnimalInfoList == null)
-                return false;
-            
-            return GetAnimalInfo(animalId) != null;
-        }
+        
 
         public Info.Animal GetAnimalInfo(int animalId)
         {
             return _animalHolder?.GetAnimalInfo(animalId);
         }
 
-        public void Check()
+        void IStarter.Check()
         {
             if (_data == null)
                 return;
@@ -117,7 +119,7 @@ namespace Game
                     animalData.PlaceId != _data.PlaceId)
                     continue;
 
-                if (MainGameManager.Instance.CheckExist(Game.Type.EElement.Animal, data.Id))
+                if (CheckExist(data.Id))
                     continue;
 
                 if (data.EType_ == OpenConditionData.EType.Starter)
@@ -125,8 +127,8 @@ namespace Game
                     Sequencer.EnqueueTask(
                         () =>
                         {
-                            var popup = new PopupCreator<Unlock, Unlock.Data>()
-                                .SetData(new Unlock.Data()
+                            var popup = new PopupCreator<Obtain, Obtain.Data>()
+                                .SetData(new Obtain.Data()
                                 {
                                     EElement = Type.EElement.Animal,
                                     Id = data.Id,
@@ -142,7 +144,7 @@ namespace Game
                             return popup;
                         });
 
-                    MainGameManager.Instance?.AddInfo(Type.EElement.Animal, data.Id);
+                    Add(data.Id);
                 }
             }
         }
@@ -186,7 +188,7 @@ namespace Game
             
         }
 
-        private void OnChangedObjectInfo(int id)
+        private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
         {
 
         }

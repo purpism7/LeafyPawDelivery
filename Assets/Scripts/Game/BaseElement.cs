@@ -62,7 +62,7 @@ namespace Game
 
             SetOutline(5f);
 
-            MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(false);
+            MainGameManager.Get<Game.PlaceManager>()?.ActivityPlace?.EnableCollider(false);
             EnableCollider(true);
 
             Game.UIManager.Instance?.Bottom?.DeactivateEditList();
@@ -81,7 +81,7 @@ namespace Game
             }
              
             Game.UIManager.Instance?.Bottom?.ActivateEditList(eTab);
-            MainGameManager.Instance?.placeMgr?.ActivityPlace?.EnableCollider(true);
+            MainGameManager.Get<Game.PlaceManager>()?.ActivityPlace?.EnableCollider(true);
         }
 
         public void InteractableArrangeBtn(bool interactable)

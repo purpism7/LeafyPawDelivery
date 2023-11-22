@@ -86,14 +86,10 @@ namespace GameSystem
 
         public override Game.Creature.Animal Create()
         {
-            var mainGameMgr = MainGameManager.Instance;
-            if (mainGameMgr == null)
-                return null;
-
             var rootTm = _rootTm;
             if (!rootTm)
             {
-                var activityPlace = mainGameMgr.placeMgr?.ActivityPlace;
+                var activityPlace = MainGameManager.Get<Game.PlaceManager>()?.ActivityPlace;
                 if (activityPlace == null)
                     return null;
 

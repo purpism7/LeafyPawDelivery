@@ -1,18 +1,17 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-
 
 namespace Game.Manager
 {
-    public class BaseData
+    public class BaseElement : Base
     {
-
+        
+        
+       
     }
 
-    public abstract class Base<T>: MonoBehaviour where T : BaseData
+    public abstract class BaseElement<T> : BaseElement
     {
         private void Awake()
         {
@@ -26,6 +25,9 @@ namespace Game.Manager
 
         protected abstract void Initialize();
         public abstract IEnumerator CoInitialize(T data);
+
+        public abstract void Add(int id);
+        public abstract void Remove(int id, int uId);
+        public abstract bool CheckExist(int id);
     }
 }
-
