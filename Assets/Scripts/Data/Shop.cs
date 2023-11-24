@@ -15,6 +15,7 @@ namespace Data
         public int PaymentValue = 0;
         public int Value = 0;
         public string IconImg = string.Empty;
+        public string Key = string.Empty;
 
         public Game.Type.ECategory ECategory { get; private set; } = Game.Type.ECategory.None;
         public Game.Type.EPayment EPayment { get; private set; } = Game.Type.EPayment.None;

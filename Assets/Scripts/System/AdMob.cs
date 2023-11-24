@@ -9,17 +9,19 @@ namespace GameSystem
     public class AdMob : MonoBehaviour
     {
         private static AdMob _instance = null;
-        public static void Create()
+        public static AdMob Create()
         {
             if (_instance == null)
             {
                 var gameObj = new GameObject(typeof(AdMob).Name);
                 if (!gameObj)
-                    return;
+                    return null;
 
                 _instance = gameObj.GetOrAddComponent<AdMob>();
                 _instance?.Initialize();
             }
+
+            return _instance;
         }
 
         private RewardedInterstitialAd _rewardedInterstitialAd = null;

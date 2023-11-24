@@ -68,12 +68,11 @@ namespace UI.Component
         }
 
         public void OnClick()
-        {
-            //_adMob?.LoadRewardedInterstitialAd("ca-app-pub-3940256099942544/1712485313");
+        {            
             _data?.IListener?.Buy(_data?.ShopData,
                 () =>
                 {
-
+                    Game.UIManager.Instance?.Top?.CollectCashCurrency(transform.position, _data.ShopData.Value);
                 });
         }
     }

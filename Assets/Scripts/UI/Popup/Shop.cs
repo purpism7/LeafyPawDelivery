@@ -18,11 +18,15 @@ namespace UI
         [SerializeField]
         private ScrollRect itemScrollRect = null;
 
+        private AdMob _adMob = null;
+
         public override IEnumerator CoInitialize(Data_ data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
 
             SetItemList();
+
+            _adMob = AdMob.Create();
 
             yield return null;
         }
@@ -61,6 +65,14 @@ namespace UI
             if (shopData == null)
                 return;
 
+            if(shopData.EPayment == Game.Type.EPayment.Advertising)
+            {
+                _adMob?.LoadRewardedInterstitialAd(shopData.Key);
+            }
+            else
+            {
+
+            }
 
             endAction?.Invoke();
         }
