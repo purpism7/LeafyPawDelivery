@@ -850,6 +850,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OpenConditionVertical
       objectReference: {fileID: 0}
+    - target: {fileID: 6346749513879832639, guid: 4d906ad74957d4a89b4bbda15bcaa484, type: 3}
+      propertyPath: m_Spacing
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 9024808330885953436, guid: 4d906ad74957d4a89b4bbda15bcaa484, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -916,7 +920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9024808330885953436, guid: 4d906ad74957d4a89b4bbda15bcaa484, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9024808330885953436, guid: 4d906ad74957d4a89b4bbda15bcaa484, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

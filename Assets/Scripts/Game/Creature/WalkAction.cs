@@ -73,6 +73,7 @@ namespace Game.Creature
                 return false;
 
             _targetPos = _posQueue.Dequeue();
+            _targetPos.z = _initPosZ;
 
             _data.SprRenderer.flipX = animalTm.localPosition.x - _targetPos.x < 0;
 
@@ -98,7 +99,9 @@ namespace Game.Creature
             if (!animalTm)
                 return;
             
-            animalTm.localPosition = Vector2.MoveTowards(animalTm.localPosition, _targetPos, Time.deltaTime * 50f);
+            Vector3 movePos = Vector2.MoveTowards(animalTm.localPosition, _targetPos, Time.deltaTime * 50f);
+            movePos.z = _initPosZ;
+            animalTm.localPosition = movePos;
             //animalTm.localPosition = new Vector3(animalTm.localPosition.x, animalTm.localPosition.y, _initPosZ);
 
             Debug.DrawLine(animalTm.localPosition, _targetPos);

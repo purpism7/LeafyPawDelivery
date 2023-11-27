@@ -46,7 +46,16 @@ namespace UI.Component
             if (atlasLoader == null)
                 return;
 
-            iconImg.sprite = atlasLoader.GetShopItemSprite(shopData.ECategory, shopData.IconImg);
+
+            if(shopData.EPayment == Game.Type.EPayment.Advertising)
+            {
+                iconImg.sprite = atlasLoader.GetCurrencySprite("ad");
+                iconImg.rectTransform.sizeDelta = new Vector2(150f, 100f);
+            }
+            else
+            {
+                iconImg.sprite = atlasLoader.GetShopItemSprite(shopData.ECategory, shopData.IconImg);
+            }
         }
 
         private void SetValue()

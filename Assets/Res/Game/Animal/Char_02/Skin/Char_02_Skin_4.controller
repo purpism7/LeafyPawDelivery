@@ -57,7 +57,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Char_02_Skin3_Walk_1
+  m_Name: Char_02_Skin_4
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Idle
