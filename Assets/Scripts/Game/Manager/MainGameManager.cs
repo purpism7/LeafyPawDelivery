@@ -49,8 +49,8 @@ public class MainGameManager : Singleton<MainGameManager>
         _managerDic.Clear();
 
         AddManager(typeof(Game.PlaceManager), placeMgr);
-        AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>());
         AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>());
+        AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>());
         AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
     }
 
