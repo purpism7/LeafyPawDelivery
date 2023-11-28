@@ -37,6 +37,7 @@ namespace Game
             _storyPrefabList.Clear();
             
             AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
+            ObjectManager.Listener?.AddListener(OnChangedObjectInfo);
             Game.PlaceManager.Listener?.AddListener(OnChangedPlace);
         }
 
@@ -255,15 +256,15 @@ namespace Game
                 StartStory(story);
             }
         }
-        
-        private void OnChangedObjectInfo(Info.Object objectInfo)
+
+        private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
         {
-            if(Check(out Story story))
+            if (Check(out Story story))
             {
                 StartStory(story);
             }
         }
-        
+
         private void OnChangedPlace(int placeId)
         {
             _placeId = placeId;

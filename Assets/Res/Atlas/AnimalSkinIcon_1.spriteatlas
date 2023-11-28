@@ -42,6 +42,8 @@ SpriteAtlas:
     - d7987281cfecd4c6286572dc41518cb1: 21300000
     - e3cdf891def9241fd99247a9b210e648: 21300000
     - 07868eb356f394cea976f7701b06726f: 21300000
+    - 98f005e374d9548009aec6c2973ae4f2: 21300000
+    - 0c3021e66747a43dfb8168d234c69ee5: 21300000
     - 2a87ca17195524ab7aa524cb1ae480ba: 21300000
     - 23944a48bf7c14325ab5f9dc6e8a385a: 21300000
     - 6d371188b2f894ca79a3a8bcf243913d: 21300000
@@ -49,6 +51,7 @@ SpriteAtlas:
     - 7a04d0997c8f74722aa9c1a267906900: 21300000
     - 38b7296a0ecd342c088572b4373545d3: 21300000
     - e0c2aada8f2e4451db2b939f4e7b8217: 21300000
+    - 6f5f94bbfc71442e29fd11baeef62578: 21300000
     - bc9b649c6ab4f4aa988dd9ead26d9d55: 21300000
     - 1a1580dd4cfee4372b632b17c5d023cd: 21300000
     - 7e826bfeea6114ce1952b4d306fac97c: 21300000
@@ -61,6 +64,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d7987281cfecd4c6286572dc41518cb1, type: 3}
   - {fileID: 21300000, guid: e3cdf891def9241fd99247a9b210e648, type: 3}
   - {fileID: 21300000, guid: 07868eb356f394cea976f7701b06726f, type: 3}
+  - {fileID: 21300000, guid: 98f005e374d9548009aec6c2973ae4f2, type: 3}
+  - {fileID: 21300000, guid: 0c3021e66747a43dfb8168d234c69ee5, type: 3}
   - {fileID: 21300000, guid: 2a87ca17195524ab7aa524cb1ae480ba, type: 3}
   - {fileID: 21300000, guid: 23944a48bf7c14325ab5f9dc6e8a385a, type: 3}
   - {fileID: 21300000, guid: 6d371188b2f894ca79a3a8bcf243913d, type: 3}
@@ -68,6 +73,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7a04d0997c8f74722aa9c1a267906900, type: 3}
   - {fileID: 21300000, guid: 38b7296a0ecd342c088572b4373545d3, type: 3}
   - {fileID: 21300000, guid: e0c2aada8f2e4451db2b939f4e7b8217, type: 3}
+  - {fileID: 21300000, guid: 6f5f94bbfc71442e29fd11baeef62578, type: 3}
   - {fileID: 21300000, guid: bc9b649c6ab4f4aa988dd9ead26d9d55, type: 3}
   - {fileID: 21300000, guid: 1a1580dd4cfee4372b632b17c5d023cd, type: 3}
   - {fileID: 21300000, guid: 7e826bfeea6114ce1952b4d306fac97c, type: 3}
@@ -79,6 +85,8 @@ SpriteAtlas:
   - UI_Book_Profile_LeaSkin_01
   - UI_Book_Profile_GnarSkin_02
   - UI_Book_Profile_BarnieSkin_02
+  - UI_Book_Profile_HaleSkin_03
+  - UI_Book_Profile_HaleSkin_02
   - Gnar_Icon
   - UI_Book_Profile_LauraSkin_03
   - UI_Book_Profile_GnarSkin_03
@@ -86,6 +94,7 @@ SpriteAtlas:
   - Lea_Icon
   - UI_Book_Profile_LauraSkin_02
   - Hale_Icon
+  - UI_Book_Profile_HaleSkin_01
   - UI_Book_Profile_LauraSkin_01
   - Laura_Icon
   - UI_Book_Profile_LeaSkin_03
