@@ -49,6 +49,12 @@ public class Const : ScriptableObject
 
             if (currencyInfo.PlaceId == placeId)
             {
+                if(Application.isEditor)
+                {
+                    currencyInfo.StartValue.Animal = 999999;
+                    currencyInfo.StartValue.Object = 999999;
+                }
+
                 return currencyInfo.StartValue;
             }
         }
