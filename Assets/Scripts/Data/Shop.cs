@@ -8,28 +8,38 @@ namespace Data
     public class Shop : Data.Base
     {
         [SerializeField]
-        private string Category = string.Empty;
+        private bool show = false;
         [SerializeField]
-        private string Payment = string.Empty;
-        
-        public int PaymentValue = 0;
-        public int Value = 0;
-        public string IconImg = string.Empty;
-        public string Key = string.Empty;
+        private string category = string.Empty;
+        [SerializeField]
+        private string payment = string.Empty;
+        [SerializeField]
+        private int paymentValue = 0;
+        [SerializeField]
+        private int value = 0;
+        [SerializeField]
+        private string iconImg = string.Empty;
+        [SerializeField]
+        private string key = string.Empty;
 
+        public bool Show { get { return show; } }
         public Game.Type.ECategory ECategory { get; private set; } = Game.Type.ECategory.None;
         public Game.Type.EPayment EPayment { get; private set; } = Game.Type.EPayment.None;
+        public int PaymentValue { get { return paymentValue; } }
+        public int Value { get { return value; } }
+        public string IconImg { get { return iconImg; } }
+        public string Key { get { return key; } }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            if (System.Enum.TryParse(Category, out Game.Type.ECategory eCategory))
+            if (System.Enum.TryParse(category, out Game.Type.ECategory eCategory))
             {
                 ECategory = eCategory;
             }
 
-            if (System.Enum.TryParse(Payment, out Game.Type.EPayment ePayment))
+            if (System.Enum.TryParse(payment, out Game.Type.EPayment ePayment))
             {
                 EPayment = ePayment;
             }

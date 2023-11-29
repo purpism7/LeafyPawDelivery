@@ -47,6 +47,9 @@ namespace UI
                 if (data == null)
                     continue;
 
+                if (!data.Show)
+                    continue;
+
                 var shopItemCellData = new ShopItemCell.Data_()
                 {
                     IListener = this,
