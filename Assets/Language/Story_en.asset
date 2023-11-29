@@ -35,6 +35,82 @@ MonoBehaviour:
     m_Localized: Barnie
     m_Metadata:
       m_Items: []
+  - m_Id: 366824382464
+    m_Localized: Hey guys! The wreath is so pretty. Did you all make it by yourself?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1092476723200
+    m_Localized: Yes! Mom taught us how yesterday.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 590588305989632
+    m_Localized: "That's so cool! Do any of you know who \u201CBarnie\u201D is?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 686935356989440
+    m_Localized: "That\u2019s our mom! Do you know our mom?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 698752900784128
+    m_Localized: I need to deliver this letter to her. Can you show me where your
+      mom is?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 698802372599808
+    m_Localized: Come right this way!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 698975416999936
+    m_Localized: Oh, um, but she might be in the garden right now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699031771668480
+    m_Localized: "Let\u2019s head to our house for now!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18096676576157696
+    m_Localized: "It\u2019s mom!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18096790355042304
+    m_Localized: Are you already done playing with the flowers? What a beautiful
+      wreath~
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18096844419620864
+    m_Localized: We brought a guest! He's a mailman.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18096903450255360
+    m_Localized: Hello. I have a letter from Kara for you. Here you go.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18096979379740672
+    m_Localized: Kara?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18097013689147392
+    m_Localized: Yes. By any chance, is this the famous author Kara?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18097442074386432
+    m_Localized: Why, yes, it is. Mail from Kara.. Thank you.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18097473187733504
+    m_Localized: Would you like to come in for some lunch/dinner? You're the new
+      temporary mailman, right?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18097524261773312
+    m_Localized: Yes! I caused a small accident..  I'm not too sure if I can actually
+      do the job well.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18097564128632832
+    m_Localized: "You\u2019re doing great! Please, come in."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
