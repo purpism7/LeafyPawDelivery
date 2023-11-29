@@ -10,29 +10,20 @@ using Info;
 
 namespace Game
 {
-    public class StoryManager : GameSystem.Processing
+    public class StoryManager : Manager.Base<StoryManager.Data>
     {
-        public enum EState
+        public class Data : Manager.BaseData
         {
-            None,
             
-            Begin,
-            End,
-        }
-
-        public class Data
-        {
-            public int Id = 0;
-            public EState EState = EState.None;
         }
 
         private List<GameObject> _storyPrefabList = new();
         private List<Story> _storyList = new();
         private int _placeId = 0;
 
-        public static UnityEvent<Data> Listener = new();
+        public static UnityEvent<Event.StoryData> Listener = new();
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             _storyPrefabList.Clear();
             
@@ -41,11 +32,11 @@ namespace Game
             Game.PlaceManager.Listener?.AddListener(OnChangedPlace);
         }
 
-        public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
+        public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(CoLoadStory());
         }
-        
+
         private IEnumerator CoLoadStory()
         {
             var addressableAssetLoader = GameSystem.ResourceManager.Instance?.AddressableAssetLoader;
@@ -176,10 +167,10 @@ namespace Game
                         },
                     });
 
-                    Listener?.Invoke(new Data()
+                    Listener?.Invoke(new Event.StoryData()
                     {
                         Id = story.Id,
-                        EState = EState.Begin,
+                        EState = Event.EState.Begin,
                     });
 
                     return cutscene;
@@ -193,10 +184,10 @@ namespace Game
             if (story == null)
                 return;
             
-            Listener?.Invoke(new Data()
+            Listener?.Invoke(new Event.StoryData()
             {
                 Id = story.Id,
-                EState = EState.End,
+                EState = Event.EState.Begin,
             });
 
             //storyData.Completed = true;
@@ -259,6 +250,7 @@ namespace Game
 
         private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
         {
+            Debug.Log("Start objectData = " + objectData.Id);
             if (Check(out Story story))
             {
                 StartStory(story);

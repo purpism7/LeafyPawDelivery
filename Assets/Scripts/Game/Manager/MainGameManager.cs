@@ -48,9 +48,11 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         _managerDic.Clear();
 
-        AddManager(typeof(Game.PlaceManager), placeMgr);
         AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>());
         AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>());
+
+        AddManager(typeof(Game.PlaceManager), placeMgr);
+        AddManager(typeof(Game.StoryManager), gameObject.GetOrAddComponent<Game.StoryManager>());
         AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
     }
 
@@ -65,8 +67,6 @@ public class MainGameManager : Singleton<MainGameManager>
 
         _iGrid = inputMgr?.grid;
 
-        AddManager(typeof(Game.StoryManager), iProvider.Get<Game.StoryManager>());
-
         _iUpdateInputMgr = inputMgr;
         _iUpdateGameCameraCtr = GameCameraCtr;
         _iUpdateGrid = inputMgr?.grid;
@@ -77,6 +77,7 @@ public class MainGameManager : Singleton<MainGameManager>
         yield return StartCoroutine(acquireMgr?.CoInitialize(null));
 
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
+        yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
 
         yield return null;
 
