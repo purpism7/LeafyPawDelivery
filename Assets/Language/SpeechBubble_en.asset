@@ -51,21 +51,89 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 745123150290944
-    m_Localized: "\uC5B4\uC11C\uC640\uC694! \uC624\uB298 \uD558\uB298\uC774 \uC608\uC058\uB124\uC694."
+    m_Localized: 'Welcome! The sky is beautiful today.
+
+'
     m_Metadata:
       m_Items: []
   - m_Id: 751327113109504
-    m_Localized: "\uB0B4\uC77C \uBE44\uAC00 \uC62C \uAC83 \uAC19\uB124\uC694. \uBE68\uB798\uB97C
-      \uAC77\uC5B4\uC57C\uACA0\uC5B4\uC694."
+    m_Localized: 'I cooked some beet stew today. Will you try some?
+
+'
     m_Metadata:
       m_Items: []
   - m_Id: 751383484555264
-    m_Localized: "\uAC71\uC815\uD558\uB290\uB77C \uB0A0\uC744 \uC0DC\uC5B4. \uADF8\uB7F0\uB2E4\uACE0
-      \uD574\uACB0\uC774 \uB418\uB294 \uAC74 \uC544\uB2CC\uB370."
+    m_Localized: I spent the whole day worrying. Worrying doesn't solve anything.
     m_Metadata:
       m_Items: []
   - m_Id: 1676002630557696
     m_Localized: "\uC544\uC57C!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39131477059821568
+    m_Localized: Have you seen my babies? Where have they gone off to this time?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39131720941821952
+    m_Localized: "It\u2019s okay. Things happen.."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39131982544756736
+    m_Localized: 'All that matters is that I''m happy right now.
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39132151432601600
+    m_Localized: Hello! It's the perfect weather to ride a bicycle!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39132310270894080
+    m_Localized: "That\u2019s okay! Everything happens for a reason."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39132413178142720
+    m_Localized: Doesn't the cool feeling of your blankets running over your skin
+      feel so nice?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39132684776103936
+    m_Localized: My goodness, what a world we live in. Don't you agree?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39132830679162880
+    m_Localized: Not everything goes as planned.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39132953320611840
+    m_Localized: Who cares what other people think?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39133045184258048
+    m_Localized: Please don't bother me about trivial things.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39133232107610112
+    m_Localized: Why do you look so depressed?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39133338869424128
+    m_Localized: 'Is it that important?
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39133434998677504
+    m_Localized: 'Nice to meet you! I''m Kara, a traveling author! '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39133583212797952
+    m_Localized: "What does it mean to be free? I still don\u2019t understand it
+      quite yet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39133697163649024
+    m_Localized: Bunny looks quite busy today.
     m_Metadata:
       m_Items: []
   references:
