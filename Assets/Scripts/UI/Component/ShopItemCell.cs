@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 
 using TMPro;
 
@@ -73,7 +74,16 @@ namespace UI.Component
             if (shopData == null)
                 return;
 
-            paymentValueTMP?.SetText(shopData.PaymentValue.ToString());
+            if (shopData.EPayment == Game.Type.EPayment.Advertising)
+            {
+                var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "free", LocalizationSettings.SelectedLocale);
+
+                paymentValueTMP?.SetText(text);
+            }
+            else
+            {
+                paymentValueTMP?.SetText(shopData.PaymentValue.ToString());
+            }
         }
 
         public void OnClick()

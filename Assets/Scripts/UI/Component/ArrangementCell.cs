@@ -48,6 +48,8 @@ namespace UI.Component
         [SerializeField]
         private Image lockImg = null;
         [SerializeField]
+        private Image unLockImg = null;
+        [SerializeField]
         private Image lockBgImg = null;
         #endregion
 
@@ -65,6 +67,7 @@ namespace UI.Component
 
             UIUtils.SetActive(openRootRectTm, !_data.Owned);
             UIUtils.SetActive(lockRootRectTm, _data.Lock);
+            UIUtils.SetActive(unLockImg?.gameObject, false);
         }
 
         public override void Activate()
@@ -390,7 +393,12 @@ namespace UI.Component
                     Sequence sequence = DOTween.Sequence()
                        .SetAutoKill(false)
                        .OnStart(() => { _endTask = false; })
-                       .Append(lockBgImg.DOFade(0, 1f))
+                       .AppendInterval(0.5f)
+                       .AppendCallback(() => UIUtils.SetActive(lockImg?.gameObject, false))
+                       .AppendCallback(() => UIUtils.SetActive(unLockImg?.gameObject, true))
+                       .AppendInterval(0.4f)
+                       .Append(lockBgImg.DOFade(0, 0.3f))
+                       .Join(unLockImg.DOFade(0, 0.3f))
                        .OnComplete(() =>
                        {
                            UIUtils.SetActive(lockRootRectTm, _data.Lock);

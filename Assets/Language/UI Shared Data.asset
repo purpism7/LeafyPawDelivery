@@ -24,7 +24,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 184285406420992
-    m_Key: arrangement
+    m_Key: 'shop
+
+'
     m_Metadata:
       m_Items: []
   - m_Id: 185593299460096
@@ -69,6 +71,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 28080266466549760
     m_Key: dailymission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40622331704369152
+    m_Key: free
     m_Metadata:
       m_Items: []
   m_Metadata:

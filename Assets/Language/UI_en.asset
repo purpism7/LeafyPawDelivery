@@ -74,6 +74,10 @@ MonoBehaviour:
     m_Localized: Daily Mission
     m_Metadata:
       m_Items: []
+  - m_Id: 40622331704369152
+    m_Localized: Free
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
