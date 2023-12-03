@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 namespace GameSystem
 {
     public class BGMPlayer : MonoBehaviour
@@ -24,6 +26,12 @@ namespace GameSystem
 
         public void Play()
         {
+            if(audioSource != null)
+            {
+                if (audioSource.isPlaying)
+                    return;
+            }
+
             if (audioClips == null)
                 return;
 
@@ -75,6 +83,16 @@ namespace GameSystem
 
             finish();
         }
+
+        //private async UniTask AsyncPlay()
+        //{
+        //    float duration = audioSource.clip.length;
+        //    audioSource?.Play();
+
+        //    await UniTask.WaitForSeconds(duration);
+
+        //    finish();
+        //}
 
         private void SetAudioClip()
         {

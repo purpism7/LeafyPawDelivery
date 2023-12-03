@@ -21,8 +21,8 @@ namespace UI.Component
         private Image progressImg = null;
         [SerializeField]
         private TextMeshProUGUI progressTMP = null;
-        [SerializeField]
-        private Button getRewardBtn = null;
+        //[SerializeField]
+        //private Button getRewardBtn = null;
         [SerializeField]
         private OpenConditionVertical openCondition = null;
         [SerializeField]

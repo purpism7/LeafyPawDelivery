@@ -27,9 +27,9 @@ namespace Game
         {
             _storyPrefabList.Clear();
             
-            AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
-            ObjectManager.Listener?.AddListener(OnChangedObjectInfo);
-            Game.PlaceManager.Listener?.AddListener(OnChangedPlace);
+            AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
+            ObjectManager.Event?.AddListener(OnChangedObjectInfo);
+            Game.PlaceManager.Event?.AddListener(OnChangedPlace);
         }
 
         public override IEnumerator CoInitialize(Data data)

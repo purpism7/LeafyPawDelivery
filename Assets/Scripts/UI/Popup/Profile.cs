@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using TMPro;
 using UnityEngine.Localization.Settings;
+
 using UI.Component;
 using GameSystem;
 

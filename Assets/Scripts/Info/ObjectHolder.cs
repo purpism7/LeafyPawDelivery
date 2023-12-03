@@ -8,7 +8,7 @@ namespace Info
 {
     public class ObjectHolder : Holder.Base
     {
-        private readonly string ObjectUIdKey = "Object_UId_Key";
+        //private readonly string ObjectUIdKey = "Object_UId_Key";
         
         protected override string JsonFilePath => RootJsonFilePath + "/Info/Object_Place_{0}.json";
 

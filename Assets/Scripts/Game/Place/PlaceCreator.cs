@@ -12,20 +12,20 @@ namespace GameSystem
 {
     public class PlaceCreator : BaseCreator<Game.Place>
     {         
-        private int _placeId = 0;
         private Transform _rootTm = null;
+        private Game.Place.Data _data = null;
         //private System.Action<int> _placeActivityAnimalAction = null;
-
-        public PlaceCreator SetPlaceId(int id)
-        {
-            _placeId = id;
-
-            return this;
-        }
 
         public PlaceCreator SetRoot(Transform rootTm)
         {
             _rootTm = rootTm;
+
+            return this;
+        }
+
+        public PlaceCreator SetData(Game.Place.Data data)
+        {
+            _data = data;
 
             return this;
         }
@@ -39,17 +39,17 @@ namespace GameSystem
 
         public override Game.Place Create()
         {
-            var place = ResourceManager.Instance?.Instantiate<Game.Place>(_placeId, _rootTm);
-            if (place == null)
-            {
+            if (_data == null)
                 return null;
-            }
 
-            place.Id = _placeId;
-            place.Initialize(new Game.Place.Data()
-            {
-                Id = _placeId,
-            });
+            int placeId = _data.Id;
+
+            var place = ResourceManager.Instance?.Instantiate<Game.Place>(placeId, _rootTm);
+            if (place == null)
+                return null;
+
+            place.Id = placeId;
+            place.Initialize(_data);
 
             return place;
         }

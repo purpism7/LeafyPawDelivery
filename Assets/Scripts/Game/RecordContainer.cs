@@ -15,7 +15,7 @@ namespace Game
         {
             LoadInfo();
 
-            AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
+            AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
         }
 
         public override void LoadInfo()

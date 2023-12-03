@@ -66,8 +66,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 43733a8b0a09148009d777469172904c, type: 3}
   m_PackedSpriteNamesToIndex:
   - Shop_Jewel_2
-  - Shop_Jewel_3
   - Shop_Jewel_4
+  - Shop_Jewel_4_2
   - Shop_Jewel_1
   - Shop_Jewel_6
   - Shop_Jewel_5

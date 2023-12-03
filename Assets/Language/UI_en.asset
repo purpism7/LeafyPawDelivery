@@ -78,6 +78,18 @@ MonoBehaviour:
     m_Localized: Free
     m_Metadata:
       m_Items: []
+  - m_Id: 41339116418228224
+    m_Localized: BGM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41339193681502208
+    m_Localized: Effect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41339547789811712
+    m_Localized: Setting
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

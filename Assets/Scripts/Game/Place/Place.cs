@@ -31,6 +31,7 @@ namespace Game
         public class Data : BaseData
         {
             public int Id = 0;
+            public bool onBGM = true;
         }
 
         [SerializeField]
@@ -55,6 +56,8 @@ namespace Game
 
             _initialize = true;
             _placeEventCtr?.Initialize(this);
+
+            Info.Setting.Event?.AddListener(OnChangedSetting);
 
             Deactivate();
         }
@@ -85,7 +88,11 @@ namespace Game
 
             _state = IPlaceState.EType.Active;
 
-            bgmPlayer?.Play();
+            if(_data != null &&
+               _data.onBGM)
+            {
+                bgmPlayer?.Play();
+            }
         }
 
         public override void Deactivate()
@@ -472,6 +479,39 @@ namespace Game
             get
             {
                 return _state;
+            }
+        }
+        #endregion
+
+        #region Setting.Event
+        private void OnChangedSetting(Game.Event.SettingData settingData)
+        {
+            if (_data == null)
+                return;
+
+            if (settingData == null)
+                return;
+
+            switch(settingData)
+            {
+                case Game.Event.BGMData bgmData:
+                    {
+                        if (bgmData.on == _data.onBGM)
+                            return;
+
+                        _data.onBGM = bgmData.on;
+
+                        if(bgmData.on)
+                        {
+                            bgmPlayer?.Play();
+                        }
+                        else
+                        {
+                            bgmPlayer?.Stop();
+                        }
+
+                        return;
+                    }
             }
         }
         #endregion

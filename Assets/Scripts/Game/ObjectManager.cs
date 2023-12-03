@@ -12,7 +12,7 @@ namespace Game
             public int PlaceId = 0;
         }
 
-        public static UnityEvent<Game.Event.ObjectData> Listener { get; private set; } = new();
+        public static UnityEvent<Game.Event.ObjectData> Event { get; private set; } = new();
 
         private Data _data = null;
         private Info.ObjectHolder _objectHolder = new();
@@ -27,7 +27,7 @@ namespace Game
 
         protected override void Initialize()
         {
-            Listener?.RemoveAllListeners();
+            Event?.RemoveAllListeners();
 
             _objectHolder?.LoadInfo();
         }
@@ -46,7 +46,7 @@ namespace Game
 
             if (_objectHolder.AddObjectInfo(id))
             {
-                Listener?.Invoke(
+                Event?.Invoke(
                     new Event.ObjectData()
                     {
                         Id = id,

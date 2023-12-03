@@ -22,7 +22,8 @@ namespace Scene
             {
                 if (eSceneType == Type.EScene.Game)
                 {
-                    LocalizationSettings.SelectedLocale = UnityEngine.Localization.Locale.CreateLocale("ko");
+                    Info.Setting setting = new();
+                    setting?.InitializeLocale();
 
                     _preprocessing?.Init(this);
                 }

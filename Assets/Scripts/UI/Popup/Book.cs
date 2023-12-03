@@ -47,8 +47,8 @@ namespace UI
 
         private void InternalInit()
         {
-            Game.AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
-            ObjectManager.Listener?.AddListener(OnChangedObjectInfo);
+            Game.AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
+            ObjectManager.Event?.AddListener(OnChangedObjectInfo);
 
             _placeId = _data.PlaceId;
 

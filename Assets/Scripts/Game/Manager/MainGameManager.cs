@@ -53,6 +53,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         AddManager(typeof(Game.PlaceManager), placeMgr);
         AddManager(typeof(Game.StoryManager), gameObject.GetOrAddComponent<Game.StoryManager>());
+        AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>());
         AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
     }
 
@@ -81,7 +82,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         yield return null;
 
-        EndLoad();
+        EndLoad(true);
     }
 
     private void AddManager(Type type, MonoBehaviour monoBehaviour)
@@ -94,12 +95,14 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private IEnumerator CoInitializeManager(int placeId)
     {
+        var setting = new Info.Setting();
         if (placeMgr != null)
         {
             yield return StartCoroutine(placeMgr.CoInitialize(
                 new Game.PlaceManager.Data()
                 {
-                    PlaceId = placeId,
+                    placeId = placeId,
+                    setting = setting,
                 }));
         }
 
@@ -134,9 +137,14 @@ public class MainGameManager : Singleton<MainGameManager>
         _iGrid?.Overlap();
     }
 
-    private void EndLoad()
+    private void EndLoad(bool initialize)
     {
         Starter();
+
+        if(initialize)
+        {
+            Get<Game.Manager.Guide>()?.Show();
+        }
     }
 
     private void Starter()
@@ -224,7 +232,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         yield return null;
 
-        EndLoad();
+        EndLoad(false);
     }
 
     //private async UniTask AsyncMovePlace(int placeId, System.Action endMoveAction)

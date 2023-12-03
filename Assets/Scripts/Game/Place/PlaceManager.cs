@@ -13,10 +13,11 @@ namespace Game
     {
         public class Data : Manager.BaseData
         {
-            public int PlaceId = 0;
+            public int placeId = 0;
+            public Info.Setting setting = null;
         }
 
-        public static UnityEvent<int> Listener { get; private set; } = null;
+        public static UnityEvent<int> Event { get; private set; } = null;
 
         public Transform RootTm;
 
@@ -33,8 +34,8 @@ namespace Game
 
         protected override void Initialize()
         {
-            Listener = new UnityEvent<int>();
-            Listener?.RemoveAllListeners();
+            Event = new UnityEvent<int>();
+            Event?.RemoveAllListeners();
         }
 
         public override IEnumerator CoInitialize(Data data)
@@ -48,7 +49,7 @@ namespace Game
         {
             ActivityPlace?.Deactivate();
 
-            var place = _placeList?.Find(place => place.Id == data.PlaceId);
+            var place = _placeList?.Find(place => place.Id == data.placeId);
             if (place != null)
             {
                 ActivityPlace = place;
@@ -56,14 +57,18 @@ namespace Game
             else
             {
                 ActivityPlace = new GameSystem.PlaceCreator()
-                  .SetPlaceId(data.PlaceId)
                   .SetRoot(RootTm)
+                  .SetData(new Place.Data()
+                  {
+                      Id = data.placeId,
+                      onBGM = data.setting.OnBGM,
+                  })
                   .Create();
 
                 _placeList?.Add(ActivityPlace);
             }
 
-            Listener?.Invoke(ActivityPlaceId);
+            Event?.Invoke(ActivityPlaceId);
         }
 
         public override void ChainUpdate()

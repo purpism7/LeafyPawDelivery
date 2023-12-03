@@ -73,10 +73,11 @@ namespace UI
 
         private void InitializeListener()
         {
-            Game.AnimalManager.Listener?.RemoveListener(OnChangedAnimalInfo);
-            Game.AnimalManager.Listener?.AddListener(OnChangedAnimalInfo);
+            Game.AnimalManager.Event?.RemoveListener(OnChangedAnimalInfo);
+            Game.AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
 
-            Game.ObjectManager.Listener?.AddListener(OnChangedObjectInfo);
+            Game.ObjectManager.Event?.RemoveListener(OnChangedObjectInfo);
+            Game.ObjectManager.Event?.AddListener(OnChangedObjectInfo);
         }
 
         private void ActivateArrangementCellList()
@@ -292,6 +293,7 @@ namespace UI
         // 탭 변경 콜백.
         public void OnChanged(string tabType)
         {
+            Debug.Log("tabType = " + tabType);
             if(System.Enum.TryParse(tabType, out Game.Type.ETab eTabType))
             {
                 if(_currETabType == eTabType)

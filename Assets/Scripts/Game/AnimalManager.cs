@@ -14,7 +14,7 @@ namespace Game
             public int PlaceId = 0;
         }
 
-        public static UnityEvent<Info.Animal> Listener { get; private set; } = null;
+        public static UnityEvent<Info.Animal> Event { get; private set; } = null;
 
         private Data _data = null;
         private Info.AnimalHolder _animalHolder = new();
@@ -25,12 +25,12 @@ namespace Game
         {
             Debug.Log("AnimalManager Initialize");
 
-            Listener = new UnityEvent<Info.Animal>();
-            Listener.RemoveAllListeners();
+            Event = new UnityEvent<Info.Animal>();
+            Event.RemoveAllListeners();
 
             var mainGameMgr = MainGameManager.Instance;
-            Game.ObjectManager.Listener.AddListener(OnChangedObjectInfo);
-            Game.PlaceManager.Listener?.AddListener(OnChangedPlace);
+            Game.ObjectManager.Event.AddListener(OnChangedObjectInfo);
+            Game.PlaceManager.Event?.AddListener(OnChangedPlace);
 
             _animalHolder?.LoadInfo();
         }
@@ -51,7 +51,7 @@ namespace Game
             
             if (_animalHolder.AddAnimalInfo(animalInfo))
             {
-                Listener?.Invoke(animalInfo);
+                Event?.Invoke(animalInfo);
             }
         }
 
@@ -69,7 +69,7 @@ namespace Game
 
             if (_animalHolder.AddAnimalInfo(animalInfo))
             {
-                Listener?.Invoke(animalInfo);
+                Event?.Invoke(animalInfo);
             }
         }
 

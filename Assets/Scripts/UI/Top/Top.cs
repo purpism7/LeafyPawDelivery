@@ -18,7 +18,7 @@ namespace UI
             
         }
         
-        [SerializeField] private TextMeshProUGUI lvTMP = null;
+        //[SerializeField] private TextMeshProUGUI lvTMP = null;
         [SerializeField] private TextMeshProUGUI animalCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI objectCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI cashTMP = null;
@@ -40,8 +40,8 @@ namespace UI
         {
             base.Initialize(data);
 
-            PlaceManager.Listener?.RemoveListener(OnChangedPlace);
-            PlaceManager.Listener?.AddListener(OnChangedPlace);
+            PlaceManager.Event?.RemoveListener(OnChangedPlace);
+            PlaceManager.Event?.AddListener(OnChangedPlace);
 
             _collectCurrencyList?.Clear();
             _addCurrencyList?.Clear();
@@ -248,6 +248,19 @@ namespace UI
         {
             Debug.Log("Top OnChangedPlace = " + placeId);
             Initialize();
+        }
+
+        public void OnClickCurrency()
+        {
+            var popup = new GameSystem.PopupCreator<Shop, Shop.Data_>()
+                .SetCoInit(true)
+                .Create();
+        }
+
+        public void OnClickSetting()
+        {
+            var popup = new GameSystem.PopupCreator<Setting, UI.BaseData>()
+               .Create();
         }
     }
 }
