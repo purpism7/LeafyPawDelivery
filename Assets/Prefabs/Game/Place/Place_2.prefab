@@ -294,6 +294,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BGMPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 3835373068479795185, guid: 8391d08e6ba95401faab2f97a9000ba3, type: 3}
+      propertyPath: audioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3835373068479795185, guid: 8391d08e6ba95401faab2f97a9000ba3, type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 23d22c7d4fd044fedb46284123a7fb63, type: 3}
     - target: {fileID: 5880779311851659688, guid: 8391d08e6ba95401faab2f97a9000ba3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
