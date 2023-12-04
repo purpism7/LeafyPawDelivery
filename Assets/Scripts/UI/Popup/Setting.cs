@@ -15,7 +15,6 @@ namespace UI
         [SerializeField]
         private Image effectCheckImg = null;
         [Header("Language")]
-        [Tooltip("Localization Tables 에 언어 순서랑 동일해야 됨.")]
         [SerializeField]
         private Toggle[] langToggles = null;
 
@@ -25,8 +24,8 @@ namespace UI
         {
             base.Initialize(data);
 
-            SetLanguage();
             SetSound();
+            SetLanguage();
         }
 
         public override void Activate()
@@ -69,6 +68,7 @@ namespace UI
         }
         #endregion
 
+        #region Language
         private void SetLanguage()
         {
             int index = 0;
@@ -83,7 +83,7 @@ namespace UI
             if (langToggles.Length <= index)
                 return;
 
-            langToggles[index].SetIsOnWithoutNotify(true);
+            langToggles[index]?.SetIsOnWithoutNotify(true);
         }
 
         public void OnChangedLanguage(int index)
@@ -102,7 +102,16 @@ namespace UI
             LocalizationSettings.SelectedLocale = selectedLocale;
 
             _setting?.SaveLocaleIndex(index);
+
+            if(langToggles != null)
+            {
+                for (int i = 0; i < langToggles.Length; ++i)
+                {
+                    langToggles[i]?.SetIsOnWithoutNotify(i == index);
+                }
+            }
         }
+        #endregion
     }
 }
 

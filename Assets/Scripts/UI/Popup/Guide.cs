@@ -39,8 +39,14 @@ namespace UI
 
         private void FinishTyping()
         {
-            Debug.Log("FinishTyping");
+            
+        }
+
+        private void Finish()
+        {
             _endTask = true;
+
+            Deactivate();
         }
 
         private async UniTask AsyncTyping()
@@ -50,10 +56,12 @@ namespace UI
 
             if (_data.sentenceQueue.Count <= 0)
             {
-                FinishTyping();
+                Finish();
 
                 return;
             }
+
+            typingTMP?.SetText(string.Empty);
 
             string sentence = _data.sentenceQueue.Dequeue();
 
@@ -66,8 +74,21 @@ namespace UI
 
             await UniTask.WaitForSeconds(1f);
 
+            FinishTyping();
+
+            await UniTask.WaitForSeconds(1.5f);
+
             AsyncTyping().Forget();
         }
+
+        //public void OnClick()
+        //{
+        //    if (_isTyping)
+        //        return;
+
+
+        //    //AsyncTyping().Forget();
+        //}
     }
 }
 

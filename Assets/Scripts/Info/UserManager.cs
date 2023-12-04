@@ -14,7 +14,7 @@ namespace Info
         private const string KeyUserStory = "StoryList";
 
 #if UNITY_EDITOR
-        readonly private string _userInfoJsonFilePath = "Assets/Info/User.json";
+        private const string _userInfoJsonFilePath = "Assets/Info/User.json";
 #else
         readonly private string _userInfoJsonFilePath = Application.persistentDataPath + "/Info/User.json";
 #endif

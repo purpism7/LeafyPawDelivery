@@ -55,6 +55,9 @@ namespace UI
             {
                 tabToggle.SetIsOnWithoutNotify(true);
             }
+
+            animalScrollRect?.ResetScrollPos();
+            objectScrollRect?.ResetScrollPos();
         }
 
         public override void Deactivate()
@@ -266,7 +269,6 @@ namespace UI
             foreach (var cell in _arrangementCellList)
             {
                 cell?.Obtain(EElement, id);
-
             }
         }
         
@@ -284,10 +286,6 @@ namespace UI
                 return;
 
             Obtain(Game.Type.EElement.Object, objectData.Id);
-
-            Debug.Log("OnChangedObjectInfo = " + objectData.Id);
-
-
         }
 
         // 탭 변경 콜백.

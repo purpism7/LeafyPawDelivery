@@ -220,14 +220,14 @@ namespace UI
             }
         }
 
-        private void AddStoryCell(Story story, int placeId)
+        private void AddStoryCell(Story story)
         {
             StoryCell storyCell = DeactiveStoryCell;
             var cellData = new StoryCell.Data()
             {
                 IListener = this,
                 Story = story,
-                PlaceId = placeId,
+                PlaceId = _placeId,
             };
 
             if (storyCell != null)
@@ -250,9 +250,7 @@ namespace UI
         {
             AllDeacitveStoryCellList();
 
-            int activityPlaceId = GameUtils.ActivityPlaceId;
-
-            var storyList = StoryContainer.Instance.GetStoryList(activityPlaceId);
+            var storyList = StoryContainer.Instance.GetStoryList(_placeId);
             if (storyList == null)
                 return;
 
@@ -261,7 +259,7 @@ namespace UI
                 if (story == null)
                     continue;
 
-                AddStoryCell(story, activityPlaceId);
+                AddStoryCell(story);
             }
         }
         #endregion

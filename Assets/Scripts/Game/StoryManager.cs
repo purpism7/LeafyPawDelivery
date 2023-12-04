@@ -18,7 +18,6 @@ namespace Game
         }
 
         private List<GameObject> _storyPrefabList = new();
-        private List<Story> _storyList = new();
         private int _placeId = 0;
 
         public static UnityEvent<Event.StoryData> Listener = new();
@@ -61,21 +60,6 @@ namespace Game
             yield return new WaitUntil(() => endLoad);
         }
 
-        private void SetStoryList()
-        {
-            if(_storyList == null)
-            {
-                _storyList = new();
-            }
-
-            _storyList.Clear();
-            _storyList = StoryContainer.Instance.GetStoryList(_placeId);
-            if(_storyList != null)
-            {
-                _storyList.OrderByDescending(story => story.Id);
-            }
-        }
-        
         private bool Check(out Story currStory)
         {
             currStory = null;
@@ -84,12 +68,13 @@ namespace Game
             if (mainGameMgr == null)
                 return false;
 
-            if (_storyList == null)
+            var storyList = StoryContainer.Instance.GetStoryList(_placeId);
+            if (storyList == null)
                 return false;
 
             int lastStoryId = UserManager.Instance.GetLastStoryId(_placeId);
             
-            foreach (var story in _storyList)
+            foreach (var story in storyList)
             {
                 if (story == null)
                     continue;
@@ -261,7 +246,7 @@ namespace Game
         {
             _placeId = placeId;
 
-            SetStoryList();
+            //SetStoryList();
         }
         #endregion
     }

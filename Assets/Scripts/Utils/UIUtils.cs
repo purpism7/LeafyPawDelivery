@@ -75,4 +75,14 @@ public static class UIUtils
             GameObject.Destroy(rectTm.gameObject);
         }
     }
+
+    public static void ResetScrollPos(this ScrollRect scroll)
+    {
+        var scrollContent = scroll?.content;
+        if (scrollContent == null)
+            return;
+
+        float x = scrollContent.anchoredPosition.x;
+        scrollContent.anchoredPosition = new Vector3(x, 0, 0);
+    }
 }

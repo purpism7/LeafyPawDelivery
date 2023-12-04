@@ -30,6 +30,8 @@ namespace Game.Manager
                     var senteceQueue = new Queue<string>();
                     senteceQueue.Clear();
                     senteceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "guide_" + "1_1", LocalizationSettings.SelectedLocale));
+                    senteceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "guide_" + "1_2", LocalizationSettings.SelectedLocale));
+                    senteceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "guide_" + "1_3", LocalizationSettings.SelectedLocale));
 
                     var guide = new GameSystem.PopupCreator<UI.Guide, UI.Guide.Data>()
                         .SetReInitialize(true)
@@ -41,8 +43,6 @@ namespace Game.Manager
 
                     return guide;
                 });
-
-           
         }
 
         private void OnChangedAnimalInfo(Info.Animal animalInfo)

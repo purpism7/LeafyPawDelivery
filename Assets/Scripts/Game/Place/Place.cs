@@ -501,6 +501,9 @@ namespace Game
 
                         _data.onBGM = bgmData.on;
 
+                        if (GameUtils.ActivityPlaceId != _data.Id)
+                            return;
+
                         if(bgmData.on)
                         {
                             bgmPlayer?.Play();
