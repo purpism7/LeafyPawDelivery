@@ -9,13 +9,13 @@ namespace Game.Element.State
         readonly private float TouchInterval = 0.3f;
 
         private GameSystem.GameCameraController _gameCameraCtr = null;
-        private GameSystem.IGrid _iGrid = null;
+        //private GameSystem.IGrid _iGrid = null;
         private DateTime _touchDateTime;
 
         public override BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             _gameCameraCtr = gameCameraCtr;
-            _iGrid = iGrid;
+            //_iGrid = iGrid;
 
             return this;
         }
@@ -37,6 +37,8 @@ namespace Game.Element.State
             {
                 case TouchPhase.Began:
                     {
+                        CollectCurrnecyFromObject(touch);
+
                         break;
                     }
 
@@ -47,7 +49,7 @@ namespace Game.Element.State
 
                 case TouchPhase.Stationary:
                     {
-                        CollectCurrnecyFromObject(touch);
+                        
 
                         break;
                     }
