@@ -38,29 +38,32 @@ namespace UI
 
         private void SetItemList()
         {
-            var shopDatas = ShopContainer.Instance?.Datas;
-            if (shopDatas == null)
+            var shopListDic = ShopContainer.Instance?.ShopListDic;
+            if (shopListDic == null)
                 return;
 
-            foreach(var data in shopDatas)
+            var scrollContent = itemScrollRect?.content;
+            if (scrollContent == null)
+                return;
+
+            foreach (var data in shopListDic)
             {
-                if (data == null)
+                var dataList = data.Value;
+
+                if (dataList == null)
                     continue;
 
-                if (!data.Show)
-                    continue;
+                var cell = new ComponentCreator<ShopItemGroup, ShopItemGroup.Data_>()
+                    .SetData(new ShopItemGroup.Data_()
+                    {
 
-                var shopItemCellData = new ShopItemCell.Data_()
-                {
-                    IListener = this,
-                    ShopData = data,
-                };
-
-                var cell = new ComponentCreator<ShopItemCell, ShopItemCell.Data_>()
-                    .SetData(shopItemCellData)
-                    .SetRootRectTm(itemScrollRect?.content)
+                        shopDataList = dataList,
+                    })
+                    .SetRootRectTm(scrollContent)
                     .Create();
             }
+
+            itemScrollRect?.ResetScrollPos();
         }
 
         void ShopItemCell.IListener.Buy(Data.Shop shopData, System.Action endAction)

@@ -224,9 +224,11 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private IEnumerator CoMovePlace(int placeId, System.Action endMoveAction)
     {
+        yield return null;
+
         yield return StartCoroutine(CoInitializeManager(placeId));
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 3f));
 
         endMoveAction?.Invoke();
 
