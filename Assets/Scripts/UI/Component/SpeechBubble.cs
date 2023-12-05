@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 using TMPro;
-using UnityEngine.Localization.Settings;
+
+using Cysharp.Threading.Tasks;
 
 namespace UI.Component
 {
@@ -104,22 +106,36 @@ namespace UI.Component
 
             _isPlaying = true;
 
-            StartCoroutine(CoBegin(constituent));
+            AsyncBegin(constituent).Forget();
+            //StartCoroutine(CoBegin(constituent));
         }
 
-        private IEnumerator CoBegin(Constituent constituent)
+        private async UniTask AsyncBegin(Constituent constituent)
         {
             Activate();
             SetSentence(constituent.Sentence);
-            
-            yield return new WaitForSeconds(constituent.KeepDelay);
+
+            await UniTask.WaitForSeconds(constituent.KeepDelay);
 
             constituent?.EndAction?.Invoke();
 
-            yield return new WaitForEndOfFrame();
+            await UniTask.Delay(1);
 
             End();
         }
+
+        //private IEnumerator CoBegin(Constituent constituent)
+        //{
+            
+            
+        //    yield return new WaitForSeconds(constituent.KeepDelay);
+
+            
+
+        //    yield return new WaitForEndOfFrame();
+
+        //    End();
+        //}
 
         private new void End()
         {

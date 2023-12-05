@@ -24,9 +24,25 @@ namespace GameSystem
 
         public float Height { get; private set; } = 0;
         public float Width { get; private set; } = 0;
-        public Vector3 Center { get { return GameCamera != null ? GameCamera.transform.position + GameCamera.transform.forward : Vector3.zero; } }
+       
         public IGrid IGrid { get; private set; } = null;
         public bool StopUpdate { get; private set; } = false;
+
+        public Vector3 Center
+        {
+            get
+            {
+                if(GameCamera != null)
+                {
+                    var pos = GameCamera.transform.position + GameCamera.transform.forward;
+                    pos.y = IGrid != null ? IGrid.LimitPosY(pos.y) : pos.y;
+
+                    return pos;
+                }
+                
+                return Vector3.zero;
+            }
+        }
 
         public void Initialize(IGrid iGrid)
         {
@@ -143,10 +159,7 @@ namespace GameSystem
             float clampX = GetClampX(movePos.x);
             float clampY = GetClampY(movePos.y);
 
-            //var time = Time.deltaTime * 50f;
-
             var targetPos = new Vector3(clampX, clampY, InitPosZ);
-            //cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, time);
             cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, 0.01f);
         }
 

@@ -65,7 +65,6 @@ namespace Game.Creature
         private void DeactivateChild()
         {
             _actionCtr?.Deactivate();
-            //DeactivateSpeechBubble();
         }
 
         private void InitActionController()
@@ -110,6 +109,8 @@ namespace Game.Creature
             {
                 SetState(new Element.State.Game<Animal>()?.Initialize(gameCameraCtr, iGrid));
             }
+
+
         }
 
         public override void OnTouch(Touch touch)
