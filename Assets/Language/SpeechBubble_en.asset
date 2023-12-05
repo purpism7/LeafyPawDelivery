@@ -19,35 +19,36 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 213262524416
-    m_Localized: "\uB4DC\uB514\uC5B4 \uAE08\uC694\uC77C\uC774\uB124. \n\uC9C0\uAE0B\uC9C0\uAE0B\uD558\uB2E4
-      \uC815\uB9D0."
+    m_Localized: 'It''s finally Friday.
+
+      I''m so sick of it.'
     m_Metadata:
       m_Items: []
   - m_Id: 1502142783488
-    m_Localized: "\uD53C\uACE4\uD574\uC11C \uB208\uB3C4 \uC81C\uB300\uB85C \n\uBABB\uB728\uACA0\uC5B4..."
+    m_Localized: I'm sooo tired...
     m_Metadata:
       m_Items: []
   - m_Id: 231133248741376
-    m_Localized: "\uC557, \uC8C4\uC1A1\uD574\uC694! \uAD1C\uCC2E\uC73C\uC138\uC694??"
+    m_Localized: Oh, I'm so sorry. Are you okay?
     m_Metadata:
       m_Items: []
   - m_Id: 231209421496320
-    m_Localized: "\uC544\uC57C..\uAD1C\uCC2E\uC2B5\uB2C8\uB2E4. \uC774 \uB3D9\uB124\uB294
-      \n\uCC98\uC74C\uC774\uB77C \uAE38\uC744 \uD5F7\uAC08\uB838\uB124\uC694."
+    m_Localized: I'm okay.. I got confused because this town is first.
     m_Metadata:
       m_Items: []
   - m_Id: 233815942356992
-    m_Localized: "\uB2E4\uB9AC\uB97C \uB2E4\uCE58\uC2E0 \uAC83 \uAC19\uC740\uB370..
-      \n\uC790\uC804\uAC70\uB294 \uC704\uD5D8\uD558\uC9C0 \uC54A\uC744\uAE4C\uC694?"
+    m_Localized: 'I think you hurt your leg..
+
+      Wouldn''t it be dangerous to
+      ride a bicycle?'
     m_Metadata:
       m_Items: []
   - m_Id: 235290277961728
-    m_Localized: "\uD070\uC77C\uC774\uB124, \uC774 \uD3B8\uC9C0\uB4E4\uC744 \uC5B4\uC11C
-      \n\uC804\uD574\uC57C \uD558\uB294\uB370..."
+    m_Localized: I need to deliver these letters...
     m_Metadata:
       m_Items: []
   - m_Id: 235361539186688
-    m_Localized: "...\uC81C\uAC00 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?"
+    m_Localized: ...Can I help you?
     m_Metadata:
       m_Items: []
   - m_Id: 745123150290944
@@ -67,7 +68,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1676002630557696
-    m_Localized: "\uC544\uC57C!"
+    m_Localized: Ouch!
     m_Metadata:
       m_Items: []
   - m_Id: 39131477059821568

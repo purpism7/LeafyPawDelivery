@@ -111,6 +111,62 @@ MonoBehaviour:
     m_Localized: "You\u2019re doing great! Please, come in."
     m_Metadata:
       m_Items: []
+  - m_Id: 43308319677341696
+    m_Localized: You must be friends with Kara. I've read so many of her books!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43308528356548608
+    m_Localized: "Yes, she\u2019s an old friend of mine. I haven\u2019t seen her
+      since she left. It makes me quite happy that she\u2019s written to us."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43308584807686144
+    m_Localized: "I suppose it\u2019s gets little difficult to see each other with
+      her traveling so much."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43308662641385472
+    m_Localized: "Yes, I suppose it is. I\u2019m a little jealous, to be honest.
+      She suggested that I go with her so that we could travel and write together."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43308724649975808
+    m_Localized: Wow, how romantic!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43383524005240832
+    m_Localized: Yes, it is. But I couldn't muster up the courage, so I stayed behind
+      in our hometown. Looking back now, I feel like I could've been a little bolder.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43384047374688256
+    m_Localized: Leaving behind your home and going on an adventure is no easy task.
+      I still feel like I'm dreaming sometimes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43384118061293568
+    m_Localized: I know I'm happy right now, but I envy that kind of freedom at times.
+      Imagining it makes me wonder about just what kind of life that entails.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43384192132702208
+    m_Localized: "It\u2019s still not too late for you, is it?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43384254447476736
+    m_Localized: "Oh, not after all these years. I have so much to do.. It\u2019s
+      too late to dream!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43384318091845632
+    m_Localized: "You still have your whole life ahead of you. Today's the youngest
+      you\u2019ll ever be. Age is but a number when it comes to dreams"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43384388518404096
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
