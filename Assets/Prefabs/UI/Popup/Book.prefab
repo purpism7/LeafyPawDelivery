@@ -1371,6 +1371,18 @@ PrefabInstance:
       propertyPath: m_text
       value: Object
       objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
+      propertyPath: m_fontSize
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 57b10edb38a144f4cacfea3bcc8783e4, type: 2}
     - target: {fileID: 3161672613242512127, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -1603,6 +1615,18 @@ PrefabInstance:
       propertyPath: m_text
       value: Story
       objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
+      propertyPath: m_fontSize
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 57b10edb38a144f4cacfea3bcc8783e4, type: 2}
     - target: {fileID: 3161672613242512127, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -1835,6 +1859,18 @@ PrefabInstance:
       propertyPath: m_text
       value: Animal
       objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
+      propertyPath: m_fontSize
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458303959644118984, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 57b10edb38a144f4cacfea3bcc8783e4, type: 2}
     - target: {fileID: 3161672613242512127, guid: b894144b8fe454e0cac738b50690f1af, type: 3}
       propertyPath: m_Layer
       value: 5

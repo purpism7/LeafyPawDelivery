@@ -41,7 +41,9 @@ public class ConversationBehaviour : PlayableBehaviour
             LocalDatas.Length <= 0)
             return;
 
-        foreach(var localData in LocalDatas)
+        conversation?.SetAllCnt(LocalDatas.Length);
+
+        foreach (var localData in LocalDatas)
         {
             if (localData == null)
                 continue;

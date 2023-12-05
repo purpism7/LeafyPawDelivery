@@ -547,8 +547,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -682,7 +682,6 @@ MonoBehaviour:
   titleTMP: {fileID: 9036643580066779562}
   progressImg: {fileID: 3204678282556713992}
   progressTMP: {fileID: 5225297206241416530}
-  getRewardBtn: {fileID: 4569124426618834460}
   openCondition: {fileID: 1884986161208141668}
   completedRootRectTm: {fileID: 4678024129634072320}
 --- !u!1 &4612758420966288478
@@ -744,7 +743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

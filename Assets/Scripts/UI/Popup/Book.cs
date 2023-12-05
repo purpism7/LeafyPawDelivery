@@ -48,7 +48,7 @@ namespace UI
         private void InternalInit()
         {
             Game.AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
-            ObjectManager.Event?.AddListener(OnChangedObjectInfo);
+            ObjectManager.Event?.AddListener(OnChangedObject);
 
             _placeId = _data.PlaceId;
 
@@ -282,20 +282,20 @@ namespace UI
             }
         }
         
-        private void OnChangedAnimalInfo(Info.Animal animalInfo)
+        private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
         {
-            if (animalInfo == null)
+            if (animalData == null)
                 return;
             
-            Unlock(Type.EElement.Animal, animalInfo.Id);
+            Unlock(Type.EElement.Animal, animalData.id);
         }
         
-        private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
+        private void OnChangedObject(Game.Event.ObjectData objectData)
         {
             if (objectData == null)
                 return;
 
-            Unlock(Type.EElement.Object, objectData.Id);
+            Unlock(Type.EElement.Object, objectData.id);
         }
 
         public void OnChanged(string tabType)

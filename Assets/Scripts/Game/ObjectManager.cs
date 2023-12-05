@@ -47,9 +47,9 @@ namespace Game
             if (_objectHolder.AddObjectInfo(id))
             {
                 Event?.Invoke(
-                    new Event.ObjectData()
+                    new Event.AddObjectData()
                     {
-                        Id = id,
+                        id = id,
                     });
             }
         }

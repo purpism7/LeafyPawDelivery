@@ -272,12 +272,12 @@ namespace UI
             }
         }
         
-        private void OnChangedAnimalInfo(Info.Animal animalInfo)
+        private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
         {
-            if (animalInfo == null)
+            if (animalData == null)
                 return;
 
-            Obtain(Game.Type.EElement.Animal, animalInfo.Id);
+            Obtain(Game.Type.EElement.Animal, animalData.id);
         }
         
         private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
@@ -285,7 +285,7 @@ namespace UI
             if (objectData == null)
                 return;
 
-            Obtain(Game.Type.EElement.Object, objectData.Id);
+            Obtain(Game.Type.EElement.Object, objectData.id);
         }
 
         // 탭 변경 콜백.

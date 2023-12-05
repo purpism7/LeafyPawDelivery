@@ -103,9 +103,9 @@ namespace Game
             return null;
         }
 
-        private void OnChangedAnimalInfo(Info.Animal animalInfo)
+        private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
         {
-            if (animalInfo == null)
+            if (animalData == null)
                 return;
         }
     }

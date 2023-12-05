@@ -9,7 +9,6 @@ using UnityEngine.SceneManagement;
 
 namespace Game.Manager
 {
-    [ExecuteInEditMode]
     public class Cutscene : Game.Common, Sequencer.ITask, Conversation.IListener
     {
         #region Static

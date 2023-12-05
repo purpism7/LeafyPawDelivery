@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,39 +6,53 @@ using UnityEngine.Localization.Settings;
 
 namespace Game.Manager
 {
-    public class Guide : Base<Guide.Data>
+    public class Guide : Game.Common
     {
-        public class Data : BaseData
-        {
+        #region Static
+        private static string KeyGuide { get { return "Key" + typeof(Guide).Name; } }
 
+        private static Guide _instance = null;
+        public static Guide Create()
+        {
+            int step = PlayerPrefs.GetInt(KeyGuide , 0);
+            if (step >= 3)
+                return null;
+
+            if (_instance == null)
+            {
+                var gameObj = new GameObject(typeof(Guide).Name);
+                if (!gameObj)
+                    return null;
+
+                _instance = gameObj.GetOrAddComponent<Guide>();
+                _instance?.Initialize();
+            }
+
+            return _instance;
         }
 
-        protected override void Initialize()
+        public static bool Validate
         {
-            AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
+            get { return _instance != null; }
+        }
+        #endregion
+
+        private void Initialize()
+        {
+            AnimalManager.Event?.AddListener(OnChangedAnimal);
+            ObjectManager.Event?.AddListener(OnChangedObject);
         }
 
-        public override IEnumerator CoInitialize(Data data)
-        {
-            yield return null;
-        }
-
-        public void Show()
+        private void Show(Queue<string> sentenceQueue)
         {
             Sequencer.EnqueueTask(
                 () =>
                 {
-                    var senteceQueue = new Queue<string>();
-                    senteceQueue.Clear();
-                    senteceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "guide_" + "1_1", LocalizationSettings.SelectedLocale));
-                    senteceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "guide_" + "1_2", LocalizationSettings.SelectedLocale));
-                    senteceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "guide_" + "1_3", LocalizationSettings.SelectedLocale));
-
                     var guide = new GameSystem.PopupCreator<UI.Guide, UI.Guide.Data>()
                         .SetReInitialize(true)
                         .SetData(new UI.Guide.Data()
                         {
-                            sentenceQueue = senteceQueue,
+                            sentenceQueue = sentenceQueue,
                         })
                         .Create();
 
@@ -45,9 +60,66 @@ namespace Game.Manager
                 });
         }
 
-        private void OnChangedAnimalInfo(Info.Animal animalInfo)
+        private void OnChangedAnimal(Game.Event.AnimalData animalData)
         {
+            switch(animalData)
+            {
+                case Game.Event.ArrangeAnimalData arrangeAnimalData:
+                    {
+                        Debug.Log("Guide = " + arrangeAnimalData.id);
+                        if(Boolean.TryParse(PlayerPrefs.GetString(KeyGuide + "_Animal", false.ToString()), out bool already))
+                        {
+                            if (already)
+                                return;
+                        }
 
+                        if (arrangeAnimalData.id == 1)
+                        {
+                            var sentenceQueue = new Queue<string>();
+                            sentenceQueue.Clear();
+
+                            var key = "guide_object_{0}";
+                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 1), LocalizationSettings.SelectedLocale));
+                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 2), LocalizationSettings.SelectedLocale));
+                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 3), LocalizationSettings.SelectedLocale));
+
+                            Show(sentenceQueue);
+                        }
+
+                        break;
+                    }
+            }
+        }
+
+        private void OnChangedObject(Game.Event.ObjectData objectData)
+        {
+            switch(objectData)
+            {
+                case Event.AddObjectData addObjectData:
+                    {
+                        //Debug.Log("Guide = " + addObjectData.id);
+                        //if (Boolean.TryParse(PlayerPrefs.GetString(KeyGuide + "_Object", false.ToString()), out bool already))
+                        //{
+                        //    if (already)
+                        //        return;
+                        //}
+
+                        if (addObjectData.id == 1)
+                        {
+                            var sentenceQueue = new Queue<string>();
+                            sentenceQueue.Clear();
+
+                            var key = "guide_animal_{0}";
+                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 1), LocalizationSettings.SelectedLocale));
+                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 2), LocalizationSettings.SelectedLocale));
+                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 3), LocalizationSettings.SelectedLocale));
+
+                            Show(sentenceQueue);
+                        }
+
+                        break;
+                    }
+            }
         }
     }
 }

@@ -46,15 +46,20 @@ namespace UI
         [SerializeField] private TextMeshProUGUI typingTMP = null;
         [SerializeField]
         private UnityEngine.UI.Image speakerImg = null;
+        [SerializeField]
+        private TextMeshProUGUI cntTMP = null;
 
         private YieldInstruction _waitSec = new WaitForSeconds(0.02f);
         private Queue<Constituent> _constituentQueue = new();
+
+        private int _allCnt = 0;
+        private int _cnt = 0;
 
         public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
 
-            _constituentQueue?.Clear();
+            Clear();
         }
 
         public override void Initialize(Data data)
@@ -69,6 +74,7 @@ namespace UI
             base.Activate();
 
             SetEmpty();
+            cntTMP?.SetText(string.Empty);
         }
 
         private void SetEmpty()
@@ -150,6 +156,16 @@ namespace UI
                 return;
 
             StartCoroutine(CoTyping(constituent));
+
+            if(_allCnt > 0)
+            {
+                cntTMP?.SetText(string.Format("{0}/{1}", ++_cnt, _allCnt));
+            }
+        }
+
+        public void SetAllCnt(int allCnt)
+        {
+            _allCnt = allCnt;
         }
     }
 }

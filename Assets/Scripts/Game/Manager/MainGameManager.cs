@@ -82,6 +82,8 @@ public class MainGameManager : Singleton<MainGameManager>
 
         yield return null;
 
+        Game.Manager.Guide.Create();
+
         EndLoad(true);
     }
 
@@ -140,11 +142,6 @@ public class MainGameManager : Singleton<MainGameManager>
     private void EndLoad(bool initialize)
     {
         Starter();
-
-        if(initialize)
-        {
-            Get<Game.Manager.Guide>()?.Show();
-        }
     }
 
     private void Starter()

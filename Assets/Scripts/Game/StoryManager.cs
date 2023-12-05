@@ -223,10 +223,8 @@ namespace Game
         }
 
         #region Listener
-        private void OnChangedAnimalInfo(Info.Animal animalInfo)
+        private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
         {
-            Debug.Log("Start Story Animal = " + animalInfo.Id);
-            //Check();
             if (Check(out Story story))
             {
                 StartStory(story);
@@ -235,7 +233,6 @@ namespace Game
 
         private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
         {
-            Debug.Log("Start objectData = " + objectData.Id);
             if (Check(out Story story))
             {
                 StartStory(story);

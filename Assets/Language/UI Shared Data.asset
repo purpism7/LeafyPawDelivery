@@ -78,15 +78,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41013063703322624
-    m_Key: guide_1_1
+    m_Key: guide_object_1
     m_Metadata:
       m_Items: []
   - m_Id: 41339045966503936
-    m_Key: guide_1_2
+    m_Key: guide_object_2
     m_Metadata:
       m_Items: []
   - m_Id: 41339094389743616
-    m_Key: guide_1_3
+    m_Key: guide_object_3
     m_Metadata:
       m_Items: []
   - m_Id: 41339116418228224
@@ -99,6 +99,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41339547789811712
     m_Key: setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42762563220398080
+    m_Key: guide_animal_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42762690496552960
+    m_Key: guide_animal_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42762875662491648
+    m_Key: guide_animal_3
     m_Metadata:
       m_Items: []
   m_Metadata:

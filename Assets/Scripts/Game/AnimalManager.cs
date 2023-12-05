@@ -14,7 +14,7 @@ namespace Game
             public int PlaceId = 0;
         }
 
-        public static UnityEvent<Info.Animal> Event { get; private set; } = null;
+        public static UnityEvent<Event.AnimalData> Event { get; private set; } = null;
 
         private Data _data = null;
         private Info.AnimalHolder _animalHolder = new();
@@ -25,8 +25,8 @@ namespace Game
         {
             Debug.Log("AnimalManager Initialize");
 
-            Event = new UnityEvent<Info.Animal>();
-            Event.RemoveAllListeners();
+            Event = new UnityEvent<Event.AnimalData>();
+            Event?.RemoveAllListeners();
 
             var mainGameMgr = MainGameManager.Instance;
             Game.ObjectManager.Event.AddListener(OnChangedObjectInfo);
@@ -44,16 +44,19 @@ namespace Game
             yield break;
         }
 
-        public void AddAnimal(Info.Animal animalInfo)
-        {
-            if (_animalHolder == null)
-                return;
+        //public void AddAnimal(Info.Animal animalInfo)
+        //{
+        //    if (_animalHolder == null)
+        //        return;
             
-            if (_animalHolder.AddAnimalInfo(animalInfo))
-            {
-                Event?.Invoke(animalInfo);
-            }
-        }
+        //    if (_animalHolder.AddAnimalInfo(animalInfo))
+        //    {
+        //        Event?.Invoke(new Game.Event.AddAnimalData()
+        //        {
+        //            id = animalInfo.Id,
+        //        });
+        //    }
+        //}
 
         // Add 되는 Animal 의 Skin Id Base 인 1 일 것.
         public override void Add(int id)
@@ -69,7 +72,10 @@ namespace Game
 
             if (_animalHolder.AddAnimalInfo(animalInfo))
             {
-                Event?.Invoke(animalInfo);
+                Event?.Invoke(new Game.Event.AddAnimalData()
+                {
+                    id = animalInfo.Id,
+                });
             }
         }
 
@@ -89,9 +95,12 @@ namespace Game
         public void ArrangeAnimal(int id, Vector3 pos)
         {
             _animalHolder?.ArrangeAnimal(id, pos);
-        }
 
-        
+            Event?.Invoke(new Game.Event.ArrangeAnimalData()
+            {
+                id = id,
+            });
+        }
 
         public Info.Animal GetAnimalInfo(int animalId)
         {
