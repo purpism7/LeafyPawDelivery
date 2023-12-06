@@ -20,11 +20,6 @@ namespace Game.Element.State
             return this;
         }
 
-        public override void Apply(T t)
-        {
-            _gameBaseElement = t;
-        }
-
         public override void Touch(Touch touch)
         {
             if (_gameBaseElement == null)

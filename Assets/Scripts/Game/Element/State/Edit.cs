@@ -27,6 +27,13 @@ namespace Game.Element.State
             return this;
         }
 
+        public override void Apply(T t)
+        {
+            base.Apply(t);
+
+            Overlap();
+        }
+
         public override void Touch(Touch touch)
         {
             if(_gameBaseElement == null)
@@ -189,7 +196,7 @@ namespace Game.Element.State
                 {
                     if (collider == null)
                         continue;
-
+                    
                     var obj = collider.gameObject.GetComponentInParent<Game.Object>();
                     if (obj != null)
                     {
@@ -211,9 +218,14 @@ namespace Game.Element.State
                     var animal = collider.gameObject.GetComponentInParent<Game.Creature.Animal>();
                     if (animal != null)
                     {
-                        if (animal.Id == _gameBaseElement.Id)
-                            continue;
-
+                        var elementData = _gameBaseElement.ElementData;
+                        if(elementData != null &&
+                           elementData.EElement == Game.Type.EElement.Animal)
+                        {
+                            if (animal.Id == _gameBaseElement.Id)
+                                continue;
+                        }
+                        
                         isOverlap = true;
 
                         break;
