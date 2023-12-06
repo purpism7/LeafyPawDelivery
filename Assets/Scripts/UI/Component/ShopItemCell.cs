@@ -48,12 +48,12 @@ namespace UI.Component
                 return;
 
 
-            if(shopData.EPayment == Game.Type.EPayment.Advertising)
-            {
-                iconImg.sprite = atlasLoader.GetCurrencySprite("ad");
-                iconImg.rectTransform.sizeDelta = new Vector2(150f, 100f);
-            }
-            else
+            //if(shopData.EPayment == Game.Type.EPayment.Advertising)
+            //{
+            //    iconImg.sprite = atlasLoader.GetCurrencySprite("ad");
+            //    iconImg.rectTransform.sizeDelta = new Vector2(150f, 100f);
+            //}
+            //else
             {
                 iconImg.sprite = atlasLoader.GetShopItemSprite(shopData.ECategory, shopData.IconImg);
             }
