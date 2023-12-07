@@ -51,26 +51,50 @@ SpriteAtlas:
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
     - 70eb9760dca3b43998feba9499b2ec1d: 21300000
+    - fb9be241f332945f8908c0d49606effd: 21300000
+    - ba5729b1662454141990453410fd15ca: 21300000
     - 62d567f14a09c4027bc533f06d319e10: 21300000
+    - 4fb271d2119cc4b7abccc9af1283acb2: 21300000
     - 052671440b8494048ab26bf985e79685: 21300000
+    - 154ae3960166844f3aae4237a4bd16d8: 21300000
+    - 9215d3973d92e4621b814c00c91a9b45: 21300000
     - a5afb8b84f3e04e7faf3c78df10f103a: 21300000
+    - b59d13c99e6804215adcc3b918cfd28e: 21300000
+    - 46f453caff61c42f8a6fffcc11ae148b: 21300000
     - 506e3bda9ca714a5ea2feee502c39d94: 21300000
     - 43733a8b0a09148009d777469172904c: 21300000
+    - 24a7006e978eb42a8ad8f5a6a2f91fd3: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 70eb9760dca3b43998feba9499b2ec1d, type: 3}
+  - {fileID: 21300000, guid: fb9be241f332945f8908c0d49606effd, type: 3}
+  - {fileID: 21300000, guid: ba5729b1662454141990453410fd15ca, type: 3}
   - {fileID: 21300000, guid: 62d567f14a09c4027bc533f06d319e10, type: 3}
+  - {fileID: 21300000, guid: 4fb271d2119cc4b7abccc9af1283acb2, type: 3}
   - {fileID: 21300000, guid: 052671440b8494048ab26bf985e79685, type: 3}
+  - {fileID: 21300000, guid: 154ae3960166844f3aae4237a4bd16d8, type: 3}
+  - {fileID: 21300000, guid: 9215d3973d92e4621b814c00c91a9b45, type: 3}
   - {fileID: 21300000, guid: a5afb8b84f3e04e7faf3c78df10f103a, type: 3}
+  - {fileID: 21300000, guid: b59d13c99e6804215adcc3b918cfd28e, type: 3}
+  - {fileID: 21300000, guid: 46f453caff61c42f8a6fffcc11ae148b, type: 3}
   - {fileID: 21300000, guid: 506e3bda9ca714a5ea2feee502c39d94, type: 3}
   - {fileID: 21300000, guid: 43733a8b0a09148009d777469172904c, type: 3}
+  - {fileID: 21300000, guid: 24a7006e978eb42a8ad8f5a6a2f91fd3, type: 3}
   m_PackedSpriteNamesToIndex:
   - Shop_Jewel_2
+  - Shop_Moon_1
+  - Shop_Acorn_2
   - Shop_Jewel_4
+  - Shop_Acorn_1
   - Shop_Jewel_4_2
+  - Shop_Star_2
+  - Shop_Star_1
   - Shop_Jewel_1
+  - Shop_Moon_2
+  - Shop_Leaf_2
   - Shop_Jewel_6
   - Shop_Jewel_5
+  - Shop_Leaf_1
   m_RenderDataMap: {}
   m_Tag: Shop
   m_IsVariant: 0

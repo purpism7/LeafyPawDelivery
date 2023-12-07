@@ -51,6 +51,7 @@ SpriteAtlas:
     - 7a04d0997c8f74722aa9c1a267906900: 21300000
     - 38b7296a0ecd342c088572b4373545d3: 21300000
     - e0c2aada8f2e4451db2b939f4e7b8217: 21300000
+    - 8af7f1ea2168c4e86943f5aefb15658a: 21300000
     - 6f5f94bbfc71442e29fd11baeef62578: 21300000
     - bc9b649c6ab4f4aa988dd9ead26d9d55: 21300000
     - 1a1580dd4cfee4372b632b17c5d023cd: 21300000
@@ -73,6 +74,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7a04d0997c8f74722aa9c1a267906900, type: 3}
   - {fileID: 21300000, guid: 38b7296a0ecd342c088572b4373545d3, type: 3}
   - {fileID: 21300000, guid: e0c2aada8f2e4451db2b939f4e7b8217, type: 3}
+  - {fileID: 21300000, guid: 8af7f1ea2168c4e86943f5aefb15658a, type: 3}
   - {fileID: 21300000, guid: 6f5f94bbfc71442e29fd11baeef62578, type: 3}
   - {fileID: 21300000, guid: bc9b649c6ab4f4aa988dd9ead26d9d55, type: 3}
   - {fileID: 21300000, guid: 1a1580dd4cfee4372b632b17c5d023cd, type: 3}
@@ -94,6 +96,7 @@ SpriteAtlas:
   - Lea_Icon
   - UI_Book_Profile_LauraSkin_02
   - Hale_Icon
+  - Kara_Icon
   - UI_Book_Profile_HaleSkin_01
   - UI_Book_Profile_LauraSkin_01
   - Laura_Icon
