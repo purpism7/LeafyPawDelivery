@@ -8,8 +8,8 @@ namespace GameSystem
 {
     public class GameCameraController : MonoBehaviour, IUpdater
     {
-        private const float MaxOrthographicSize = 1800f;
-        private const float MinOrthographicSize = 1200f;
+        private const float MaxOrthographicSize = 1900f;
+        private const float MinOrthographicSize = 1100f;
         private const float InitPosZ = -1000f;
 
         public Camera GameCamera = null;
