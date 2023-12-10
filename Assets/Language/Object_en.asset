@@ -142,6 +142,138 @@ MonoBehaviour:
     m_Localized: Baby rabbits
     m_Metadata:
       m_Items: []
+  - m_Id: 45554380970123264
+    m_Localized: Barnie's tomato stew
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45555462760816640
+    m_Localized: Book of Kara
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45555479370260480
+    m_Localized: Log bench
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45555488551591936
+    m_Localized: Reeds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45555497569345536
+    m_Localized: Big leaves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45555511041449984
+    m_Localized: Pointy tree
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45555521845977088
+    m_Localized: Round rock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45555534806376448
+    m_Localized: Stump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45556779738718208
+    m_Localized: Bush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45557017866133504
+    m_Localized: Blue flower bush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45557064594874368
+    m_Localized: Purple mushrooms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45557091404865536
+    m_Localized: Hydrangea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45557100997238784
+    m_Localized: Cooking place
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45557380920893440
+    m_Localized: Bus stop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45557389418553344
+    m_Localized: Stump table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45557400919334912
+    m_Localized: Fireflies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45557411430260736
+    m_Localized: Bonfire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45557422784241664
+    m_Localized: May lily
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45557432569552896
+    m_Localized: Butterflies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45558634388643840
+    m_Localized: Tulips
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45558738822619136
+    m_Localized: Garland
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45558757021704192
+    m_Localized: Big mushroom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45558906414424064
+    m_Localized: Acorns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45559041005445120
+    m_Localized: Firewoods
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45590607454789632
+    m_Localized: Farm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45590686555168768
+    m_Localized: Guitar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45590955863040000
+    m_Localized: Postbox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45591011919912960
+    m_Localized: Tree swing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45591076646412288
+    m_Localized: Bus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45591123366764544
+    m_Localized: Lamp Garland
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45591202265817088
+    m_Localized: Tent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45591249552400384
+    m_Localized: Lamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45591290283286528
+    m_Localized: Star tree
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

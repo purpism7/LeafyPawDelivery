@@ -17,7 +17,63 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: 2276bcf6cba09470daaf56ee429a8064, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 111001198592
+    m_Localized: Pick up the animal currency {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2114716688384
+    m_Localized: Get the object currency {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2298481729536
+    m_Localized: Pick up a dropped letter {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2392367030272
+    m_Localized: Place something in the edit tab {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3136776298496
+    m_Localized: Make a stamp {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1709034729103360
+    m_Localized: Get some object currency {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1709230405967872
+    m_Localized: Pick up some animal currency {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1986566317662208
+    m_Localized: Place something {0} times in the edit tab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1986826804912128
+    m_Localized: 'Use animal currency {0} '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1987347221569536
+    m_Localized: Use object currency {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1987624062410752
+    m_Localized: Buy animal skin {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1987715980582912
+    m_Localized: Watch the game story {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1987858083602432
+    m_Localized: Pick up a dropped letter {0} times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1987963016699904
+    m_Localized: Make a stamp {0} times
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

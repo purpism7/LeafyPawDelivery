@@ -72,6 +72,46 @@ MonoBehaviour:
     m_Localized: A Barnie's writer friend Kara
     m_Metadata:
       m_Items: []
+  - m_Id: 45211839817048064
+    m_Localized: Brie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45211911610949632
+    m_Localized: Balla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45235425860640768
+    m_Localized: Marie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45235516960923648
+    m_Localized: Phara
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45235697928364032
+    m_Localized: Henry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45244991805579264
+    m_Localized: A shy and emotional deer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45245006292705280
+    m_Localized: A cheerful and bright deer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45245017881567232
+    m_Localized: A quiet dreamer white sheep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45245028866449408
+    m_Localized: A playful brown squirrel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45245039486427136
+    m_Localized: A quiet but sweet gray wolf
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

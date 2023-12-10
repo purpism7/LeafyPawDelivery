@@ -58,13 +58,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 751327113109504
-    m_Localized: 'I cooked some beet stew today. Will you try some?
-
-'
+    m_Localized: I cooked some beet stew today.
     m_Metadata:
       m_Items: []
   - m_Id: 751383484555264
-    m_Localized: I spent the whole day worrying. Worrying doesn't solve anything.
+    m_Localized: Worrying doesn't solve anything..I know.
     m_Metadata:
       m_Items: []
   - m_Id: 1676002630557696
@@ -72,7 +70,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39131477059821568
-    m_Localized: Have you seen my babies? Where have they gone off to this time?
+    m_Localized: Have you seen my babies?
     m_Metadata:
       m_Items: []
   - m_Id: 39131720941821952
@@ -94,12 +92,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39132413178142720
-    m_Localized: Doesn't the cool feeling of your blankets running over your skin
-      feel so nice?
+    m_Localized: Doesn't the cool feeling of your blankets?
     m_Metadata:
       m_Items: []
   - m_Id: 39132684776103936
-    m_Localized: My goodness, what a world we live in. Don't you agree?
+    m_Localized: My goodness, what a world we live in.
     m_Metadata:
       m_Items: []
   - m_Id: 39132830679162880
@@ -129,8 +126,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39133583212797952
-    m_Localized: "What does it mean to be free? I still don\u2019t understand it
-      quite yet."
+    m_Localized: What does it mean to be free?
     m_Metadata:
       m_Items: []
   - m_Id: 39133697163649024
