@@ -48,8 +48,8 @@ namespace Game
             if (data != null)
             {
                 UId = ObjectUId;
-                transform.localPosition = data.Pos;
 
+                SetPos();
                 SetSortingOrder(-(int)transform.localPosition.y);
             }
 
@@ -59,6 +59,13 @@ namespace Game
             });
 
             ActiveEdit(false);
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            SetPos();
         }
 
         // object 최초 선택 시, 호출.
@@ -89,6 +96,14 @@ namespace Game
             base.OnTouch(touch);
 
             State?.Touch(touch);
+        }
+
+        private void SetPos()
+        {
+            if (_data == null)
+                return;
+
+            transform.localPosition = _data.Pos;
         }
 
         private void SetState(Game.Element.State.BaseState<Game.Object> state)

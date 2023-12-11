@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 
 using Cysharp.Threading.Tasks;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
 
 using GameSystem;
 
@@ -55,6 +56,8 @@ public class MainGameManager : Singleton<MainGameManager>
         AddManager(typeof(Game.StoryManager), gameObject.GetOrAddComponent<Game.StoryManager>());
         AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>());
         AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
+
+        gameObject.GetOrAddComponent<ServerTime>();
     }
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
@@ -141,6 +144,8 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private void EndLoad(bool initialize)
     {
+        GameCameraCtr?.AnimEnter();
+
         Starter();
     }
 
@@ -234,18 +239,21 @@ public class MainGameManager : Singleton<MainGameManager>
         EndLoad(false);
     }
 
-    //private async UniTask AsyncMovePlace(int placeId, System.Action endMoveAction)
-    //{
-    //    //yield return StartCoroutine(CoInitializeManager(placeId));
+    private async UniTask AsyncMovePlace(int placeId, System.Action endMoveAction)
+    {
+        StartCoroutine(CoInitializeManager(placeId));
+        
 
-    //    await UniTask.Delay(2100);
+        //yield return 
 
-    //    endMoveAction?.Invoke();
+        await UniTask.Delay(UnityEngine.Random.Range(2, 3) * 1000);
 
-    //    await UniTask.Yield();
+        endMoveAction?.Invoke();
 
-    //    Starter();
-    //}
+        await UniTask.Yield();
+
+        Starter();
+    }
     #endregion
 
     #region Animal

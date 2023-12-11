@@ -9,8 +9,8 @@ namespace GameSystem
 {
     public class FirebaseManager : Singleton<FirebaseManager>
     {
-        public Firebase.Auth Auth { get; private set; } = null;
-        public Firebase.Database Database { get; private set; } = null;
+        public FirebaseSystem.Auth Auth { get; private set; } = null;
+        public FirebaseSystem.Database Database { get; private set; } = null;
 
         private FirebaseApp _firebaseApp = null;
 
@@ -37,11 +37,11 @@ namespace GameSystem
 
             yield return new WaitUntil(() => check);
 
-            Auth = gameObject.GetOrAddComponent<Firebase.Auth>();
+            Auth = gameObject.GetOrAddComponent<FirebaseSystem.Auth>();
             Debug.Log("Auth = " + Auth.name);
             yield return StartCoroutine(Auth.CoInit());
 
-            Database = gameObject.GetOrAddComponent<Firebase.Database>();
+            Database = gameObject.GetOrAddComponent<FirebaseSystem.Database>();
             Debug.Log("Database = " + Database.name);
             yield return StartCoroutine(Database.CoInit());
 

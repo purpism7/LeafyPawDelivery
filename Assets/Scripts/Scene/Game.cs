@@ -1,10 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameSystem;
+using Unity.Services.Core;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
+
+using System.Threading.Tasks;
+using Unity.Services.Authentication;
+using UnityEngine.SocialPlatforms.GameCenter;
+
+using GameSystem;
 
 using Type = Game.Type;
 
@@ -14,7 +19,13 @@ namespace Scene
     {
         [SerializeField] private Preprocessing _preprocessing = null;
 
-        private void Start()
+        //string Signature;
+        //string TeamPlayerID;
+        //string Salt;
+        //string PublicKeyUrl;
+        //ulong Timestamp;
+
+        private async void Start()
         {
             // GameScene 에서 바로 실행 시, 동작.
             // Loading 거쳐서 들어올 경우 에는, ActiveScene 이 LoadingScene 임.
@@ -28,7 +39,81 @@ namespace Scene
                     _preprocessing?.Init(this);
                 }
             }
+
+            await UnityServices.InitializeAsync();
+
+            Debug.Log(UnityServices.State);
+            Debug.Log("Game Start");
+            //await Login();
+            //await SignInWithAppleGameCenterAsync(Signature, TeamPlayerID, PublicKeyUrl, Salt, Timestamp);
+
+            Social.localUser.Authenticate(
+                (success) =>
+                {
+                    Debug.Log("Success Authenticate");
+                    //GameCenterPlatform.Show(true);
+                    //Social.
+
+                    Debug.Log("UserName = " + Social.localUser.userName); 
+                });
         }
+
+        //public async Task Login()
+        //{
+        //    if (!GKLocalPlayer.Local.IsAuthenticated)
+        //    {
+        //        // Perform the authentication.
+        //        var player = await GKLocalPlayer.Authenticate();
+        //        Debug.Log($"GameKit Authentication: player {player}");
+
+        //        // Grab the display name.
+        //        var localPlayer = GKLocalPlayer.Local;
+        //        Debug.Log($"Local Player: {localPlayer.DisplayName}");
+
+        //        // Fetch the items.
+        //        var fetchItemsResponse = await GKLocalPlayer.Local.FetchItems();
+
+        //        Signature = Convert.ToBase64String(fetchItemsResponse.GetSignature());
+        //        TeamPlayerID = localPlayer.TeamPlayerId;
+        //        Debug.Log($"Team Player ID: {TeamPlayerID}");
+
+        //        Salt = Convert.ToBase64String(fetchItemsResponse.GetSalt());
+        //        PublicKeyUrl = fetchItemsResponse.PublicKeyUrl;
+        //        Timestamp = fetchItemsResponse.Timestamp;
+
+        //        Debug.Log($"GameKit Authentication: signature => {Signature}");
+        //        Debug.Log($"GameKit Authentication: publickeyurl => {PublicKeyUrl}");
+        //        Debug.Log($"GameKit Authentication: salt => {Salt}");
+        //        Debug.Log($"GameKit Authentication: Timestamp => {Timestamp}");
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("AppleGameCenter player already logged in.");
+        //    }
+        //}
+
+        //private async Task SignInWithAppleGameCenterAsync(string signature, string teamPlayerId, string publicKeyURL, string salt, ulong timestamp)
+        //{
+        //    try
+        //    {
+        //        await AuthenticationService.Instance.SignInWithAppleGameCenterAsync(signature, teamPlayerId, publicKeyURL, salt, timestamp);
+        //        Debug.Log("SignIn is successful.");
+        //    }
+        //    catch (AuthenticationException ex)
+        //    {
+        //        // Compare error code to AuthenticationErrorCodes
+        //        // Notify the player with the proper error message
+        //        Debug.LogException(ex);
+        //    }
+        //    catch (RequestFailedException ex)
+        //    {
+        //        // Compare error code to CommonErrorCodes
+        //        // Notify the player with the proper error message
+        //        Debug.LogException(ex);
+        //    }
+        //}
+
+
 
         public override void Init(IListener iListener)
         {

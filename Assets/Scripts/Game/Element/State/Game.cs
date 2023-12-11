@@ -6,7 +6,7 @@ namespace Game.Element.State
 {
     public class Game<T> : BaseState<T> where T : Game.BaseElement
     {
-        readonly private float TouchInterval = 0.3f;
+        readonly private float TouchInterval = 0.15f;
 
         private GameSystem.GameCameraController _gameCameraCtr = null;
         //private GameSystem.IGrid _iGrid = null;

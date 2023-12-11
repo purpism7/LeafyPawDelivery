@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using Firebase.Firestore;
 using Firebase.Database;
+using Cysharp.Threading.Tasks;
 
-namespace GameSystem.Firebase
+namespace FirebaseSystem
 {
     public class Database : Base
     {
@@ -25,6 +27,10 @@ namespace GameSystem.Firebase
         //}
         private System.Action<DataSnapshot> _dataSnapshotAction = null;
 
+        public override async UniTask AsyncInitialize()
+        {
+            await UniTask.CompletedTask;
+        }
 
         public override IEnumerator CoInit()
         {

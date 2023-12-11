@@ -1,15 +1,18 @@
-    using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
 using DG.Tweening;
+using Cysharp.Threading.Tasks;
 
 namespace GameSystem
 {
-    public class GameCameraController : MonoBehaviour, IUpdater
+    public class GameCameraController : MonoBehaviour, IUpdater, Sequencer.ITask
     {
-        private const float MaxOrthographicSize = 1900f;
-        private const float MinOrthographicSize = 1100f;
+        private const float MaxOrthographicSize = 2000f;
+        private const float MinOrthographicSize = 1000f;
+        private const float OrthographicSize = 1600f;
         private const float InitPosZ = -1000f;
 
         public Camera GameCamera = null;
@@ -61,11 +64,6 @@ namespace GameSystem
             Width = Height * GameCamera.aspect;
 
             _dragWidth = _halfHeight * Screen.width / Screen.height;
-        }
-
-        public void ChainFixedUpdate()
-        {
-
         }
 
         #region IUpdate
@@ -197,6 +195,66 @@ namespace GameSystem
         public void SetStopUpdate(bool stopUpdate)
         {
             StopUpdate = stopUpdate;
+        }
+
+        #region Sequencer.ITask
+        private bool EndTask { get; set; } = false;
+
+        void Sequencer.ITask.Begin()
+        {
+            EndTask = false;
+        }
+
+        bool Sequencer.ITask.End
+        {
+            get
+            {
+                return EndTask;
+            }
+        }
+        #endregion
+
+        public void AnimEnter()
+        {
+            Debug.Log("AnimEnter");
+            //AsyncAnimEnter().Forget();
+
+            EndTask = true;
+
+            //Sequence sequence = DOTween.Sequence()
+            //   .SetAutoKill(false)
+            //   .OnStart(() => { GameCamera.orthographicSize = 1900f; })
+            //   .OnUpdate(() =>
+            //   {
+            //       if(GameCamera.orthographicSize >= OrthographicSize)
+            //       {
+            //           GameCamera.orthographicSize -= 1f;
+            //       }
+            //   })
+            //   //.Append(rootRectTm.DOScale(Vector3.one * 0.5f, 0f))
+            //   //.Append(rootRectTm.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutSine))
+            //   .OnComplete(() =>
+            //   {
+            //       Debug.Log("OnComplete");
+            //   });
+            //sequence.Restart();
+        }
+
+        private async UniTask AsyncAnimEnter()
+        {
+          
+            GameCamera.orthographicSize = 1900f;
+
+            while (GameCamera.orthographicSize >= OrthographicSize)
+            {
+                GameCamera.orthographicSize -= 1f;
+                Debug.Log(GameCamera.orthographicSize);
+                await UniTask.WaitForSeconds(1f);
+            }
+
+            await UniTask.Yield();
+
+
         }
     }
 }
