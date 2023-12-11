@@ -47,7 +47,6 @@ namespace UI.Component
             if (atlasLoader == null)
                 return;
 
-
             if(shopData.EPayment == Game.Type.EPayment.Advertising)
             {
                 iconImg.sprite = atlasLoader.GetCurrencySprite("ad");

@@ -115,6 +115,7 @@ namespace Game
 
             Cash,
             AnimalCurrency,
+            ObjectCurrency,
         }
     }
 }

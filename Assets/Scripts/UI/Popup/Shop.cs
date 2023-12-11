@@ -56,7 +56,7 @@ namespace UI
                 var cell = new ComponentCreator<ShopItemGroup, ShopItemGroup.Data_>()
                     .SetData(new ShopItemGroup.Data_()
                     {
-
+                        eCategory = dataList.Count > 0 ? dataList[0].ECategory : Game.Type.ECategory.None,
                         shopDataList = dataList,
                     })
                     .SetRootRectTm(scrollContent)
