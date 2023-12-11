@@ -53,7 +53,7 @@ namespace Scene
                     Debug.Log("Success Authenticate");
                     //GameCenterPlatform.Show(true);
                     //Social.
-
+                    Debug.Log(Social.localUser.id);
                     Debug.Log("UserName = " + Social.localUser.userName); 
                 });
         }
