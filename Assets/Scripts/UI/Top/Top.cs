@@ -262,6 +262,11 @@ namespace UI
             var popup = new GameSystem.PopupCreator<Setting, UI.BaseData>()
                .Create();
         }
+
+        public void OnClickScreenshot()
+        {
+
+        }
     }
 }
 

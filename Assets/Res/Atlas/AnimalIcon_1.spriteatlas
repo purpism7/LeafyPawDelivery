@@ -38,55 +38,85 @@ SpriteAtlas:
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
     - 6e2a7621e3359714cbbce1665c676d54: 21300000
+    - eb393f21665b44efeb886e7ba6278abf: 21300000
+    - da78d27125c764dd999d0d783b91bfe8: 21300000
     - 97e332b15cab845fe91f0b23b022dcd9: 21300000
+    - 33a362e1735f44183979fc0e4c9cb758: 21300000
     - 893baff15f5044698aaa192e93c046c1: 21300000
+    - 21f36522d01bb4b38b54a746fb117ee9: 21300000
     - d45f76f3ad19e4ce982b3c1570f16934: 21300000
     - 41fa7e15ea323d249964a8c08728383f: 21300000
     - 599edaa5963704dadb6e31cfdb1225ea: 21300000
+    - 22c107361c3e345cdb393b0c25a4d612: 21300000
+    - 47d68776f91c4411b9138c657d5f5836: 21300000
     - 9e94afa64754b42a2b0fee9bc792c05d: 21300000
     - 09d253b6430b0bf44b90682a5ec43274: 21300000
     - 4c9c64670e4304081b2848dc5886fd22: 21300000
     - b5c01ad74b3cf436692cf7c04f9fa5d8: 21300000
+    - b64eaed7367d548de942255164696906: 21300000
     - 70721d18ec1f14d458c8c07349c12379: 21300000
     - b04eca58c86c0486ea39ef91424ba07e: 21300000
+    - a916e2d9b559741129f6a0277b855d0b: 21300000
     - 0323974a3f8a6499d967e2776a2dbb8a: 21300000
     - 4a0b5e6ab5137264e927da84d5601b55: 21300000
+    - 396d8a3cd623146139354b11f85fb3dc: 21300000
     - dca5e4fc9644b41a8a98596ac82f73bd: 21300000
+    - c864c9eda499e4a5ab6b298d97f6dead: 21300000
     - 5595e85eedf5aba49b8b80da1a63b92b: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 6e2a7621e3359714cbbce1665c676d54, type: 3}
+  - {fileID: 21300000, guid: eb393f21665b44efeb886e7ba6278abf, type: 3}
+  - {fileID: 21300000, guid: da78d27125c764dd999d0d783b91bfe8, type: 3}
   - {fileID: 21300000, guid: 97e332b15cab845fe91f0b23b022dcd9, type: 3}
+  - {fileID: 21300000, guid: 33a362e1735f44183979fc0e4c9cb758, type: 3}
   - {fileID: 21300000, guid: 893baff15f5044698aaa192e93c046c1, type: 3}
+  - {fileID: 21300000, guid: 21f36522d01bb4b38b54a746fb117ee9, type: 3}
   - {fileID: 21300000, guid: d45f76f3ad19e4ce982b3c1570f16934, type: 3}
   - {fileID: 21300000, guid: 41fa7e15ea323d249964a8c08728383f, type: 3}
   - {fileID: 21300000, guid: 599edaa5963704dadb6e31cfdb1225ea, type: 3}
+  - {fileID: 21300000, guid: 22c107361c3e345cdb393b0c25a4d612, type: 3}
+  - {fileID: 21300000, guid: 47d68776f91c4411b9138c657d5f5836, type: 3}
   - {fileID: 21300000, guid: 9e94afa64754b42a2b0fee9bc792c05d, type: 3}
   - {fileID: 21300000, guid: 09d253b6430b0bf44b90682a5ec43274, type: 3}
   - {fileID: 21300000, guid: 4c9c64670e4304081b2848dc5886fd22, type: 3}
   - {fileID: 21300000, guid: b5c01ad74b3cf436692cf7c04f9fa5d8, type: 3}
+  - {fileID: 21300000, guid: b64eaed7367d548de942255164696906, type: 3}
   - {fileID: 21300000, guid: 70721d18ec1f14d458c8c07349c12379, type: 3}
   - {fileID: 21300000, guid: b04eca58c86c0486ea39ef91424ba07e, type: 3}
+  - {fileID: 21300000, guid: a916e2d9b559741129f6a0277b855d0b, type: 3}
   - {fileID: 21300000, guid: 0323974a3f8a6499d967e2776a2dbb8a, type: 3}
   - {fileID: 21300000, guid: 4a0b5e6ab5137264e927da84d5601b55, type: 3}
+  - {fileID: 21300000, guid: 396d8a3cd623146139354b11f85fb3dc, type: 3}
   - {fileID: 21300000, guid: dca5e4fc9644b41a8a98596ac82f73bd, type: 3}
+  - {fileID: 21300000, guid: c864c9eda499e4a5ab6b298d97f6dead, type: 3}
   - {fileID: 21300000, guid: 5595e85eedf5aba49b8b80da1a63b92b, type: 3}
   m_PackedSpriteNamesToIndex:
   - BookIcon_Map01_Char_02
+  - EditIcon_Map02_Animal_10
+  - BookIcon_Map02_Animal_9
   - EditIcon_Map01_Char_03
+  - EditIcon_Map02_Animal_11
   - StoryIcon_Map01_Kara
+  - EditIcon_Map02_Animal_8
   - EditIcon_Map01_Char_05
   - BookIcon_Map01_Char_04
   - StoryIcon_Map01_Player
+  - BookIcon_Map02_Animal_10
+  - BookIcon_Map02_Animal_8
   - EditIcon_Map01_Char_02
   - BookIcon_Map01_Char_03
   - BookIcon_Map01_Char_06
   - StoryIcon_Map01_Barnie
+  - EditIcon_Map02_Animal_7
   - EditIcon_Map01_Char_06
   - EditIcon_Map01_Char_04
+  - BookIcon_Map02_Animal_11
   - EditIcon_Map01_Char_01
   - BookIcon_Map01_Char_05
+  - BookIcon_Map02_Animal_7
   - StoryIcon_Map01_BabyRabbits
+  - EditIcon_Map02_Animal_9
   - BookIcon_Map01_Char_01
   m_RenderDataMap: {}
   m_Tag: AnimalIcon_1

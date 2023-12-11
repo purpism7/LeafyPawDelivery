@@ -84,7 +84,13 @@ namespace GameSystem
 
             int placeId = GameUtils.ActivityPlaceId;
 
-            return GetSprite("Shop", string.Format(name, placeId));
+            var currencyInfo = Game.Data.Const.GetCurrencyInfo(placeId);
+            if (currencyInfo == null)
+                return null;
+
+            string currencyName = eCategory == Game.Type.ECategory.AnimalCurrency ? currencyInfo.Animal.ToString() : currencyInfo.Object.ToString();
+
+            return GetSprite("Shop", string.Format(name, currencyName));
         }
     }
 }
