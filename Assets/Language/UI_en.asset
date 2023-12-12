@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1817155985408
-    m_Localized: Object
+    m_Localized: Deco
     m_Metadata:
       m_Items: []
   - m_Id: 184285406420992
@@ -112,6 +112,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41013063703322624
     m_Localized: First, place a large tree.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45328183996702720
+    m_Localized: Animal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45328302171217920
+    m_Localized: Deco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45328471499464704
+    m_Localized: Jewel
     m_Metadata:
       m_Items: []
   references:

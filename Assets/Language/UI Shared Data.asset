@@ -113,6 +113,18 @@ MonoBehaviour:
     m_Key: guide_animal_3
     m_Metadata:
       m_Items: []
+  - m_Id: 45328183996702720
+    m_Key: animalcurrency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45328302171217920
+    m_Key: objectcurrency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45328471499464704
+    m_Key: cash
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
