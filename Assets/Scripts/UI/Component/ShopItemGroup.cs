@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 using TMPro;
+
 using GameSystem;
 
 namespace UI.Component
@@ -33,7 +35,9 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            categoryTMP?.SetText(_data.eCategory.ToString());
+            var category = LocalizationSettings.StringDatabase.GetLocalizedString("UI", _data.eCategory.ToString().ToLower(), LocalizationSettings.SelectedLocale);
+
+            categoryTMP?.SetText(category);
         }
 
         private void SetItemList()
