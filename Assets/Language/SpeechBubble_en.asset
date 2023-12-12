@@ -133,6 +133,68 @@ MonoBehaviour:
     m_Localized: Bunny looks quite busy today.
     m_Metadata:
       m_Items: []
+  - m_Id: 42993831346429952
+    m_Localized: 'What? Me? Like Valla?
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994089019301888
+    m_Localized: Balla likes yellow flowers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994134263259136
+    m_Localized: "It\u2019s getting pretty late... where could Balla be?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994194006925312
+    m_Localized: The moon sure is pretty tonight!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994261954650112
+    m_Localized: "I\u2019m in the mood for some chocolate cake!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994315566243840
+    m_Localized: Do you think Brie will be waiting for me?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994391336345600
+    m_Localized: ..The moon sure is bright tonight.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994465185456128
+    m_Localized: "I\u2019m thinking about what book to read next."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994542855577600
+    m_Localized: "It\u2019s important to let some fresh air in sometimes..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994633825837056
+    m_Localized: "It\u2019s a full moon! A wolf\u2019s going to appear!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994686426603520
+    m_Localized: Hi! I love this big tree!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994731502788608
+    m_Localized: Just thinking about my friends makes me feel good!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994771625500672
+    m_Localized: Parah, stop messing around...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994826063372288
+    m_Localized: Careful not to catch a cold.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42994875992367104
+    m_Localized: "It\u2019s going to be a good day tomorrow, too."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
