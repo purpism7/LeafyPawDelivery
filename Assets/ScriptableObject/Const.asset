@@ -15,14 +15,14 @@ MonoBehaviour:
   animalBaseSkinId: 1
   startPlaceId: 1
   PlaceDatas:
-  - placeName: 1
+  - ePlaceName: 1
     Animal: 1
     Object: 1
     StartValue:
       PlaceId: 1
       Animal: 51
       Object: 1088
-  - placeName: 2
+  - ePlaceName: 2
     Animal: 2
     Object: 2
     StartValue:
