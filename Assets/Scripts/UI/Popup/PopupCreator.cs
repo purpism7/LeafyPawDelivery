@@ -14,6 +14,7 @@ namespace GameSystem
 
         private bool _reInitialize = false;
         private bool _animActivate = true;
+        private bool _showBackground = true;
         // private RectTransform _rootRecTm = null;
 
         //public static T a<T, V>() where T : UI.Base<V> where V : BaseData
@@ -49,13 +50,21 @@ namespace GameSystem
             return this;
         }
 
+        public PopupCreator<T, V> SetShowBackground(bool showBackground)
+        {
+            _showBackground = showBackground;
+
+            return this;
+        }
+
         public override T Create()
         {
             var initData = new UI.Popup.InitData()
             {
-                CoInitialzie = _coInitialize,
-                ReInitialize = _reInitialize,
-                AnimActivate = _animActivate,
+                coInitialzie = _coInitialize,
+                reInitialize = _reInitialize,
+                animActivate = _animActivate,
+                showBackground = _showBackground,
             };
 
             var popup = Game.UIManager.Instance?.Popup?.Instantiate<T, V>(_data, initData);

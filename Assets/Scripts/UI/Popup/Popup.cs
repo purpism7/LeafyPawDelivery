@@ -14,9 +14,10 @@ namespace UI
     {
         public class InitData
         {
-            public bool CoInitialzie = false;
-            public bool ReInitialize = false;
-            public bool AnimActivate = true;
+            public bool coInitialzie = false;
+            public bool reInitialize = false;
+            public bool animActivate = true;
+            public bool showBackground = true;
         }
 
         public RectTransform popupRootRectTm;
@@ -40,11 +41,11 @@ namespace UI
                     var basePopup = uiBase.GetComponent<UI.BasePopup<V>>();
                     if (basePopup != null)
                     {
-                        if (!initData.ReInitialize)
+                        if (!initData.reInitialize)
                         {
                             resPopup = basePopup.GetComponent<T>();
                         
-                            ActivatePopup<T, V>(uiBase, initData.AnimActivate);
+                            ActivatePopup<T, V>(uiBase, initData.animActivate, initData.showBackground);
                             
                             return resPopup;
                         }
@@ -88,7 +89,7 @@ namespace UI
                 
             returnAction?.Invoke(popup);
 
-            if (initData.CoInitialzie)
+            if (initData.coInitialzie)
             {
                 yield return StartCoroutine(popup.CoInitialize(vData));
             }
@@ -97,10 +98,10 @@ namespace UI
                 popup.Initialize(vData);
             }
 
-            ActivatePopup<T, V>(uIBase, initData.AnimActivate);
+            ActivatePopup<T, V>(uIBase, initData.animActivate, initData.showBackground);
         }
         
-        private void ActivatePopup<T, V>(UI.Base uiBase, bool animActivate) where T :UI.Base<V> where V : BaseData
+        private void ActivatePopup<T, V>(UI.Base uiBase, bool animActivate, bool showBackground) where T :UI.Base<V> where V : BaseData
         {
             if (uiBase == null)
                 return;
@@ -111,7 +112,7 @@ namespace UI
             if (basePopup == null)
                 return;
 
-            FadeOutBackground();
+            FadeOutBackground(showBackground);
             if(animActivate)
             {
                 basePopup.AnimActivate();
@@ -185,7 +186,7 @@ namespace UI
         }
 
         #region Background
-        private void FadeOutBackground()
+        private void FadeOutBackground(bool show)
         {
             if (backgroundImg.isActiveAndEnabled)
                 return;
@@ -194,17 +195,23 @@ namespace UI
                 return;
             
             UIUtils.SetActive(backgroundImg.gameObject, true);
-            
-            Sequence sequence = DOTween.Sequence()
-                .SetAutoKill(false)
-                .Append(backgroundImg.DOFade(0, 0))
-                .Append(backgroundImg.DOFade(0.7f, 0.5f))
-                .OnComplete(() =>
-                {
-                    
-                });
-            
-            sequence.Restart();
+
+            if(show)
+            {
+                Sequence sequence = DOTween.Sequence()
+                    .SetAutoKill(false)
+                    .Append(backgroundImg.DOFade(0, 0))
+                    .Append(backgroundImg.DOFade(0.7f, 0.5f));
+                //.OnComplete(() =>
+                //{
+
+                //});
+                sequence.Restart();
+            }
+            else
+            {
+                backgroundImg.DOFade(0, 0);
+            }
         }
 
         private void DeactivateBackground()

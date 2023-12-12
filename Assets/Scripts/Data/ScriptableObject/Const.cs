@@ -6,8 +6,10 @@ using UnityEngine;
 public class Const : ScriptableObject
 {
     [System.Serializable]
-    public class CurrencyInfo
+    public class PlaceData
     {
+        public Game.Type.EPlaceName ePlaceName = Game.Type.EPlaceName.None;
+
         public Game.Type.EAnimalCurrency Animal = Game.Type.EAnimalCurrency.None;
         public Game.Type.EObjectCurrency Object = Game.Type.EObjectCurrency.None;
         public Info.User.Currency StartValue = null;
@@ -31,53 +33,63 @@ public class Const : ScriptableObject
 
     public int AnimalBaseSkinId { get { return animalBaseSkinId; } }
     public int StartPlaceId { get { return startPlaceId; } }
-    public int TotalPlaceCount { get { return CurrencyInfos != null ? CurrencyInfos.Length : 1; } }
+    public int TotalPlaceCount { get { return PlaceDatas != null ? PlaceDatas.Length : 1; } }
 
-    public CurrencyInfo[] CurrencyInfos = null;
+    public PlaceData[] PlaceDatas = null;
 
     public Info.User.Currency GetStartCurrency(int placeId)
     {
-        if (CurrencyInfos == null)
+        if (PlaceDatas == null)
         {
             return Info.User.GetInitializeCurrency(placeId);
         }
 
-        foreach (var currencyInfo in CurrencyInfos)
+        foreach (var data in PlaceDatas)
         {
-            if (currencyInfo == null)
+            if (data == null)
                 continue;
 
-            if (currencyInfo.PlaceId == placeId)
+            if (data.PlaceId == placeId)
             {
                 if(Application.isEditor)
                 {
-                    currencyInfo.StartValue.Animal = 999999;
-                    currencyInfo.StartValue.Object = 999999;
+                    data.StartValue.Animal = 999999;
+                    data.StartValue.Object = 999999;
                 }
 
-                return currencyInfo.StartValue;
+                return data.StartValue;
             }
         }
 
         return Info.User.GetInitializeCurrency(placeId);
     }
 
-    public CurrencyInfo GetCurrencyInfo(int placeId)
+    public PlaceData GetPlaceData(int placeId)
     {
-        if (CurrencyInfos == null)
+        if (PlaceDatas == null)
             return null;
 
-        foreach (var currencyInfo in CurrencyInfos)
+        foreach (var data in PlaceDatas)
         {
-            if (currencyInfo == null)
+            if (data == null)
                 continue;
 
-            if (currencyInfo.PlaceId == placeId)
+            if (data.PlaceId == placeId)
             {
-                return currencyInfo;
+                return data;
             }
         }
 
         return null;
+    }
+
+    public PlaceData ActivityPlaceData
+    {
+        get
+        {
+            int placeId = GameUtils.ActivityPlaceId;
+
+            return GetPlaceData(placeId);
+        }
     }
 }

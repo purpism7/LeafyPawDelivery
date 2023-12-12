@@ -83,6 +83,9 @@ public class MainGameManager : Singleton<MainGameManager>
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
         yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
 
+        // 진입 연출 전 Deactivate Top, Bottom 
+        Game.UIManager.Instance?.DeactivateAnim();
+
         yield return null;
 
         Game.Manager.Guide.Create();
@@ -144,9 +147,22 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private void EndLoad(bool initialize)
     {
-        GameCameraCtr?.AnimEnter();
+        AnimEnterPlace();
 
         Starter();
+    }
+
+    private void AnimEnterPlace()
+    {
+        var enterPlace = new PopupCreator<UI.EnterPlace, UI.EnterPlace.Data>()
+            .SetShowBackground(false)
+            .Create();
+
+        enterPlace?.PlayAnim(GameCameraCtr,
+            () =>
+            {
+                Game.UIManager.Instance?.ActivateAnim();
+            });
     }
 
     private void Starter()
@@ -229,6 +245,9 @@ public class MainGameManager : Singleton<MainGameManager>
         yield return null;
 
         yield return StartCoroutine(CoInitializeManager(placeId));
+
+        // 진입 연출 전 Deactivate Top, Bottom 
+        Game.UIManager.Instance?.DeactivateAnim();
 
         yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 3f));
 

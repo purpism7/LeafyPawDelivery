@@ -15,10 +15,9 @@ namespace UI
             public RectTransform PopupRootRectTm = null;
         }
 
-        readonly float InitPosY = -500f;
+        private const float InitPosY = -400f;
 
-        #region Inspector
-        public RectTransform RootRectTm;
+        #region Inspector        
         [SerializeField]
         private RectTransform EditListRootRectTm;
         #endregion
@@ -37,10 +36,10 @@ namespace UI
 
         private void InitBottomMenu()
         {
-            if(!RootRectTm)
+            if(!rootRectTm)
                 return;
 
-            var bottomMenus = RootRectTm.GetComponentsInChildren<BottomMenu>();
+            var bottomMenus = rootRectTm.GetComponentsInChildren<BottomMenu>();
             foreach (var bottomMenu in bottomMenus)
             {
                 bottomMenu?.Initialize(new BottomMenu.Data()
@@ -50,15 +49,14 @@ namespace UI
             }
         }
 
-        public void DeactivateBottom(System.Action endAction)
+        public void ActivateAnim(System.Action completeAction)
         {
-            DeactivateAnim(RootRectTm,
-                () =>
-                {
-                    MainGameManager.Instance.SetGameState<Game.State.Edit>();
+            ActivateAnim(rootRectTm, completeAction);
+        }
 
-                    endAction?.Invoke();
-                });
+        public void DeactivateAnim(System.Action endAction)
+        {
+            DeactivateAnim(rootRectTm, endAction);
         }
 
         #region EditList
@@ -91,7 +89,7 @@ namespace UI
 
         public void ActivateEditListAfterDeactivateBottom(Game.Type.ETab eTabType)
         {
-            DeactivateAnim(RootRectTm,
+            DeactivateAnim(rootRectTm,
                 () =>
                 {
                     ActivateEditList(eTabType);
@@ -121,7 +119,7 @@ namespace UI
             DeactivateAnim(EditListRootRectTm,
                 () =>
                 {
-                    ActivateAnim(RootRectTm, null);
+                    ActivateAnim(rootRectTm, null);
                     EditList.Deactivate();
 
                     MainGameManager.Instance.SetGameState<Game.State.Game>();

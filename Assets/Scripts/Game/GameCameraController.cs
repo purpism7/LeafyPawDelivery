@@ -8,11 +8,12 @@ using Cysharp.Threading.Tasks;
 
 namespace GameSystem
 {
-    public class GameCameraController : MonoBehaviour, IUpdater, Sequencer.ITask
+    public class GameCameraController : MonoBehaviour, IUpdater
     {
-        private const float MaxOrthographicSize = 2000f;
-        private const float MinOrthographicSize = 1000f;
-        private const float OrthographicSize = 1600f;
+        //public const float MaxOrthographicSize = 2000f;
+        //public const float MinOrthographicSize = 1000f;
+        //public const float OrthographicSize = 1500f;
+
         private const float InitPosZ = -1000f;
 
         public Camera GameCamera = null;
@@ -30,6 +31,10 @@ namespace GameSystem
        
         public IGrid IGrid { get; private set; } = null;
         public bool StopUpdate { get; private set; } = false;
+
+        public float MaxOrthographicSize { get { return 2000f; } }
+        public float MinOrthographicSize { get { return 1000f; } }
+        public float DefaultOrthographicSize { get { return 1500f; } }
 
         public Vector3 Center
         {
@@ -180,7 +185,8 @@ namespace GameSystem
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
             //Debug.Log("res = " + res);
             GameCamera.orthographicSize += deltaMagnitudeDiff * 0.5f;
-            GameCamera.orthographicSize = Mathf.Clamp(GameCamera.orthographicSize, MinOrthographicSize, MaxOrthographicSize);
+            SetOrthographicSize(GameCamera.orthographicSize);
+            //GameCamera.orthographicSize = Mathf.Clamp(GameCamera.orthographicSize, MinOrthographicSize, MaxOrthographicSize);
 
             SetSize();
             
@@ -192,69 +198,14 @@ namespace GameSystem
             cameraTm.position = targetPos;
         }
 
+        public void SetOrthographicSize(float orthographicSize)
+        {
+            GameCamera.orthographicSize = Mathf.Clamp(orthographicSize, MinOrthographicSize, MaxOrthographicSize);
+        }
+
         public void SetStopUpdate(bool stopUpdate)
         {
             StopUpdate = stopUpdate;
-        }
-
-        #region Sequencer.ITask
-        private bool EndTask { get; set; } = false;
-
-        void Sequencer.ITask.Begin()
-        {
-            EndTask = false;
-        }
-
-        bool Sequencer.ITask.End
-        {
-            get
-            {
-                return EndTask;
-            }
-        }
-        #endregion
-
-        public void AnimEnter()
-        {
-            Debug.Log("AnimEnter");
-            //AsyncAnimEnter().Forget();
-
-            EndTask = true;
-
-            //Sequence sequence = DOTween.Sequence()
-            //   .SetAutoKill(false)
-            //   .OnStart(() => { GameCamera.orthographicSize = 1900f; })
-            //   .OnUpdate(() =>
-            //   {
-            //       if(GameCamera.orthographicSize >= OrthographicSize)
-            //       {
-            //           GameCamera.orthographicSize -= 1f;
-            //       }
-            //   })
-            //   //.Append(rootRectTm.DOScale(Vector3.one * 0.5f, 0f))
-            //   //.Append(rootRectTm.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutSine))
-            //   .OnComplete(() =>
-            //   {
-            //       Debug.Log("OnComplete");
-            //   });
-            //sequence.Restart();
-        }
-
-        private async UniTask AsyncAnimEnter()
-        {
-          
-            GameCamera.orthographicSize = 1900f;
-
-            while (GameCamera.orthographicSize >= OrthographicSize)
-            {
-                GameCamera.orthographicSize -= 1f;
-                Debug.Log(GameCamera.orthographicSize);
-                await UniTask.WaitForSeconds(1f);
-            }
-
-            await UniTask.Yield();
-
-
         }
     }
 }

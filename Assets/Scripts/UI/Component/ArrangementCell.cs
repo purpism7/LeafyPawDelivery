@@ -194,12 +194,12 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
-            var currencyInfo = Game.Data.Const.GetCurrencyInfo(GameUtils.ActivityPlaceId);
-            if (currencyInfo == null)
+            var placeData = Game.Data.Const.ActivityPlaceData;
+            if (placeData == null)
                 return;
 
-            AddOpenCondition(currencyInfo.AnimalSpriteName, openCondition.AnimalCurrency, () => animalOpenConditionContainer.CheckAnimalCurrency(_data.Id));
-            AddOpenCondition(currencyInfo.ObjectSpriteName, openCondition.ObjectCurrency, () => animalOpenConditionContainer.CheckObjectCurrency(_data.Id));
+            AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => animalOpenConditionContainer.CheckAnimalCurrency(_data.Id));
+            AddOpenCondition(placeData.ObjectSpriteName, openCondition.ObjectCurrency, () => animalOpenConditionContainer.CheckObjectCurrency(_data.Id));
         }
 
         private void SetObjectOpenCondition()
@@ -209,12 +209,12 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
-            var currencyInfo = Game.Data.Const.GetCurrencyInfo(GameUtils.ActivityPlaceId);
-            if (currencyInfo == null)
+            var placeData = Game.Data.Const.ActivityPlaceData;
+            if (placeData == null)
                 return;
 
-            AddOpenCondition(currencyInfo.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
-            AddOpenCondition(currencyInfo.ObjectSpriteName, openCondition.ObjectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
+            AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
+            AddOpenCondition(placeData.ObjectSpriteName, openCondition.ObjectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
         }
 
         private string GetRequireCurrency(long currency)

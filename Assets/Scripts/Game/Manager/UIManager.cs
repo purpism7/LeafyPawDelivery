@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+
 using GameData;
 using UI;
-using UnityEngine;
 
 namespace Game
 {
@@ -47,6 +48,18 @@ namespace Game
         public void EnalbeUIRoot(bool enable)
         {
             UIUtils.SetActive(uiRootRectTm, enable);
+        }
+
+        public void ActivateAnim()
+        {
+            Top?.ActivateAnim(null);
+            Bottom?.ActivateAnim(null);
+        }
+
+        public void DeactivateAnim()
+        {
+            Top?.DeactivateAnim(null);
+            Bottom?.DeactivateAnim(null);
         }
     }
 }

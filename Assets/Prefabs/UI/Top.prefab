@@ -832,7 +832,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf58df5ecf8eb4809b557163a3bfd5f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootRectTm: {fileID: 0}
+  rootRectTm: {fileID: 3040557602613828001}
+  topRootRectTm: {fileID: 2711693529902603192}
+  rightRootRectTm: {fileID: 3611969013638216062}
   animalCurrencyTMP: {fileID: 1184800537530304502}
   objectCurrencyTMP: {fileID: 5197083202406173486}
   cashTMP: {fileID: 5278897631640219088}

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
+using DG.Tweening;
 
 using Game;
 using GameSystem;
@@ -17,7 +18,14 @@ namespace UI
         {
             
         }
-        
+
+        private const float InitPos = 400f;
+
+        [SerializeField]
+        private RectTransform topRootRectTm = null;
+        [SerializeField]
+        private RectTransform rightRootRectTm = null;
+
         //[SerializeField] private TextMeshProUGUI lvTMP = null;
         [SerializeField] private TextMeshProUGUI animalCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI objectCurrencyTMP = null;
@@ -48,10 +56,7 @@ namespace UI
             
             Initialize();
         }
-        
-        // a=x10000
-        // b=x100000
-        // c=x1000000
+
         private void Initialize()
         {
             SetCurrencyImg();
@@ -76,12 +81,12 @@ namespace UI
 
         private void SetCurrencyImg()
         {
-            var currencyInfo = Game.Data.Const.GetCurrencyInfo(GameUtils.ActivityPlaceId);
-            if (currencyInfo == null)
+            var placeData = Game.Data.Const.GetPlaceData(GameUtils.ActivityPlaceId);
+            if (placeData == null)
                 return;
 
-            SetCurrencyImg(animalCurrencyImg, currencyInfo.AnimalSpriteName);
-            SetCurrencyImg(objectCurrencyImg, currencyInfo.ObjectSpriteName);
+            SetCurrencyImg(animalCurrencyImg, placeData.AnimalSpriteName);
+            SetCurrencyImg(objectCurrencyImg, placeData.ObjectSpriteName);
         }
 
         private void SetCurrencyImg(Image img, string currency)
@@ -95,6 +100,80 @@ namespace UI
 
             img.sprite = atlasLoader.GetCurrencySprite(currency);
         }
+
+        #region Anim Activate & Deactivate
+        public void ActivateAnim(System.Action completeAction)
+        {
+            ActivateAnimTop(completeAction);
+            ActivateAnimRight(completeAction);
+        }
+
+        public void DeactivateAnim(System.Action completeAction)
+        {
+            DeactivateAnimTop(completeAction);
+            DeactivateAnimRight(completeAction);
+        }
+
+        private void ActivateAnimTop(System.Action completeAction)
+        {
+            if (!topRootRectTm)
+                return;
+
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(topRootRectTm.DOAnchorPosY(0, 0.3f).SetEase(Ease.OutBack))
+                .OnComplete(() =>
+                {
+                    completeAction?.Invoke();
+                });
+            sequence.Restart();
+        }
+
+        private void DeactivateAnimTop(System.Action completeAction)
+        {
+            if (!topRootRectTm)
+                return;
+
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(topRootRectTm.DOAnchorPosY(InitPos, 0.3f).SetEase(Ease.InBack))
+                .OnComplete(() =>
+                {
+                    completeAction?.Invoke();
+                });
+            sequence.Restart();
+        }
+
+        private void ActivateAnimRight(System.Action completeAction)
+        {
+            if (!rightRootRectTm)
+                return;
+
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(rightRootRectTm.DOAnchorPosX(0, 0.3f).SetEase(Ease.OutBack))
+                .OnComplete(() =>
+                {
+                    completeAction?.Invoke();
+                });
+            sequence.Restart();
+        }
+
+        private void DeactivateAnimRight(System.Action completeAction)
+        {
+            if (!rightRootRectTm)
+                return;
+
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(rightRootRectTm.DOAnchorPosX(InitPos, 0.3f).SetEase(Ease.InBack))
+                .OnComplete(() =>
+                {
+                    completeAction?.Invoke();
+                });
+            sequence.Restart();
+        }
+        #endregion
 
         #region Collect Currency (Move Action Currnecy)
         public void CollectCashCurrency(Vector3 startPos, int currency)
@@ -125,14 +204,14 @@ namespace UI
             if (_collectCurrencyList == null)
                 return;
 
-            var currencyInfo = Game.Data.Const.GetCurrencyInfo(GameUtils.ActivityPlaceId);
-            if (currencyInfo == null)
+            var placeData = Game.Data.Const.GetPlaceData(GameUtils.ActivityPlaceId);
+            if (placeData == null)
                 return;
 
-            var currencyName = currencyInfo.Animal.ToString();
+            var currencyName = placeData.Animal.ToString();
             if(eElement == Type.EElement.Object)
             {
-                currencyName = currencyInfo.Object.ToString();
+                currencyName = placeData.Object.ToString();
             }
 
             var data = new CollectCurrency.Data()

@@ -12,6 +12,15 @@ namespace Game
             Achievement,
         }
 
+        public enum EPlaceName
+        {
+            None,
+
+            Palmwoods,
+            Moonmount,
+            Heartsand,
+        }
+
         public enum EElement
         {
             None,

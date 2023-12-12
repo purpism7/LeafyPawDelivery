@@ -185,7 +185,7 @@ Camera:
   far clip plane: 2000
   field of view: 140
   orthographic: 1
-  orthographic size: 1600
+  orthographic size: 1900
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -444,7 +444,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootRectTm: {fileID: 1083525945}
-  RootRectTm: {fileID: 1083525945}
   EditListRootRectTm: {fileID: 233562708}
 --- !u!1 &233562707
 GameObject:
@@ -1081,7 +1080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3256,6 +3255,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1917563348}
     m_Modifications:
+    - target: {fileID: 652935496566770062, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 652935496566770062, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 652935496566770062, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 652935496566770062, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2003757909732337152, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
