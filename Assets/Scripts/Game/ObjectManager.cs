@@ -29,6 +29,8 @@ namespace Game
         {
             Event?.RemoveAllListeners();
 
+            Game.AnimalManager.Event?.AddListener(OnChangedAnimalData);
+
             _objectHolder?.LoadInfo();
         }
 
@@ -37,6 +39,14 @@ namespace Game
             _data = data;
 
             yield break;
+        }
+
+        public new bool CheckIsAll
+        {
+            get
+            {
+                return CheckIsAll(ObjectOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy }));
+            }
         }
 
         public override void Add(int id)
@@ -50,6 +60,7 @@ namespace Game
                     new Event.AddObjectData()
                     {
                         id = id,
+                        isAll = CheckIsAll,
                     });
             }
         }
@@ -124,7 +135,7 @@ namespace Game
                 if (CheckExist(data.Id))
                     continue;
 
-                if (data.EType_ == OpenConditionData.EType.Starter)
+                if (data.eType == OpenConditionData.EType.Starter)
                 {
                     Sequencer.EnqueueTask(
                         () =>
@@ -149,6 +160,11 @@ namespace Game
                     Add(data.Id);
                 }
             }
+        }
+
+        private void OnChangedAnimalData(Event.AnimalData animalData)
+        {
+
         }
     }
 }

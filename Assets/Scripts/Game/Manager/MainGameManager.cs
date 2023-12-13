@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
-using Unity.Services.Core;
-using Unity.Services.Authentication;
 
 using GameSystem;
 
@@ -154,14 +152,21 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private void AnimEnterPlace()
     {
-        var enterPlace = new PopupCreator<UI.EnterPlace, UI.EnterPlace.Data>()
-            .SetShowBackground(false)
-            .Create();
-
-        enterPlace?.PlayAnim(GameCameraCtr,
+        Sequencer.EnqueueTask(
             () =>
             {
-                Game.UIManager.Instance?.ActivateAnim();
+                var enterPlace = new PopupCreator<UI.EnterPlace, UI.EnterPlace.Data>()
+                    .SetReInitialize(true)
+                    .SetShowBackground(false)
+                    .Create();
+
+                enterPlace?.PlayAnim(GameCameraCtr,
+                    () =>
+                    {
+                        Game.UIManager.Instance?.ActivateAnim();
+                    });
+
+                return enterPlace;
             });
     }
 

@@ -7,6 +7,7 @@ namespace Game.Event
     public class AnimalData : BaseData
     {
         public int id = 0;
+        public bool isAll = false;
     }
 
     public class AddAnimalData : AnimalData

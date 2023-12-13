@@ -9,6 +9,7 @@ namespace UI.Component
         public class Data : BaseData
         {
             public IListener IListener = null;
+            public bool isLock = true;
         }
 
         public interface IListener

@@ -25,8 +25,15 @@ namespace Info
             if(pause)
             {
                 Debug.Log("UserManager OnApplicationPause");
+                LocalSave();
                 Save();
             }
+        }
+
+        private void OnApplicationQuit()
+        {
+            LocalSave();
+            Save();
         }
 
         protected override void Initialize()
@@ -213,7 +220,13 @@ namespace Info
             return story.StoryId;
         }
 
-        public void Save()
+        private void LocalSave()
+        {
+            var jsonString = JsonUtility.ToJson(User);
+            System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonString);
+        }
+
+        private void Save()
         {
             var firebaseMgr = GameSystem.FirebaseManager.Instance;
             if (firebaseMgr == null)
@@ -223,7 +236,8 @@ namespace Info
             if (string.IsNullOrEmpty(userId))
                 return;
 
-            firebaseMgr?.Database?.Save(userId, JsonUtility.ToJson(User));
+            var jsonString = JsonUtility.ToJson(User);
+            firebaseMgr?.Database?.Save(userId, jsonString);
         }
 
         public void SaveCurrency(User.Currency currency)

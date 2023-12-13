@@ -23,6 +23,23 @@ namespace Game.Manager
 
         }
 
+        protected bool CheckIsAll(List<OpenConditionData> openConditionDataList)
+        {
+            if (openConditionDataList == null)
+                return false;
+
+            foreach (var data in openConditionDataList)
+            {
+                if (data == null)
+                    continue;
+
+                if (!CheckExist(data.Id))
+                    return false;
+            }
+
+            return true;
+        }
+
         protected abstract void Initialize();
         public abstract IEnumerator CoInitialize(T data);
 

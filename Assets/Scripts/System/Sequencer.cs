@@ -122,44 +122,46 @@ public class Sequencer : Game.Common
         _eTaskState = ETaskState.End;
         Debug.Log("Sequence End Task");
 
+        //await UniTask.WaitForSeconds(0.1f);
+
         Progress();
     }
 
-    private IEnumerator CoProgressTask()
-    {
-        if (_taskFuncQueue.Count <= 0)
-        {
-            _eTaskState = ETaskState.None;
+    //private IEnumerator CoProgressTask()
+    //{
+    //    if (_taskFuncQueue.Count <= 0)
+    //    {
+    //        _eTaskState = ETaskState.None;
 
-            yield break;
-        }
+    //        yield break;
+    //    }
 
-        var taskFunc = _taskFuncQueue.Dequeue();
-        if (taskFunc == null)
-        {
-            Progress();
+    //    var taskFunc = _taskFuncQueue.Dequeue();
+    //    if (taskFunc == null)
+    //    {
+    //        Progress();
 
-            yield break;
-        }
+    //        yield break;
+    //    }
             
 
-        var iTask = taskFunc();
-        if(iTask == null)
-        {
-            Progress();
+    //    var iTask = taskFunc();
+    //    if(iTask == null)
+    //    {
+    //        Progress();
 
-            yield break;
-        }
+    //        yield break;
+    //    }
 
-        _eTaskState = ETaskState.Begin;
-        Debug.Log("Sequence Begin Task = " + iTask.GetType().FullName);
-        iTask.Begin();
+    //    _eTaskState = ETaskState.Begin;
+    //    Debug.Log("Sequence Begin Task = " + iTask.GetType().FullName);
+    //    iTask.Begin();
 
-        yield return new WaitUntil(() => iTask.End);
+    //    yield return new WaitUntil(() => iTask.End);
 
-        _eTaskState = ETaskState.End;
-        Debug.Log("Sequence End Task");
+    //    _eTaskState = ETaskState.End;
+    //    Debug.Log("Sequence End Task");
 
-        Progress();
-    }
+    //    Progress();
+    //}
 }

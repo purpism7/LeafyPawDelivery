@@ -13,22 +13,21 @@ public class CalcSafeArea : MonoBehaviour
     private void OnApplicationFocus(bool focus)
     {
         Debug.Log("CalcSafeArea OnApplicationFocus");
-        Calc();
+        //Calc();
     }
 
     private void OnApplicationPause(bool pause)
     {
         Debug.Log("CalcSafeArea OnApplicationPause");
-        Calc();
+
+        //Calc();
     }
 
     void Calc()
     {
         var rectTm = GetComponent<RectTransform>();
         if(!rectTm)
-        {
             return;
-        }
 
         var safeAreaPos = Screen.safeArea.position;
 

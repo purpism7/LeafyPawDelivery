@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class OpenConditionContainer<T> : BaseContainer<T, OpenConditionData> where T : new()
 {
@@ -102,5 +103,30 @@ public class OpenConditionContainer<T> : BaseContainer<T, OpenConditionData> whe
         }
 
         return true;
+    }
+
+    public List<OpenConditionData> GetDataList(OpenConditionData.EType[] eTypes)
+    {
+        if (eTypes == null)
+            return null;
+
+        if (_datas == null)
+            return null;
+
+        var dataList = new List<OpenConditionData>();
+        dataList.Clear();
+
+        foreach (var data in _datas)
+        {
+            if (data == null)
+                continue;
+
+            if (!eTypes.ToList().Contains(data.eType))
+                continue;
+
+            dataList.Add(data);
+        }
+
+        return dataList;
     }
 }

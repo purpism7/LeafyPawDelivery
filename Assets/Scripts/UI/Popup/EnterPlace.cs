@@ -24,13 +24,13 @@ namespace UI
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+
+            _endTask = false;
         }
 
         public override void Activate()
         {
             base.Activate();
-
-            _endTask = false;
 
             SetPlaceName();
             SetTextToZeroAlpha();
@@ -63,14 +63,10 @@ namespace UI
             _endAnim = false;
             _endAction = endAction;
 
+            gameCameraCtr.SetOrthographicSize(gameCameraCtr.MaxOrthographicSize);
+
             Sequence sequence = DOTween.Sequence()
                .SetAutoKill(false)
-               .OnStart(() =>
-               {
-                   gameCameraCtr.SetOrthographicSize(gameCameraCtr.MaxOrthographicSize);
-                   Debug.Log("gameCameraCtr = " + gameCamera.orthographicSize);
-               })
-
                .AppendCallback(() => StartCoroutine(CoFadeTextToFullAlpha()))
                .Join(DOTween.To(() => gameCameraCtr.MaxOrthographicSize, size => gameCamera.orthographicSize = size, gameCameraCtr.DefaultOrthographicSize, 2f).SetEase(Ease.OutCirc))
                .OnComplete(() =>

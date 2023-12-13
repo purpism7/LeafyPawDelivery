@@ -23,6 +23,7 @@ namespace Info
         }
 
         public long Cash = 0;
+        public int lastPlaceId = 1;
         
         public List<Currency> CurrencyList = new();
         public List<Story> StoryList = new();

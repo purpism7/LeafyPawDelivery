@@ -60,10 +60,37 @@ namespace Game.Manager
                 });
         }
 
+        private void CheckOpenPlace(bool isAll)
+        {
+            //if (!isAll)
+            //    return;
+
+            var sentenceQueue = new Queue<string>();
+            sentenceQueue.Clear();
+            sentenceQueue.Enqueue("맵 오픈");
+
+            Show(sentenceQueue);
+        }
+
         private void OnChangedAnimal(Game.Event.AnimalData animalData)
         {
-            switch(animalData)
+            switch (animalData)
             {
+                case Game.Event.AddAnimalData addAnimalData:
+                    {
+                        //if (!addAnimalData.isAll)
+                        //    return;
+
+                        var objectMgr = MainGameManager.Get<ObjectManager>();
+                        if (objectMgr == null)
+                            return;
+
+                        CheckOpenPlace(objectMgr.CheckIsAll);
+
+                        break;
+                    }
+
+
                 case Game.Event.ArrangeAnimalData arrangeAnimalData:
                     {
                         Debug.Log("Guide = " + arrangeAnimalData.id);
@@ -115,6 +142,19 @@ namespace Game.Manager
                             sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 3), LocalizationSettings.SelectedLocale));
 
                             Show(sentenceQueue);
+
+                            return;
+                        }
+
+                        if(addObjectData.isAll)
+                        {
+                            var animalMgr = MainGameManager.Get<AnimalManager>();
+                            if (animalMgr == null)
+                                return;
+
+                            CheckOpenPlace(animalMgr.CheckIsAll);
+
+                            return;
                         }
 
                         break;

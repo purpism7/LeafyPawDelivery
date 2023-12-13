@@ -23,12 +23,9 @@ namespace Game
 
         protected override void Initialize()
         {
-            Debug.Log("AnimalManager Initialize");
-
             Event = new UnityEvent<Event.AnimalData>();
             Event?.RemoveAllListeners();
 
-            var mainGameMgr = MainGameManager.Instance;
             Game.ObjectManager.Event.AddListener(OnChangedObjectInfo);
             Game.PlaceManager.Event?.AddListener(OnChangedPlace);
 
@@ -39,24 +36,16 @@ namespace Game
         {
             _data = data;
 
-            Debug.Log("AnimalManager CoInit");
-            
             yield break;
         }
 
-        //public void AddAnimal(Info.Animal animalInfo)
-        //{
-        //    if (_animalHolder == null)
-        //        return;
-            
-        //    if (_animalHolder.AddAnimalInfo(animalInfo))
-        //    {
-        //        Event?.Invoke(new Game.Event.AddAnimalData()
-        //        {
-        //            id = animalInfo.Id,
-        //        });
-        //    }
-        //}
+        public new bool CheckIsAll
+        {
+            get
+            {
+                return CheckIsAll(AnimalOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy }));
+            }
+        }
 
         // Add 되는 Animal 의 Skin Id Base 인 1 일 것.
         public override void Add(int id)
@@ -75,6 +64,7 @@ namespace Game
                 Event?.Invoke(new Game.Event.AddAnimalData()
                 {
                     id = animalInfo.Id,
+                    isAll = CheckIsAll,
                 });
             }
         }
@@ -131,7 +121,7 @@ namespace Game
                 if (CheckExist(data.Id))
                     continue;
 
-                if (data.EType_ == OpenConditionData.EType.Starter)
+                if (data.eType == OpenConditionData.EType.Starter)
                 {
                     Sequencer.EnqueueTask(
                         () =>
@@ -199,7 +189,7 @@ namespace Game
 
         private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
         {
-
+           
         }
     }
 }

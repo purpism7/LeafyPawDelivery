@@ -20,6 +20,8 @@ namespace UI
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+
+            _endTask = false;
         }
 
         public override void Activate()
@@ -76,7 +78,7 @@ namespace UI
 
             FinishTyping();
 
-            await UniTask.WaitForSeconds(1.5f);
+            await UniTask.WaitForSeconds(1f);
 
             AsyncTyping().Forget();
         }

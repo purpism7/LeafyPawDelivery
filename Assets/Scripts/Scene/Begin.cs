@@ -64,8 +64,6 @@ namespace Scene
 
                 yield break;
             }
-
-            //Init(null);
         }
 
         public override void Init(IListener iListener)

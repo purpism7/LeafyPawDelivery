@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 [System.Serializable]
 public class OpenConditionData : Data.Base
 {
@@ -8,9 +10,11 @@ public class OpenConditionData : Data.Base
 
         Starter,
         Buy,
+        Bonus,
     };
 
-    public string Type = string.Empty;
+    [SerializeField]
+    private string Type = string.Empty;
     public int AnimalCurrency = 0;
     public int ObjectCurrency = 0;
     public int Cash = 0;
@@ -18,12 +22,12 @@ public class OpenConditionData : Data.Base
     public int[] ReqAnimalIds = null;
     public int[] ReqObjectIds = null;
 
-    public EType EType_ = EType.None;
+    public EType eType = EType.None;
 
     public override void Initialize()
     {
         base.Initialize();
        
-        System.Enum.TryParse(Type, out EType_);
+        System.Enum.TryParse(Type, out eType);
     }
 }
