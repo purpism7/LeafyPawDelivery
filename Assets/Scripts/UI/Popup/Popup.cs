@@ -188,30 +188,27 @@ namespace UI
         #region Background
         private void FadeOutBackground(bool show)
         {
-            if (backgroundImg.isActiveAndEnabled)
-                return;
-            
             if (backgroundImg == null)
+                return;
+
+            if (!show)
+            {
+                backgroundImg.DOFade(0, 0);
+
+                return;
+            }
+
+            if (backgroundImg.isActiveAndEnabled)
                 return;
             
             UIUtils.SetActive(backgroundImg.gameObject, true);
 
-            if(show)
-            {
-                Sequence sequence = DOTween.Sequence()
-                    .SetAutoKill(false)
-                    .Append(backgroundImg.DOFade(0, 0))
-                    .Append(backgroundImg.DOFade(0.7f, 0.5f));
-                //.OnComplete(() =>
-                //{
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(backgroundImg.DOFade(0, 0))
+                .Append(backgroundImg.DOFade(0.7f, 0.5f));
 
-                //});
-                sequence.Restart();
-            }
-            else
-            {
-                backgroundImg.DOFade(0, 0);
-            }
+            sequence.Restart();
         }
 
         private void DeactivateBackground()

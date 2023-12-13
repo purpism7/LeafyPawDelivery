@@ -310,6 +310,7 @@ namespace UI
             if (addCurrency != null)
             {
                 addCurrency.Initialize(data);
+                addCurrency.transform.SetAsLastSibling();
 
                 return;
             }
@@ -344,7 +345,7 @@ namespace UI
 
         public void OnClickScreenshot()
         {
-
+            MainGameManager.Instance.SetGameState<Game.State.Screenshot>();
         }
     }
 }
