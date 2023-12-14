@@ -194,6 +194,103 @@ MonoBehaviour:
     m_Localized: Baby rabbit 2
     m_Metadata:
       m_Items: []
+  - m_Id: 46577387373060096
+    m_Localized: Barnie!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46577599340601344
+    m_Localized: Kara? What brings you all the way out here?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46577641006817280
+    m_Localized: "I missed you! I wanted to see how you were doing. It\u2019s been
+      too long hasn\u2019t it? I'm sorry."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46577767188258816
+    m_Localized: No, no. You must be so busy. I'm happy that you were able to make
+      it at all. You seemed happy. I enjoyed your book as well!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46577802965671936
+    m_Localized: "I was actually a little embarrassed to see you. I was so confident
+      when I asked you to join me, But things were harder than I thought they\u2019d
+      be."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46577876613455872
+    m_Localized: Not having anyone to rely on, or not having a stable place to stay
+      was difficult.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46577926886383616
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46577978572791808
+    m_Localized: I thought of you a lot. Sometimes, I regretted not staying back
+      with you. Of course, there were moments that I enjoyed as well.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46578067101966336
+    m_Localized: Haha, I was actually envious of you as well. You seemed to be flying
+      wherever your heart desired.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46578144931471360
+    m_Localized: Good thing I stopped by, right?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46578188015362048
+    m_Localized: Yes. We were both doing well in our respective lives.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46578246857252864
+    m_Localized: Now then, will you introduce me to your cute little baby bunnies?
+      I've been looking foward to meeting them!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46578310614867968
+    m_Localized: Of course. Come on in!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46579423137226752
+    m_Localized: "Excuse me, \nis this the entrance to Moonmount Village?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46579495723851776
+    m_Localized: "Good evening! That\u2019s right! \nThis is Moonmount Village!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46579517974634496
+    m_Localized: I see. What are you doing out so late at night?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46579556490928128
+    m_Localized: "Oh, umm\u2026 I\u2019m waiting on a friend that\u2019s working."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46579593916702720
+    m_Localized: "How sweet of you. Are you walking your friend back home because
+      it\u2019s so late?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46579630956601344
+    m_Localized: "Yes\u2026 It\u2019s late\u2026 and also\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46579669003132928
+    m_Localized: Hey Brie! What are you doing out so late? Are you headed somewhere?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46579702679199744
+    m_Localized: "Balla! I was just\u2026 passing by! Are you heading home now?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46579737043132416
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
