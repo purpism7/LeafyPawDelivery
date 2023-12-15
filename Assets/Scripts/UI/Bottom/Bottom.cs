@@ -22,7 +22,8 @@ namespace UI
         private RectTransform EditListRootRectTm;
         #endregion
         
-        private List<BottomMenu> BottomMenuList = new();
+        private List<BottomMenu> _bottomMenuList = new();
+        private int _placeId = 0;
 
         public EditList EditList { get; private set; } = null;
 
@@ -31,21 +32,43 @@ namespace UI
             base.Initialize(data);
 
             DeactivateAnim(EditListRootRectTm, null);
-            InitBottomMenu();
+            InitializeBottomMenu();
         }
 
-        private void InitBottomMenu()
+        private void InitializeBottomMenu()
         {
-            if(!rootRectTm)
+            _bottomMenuList?.Clear();
+
+            if (!rootRectTm)
                 return;
 
             var bottomMenus = rootRectTm.GetComponentsInChildren<BottomMenu>();
             foreach (var bottomMenu in bottomMenus)
             {
-                bottomMenu?.Initialize(new BottomMenu.Data()
+                if (bottomMenu == null)
+                    continue;
+
+                bottomMenu.Initialize(new BottomMenu.Data()
                 {
                     ILisener = this,
                 });
+
+                _bottomMenuList?.Add(bottomMenu);
+            }
+        }
+
+        private bool CheckReInitialize
+        {
+            get
+            {
+                bool reInitialize = false;
+                int activityPlaceId = GameUtils.ActivityPlaceId;
+
+                reInitialize = _placeId != activityPlaceId;
+
+                _placeId = activityPlaceId;
+
+                return reInitialize;
             }
         }
 
@@ -107,9 +130,68 @@ namespace UI
         #endregion
 
         #region BottomMenu.IListener
-        void BottomMenu.IListener.ClickBottomMenu()
+        void BottomMenu.IListener.SelectBottomMenu(Game.Type.EBottomType eBottomType)
         {
-           
+            bool reInitialize = CheckReInitialize;
+
+            switch (eBottomType)
+            {
+                case Game.Type.EBottomType.Shop:
+                    {
+                        var popup = new GameSystem.PopupCreator<Shop, Shop.Data_>()
+                            .SetCoInit(true)
+                            .Create();
+
+                        break;
+                    }
+
+                case Game.Type.EBottomType.Arrangement:
+                    {
+                        var popup = new GameSystem.PopupCreator<Arrangement, Arrangement.Data>()
+                            .SetCoInit(true)
+                            .SetReInitialize(reInitialize)
+                            .SetData(new Arrangement.Data()
+                            {
+                                PlaceId = _placeId,
+                            })
+                            .Create();
+
+                        break;
+                    }
+
+                case Game.Type.EBottomType.Book:
+                    {
+                        var popup = new GameSystem.PopupCreator<Book, Book.Data>()
+                             .SetCoInit(true)
+                             .SetReInitialize(reInitialize)
+                             .SetData(new Book.Data()
+                             {
+                                 PlaceId = _placeId,
+                             })
+                             .Create();
+
+                        break;
+                    }
+
+
+                case Game.Type.EBottomType.Acquire:
+                    {
+                        var popup = new GameSystem.PopupCreator<Acquire, Acquire.Data>()
+                                .SetCoInit(true)
+                                .Create();
+
+                        break;
+                    }
+
+                case Game.Type.EBottomType.Map:
+                    {
+                        var popup = new GameSystem.PopupCreator<Map, Map.Data>()
+                            .SetCoInit(true)
+                            .Create();
+
+                        break;
+                    }
+            }
         }
         #endregion
 

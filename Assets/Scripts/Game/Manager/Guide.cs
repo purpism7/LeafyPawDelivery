@@ -60,14 +60,20 @@ namespace Game.Manager
                 });
         }
 
-        private void CheckOpenPlace(bool isAll)
+        private void CheckOpenPlace()
         {
-            //if (!isAll)
-            //    return;
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                return;
+
+            if (!mainGameMgr.CheckIsAll)
+                return;
+
+            var sentence = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "guide_open_place", LocalizationSettings.SelectedLocale);
 
             var sentenceQueue = new Queue<string>();
             sentenceQueue.Clear();
-            sentenceQueue.Enqueue("맵 오픈");
+            sentenceQueue.Enqueue(sentence);
 
             Show(sentenceQueue);
         }
@@ -78,14 +84,7 @@ namespace Game.Manager
             {
                 case Game.Event.AddAnimalData addAnimalData:
                     {
-                        //if (!addAnimalData.isAll)
-                        //    return;
-
-                        var objectMgr = MainGameManager.Get<ObjectManager>();
-                        if (objectMgr == null)
-                            return;
-
-                        CheckOpenPlace(objectMgr.CheckIsAll);
+                        CheckOpenPlace();
 
                         break;
                     }
@@ -146,16 +145,7 @@ namespace Game.Manager
                             return;
                         }
 
-                        if(addObjectData.isAll)
-                        {
-                            var animalMgr = MainGameManager.Get<AnimalManager>();
-                            if (animalMgr == null)
-                                return;
-
-                            CheckOpenPlace(animalMgr.CheckIsAll);
-
-                            return;
-                        }
+                        CheckOpenPlace();
 
                         break;
                     }

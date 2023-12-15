@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Cysharp.Threading.Tasks;
-
 using GameSystem;
 
 public interface IStarter
@@ -24,10 +22,10 @@ public class MainGameManager : Singleton<MainGameManager>
     public Game.RecordContainer RecordContainer { get; private set; } = null;
 
     private System.Action<Game.Base> _startEditAction = null;
-    private IUpdater _iUpdateInputMgr = null;
-    private IUpdater _iUpdateGameCameraCtr = null;
-    private IUpdater _iUpdateGrid = null;
+    
     private IGrid _iGrid = null;
+
+    private List<IUpdater> _iUpdaterList = new();
 
     private static Dictionary<Type, MonoBehaviour> _managerDic = new();
 
@@ -69,26 +67,34 @@ public class MainGameManager : Singleton<MainGameManager>
 
         _iGrid = inputMgr?.grid;
 
-        _iUpdateInputMgr = inputMgr;
-        _iUpdateGameCameraCtr = GameCameraCtr;
-        _iUpdateGrid = inputMgr?.grid;
+        InitializeIUpdateList(inputMgr);
 
         RecordContainer = new();
 
         var acquireMgr = Get<Game.Manager.Acquire>();
         yield return StartCoroutine(acquireMgr?.CoInitialize(null));
 
-        yield return StartCoroutine(CoInitializeManager(activityPlaceId));
-        yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
-
         // 진입 연출 전 Deactivate Top, Bottom 
         Game.UIManager.Instance?.DeactivateAnim();
+
+        yield return StartCoroutine(CoInitializeManager(activityPlaceId));
+        yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
 
         yield return null;
 
         Game.Manager.Guide.Create();
 
         EndLoad(true);
+    }
+
+    private void InitializeIUpdateList(InputManager inputMgr)
+    {
+        _iUpdaterList?.Clear();
+
+        _iUpdaterList?.Add(inputMgr);
+        _iUpdaterList?.Add(GameCameraCtr);
+        _iUpdaterList?.Add(placeMgr);
+        _iUpdaterList?.Add(inputMgr?.grid);
     }
 
     private void AddManager(Type type, MonoBehaviour monoBehaviour)
@@ -186,12 +192,13 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private void Update()
     {
-        _iUpdateInputMgr?.ChainUpdate();
-        _iUpdateGameCameraCtr?.ChainUpdate();
-
-        placeMgr?.ChainUpdate();
-
-        _iUpdateGrid?.ChainUpdate();
+        if (_iUpdaterList != null)
+        {
+            foreach (var iUpdater in _iUpdaterList)
+            {
+                iUpdater?.ChainUpdate();
+            }
+        }
     }
 
     #region GameState
@@ -263,24 +270,55 @@ public class MainGameManager : Singleton<MainGameManager>
         EndLoad(false);
     }
 
-    private async UniTask AsyncMovePlace(int placeId, System.Action endMoveAction)
-    {
-        StartCoroutine(CoInitializeManager(placeId));
+    //private async UniTask AsyncMovePlace(int placeId, System.Action endMoveAction)
+    //{
+    //    StartCoroutine(CoInitializeManager(placeId));
         
 
-        //yield return 
+    //    //yield return 
 
-        await UniTask.Delay(UnityEngine.Random.Range(2, 3) * 1000);
+    //    await UniTask.Delay(UnityEngine.Random.Range(2, 3) * 1000);
 
-        endMoveAction?.Invoke();
+    //    endMoveAction?.Invoke();
 
-        await UniTask.Yield();
+    //    await UniTask.Yield();
 
-        Starter();
-    }
+    //    Starter();
+    //}
     #endregion
 
-    #region Animal
+    #region Animal & Object
+    public bool CheckIsAll
+    {
+        get
+        {
+            var animalMgr = Get<Game.AnimalManager>();
+            if (animalMgr == null)
+                return false;
+
+            if (!animalMgr.CheckIsAll)
+                return false;
+
+            var objectMgr = Get<Game.ObjectManager>();
+            if (objectMgr == null)
+                return false;
+
+            if (!objectMgr.CheckIsAll)
+                return false;
+
+            var user = Info.UserManager.Instance?.User;
+            if (user == null)
+                return false;
+
+            Info.UserManager.Instance?.SaveLastPlaceId();
+            
+            var connector = new Info.Connector();
+            connector.SaveOpenPlaceId(user.LastPlaceId);
+
+            return true;
+        }
+    }
+
     public void AddAnimalToPlace(int id)
     {
         var animalInfo = Get<Game.AnimalManager>()?.GetAnimalInfo(id);
@@ -327,9 +365,7 @@ public class MainGameManager : Singleton<MainGameManager>
             animalMgr?.ApplySkin(id, skinId);
         }
     }
-    #endregion
 
-    #region Object
     public void AddObjectToPlace(int id)
     {
         var activityPlace = placeMgr?.ActivityPlace;

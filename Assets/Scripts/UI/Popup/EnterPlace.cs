@@ -68,9 +68,11 @@ namespace UI
             Sequence sequence = DOTween.Sequence()
                .SetAutoKill(false)
                .AppendCallback(() => StartCoroutine(CoFadeTextToFullAlpha()))
-               .Join(DOTween.To(() => gameCameraCtr.MaxOrthographicSize, size => gameCamera.orthographicSize = size, gameCameraCtr.DefaultOrthographicSize, 2f).SetEase(Ease.OutCirc))
+               .Join(DOTween.To(() => gameCameraCtr.MaxOrthographicSize, size => gameCamera.orthographicSize = size, gameCameraCtr.DefaultOrthographicSize, 2f).SetEase(Ease.OutCubic))
                .OnComplete(() =>
                {
+                   gameCameraCtr.SetSize();
+
                    _endAnim = true;
                });
             sequence.Restart();

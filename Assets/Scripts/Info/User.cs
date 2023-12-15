@@ -23,10 +23,14 @@ namespace Info
         }
 
         public long Cash = 0;
-        public int lastPlaceId = 1;
+
+        [SerializeField]
+        private int lastPlaceId = 1;
         
         public List<Currency> CurrencyList = new();
         public List<Story> StoryList = new();
+
+        public int LastPlaceId { get { return lastPlaceId; } }
 
         #region Currency
         public static Currency GetInitializeCurrency(int placeId)
@@ -189,6 +193,15 @@ namespace Info
             return StoryList.Find(story => story.PlaceId == placeId);
         }
 
+        public int GetLastStoryId(int placeId)
+        {
+            var story = GetStory(placeId);
+            if (story == null)
+                return 0;
+
+            return story.StoryId;
+        }
+
         public void SetStory(int placeId, int storyId)
         {
             if(StoryList == null)
@@ -209,6 +222,14 @@ namespace Info
             }
         }
         #endregion
+
+        public void SetLastPlaceId(int id)
+        {
+            if (lastPlaceId >= id)
+                return;
+
+            lastPlaceId = id;
+        }
     }
 }
 

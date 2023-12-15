@@ -36,6 +36,15 @@ namespace UI
         private void InternalInitialize()
         {
             SetMapIcons();
+
+            InitializeChildComponent();
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            ActivateChildComponent(typeof(MapIcon));
         }
 
         private void SetMapIcons()

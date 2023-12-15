@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Game
 {
-    public class PlaceManager : Manager.Base<PlaceManager.Data>
+    public class PlaceManager : Manager.Base<PlaceManager.Data>, IUpdater
     {
         public class Data : Manager.BaseData
         {

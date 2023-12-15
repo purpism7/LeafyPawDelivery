@@ -29,7 +29,7 @@ namespace Game
         {
             Event?.RemoveAllListeners();
 
-            Game.AnimalManager.Event?.AddListener(OnChangedAnimalData);
+            Game.AnimalManager.Event?.AddListener(OnChangedAnimal);
 
             _objectHolder?.LoadInfo();
         }
@@ -41,11 +41,34 @@ namespace Game
             yield break;
         }
 
-        public new bool CheckIsAll
+        public bool CheckIsAll
         {
             get
             {
-                return CheckIsAll(ObjectOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy }));
+                if (_data == null)
+                    return false;
+
+
+                var objectDataList = ObjectContainer.Instance.GetDataListByPlaceId(_data.PlaceId);
+                if (objectDataList == null)
+                    return false;
+
+                var openConditionDataList = ObjectOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy });
+
+                foreach (var objectData in objectDataList)
+                {
+                    if (objectData == null)
+                        continue;
+
+                    if (openConditionDataList != null &&
+                        openConditionDataList.Find(openConditionData => openConditionData.Id == objectData.Id) != null)
+                    {
+                        if (!CheckExist(objectData.Id))
+                            return false;
+                    }
+                }
+
+                return true;
             }
         }
 
@@ -60,8 +83,9 @@ namespace Game
                     new Event.AddObjectData()
                     {
                         id = id,
-                        isAll = CheckIsAll,
                     });
+
+                Notification.Get?.Notify(Notification.EType.OpenPlace);
             }
         }
 
@@ -162,7 +186,7 @@ namespace Game
             }
         }
 
-        private void OnChangedAnimalData(Event.AnimalData animalData)
+        private void OnChangedAnimal(Event.AnimalData animalData)
         {
 
         }

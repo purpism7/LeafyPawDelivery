@@ -72,7 +72,11 @@ namespace Game
             if (storyList == null)
                 return false;
 
-            int lastStoryId = UserManager.Instance.GetLastStoryId(_placeId);
+            var user = UserManager.Instance?.User;
+            if (user == null)
+                return false;
+
+            int lastStoryId = user.GetLastStoryId(_placeId);
             
             foreach (var story in storyList)
             {

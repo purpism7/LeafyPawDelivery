@@ -2,43 +2,41 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace UI
 {
-    public class BottomMenu : Base<BottomMenu.Data>
+    public class BottomMenu : Base<BottomMenu.Data>, Game.Notification.IListener
     {
-        public enum EType
-        {
-            None,
-
-            Shop,
-            Arrangement,
-            Book,
-            Acquire,
-            Map,
-        }
-
-        public interface IListener
-        {
-            void ClickBottomMenu();
-        }
-
-        private int _placeId = 0;
-
         public class Data : BaseData
         {
             public IListener ILisener = null;
         }
 
+        public interface IListener
+        {
+            void SelectBottomMenu(Game.Type.EBottomType eType);
+        }
+
         [SerializeField] private Button btn = null;
+        [SerializeField]
+        private RectTransform redDotRectTm = null;
+
+        private Game.Type.EBottomType _eType = Game.Type.EBottomType.None;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-            
+
+            System.Enum.TryParse(gameObject.name, out _eType);
+
             btn?.onClick.RemoveAllListeners();
             btn?.onClick.AddListener(OnClick);
+
+            SetNotification();
+
+            UIUtils.SetActive(redDotRectTm, false);
         }
 
         public override void Activate()
@@ -46,108 +44,38 @@ namespace UI
             base.Activate();
         }
 
-        private bool CheckReInitialize
+        private void SetNotification()
         {
-            get
+            switch (_eType)
             {
-                bool reInitialize = false;
+                case Game.Type.EBottomType.Map:
+                    {
+                        Game.Notification.Get?.AddListener(Game.Notification.EType.OpenPlace, this);
 
-                var placeMgr = MainGameManager.Get<Game.PlaceManager>();
-                if (placeMgr != null)
-                {
-                    reInitialize = _placeId != placeMgr.ActivityPlaceId;
-
-                    _placeId = placeMgr.ActivityPlaceId;
-                }
-
-                return reInitialize;
+                        break;
+                    }
             }
         }
 
+        #region Notification.IListener
+        void Game.Notification.IListener.Notify()
+        {
+            switch (_eType)
+            {
+                case Game.Type.EBottomType.Map:
+                    {
+                        var connector = new Info.Connector();
+                        UIUtils.SetActive(redDotRectTm, connector.OpenPlaceId > 0);
+
+                        break;
+                    }
+            }
+        }
+        #endregion
+
         public void OnClick()
         {
-            bool reInitialize = CheckReInitialize;
-
-            Debug.Log(gameObject.name);
-            if (System.Enum.TryParse(gameObject.name, out EType eType))
-            {
-                switch(eType)
-                {
-                    case EType.Shop:
-                        {
-                            var popup = new GameSystem.PopupCreator<Shop, Shop.Data_>()
-                                .SetCoInit(true)
-                                .Create();
-                        }
-                        break;
-                    
-                    case EType.Arrangement:
-                        {
-                            //Sequencer.EnqueueTask(
-                            //    () =>
-                            //    {
-                                    var popup = new GameSystem.PopupCreator<Arrangement, Arrangement.Data>()
-                                        .SetCoInit(true)
-                                        .SetReInitialize(reInitialize)
-                                        .SetData(new Arrangement.Data()
-                                        {
-                                            PlaceId = _placeId,
-                                        })
-                                        .Create();
-
-                                //    return popup;
-                                //});
-                            
-                            break;
-                        }
-                    
-                    case EType.Book:
-                        {
-                            //Sequencer.EnqueueTask(
-                            //   () =>
-                            //   {
-                                   var popup = new GameSystem.PopupCreator<Book, Book.Data>()
-                                        .SetCoInit(true)
-                                        .SetReInitialize(reInitialize)
-                                        .SetData(new Book.Data()
-                                        {
-                                            PlaceId = _placeId,
-                                        })
-                                        .Create();
-
-                            //    return popup;
-                            //});
-
-                            break;
-                        }
-                        
-
-                    case EType.Acquire:
-                        {
-
-                            var popup = new GameSystem.PopupCreator<Acquire, Acquire.Data>()
-                                    .SetCoInit(true)
-                                    .Create();
-
-                            break;
-                        }
-                    
-                    case EType.Map:
-                        {
-                            var popup = new GameSystem.PopupCreator<Map, Map.Data>()
-                                .SetCoInit(true)
-                                .Create();
-
-                            break;
-                        }
-
-                    default:
-                        {
-                            _data?.ILisener?.ClickBottomMenu();
-                        }
-                        break;
-                }
-            }
+            _data?.ILisener?.SelectBottomMenu(_eType);
         }
     }
 }

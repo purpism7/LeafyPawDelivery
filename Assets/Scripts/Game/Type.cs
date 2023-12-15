@@ -12,6 +12,17 @@ namespace Game
             Achievement,
         }
 
+        public enum EBottomType
+        {
+            None,
+
+            Shop,
+            Arrangement,
+            Book,
+            Acquire,
+            Map,
+        }
+
         public enum EPlaceName
         {
             None,

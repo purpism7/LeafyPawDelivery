@@ -9,7 +9,6 @@ using Game.Manager;
 public class Sequencer : Game.Common
 {
     #region Static
-
     private static Sequencer _instance = null;
     public static Sequencer Create()
     {

@@ -10,10 +10,6 @@ namespace GameSystem
 {
     public class GameCameraController : MonoBehaviour, IUpdater
     {
-        //public const float MaxOrthographicSize = 2000f;
-        //public const float MinOrthographicSize = 1000f;
-        //public const float OrthographicSize = 1500f;
-
         private const float InitPosZ = -1000f;
 
         public Camera GameCamera = null;
@@ -57,18 +53,6 @@ namespace GameSystem
             IGrid = iGrid;
 
             SetSize();
-        }
-
-        private void SetSize()
-        {
-            if (GameCamera == null)
-                return;
-
-            _halfHeight = GameCamera.orthographicSize;
-            Height = _halfHeight * 2f;
-            Width = Height * GameCamera.aspect;
-
-            _dragWidth = _halfHeight * Screen.width / Screen.height;
         }
 
         #region IUpdate
@@ -163,6 +147,7 @@ namespace GameSystem
             float clampY = GetClampY(movePos.y);
 
             var targetPos = new Vector3(clampX, clampY, InitPosZ);
+            Debug.Log("targetPos = " + targetPos);
             cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, 0.01f);
         }
 
@@ -196,6 +181,18 @@ namespace GameSystem
             float clampY = GetClampY(cameraTm.position.y);
             var targetPos = new Vector3(clampX, clampY, InitPosZ);
             cameraTm.position = targetPos;
+        }
+
+        public void SetSize()
+        {
+            if (GameCamera == null)
+                return;
+
+            _halfHeight = GameCamera.orthographicSize;
+            Height = _halfHeight * 2f;
+            Width = Height * GameCamera.aspect;
+
+            _dragWidth = _halfHeight * Screen.width / Screen.height;
         }
 
         public void SetOrthographicSize(float orthographicSize)

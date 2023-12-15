@@ -26,7 +26,7 @@ namespace Game
             Event = new UnityEvent<Event.AnimalData>();
             Event?.RemoveAllListeners();
 
-            Game.ObjectManager.Event.AddListener(OnChangedObjectInfo);
+            Game.ObjectManager.Event.AddListener(OnChangedObject);
             Game.PlaceManager.Event?.AddListener(OnChangedPlace);
 
             _animalHolder?.LoadInfo();
@@ -39,11 +39,34 @@ namespace Game
             yield break;
         }
 
-        public new bool CheckIsAll
+        public bool CheckIsAll
         {
             get
             {
-                return CheckIsAll(AnimalOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy }));
+                if (_data == null)
+                    return false;
+
+
+                var animalDataList = AnimalContainer.Instance.GetDataListByPlaceId(_data.PlaceId);
+                if (animalDataList == null)
+                    return false;
+
+                var openConditionDataList = AnimalOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy });
+
+                foreach (var animalData in animalDataList)
+                {
+                    if (animalData == null)
+                        continue;
+
+                    if (openConditionDataList != null &&
+                        openConditionDataList.Find(openConditionData => openConditionData.Id == animalData.Id) != null)
+                    {
+                        if (!CheckExist(animalData.Id))
+                            return false;
+                    }
+                }
+
+                return true;
             }
         }
 
@@ -64,8 +87,9 @@ namespace Game
                 Event?.Invoke(new Game.Event.AddAnimalData()
                 {
                     id = animalInfo.Id,
-                    isAll = CheckIsAll,
                 });
+
+                Notification.Get?.Notify(Notification.EType.OpenPlace);
             }
         }
 
@@ -187,9 +211,9 @@ namespace Game
             
         }
 
-        private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
+        private void OnChangedObject(Game.Event.ObjectData objectData)
         {
-           
+
         }
     }
 }

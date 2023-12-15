@@ -13,7 +13,7 @@ namespace Game
         [SerializeField]
         private RectTransform uiRootRectTm = null;
         public UI.Top Top;
-        public UI.Bottom Bottom;
+        public UI.Bottom Bottom = null;
         public UI.Popup Popup;
 
         protected override void Initialize()

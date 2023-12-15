@@ -211,20 +211,21 @@ namespace Info
             }
         }
 
-        public int GetLastStoryId(int placeId)
-        {
-            var story = User?.GetStory(placeId);
-            if (story == null)
-                return 0;
-
-            return story.StoryId;
-        }
-
         private void LocalSave()
         {
             var jsonString = JsonUtility.ToJson(User);
             System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonString);
         }
+
+        public void SaveLastPlaceId()
+        {
+            if (User == null)
+                return;
+
+            User.SetLastPlaceId(User.LastPlaceId + 1);
+
+            LocalSave();
+        }        
 
         private void Save()
         {

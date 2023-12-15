@@ -1,1 +1,65 @@
-{"Datas":[{"Id":1,"PlaceId":1,"Currency":17,"Bonus":null},{"Id":2,"PlaceId":1,"Currency":25,"Bonus":null},{"Id":3,"PlaceId":1,"Currency":33,"Bonus":null},{"Id":4,"PlaceId":1,"Currency":42,"Bonus":null},{"Id":5,"PlaceId":1,"Currency":50,"Bonus":null},{"Id":6,"PlaceId":1,"Currency":null,"Bonus":null},{"Id":7,"PlaceId":2,"Currency":17,"Bonus":null},{"Id":8,"PlaceId":2,"Currency":25,"Bonus":null},{"Id":9,"PlaceId":2,"Currency":33,"Bonus":null},{"Id":10,"PlaceId":2,"Currency":42,"Bonus":null},{"Id":11,"PlaceId":2,"Currency":50,"Bonus":null}]}
+{
+    "Datas": [
+
+        {
+            "Id": 1,
+            "PlaceId": 1,
+            "Currency": 17,
+            "Bonus": null
+        },
+        {
+            "Id": 2,
+            "PlaceId": 1,
+            "Currency": 25,
+            "Bonus": null
+        },
+        {
+            "Id": 3,
+            "PlaceId": 1,
+            "Currency": 33,
+            "Bonus": null
+        },
+        {
+            "Id": 4,
+            "PlaceId": 1,
+            "Currency": 42,
+            "Bonus": null
+        },
+        {
+            "Id": 5,
+            "PlaceId": 1,
+            "Currency": 50,
+            "Bonus": null
+        },
+        {
+            "Id": 7,
+            "PlaceId": 2,
+            "Currency": 17,
+            "Bonus": null
+        },
+        {
+            "Id": 8,
+            "PlaceId": 2,
+            "Currency": 25,
+            "Bonus": null
+        },
+        {
+            "Id": 9,
+            "PlaceId": 2,
+            "Currency": 33,
+            "Bonus": null
+        },
+        {
+            "Id": 10,
+            "PlaceId": 2,
+            "Currency": 42,
+            "Bonus": null
+        },
+        {
+            "Id": 11,
+            "PlaceId": 2,
+            "Currency": 50,
+            "Bonus": null
+        }
+    ]
+}

@@ -7,7 +7,6 @@ namespace Game.Event
     public class ObjectData : BaseData
     {
         public int id = 0;
-        public bool isAll = false;
     }
 
     public class AddObjectData : ObjectData
