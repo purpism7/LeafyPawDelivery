@@ -332,7 +332,8 @@ namespace UI.Component
                         Object = -openConditionData.ObjectCurrency,
                     });
 
-                    Game.UIManager.Instance?.Top?.SetCurrency();
+                    ITop iTop = Game.UIManager.Instance?.Top;
+                    iTop?.SetCurrency();
 
                     return obtain;
                 });

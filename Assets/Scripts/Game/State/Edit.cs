@@ -8,6 +8,9 @@ namespace Game.State
     {
         public override void Initialize(MainGameManager mainGameMgr)
         {
+            UI.ITopAnim iTopAnim = UIManager.Instance?.Top;
+            iTopAnim?.DeactivateRight(null);
+
             var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
             if (activityPlace == null)
                 return;

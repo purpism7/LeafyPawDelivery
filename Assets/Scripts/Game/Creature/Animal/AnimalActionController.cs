@@ -14,20 +14,20 @@ namespace Game.Creature
 
         void OnDrawGizmos()
         {
-            Vector3 pos = Vector3.zero;
-            var gameCameraCtr = MainGameManager.Instance?.GameCameraCtr;
-            if (gameCameraCtr == null)
-                return;
+            //Vector3 pos = Vector3.zero;
+            //var iGameCameraCtrProvider = MainGameManager.Instance?.IGameCameraCtrProvider;
+            //if (iGameCameraCtrProvider == null)
+            //    return;
 
-            var center = gameCameraCtr.Center;
-            var halfWidth = (gameCameraCtr.Width - 200f) / 2f;
-            var halfHeight = (gameCameraCtr.Height - 850f) / 2f;
+            //var center = iGameCameraCtrProvider.Center;
+            //var halfWidth = (gameCameraCtr.Width - 200f) / 2f;
+            //var halfHeight = (gameCameraCtr.Height - 850f) / 2f;
 
-            Gizmos.color = Color.black;
-            var posY = center.y + halfHeight;
-            
-            posY = gameCameraCtr.IGrid.LimitPosY(posY);
-            Gizmos.DrawLine(new Vector3(center.x - halfWidth, center.y - halfHeight), new Vector3(center.x + halfWidth, posY));
+            //Gizmos.color = Color.black;
+            //var posY = center.y + halfHeight;
+
+            //posY = gameCameraCtr.IGrid.LimitPosY(posY);
+            //Gizmos.DrawLine(new Vector3(center.x - halfWidth, center.y - halfHeight), new Vector3(center.x + halfWidth, posY));
         }
 
         public void Initialize(Animator animator, SpriteRenderer sprRenderer, bool onlyIdle)

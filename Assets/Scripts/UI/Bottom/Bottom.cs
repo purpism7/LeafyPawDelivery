@@ -98,20 +98,12 @@ namespace UI
 
             EditList.Setup(eTabType).Activate();
             ActivateAnim(EditListRootRectTm, null);
-                    
-            MainGameManager.Instance.SetGameState<Game.State.Edit>();
         }
-
-        //public void ActivateEditList()
-        //{
-        //    EditList.Activate();
-        //    ActivateAnim(EditListRootRectTm, null);
-            
-        //    MainGameManager.Instance.SetGameState<Game.State.Edit>();
-        //}
 
         public void ActivateEditListAfterDeactivateBottom(Game.Type.ETab eTabType)
         {
+            MainGameManager.Instance?.SetGameState<Game.State.Edit>();
+
             DeactivateAnim(rootRectTm,
                 () =>
                 {

@@ -181,7 +181,7 @@ MonoBehaviour:
   rootTm: {fileID: 1240173292099746398}
   Id: 2
   objectRootTm: {fileID: 8331713420321853600}
-  currencyRootTm: {fileID: 9165708623665845932}
+  itemRootTm: {fileID: 9165708623665845932}
   bgmPlayer: {fileID: 899944983865528861}
   animalRootTm: {fileID: 3621777883156634170}
 --- !u!1 &7031481512000522290
@@ -261,7 +261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9165708623665845932}
   m_Layer: 8
-  m_Name: CurrencyRoot
+  m_Name: ItemRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

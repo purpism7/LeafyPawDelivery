@@ -310,12 +310,13 @@ namespace UI
 
             if (EElement == Game.Type.EElement.Animal)
             {
+                var mainGameMgr = MainGameManager.Instance;
+
+                mainGameMgr?.SetGameState<Game.State.Edit>();
+
                 Game.UIManager.Instance?.Bottom?.DeactivateAnim(
                     () =>
                     {
-                        var mainGameMgr = MainGameManager.Instance;
-
-                        mainGameMgr?.SetGameState<Game.State.Edit>();
                         mainGameMgr?.AddAnimalToPlace(id);
                     });
             }

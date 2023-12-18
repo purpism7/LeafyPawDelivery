@@ -16,5 +16,15 @@ namespace Game
             }
         }
 
+        public class ItemData : Data 
+        {
+            public Game.Type.EItemSub eItemSub = Type.EItemSub.None;
+
+            public ItemData() : base(Type.EItem.Item)
+            {
+
+            }
+        }
+
     }
 }

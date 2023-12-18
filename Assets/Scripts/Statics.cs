@@ -13,6 +13,8 @@ public abstract class Statics<T> : MonoBehaviour where T : MonoBehaviour
             if (!gameObj)
                 return null;
 
+            gameObj.transform.SetParent(MainGameManager.Instance?.transform);
+
             _instance = gameObj.GetOrAddComponent<T>();
         }
 

@@ -1865,7 +1865,7 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 162, y: 193}
+  m_CellSize: {x: 150, y: 180}
   m_Spacing: {x: 10, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -3271,6 +3271,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1523447297565640952, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523447297565640952, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523447297565640952, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1523447297565640952, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2003757909732337152, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3415,6 +3431,10 @@ PrefabInstance:
       propertyPath: collectCurrencyRootRectTm
       value: 
       objectReference: {fileID: 465678453}
+    - target: {fileID: 3679848378893774603, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3886750508737240343, guid: 98c74c543f1dc2b4d9af219dbc83571f, type: 3}
       propertyPath: m_Enabled
       value: 1

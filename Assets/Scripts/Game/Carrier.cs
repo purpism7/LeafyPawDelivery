@@ -9,22 +9,25 @@ namespace Game
     public class Carrier : MonoBehaviour
     {
         private static Carrier _instance = null;
-
         public static void Create(IGridCell iGridCell)
         {
             if (_instance == null)
             {
                 Debug.Log("Carrier Create");
                 var gameObj = new GameObject(typeof(Carrier).Name);
+                if (!gameObj)
+                    return;
+
+                gameObj.transform.SetParent(MainGameManager.Instance?.transform);
                 _instance = gameObj.GetOrAddComponent<Carrier>();
             }
 
             _instance?.Initialize(iGridCell);
 
-            if (_instance != null)
-            {
-                DontDestroyOnLoad(_instance);
-            }
+            //if (_instance != null)
+            //{
+            //    DontDestroyOnLoad(_instance);
+            //}
         }
 
         public static bool Move(Vector3 targetPos, out List<Vector3> pathPosList)
@@ -64,16 +67,12 @@ namespace Game
             if (cell == null)
                 return false;
 
-            Debug.Log(cell.name);
-
             var targetCell = _iGridCell.GetCell(GetRandomPos(targetPos.z));
             if (targetCell.IsOverlap)
                 return false;
 
             var startNode = new PathFinding.Node(cell.Id, !cell.IsOverlap, cell.Row, cell.Column);
             var targetNode = new PathFinding.Node(targetCell.Id, true, targetCell.Row, targetCell.Column);
-
-            //_iGridCell.Reset();
 
             _aStar.FindPath(startNode, targetNode, GetNeighbourNodeList);
 
@@ -89,7 +88,6 @@ namespace Game
                 if (pathCell == null)
                     continue;
 
-                //pathCell.Path = true;
                 pathPosList.Add(pathCell.transform.position);
             }
 
@@ -98,18 +96,12 @@ namespace Game
 
         private Vector3 GetRandomPos(float z)
         {
-            Vector3 pos = Vector3.zero;
-            var gameCameraCtr = MainGameManager.Instance?.GameCameraCtr;
-            if (gameCameraCtr == null)
+            var iGameCameraCtrProvider = MainGameManager.Instance?.IGameCameraCtrProvider;
+            if (iGameCameraCtrProvider == null)
                 return Vector3.zero;
 
-            var center = gameCameraCtr.Center;
-            var halfWidth = (gameCameraCtr.Width - 200f) / 2f;
-            var halfHeight = (gameCameraCtr.Height - 850f) / 2f;
-
-            var randomX = Random.Range(center.x - halfWidth, center.x + halfWidth);
-            var randomY = Random.Range(center.y - halfHeight, center.y + halfHeight);
-            randomY = gameCameraCtr.IGrid.LimitPosY(randomY);
+            var randomX = iGameCameraCtrProvider.RandPosXInScreenRagne;
+            var randomY = iGameCameraCtrProvider.RandPosYInScreenRagne;
 
             return new Vector3(randomX, randomY, z);
         }

@@ -12,7 +12,20 @@ using UI.Component;
 
 namespace UI
 {
-    public class Top : Common<Top.Data>
+    public interface ITop
+    {
+        void SetCurrency();
+        void SetDropLetterCnt(int cnt);
+        void SetDropAnimalCurrencyCnt(int cnt);
+    }
+
+    public interface ITopAnim
+    {
+        void ActivateRight(System.Action completeAction);
+        void DeactivateRight(System.Action completeAction);
+    }
+
+    public class Top : Common<Top.Data>, ITop, ITopAnim
     {
         public class Data : BaseData
         {
@@ -30,6 +43,8 @@ namespace UI
         [SerializeField] private TextMeshProUGUI animalCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI objectCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI cashTMP = null;
+        [SerializeField] private TextMeshProUGUI dropAnimalCurrencyCntTMP = null;
+        [SerializeField] private TextMeshProUGUI dropLetterCntTMP = null;
 
         [SerializeField] private Image animalCurrencyImg = null;
         [SerializeField] private Image objectCurrencyImg = null;
@@ -44,6 +59,9 @@ namespace UI
         private List<CollectCurrency> _collectCurrencyList = new();
         private List<AddCurrency> _addCurrencyList = new();
 
+        private Dictionary<int, int> _dropLetterCntDic = new();
+        private Dictionary<int, int> _dropAnimalCurrencyCntDic = new();
+
         public override void Initialize(Data data)
         {
             base.Initialize(data);
@@ -53,7 +71,9 @@ namespace UI
 
             _collectCurrencyList?.Clear();
             _addCurrencyList?.Clear();
-            
+            _dropLetterCntDic?.Clear();
+            _dropAnimalCurrencyCntDic?.Clear();
+
             Initialize();
         }
 
@@ -61,9 +81,11 @@ namespace UI
         {
             SetCurrencyImg();
             SetCurrency();
+            SetDropLetterCnt(0);
+            SetDropAnimalCurrencyCnt(0);
         }
 
-        public void SetCurrency()
+        private void SetCurrency()
         {
             var userInfo = Info.UserManager.Instance?.User;
             if (userInfo == null)
@@ -100,6 +122,82 @@ namespace UI
 
             img.sprite = atlasLoader.GetCurrencySprite(currency);
         }
+
+        #region Animal Currency Count
+        private void SetDropAnimalCurrencyCnt(int cnt)
+        {
+            int activityPlaceId = GameUtils.ActivityPlaceId;
+            if (_dropAnimalCurrencyCntDic.ContainsKey(activityPlaceId))
+            {
+                _dropAnimalCurrencyCntDic[activityPlaceId] += cnt;
+            }
+            else
+            {
+                _dropAnimalCurrencyCntDic.Add(activityPlaceId, cnt);
+            }
+
+            SetDropAnimalCurrencyCntTMP();
+        }
+
+        private void SetDropAnimalCurrencyCntTMP()
+        {
+            dropAnimalCurrencyCntTMP?.SetText(string.Format("{0}/{1}", DropAnimalCurrencyCnt, Game.Data.Const.MaxDropAnimalCurrencyCount));
+        }
+
+        private int DropAnimalCurrencyCnt
+        {
+            get
+            {
+                int cnt = 0;
+
+                if (_dropAnimalCurrencyCntDic == null)
+                    return cnt;
+
+                if (!_dropAnimalCurrencyCntDic.TryGetValue(GameUtils.ActivityPlaceId, out cnt))
+                    return cnt;
+
+                return cnt;
+            }
+        }
+        #endregion
+
+        #region Letter Count
+        private void SetDropLetterCnt(int cnt)
+        {
+            int activityPlaceId = GameUtils.ActivityPlaceId;
+            if (_dropLetterCntDic.ContainsKey(activityPlaceId))
+            {
+                _dropLetterCntDic[activityPlaceId] += cnt;
+            }
+            else
+            {
+                _dropLetterCntDic?.Add(activityPlaceId, cnt);
+            }
+
+            SetDropLetterCntTMP();
+        }
+
+        private void SetDropLetterCntTMP()
+        {
+            dropLetterCntTMP?.SetText(string.Format("{0}/{1}", DropLetterCnt, Game.Data.Const.MaxDropLetterCount));
+        }
+
+        private int DropLetterCnt
+        {
+            get
+            {
+                int cnt = 0;
+
+                if (_dropLetterCntDic == null)
+                    return cnt;
+
+                if (!_dropLetterCntDic.TryGetValue(GameUtils.ActivityPlaceId, out cnt))
+                    return cnt;
+
+                return cnt;
+            }
+        }
+        #endregion
 
         #region Anim Activate & Deactivate
         public void ActivateAnim(System.Action completeAction)
@@ -230,7 +328,7 @@ namespace UI
 
             // save currency value.
             Info.UserManager.Instance?.User?.SetCurrency(eElement, currency);
-            MainGameManager.Instance?.AddAcquire(eElement, Game.Type.EAcquireAction.Obtain, 1); 
+            MainGameManager.Instance?.AddAcquire(eElement, Game.Type.EAcquireAction.Obtain, 1);
         }
 
         private void CollectCurrency(CollectCurrency.Data data)
@@ -324,6 +422,35 @@ namespace UI
         }
         #endregion
 
+        #region ITop
+        void ITop.SetCurrency()
+        {
+            SetCurrency();
+        }
+
+        void ITop.SetDropLetterCnt(int cnt)
+        {
+            SetDropLetterCnt(cnt);
+        }
+
+        void ITop.SetDropAnimalCurrencyCnt(int cnt)
+        {
+            SetDropAnimalCurrencyCnt(cnt);
+        }
+        #endregion
+
+        #region ITopAnim
+        void ITopAnim.ActivateRight(System.Action completeAction)
+        {
+            ActivateAnimRight(completeAction);
+        }
+
+        void ITopAnim.DeactivateRight(System.Action completeAction)
+        {
+            DeactivateAnimRight(completeAction);
+        }
+        #endregion
+
         private void OnChangedPlace(int placeId)
         {
             Debug.Log("Top OnChangedPlace = " + placeId);
@@ -345,7 +472,18 @@ namespace UI
 
         public void OnClickScreenshot()
         {
-            MainGameManager.Instance.SetGameState<Game.State.Screenshot>();
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                return;
+
+            var gameState = mainGameMgr.GameState;
+            if (gameState == null)
+                return;
+            Debug.Log("gameState = " + gameState);
+            if (gameState.CheckState<Game.State.Edit>())
+                return;
+
+            mainGameMgr.SetGameState<Game.State.Screenshot>();
         }
     }
 }

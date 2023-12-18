@@ -18,13 +18,15 @@ public class Sequencer : Game.Common
             if (!gameObj)
                 return null;
 
+            gameObj.transform.SetParent(MainGameManager.Instance?.transform);
+
             _instance = gameObj.GetOrAddComponent<Sequencer>();
         }
 
-        if(_instance != null)
-        {
-            DontDestroyOnLoad(_instance);
-        }
+        //if(_instance != null)
+        //{
+        //    DontDestroyOnLoad(_instance);
+        //}
 
         return _instance;
     }

@@ -17,7 +17,7 @@ public class MainGameManager : Singleton<MainGameManager>
     private Game.PlaceManager placeMgr = null;
     #endregion
 
-    public GameCameraController GameCameraCtr { get; private set; } = null;
+    public IGameCameraCtrProvider IGameCameraCtrProvider { get; private set; } = null;
     public Game.State.Base GameState { get; private set; } = null;
     public Game.RecordContainer RecordContainer { get; private set; } = null;
 
@@ -63,7 +63,7 @@ public class MainGameManager : Singleton<MainGameManager>
         var activityPlaceId = Game.Data.Const.StartPlaceId;//placeMgr.ActivityPlaceId; 
 
         var inputMgr = iProvider.Get<InputManager>();
-        GameCameraCtr = inputMgr?.GameCameraCtr;
+        IGameCameraCtrProvider = inputMgr?.GameCameraCtr;
 
         _iGrid = inputMgr?.grid;
 
@@ -75,7 +75,9 @@ public class MainGameManager : Singleton<MainGameManager>
         yield return StartCoroutine(acquireMgr?.CoInitialize(null));
 
         // 진입 연출 전 Deactivate Top, Bottom 
-        Game.UIManager.Instance?.DeactivateAnim();
+        //Game.UIManager.Instance?.DeactivateAnim();
+
+        SetGameState<Game.State.Enter>();
 
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
         yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
@@ -92,7 +94,7 @@ public class MainGameManager : Singleton<MainGameManager>
         _iUpdaterList?.Clear();
 
         _iUpdaterList?.Add(inputMgr);
-        _iUpdaterList?.Add(GameCameraCtr);
+        _iUpdaterList?.Add(IGameCameraCtrProvider as IUpdater);
         _iUpdaterList?.Add(placeMgr);
         _iUpdaterList?.Add(inputMgr?.grid);
     }
@@ -142,7 +144,7 @@ public class MainGameManager : Singleton<MainGameManager>
             Game.Carrier.Create(iGridCell);
         }
 
-        SetGameState<Game.State.Game>();
+        //SetGameState<Game.State.Game>();
 
         yield return null;
 
@@ -166,10 +168,10 @@ public class MainGameManager : Singleton<MainGameManager>
                     .SetShowBackground(false)
                     .Create();
 
-                enterPlace?.PlayAnim(GameCameraCtr,
+                enterPlace?.PlayAnim(IGameCameraCtrProvider,
                     () =>
                     {
-                        Game.UIManager.Instance?.ActivateAnim();
+                        SetGameState<Game.State.Game>();
                     });
 
                 return enterPlace;
@@ -258,8 +260,9 @@ public class MainGameManager : Singleton<MainGameManager>
 
         yield return StartCoroutine(CoInitializeManager(placeId));
 
-        // 진입 연출 전 Deactivate Top, Bottom 
-        Game.UIManager.Instance?.DeactivateAnim();
+        //// 진입 연출 전 Deactivate Top, Bottom 
+        //Game.UIManager.Instance?.DeactivateAnim();
+        SetGameState<Game.State.Enter>();
 
         yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 3f));
 
@@ -330,9 +333,9 @@ public class MainGameManager : Singleton<MainGameManager>
             return;
 
         Vector3 pos = Vector3.zero;
-        if (GameCameraCtr != null)
+        if (IGameCameraCtrProvider != null)
         {
-            pos = GameCameraCtr.Center;
+            pos = IGameCameraCtrProvider.Center;
         }
 
         var animal = activityPlace.AddAnimal(id, animalInfo.SkinId, pos);
@@ -353,9 +356,9 @@ public class MainGameManager : Singleton<MainGameManager>
             return;
 
         Vector3 pos = Vector3.zero;
-        if (GameCameraCtr != null)
+        if (IGameCameraCtrProvider != null)
         {
-            pos = GameCameraCtr.Center;
+            pos = IGameCameraCtrProvider.Center;
         }
 
         int currSkinId = animalMgr.GetCurrenctSkinId(id);
@@ -377,9 +380,9 @@ public class MainGameManager : Singleton<MainGameManager>
             return;
 
         Vector3 pos = Vector3.zero;
-        if (GameCameraCtr != null)
+        if (IGameCameraCtrProvider != null)
         {
-            pos = GameCameraCtr.Center;
+            pos = IGameCameraCtrProvider.Center;
         }
 
         var obj = activityPlace.AddObject(id, pos, editObject.UId);

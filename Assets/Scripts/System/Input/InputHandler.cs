@@ -30,11 +30,11 @@ namespace GameSystem
         {
             if(_mainGameMgr == null)
                 return;
-            
-            UpdateTouch();
+
+            UpdateTouchGameBase();
         }
 
-        private void UpdateTouch()
+        private void UpdateTouchGameBase()
         {
             if (_gameCameraCtr == null)
                 return;
@@ -50,6 +50,9 @@ namespace GameSystem
             
             if (touch.phase == TouchPhase.Began)
             {
+                if (_beganGameBase)
+                    return;
+
                 if (isHitInfo)
                 {
                     if (CheckGetGameBase<Game.Base>(hitInfo, out gameBase))
@@ -57,9 +60,6 @@ namespace GameSystem
                         OnTouchBegan(touch, gameBase);
                     }
                 }
-
-                if (!_beganGameBase)
-                    return;
             }
             else
             {

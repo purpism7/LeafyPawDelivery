@@ -24,7 +24,7 @@ namespace UI.Component
         [SerializeField]
         private int placeId = 0;
         [SerializeField]
-        private RectTransform lockRectTmRoot = null;
+        private RectTransform lockRectRootTm = null;
         [SerializeField]
         private Image placeIconImg = null;
         [SerializeField]
@@ -73,7 +73,7 @@ namespace UI.Component
                 isLock = placeId > lastPlaceId;
             }
 
-            UIUtils.SetActive(lockRectTmRoot, isLock);
+            UIUtils.SetActive(lockRectRootTm, isLock);
             UIUtils.SetActive(placeIconImg?.gameObject, !isLock);
 
             SetInteractableEnterBtn(!isLock);
@@ -105,7 +105,7 @@ namespace UI.Component
                 .SetAutoKill(false)
                 .OnStart(() => { _endTask = false; })
                 .AppendInterval(0.5f)
-                .AppendCallback(() => UIUtils.SetActive(lockRectTmRoot, false))
+                .AppendCallback(() => UIUtils.SetActive(lockRectRootTm, false))
                 .AppendInterval(0.3f)
                 .Append(placeIconImg.DOFade(1, 0.5f))
                 .OnComplete(() =>

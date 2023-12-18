@@ -8,6 +8,8 @@ namespace Game.State
     {
         public override void Initialize(MainGameManager mainGameMgr)
         {
+            UIManager.Instance?.ActivateAnim();
+
             var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
             if (activityPlace == null)
                 return;

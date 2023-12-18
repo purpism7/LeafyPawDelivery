@@ -43,7 +43,11 @@ namespace Game.PlaceEvent
             yield return _waitSecDropCurrency;
 
             if (_dropCurrencyCoroutine == null)
+            {
+                StartDrop();
+
                 yield break;
+            }
 
             Drop();
 
@@ -67,15 +71,17 @@ namespace Game.PlaceEvent
             if (randomAnimal.ElementData == null)
                 return;
 
-            DropItemCreator.Get
-                .SetRootTm(_iPlace.CurrencyRootTm)
-                .SetDropItemData(new DropItem.CurrencyData()
-                {
-                    startRootTm = randomAnimal.transform,
-                    EElement = Type.EElement.Animal,
-                    Value = randomAnimal.ElementData.GetCurrency,
-                })
-                .Create();
+            var currencyData = new Game.DropItem.CurrencyData()
+            {
+                startPos = new Vector3(randomAnimal.transform.position.x, randomAnimal.transform.position.y, 300f),
+                EElement = Type.EElement.Animal,
+                Value = randomAnimal.ElementData.GetCurrency,
+            };
+
+            _iPlace?.CreateDropItem(currencyData);
+
+            UI.ITop iTop = UIManager.Instance?.Top;
+            iTop?.SetDropAnimalCurrencyCnt(1);
         }
     }
 }

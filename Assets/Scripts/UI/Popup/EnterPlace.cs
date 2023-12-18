@@ -50,10 +50,9 @@ namespace UI
             placeNameTMP?.SetText(placeData.ePlaceName.ToString());
         }
 
-        public void PlayAnim(GameCameraController gameCameraCtr, System.Action endAction)
+        public void PlayAnim(IGameCameraCtrProvider iGameCameraCtrProvider, System.Action endAction)
         {
-            var gameCamera = gameCameraCtr?.GameCamera;
-            if (gameCamera == null)
+            if (iGameCameraCtrProvider == null)
             {
                 Deactivate();
 
@@ -63,15 +62,15 @@ namespace UI
             _endAnim = false;
             _endAction = endAction;
 
-            gameCameraCtr.SetOrthographicSize(gameCameraCtr.MaxOrthographicSize);
+            iGameCameraCtrProvider.SetOrthographicSize(iGameCameraCtrProvider.MaxOrthographicSize);
 
             Sequence sequence = DOTween.Sequence()
                .SetAutoKill(false)
                .AppendCallback(() => StartCoroutine(CoFadeTextToFullAlpha()))
-               .Join(DOTween.To(() => gameCameraCtr.MaxOrthographicSize, size => gameCamera.orthographicSize = size, gameCameraCtr.DefaultOrthographicSize, 2f).SetEase(Ease.OutCubic))
+               .Join(DOTween.To(() => iGameCameraCtrProvider.MaxOrthographicSize, size => iGameCameraCtrProvider.SetOrthographicSize(size), iGameCameraCtrProvider.DefaultOrthographicSize, 2f).SetEase(Ease.OutCubic))
                .OnComplete(() =>
                {
-                   gameCameraCtr.SetSize();
+                   iGameCameraCtrProvider.SetSize();
 
                    _endAnim = true;
                });

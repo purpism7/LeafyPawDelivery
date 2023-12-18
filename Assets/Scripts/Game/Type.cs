@@ -97,6 +97,13 @@ namespace Game
             None,
 
             Currency,
+            Item,
+        }
+
+        public enum EItemSub
+        {
+            None,
+
             Letter,
         }
 

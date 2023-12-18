@@ -9,7 +9,8 @@ namespace Game
     public interface IPlace
     {
         List<Game.Creature.Animal> AnimalList { get; }
-        Transform CurrencyRootTm { get; }
+
+        void CreateDropItem(DropItem.Data dropItemData);
     }
 
     public interface IPlaceState
@@ -37,7 +38,7 @@ namespace Game
         [SerializeField]
         private Transform objectRootTm;
         [SerializeField]
-        private Transform currencyRootTm = null;
+        private Transform itemRootTm = null;
         [SerializeField]
         private BGMPlayer bgmPlayer = null;
 
@@ -45,6 +46,7 @@ namespace Game
 
         private List<Game.Object> _objectList = new();
         private List<Game.Creature.Animal> _animalList = new();
+        private List<Game.DropItem> _dropItemList = new();
         private bool _initialize = false;
 
         private PlaceEventController _placeEventCtr = new();
@@ -56,6 +58,8 @@ namespace Game
 
             _initialize = true;
             _placeEventCtr?.Initialize(this);
+
+            _dropItemList?.Clear();
 
             Info.Setting.Event?.AddListener(OnChangedSetting);
 
@@ -201,7 +205,7 @@ namespace Game
 
         private float GetAnimalPosZ(int id)
         {
-            return 0.1f * id / 10;
+            return -(0.1f * id / 10);
         }
         #endregion
 
@@ -273,7 +277,7 @@ namespace Game
             float offset = 0.0001f;
             float posZ = (id * 100 + uId) * offset;
 
-            return posZ;
+            return -posZ;
         }
         #endregion
 
@@ -443,7 +447,7 @@ namespace Game
 
             _placeEventCtr?.Start();
 
-            currencyRootTm.SetActive(true);
+            itemRootTm.SetActive(true);
         }
 
         public void Bust()
@@ -452,7 +456,7 @@ namespace Game
 
             _placeEventCtr?.End();
 
-            currencyRootTm.SetActive(false);
+            itemRootTm.SetActive(false);
         }
 
         #region IPlace
@@ -464,13 +468,33 @@ namespace Game
             }
         }
 
-        Transform IPlace.CurrencyRootTm
+        void IPlace.CreateDropItem(DropItem.Data dropItemData)
         {
-            get
+            if(_dropItemList != null)
             {
-                return currencyRootTm;
+                foreach(var dropItem in _dropItemList)
+                {
+                    if (dropItem == null)
+                        continue;
+
+                    if (dropItem.IsActivate)
+                        continue;
+
+                    dropItem.Initialize(dropItemData);
+                    dropItem.Activate();
+
+                    return;
+                }
             }
+
+            var addDropItem = DropItemCreator.Get
+               .SetRootTm(itemRootTm)
+               .SetDropItemData(dropItemData)
+               .Create();
+
+            _dropItemList?.Add(addDropItem);
         }
+
         #endregion
 
         #region IPlaceState

@@ -38,22 +38,33 @@ SpriteAtlas:
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
     - ecc3246049c5246b291b14c852269d98: 21300000
+    - a8646490b0d0649538a4406bd556e0b9: 21300000
+    - f409f94107e034efa90b2ad33fcbfc19: 21300000
     - 368a1281b0b6347fbbc9db3989978d99: 21300000
     - d7987281cfecd4c6286572dc41518cb1: 21300000
     - e3cdf891def9241fd99247a9b210e648: 21300000
+    - e8b9e2f160ca34a71b0f8c1439277b09: 21300000
+    - d12858a278af24807982c0cf0546a4e7: 21300000
+    - bfaf7e130de1b48fa8737e8a04b215f4: 21300000
     - 07868eb356f394cea976f7701b06726f: 21300000
     - 98f005e374d9548009aec6c2973ae4f2: 21300000
     - 0c3021e66747a43dfb8168d234c69ee5: 21300000
     - 2a87ca17195524ab7aa524cb1ae480ba: 21300000
+    - 0b4ab1e77c8a441079db4ed9229279fe: 21300000
+    - 59ef64e7104f14c3d8737aafa6ab8220: 21300000
     - 23944a48bf7c14325ab5f9dc6e8a385a: 21300000
     - 6d371188b2f894ca79a3a8bcf243913d: 21300000
+    - 3a2ca609e26304ff3b3b103592840d85: 21300000
     - 12b78a098906b407b9a294ea0f02e8ff: 21300000
     - 7a04d0997c8f74722aa9c1a267906900: 21300000
     - 38b7296a0ecd342c088572b4373545d3: 21300000
     - e0c2aada8f2e4451db2b939f4e7b8217: 21300000
     - 8af7f1ea2168c4e86943f5aefb15658a: 21300000
     - 6f5f94bbfc71442e29fd11baeef62578: 21300000
+    - 039e61dbdf8f3466fb85a854bc4d6181: 21300000
+    - 5fcc609c771da4016801f9d242a2cfb5: 21300000
     - bc9b649c6ab4f4aa988dd9ead26d9d55: 21300000
+    - 5be2099ced9ba4329a566a937b8cb2e6: 21300000
     - 1a1580dd4cfee4372b632b17c5d023cd: 21300000
     - 7e826bfeea6114ce1952b4d306fac97c: 21300000
     - 22eb9fbf00b89439ab8589c1141af28d: 21300000
@@ -61,44 +72,66 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: ecc3246049c5246b291b14c852269d98, type: 3}
+  - {fileID: 21300000, guid: a8646490b0d0649538a4406bd556e0b9, type: 3}
+  - {fileID: 21300000, guid: f409f94107e034efa90b2ad33fcbfc19, type: 3}
   - {fileID: 21300000, guid: 368a1281b0b6347fbbc9db3989978d99, type: 3}
   - {fileID: 21300000, guid: d7987281cfecd4c6286572dc41518cb1, type: 3}
   - {fileID: 21300000, guid: e3cdf891def9241fd99247a9b210e648, type: 3}
+  - {fileID: 21300000, guid: e8b9e2f160ca34a71b0f8c1439277b09, type: 3}
+  - {fileID: 21300000, guid: d12858a278af24807982c0cf0546a4e7, type: 3}
+  - {fileID: 21300000, guid: bfaf7e130de1b48fa8737e8a04b215f4, type: 3}
   - {fileID: 21300000, guid: 07868eb356f394cea976f7701b06726f, type: 3}
   - {fileID: 21300000, guid: 98f005e374d9548009aec6c2973ae4f2, type: 3}
   - {fileID: 21300000, guid: 0c3021e66747a43dfb8168d234c69ee5, type: 3}
   - {fileID: 21300000, guid: 2a87ca17195524ab7aa524cb1ae480ba, type: 3}
+  - {fileID: 21300000, guid: 0b4ab1e77c8a441079db4ed9229279fe, type: 3}
+  - {fileID: 21300000, guid: 59ef64e7104f14c3d8737aafa6ab8220, type: 3}
   - {fileID: 21300000, guid: 23944a48bf7c14325ab5f9dc6e8a385a, type: 3}
   - {fileID: 21300000, guid: 6d371188b2f894ca79a3a8bcf243913d, type: 3}
+  - {fileID: 21300000, guid: 3a2ca609e26304ff3b3b103592840d85, type: 3}
   - {fileID: 21300000, guid: 12b78a098906b407b9a294ea0f02e8ff, type: 3}
   - {fileID: 21300000, guid: 7a04d0997c8f74722aa9c1a267906900, type: 3}
   - {fileID: 21300000, guid: 38b7296a0ecd342c088572b4373545d3, type: 3}
   - {fileID: 21300000, guid: e0c2aada8f2e4451db2b939f4e7b8217, type: 3}
   - {fileID: 21300000, guid: 8af7f1ea2168c4e86943f5aefb15658a, type: 3}
   - {fileID: 21300000, guid: 6f5f94bbfc71442e29fd11baeef62578, type: 3}
+  - {fileID: 21300000, guid: 039e61dbdf8f3466fb85a854bc4d6181, type: 3}
+  - {fileID: 21300000, guid: 5fcc609c771da4016801f9d242a2cfb5, type: 3}
   - {fileID: 21300000, guid: bc9b649c6ab4f4aa988dd9ead26d9d55, type: 3}
+  - {fileID: 21300000, guid: 5be2099ced9ba4329a566a937b8cb2e6, type: 3}
   - {fileID: 21300000, guid: 1a1580dd4cfee4372b632b17c5d023cd, type: 3}
   - {fileID: 21300000, guid: 7e826bfeea6114ce1952b4d306fac97c, type: 3}
   - {fileID: 21300000, guid: 22eb9fbf00b89439ab8589c1141af28d, type: 3}
   - {fileID: 21300000, guid: 5b2787cf3d6be4a619613fb33c7a336a, type: 3}
   m_PackedSpriteNamesToIndex:
   - UI_Book_Profile_GnarSkin_01
+  - UI_Book_Profile_BrieSkin_01
+  - Balla_Icon
   - Barnie_Icon
   - UI_Book_Profile_LeaSkin_01
   - UI_Book_Profile_GnarSkin_02
+  - UI_Book_Profile_BallaSkin_01
+  - Henry_Icon
+  - Brie_Icon
   - UI_Book_Profile_BarnieSkin_02
   - UI_Book_Profile_HaleSkin_03
   - UI_Book_Profile_HaleSkin_02
   - Gnar_Icon
+  - Parah_Icon
+  - UI_Book_Profile_BrieSkin_02
   - UI_Book_Profile_LauraSkin_03
   - UI_Book_Profile_GnarSkin_03
+  - Marie_Icon
   - UI_Book_Profile_BarnieSkin_01
   - Lea_Icon
   - UI_Book_Profile_LauraSkin_02
   - Hale_Icon
   - Kara_Icon
   - UI_Book_Profile_HaleSkin_01
+  - UI_Book_Profile_BallaSkin_03
+  - UI_Book_Profile_BrieSkin_03
   - UI_Book_Profile_LauraSkin_01
+  - UI_Book_Profile_BallaSkin_02
   - Laura_Icon
   - UI_Book_Profile_LeaSkin_03
   - UI_Book_Profile_LeaSkin_02

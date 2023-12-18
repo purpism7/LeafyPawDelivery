@@ -14,14 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalBaseSkinId: 1
   startPlaceId: 1
+  maxDropAnimalCurrencyCount: 50
+  maxDropLetterCount: 50
   PlaceDatas:
   - ePlaceName: 1
     Animal: 1
     Object: 1
     StartValue:
       PlaceId: 1
-      Animal: 51
-      Object: 1088
+      Animal: 999999
+      Object: 999999
   - ePlaceName: 2
     Animal: 2
     Object: 2

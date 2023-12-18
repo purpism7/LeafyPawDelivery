@@ -24,6 +24,8 @@ namespace Game.Manager
                 if (!gameObj)
                     return null;
 
+                gameObj.transform.SetParent(MainGameManager.Instance?.transform);
+
                 _instance = gameObj.GetOrAddComponent<Guide>();
                 _instance?.Initialize();
             }

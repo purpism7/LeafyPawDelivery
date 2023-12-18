@@ -8,7 +8,20 @@ using Cysharp.Threading.Tasks;
 
 namespace GameSystem
 {
-    public class GameCameraController : MonoBehaviour, IUpdater
+    public interface IGameCameraCtrProvider
+    {
+        float MaxOrthographicSize { get; }
+        float DefaultOrthographicSize { get; }
+
+        Vector3 Center { get; }
+
+        void SetSize();
+        void SetOrthographicSize(float orthographicSize);
+        float RandPosXInScreenRagne { get; }
+        float RandPosYInScreenRagne { get; }
+    }
+
+    public class GameCameraController : MonoBehaviour, IUpdater, IGameCameraCtrProvider
     {
         private const float InitPosZ = -1000f;
 
@@ -123,6 +136,23 @@ namespace GameSystem
             }
         }
 
+        private void SetSize()
+        {
+            if (GameCamera == null)
+                return;
+
+            _halfHeight = GameCamera.orthographicSize;
+            Height = _halfHeight * 2f;
+            Width = Height * GameCamera.aspect;
+
+            _dragWidth = _halfHeight * Screen.width / Screen.height;
+        }
+
+        private void SetOrthographicSize(float orthographicSize)
+        {
+            GameCamera.orthographicSize = Mathf.Clamp(orthographicSize, MinOrthographicSize, MaxOrthographicSize);
+        }
+
         private float GetClampX(float posX)
         {
             float x = _mapSize.x - _dragWidth;
@@ -183,27 +213,46 @@ namespace GameSystem
             cameraTm.position = targetPos;
         }
 
-        public void SetSize()
-        {
-            if (GameCamera == null)
-                return;
-
-            _halfHeight = GameCamera.orthographicSize;
-            Height = _halfHeight * 2f;
-            Width = Height * GameCamera.aspect;
-
-            _dragWidth = _halfHeight * Screen.width / Screen.height;
-        }
-
-        public void SetOrthographicSize(float orthographicSize)
-        {
-            GameCamera.orthographicSize = Mathf.Clamp(orthographicSize, MinOrthographicSize, MaxOrthographicSize);
-        }
-
         public void SetStopUpdate(bool stopUpdate)
         {
             StopUpdate = stopUpdate;
         }
+
+        #region IGameCameraCtrProvider
+        void IGameCameraCtrProvider.SetSize()
+        {
+            SetSize();
+        }
+
+        void IGameCameraCtrProvider.SetOrthographicSize(float orthographicSize)
+        {
+            SetOrthographicSize(orthographicSize);
+        }
+
+        float IGameCameraCtrProvider.RandPosXInScreenRagne
+        {
+            get
+            {
+                var center = Center;
+                var halfWidth = (Width - 200f) / 2f;
+
+                return Random.Range(center.x - halfWidth, center.x + halfWidth);
+            }
+        }
+
+        float IGameCameraCtrProvider.RandPosYInScreenRagne
+        {
+            get
+            {
+                var center = Center;
+                var halfHeight = (Height - 850f) / 2f;
+
+                var randomY = Random.Range(center.y - halfHeight, center.y + halfHeight);
+
+                return IGrid.LimitPosY(randomY);
+            }
+        }
+        #endregion
     }
 }
 

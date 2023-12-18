@@ -310,7 +310,9 @@ namespace UI
                 return;
 
             userMgr.SaveCash(-animalSkinData.Cash);
-            Game.UIManager.Instance?.Top?.SetCurrency();
+
+            ITop iTop = Game.UIManager.Instance?.Top;
+            iTop?.SetCurrency();
 
             animalMgr.AddSkin(animalId, selectSkinId);
             mainGameMgr.ChangeAnimalSkinToPlace(animalId, selectSkinId);

@@ -40,11 +40,6 @@ namespace Game
             return GameSystem.ResourceManager.Instance.InstantiateUI<T>(rootRectTm);
         }
 
-        private void OpenCountListener(int count)
-        {
-            Debug.Log("OpenCount " + count);
-        }
-
         public void EnalbeUIRoot(bool enable)
         {
             UIUtils.SetActive(uiRootRectTm, enable);
