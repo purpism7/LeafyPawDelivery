@@ -15,14 +15,14 @@ MonoBehaviour:
   animalBaseSkinId: 1
   startPlaceId: 1
   maxDropAnimalCurrencyCount: 50
-  maxDropLetterCount: 50
+  maxDropLetterCount: 25
   PlaceDatas:
   - ePlaceName: 1
     Animal: 1
     Object: 1
     StartValue:
       PlaceId: 1
-      Animal: 999999
+      Animal: 1000041
       Object: 999999
   - ePlaceName: 2
     Animal: 2

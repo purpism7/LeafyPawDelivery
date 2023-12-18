@@ -20,7 +20,7 @@ namespace Data
         [SerializeField]
         private string iconImg = string.Empty;
         [SerializeField]
-        private string key = string.Empty;
+        private string productId = string.Empty;
 
         public bool Show { get { return show; } }
         public Game.Type.ECategory ECategory { get; private set; } = Game.Type.ECategory.None;
@@ -28,7 +28,7 @@ namespace Data
         public int PaymentValue { get { return paymentValue; } }
         public int Value { get { return value; } }
         public string IconImg { get { return iconImg; } }
-        public string Key { get { return key; } }
+        public string ProductId { get { return productId; } }
 
         public override void Initialize()
         {

@@ -26,6 +26,8 @@ namespace UI
 
             SetItemList();
 
+            yield return new WaitForEndOfFrame();
+
             _adMob = AdMob.Create();
 
             yield return null;
@@ -56,6 +58,7 @@ namespace UI
                 var cell = new ComponentCreator<ShopItemGroup, ShopItemGroup.Data_>()
                     .SetData(new ShopItemGroup.Data_()
                     {
+                        iShopItemCellListener = this,
                         eCategory = dataList.Count > 0 ? dataList[0].ECategory : Game.Type.ECategory.None,
                         shopDataList = dataList,
                     })
@@ -73,7 +76,7 @@ namespace UI
 
             if(shopData.EPayment == Game.Type.EPayment.Advertising)
             {
-                _adMob?.LoadRewardedInterstitialAd(shopData.Key);
+                _adMob?.LoadRewardedInterstitialAd(shopData.ProductId);
             }
             else
             {

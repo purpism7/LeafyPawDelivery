@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using System;
+
 namespace Game.PlaceEvent
 {
     public class DropItem : Base
     {
         private Coroutine _dropItemCoroutine = null;
         private YieldInstruction _waitSecDrop = new WaitForSeconds(60f);
+
+        //private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         private Game.Type.EItemSub _eItemSub = Type.EItemSub.None;
 
@@ -17,6 +23,8 @@ namespace Game.PlaceEvent
 
             StopDrop();
             _dropItemCoroutine = StartCoroutine(CoDrop());
+            //AsyncDrop().Forget();
+            
         }
 
         public void StopDrop()
@@ -26,7 +34,67 @@ namespace Game.PlaceEvent
                 StopCoroutine(_dropItemCoroutine);
                 _dropItemCoroutine = null;
             }
+
+            //if (_cancellationTokenSource != null)
+            //{
+            //    _cancellationTokenSource.Cancel();
+
+            //}
         }
+
+        //private async UniTask AsyncDrop()
+        //{
+        //    var gameState = MainGameManager.Instance?.GameState;
+        //    if (gameState == null)
+        //    {
+        //        StartDrop();
+
+        //        return;
+        //    }
+
+        //    if (gameState.CheckState<Game.State.Edit>())
+        //        return;
+
+        //    if (_eItemSub == Type.EItemSub.Letter)
+        //    {
+        //        UI.ITop iTop = Game.UIManager.Instance?.Top;
+        //        if (iTop == null)
+        //        {
+        //            StartDrop();
+
+        //            return;
+        //        }
+
+        //        if (iTop.CheckMaxDropLetterCnt)
+        //        {
+        //            StartDrop();
+
+        //            return;
+        //        }
+        //    }
+
+        //    try
+        //    {
+        //        await UniTask.WaitForSeconds(UnityEngine.Random.Range(60f, 70f), false, PlayerLoopTiming.Update, _cancellationTokenSource.Token);
+
+        //        if (_cancellationTokenSource.IsCancellationRequested)
+        //        {
+        //            StartDrop();
+
+        //            return;
+        //        }
+        //    }
+        //    catch(OperationCanceledException e)
+        //    {
+
+        //    }
+
+        //    Drop();
+
+        //    await UniTask.Yield();
+
+        //    StartDrop();
+        //}
 
         private IEnumerator CoDrop()
         {
@@ -37,7 +105,7 @@ namespace Game.PlaceEvent
             if (gameState.CheckState<Game.State.Edit>())
                 yield break;
 
-            if(_eItemSub == Type.EItemSub.Letter)
+            if (_eItemSub == Type.EItemSub.Letter)
             {
                 UI.ITop iTop = Game.UIManager.Instance?.Top;
                 if (iTop == null)
@@ -47,12 +115,7 @@ namespace Game.PlaceEvent
                     yield break;
                 }
 
-                if(iTop.CheckMaxDropLetterCnt)
-                {
-                    StartDrop();
-
-                    yield break;
-                }
+                yield return new WaitUntil(() => !iTop.CheckMaxDropLetterCnt);
             }
 
             yield return _waitSecDrop;

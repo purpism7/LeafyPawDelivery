@@ -12,8 +12,8 @@ namespace UI.Component
     {
         public class Data_ : BaseData
         {
-            public IListener IListener = null;
-            public Data.Shop ShopData = null;
+            public IListener iListener = null;
+            public Data.Shop shopData = null;
         }
 
         public interface IListener
@@ -39,7 +39,7 @@ namespace UI.Component
 
         private void SetIconImg()
         {
-            var shopData = _data?.ShopData;
+            var shopData = _data?.shopData;
             if (shopData == null)
                 return;
 
@@ -60,7 +60,7 @@ namespace UI.Component
 
         private void SetValue()
         {
-            var shopData = _data?.ShopData;
+            var shopData = _data?.shopData;
             if (shopData == null)
                 return;
 
@@ -69,7 +69,7 @@ namespace UI.Component
 
         private void SetPaymentValue()
         {
-            var shopData = _data?.ShopData;
+            var shopData = _data?.shopData;
             if (shopData == null)
                 return;
 
@@ -87,10 +87,10 @@ namespace UI.Component
 
         public void OnClick()
         {            
-            _data?.IListener?.Buy(_data?.ShopData,
+            _data?.iListener?.Buy(_data?.shopData,
                 () =>
                 {
-                    Game.UIManager.Instance?.Top?.CollectCashCurrency(transform.position, _data.ShopData.Value);
+                    Game.UIManager.Instance?.Top?.CollectCashCurrency(transform.position, _data.shopData.Value);
                 });
         }
     }

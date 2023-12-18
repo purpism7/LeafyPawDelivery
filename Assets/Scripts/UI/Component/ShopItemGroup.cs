@@ -13,6 +13,7 @@ namespace UI.Component
     {
         public class Data_ : BaseData
         {
+            public ShopItemCell.IListener iShopItemCellListener = null;
             public Game.Type.ECategory eCategory = Game.Type.ECategory.None;
             public List<Data.Shop> shopDataList = null;
         }
@@ -56,8 +57,8 @@ namespace UI.Component
 
                 var shopItemCellData = new ShopItemCell.Data_()
                 {
-                    //IListener = this,
-                    ShopData = data,
+                    iListener = _data.iShopItemCellListener,
+                    shopData = data,
                 };
 
                 var cell = new ComponentCreator<ShopItemCell, ShopItemCell.Data_>()

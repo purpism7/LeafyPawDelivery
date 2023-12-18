@@ -48,12 +48,7 @@ namespace Game.PlaceEvent
                 yield break;
             }
 
-            if(iTop.CheckMaxDropAnimalCurrencyCnt)
-            {
-                StartDrop();
-
-                yield break;
-            }
+            yield return new WaitUntil(() => !iTop.CheckMaxDropAnimalCurrencyCnt);
 
             yield return _waitSecDropCurrency;
 
