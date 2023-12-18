@@ -9,8 +9,12 @@ namespace Game.PlaceEvent
         private Coroutine _dropItemCoroutine = null;
         private YieldInstruction _waitSecDrop = new WaitForSeconds(60f);
 
+        private Game.Type.EItemSub _eItemSub = Type.EItemSub.None;
+
         public void StartDrop()
         {
+            _eItemSub = Type.EItemSub.Letter;
+
             StopDrop();
             _dropItemCoroutine = StartCoroutine(CoDrop());
         }
@@ -33,15 +37,24 @@ namespace Game.PlaceEvent
             if (gameState.CheckState<Game.State.Edit>())
                 yield break;
 
-            UI.ITop iTop = Game.UIManager.Instance?.Top;
-            if(iTop == null)
+            if(_eItemSub == Type.EItemSub.Letter)
             {
-                StartDrop();
+                UI.ITop iTop = Game.UIManager.Instance?.Top;
+                if (iTop == null)
+                {
+                    StartDrop();
 
-                yield break;
+                    yield break;
+                }
+
+                if(iTop.CheckMaxDropLetterCnt)
+                {
+                    StartDrop();
+
+                    yield break;
+                }
             }
 
-            //iTop.
             yield return _waitSecDrop;
 
             if (_dropItemCoroutine == null)
@@ -72,29 +85,16 @@ namespace Game.PlaceEvent
                 activateProgress = true,
                 totalProgress = 10,
 
-                eItemSub = Type.EItemSub.Letter,
+                eItemSub = _eItemSub,
             };
 
             _iPlace?.CreateDropItem(itemData);
 
-            UI.ITop iTop = Game.UIManager.Instance?.Top;
-            iTop?.SetDropLetterCnt(1);
-            //DropItemCreator.Get
-            //    .SetRootTm(_iPlace.ItemRootTm)
-            //    .SetDropItemData(new Game.DropItem.ItemData()
-            //    {
-            //        startPos = new Vector3(iGameCameraCtrProvider.RandPosXInScreenRagne, iGameCameraCtrProvider.RandPosYInScreenRagne, 310f),
-
-            //        activateProgress = true,
-            //        totalProgress = 10,
-
-            //        eItemSub = Type.EItemSub.Letter,
-
-            //        //startRootTm = randomAnimal.transform,
-            //        //EElement = Type.EElement.Animal,
-            //        //Value = randomAnimal.ElementData.GetCurrency,
-            //    })
-            //    .Create();
+            if(_eItemSub == Type.EItemSub.Letter)
+            {
+                UI.ITop iTop = Game.UIManager.Instance?.Top;
+                iTop?.SetDropLetterCnt(1);
+            }
         }
     }
 }

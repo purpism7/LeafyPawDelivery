@@ -40,6 +40,21 @@ namespace Game.PlaceEvent
             if (animalList.Count <= 0)
                 yield break;
 
+            UI.ITop iTop = Game.UIManager.Instance?.Top;
+            if (iTop == null)
+            {
+                StartDrop();
+
+                yield break;
+            }
+
+            if(iTop.CheckMaxDropAnimalCurrencyCnt)
+            {
+                StartDrop();
+
+                yield break;
+            }
+
             yield return _waitSecDropCurrency;
 
             if (_dropCurrencyCoroutine == null)

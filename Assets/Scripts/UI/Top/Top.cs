@@ -17,6 +17,9 @@ namespace UI
         void SetCurrency();
         void SetDropLetterCnt(int cnt);
         void SetDropAnimalCurrencyCnt(int cnt);
+
+        bool CheckMaxDropLetterCnt { get; }
+        bool CheckMaxDropAnimalCurrencyCnt { get; }
     }
 
     public interface ITopAnim
@@ -436,6 +439,22 @@ namespace UI
         void ITop.SetDropAnimalCurrencyCnt(int cnt)
         {
             SetDropAnimalCurrencyCnt(cnt);
+        }
+
+        bool ITop.CheckMaxDropLetterCnt
+        {
+            get
+            {
+                return DropLetterCnt >= Game.Data.Const.MaxDropLetterCount;
+            }
+        }
+
+        bool ITop.CheckMaxDropAnimalCurrencyCnt
+        {
+            get
+            {
+                return DropAnimalCurrencyCnt >= Game.Data.Const.MaxDropAnimalCurrencyCount;
+            }
         }
         #endregion
 

@@ -55,6 +55,12 @@ namespace Game
                 return;
 
             progressRootTm.SetActive(activate);
+
+            if(activate &&
+               progressSpriteRenderer != null)
+            {
+                progressSpriteRenderer.transform.DOScaleX(1f, 0);
+            }
         }
 
         public override void OnTouchBegan(Touch? touch, GameCameraController gameCameraCtr, IGrid iGrid)
