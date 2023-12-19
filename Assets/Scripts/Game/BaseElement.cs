@@ -18,7 +18,7 @@ namespace Game
 
         public bool IsOverlap = false;
 
-        public Collider Collider { get; private set; } = null;
+        public Collider Collider = null;
         public ElementData ElementData { get; protected set; } = null;
         //public int SortingOrder { get { return spriteRenderer != null ? spriteRenderer.sortingOrder : 1; } }
 
@@ -29,15 +29,22 @@ namespace Game
 
         public void EnableCollider(bool enable)
         {
-            if (Collider == null)
-            {
-                if (spriteRenderer == null)
-                    return;
+            if (!IsActivate)
+                return;
 
-                Collider = transform.GetComponentInChildren<Collider>();
-            }
+            SetCollider<CapsuleCollider>();
+            SetCollider<BoxCollider>();
+            SetCollider<SphereCollider>();
 
             Collider.enabled = enable;
+        }
+
+        protected void SetCollider<T>() where T : Collider
+        {
+            if (Collider != null)
+                return;
+
+            Collider = transform.GetComponentInChildren<T>();
         }
 
         public void SetColor(Color color)

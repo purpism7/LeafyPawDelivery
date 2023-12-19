@@ -426,13 +426,13 @@ namespace Game
         {
             if(_animalList != null)
             {
-                foreach(var animal in _animalList)
+                foreach (var animal in _animalList)
                 {
                     animal?.EnableCollider(enable);
                 }
             }
 
-            if(_objectList != null)
+            if (_objectList != null)
             {
                 foreach (var obj in _objectList)
                 {
