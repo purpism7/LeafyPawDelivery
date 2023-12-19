@@ -32,9 +32,9 @@ public class Const : ScriptableObject
     private int startPlaceId = 1;
 
     [SerializeField]
-    private int maxDropAnimalCurrencyCount = 50;
+    private int maxDropAnimalCurrencyCount = 30;
     [SerializeField]
-    private int maxDropLetterCount = 25;
+    private int maxDropLetterCount = 20;
 
     public int AnimalBaseSkinId { get { return animalBaseSkinId; } }
     public int StartPlaceId { get { return startPlaceId; } }

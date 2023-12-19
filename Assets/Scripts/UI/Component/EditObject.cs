@@ -12,11 +12,17 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
+            public IListener iListener = null;
             public int ObjectId = 0;
             public int Count = 0;
             public int RemainCount = 0;
         }
-        
+
+        public interface IListener
+        {
+            void Select(int id);
+        }
+
         [SerializeField] private Image iconImg = null;
         [SerializeField] private TextMeshProUGUI countTMP = null;
         
@@ -49,11 +55,7 @@ namespace UI.Component
             if(_data == null)
                 return;
 
-            var mainGameMgr = MainGameManager.Instance;
-            if(mainGameMgr == null)
-                return;
-
-            mainGameMgr.AddObjectToPlace(_data.ObjectId);
+            _data?.iListener?.Select(_data.ObjectId);
         }
     }
 }

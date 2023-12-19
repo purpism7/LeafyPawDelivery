@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalBaseSkinId: 1
   startPlaceId: 1
-  maxDropAnimalCurrencyCount: 50
-  maxDropLetterCount: 25
+  maxDropAnimalCurrencyCount: 30
+  maxDropLetterCount: 20
   PlaceDatas:
   - ePlaceName: 1
     Animal: 1

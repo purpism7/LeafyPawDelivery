@@ -8,7 +8,7 @@ using UI.Component;
 
 namespace UI
 {
-    public class EditList : Base<EditList.Data>
+    public class EditList : Base<EditList.Data>, EditAnimal.IListener, EditObject.IListener
     {
         public class Data : BaseData
         {
@@ -33,6 +33,8 @@ namespace UI
         private List<Component.EditObject> _editObjectList = new();
         public Type.ETab CurrETabType { get; private set; } = Type.ETab.Animal;
 
+        private bool _editing = false;
+
         public override void Initialize(Data data)
         {
             base.Initialize(data);            
@@ -46,6 +48,8 @@ namespace UI
 
             SetAnimalList();
             SetObjectList();
+
+            _editing = false;
         }
 
         public EditList Setup(Type.ETab eTabType)
@@ -87,6 +91,7 @@ namespace UI
 
                 var data = new Component.EditAnimal.Data()
                 {
+                    iListener = this,
                     AnimalData = animalData,
                 };
 
@@ -128,6 +133,7 @@ namespace UI
 
                 var data = new Component.EditObject.Data()
                 {
+                    iListener = this,
                     ObjectId = objectInfo.Id,
                     Count = objectData.Count,
                     RemainCount = reaminCount,
@@ -217,6 +223,7 @@ namespace UI
 
                 var data = new Component.EditAnimal.Data()
                 {
+                    iListener = this,
                     AnimalData = animalData,
                     //SkinId = animalMgr.GetCurrenctSkinId(info.Id),
                 };
@@ -269,6 +276,7 @@ namespace UI
 
                 var data = new Component.EditObject.Data()
                 {
+                    iListener = this,
                     ObjectId = objectInfo.Id,
                     Count = objectData.Count,
                     RemainCount = remainCount,
@@ -296,7 +304,40 @@ namespace UI
 
             ActiveContents();
         }
-        
+
+        #region EditAnimal.IListener
+        void EditAnimal.IListener.Select(int id)
+        {
+            if (_editing)
+                return;
+
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                return;
+
+            mainGameMgr.AddAnimalToPlace(id);
+
+            _editing = true;
+
+        }
+        #endregion
+
+        #region EditObject.IListener
+        void EditObject.IListener.Select(int id)
+        {
+            if (_editing)
+                return;
+
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                return;
+
+            mainGameMgr.AddObjectToPlace(id);
+
+            _editing = true;
+        }
+        #endregion
+
         public void OnChanged(string tabType)
         {
             if(System.Enum.TryParse(tabType, out Type.ETab eTabType))

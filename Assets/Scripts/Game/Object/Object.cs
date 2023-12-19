@@ -87,6 +87,11 @@ namespace Game
             else
             {
                 SetState(new Game.Element.State.Game<Game.Object>()?.Initialize(gameCameraCtr, iGrid));
+                
+            }
+
+            if(touch != null)
+            {
                 State?.Touch(touch.Value);
             }
         }

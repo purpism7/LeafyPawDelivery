@@ -110,7 +110,10 @@ namespace Game.Creature
                 SetState(new Element.State.Game<Animal>()?.Initialize(gameCameraCtr, iGrid));
             }
 
-
+            if(touch != null)
+            {
+                State?.Touch(touch.Value);
+            }
         }
 
         public override void OnTouch(Touch touch)

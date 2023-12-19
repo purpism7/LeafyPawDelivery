@@ -10,7 +10,13 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
+            public IListener iListener = null;
             public Animal AnimalData = null;
+        }
+
+        public interface IListener
+        {
+            void Select(int id);
         }
 
         [SerializeField] private Image iconImg = null;
@@ -41,11 +47,7 @@ namespace UI.Component
             if (_data.AnimalData == null)
                 return;
 
-            var mainGameMgr = MainGameManager.Instance;
-            if(mainGameMgr == null)
-                return;
-
-            mainGameMgr.AddAnimalToPlace(_data.AnimalData.Id);
+            _data?.iListener?.Select(_data.AnimalData.Id);
         }
     }
 }
