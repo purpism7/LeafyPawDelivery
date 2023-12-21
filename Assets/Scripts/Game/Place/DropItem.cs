@@ -11,7 +11,7 @@ namespace Game.PlaceEvent
     public class DropItem : Base
     {
         private Coroutine _dropItemCoroutine = null;
-        private YieldInstruction _waitSecDrop = new WaitForSeconds(UnityEngine.Random.Range(50f, 70f));
+        private YieldInstruction _waitSecDrop = new WaitForSeconds(56f);
 
         //private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
