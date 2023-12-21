@@ -8,36 +8,12 @@ namespace Game.Manager
 {
     public class Guide : Game.Common
     {
-        #region Static
-        private static string KeyGuide { get { return "Key" + typeof(Guide).Name; } }
+        private string KeyGuide { get { return "Key" + typeof(Guide).Name; } }
 
-        private static Guide _instance = null;
-        public static Guide Create()
+        private void Start()
         {
-            int step = PlayerPrefs.GetInt(KeyGuide , 0);
-            if (step >= 3)
-                return null;
-
-            if (_instance == null)
-            {
-                var gameObj = new GameObject(typeof(Guide).Name);
-                if (!gameObj)
-                    return null;
-
-                gameObj.transform.SetParent(MainGameManager.Instance?.transform);
-
-                _instance = gameObj.GetOrAddComponent<Guide>();
-                _instance?.Initialize();
-            }
-
-            return _instance;
+            Initialize();
         }
-
-        public static bool Validate
-        {
-            get { return _instance != null; }
-        }
-        #endregion
 
         private void Initialize()
         {

@@ -28,8 +28,6 @@ namespace UI
 
             yield return new WaitForEndOfFrame();
 
-            _adMob = AdMob.Create();
-
             yield return null;
         }
 
@@ -76,7 +74,7 @@ namespace UI
 
             if(shopData.EPayment == Game.Type.EPayment.Advertising)
             {
-                _adMob?.LoadRewardedInterstitialAd(shopData.ProductId);
+                //_adMob?.LoadRewardedInterstitialAd(shopData.ProductId);
             }
             else
             {

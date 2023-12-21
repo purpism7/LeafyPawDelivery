@@ -6,29 +6,29 @@ namespace Info
 {
     public class Connector
     {
-        private readonly string KEYOPENPLACEID = string.Empty;
+        private readonly string KeyOpenPlaceId = string.Empty;
 
         public Connector()
         {
-            KEYOPENPLACEID = GetType().Name + "_OpenPlaceId";
+            KeyOpenPlaceId = GetType().Name + "_OpenPlaceId";
         }
 
         public int OpenPlaceId
         {
             get
             {
-                return PlayerPrefs.GetInt(KEYOPENPLACEID, 0);
+                return PlayerPrefs.GetInt(KeyOpenPlaceId, 0);
             }
         }
 
         public void SaveOpenPlaceId(int id)
         {
-            PlayerPrefs.SetInt(KEYOPENPLACEID, id);
+            PlayerPrefs.SetInt(KeyOpenPlaceId, id);
         }
 
         public void ResetOpenPlaceId()
         {
-            PlayerPrefs.SetInt(KEYOPENPLACEID, 0);
+            PlayerPrefs.SetInt(KeyOpenPlaceId, 0);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Scene
         //string PublicKeyUrl;
         //ulong Timestamp;
 
-        private async void Start()
+        private void Start()
         {
             // GameScene 에서 바로 실행 시, 동작.
             // Loading 거쳐서 들어올 경우 에는, ActiveScene 이 LoadingScene 임.
@@ -40,22 +40,11 @@ namespace Scene
                 }
             }
 
-            await UnityServices.InitializeAsync();
 
-            Debug.Log(UnityServices.State);
+            
             Debug.Log("Game Start");
             //await Login();
             //await SignInWithAppleGameCenterAsync(Signature, TeamPlayerID, PublicKeyUrl, Salt, Timestamp);
-
-            Social.localUser.Authenticate(
-                (success) =>
-                {
-                    Debug.Log("Success Authenticate");
-                    //GameCenterPlatform.Show(true);
-                    //Social.
-                    Debug.Log(Social.localUser.id);
-                    Debug.Log("UserName = " + Social.localUser.userName); 
-                });
         }
 
         //public async Task Login()

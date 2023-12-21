@@ -118,6 +118,7 @@ namespace Game
             AnimalSkin,
             Story,
             Stamp,
+            Letter,
         }
 
         public enum EAcquireAction

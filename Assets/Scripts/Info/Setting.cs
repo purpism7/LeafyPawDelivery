@@ -9,8 +9,8 @@ namespace Info
 {
     public class Setting
     {
-        private readonly string KEYBGM = string.Empty;
-        private readonly string KEYEFFECT = string.Empty;
+        private readonly string KeyBGM = string.Empty;
+        private readonly string KeyEffect = string.Empty;
         private readonly string KEYLOCALEINDEX = string.Empty;
 
         public static UnityEvent<Game.Event.SettingData> Event { get; private set; } = new();
@@ -19,7 +19,7 @@ namespace Info
         {
             get
             {
-                string onBGM = PlayerPrefs.GetString(KEYBGM, true.ToString());
+                string onBGM = PlayerPrefs.GetString(KeyBGM, true.ToString());
                 if (Boolean.TryParse(onBGM, out bool on))
                 {
                     return on;
@@ -33,7 +33,7 @@ namespace Info
         {
             get
             {
-                string onEffect = PlayerPrefs.GetString(KEYEFFECT, true.ToString());
+                string onEffect = PlayerPrefs.GetString(KeyEffect, true.ToString());
                 if (Boolean.TryParse(onEffect, out bool on))
                 {
                     return on;
@@ -53,14 +53,14 @@ namespace Info
 
         public Setting()
         {
-            KEYBGM = GetType().Name + "_BGM";
-            KEYEFFECT = GetType().Name + "_Effect";
+            KeyBGM = GetType().Name + "_BGM";
+            KeyEffect = GetType().Name + "_Effect";
             KEYLOCALEINDEX = GetType().Name + "_LocaleIndex";
         }
 
         public void SaveBGM(bool on)
         {
-            PlayerPrefs.SetString(KEYBGM, on.ToString());
+            PlayerPrefs.SetString(KeyBGM, on.ToString());
 
             Event?.Invoke(
                 new Game.Event.BGMData()
@@ -71,7 +71,7 @@ namespace Info
 
         public void SaveEffect(bool on)
         {
-            PlayerPrefs.SetString(KEYEFFECT, on.ToString());
+            PlayerPrefs.SetString(KeyEffect, on.ToString());
         }
 
         public void SaveLocaleIndex(int index)

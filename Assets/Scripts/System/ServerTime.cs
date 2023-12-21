@@ -33,7 +33,6 @@ namespace GameSystem
                     //callback?.Invoke(date);
                     if(DateTime.TryParse(date, out DateTime dateTime))
                     {
-                        Debug.Log("serverTime = " + (DateTime.UtcNow - dateTime).TotalSeconds);
                         DatTime = dateTime;
                         
                     }

@@ -29,6 +29,8 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private static Dictionary<Type, MonoBehaviour> _managerDic = new();
 
+    public ServerTime ServerTime { get; private set; } = null;
+
     public static T Get<T>()
     {
         if (_managerDic == null)
@@ -53,7 +55,7 @@ public class MainGameManager : Singleton<MainGameManager>
         AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>());
         AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
 
-        gameObject.GetOrAddComponent<ServerTime>();
+        ServerTime = gameObject.GetOrAddComponent<ServerTime>();
     }
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
@@ -83,8 +85,6 @@ public class MainGameManager : Singleton<MainGameManager>
         yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
 
         yield return null;
-
-        Game.Manager.Guide.Create();
 
         EndLoad(true);
     }

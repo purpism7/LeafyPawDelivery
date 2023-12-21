@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+
 using Firebase.Database;
+using Cysharp.Threading.Tasks;
 
 namespace Info
 {
@@ -44,12 +46,43 @@ namespace Info
         public override IEnumerator CoInit()
         {
             yield return StartCoroutine(base.CoInit());
-            yield return StartCoroutine(CoLoadUserInfo());
+
+            yield return StartCoroutine(CoLoadLocalUserInfo());
+            //yield return StartCoroutine(CoLoadUserInfo());
+        }
+
+        private IEnumerator CoLoadLocalUserInfo()
+        {
+            if (!System.IO.File.Exists(_userInfoJsonFilePath))
+            {
+                CreateUserInfo();
+
+                yield break;
+            }
+
+            var jsonString = System.IO.File.ReadAllText(_userInfoJsonFilePath);
+            User = JsonUtility.FromJson<Info.User>(jsonString);
+
+            CreateUserInfo();
+
+            Debug.Log(jsonString);
+            
             yield return null;
+        }
+
+        private void CreateUserInfo()
+        {
+            if (User != null)
+                return;
+
+            User = new Info.User();
+
+            LocalSave();
         }
 
         private IEnumerator CoLoadUserInfo()
         {
+            Debug.Log("CoLoadUserInfo()");
             var firebaseMgr = GameSystem.FirebaseManager.Instance;
             if (firebaseMgr == null)
                 yield break;
@@ -245,6 +278,8 @@ namespace Info
         {
             User?.SetCurrency(currency);
 
+            LocalSave();
+
             var firebaseMgr = GameSystem.FirebaseManager.Instance;
             if (firebaseMgr == null)
                 return;
@@ -259,6 +294,8 @@ namespace Info
         public void SaveCash(long cash)
         {
             User?.SetCash(cash);
+
+            LocalSave();
 
             var firebaseMgr = GameSystem.FirebaseManager.Instance;
             if (firebaseMgr == null)
@@ -275,6 +312,8 @@ namespace Info
         {
             User?.SetStory(GameUtils.ActivityPlaceId, storyId);
 
+            LocalSave();
+
             var firebaseMgr = GameSystem.FirebaseManager.Instance;
             if (firebaseMgr == null)
                 return;
@@ -287,6 +326,7 @@ namespace Info
             Debug.Log("StoryList json str = " + jsonStr);
 
             firebaseMgr?.Database?.SaveChild(userId, KeyUserStory, jsonStr);
+
         }
     }
 }

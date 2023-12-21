@@ -9,22 +9,20 @@ namespace GameSystem
     public class AdMob : MonoBehaviour
     {
         private static AdMob _instance = null;
-        public static AdMob Create()
+        public static void Create()
         {
             if (_instance == null)
             {
                 var gameObj = new GameObject(typeof(AdMob).Name);
                 if (!gameObj)
-                    return null;
+                    return;
 
                 _instance = gameObj.GetOrAddComponent<AdMob>();
                 _instance?.Initialize();
             }
-
-            return _instance;
         }
 
-        private RewardedInterstitialAd _rewardedInterstitialAd = null;
+        private static RewardedInterstitialAd _rewardedInterstitialAd = null;
 
         //public AdMob()
         //{
@@ -41,7 +39,7 @@ namespace GameSystem
 
         /// Loads the rewarded interstitial ad.
         /// </summary>
-        public void LoadRewardedInterstitialAd(string id)
+        public static void LoadRewardedInterstitialAd(string id)
         {
             // Clean up the old ad before loading a new one.
             if (_rewardedInterstitialAd != null)
@@ -75,7 +73,7 @@ namespace GameSystem
               //  });
         }
 
-        private void AdLoadCallback(RewardedInterstitialAd ad, LoadAdError error)
+        private static void AdLoadCallback(RewardedInterstitialAd ad, LoadAdError error)
         {
             if (error != null || ad == null)
             {

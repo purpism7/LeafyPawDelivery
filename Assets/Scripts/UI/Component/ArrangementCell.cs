@@ -307,6 +307,8 @@ namespace UI.Component
             if (!isPossibleObtain)
                 return;
 
+            var mainGameMgr = MainGameManager.Instance;
+
             Sequencer.EnqueueTask(
                 () =>
                 {
@@ -325,20 +327,26 @@ namespace UI.Component
                         .Create();
 
 
+                    int animalCurrency = openConditionData.AnimalCurrency;
+                    int objectCurrency = openConditionData.ObjectCurrency;
+
                     Info.UserManager.Instance.SaveCurrency(new Info.User.Currency()
                     {
                         PlaceId = GameUtils.ActivityPlaceId,
-                        Animal = -openConditionData.AnimalCurrency,
-                        Object = -openConditionData.ObjectCurrency,
+                        Animal = -animalCurrency,
+                        Object = -objectCurrency,
                     });
 
                     ITop iTop = Game.UIManager.Instance?.Top;
                     iTop?.SetCurrency();
 
+                    mainGameMgr?.AddAcquire(Game.Type.EElement.Animal, Game.Type.EAcquireAction.Use, animalCurrency);
+                    mainGameMgr?.AddAcquire(Game.Type.EElement.Object, Game.Type.EAcquireAction.Use, objectCurrency);
+
                     return obtain;
                 });
 
-            MainGameManager.Instance?.Add(_data.EElement, _data.Id);
+            mainGameMgr?.Add(_data.EElement, _data.Id);
         }
 
         public void Obtain(Game.Type.EElement eElement, int id)

@@ -17,16 +17,20 @@ namespace UI.Component
             public List<Achievement> AchievementDataList = null;
         }
 
+        private const string KeyGetRewardedAchievement = "KeyGetRewardedAchievement_{0}";
+
         [SerializeField]
         private TextMeshProUGUI titleTMP = null;
         [SerializeField]
         private Image progressImg = null;
         [SerializeField]
         private TextMeshProUGUI progressTMP = null;
-        [SerializeField]
-        private Button getRewardBtn = null;
+        //[SerializeField]
+        //private Button getRewardBtn = null;
         [SerializeField]
         private OpenConditionVertical openCondition = null;
+        [SerializeField]
+        private RectTransform completedRootRectTm = null;
 
         private int _step = 1;
         private float _progress = 0;
@@ -42,6 +46,13 @@ namespace UI.Component
         {
             base.Activate();
 
+            Set();
+
+            UIUtils.SetActive(completedRootRectTm, GetRewarded);
+        }
+
+        private void Set()
+        {
             SetStep();
             SetTitleTMP();
             SetProgress();
@@ -69,7 +80,7 @@ namespace UI.Component
 
         private void SetProgress()
         {
-            int id = _data != null ? _data.Id : 0;
+            //int id = _data != null ? _data.Id : 0;
             var achievementInfo = MainGameManager.Get<Game.Manager.Acquire>()?.GetAchievement(_data.Id);
 
             float dataProgress = DataProgress;
@@ -88,6 +99,47 @@ namespace UI.Component
                 var achievementData = achievementDatas != null && achievementDatas.Count() >= _step ? achievementDatas.ToArray()[_step - 1] : null;
 
                 return achievementData != null ? achievementData.Value : 0;
+            }
+        }
+
+        private bool IsLastStep
+        {
+            get
+            {
+                var achievementDataList = _data?.AchievementDataList;
+                if (achievementDataList == null)
+                    return false;
+
+                int lastStep = 0;
+                foreach(var achievementData in achievementDataList)
+                {
+                    if (achievementData == null)
+                        continue;
+
+                    if (lastStep >= achievementData.Step)
+                        continue;
+
+                    lastStep = achievementData.Step;
+                }
+
+                return _step >= lastStep;
+            }
+        }
+
+        private bool GetRewarded
+        {
+            get
+            {
+                bool getRewarded = true;
+                if (_data == null)
+                    return getRewarded;
+
+                if (System.Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedAchievement, _data.Id), false.ToString()), out getRewarded))
+                {
+                    return getRewarded;
+                }
+
+                return getRewarded;
             }
         }
 
@@ -118,14 +170,24 @@ namespace UI.Component
 
             Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, 5);
 
+            if(IsLastStep)
+            {
+                PlayerPrefs.SetString(string.Format(KeyGetRewardedAchievement, _data.Id), true.ToString());
+
+                UIUtils.SetActive(completedRootRectTm, GetRewarded);
+
+                if (transform)
+                {
+                    transform.SetAsLastSibling();
+                }
+            }
+
             if(_data != null)
             {
                 MainGameManager.Get<Game.Manager.Acquire>()?.SetNextStep(_data.Id);
             }
 
-            SetStep();
-            SetTitleTMP();
-            SetProgress();
+            Set();
         }
     }
 }

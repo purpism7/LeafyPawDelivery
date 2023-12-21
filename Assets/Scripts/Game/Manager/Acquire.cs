@@ -12,7 +12,6 @@ namespace Game.Manager
         }
 
         private Info.AcquireHolder _acquireHolder = new();
-
         
         protected override void Initialize()
         {

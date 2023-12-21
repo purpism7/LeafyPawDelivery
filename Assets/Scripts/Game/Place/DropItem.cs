@@ -11,7 +11,7 @@ namespace Game.PlaceEvent
     public class DropItem : Base
     {
         private Coroutine _dropItemCoroutine = null;
-        private YieldInstruction _waitSecDrop = new WaitForSeconds(60f);
+        private YieldInstruction _waitSecDrop = new WaitForSeconds(UnityEngine.Random.Range(50f, 70f));
 
         //private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
@@ -143,7 +143,6 @@ namespace Game.PlaceEvent
             var itemData = new Game.DropItem.ItemData()
             {
                 startPos = new Vector3(iGameCameraCtrProvider.RandPosXInScreenRagne, iGameCameraCtrProvider.RandPosYInScreenRagne, 310f),
-                Value = 10,
 
                 activateProgress = true,
                 totalProgress = 10,

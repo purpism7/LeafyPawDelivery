@@ -3,17 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
+using System;
 
 using TMPro;
 
+
 namespace UI.Component
 {
-    public class DailyMissionCell : Base<DailyMissionCell.Data>
+    public interface IDailyMissionProvider
+    {
+        bool IsCompleted { get; }
+        bool GetRewarded { get; }
+        void Reset();
+    }
+
+    public class DailyMissionCell : Base<DailyMissionCell.Data>, IDailyMissionProvider
     {
         public class Data : BaseData
         {
             public DailyMission DailyMissionData = null;
+            public bool isTotal = false;
         }
+
+        private const string KeyGetRewardedDailyMission = "KeyGetRewardedDailyMission_{0}";
 
         [SerializeField]
         private TextMeshProUGUI titleTMP = null;
@@ -29,6 +41,8 @@ namespace UI.Component
         private RectTransform completedRootRectTm = null;
 
         private float _progress = 0;
+
+        public int Id { get { return _data?.DailyMissionData != null ? _data.DailyMissionData.Id : 0; } }
 
         public override void Initialize(Data data)
         {
@@ -49,23 +63,44 @@ namespace UI.Component
             //    getRewardBtn.interactable = _progress < DataProgress;
             //}
 
-            UIUtils.SetActive(completedRootRectTm, _progress >= DataProgress);
+            UIUtils.SetActive(completedRootRectTm, GetRewarded);
         }
 
         private void SetTitleTMP()
         {
-            var dailyMissionData = _data?.DailyMissionData;
-            if (dailyMissionData == null)
+            if (_data == null)
                 return;
 
-            string localKey = "dailymission_" + dailyMissionData.Id;
-            var title = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", localKey, LocalizationSettings.SelectedLocale), dailyMissionData.Value);
+            string localKey = string.Empty;
+            string title = string.Empty;
+            if(_data.isTotal)
+            {
+                localKey = "dailymission_total";
+                title = LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", localKey, LocalizationSettings.SelectedLocale);
+            }
+            else
+            {
+                var dailyMissionData = _data?.DailyMissionData;
+                if (dailyMissionData == null)
+                    return;
 
+                localKey = "dailymission_" + dailyMissionData.Id;
+                title = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", localKey, LocalizationSettings.SelectedLocale), dailyMissionData.Value);
+            }
+           
             titleTMP?.SetText(title);
         }
 
         private void SetProgress()
         {
+            if (_data == null)
+                return;
+
+            if(_data.isTotal)
+            {
+
+            }
+
             var dailyMissionData = _data?.DailyMissionData;
 
             float dataProgress = DataProgress;
@@ -106,6 +141,63 @@ namespace UI.Component
             }
         }
 
+        private bool GetRewarded
+        {
+            get
+            {
+                bool getRewarded = true;
+                var dailyMissionData = _data?.DailyMissionData;
+                if (dailyMissionData == null)
+                    return getRewarded;
+
+                if(Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedDailyMission, _data.DailyMissionData.Id), false.ToString()), out getRewarded))
+                {
+                    return getRewarded;
+                }
+
+                return getRewarded;
+            }
+        }
+
+        private bool IsCompleted
+        {
+            get
+            {
+                var dailyMissionData = _data?.DailyMissionData;
+                if (dailyMissionData == null)
+                    return false;
+
+                return _progress >= dailyMissionData.Progress;
+            }
+        }
+
+        #region IDailyMissionProvider
+        bool IDailyMissionProvider.IsCompleted
+        {
+            get
+            {
+                return IsCompleted;
+            }
+        }
+
+        bool IDailyMissionProvider.GetRewarded
+        {
+            get
+            {
+                return GetRewarded;
+            }
+        }
+
+        void IDailyMissionProvider.Reset()
+        {
+            var dailyMissionData = _data?.DailyMissionData;
+            if (dailyMissionData == null)
+                return;
+
+            PlayerPrefs.SetString(string.Format(KeyGetRewardedDailyMission, dailyMissionData.Id), false.ToString());
+        }
+        #endregion
+
         public void OnClickGetReward()
         {
             var dataProgress = DataProgress;
@@ -118,6 +210,13 @@ namespace UI.Component
             Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, 5);
 
             UIUtils.SetActive(completedRootRectTm, true);
+
+            if(transform)
+            {
+                transform.SetAsLastSibling();
+            }
+
+            PlayerPrefs.SetString(string.Format(KeyGetRewardedDailyMission, _data.DailyMissionData.Id), true.ToString());
         }
     }
 }

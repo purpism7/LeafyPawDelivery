@@ -125,6 +125,10 @@ MonoBehaviour:
     m_Key: cash
     m_Metadata:
       m_Items: []
+  - m_Id: 46398107640913920
+    m_Key: guide_open_place
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

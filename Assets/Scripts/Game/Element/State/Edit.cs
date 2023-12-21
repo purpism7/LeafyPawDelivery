@@ -151,13 +151,6 @@ namespace Game.Element.State
             {
                 case CapsuleCollider collider:
                     {
-                        //var height = collider.direction == 0 ? collider.center.y : collider.height;
-
-
-                        //Debug.Log(gameBaseTm.position);
-                        //var startPos = new Vector3(gameBaseTm.position.x, gameBaseTm.position.y, gameBaseTm.position.z);
-                        //var endPos = new Vector3(gameBaseTm.position.x, gameBaseTm.position.y + height, gameBaseTm.position.z);
-                        //Debug.DrawLine(startPos, endPos, Color.black);
                         var direction = new Vector3 { [collider.direction] = 1 };
                         var offset = collider.height / 2 - collider.radius;
                         var localPoint0 = collider.center - direction * offset;
@@ -168,7 +161,6 @@ namespace Game.Element.State
 
                         var r = gameBaseTm.TransformVector(collider.radius, collider.radius, collider.radius);
                         var radius = Enumerable.Range(0, 3).Select(xyz => xyz == collider.direction ? 0 : r[xyz]).Select(Mathf.Abs).Max();
-
 
                         colliders = Physics.OverlapCapsule(startPos, endPos, collider.radius);
 

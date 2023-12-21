@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
+using TMPro;
+
 using Game;
 
 namespace UI
@@ -18,6 +20,14 @@ namespace UI
         [SerializeField] private Toggle[] tabToggles = null;
         [SerializeField] private ScrollRect dailyMissionScrollRect = null;
         [SerializeField] private ScrollRect achievementsScrollRect = null;
+
+        [Header("Daily Mission")]
+        [SerializeField]
+        private RectTransform dailyMissionRootRectTm = null;
+        [SerializeField]
+        private TextMeshProUGUI localRemainTimeTMP = null;
+        [SerializeField]
+        private Component.DailyMissionCell totalDailyMissionCell = null;
 
         private Type.ETab _currETabType = Type.ETab.DailyMission;
         private List<Component.DailyMissionCell> _dailyMissionCellList = new();
@@ -52,6 +62,19 @@ namespace UI
             }           
         }
 
+        private void Update()
+        {
+            var localRemainTime = System.DateTime.Today.AddDays(1).Subtract(System.DateTime.UtcNow);
+            var localRemainTotalSeconds = localRemainTime.TotalSeconds;
+
+            localRemainTimeTMP?.SetText("Local Time : " + localRemainTime.ToString(@"hh\:mm\:ss"));
+
+            if(localRemainTotalSeconds <= 0)
+            {
+                ResetDailyMissionList();
+            }
+        }
+
         private void SetDailyMissionList()
         {
             var dailyMissions = DailyMissionContainer.Instance?.Datas;
@@ -72,6 +95,46 @@ namespace UI
                    .Create();
 
                 _dailyMissionCellList.Add(cell);
+            }
+
+            foreach(var dailyMissionCell in _dailyMissionCellList)
+            {
+                if (dailyMissionCell == null)
+                    continue;
+
+                var iDailyMissionProvider = dailyMissionCell as UI.Component.IDailyMissionProvider;
+                if (iDailyMissionProvider == null)
+                    continue;
+
+                if (!iDailyMissionProvider.GetRewarded)
+                    continue;
+
+                if (!dailyMissionCell.transform)
+                    continue;
+
+                dailyMissionCell.transform.SetAsLastSibling();
+            }
+
+            totalDailyMissionCell?.Initialize(
+                new Component.DailyMissionCell.Data()
+                {
+                    isTotal = true,
+                });
+            totalDailyMissionCell?.Activate();
+        }
+
+        private void ResetDailyMissionList()
+        {
+            Debug.Log("ResetDailyMissionList");
+
+            if (_dailyMissionCellList == null)
+                return;
+
+            _dailyMissionCellList.OrderBy(dailyMissionCell => dailyMissionCell.Id);
+
+            foreach(UI.Component.IDailyMissionProvider iDailyMissionProvider in _dailyMissionCellList)
+            {
+                iDailyMissionProvider?.Reset();
             }
         }
 
@@ -100,7 +163,7 @@ namespace UI
         {
             ActivateChildComponent(_currETabType == Game.Type.ETab.DailyMission ? typeof(Component.DailyMissionCell) : typeof(Component.AchievementCell));
 
-            UIUtils.SetActive(dailyMissionScrollRect?.gameObject, _currETabType == Game.Type.ETab.DailyMission);
+            UIUtils.SetActive(dailyMissionRootRectTm, _currETabType == Game.Type.ETab.DailyMission);
             UIUtils.SetActive(achievementsScrollRect?.gameObject, _currETabType == Game.Type.ETab.Achievement);
         }
 

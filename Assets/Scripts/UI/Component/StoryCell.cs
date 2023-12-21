@@ -55,7 +55,14 @@ namespace UI.Component
         private void SetLock()
         {
             bool isLock = true;
-            if(_data.Story.Id <= 2)
+            var user = Info.UserManager.Instance.User;
+            int lastStoryId = 0;
+            if (user != null)
+            {
+                lastStoryId  = user.GetLastStoryId(GameUtils.ActivityPlaceId);
+            }
+
+            if(_data.Story.Id <= lastStoryId)
             {
                 isLock = false;
             }
