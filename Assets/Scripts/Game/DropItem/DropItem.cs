@@ -119,7 +119,7 @@ namespace Game
         {
             yield return _waitSecActivateProgress;
 
-            progressSpriteRenderer?.DOFade(0, 0.1f);
+            progressSpriteRenderer?.DOFade(0, 0.2f);
         }
 
         //private async UniTask AsyncActivateProgress()

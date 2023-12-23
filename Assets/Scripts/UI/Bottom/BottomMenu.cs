@@ -25,6 +25,8 @@ namespace UI
 
         private Game.Type.EBottomType _eType = Game.Type.EBottomType.None;
 
+        public Game.Type.EBottomType EType { get { return _eType; } }
+
         public override void Initialize(Data data)
         {
             base.Initialize(data);

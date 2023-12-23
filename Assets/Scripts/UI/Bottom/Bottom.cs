@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 using DG.Tweening;
 
@@ -23,6 +24,7 @@ namespace UI
         #endregion
         
         private List<BottomMenu> _bottomMenuList = new();
+        private Dictionary<Game.Type.EBottomType, bool> _reInitializeDic = new(); 
         private int _placeId = 0;
 
         public EditList EditList { get; private set; } = null;
@@ -38,6 +40,7 @@ namespace UI
         private void InitializeBottomMenu()
         {
             _bottomMenuList?.Clear();
+            _reInitializeDic?.Clear();
 
             if (!rootRectTm)
                 return;
@@ -54,22 +57,26 @@ namespace UI
                 });
 
                 _bottomMenuList?.Add(bottomMenu);
+                _reInitializeDic?.Add(bottomMenu.EType, false);
             }
         }
 
-        private bool CheckReInitialize
+        private void SetReInitialize()
         {
-            get
+            bool reInitialize = false;
+            int activityPlaceId = GameUtils.ActivityPlaceId;
+
+            reInitialize = _placeId != activityPlaceId;
+            if (reInitialize)
             {
-                bool reInitialize = false;
-                int activityPlaceId = GameUtils.ActivityPlaceId;
-
-                reInitialize = _placeId != activityPlaceId;
-
-                _placeId = activityPlaceId;
-
-                return reInitialize;
+                _reInitializeDic.Keys?.ToList().ForEach(
+                    key =>
+                    {
+                        _reInitializeDic[key] = true;
+                    });
             }
+
+            _placeId = activityPlaceId;
         }
 
         public void ActivateAnim(System.Action completeAction)
@@ -124,14 +131,23 @@ namespace UI
         #region BottomMenu.IListener
         void BottomMenu.IListener.SelectBottomMenu(Game.Type.EBottomType eBottomType)
         {
-            bool reInitialize = CheckReInitialize;
+            SetReInitialize();
 
+            bool reInitialize = false;
+            if(_reInitializeDic != null &&
+               _reInitializeDic.TryGetValue(eBottomType, out reInitialize))
+            {
+                Debug.Log("reInitialize 11 = " + reInitialize);
+                _reInitializeDic[eBottomType] = false;
+            }
+            Debug.Log("reInitialize 22 = " + reInitialize);
             switch (eBottomType)
             {
                 case Game.Type.EBottomType.Shop:
                     {
                         var popup = new GameSystem.PopupCreator<Shop, Shop.Data_>()
                             .SetCoInit(true)
+                            .SetReInitialize(reInitialize)
                             .Create();
 
                         break;

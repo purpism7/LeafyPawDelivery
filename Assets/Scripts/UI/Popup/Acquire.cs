@@ -59,7 +59,10 @@ namespace UI
             if (tabToggle != null)
             {
                 tabToggle.SetIsOnWithoutNotify(true);
-            }           
+            }
+
+            dailyMissionScrollRect?.ResetScrollPos();
+            achievementsScrollRect?.ResetScrollPos();
         }
 
         private void Update()

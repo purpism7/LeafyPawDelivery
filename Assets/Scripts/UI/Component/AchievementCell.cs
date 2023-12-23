@@ -176,10 +176,10 @@ namespace UI.Component
 
                 UIUtils.SetActive(completedRootRectTm, GetRewarded);
 
-                if (transform)
-                {
-                    transform.SetAsLastSibling();
-                }
+                //if (transform)
+                //{
+                //    transform.SetAsLastSibling();
+                //}
             }
 
             if(_data != null)
