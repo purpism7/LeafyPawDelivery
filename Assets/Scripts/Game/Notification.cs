@@ -23,6 +23,8 @@ namespace Game
 
         private void Awake()
         {
+            Create(MainGameManager.Instance?.transform);
+
             _iListenerDic?.Clear();
         }
 

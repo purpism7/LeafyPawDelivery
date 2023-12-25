@@ -5,7 +5,8 @@ using UnityEngine;
 public abstract class Statics<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance = null;
-    private static T Create()
+    private static Transform _parentTm = null;
+    public static T Create(Transform parentTm = null)
     {
         if (_instance == null)
         {
@@ -13,7 +14,14 @@ public abstract class Statics<T> : MonoBehaviour where T : MonoBehaviour
             if (!gameObj)
                 return null;
 
-            gameObj.transform.SetParent(MainGameManager.Instance?.transform);
+            var tm = gameObj.transform;
+            if (!tm)
+                return null;
+
+            tm.SetParent(parentTm);
+
+            tm.localPosition = Vector3.zero;
+            tm.localScale = Vector3.one;
 
             _instance = gameObj.GetOrAddComponent<T>();
         }
@@ -30,7 +38,7 @@ public abstract class Statics<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
-            return Create();
+            return _instance;
         }
     }
 }
