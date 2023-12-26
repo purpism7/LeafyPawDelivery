@@ -1,1 +1,348 @@
-{"Datas":[{"Id":1,"Step":1,"Type":"ObjectCurrency","Action":"Obtain","Value":200,"RewardId":null},{"Id":1,"Step":2,"Type":"ObjectCurrency","Action":"Obtain","Value":400,"RewardId":null},{"Id":1,"Step":3,"Type":"ObjectCurrency","Action":"Obtain","Value":600,"RewardId":null},{"Id":1,"Step":4,"Type":"ObjectCurrency","Action":"Obtain","Value":800,"RewardId":null},{"Id":1,"Step":5,"Type":"ObjectCurrency","Action":"Obtain","Value":1000,"RewardId":null},{"Id":2,"Step":1,"Type":"AnimalCurrency","Action":"Obtain","Value":10,"RewardId":null},{"Id":2,"Step":2,"Type":"AnimalCurrency","Action":"Obtain","Value":20,"RewardId":null},{"Id":2,"Step":3,"Type":"AnimalCurrency","Action":"Obtain","Value":30,"RewardId":null},{"Id":2,"Step":4,"Type":"AnimalCurrency","Action":"Obtain","Value":40,"RewardId":null},{"Id":2,"Step":5,"Type":"AnimalCurrency","Action":"Obtain","Value":50,"RewardId":null},{"Id":3,"Step":1,"Type":"Animal","Action":"Use","Value":null,"RewardId":null},{"Id":3,"Step":2,"Type":"Animal","Action":"Use","Value":null,"RewardId":null},{"Id":3,"Step":3,"Type":"Animal","Action":"Use","Value":null,"RewardId":null},{"Id":3,"Step":4,"Type":"Animal","Action":"Use","Value":null,"RewardId":null},{"Id":3,"Step":5,"Type":"Animal","Action":"Use","Value":null,"RewardId":null},{"Id":4,"Step":1,"Type":"ObjectCurrency","Action":"Use","Value":50000,"RewardId":null},{"Id":4,"Step":2,"Type":"ObjectCurrency","Action":"Use","Value":100000,"RewardId":null},{"Id":4,"Step":3,"Type":"ObjectCurrency","Action":"Use","Value":150000,"RewardId":null},{"Id":4,"Step":4,"Type":"ObjectCurrency","Action":"Use","Value":200000,"RewardId":null},{"Id":5,"Step":1,"Type":"AnimalCurrency","Action":"Use","Value":50000,"RewardId":null},{"Id":5,"Step":2,"Type":"AnimalCurrency","Action":"Use","Value":100000,"RewardId":null},{"Id":5,"Step":3,"Type":"AnimalCurrency","Action":"Use","Value":150000,"RewardId":null},{"Id":5,"Step":4,"Type":"AnimalCurrency","Action":"Use","Value":200000,"RewardId":null},{"Id":6,"Step":1,"Type":"AnimalSkin","Action":"Obtain","Value":3,"RewardId":null},{"Id":6,"Step":2,"Type":"AnimalSkin","Action":"Obtain","Value":6,"RewardId":null},{"Id":6,"Step":3,"Type":"AnimalSkin","Action":"Obtain","Value":9,"RewardId":null},{"Id":6,"Step":4,"Type":"AnimalSkin","Action":"Obtain","Value":12,"RewardId":null},{"Id":6,"Step":5,"Type":"AnimalSkin","Action":"Obtain","Value":15,"RewardId":null},{"Id":7,"Step":1,"Type":"Story","Action":"Obtain","Value":1,"RewardId":null},{"Id":7,"Step":2,"Type":"Story","Action":"Obtain","Value":2,"RewardId":null},{"Id":7,"Step":3,"Type":"Story","Action":"Obtain","Value":3,"RewardId":null},{"Id":7,"Step":4,"Type":"Story","Action":"Obtain","Value":4,"RewardId":null},{"Id":7,"Step":5,"Type":"Story","Action":"Obtain","Value":5,"RewardId":null},{"Id":8,"Step":1,"Type":"Letter","Action":"Obtain","Value":10,"RewardId":null},{"Id":8,"Step":2,"Type":"Letter","Action":"Obtain","Value":20,"RewardId":null},{"Id":8,"Step":3,"Type":"Letter","Action":"Obtain","Value":30,"RewardId":null},{"Id":8,"Step":4,"Type":"Letter","Action":"Obtain","Value":40,"RewardId":null},{"Id":8,"Step":5,"Type":"Letter","Action":"Obtain","Value":50,"RewardId":null},{"Id":9,"Step":1,"Type":"\bStamp","Action":"Obtain","Value":5,"RewardId":null},{"Id":9,"Step":2,"Type":"Stamp","Action":"Obtain","Value":10,"RewardId":null},{"Id":9,"Step":3,"Type":"Stamp","Action":"Obtain","Value":15,"RewardId":null},{"Id":9,"Step":4,"Type":"Stamp","Action":"Obtain","Value":20,"RewardId":null},{"Id":9,"Step":5,"Type":"Stamp","Action":"Obtain","Value":25,"RewardId":null}]}
+{
+    "Datas":
+    [
+        {
+            "Id": 1,
+            "Step": 1,
+            "Type": "ObjectCurrency",
+            "Action": "Obtain",
+            "Value": 200,
+            "RewardId": null
+        },
+        {
+            "Id": 1,
+            "Step": 2,
+            "Type": "ObjectCurrency",
+            "Action": "Obtain",
+            "Value": 400,
+            "RewardId": null
+        },
+        {
+            "Id": 1,
+            "Step": 3,
+            "Type": "ObjectCurrency",
+            "Action": "Obtain",
+            "Value": 600,
+            "RewardId": null
+        },
+        {
+            "Id": 1,
+            "Step": 4,
+            "Type": "ObjectCurrency",
+            "Action": "Obtain",
+            "Value": 800,
+            "RewardId": null
+        },
+        {
+            "Id": 1,
+            "Step": 5,
+            "Type": "ObjectCurrency",
+            "Action": "Obtain",
+            "Value": 1000,
+            "RewardId": null
+        },
+        {
+            "Id": 2,
+            "Step": 1,
+            "Type": "AnimalCurrency",
+            "Action": "Obtain",
+            "Value": 10,
+            "RewardId": null
+        },
+        {
+            "Id": 2,
+            "Step": 2,
+            "Type": "AnimalCurrency",
+            "Action": "Obtain",
+            "Value": 20,
+            "RewardId": null
+        },
+        {
+            "Id": 2,
+            "Step": 3,
+            "Type": "AnimalCurrency",
+            "Action": "Obtain",
+            "Value": 30,
+            "RewardId": null
+        },
+        {
+            "Id": 2,
+            "Step": 4,
+            "Type": "AnimalCurrency",
+            "Action": "Obtain",
+            "Value": 40,
+            "RewardId": null
+        },
+        {
+            "Id": 2,
+            "Step": 5,
+            "Type": "AnimalCurrency",
+            "Action": "Obtain",
+            "Value": 50,
+            "RewardId": null
+        },
+        {
+            "Id": 3,
+            "Step": 1,
+            "Type": "Animal",
+            "Action": "Use",
+            "Value": 5,
+            "RewardId": null
+        },
+        {
+            "Id": 3,
+            "Step": 2,
+            "Type": "Animal",
+            "Action": "Use",
+            "Value": 10,
+            "RewardId": null
+        },
+        {
+            "Id": 3,
+            "Step": 3,
+            "Type": "Animal",
+            "Action": "Use",
+            "Value": 15,
+            "RewardId": null
+        },
+        {
+            "Id": 3,
+            "Step": 4,
+            "Type": "Animal",
+            "Action": "Use",
+            "Value": 20,
+            "RewardId": null
+        },
+        {
+            "Id": 3,
+            "Step": 5,
+            "Type": "Animal",
+            "Action": "Use",
+            "Value": 25,
+            "RewardId": null
+        },
+        {
+            "Id": 4,
+            "Step": 1,
+            "Type": "Object",
+            "Action": "Use",
+            "Value": 10,
+            "RewardId": null
+        },
+        {
+            "Id": 4,
+            "Step": 2,
+            "Type": "Object",
+            "Action": "Use",
+            "Value": 20,
+            "RewardId": null
+        },
+        {
+            "Id": 4,
+            "Step": 3,
+            "Type": "Object",
+            "Action": "Use",
+            "Value": 30,
+            "RewardId": null
+        },
+        {
+            "Id": 4,
+            "Step": 4,
+            "Type": "Object",
+            "Action": "Use",
+            "Value": 40,
+            "RewardId": null
+        },
+        {
+            "Id": 4,
+            "Step": 5,
+            "Type": "Object",
+            "Action": "Use",
+            "Value": 50,
+            "RewardId": null
+        },
+        {
+            "Id": 5,
+            "Step": 1,
+            "Type": "ObjectCurrency",
+            "Action": "Use",
+            "Value": 50000,
+            "RewardId": null
+        },
+        {
+            "Id": 5,
+            "Step": 2,
+            "Type": "ObjectCurrency",
+            "Action": "Use",
+            "Value": 100000,
+            "RewardId": null
+        },
+        {
+            "Id": 5,
+            "Step": 3,
+            "Type": "ObjectCurrency",
+            "Action": "Use",
+            "Value": 150000,
+            "RewardId": null
+        },
+        {
+            "Id": 5,
+            "Step": 4,
+            "Type": "ObjectCurrency",
+            "Action": "Use",
+            "Value": 200000,
+            "RewardId": null
+        },
+        {
+            "Id": 6,
+            "Step": 1,
+            "Type": "AnimalCurrency",
+            "Action": "Use",
+            "Value": 50000,
+            "RewardId": null
+        },
+        {
+            "Id": 6,
+            "Step": 2,
+            "Type": "AnimalCurrency",
+            "Action": "Use",
+            "Value": 100000,
+            "RewardId": null
+        },
+        {
+            "Id": 6,
+            "Step": 3,
+            "Type": "AnimalCurrency",
+            "Action": "Use",
+            "Value": 150000,
+            "RewardId": null
+        },
+        {
+            "Id": 6,
+            "Step": 4,
+            "Type": "AnimalCurrency",
+            "Action": "Use",
+            "Value": 200000,
+            "RewardId": null
+        },
+        {
+            "Id": 7,
+            "Step": 1,
+            "Type": "AnimalSkin",
+            "Action": "Obtain",
+            "Value": 3,
+            "RewardId": null
+        },
+        {
+            "Id": 7,
+            "Step": 2,
+            "Type": "AnimalSkin",
+            "Action": "Obtain",
+            "Value": 6,
+            "RewardId": null
+        },
+        {
+            "Id": 7,
+            "Step": 3,
+            "Type": "AnimalSkin",
+            "Action": "Obtain",
+            "Value": 9,
+            "RewardId": null
+        },
+        {
+            "Id": 7,
+            "Step": 4,
+            "Type": "AnimalSkin",
+            "Action": "Obtain",
+            "Value": 12,
+            "RewardId": null
+        },
+        {
+            "Id": 7,
+            "Step": 5,
+            "Type": "AnimalSkin",
+            "Action": "Obtain",
+            "Value": 15,
+            "RewardId": null
+        },
+        {
+            "Id": 8,
+            "Step": 1,
+            "Type": "Story",
+            "Action": "Obtain",
+            "Value": 1,
+            "RewardId": null
+        },
+        {
+            "Id": 8,
+            "Step": 2,
+            "Type": "Story",
+            "Action": "Obtain",
+            "Value": 2,
+            "RewardId": null
+        },
+        {
+            "Id": 8,
+            "Step": 3,
+            "Type": "Story",
+            "Action": "Obtain",
+            "Value": 3,
+            "RewardId": null
+        },
+        {
+            "Id": 8,
+            "Step": 4,
+            "Type": "Story",
+            "Action": "Obtain",
+            "Value": 4,
+            "RewardId": null
+        },
+        {
+            "Id": 8,
+            "Step": 5,
+            "Type": "Story",
+            "Action": "Obtain",
+            "Value": 5,
+            "RewardId": null
+        },
+        {
+            "Id": 9,
+            "Step": 1,
+            "Type": "Letter",
+            "Action": "Obtain",
+            "Value": 10,
+            "RewardId": null
+        },
+        {
+            "Id": 9,
+            "Step": 2,
+            "Type": "Letter",
+            "Action": "Obtain",
+            "Value": 20,
+            "RewardId": null
+        },
+        {
+            "Id": 9,
+            "Step": 3,
+            "Type": "Letter",
+            "Action": "Obtain",
+            "Value": 30,
+            "RewardId": null
+        },
+        {
+            "Id": 9,
+            "Step": 4,
+            "Type": "Letter",
+            "Action": "Obtain",
+            "Value": 40,
+            "RewardId": null
+        },
+        {
+            "Id": 9,
+            "Step": 5,
+            "Type": "Letter",
+            "Action": "Obtain",
+            "Value": 50,
+            "RewardId": null
+        }
+    ]}

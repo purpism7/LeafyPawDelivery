@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
-using UI;
+using Cysharp.Threading.Tasks;
 
 namespace GameSystem
 {
@@ -40,6 +40,7 @@ namespace GameSystem
             _uiGameObjDic.Clear();
 
             _endLoad = true;
+
             foreach (var assetLabel in InitLoadLabelList)
             {
                 yield return new WaitUntil(() => _endLoad); 

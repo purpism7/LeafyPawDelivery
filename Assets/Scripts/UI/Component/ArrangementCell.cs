@@ -340,8 +340,8 @@ namespace UI.Component
                     ITop iTop = Game.UIManager.Instance?.Top;
                     iTop?.SetCurrency();
 
-                    mainGameMgr?.AddAcquire(Game.Type.EElement.Animal, Game.Type.EAcquireAction.Use, animalCurrency);
-                    mainGameMgr?.AddAcquire(Game.Type.EElement.Object, Game.Type.EAcquireAction.Use, objectCurrency);
+                    mainGameMgr?.AddAcquireCurrency(Game.Type.EElement.Animal, Game.Type.EAcquireAction.Use, animalCurrency);
+                    mainGameMgr?.AddAcquireCurrency(Game.Type.EElement.Object, Game.Type.EAcquireAction.Use, objectCurrency);
 
                     return obtain;
                 });

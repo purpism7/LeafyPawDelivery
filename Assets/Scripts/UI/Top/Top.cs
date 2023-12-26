@@ -331,7 +331,7 @@ namespace UI
 
             // save currency value.
             Info.UserManager.Instance?.User?.SetCurrency(eElement, currency);
-            MainGameManager.Instance?.AddAcquire(eElement, Game.Type.EAcquireAction.Obtain, 1);
+            MainGameManager.Instance?.AddAcquireCurrency(eElement, Game.Type.EAcquireAction.Obtain, 1);
         }
 
         private void CollectCurrency(CollectCurrency.Data data)

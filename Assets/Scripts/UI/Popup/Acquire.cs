@@ -60,9 +60,6 @@ namespace UI
             {
                 tabToggle.SetIsOnWithoutNotify(true);
             }
-
-            dailyMissionScrollRect?.ResetScrollPos();
-            achievementsScrollRect?.ResetScrollPos();
         }
 
         private void Update()
@@ -168,6 +165,9 @@ namespace UI
 
             UIUtils.SetActive(dailyMissionRootRectTm, _currETabType == Game.Type.ETab.DailyMission);
             UIUtils.SetActive(achievementsScrollRect?.gameObject, _currETabType == Game.Type.ETab.Achievement);
+
+            dailyMissionScrollRect?.ResetScrollPos();
+            achievementsScrollRect?.ResetScrollPos();
         }
 
         public void OnChanged(string tabType)

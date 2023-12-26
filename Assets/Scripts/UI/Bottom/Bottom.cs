@@ -137,10 +137,9 @@ namespace UI
             if(_reInitializeDic != null &&
                _reInitializeDic.TryGetValue(eBottomType, out reInitialize))
             {
-                Debug.Log("reInitialize 11 = " + reInitialize);
                 _reInitializeDic[eBottomType] = false;
             }
-            Debug.Log("reInitialize 22 = " + reInitialize);
+            
             switch (eBottomType)
             {
                 case Game.Type.EBottomType.Shop:

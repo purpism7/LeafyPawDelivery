@@ -2468,7 +2468,6 @@ MonoBehaviour:
   Top: {fileID: 923999650}
   Bottom: {fileID: 229178124}
   Popup: {fileID: 1404788286}
-  toastRootRectTm: {fileID: 695058588}
 --- !u!1001 &1401203646
 PrefabInstance:
   m_ObjectHideFlags: 0

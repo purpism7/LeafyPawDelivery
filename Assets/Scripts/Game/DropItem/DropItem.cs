@@ -260,6 +260,8 @@ namespace Game
                                 int value = UnityEngine.Random.Range(50, 100);
                                 top?.CollectCurrency(startPos, Type.EElement.Object, value);
                             }
+
+                            MainGameManager.Instance?.AddAcquire(Type.EAcquire.Letter, Type.EAcquireAction.Obtain, 1);
                         }
 
                         UI.ITop iTop = UIManager.Instance?.Top;

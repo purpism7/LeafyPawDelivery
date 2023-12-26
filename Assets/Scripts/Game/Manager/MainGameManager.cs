@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using GameSystem;
 
 public interface IStarter
@@ -260,34 +262,21 @@ public class MainGameManager : Singleton<MainGameManager>
 
         yield return StartCoroutine(CoInitializeManager(placeId));
 
-        //// 진입 연출 전 Deactivate Top, Bottom 
-        //Game.UIManager.Instance?.DeactivateAnim();
         SetGameState<Game.State.Enter>();
 
-        yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 3f));
+        AsyncDelay(endMoveAction).Forget();
+    }
+
+    private async UniTask AsyncDelay(System.Action endMoveAction)
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(2f, 3f)));
 
         endMoveAction?.Invoke();
 
-        yield return null;
+        await UniTask.Yield();
 
         EndLoad(false);
     }
-
-    //private async UniTask AsyncMovePlace(int placeId, System.Action endMoveAction)
-    //{
-    //    StartCoroutine(CoInitializeManager(placeId));
-        
-
-    //    //yield return 
-
-    //    await UniTask.Delay(UnityEngine.Random.Range(2, 3) * 1000);
-
-    //    endMoveAction?.Invoke();
-
-    //    await UniTask.Yield();
-
-    //    Starter();
-    //}
     #endregion
 
     #region Animal & Object
@@ -430,13 +419,15 @@ public class MainGameManager : Singleton<MainGameManager>
             gameBaseElement.ElementData == null)
             return;
 
+        var element = gameBaseElement.ElementData.EElement;
+
         int placeId = 0;
         if (placeMgr != null)
         {
             placeId = placeMgr.ActivityPlace.Id;
         }
 
-        switch (gameBaseElement.ElementData.EElement)
+        switch (element)
         {
             case Game.Type.EElement.Animal:
                 {
@@ -459,15 +450,29 @@ public class MainGameManager : Singleton<MainGameManager>
                 }
         }
 
+        AddAcquireArrange(element, Game.Type.EAcquireAction.Use, 1);            
+
         _iGrid?.Overlap();
     }
     #endregion
 
     #region Acquire
-    public void AddAcquire(Game.Type.EElement eElement, Game.Type.EAcquireAction eAcquireAction, int value)
+    public void AddAcquireCurrency(Game.Type.EElement eElement, Game.Type.EAcquireAction eAcquireAction, int value)
     {
         var eAcquire = eElement == Game.Type.EElement.Animal ? Game.Type.EAcquire.AnimalCurrency : Game.Type.EAcquire.ObjectCurrency;
 
+        AddAcquire(eAcquire, eAcquireAction, value);
+    }
+
+    public void AddAcquireArrange(Game.Type.EElement eElement, Game.Type.EAcquireAction eAcquireAction, int value)
+    {
+        var eAcquire = eElement == Game.Type.EElement.Animal ? Game.Type.EAcquire.Animal : Game.Type.EAcquire.Object;
+
+        AddAcquire(eAcquire, eAcquireAction, value);
+    }
+
+    public void AddAcquire(Game.Type.EAcquire eAcquire, Game.Type .EAcquireAction eAcquireAction, int value)
+    {
         Get<Game.Manager.Acquire>()?.Add(eAcquire, eAcquireAction, value);
         RecordContainer?.Add(eAcquire, eAcquireAction, value);
     }

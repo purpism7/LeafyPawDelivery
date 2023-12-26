@@ -48,7 +48,7 @@ namespace UI.Component
         {
             base.Initialize(data);
 
-            SetTitleTMP();
+            
             SetOpenCondition();
         }
 
@@ -56,6 +56,7 @@ namespace UI.Component
         {
             base.Activate();
 
+            SetTitleTMP();
             SetProgress();
 
             //if(getRewardBtn != null)

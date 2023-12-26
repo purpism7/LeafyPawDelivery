@@ -11,11 +11,23 @@ namespace Game.PlaceEvent
     public class DropItem : Base
     {
         private Coroutine _dropItemCoroutine = null;
-        private YieldInstruction _waitSecDrop = new WaitForSeconds(56f);
+        private YieldInstruction _waitSecDrop = null;
 
         //private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         private Game.Type.EItemSub _eItemSub = Type.EItemSub.None;
+
+        public override Base Initialize(IPlace iPlace)
+        {
+            base.Initialize(iPlace);
+
+            float randWaitSec = UnityEngine.Random.Range(60f, 70f);
+            Debug.Log(randWaitSec);
+
+            _waitSecDrop = new WaitForSeconds(randWaitSec);
+
+            return this;
+        }
 
         public void StartDrop()
         {
@@ -118,6 +130,8 @@ namespace Game.PlaceEvent
                 yield return new WaitUntil(() => !iTop.CheckMaxDropLetterCnt);
             }
 
+            //AsyncDrop().Forget();
+
             yield return _waitSecDrop;
 
             if (_dropItemCoroutine == null)
@@ -133,6 +147,24 @@ namespace Game.PlaceEvent
 
             StartDrop();
         }
+
+        //private async UniTask AsyncDrop()
+        //{
+        //    await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(60f, 70f)));
+
+        //    if(_dropItemCoroutine == null)
+        //    {
+        //        StartDrop();
+
+        //        return;
+        //    }
+
+        //    Drop();
+
+        //    await UniTask.Yield();
+
+        //    StartDrop();
+        //}
 
         private void Drop()
         {

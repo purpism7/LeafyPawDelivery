@@ -316,6 +316,7 @@ namespace UI
 
             animalMgr.AddSkin(animalId, selectSkinId);
             mainGameMgr.ChangeAnimalSkinToPlace(animalId, selectSkinId);
+            mainGameMgr.AddAcquire(Game.Type.EAcquire.AnimalSkin, Game.Type.EAcquireAction.Obtain, 1);
 
             _selectSkinCell?.EnableBuyRoot(false);
         }

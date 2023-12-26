@@ -7,7 +7,19 @@ namespace Game.PlaceEvent
     public class DropCurrency : Base
     {
         private Coroutine _dropCurrencyCoroutine = null;
-        private YieldInstruction _waitSecDropCurrency = new WaitForSeconds(30f);
+        private YieldInstruction _waitSecDrop = new WaitForSeconds(30f);
+
+        public override Base Initialize(IPlace iPlace)
+        {
+            base.Initialize(iPlace);
+
+            float randWaitSec = UnityEngine.Random.Range(30f, 40f);
+            Debug.Log(randWaitSec);
+
+            _waitSecDrop = new WaitForSeconds(randWaitSec);
+
+            return this;
+        }
 
         public void StartDrop()
         {
@@ -50,7 +62,7 @@ namespace Game.PlaceEvent
 
             yield return new WaitUntil(() => !iTop.CheckMaxDropAnimalCurrencyCnt);
 
-            yield return _waitSecDropCurrency;
+            yield return _waitSecDrop;
 
             if (_dropCurrencyCoroutine == null)
             {

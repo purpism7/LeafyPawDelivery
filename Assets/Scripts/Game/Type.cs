@@ -117,7 +117,7 @@ namespace Game
             ObjectCurrency,
             AnimalSkin,
             Story,
-            Stamp,
+            //Stamp,
             Letter,
         }
 

@@ -124,12 +124,12 @@ namespace Game
             return true;
         }
 
-        public void PlayStory(Story story)
+        public Game.Manager.Cutscene PlayStory(Story story)
         {
             if (story == null)
-                return;
+                return null;
 
-            Game.Manager.Cutscene.Create(new Game.Manager.Cutscene.Data()
+            return Game.Manager.Cutscene.Create(new Game.Manager.Cutscene.Data()
             {
                 TargetGameObj = GetStoryGameObj(story.PrefabName),
                 EndAction = () =>
@@ -147,20 +147,15 @@ namespace Game
             Sequencer.EnqueueTask(
                 () =>
                 {
-                    var cutscene = Game.Manager.Cutscene.Create(new Game.Manager.Cutscene.Data()
-                    {
-                        TargetGameObj = GetStoryGameObj(story.PrefabName),
-                        EndAction = () =>
-                        {
-                            EndStory(story);
-                        },
-                    });
+                    var cutscene = PlayStory(story);
 
                     Listener?.Invoke(new Event.StoryData()
                     {
                         Id = story.Id,
                         EState = Event.EState.Begin,
                     });
+
+                    MainGameManager.Instance?.AddAcquire(Type.EAcquire.Story, Type.EAcquireAction.Obtain, 1);
 
                     return cutscene;
                 });
