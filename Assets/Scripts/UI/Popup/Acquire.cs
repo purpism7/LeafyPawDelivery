@@ -33,6 +33,8 @@ namespace UI
         private List<Component.DailyMissionCell> _dailyMissionCellList = new();
         private List<Component.AchievementCell> _achievementCellList = new();
 
+        private bool _resetDailyMission = false; 
+
         public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
@@ -52,6 +54,17 @@ namespace UI
         {
             base.Activate();
 
+            _resetDailyMission = false;
+
+            var acquireMgr = MainGameManager.Get<Game.Manager.Acquire>();
+            if (acquireMgr != null)
+            {
+                if (acquireMgr.CheckResetDailyMission)
+                {
+                    ResetDailyMission();
+                }
+            }
+
             _currETabType = Type.ETab.DailyMission;
             ActiveContents();
 
@@ -67,11 +80,14 @@ namespace UI
             var localRemainTime = System.DateTime.Today.AddDays(1).Subtract(System.DateTime.UtcNow);
             var localRemainTotalSeconds = localRemainTime.TotalSeconds;
 
-            localRemainTimeTMP?.SetText("Local Time : " + localRemainTime.ToString(@"hh\:mm\:ss"));
-
-            if(localRemainTotalSeconds <= 0)
+            localRemainTimeTMP?.SetText(localRemainTime.ToString(@"hh\:mm\:ss"));
+            //localRemainTimeTMP?.SetText(System.DateTime.Now.ToString(@"yyyy-MM-dd"));
+            if (!_resetDailyMission &&
+                localRemainTotalSeconds <= 0)
             {
-                ResetDailyMissionList();
+                _resetDailyMission = true;
+
+                ResetDailyMission();
             }
         }
 
@@ -102,11 +118,11 @@ namespace UI
                 if (dailyMissionCell == null)
                     continue;
 
-                var iDailyMissionProvider = dailyMissionCell as UI.Component.IDailyMissionProvider;
-                if (iDailyMissionProvider == null)
+                var iDailyMission = dailyMissionCell as UI.Component.IDailyMission;
+                if (iDailyMission == null)
                     continue;
 
-                if (!iDailyMissionProvider.GetRewarded)
+                if (!iDailyMission.GetRewarded)
                     continue;
 
                 if (!dailyMissionCell.transform)
@@ -123,18 +139,25 @@ namespace UI
             totalDailyMissionCell?.Activate();
         }
 
-        private void ResetDailyMissionList()
+        private void ResetDailyMission()
         {
             Debug.Log("ResetDailyMissionList");
 
             if (_dailyMissionCellList == null)
                 return;
 
-            _dailyMissionCellList.OrderBy(dailyMissionCell => dailyMissionCell.Id);
+            MainGameManager.Get<Game.Manager.Acquire>()?.ResetDailyMission();
 
-            foreach(UI.Component.IDailyMissionProvider iDailyMissionProvider in _dailyMissionCellList)
+            foreach (var dailyMissionCell in _dailyMissionCellList)
             {
-                iDailyMissionProvider?.Reset();
+                if (dailyMissionCell == null)
+                    continue;
+
+                (dailyMissionCell as UI.Component.IDailyMission)?.Reset();
+
+                dailyMissionCell?.Activate();
+
+                dailyMissionCell.transform.SetSiblingIndex(dailyMissionCell.Id);
             }
         }
 
@@ -181,6 +204,11 @@ namespace UI
 
                 ActiveContents();
             }
+        }
+
+        public void OnClickResetDailyMission()
+        {
+            ResetDailyMission();
         }
     }
 }

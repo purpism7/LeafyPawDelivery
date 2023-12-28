@@ -11,11 +11,13 @@ namespace Game.Manager
 
         }
 
+        private const string KeyDailyMissionDate = "KeyDailyMissionDate";
+
         private Info.AcquireHolder _acquireHolder = new();
         
         protected override void Initialize()
         {
-            
+            SetDailyMissionDate();
         }
 
         public override IEnumerator CoInitialize(Data data)
@@ -43,6 +45,37 @@ namespace Game.Manager
         public Info.Acquire.Achievement GetAchievement(int id)
         {
             return _acquireHolder?.GetAchievement(id);
+        }
+
+        private void SetDailyMissionDate()
+        {
+            string dailyMissionDate = PlayerPrefs.GetString(KeyDailyMissionDate);
+            if (string.IsNullOrEmpty(dailyMissionDate))
+            {
+                PlayerPrefs.SetString(KeyDailyMissionDate, System.DateTime.UtcNow.ToString());
+
+                return;
+            }
+
+            if(CheckResetDailyMission)
+            {
+                PlayerPrefs.SetString(KeyDailyMissionDate, System.DateTime.UtcNow.ToString());
+            }
+        }
+
+        public bool CheckResetDailyMission
+        {
+            get
+            {
+                return (System.DateTime.UtcNow - System.DateTime.Parse(PlayerPrefs.GetString(KeyDailyMissionDate))).Days >= 1;
+            }
+        }
+
+        public void ResetDailyMission()
+        {
+            _acquireHolder?.ResetDailyMission();
+
+            SetDailyMissionDate();
         }
     }
 }

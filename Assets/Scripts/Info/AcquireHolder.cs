@@ -32,7 +32,7 @@ namespace Info
             var jsonString = System.IO.File.ReadAllText(fullPath);
             var dailyMissionInfos  = JsonHelper.FromJson<Acquire.DailyMission>(jsonString);
 
-            _acquire?.DailyMissionInfoList?.AddRange(dailyMissionInfos);
+            _acquire?.dailyMissionInfoList?.AddRange(dailyMissionInfos);
         }
 
         private void LoadAchievementInfo()
@@ -57,7 +57,7 @@ namespace Info
 
         private void SaveDailyMissionInfo()
         {
-            SaveInfo(DailyMissionJsonFileName, _acquire.DailyMissionInfoList);
+            SaveInfo(DailyMissionJsonFileName, _acquire.dailyMissionInfoList);
         }
 
         private void SaveAchievementInfo()
@@ -95,6 +95,13 @@ namespace Info
         public Acquire.Achievement GetAchievement(int id)
         {
             return _acquire?.GetAchievement(id);
+        }
+
+        public void ResetDailyMission()
+        {
+            _acquire?.dailyMissionInfoList?.Clear();
+
+            SaveDailyMissionInfo();
         }
     }
 }

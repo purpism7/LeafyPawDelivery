@@ -10,14 +10,14 @@ using TMPro;
 
 namespace UI.Component
 {
-    public interface IDailyMissionProvider
+    public interface IDailyMission
     {
         bool IsCompleted { get; }
         bool GetRewarded { get; }
         void Reset();
     }
 
-    public class DailyMissionCell : Base<DailyMissionCell.Data>, IDailyMissionProvider
+    public class DailyMissionCell : Base<DailyMissionCell.Data>, IDailyMission
     {
         public class Data : BaseData
         {
@@ -48,7 +48,6 @@ namespace UI.Component
         {
             base.Initialize(data);
 
-            
             SetOpenCondition();
         }
 
@@ -172,8 +171,8 @@ namespace UI.Component
             }
         }
 
-        #region IDailyMissionProvider
-        bool IDailyMissionProvider.IsCompleted
+        #region IDailyMission
+        bool IDailyMission.IsCompleted
         {
             get
             {
@@ -181,7 +180,7 @@ namespace UI.Component
             }
         }
 
-        bool IDailyMissionProvider.GetRewarded
+        bool IDailyMission.GetRewarded
         {
             get
             {
@@ -189,7 +188,7 @@ namespace UI.Component
             }
         }
 
-        void IDailyMissionProvider.Reset()
+        void IDailyMission.Reset()
         {
             var dailyMissionData = _data?.DailyMissionData;
             if (dailyMissionData == null)

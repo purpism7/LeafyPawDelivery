@@ -22,7 +22,7 @@ namespace Info
         }
 
         public List<Achievement> AchievementInfoList = new();
-        public List<DailyMission> DailyMissionInfoList = new();
+        public List<DailyMission> dailyMissionInfoList = new();
 
         #region DailyMission
         public void AddDailyMission(Game.Type.EAcquire eAcquire, Game.Type.EAcquireAction eAcquireAction, int value)
@@ -32,7 +32,7 @@ namespace Info
                 return;
 
             DailyMission dailyMissionInfo = null;
-            foreach (var info in DailyMissionInfoList)
+            foreach (var info in dailyMissionInfoList)
             {
                 if (info == null)
                     continue;
@@ -53,7 +53,7 @@ namespace Info
 
             if(dailyMissionInfo ==null)
             {
-                DailyMissionInfoList.Add(
+                dailyMissionInfoList.Add(
                     new DailyMission()
                     {
                         Id = dailyMissionData.Id,
@@ -64,10 +64,10 @@ namespace Info
 
         public DailyMission GetDailyMission(int id)
         {
-            if (DailyMissionInfoList == null)
+            if (dailyMissionInfoList == null)
                 return null;
 
-            return DailyMissionInfoList.Find(dailyMission => dailyMission.Id == id);
+            return dailyMissionInfoList.Find(dailyMission => dailyMission.Id == id);
         }
         #endregion
 
@@ -102,33 +102,6 @@ namespace Info
             {
                 achievementInfo.Progress = achievementData.Value;
             }
-
-           
-
-            //Achievement achievementInfo = null;
-            //foreach (var info in AchievementInfoList)
-            //{
-            //    if (info == null)
-            //        continue;
-
-            //    if (info.Id != achievementData.Id)
-            //        continue;
-
-                
-
-            //    break;
-            //}
-
-            //if (achievementInfo == null)
-            //{
-            //    AchievementInfoList.Add(
-            //        new Achievement()
-            //        {
-            //            Id = achievementData.Id,
-            //            Step = 1,
-            //            Progress = value,
-            //        });
-            //}
         }
 
         public void SetNextStep(int id)
