@@ -291,6 +291,142 @@ MonoBehaviour:
     m_Localized: ...
     m_Metadata:
       m_Items: []
+  - m_Id: 46587889495040000
+    m_Localized: Hey Brie, good to see you again. Are you still waiting for Balla
+      to get off work?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46587943115022336
+    m_Localized: "\u2026Yes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46587971095224320
+    m_Localized: Is that a cake? You even brought a present today!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588035960135680
+    m_Localized: "This is Balla\u2019s favorite flavor. Balla likes chocolate cake.
+      And she likes drinking black tea with it."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588139572027392
+    m_Localized: Does Balla know you like her too?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588173940154368
+    m_Localized: "What? But I don\u2019t like Valla."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588229644705792
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588257977229312
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588314654859264
+    m_Localized: "To be honest, I\u2019m not sure\u2026 I hope she likes me too..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588344090484736
+    m_Localized: "Why don\u2019t you ask her out on a date?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588413690765312
+    m_Localized: "But what if she rejects me? I\u2019m okay with just being friends...
+      all I need is to be by her side."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588467050700800
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588580586315776
+    m_Localized: Hi Brie!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588624857194496
+    m_Localized: "Hi Balla! (You\u2019re as pretty as ever!)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588654238294016
+    m_Localized: "Brie... there\u2019s something I need to tell you. I\u2019m moving
+      to a different village."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588701768146944
+    m_Localized: What?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588748677242880
+    m_Localized: "It\u2019s pretty far away from here."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588774375743488
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588796261621760
+    m_Localized: "Now I won\u2019t be able to see you waiting for me every day."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588838892527616
+    m_Localized: You knew?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588867141165056
+    m_Localized: Everyone in the village probably knows.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588895318499328
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588919431553024
+    m_Localized: Do you really have to go?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588952319090688
+    m_Localized: "..I\u2019ll miss you, Brie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46588980446093312
+    m_Localized: Brie, are you crying?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46589012767399936
+    m_Localized: "I\u2019m not crying..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46589062159523840
+    m_Localized: "I think you are crying. Here, there\u2019s a letter for you."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46589285481046016
+    m_Localized: "...It\u2019s a letter from Balla."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46589333526798336
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46589358411603968
+    m_Localized: "I\u2019m going to go visit Balla."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46589411792510976
+    m_Localized: "Good idea. Don\u2019t go empty handed though. Get her some flowers."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46589412841086976
+    m_Localized: I know! Balla likes yellow flowers.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46589498841096192
+    m_Localized: Okay, okay. Off you go now.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
