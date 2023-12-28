@@ -18,13 +18,15 @@ namespace UI
 
         public interface IListener
         {
-            void Buy();
+            void Buy(bool possible);
         }
 
         [SerializeField]
         private Image buyTargetImg = null;
         [SerializeField]
         private Component.OpenCondition openCondition = null;
+
+        private bool _possibleBuy = false;
 
         public override void Initialize(Data data)
         {
@@ -68,11 +70,13 @@ namespace UI
                 userCash = user.Cash;
             }
 
+            _possibleBuy = userCash >= _data.Cash;
+
             var openConditionData = new OpenCondition.Data()
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
-                Text = "x" + _data.Cash,
-                PossibleFunc = () => userCash >= _data.Cash,
+                Text = _data.Cash.ToString(),
+                PossibleFunc = () => _possibleBuy,
             };
 
             openCondition.Initialize(openConditionData);
@@ -80,13 +84,12 @@ namespace UI
 
         public void OnClickCancel()
         {
-            Debug.Log("OnClickCancel");
             Deactivate();
         }
 
         public void OnClickBuy()
         {
-            _data?.IListener?.Buy();
+            _data?.IListener?.Buy(_possibleBuy);
 
             Deactivate();
         }

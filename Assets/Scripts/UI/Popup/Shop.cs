@@ -16,7 +16,7 @@ namespace UI
         Product GetProduct(string productId);
     }
 
-    public class Shop : BasePopup<Shop.Data_>, ShopItemCell.IListener, IShop, IDetailedStoreListener
+    public class Shop : BasePopup<Shop.Data_>, ShopItemCell.IListener, BuyCash.IListener, IShop, IDetailedStoreListener
     {
         public class Data_ : BaseData
         {
@@ -114,15 +114,51 @@ namespace UI
             yield return null;
         }
 
-        void ShopItemCell.IListener.Buy(Data.Shop shopData, System.Action endAction)
+        void ShopItemCell.IListener.Buy(Data.Shop shopData, Vector3 pos)
         {
             if (shopData == null)
                 return;
 
-            _buyShopData = shopData;
-            _endBuyAction = endAction;
+            var uiMgr = Game.UIManager.Instance;
+            if (uiMgr == null)
+                return;
 
-            Game.UIManager.Instance?.ActivateSreenSaver();
+            _buyShopData = shopData;
+
+            switch(shopData.EPayment)
+            {
+                case Game.Type.EPayment.Cash:
+                    {
+                        new PopupCreator<BuyCash, BuyCash.Data>()
+                            .SetReInitialize(true)
+                            .SetData(new BuyCash.Data()
+                            {
+                                IListener = this,
+                                Cash = shopData.PaymentValue,
+                                targetSprite = ResourceManager.Instance?.AtalsLoader?.GetShopItemSprite(shopData.ECategory, shopData.IconImg),
+                            })
+                            .Create();
+
+                        _endBuyAction = () =>
+                        {
+                            uiMgr.Top?.CollectCurrency(pos, shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object, shopData.Value);
+                        };
+
+                        break;
+                    }
+
+                case Game.Type.EPayment.Money:
+                    {
+                        _endBuyAction = () =>
+                        {
+                            uiMgr.Top?.CollectCashCurrency(pos, shopData.Value);
+                        };
+
+                        uiMgr?.ActivateSreenSaver();
+
+                        break;
+                    }
+            }
         }
 
         Product IShop.GetProduct(string productId)
@@ -132,6 +168,20 @@ namespace UI
 
             return _iStoreCtr.products?.WithID(productId);
         }
+
+        #region BuyCash.IListener,
+        void BuyCash.IListener.Buy(bool possible)
+        {
+            if(!possible)
+            {
+                Game.Toast.Get?.Show("not_enough_jewel");
+
+                return;
+            }
+
+            _endBuyAction?.Invoke();
+        }
+        #endregion
 
         #region IDetailedStoreListener
         void IStoreListener.OnInitializeFailed(InitializationFailureReason error, string message)
@@ -172,6 +222,9 @@ namespace UI
         void IDetailedStoreListener.OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
         {
             Debug.Log("OnPurchaseFailed = " + failureDescription.message);
+            Game.UIManager.Instance?.DeactivateScreenSaver();
+
+            Game.Toast.Get?.Show(failureDescription?.message);
         }
 
         void IStoreListener.OnInitializeFailed(InitializationFailureReason error)

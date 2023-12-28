@@ -106,7 +106,7 @@ namespace UI.Component
             var openConditionData = new OpenCondition.Data()
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
-                Text = "x" + animalSkin.Cash,
+                Text = animalSkin.Cash.ToString(),
                 PossibleFunc = () => userCash >= animalSkin.Cash,
             };
 

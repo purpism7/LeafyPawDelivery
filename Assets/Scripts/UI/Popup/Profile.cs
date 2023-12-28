@@ -278,8 +278,15 @@ namespace UI
         #endregion
 
         #region BuyCash.IListener
-        void BuyCash.IListener.Buy()
+        void BuyCash.IListener.Buy(bool possible)
         {
+            if(!possible)
+            {
+                Game.Toast.Get?.Show("not_enough_jewel");
+
+                return;
+            }
+
             if (_data == null)
                 return;
 
@@ -302,12 +309,12 @@ namespace UI
             if (userMgr == null)
                 return;
 
-            var userInfo = userMgr.User;
-            if (userInfo == null)
-                return;
+            //var userInfo = userMgr.User;
+            //if (userInfo == null)
+            //    return;
 
-            if (userInfo.Cash < animalSkinData.Cash)
-                return;
+            //if (userInfo.Cash < animalSkinData.Cash)
+            //    return;
 
             userMgr.SaveCash(-animalSkinData.Cash);
 

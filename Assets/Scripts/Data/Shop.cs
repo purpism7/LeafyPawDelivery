@@ -10,6 +10,8 @@ namespace Data
         [SerializeField]
         private bool show = false;
         [SerializeField]
+        private int order = 0;
+        [SerializeField]
         private string category = string.Empty;
         [SerializeField]
         private string payment = string.Empty;
@@ -23,6 +25,7 @@ namespace Data
         private string productId = string.Empty;
 
         public bool Show { get { return show; } }
+        public int Order { get { return order; } }
         public Game.Type.ECategory ECategory { get; private set; } = Game.Type.ECategory.None;
         public Game.Type.EPayment EPayment { get; private set; } = Game.Type.EPayment.None;
         public int PaymentValue { get { return paymentValue; } }

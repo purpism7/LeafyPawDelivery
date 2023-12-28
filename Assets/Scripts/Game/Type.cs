@@ -134,6 +134,7 @@ namespace Game
             None,
 
             Money,
+            Cash,
             Advertising,
         }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 
 using TMPro;
+using System.Linq;
 
 using GameSystem;
 
@@ -45,10 +46,12 @@ namespace UI.Component
         private void SetItemList()
         {
             var shopDataList = _data?.shopDataList;
-            if (_data == null)
+            if (shopDataList == null)
                 return;
 
-            foreach(var data in shopDataList)
+            var sortShopDatas = shopDataList.OrderBy(data => data.Order);
+
+            foreach (var data in sortShopDatas)
             {
                 if (data == null)
                     continue;

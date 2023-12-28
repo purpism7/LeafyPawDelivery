@@ -126,7 +126,7 @@ namespace UI.Component
             var openConditionData = new OpenCondition.Data()
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
-                Text = "x5",
+                Text = "5",
             };
 
             openCondition.Initialize(openConditionData);

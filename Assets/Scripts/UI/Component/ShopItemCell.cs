@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Purchasing;
-using UnityEngine.Purchasing.Extension;
 
 using TMPro;
 
@@ -21,7 +20,7 @@ namespace UI.Component
 
         public interface IListener
         {
-            void Buy(Data.Shop shopData, System.Action endAction);
+            void Buy(Data.Shop shopData, Vector3 pos);
         }
 
         [SerializeField]
@@ -69,14 +68,6 @@ namespace UI.Component
                 iAPButton.enabled = true;
                 iAPButton.productId = shopData.ProductId;
                 iAPButton.buttonType = CodelessButtonType.Purchase;
-                //iAPButton.onPurchaseComplete.RemoveAllListeners();
-                //iAPButton.F?.AddListener(OnPurchaseComplete);
-
-                ////iAPButton.onPurchaseFailed?.RemoveAllListeners();
-                //iAPButton.onPurchaseFailed?.AddListener(OnPurchaseFailed);
-
-                ////iAPButton.onProductFetched?.RemoveAllListeners();
-                //iAPButton.onProductFetched?.AddListener(OnPurchaseFetched);
             }
         }
 
@@ -107,7 +98,7 @@ namespace UI.Component
             if (shopData == null)
                 return;
 
-            valueTMP?.SetText(shopData.Value.ToString());
+            valueTMP?.SetText("x" + shopData.Value);
         }
 
         private void SetPaymentValue()
@@ -126,7 +117,6 @@ namespace UI.Component
             }
             else
             {
-
                 if(shopData.ECategory == Game.Type.ECategory.Cash)
                 {
                     var productMetaData = _data?.product?.metadata;
@@ -140,7 +130,7 @@ namespace UI.Component
                     openCondition?.Initialize(new OpenCondition.Data()
                     {
                         ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
-                        Text = "x" + shopData.PaymentValue,
+                        Text = shopData.PaymentValue.ToString(),
                         PossibleFunc = () => true,
                     });
 
@@ -174,11 +164,7 @@ namespace UI.Component
 
         public void OnClick()
         {
-            _data?.iListener?.Buy(_data?.shopData,
-                () =>
-                {
-                    Game.UIManager.Instance?.Top?.CollectCashCurrency(transform.position, _data.shopData.Value);
-                });
+            _data?.iListener?.Buy(_data?.shopData, transform.position);
         }
     }
 }
