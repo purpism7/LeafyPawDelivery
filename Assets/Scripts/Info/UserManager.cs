@@ -53,6 +53,8 @@ namespace Info
 
         private IEnumerator CoLoadLocalUserInfo()
         {
+            Debug.Log("iCloud = [" + GameSystem.Auth.ID + "] "+ iOSPlugin.iCloudGetStringValue(GameSystem.Auth.ID));
+
             if (!System.IO.File.Exists(_userInfoJsonFilePath))
             {
                 CreateUserInfo();
@@ -248,6 +250,8 @@ namespace Info
         {
             var jsonString = JsonUtility.ToJson(User);
             System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonString);
+
+            iOSPlugin.iCloudSaveStringValue(GameSystem.Auth.ID, jsonString);
         }
 
         public void SaveLastPlaceId()

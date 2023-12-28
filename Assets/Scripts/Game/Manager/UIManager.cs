@@ -16,6 +16,9 @@ namespace Game
         public UI.Bottom Bottom = null;
         public UI.Popup Popup;
 
+        [SerializeField]
+        private RectTransform screenSaverRectTm = null;
+
         protected override void Initialize()
         {
             
@@ -55,6 +58,16 @@ namespace Game
         {
             Top?.DeactivateAnim(null);
             Bottom?.DeactivateAnim(null);
+        }
+
+        public void ActivateSreenSaver()
+        {
+            UIUtils.SetActive(screenSaverRectTm, true);
+        }
+
+        public void DeactivateScreenSaver()
+        {
+            UIUtils.SetActive(screenSaverRectTm, false);
         }
     }
 }

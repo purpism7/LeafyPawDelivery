@@ -132,6 +132,8 @@ namespace UI.Component
         public void OnClick()
         {
             _data?.IListener?.SelectPlace(placeId);
+
+            //Game.Toast.Get?.Show("show");
         }
     }
 }

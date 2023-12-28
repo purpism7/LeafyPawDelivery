@@ -4,14 +4,17 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 
 using TMPro;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
+
+
 
 namespace UI.Component
 {
     public class Toast : Base<Toast.Data>
     {
-        public class Data : BaseData
+        public
+
+            class Data : BaseData
         {
             public string localKey = string.Empty;
         }

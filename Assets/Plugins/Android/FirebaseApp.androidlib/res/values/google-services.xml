@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://leafypawdelivery-default-rtdb.firebaseio.com/</string>
+  <string name="gcm_defaultSenderId" translatable="false">327674171124</string>
+  <string name="google_storage_bucket" translatable="false">leafypawdelivery.appspot.com</string>
+  <string name="project_id" translatable="false">leafypawdelivery</string>
+  <string name="google_api_key" translatable="false">AIzaSyDwl3zTjtZjnWWHn6qg2EDWP_pmr4kc2yM</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDwl3zTjtZjnWWHn6qg2EDWP_pmr4kc2yM</string>
+  <string name="google_app_id" translatable="false">1:327674171124:android:b29ed6ca3bf50b3af318a1</string>
+  <string name="default_web_client_id" translatable="false">327674171124-k80gv4cirhlu3fuj774ni8r66tk6f6n2.apps.googleusercontent.com</string>
+</resources>

@@ -21,6 +21,8 @@ namespace UI.Component
         private Image img = null;
         [SerializeField]
         private TextMeshProUGUI textTMP = null;
+        [SerializeField]
+        private ContentSizeFitter textContentSizeFitter = null;
         #endregion
 
         public override void Initialize(Data data)
@@ -29,7 +31,7 @@ namespace UI.Component
 
             SetImg();
             SetText(data.Text);
-            SetColor();
+            SetColor();   
         }
 
         public override void Activate()
@@ -37,6 +39,8 @@ namespace UI.Component
             base.Activate();
 
             SetColor();
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(textContentSizeFitter?.GetComponent<RectTransform>());
         }
 
         private void SetImg()

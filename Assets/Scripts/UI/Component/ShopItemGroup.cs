@@ -16,6 +16,7 @@ namespace UI.Component
             public ShopItemCell.IListener iShopItemCellListener = null;
             public Game.Type.ECategory eCategory = Game.Type.ECategory.None;
             public List<Data.Shop> shopDataList = null;
+            public IShop iShop = null;
         }
 
         [SerializeField]
@@ -59,6 +60,7 @@ namespace UI.Component
                 {
                     iListener = _data.iShopItemCellListener,
                     shopData = data,
+                    product = _data.iShop?.GetProduct(data.ProductId),
                 };
 
                 var cell = new ComponentCreator<ShopItemCell, ShopItemCell.Data_>()

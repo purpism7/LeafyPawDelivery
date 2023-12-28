@@ -146,7 +146,7 @@ namespace UI
                     {
                         var popup = new GameSystem.PopupCreator<Shop, Shop.Data_>()
                             .SetCoInit(true)
-                            .SetReInitialize(reInitialize)
+                            //.SetReInitialize(reInitialize)
                             .Create();
 
                         break;

@@ -5,9 +5,7 @@ using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using System.Threading.Tasks;
-using Unity.Services.Authentication;
-using UnityEngine.SocialPlatforms.GameCenter;
+using Unity.Services.CloudSave;
 
 using GameSystem;
 

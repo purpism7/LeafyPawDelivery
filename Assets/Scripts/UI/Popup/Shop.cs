@@ -2,13 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Purchasing;
+using UnityEngine.Purchasing.Extension;
+using System.Linq;
 
 using UI.Component;
 using GameSystem;
 
 namespace UI
 {
-    public class Shop : BasePopup<Shop.Data_>, ShopItemCell.IListener
+    public interface IShop
+    {
+        Product GetProduct(string productId);
+    }
+
+    public class Shop : BasePopup<Shop.Data_>, ShopItemCell.IListener, IShop, IDetailedStoreListener
     {
         public class Data_ : BaseData
         {
@@ -18,17 +26,32 @@ namespace UI
         [SerializeField]
         private ScrollRect itemScrollRect = null;
 
-        private AdMob _adMob = null;
+        private bool _initializeStore = false;
+        private IStoreController _iStoreCtr = null;
+
+        private Data.Shop _buyShopData = null;
+        private System.Action _endBuyAction = null;
 
         public override IEnumerator CoInitialize(Data_ data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
 
-            SetItemList();
+            InitializeIAP();
 
-            yield return new WaitForEndOfFrame();
+            yield return StartCoroutine(CoSetItemList());
 
-            yield return null;
+            InitializeChildComponent();
+
+            yield return new WaitUntil(() => _initializeStore);
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            ActivateChildComponent(typeof(ShopItemCell));
+
+            itemScrollRect?.ResetScrollPos();
         }
 
         public override void Deactivate()
@@ -36,15 +59,36 @@ namespace UI
             base.Deactivate();
         }
 
-        private void SetItemList()
+        private void InitializeIAP()
+        {
+            _initializeStore = false;
+
+            if (_iStoreCtr != null)
+            {
+                _initializeStore = true;
+
+                return;
+            }                
+
+            ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+
+            foreach (var productItem in ProductCatalog.LoadDefaultCatalog().allValidProducts)
+            {
+                builder.AddProduct(productItem.id, productItem.type);
+            }
+
+            UnityPurchasing.Initialize(this, builder);
+        }
+
+        private IEnumerator CoSetItemList()
         {
             var shopListDic = ShopContainer.Instance?.ShopListDic;
             if (shopListDic == null)
-                return;
+                yield break;
 
             var scrollContent = itemScrollRect?.content;
             if (scrollContent == null)
-                return;
+                yield break;
 
             foreach (var data in shopListDic)
             {
@@ -59,12 +103,15 @@ namespace UI
                         iShopItemCellListener = this,
                         eCategory = dataList.Count > 0 ? dataList[0].ECategory : Game.Type.ECategory.None,
                         shopDataList = dataList,
+                        iShop = this,
                     })
                     .SetRootRectTm(scrollContent)
                     .Create();
             }
 
             itemScrollRect?.ResetScrollPos();
+
+            yield return null;
         }
 
         void ShopItemCell.IListener.Buy(Data.Shop shopData, System.Action endAction)
@@ -72,16 +119,65 @@ namespace UI
             if (shopData == null)
                 return;
 
-            if(shopData.EPayment == Game.Type.EPayment.Advertising)
-            {
-                //_adMob?.LoadRewardedInterstitialAd(shopData.ProductId);
-            }
-            else
-            {
+            _buyShopData = shopData;
+            _endBuyAction = endAction;
 
-            }
-
-            endAction?.Invoke();
+            Game.UIManager.Instance?.ActivateSreenSaver();
         }
+
+        Product IShop.GetProduct(string productId)
+        {
+            if (_iStoreCtr == null)
+                return null;
+
+            return _iStoreCtr.products?.WithID(productId);
+        }
+
+        #region IDetailedStoreListener
+        void IStoreListener.OnInitializeFailed(InitializationFailureReason error, string message)
+        {
+            Game.UIManager.Instance?.DeactivateScreenSaver();
+            Debug.Log("OnInitializeFailed = " + message);
+        }
+
+        PurchaseProcessingResult IStoreListener.ProcessPurchase(PurchaseEventArgs purchaseEvent)
+        {
+            Debug.Log("ProcessPurchase = " + purchaseEvent.purchasedProduct.metadata.localizedTitle);
+
+            Game.UIManager.Instance?.DeactivateScreenSaver();
+
+            if (_buyShopData == null)
+                return PurchaseProcessingResult.Pending;
+
+            _endBuyAction?.Invoke();
+
+            return PurchaseProcessingResult.Complete;
+        }
+
+        void IStoreListener.OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
+        {
+            Game.UIManager.Instance?.DeactivateScreenSaver();
+            Debug.Log("OnPurchaseFailed = " + failureReason);
+        }
+
+        void IStoreListener.OnInitialized(IStoreController controller, IExtensionProvider extensions)
+        {
+            Debug.Log("OnInitialized");
+
+            _iStoreCtr = controller;
+
+            _initializeStore = true;
+        }
+
+        void IDetailedStoreListener.OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
+        {
+            Debug.Log("OnPurchaseFailed = " + failureDescription.message);
+        }
+
+        void IStoreListener.OnInitializeFailed(InitializationFailureReason error)
+        {
+            Debug.Log("OnInitializeFailed = " + error);
+        }
+        #endregion
     }
 }
