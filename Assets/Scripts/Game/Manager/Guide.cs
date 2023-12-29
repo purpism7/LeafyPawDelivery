@@ -19,6 +19,7 @@ namespace Game.Manager
         {
             AnimalManager.Event?.AddListener(OnChangedAnimal);
             ObjectManager.Event?.AddListener(OnChangedObject);
+            PlaceEventController.Event?.AddListener(OnChangedPlaceEvnet);
         }
 
         private void Show(Queue<string> sentenceQueue)
@@ -71,7 +72,7 @@ namespace Game.Manager
                 case Game.Event.ArrangeAnimalData arrangeAnimalData:
                     {
                         Debug.Log("Guide = " + arrangeAnimalData.id);
-                        if(Boolean.TryParse(PlayerPrefs.GetString(KeyGuide + "_Animal", false.ToString()), out bool already))
+                        if (Boolean.TryParse(PlayerPrefs.GetString(KeyGuide + "_Animal", false.ToString()), out bool already))
                         {
                             if (already)
                                 return;
@@ -97,7 +98,7 @@ namespace Game.Manager
 
         private void OnChangedObject(Game.Event.ObjectData objectData)
         {
-            switch(objectData)
+            switch (objectData)
             {
                 case Event.AddObjectData addObjectData:
                     {
@@ -124,6 +125,39 @@ namespace Game.Manager
                         }
 
                         CheckOpenPlace();
+
+                        break;
+                    }
+            }
+        }
+
+        private void OnChangedPlaceEvnet(Game.PlaceEvent.BaseData baseData)
+        {
+            Debug.Log("OnChangedPlaceEvnet");
+
+            switch (baseData)
+            {
+                case Game.PlaceEvent.DropItemData dropItemData:
+                    {
+                        if (dropItemData == null)
+                            return;
+
+                        if (Boolean.TryParse(PlayerPrefs.GetString(KeyGuide + "FirstDropLetter", false.ToString()), out bool already))
+                        {
+                            if (already)
+                                return;
+                        }
+                        
+                        if (dropItemData.currCnt == 1)
+                        {
+                            var sentenceQueue = new Queue<string>();
+                            sentenceQueue.Clear();
+
+                            var key = "guide_drop_letter";
+                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", key, LocalizationSettings.SelectedLocale));
+
+                            Show(sentenceQueue);
+                        }
 
                         break;
                     }

@@ -336,7 +336,10 @@ namespace UI
         #region StoryCell.IListener
         void StoryCell.IListener.Select(Story story)
         {
-            MainGameManager.Get<Game.StoryManager>()?.PlayStory(story);
+            Sequencer.EnqueueTask(() =>
+            {
+                return MainGameManager.Get<Game.StoryManager>()?.PlayStory(story);
+            }); 
         }
         #endregion
     }

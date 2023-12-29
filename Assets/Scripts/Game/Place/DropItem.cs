@@ -17,9 +17,9 @@ namespace Game.PlaceEvent
 
         private Game.Type.EItemSub _eItemSub = Type.EItemSub.None;
 
-        public override Base Initialize(IPlace iPlace)
+        public override Base Initialize(IPlace iPlace, IListener iListener)
         {
-            base.Initialize(iPlace);
+            base.Initialize(iPlace, iListener);
 
             float randWaitSec = UnityEngine.Random.Range(60f, 70f);
             Debug.Log(randWaitSec);
@@ -187,7 +187,15 @@ namespace Game.PlaceEvent
             if(_eItemSub == Type.EItemSub.Letter)
             {
                 UI.ITop iTop = Game.UIManager.Instance?.Top;
-                iTop?.SetDropLetterCnt(1);
+
+                int currCnt = 0;
+                iTop?.SetDropLetterCnt(1, out currCnt);
+
+                _iListener?.Action(new DropItemData()
+                {
+                    eItemSub = _eItemSub,
+                    currCnt = currCnt,
+                });
             }
         }
     }

@@ -36,6 +36,8 @@ namespace Game
         {
             Event = new UnityEvent<int>();
             Event?.RemoveAllListeners();
+
+            PlaceEventController.Event?.RemoveAllListeners();
         }
 
         public override IEnumerator CoInitialize(Data data)

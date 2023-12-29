@@ -7,11 +7,11 @@ namespace Game.PlaceEvent
     public class DropCurrency : Base
     {
         private Coroutine _dropCurrencyCoroutine = null;
-        private YieldInstruction _waitSecDrop = new WaitForSeconds(30f);
+        private YieldInstruction _waitSecDrop = null;
 
-        public override Base Initialize(IPlace iPlace)
+        public override Base Initialize(IPlace iPlace, IListener iListener)
         {
-            base.Initialize(iPlace);
+            base.Initialize(iPlace, iListener);
 
             float randWaitSec = UnityEngine.Random.Range(30f, 40f);
             Debug.Log(randWaitSec);

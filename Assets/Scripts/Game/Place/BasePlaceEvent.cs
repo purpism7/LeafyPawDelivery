@@ -6,11 +6,18 @@ namespace Game.PlaceEvent
 {
     public abstract class Base : MonoBehaviour
     {
-        protected IPlace _iPlace = null;
+        public interface IListener
+        {
+            void Action(PlaceEvent.BaseData data);
+        }
 
-        public virtual Base Initialize(IPlace iPlace)
+        protected IPlace _iPlace = null;
+        protected IListener _iListener = null;
+
+        public virtual Base Initialize(IPlace iPlace, IListener iListener)
         {
             _iPlace = iPlace;
+            _iListener = iListener;
 
             return this;
         }

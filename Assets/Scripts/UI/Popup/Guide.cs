@@ -74,7 +74,7 @@ namespace UI
                 typingTMP?.SetText(typingTMP.text + typingChr);
             }
 
-            await UniTask.WaitForSeconds(1f);
+            await UniTask.WaitForSeconds(1.5f);
 
             FinishTyping();
 

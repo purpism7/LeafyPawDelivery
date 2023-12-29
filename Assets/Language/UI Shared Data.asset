@@ -129,6 +129,10 @@ MonoBehaviour:
     m_Key: guide_open_place
     m_Metadata:
       m_Items: []
+  - m_Id: 51479994784800768
+    m_Key: guide_drop_letter
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

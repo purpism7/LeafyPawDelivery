@@ -265,7 +265,7 @@ namespace Game
                         }
 
                         UI.ITop iTop = UIManager.Instance?.Top;
-                        iTop?.SetDropLetterCnt(-1);
+                        iTop?.SetDropLetterCnt(-1, out int currCnt);
 
                         break;
                     }

@@ -15,7 +15,7 @@ namespace UI
     public interface ITop
     {
         void SetCurrency();
-        void SetDropLetterCnt(int cnt);
+        void SetDropLetterCnt(int cnt, out int currCnt);
         void SetDropAnimalCurrencyCnt(int cnt);
 
         bool CheckMaxDropLetterCnt { get; }
@@ -431,9 +431,11 @@ namespace UI
             SetCurrency();
         }
 
-        void ITop.SetDropLetterCnt(int cnt)
+        void ITop.SetDropLetterCnt(int cnt, out int currCnt)
         {
             SetDropLetterCnt(cnt);
+
+            currCnt = DropLetterCnt;
         }
 
         void ITop.SetDropAnimalCurrencyCnt(int cnt)
