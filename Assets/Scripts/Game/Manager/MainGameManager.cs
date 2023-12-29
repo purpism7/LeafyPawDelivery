@@ -111,14 +111,13 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private IEnumerator CoInitializeManager(int placeId)
     {
-        var setting = new Info.Setting();
         if (placeMgr != null)
         {
             yield return StartCoroutine(placeMgr.CoInitialize(
                 new Game.PlaceManager.Data()
                 {
                     placeId = placeId,
-                    setting = setting,
+                    //setting = setting,
                 }));
         }
 

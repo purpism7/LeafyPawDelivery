@@ -15,6 +15,21 @@ namespace Info
 
         public static UnityEvent<Game.Event.SettingData> Event { get; private set; } = new();
 
+        private static Setting _instance = null;
+
+        public static Setting Get
+        {
+            get
+            {
+                if(_instance == null)
+                {
+                    _instance = new();
+                }
+
+                return _instance;
+            }
+        }
+
         public bool OnBGM
         {
             get

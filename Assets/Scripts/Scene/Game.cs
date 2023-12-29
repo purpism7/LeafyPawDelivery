@@ -31,8 +31,7 @@ namespace Scene
             {
                 if (eSceneType == Type.EScene.Game)
                 {
-                    Info.Setting setting = new();
-                    setting?.InitializeLocale();
+                    Info.Setting.Get?.InitializeLocale();
 
                     _preprocessing?.Init(this);
                 }

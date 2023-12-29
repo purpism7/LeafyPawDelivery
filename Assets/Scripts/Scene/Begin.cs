@@ -25,8 +25,7 @@ namespace Scene
 
         private IEnumerator Start()
         {
-            Info.Setting setting = new();
-            setting?.InitializeLocale();
+            Info.Setting.Get?.InitializeLocale();
 
             var firebaseMgr = FirebaseManager.Instance;
 

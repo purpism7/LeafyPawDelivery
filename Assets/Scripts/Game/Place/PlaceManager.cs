@@ -14,7 +14,6 @@ namespace Game
         public class Data : Manager.BaseData
         {
             public int placeId = 0;
-            public Info.Setting setting = null;
         }
 
         public static UnityEvent<int> Event { get; private set; } = null;
@@ -63,7 +62,7 @@ namespace Game
                   .SetData(new Place.Data()
                   {
                       Id = data.placeId,
-                      onBGM = data.setting.OnBGM,
+                      onBGM = Info.Setting.Get.OnBGM,
                   })
                   .Create();
 

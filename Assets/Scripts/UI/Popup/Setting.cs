@@ -18,8 +18,6 @@ namespace UI
         [SerializeField]
         private Toggle[] langToggles = null;
 
-        private Info.Setting _setting = new();
-
         public override void Initialize(BaseData data)
         {
             base.Initialize(data);
@@ -36,10 +34,12 @@ namespace UI
         #region Sound
         private void SetSound()
         {
+            var setting = Info.Setting.Get;
+
             bool on = true;
-            if (_setting != null)
+            if (setting != null)
             {
-                on = _setting.OnBGM;
+                on = setting.OnBGM;
             }
 
             UIUtils.SetActive(bgmCheckImg?.gameObject, on);
@@ -47,14 +47,28 @@ namespace UI
 
         private void SetBGM()
         {
-            if (_setting == null)
+            var setting = Info.Setting.Get;
+            if (setting == null)
                 return;
 
-            bool on = !_setting.OnBGM;
+            bool on = !setting.OnBGM;
 
             UIUtils.SetActive(bgmCheckImg?.gameObject, on);
 
-            _setting?.SaveBGM(on);
+            setting.SaveBGM(on);
+        }
+
+        private void SetEffect()
+        {
+            var setting = Info.Setting.Get;
+            if (setting == null)
+                return;
+
+            bool on = !setting.OnEffect;
+
+            UIUtils.SetActive(effectCheckImg?.gameObject, on);
+
+            setting.SaveEffect(on);
         }
 
         public void OnClickBGM()
@@ -64,17 +78,19 @@ namespace UI
 
         public void OnClickEffect()
         {
-
+            SetEffect();
         }
         #endregion
 
         #region Language
         private void SetLanguage()
         {
+            var setting = Info.Setting.Get;
+
             int index = 0;
-            if(_setting != null)
+            if(setting != null)
             {
-                index = _setting.LocaleIndex;
+                index = setting.LocaleIndex;
             }
 
             if (langToggles == null)
@@ -101,7 +117,7 @@ namespace UI
 
             LocalizationSettings.SelectedLocale = selectedLocale;
 
-            _setting?.SaveLocaleIndex(index);
+            Info.Setting.Get?.SaveLocaleIndex(index);
 
             if(langToggles != null)
             {
