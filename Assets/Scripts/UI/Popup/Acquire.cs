@@ -10,7 +10,7 @@ using Game;
 
 namespace UI
 {
-    public class Acquire : BasePopup<Acquire.Data>
+    public class Acquire : BasePopup<Acquire.Data>, Component.DailyMissionCell.IListener
     {
         public class Data : BaseData
         {
@@ -33,11 +33,15 @@ namespace UI
         private List<Component.DailyMissionCell> _dailyMissionCellList = new();
         private List<Component.AchievementCell> _achievementCellList = new();
 
-        private bool _resetDailyMission = false; 
+        private bool _resetDailyMission = false;
+
+        private Game.Manager.Acquire _acquireMgr = null;
 
         public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
+
+            _acquireMgr = MainGameManager.Get<Game.Manager.Acquire>();
 
             _dailyMissionCellList?.Clear();
             _achievementCellList?.Clear();
@@ -56,10 +60,9 @@ namespace UI
 
             _resetDailyMission = false;
 
-            var acquireMgr = MainGameManager.Get<Game.Manager.Acquire>();
-            if (acquireMgr != null)
+            if (_acquireMgr != null)
             {
-                if (acquireMgr.CheckResetDailyMission)
+                if (_acquireMgr.CheckResetDailyMission)
                 {
                     ResetDailyMission();
                 }
@@ -73,17 +76,18 @@ namespace UI
             {
                 tabToggle.SetIsOnWithoutNotify(true);
             }
+
+            SetTotalProgress();
         }
 
         private void Update()
         {
-            var localRemainTime = System.DateTime.Today.AddDays(1).Subtract(System.DateTime.UtcNow);
-            var localRemainTotalSeconds = localRemainTime.TotalSeconds;
+            var localRemainTime = System.DateTime.Today.AddDays(1).Subtract(System.DateTime.Now);
 
             localRemainTimeTMP?.SetText(localRemainTime.ToString(@"hh\:mm\:ss"));
-            //localRemainTimeTMP?.SetText(System.DateTime.Now.ToString(@"yyyy-MM-dd"));
+            
             if (!_resetDailyMission &&
-                localRemainTotalSeconds <= 0)
+                _acquireMgr != null && _acquireMgr.CheckResetDailyMission)
             {
                 _resetDailyMission = true;
 
@@ -105,7 +109,9 @@ namespace UI
                 var cell = new GameSystem.ComponentCreator<Component.DailyMissionCell, Component.DailyMissionCell.Data>()
                    .SetData(new Component.DailyMissionCell.Data()
                    {
-                       DailyMissionData = dailyMission,
+                       iListener = this,
+                       id = dailyMission.Id,
+                       value = dailyMission.Value,
                    })
                    .SetRootRectTm(dailyMissionScrollRect.content)
                    .Create();
@@ -134,6 +140,9 @@ namespace UI
             totalDailyMissionCell?.Initialize(
                 new Component.DailyMissionCell.Data()
                 {
+                    //progress = _dailyMissionCellList.Count,
+                    value = _dailyMissionCellList.Count,
+
                     isTotal = true,
                 });
             totalDailyMissionCell?.Activate();
@@ -193,6 +202,34 @@ namespace UI
             achievementsScrollRect?.ResetScrollPos();
         }
 
+        private void SetTotalProgress()
+        {
+            if (_dailyMissionCellList == null)
+                return;
+
+            int progress = 0;
+
+            foreach(Component.IDailyMission iDailMission in _dailyMissionCellList)
+            {
+                if (iDailMission == null)
+                    continue;
+
+                if (iDailMission.GetRewarded)
+                {
+                    ++progress;
+                }
+            }
+
+            (totalDailyMissionCell as Component.IDailyMission).SetTotalProgress(progress);
+        }
+
+        #region Component.DailyMissionCell.IListener
+        void Component.DailyMissionCell.IListener.GetReward(int id)
+        {
+            SetTotalProgress();
+        }
+        #endregion
+
         public void OnChanged(string tabType)
         {
             if (System.Enum.TryParse(tabType, out Game.Type.ETab eTabType))
@@ -204,11 +241,6 @@ namespace UI
 
                 ActiveContents();
             }
-        }
-
-        public void OnClickResetDailyMission()
-        {
-            ResetDailyMission();
         }
     }
 }

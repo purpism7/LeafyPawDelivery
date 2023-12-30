@@ -72,7 +72,8 @@ namespace Game.Manager
                 case Game.Event.ArrangeAnimalData arrangeAnimalData:
                     {
                         Debug.Log("Guide = " + arrangeAnimalData.id);
-                        if (Boolean.TryParse(PlayerPrefs.GetString(KeyGuide + "_Animal", false.ToString()), out bool already))
+                        string saveKey = KeyGuide + "_Animal";
+                        if (Boolean.TryParse(PlayerPrefs.GetString(saveKey, false.ToString()), out bool already))
                         {
                             if (already)
                                 return;
@@ -89,6 +90,8 @@ namespace Game.Manager
                             sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 3), LocalizationSettings.SelectedLocale));
 
                             Show(sentenceQueue);
+
+                            PlayerPrefs.SetString(saveKey, true.ToString());
                         }
 
                         break;
@@ -142,7 +145,9 @@ namespace Game.Manager
                         if (dropItemData == null)
                             return;
 
-                        if (Boolean.TryParse(PlayerPrefs.GetString(KeyGuide + "FirstDropLetter", false.ToString()), out bool already))
+                        string saveKey = KeyGuide + "FirstDropLetter";
+
+                        if (Boolean.TryParse(PlayerPrefs.GetString(saveKey, false.ToString()), out bool already))
                         {
                             if (already)
                                 return;
@@ -157,6 +162,8 @@ namespace Game.Manager
                             sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", key, LocalizationSettings.SelectedLocale));
 
                             Show(sentenceQueue);
+
+                            PlayerPrefs.SetString(saveKey, true.ToString());
                         }
 
                         break;

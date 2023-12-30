@@ -61,8 +61,11 @@ public class Const : ScriptableObject
             {
                 if(Application.isEditor)
                 {
-                    data.StartValue.Animal = 999999;
-                    data.StartValue.Object = 999999;
+                    return new Info.User.Currency()
+                    {
+                        Animal = 999999,
+                        Object = 999999,
+                    };
                 }
 
                 return data.StartValue;

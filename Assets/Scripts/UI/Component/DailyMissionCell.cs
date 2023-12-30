@@ -15,17 +15,30 @@ namespace UI.Component
         bool IsCompleted { get; }
         bool GetRewarded { get; }
         void Reset();
+
+        void SetTotalProgress(int cnt);
     }
 
     public class DailyMissionCell : Base<DailyMissionCell.Data>, IDailyMission
     {
         public class Data : BaseData
         {
-            public DailyMission DailyMissionData = null;
+            public IListener iListener = null;
+
+            public int id = 0;
+            public int progress = 0;
+            public int value = 0;
+
             public bool isTotal = false;
         }
 
+        public interface IListener
+        {
+            void GetReward(int id);
+        }
+
         private const string KeyGetRewardedDailyMission = "KeyGetRewardedDailyMission_{0}";
+        private const int RewardCnt = 5;
 
         [SerializeField]
         private TextMeshProUGUI titleTMP = null;
@@ -42,7 +55,7 @@ namespace UI.Component
 
         private float _progress = 0;
 
-        public int Id { get { return _data?.DailyMissionData != null ? _data.DailyMissionData.Id : 0; } }
+        public int Id { get { return _data != null ? _data.id : 0; } }
 
         public override void Initialize(Data data)
         {
@@ -80,12 +93,8 @@ namespace UI.Component
             }
             else
             {
-                var dailyMissionData = _data?.DailyMissionData;
-                if (dailyMissionData == null)
-                    return;
-
-                localKey = "dailymission_" + dailyMissionData.Id;
-                title = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", localKey, LocalizationSettings.SelectedLocale), dailyMissionData.Value);
+                localKey = "dailymission_" + _data.id;
+                title = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("Acquire", localKey, LocalizationSettings.SelectedLocale), _data.value);
             }
            
             titleTMP?.SetText(title);
@@ -96,15 +105,11 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            if(_data.isTotal)
-            {
-
-            }
-
-            var dailyMissionData = _data?.DailyMissionData;
+            if (_data.isTotal)
+                return;
 
             float dataProgress = DataProgress;
-            int id = dailyMissionData != null ? dailyMissionData.Id : 0;
+            int id = Id;
 
             var dailyMissionInfo = MainGameManager.Get<Game.Manager.Acquire>()?.GetDailyMission(id);
 
@@ -120,12 +125,10 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
-            var dailyMissionData = _data?.DailyMissionData;
-
             var openConditionData = new OpenCondition.Data()
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
-                Text = "5",
+                Text = RewardCnt.ToString(),
             };
 
             openCondition.Initialize(openConditionData);
@@ -135,9 +138,7 @@ namespace UI.Component
         {
             get
             {
-                var dailyMissionData = _data?.DailyMissionData;
-
-                return dailyMissionData != null ? dailyMissionData.Value : 0;
+                return _data != null ? _data.value : 0;
             }
         }
 
@@ -146,11 +147,8 @@ namespace UI.Component
             get
             {
                 bool getRewarded = true;
-                var dailyMissionData = _data?.DailyMissionData;
-                if (dailyMissionData == null)
-                    return getRewarded;
 
-                if(Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedDailyMission, _data.DailyMissionData.Id), false.ToString()), out getRewarded))
+                if(Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedDailyMission, Id), false.ToString()), out getRewarded))
                 {
                     return getRewarded;
                 }
@@ -163,11 +161,10 @@ namespace UI.Component
         {
             get
             {
-                var dailyMissionData = _data?.DailyMissionData;
-                if (dailyMissionData == null)
+                if (_data == null)
                     return false;
 
-                return _progress >= dailyMissionData.Progress;
+                return _progress >= _data.progress;
             }
         }
 
@@ -190,16 +187,28 @@ namespace UI.Component
 
         void IDailyMission.Reset()
         {
-            var dailyMissionData = _data?.DailyMissionData;
-            if (dailyMissionData == null)
+            if (_data == null)
                 return;
 
-            PlayerPrefs.SetString(string.Format(KeyGetRewardedDailyMission, dailyMissionData.Id), false.ToString());
+            PlayerPrefs.SetString(string.Format(KeyGetRewardedDailyMission, Id), false.ToString());
+        }
+
+        void IDailyMission.SetTotalProgress(int progress)
+        {
+            _progress = progress;
+
+            float dataProgress = DataProgress;
+            Debug.Log(_progress + " / " + dataProgress);
+            progressImg.fillAmount = _progress / dataProgress;
+            progressTMP?.SetText(_progress + " / " + dataProgress);
         }
         #endregion
 
         public void OnClickGetReward()
         {
+            if (_data == null)
+                return;
+
             var dataProgress = DataProgress;
             if (dataProgress <= 0)
                 return;
@@ -207,16 +216,21 @@ namespace UI.Component
             if (_progress < dataProgress)
                 return;
 
-            Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, 5);
+            Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, RewardCnt);
 
             UIUtils.SetActive(completedRootRectTm, true);
 
-            if(transform)
+            PlayerPrefs.SetString(string.Format(KeyGetRewardedDailyMission, Id), true.ToString());
+
+            if (Id <= 0)
+                return;
+
+            if (transform)
             {
                 transform.SetAsLastSibling();
             }
 
-            PlayerPrefs.SetString(string.Format(KeyGetRewardedDailyMission, _data.DailyMissionData.Id), true.ToString());
+            _data?.iListener?.GetReward(Id);
         }
     }
 }

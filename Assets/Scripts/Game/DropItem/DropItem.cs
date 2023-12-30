@@ -48,7 +48,7 @@ namespace Game
             {
                 //_startRootTm = data.startRootTm;
                 transform.position = _data.startPos;
-                ActivateProgress(data.activateProgress);
+                ActivateProgress(false);
             }
 
             SetItemSprite();
@@ -64,8 +64,7 @@ namespace Game
 
             progressRootTm.SetActive(activate);
 
-            if(activate &&
-               progressSpriteRenderer != null)
+            if(progressSpriteRenderer != null)
             {
                 progressSpriteRenderer.transform.DOScaleX(0, 0);
             }
@@ -287,6 +286,8 @@ namespace Game
                .OnComplete(() =>
                {
                     SetSortingOrder();
+                    ActivateProgress(_data.activateProgress);
+
                });
 
             sequence.Restart();

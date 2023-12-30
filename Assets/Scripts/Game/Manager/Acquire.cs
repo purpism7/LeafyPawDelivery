@@ -14,6 +14,7 @@ namespace Game.Manager
         private const string KeyDailyMissionDate = "KeyDailyMissionDate";
 
         private Info.AcquireHolder _acquireHolder = new();
+        private System.DateTime? _dailyMissionDateTime = null;
         
         protected override void Initialize()
         {
@@ -50,24 +51,34 @@ namespace Game.Manager
         private void SetDailyMissionDate()
         {
             string dailyMissionDate = PlayerPrefs.GetString(KeyDailyMissionDate);
+            Debug.Log(dailyMissionDate);
             if (string.IsNullOrEmpty(dailyMissionDate))
             {
-                PlayerPrefs.SetString(KeyDailyMissionDate, System.DateTime.UtcNow.ToString());
+                _dailyMissionDateTime = System.DateTime.UtcNow;
+                PlayerPrefs.SetString(KeyDailyMissionDate, _dailyMissionDateTime.Value.ToString());
 
                 return;
             }
 
             if(CheckResetDailyMission)
             {
-                PlayerPrefs.SetString(KeyDailyMissionDate, System.DateTime.UtcNow.ToString());
+                _dailyMissionDateTime = System.DateTime.UtcNow;
+                PlayerPrefs.SetString(KeyDailyMissionDate, _dailyMissionDateTime.Value.ToString());
+
+                return;
             }
+
+            _dailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
         }
 
         public bool CheckResetDailyMission
         {
             get
             {
-                return (System.DateTime.UtcNow - System.DateTime.Parse(PlayerPrefs.GetString(KeyDailyMissionDate))).Days >= 1;
+                if (_dailyMissionDateTime == null)
+                    return false;
+
+                return (System.DateTime.Parse(_dailyMissionDateTime.Value.ToString()).AddDays(1) - System.DateTime.UtcNow).TotalDays >= 1;
             }
         }
 
