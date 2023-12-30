@@ -58,6 +58,33 @@ namespace Game.Creature
             _data?.IListener?.EndAction(this);
         }
 
+        protected float ClipLength
+        {
+            get
+            {
+                var animator = _data?.Animator;
+                if (animator == null)
+                    return 0;
+
+                RuntimeAnimatorController animatorCtr = animator.runtimeAnimatorController;
+                if (animatorCtr == null)
+                    return 0;
+
+                foreach(var clip in animatorCtr.animationClips)
+                {
+                    if (clip == null)
+                        continue;
+
+                    if (!clip.name.Equals(ActionName))
+                        continue;
+
+                    return clip.length;
+                }
+
+                return 0;
+            }
+        }
+
         //protected void SetState(EState eState)
         //{
         //    if(_data != null)

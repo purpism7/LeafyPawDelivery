@@ -109,6 +109,11 @@ namespace Game.Creature
             {
                 SetState(new Element.State.Game<Animal>()?.Initialize(gameCameraCtr, iGrid));
             }
+
+            if (touch != null)
+            {
+                State?.Touch(touch.Value);
+            }
         }
 
         public override void OnTouch(Touch touch)
@@ -167,6 +172,11 @@ namespace Game.Creature
         public void SetPos(Vector3 pos)
         {
             transform.localPosition = pos;
+        }
+
+        public void StartSignatureAction()
+        {
+            _actionCtr?.StartSignatureAction();
         }
 
         #region SpeechBubble

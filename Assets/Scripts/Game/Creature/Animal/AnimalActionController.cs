@@ -39,6 +39,7 @@ namespace Game.Creature
             if(!onlyIdle)
             {
                 AnimalActionList.Add(CreateaAnimalAction<WalkAction>());
+                AnimalActionList.Add(CreateaAnimalAction<SignatureAction>());
             }
 
             StartIdleAction();
@@ -85,9 +86,27 @@ namespace Game.Creature
                 if(AnimalActionList == null)
                     return null;
 
-                var randomIndex = UnityEngine.Random.Range(0, AnimalActionList.Count);
+                // signature 는 제외.
+                var randomIndex = UnityEngine.Random.Range(0, AnimalActionList.Count - 1);
 
                 return AnimalActionList[randomIndex] as AnimalAction;
+            }
+        }
+
+        private void StartAction<T>() where T : AnimalAction
+        {
+            if (AnimalActionList == null)
+                return;
+
+            foreach (AnimalAction action in AnimalActionList)
+            {
+                if (action is T)
+                {
+                    _currentAnimalAction = action;
+                    action.StartAction();
+
+                    break;
+                }
             }
         }
 
@@ -96,16 +115,12 @@ namespace Game.Creature
             if (_currentAnimalAction is IdleAction)
                 return;
 
-            foreach(AnimalAction action in AnimalActionList)
-            {
-                if(action is IdleAction)
-                {
-                    _currentAnimalAction = action;
-                    action.StartAction();
+            StartAction<IdleAction>();
+        }
 
-                    break;
-                }
-            }
+        public void StartSignatureAction()
+        {
+            StartAction<SignatureAction>();
         }
 
         #region Action.IListener

@@ -177,7 +177,7 @@ namespace GameSystem
             float clampY = GetClampY(movePos.y);
 
             var targetPos = new Vector3(clampX, clampY, InitPosZ);
-            Debug.Log("targetPos = " + targetPos);
+            
             cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, 0.01f);
         }
 

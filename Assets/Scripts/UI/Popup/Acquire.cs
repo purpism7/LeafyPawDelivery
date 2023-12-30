@@ -82,7 +82,7 @@ namespace UI
 
         private void Update()
         {
-            var localRemainTime = System.DateTime.Today.AddDays(1).Subtract(System.DateTime.Now);
+            var localRemainTime = System.DateTime.Today.AddDays(1).Subtract(System.DateTime.UtcNow);
 
             localRemainTimeTMP?.SetText(localRemainTime.ToString(@"hh\:mm\:ss"));
             

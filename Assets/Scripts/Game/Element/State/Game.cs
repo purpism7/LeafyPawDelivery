@@ -9,14 +9,11 @@ namespace Game.Element.State
         readonly private float TouchInterval = 0.15f;
 
         private GameSystem.GameCameraController _gameCameraCtr = null;
-        //private GameSystem.IGrid _iGrid = null;
         private DateTime _touchDateTime;
 
         public override BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             _gameCameraCtr = gameCameraCtr;
-
-            //_iGrid = iGrid;
 
             return this;
         }
@@ -33,7 +30,8 @@ namespace Game.Element.State
             {
                 case TouchPhase.Began:
                     {
-                        CollectCurrnecyFromObject(touch);
+                        CollectCurrnecy(touch);
+                        StartSignatureAction();
 
                         break;
                     }
@@ -60,7 +58,7 @@ namespace Game.Element.State
             }
         }
 
-        private void CollectCurrnecyFromObject(Touch touch)
+        private void CollectCurrnecy(Touch touch)
         {
             if (_gameCameraCtr == null)
                 return;
@@ -82,6 +80,27 @@ namespace Game.Element.State
             startPos.z = 10f;
 
             UIManager.Instance?.Top?.CollectCurrency(startPos, elementData.EElement, elementData.GetCurrency);
+        }
+
+        private void StartSignatureAction()
+        {
+            if (_gameCameraCtr == null)
+                return;
+
+            var elementData = _gameBaseElement?.ElementData;
+            if (elementData == null)
+                return;
+
+            if (elementData.EElement != Game.Type.EElement.Animal)
+                return;
+
+            var animal = _gameBaseElement as Creature.Animal;
+            if (animal == null)
+                return;
+
+            animal.StartSignatureAction();
+
+            Debug.Log("ActionSignature");
         }
     }
 }
