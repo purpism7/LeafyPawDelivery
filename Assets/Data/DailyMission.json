@@ -4,7 +4,7 @@
             "Id": 1,
             "Type": "AnimalCurrency",
             "Action": "Obtain",
-            "Value": 250,
+            "Value": 15,
             "RewardId": null
         },
         {
