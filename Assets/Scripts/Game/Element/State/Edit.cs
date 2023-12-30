@@ -22,8 +22,6 @@ namespace Game.Element.State
             _isOverlap = false;
             _enableColliders = false;
 
-            _gameBaseElement?.SetColor(Color.white);
-
             return this;
         }
 
@@ -124,7 +122,7 @@ namespace Game.Element.State
                 return;
 
             _gameBaseElement.SetColor(isOverlap ? Color.gray : Color.white);
-
+            
             _isOverlap = isOverlap;
         }
 

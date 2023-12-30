@@ -215,7 +215,9 @@ namespace Game
             if (_objectList == null)
                 return null;
 
-            foreach(var obj in _objectList)
+            pos.z = GetObjectPosZ(id, uId);
+
+            foreach (var obj in _objectList)
             {
                 if (obj == null)
                     continue;
@@ -226,13 +228,11 @@ namespace Game
                 if (obj.Id != id)
                     continue;
 
-                obj.UId = uId;
+                obj.Reset(uId, pos);
                 obj.Activate();
 
                 return obj;
             }
-
-            pos.z = GetObjectPosZ(id, uId);
 
             var objData = new Game.Object.Data()
             {

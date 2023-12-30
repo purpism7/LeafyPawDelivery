@@ -65,6 +65,7 @@ public class Const : ScriptableObject
                     {
                         Animal = 999999,
                         Object = 999999,
+                        PlaceId = placeId,
                     };
                 }
 

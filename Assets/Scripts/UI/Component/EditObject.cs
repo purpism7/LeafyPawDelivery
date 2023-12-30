@@ -55,7 +55,7 @@ namespace UI.Component
             if(_data == null)
                 return;
 
-            _data?.iListener?.Select(_data.ObjectId);
+            _data.iListener?.Select(_data.ObjectId);
         }
     }
 }

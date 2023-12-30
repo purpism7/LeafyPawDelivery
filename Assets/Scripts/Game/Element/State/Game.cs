@@ -15,6 +15,7 @@ namespace Game.Element.State
         public override BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             _gameCameraCtr = gameCameraCtr;
+
             //_iGrid = iGrid;
 
             return this;

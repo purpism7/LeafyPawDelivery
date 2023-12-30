@@ -139,6 +139,16 @@ namespace Game
             spriteRenderer.sortingOrder = order;
         }
 
+        public void Reset(int uId, Vector3 pos)
+        {
+            UId = uId;
+
+            if (_data == null)
+                return;
+
+            _data.Pos = pos;
+        }
+
         #region Collision 
         //private void OnCollisionEnter(Collision collision)
         //{
