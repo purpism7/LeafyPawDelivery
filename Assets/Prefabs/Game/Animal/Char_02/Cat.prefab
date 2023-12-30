@@ -50,9 +50,10 @@ MonoBehaviour:
   UId: 0
   spriteRenderer: {fileID: 2991612011475211171}
   edit: {fileID: 0}
+  IsOverlap: 0
+  Collider: {fileID: 0}
   skinId: 1
   animator: {fileID: 1654453176783347088}
-  collider: {fileID: 1742199152941368207}
 --- !u!1 &3476158958628761677
 GameObject:
   m_ObjectHideFlags: 0
