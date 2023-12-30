@@ -176,7 +176,8 @@ namespace Game.Manager
             Fade.Create.In(
                 () =>
                 {
-                    UIManager.Instance?.EnalbeUIRoot(false);
+                    //UIManager.Instance?.EnalbeUIRoot(false);
+                    //UIManager.Instance?.ActivateAnim();
                 });
         }
 
@@ -214,7 +215,9 @@ namespace Game.Manager
         {
             Fade.Create.Out(() =>
             {
-                UIManager.Instance?.EnalbeUIRoot(true);
+                //UIManager.Instance?.EnalbeUIRoot(true);
+
+                //UIManager.Instance?.ActivateAnim();
 
                 Deactivate();
 
