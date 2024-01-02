@@ -1,26 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using GameSystem;
-
 using UnityEngine;
 using UnityEngine.UI;
 
+using DG.Tweening;
+
+using GameSystem;
 using Game;
 using UI.Component;
 
+
 namespace UI
 {
-    public class Book : BasePopup<Book.Data>, BookCell.IListener, StoryCell.IListener
+    public class Book : BasePopup<Book.Data>, BookCell.IListener, StoryCell.IListener, Game.Notification.IListener
     {
         public class Data : BaseData
         {
             public int PlaceId = 0;
         }
         
-        [SerializeField] private Toggle[] tabToggles = null;
-        [SerializeField] private ScrollRect animalScrollRect = null;
-        [SerializeField] private ScrollRect objectScrollRect = null;
+        [SerializeField]
+        private Toggle[] tabToggles = null;
+        [SerializeField]
+        private RectTransform[] tabRedDotRectTms = null;
+        [SerializeField]
+        private ScrollRect animalScrollRect = null;
+        [SerializeField]
+        private ScrollRect objectScrollRect = null;
         [SerializeField] private ScrollRect storyScrollRect = null;
 
         private Type.ETab _currETabType = Type.ETab.Animal;
@@ -50,12 +57,17 @@ namespace UI
             Game.AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
             ObjectManager.Event?.AddListener(OnChangedObject);
 
+            Game.Notification.Get?.AddListener(Notification.EType.AddAnimal, this);
+
             _placeId = _data.PlaceId;
 
             AllDeactiveBookCellList();
             SetAnimalList();
             SetObjectList();
             SetStoryList();
+
+            SetAddAnimal();
+            SetAddObject();
         }
 
         public override void Activate()
@@ -72,11 +84,16 @@ namespace UI
             {
                 tabToggle.SetIsOnWithoutNotify(true);
             }
+
+            //DelayResetAddAnimal();
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
+
+            Info.Connector.Get?.ResetAddAnimal();
+            Info.Connector.Get?.ResetAddObject();
         }
 
         private void ActivateStoryCellList()
@@ -281,6 +298,45 @@ namespace UI
                 cell?.Unlock(EElement, id);
             }
         }
+
+        private void SetAddAnimal()
+        {
+            var connector = Info.Connector.Get;
+            if (connector == null)
+                return;
+
+            var redDotRectTm = tabRedDotRectTms[(int)Game.Type.ETab.Animal];
+            if (redDotRectTm)
+            {
+                UIUtils.SetActive(redDotRectTm, connector.AddAnimalId > 0);
+            }
+        }
+
+        private void SetAddObject()
+        {
+            var connector = Info.Connector.Get;
+            if (connector == null)
+                return;
+
+            var redDotRectTm = tabRedDotRectTms[(int)Game.Type.ETab.Object];
+            if (redDotRectTm)
+            {
+                UIUtils.SetActive(redDotRectTm, connector.AddObjectId > 0);
+            }
+        }
+
+        // 도감 오픈 오픈 시, Delay 후 RedDot 안 보이게 처리.
+        //private void DelayResetAddAnimal()
+        //{
+        //    Sequence sequence = DOTween.Sequence()
+        //        .SetAutoKill(false)
+        //        .AppendInterval(1f)
+        //        .OnComplete(() =>
+        //        {
+        //            Info.Connector.Get?.ResetAddAnimal();
+        //        });
+        //    sequence.Restart();
+        //}
         
         private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
         {
@@ -340,6 +396,14 @@ namespace UI
             {
                 return MainGameManager.Get<Game.StoryManager>()?.PlayStory(story);
             }); 
+        }
+        #endregion
+
+        #region Game.Notification.IListener
+        void Game.Notification.IListener.Notify()
+        {
+            SetAddAnimal();
+            SetAddObject();
         }
         #endregion
     }

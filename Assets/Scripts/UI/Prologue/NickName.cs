@@ -10,7 +10,7 @@ namespace UI
     {
         public interface IListener
         {
-            void Confirm();
+            void Confirm(string nickName);
         }
 
         [SerializeField] private TMP_InputField inputFieldTMP = null;
@@ -32,10 +32,8 @@ namespace UI
 
                 return;
             }
-             
-            PlayerPrefs.SetString(Game.Data.KeyNickName, nickName);
-
-            _iListener?.Confirm();
+           
+            _iListener?.Confirm(nickName);
 
             _endTask = true;
         }

@@ -22,11 +22,13 @@ namespace UI.Component
             public string Name = string.Empty;
             public bool Owned = false;
             public bool Lock = true;
+
+            public int index = 0;
         }
         
         public interface IListener
         {
-            void Edit(Game.Type.EElement EElement, int id);
+            void Edit(Game.Type.EElement EElement, int id, int index);
         }
 
         #region Inspector
@@ -54,6 +56,9 @@ namespace UI.Component
         #endregion
 
         private List<OpenCondition> _openConditionList = new();
+
+        public int Id { get { return _data != null ? _data.Id : 0; } }
+        public Game.Type.EElement EElement { get { return _data != null ? _data.EElement : Game.Type.EElement.None; } }
 
         public override void Initialize(Data data)
         {
@@ -219,7 +224,7 @@ namespace UI.Component
 
         private string GetRequireCurrency(long currency)
         {
-            return string.Format("x{0}", currency);
+            return string.Format("{0}", currency);
         }
 
         private void AddOpenCondition(string spriteName, int currency, Func<bool> possibleFunc)
@@ -326,7 +331,6 @@ namespace UI.Component
                         .SetReInitialize(true)
                         .Create();
 
-
                     int animalCurrency = openConditionData.AnimalCurrency;
                     int objectCurrency = openConditionData.ObjectCurrency;
 
@@ -347,6 +351,14 @@ namespace UI.Component
                 });
 
             mainGameMgr?.Add(_data.EElement, _data.Id);
+        }
+
+        public void SetIndex(int index)
+        {
+            if (_data == null)
+                return;
+
+            _data.index = index;
         }
 
         public void Obtain(Game.Type.EElement eElement, int id)
@@ -431,7 +443,7 @@ namespace UI.Component
             if (_data == null)
                 return;
             
-            _data.IListener?.Edit(_data.EElement, _data.Id);
+            _data.IListener?.Edit(_data.EElement, _data.Id, _data.index);
         }
     }
 }

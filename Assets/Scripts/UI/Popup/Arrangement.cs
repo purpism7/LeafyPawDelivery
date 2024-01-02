@@ -88,9 +88,23 @@ namespace UI
             if (_arrangementCellList == null)
                 return;
 
-            foreach(var cell in _arrangementCellList)
+            var objectMgr = MainGameManager.Get<Game.ObjectManager>();
+            if (objectMgr == null)
+                return;
+
+            int index = 0;
+
+            foreach (var cell in _arrangementCellList)
             {
-                cell?.Activate();
+                if (cell == null)
+                    continue;
+
+                if(cell.EElement == Game.Type.EElement.Object)
+                {
+                    cell.SetIndex(GetIndex(objectMgr, cell.Id, ref index));
+                }
+
+                cell.Activate();
             }
         }
 
@@ -231,6 +245,8 @@ namespace UI
             if (objectOpenConditionContainer == null)
                 return;
 
+            int index = 0;
+
             foreach (var data in dataList)
             {
                 if (data == null)
@@ -251,6 +267,8 @@ namespace UI
                         EElement = Game.Type.EElement.Object,
                         Owned = objectInfo != null,
                         Lock = !objectOpenConditionContainer.CheckReq(data.Id),
+
+                        index = GetIndex(objectMgr, data.Id, ref index),
                     }, objectScrollRect.content);
             }
         }
@@ -259,6 +277,14 @@ namespace UI
         {
             UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Game.Type.ETab.Animal);
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Game.Type.ETab.Object);
+        }
+
+        private int GetIndex(Game.ObjectManager objectMgr, int id, ref int index)
+        {
+            if (objectMgr == null)
+                return 0;
+
+            return objectMgr.GetRemainCount(id) > 0 ? index++ : 0;
         }
 
         private void Obtain(Game.Type.EElement EElement, int id)
@@ -304,7 +330,7 @@ namespace UI
         }
 
         #region ArrangementCell.IListener
-        void ArrangementCell.IListener.Edit(Game.Type.EElement EElement, int id)
+        void ArrangementCell.IListener.Edit(Game.Type.EElement EElement, int id, int index)
         {
             Deactivate();
 
@@ -323,7 +349,7 @@ namespace UI
             else if (EElement == Game.Type.EElement.Object)
             {
                 var eTab = EElement == Game.Type.EElement.Animal ? Game.Type.ETab.Animal : Game.Type.ETab.Object;
-                Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(eTab);
+                Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(eTab, index);
             }
         }
         #endregion

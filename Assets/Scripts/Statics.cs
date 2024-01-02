@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class Statics<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance = null;
-    private static Transform _parentTm = null;
     public static T Create(Transform parentTm = null)
     {
         if (_instance == null)

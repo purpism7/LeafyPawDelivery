@@ -48,7 +48,6 @@ namespace Game
                 if (_data == null)
                     return false;
 
-
                 var objectDataList = ObjectContainer.Instance.GetDataListByPlaceId(_data.PlaceId);
                 if (objectDataList == null)
                     return false;
@@ -85,6 +84,9 @@ namespace Game
                         id = id,
                     });
 
+                Info.Connector.Get?.SetAddObject(id);
+
+                Notification.Get?.Notify(Notification.EType.AddObject);
                 Notification.Get?.Notify(Notification.EType.OpenPlace);
             }
         }

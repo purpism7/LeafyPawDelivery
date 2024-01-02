@@ -48,7 +48,7 @@ public class ConversationBehaviour : PlayableBehaviour
             if (localData == null)
                 continue;
 
-            var speaker = string.IsNullOrEmpty(localData.SpeakerKey) ? string.Empty : LocalizationSettings.StringDatabase.GetLocalizedString(localData.Table, localData.SpeakerKey, LocalizationSettings.SelectedLocale);
+            var speaker = string.IsNullOrEmpty(localData.SpeakerKey) ? GameSystem.Auth.NickName : LocalizationSettings.StringDatabase.GetLocalizedString(localData.Table, localData.SpeakerKey, LocalizationSettings.SelectedLocale);
 
             conversation.Enqueue(new UI.Conversation.Constituent()
             {

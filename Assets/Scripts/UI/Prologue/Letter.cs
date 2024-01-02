@@ -26,7 +26,9 @@ namespace UI
                 IListener = this,
             });
 
-            if(constituents != null)
+            conversation?.SetAllCnt(constituents.Length);
+
+            if (constituents != null)
             {
                 foreach (var constituent in constituents)
                 {
@@ -35,7 +37,7 @@ namespace UI
 
                     conversation?.Enqueue(new Conversation.Constituent()
                     {
-                        Speaker = PlayerPrefs.GetString(Game.Data.KeyNickName),
+                        Speaker = GameSystem.Auth.NickName,
                         Sentence = LocalizationSettings.StringDatabase.GetLocalizedString("Story", constituent.Sentence, LocalizationSettings.SelectedLocale),
                         KeepDelay = constituent.KeepDelay,
                     });

@@ -37,15 +37,15 @@ namespace GameSystem
 
             yield return new WaitUntil(() => check);
 
-            Auth = gameObject.GetOrAddComponent<FirebaseSystem.Auth>();
-            Debug.Log("Auth = " + Auth.name);
-            yield return StartCoroutine(Auth.CoInit());
+            //Auth = gameObject.GetOrAddComponent<FirebaseSystem.Auth>();
+            //Debug.Log("Auth = " + Auth.name);
+            //yield return StartCoroutine(Auth.CoInit());
 
-            Database = gameObject.GetOrAddComponent<FirebaseSystem.Database>();
-            Debug.Log("Database = " + Database.name);
-            yield return StartCoroutine(Database.CoInit());
+            //Database = gameObject.GetOrAddComponent<FirebaseSystem.Database>();
+            //Debug.Log("Database = " + Database.name);
+            //yield return StartCoroutine(Database.CoInit());
 
-            //yield return new WaitUntil(() => check);
+            ////yield return new WaitUntil(() => check);
             Debug.Log("End Init FirebaseManager");
         }
     }

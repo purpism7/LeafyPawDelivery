@@ -108,6 +108,7 @@ namespace UI.Component
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
                 Text = animalSkin.Cash.ToString(),
                 PossibleFunc = () => userCash >= animalSkin.Cash,
+                refreshLayout = false,
             };
 
             openCondition.Initialize(openConditionData);

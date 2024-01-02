@@ -36,6 +36,8 @@ namespace Game
             });
 
             yield return null;
+
+            Debug.Log("End UIManager Initialize");
         }
 
         public T Instantiate<T>(RectTransform rootRectTm)

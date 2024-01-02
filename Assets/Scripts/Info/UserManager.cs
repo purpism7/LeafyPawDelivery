@@ -10,32 +10,26 @@ namespace Info
 {
     public class UserManager : Singleton<UserManager>
     {
-        private const string KeyUserCurrency = "CurrencyList";
-        private const string KeyUserCash = "Cash";
-        private const string KeyUserStory = "StoryList";
+        //private const string KeyUserCurrency = "CurrencyList";
+        //private const string KeyUserCash = "Cash";
+        //private const string KeyUserStory = "StoryList";
 
-#if UNITY_EDITOR
-        private const string _userInfoJsonFilePath = "Assets/Info/User.json";
-#else
-        readonly private string _userInfoJsonFilePath = Application.persistentDataPath + "/Info/User.json";
-#endif
-        
         public User User { get; private set; } = null;
 
         private void OnApplicationPause(bool pause)
         {
             if(pause)
             {
-                Debug.Log("UserManager OnApplicationPause");
-                LocalSave();
+                //Debug.Log("UserManager OnApplicationPause");
                 Save();
+                //Save();
             }
         }
 
         private void OnApplicationQuit()
         {
-            LocalSave();
             Save();
+            //Save();
         }
 
         protected override void Initialize()
@@ -55,19 +49,26 @@ namespace Info
         {
             //Debug.Log("iCloud = [" + GameSystem.Auth.ID + "] "+ iOSPlugin.iCloudGetStringValue(GameSystem.Auth.ID));
 
-            if (!System.IO.File.Exists(_userInfoJsonFilePath))
+            //if (!System.IO.File.Exists(_userInfoJsonFilePath))
+            //{
+            //    CreateUserInfo();
+
+            //    yield break;
+            //}
+            string jsonStr = Plugin.Native.Instance?.GetString(GameSystem.Auth.ID);
+            if(string.IsNullOrEmpty(jsonStr))
             {
                 CreateUserInfo();
 
                 yield break;
             }
-
-            var jsonString = System.IO.File.ReadAllText(_userInfoJsonFilePath);
-            User = JsonUtility.FromJson<Info.User>(jsonString);
+            //var jsonString = System.IO.File.ReadAllText(_userInfoJsonFilePath);
+            User = JsonUtility.FromJson<Info.User>(jsonStr);
+            //Plugin.Native.Instance?.LoadUserJson(GameSystem.Auth.ID);
 
             CreateUserInfo();
 
-            Debug.Log(jsonString);
+            Debug.Log(jsonStr);
             
             yield return null;
         }
@@ -79,177 +80,183 @@ namespace Info
 
             User = new Info.User();
 
-            LocalSave();
-        }
+            //var jsonString = JsonUtility.ToJson(User);
+            //System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonString);
 
-        private IEnumerator CoLoadUserInfo()
-        {
-            Debug.Log("CoLoadUserInfo()");
-            var firebaseMgr = GameSystem.FirebaseManager.Instance;
-            if (firebaseMgr == null)
-                yield break;
             
-            bool endLoad = false;
-
-            var database = firebaseMgr.Database;
-            if (database == null)
-            {
-                if (Application.isEditor)
-                {
-                    User = new Info.User();
-                    //var placeId = Game.Data.Const.StartPlaceId;
-                    //var currency = Game.Data.Const.GetStartCurrency(placeId);
-                }
-
-                yield break;
-            }
-
-            yield return StartCoroutine(database?.CoLoad(firebaseMgr.Auth.UserId,
-                (dataSnapshot) =>
-                {
-                    SetUserInfo(dataSnapshot);
-
-                    endLoad = true;
-                }));
-
-            yield return new WaitUntil(() => endLoad);
+            Save();
         }
 
-        private void SetUserInfo(Firebase.Database.DataSnapshot dataSnapshot)
-        {
-            if (dataSnapshot == null)
-                return;
+        //private IEnumerator CoLoadUserInfo()
+        //{
+        //    Debug.Log("CoLoadUserInfo()");
+        //    var firebaseMgr = GameSystem.FirebaseManager.Instance;
+        //    if (firebaseMgr == null)
+        //        yield break;
+            
+        //    bool endLoad = false;
 
-            User = new Info.User();
-            Debug.Log("SetUserInfo = " + dataSnapshot.Value);
-            if (dataSnapshot.Value != null)
-            {
-                //const string KeyDatas = "Datas";
+        //    var database = firebaseMgr.Database;
+        //    if (database == null)
+        //    {
+        //        if (Application.isEditor)
+        //        {
+        //            User = new Info.User();
+        //            //var placeId = Game.Data.Const.StartPlaceId;
+        //            //var currency = Game.Data.Const.GetStartCurrency(placeId);
+        //        }
 
-                foreach (var data in dataSnapshot.Children)
-                {
-                    if (data == null)
-                        continue;
+        //        yield break;
+        //    }
 
-                    switch(data.Key)
-                    {
-                        case "Cash":
-                            {
-                                User.Cash = (long)data.Value;
+        //    yield return StartCoroutine(database?.CoLoad(firebaseMgr.Auth.UserId,
+        //        (dataSnapshot) =>
+        //        {
+        //            SetUserInfo(dataSnapshot);
 
-                                break;
-                            }
+        //            endLoad = true;
+        //        }));
 
-                        case KeyUserCurrency:
-                            {
-                                SetCurrency(data);
+        //    yield return new WaitUntil(() => endLoad);
+        //}
 
-                                break;
-                            }
+        //private void SetUserInfo(Firebase.Database.DataSnapshot dataSnapshot)
+        //{
+        //    if (dataSnapshot == null)
+        //        return;
 
-                        case KeyUserStory:
-                            {
-                                SetStory(data);
+        //    User = new Info.User();
+        //    Debug.Log("SetUserInfo = " + dataSnapshot.Value);
+        //    if (dataSnapshot.Value != null)
+        //    {
+        //        //const string KeyDatas = "Datas";
 
-                                break;
-                            }
-                    }
-                }
-            }
-            else
-            {
-                Debug.Log("No UserInfo");
+        //        foreach (var data in dataSnapshot.Children)
+        //        {
+        //            if (data == null)
+        //                continue;
 
-                var firebase = GameSystem.FirebaseManager.Instance;
-                if (firebase == null)
-                    return;
+        //            switch(data.Key)
+        //            {
+        //                case "Cash":
+        //                    {
+        //                        User.Cash = (long)data.Value;
 
-                var database = firebase.Database;
-                database?.Save(firebase.Auth.UserId, JsonUtility.ToJson(User));
+        //                        break;
+        //                    }
 
-                var placeId = Game.Data.Const.StartPlaceId;
-                var currency = Game.Data.Const.GetStartCurrency(placeId);
-                SaveCurrency(currency);
-            }
-        }
+        //                case KeyUserCurrency:
+        //                    {
+        //                        SetCurrency(data);
 
-        private void SetCurrency(Firebase.Database.DataSnapshot dataSnapshot)
-        {
-            if (dataSnapshot == null)
-                return;
+        //                        break;
+        //                    }
 
-            User?.CurrencyList?.Clear();
+        //                case KeyUserStory:
+        //                    {
+        //                        SetStory(data);
 
-            var currencyList = dataSnapshot.Value as IList;
-            foreach (IDictionary currencyDic in currencyList)
-            {
-                var currency = new User.Currency();
+        //                        break;
+        //                    }
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("No UserInfo");
 
-                var enumerator = currencyDic.GetEnumerator();
-                while (enumerator.MoveNext())
-                {
-                    DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
+        //        var firebase = GameSystem.FirebaseManager.Instance;
+        //        if (firebase == null)
+        //            return;
 
-                    string key = dicEntry.Key.ToString();
+        //        var database = firebase.Database;
+        //        database?.Save(firebase.Auth.UserId, JsonUtility.ToJson(User));
+
+        //        var placeId = Game.Data.Const.StartPlaceId;
+        //        var currency = Game.Data.Const.GetStartCurrency(placeId);
+        //        SaveCurrency(currency);
+        //    }
+        //}
+
+        //private void SetCurrency(Firebase.Database.DataSnapshot dataSnapshot)
+        //{
+        //    if (dataSnapshot == null)
+        //        return;
+
+        //    User?.CurrencyList?.Clear();
+
+        //    var currencyList = dataSnapshot.Value as IList;
+        //    foreach (IDictionary currencyDic in currencyList)
+        //    {
+        //        var currency = new User.Currency();
+
+        //        var enumerator = currencyDic.GetEnumerator();
+        //        while (enumerator.MoveNext())
+        //        {
+        //            DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
+
+        //            string key = dicEntry.Key.ToString();
                     
-                    if (key.Equals("Animal"))
-                    {
-                        currency.Animal = (long)dicEntry.Value;
-                    }
-                    else if (key.Equals("Object"))
-                    {
-                        currency.Object = (long)dicEntry.Value;
-                    }
-                    else if (key.Equals("PlaceId"))
-                    {
-                        var value = (long)dicEntry.Value;
-                        currency.PlaceId = (int)value;
-                    }
-                }
+        //            if (key.Equals("Animal"))
+        //            {
+        //                currency.Animal = (long)dicEntry.Value;
+        //            }
+        //            else if (key.Equals("Object"))
+        //            {
+        //                currency.Object = (long)dicEntry.Value;
+        //            }
+        //            else if (key.Equals("PlaceId"))
+        //            {
+        //                var value = (long)dicEntry.Value;
+        //                currency.PlaceId = (int)value;
+        //            }
+        //        }
 
-                User?.CurrencyList?.Add(currency);
-            }
-        }
+        //        User?.CurrencyList?.Add(currency);
+        //    }
+        //}
 
-        private void SetStory(Firebase.Database.DataSnapshot dataSnapshot)
+        //private void SetStory(Firebase.Database.DataSnapshot dataSnapshot)
+        //{
+        //    if (dataSnapshot == null)
+        //        return;
+
+        //    User?.StoryList?.Clear();
+
+        //    var storyList = dataSnapshot.Value as IList;
+        //    foreach (IDictionary storyDic in storyList)
+        //    {
+        //        var story = new User.Story();
+
+        //        var enumerator = storyDic.GetEnumerator();
+        //        while (enumerator.MoveNext())
+        //        {
+        //            DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
+
+        //            string key = dicEntry.Key.ToString();
+
+        //            if (key.Equals("StoryId"))
+        //            {
+        //                var value = (long)dicEntry.Value;
+        //                story.StoryId = (int)value;
+        //            }
+        //            else if (key.Equals("PlaceId"))
+        //            {
+        //                var value = (long)dicEntry.Value;
+        //                story.PlaceId = (int)value;
+        //            }
+        //        }
+
+        //        User?.StoryList?.Add(story);
+        //    }
+        //}
+
+        private void Save()
         {
-            if (dataSnapshot == null)
-                return;
+            var jsonStr = JsonUtility.ToJson(User);
 
-            User?.StoryList?.Clear();
-
-            var storyList = dataSnapshot.Value as IList;
-            foreach (IDictionary storyDic in storyList)
-            {
-                var story = new User.Story();
-
-                var enumerator = storyDic.GetEnumerator();
-                while (enumerator.MoveNext())
-                {
-                    DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
-
-                    string key = dicEntry.Key.ToString();
-
-                    if (key.Equals("StoryId"))
-                    {
-                        var value = (long)dicEntry.Value;
-                        story.StoryId = (int)value;
-                    }
-                    else if (key.Equals("PlaceId"))
-                    {
-                        var value = (long)dicEntry.Value;
-                        story.PlaceId = (int)value;
-                    }
-                }
-
-                User?.StoryList?.Add(story);
-            }
-        }
-
-        private void LocalSave()
-        {
-            var jsonString = JsonUtility.ToJson(User);
-            System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonString);
+            Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, jsonStr);
+            //System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonString);
 
             //iOSPlugin.iCloudSaveStringValue(GameSystem.Auth.ID, jsonString);
         }
@@ -261,75 +268,75 @@ namespace Info
 
             User.SetLastPlaceId(User.LastPlaceId + 1);
 
-            LocalSave();
+            Save();
         }        
 
-        private void Save()
-        {
-            var firebaseMgr = GameSystem.FirebaseManager.Instance;
-            if (firebaseMgr == null)
-                return;
+        //private void Save()
+        //{
+        //    var firebaseMgr = GameSystem.FirebaseManager.Instance;
+        //    if (firebaseMgr == null)
+        //        return;
 
-            var userId = firebaseMgr.Auth?.UserId;
-            if (string.IsNullOrEmpty(userId))
-                return;
+        //    var userId = firebaseMgr.Auth?.UserId;
+        //    if (string.IsNullOrEmpty(userId))
+        //        return;
 
-            var jsonString = JsonUtility.ToJson(User);
-            firebaseMgr?.Database?.Save(userId, jsonString);
-        }
+        //    var jsonString = JsonUtility.ToJson(User);
+        //    firebaseMgr?.Database?.Save(userId, jsonString);
+        //}
 
         public void SaveCurrency(User.Currency currency)
         {
             User?.SetCurrency(currency);
 
-            LocalSave();
+            Save();
 
-            var firebaseMgr = GameSystem.FirebaseManager.Instance;
-            if (firebaseMgr == null)
-                return;
+            //var firebaseMgr = GameSystem.FirebaseManager.Instance;
+            //if (firebaseMgr == null)
+            //    return;
 
-            var userId = firebaseMgr.Auth?.UserId;
-            if (string.IsNullOrEmpty(userId))
-                return;
+            //var userId = firebaseMgr.Auth?.UserId;
+            //if (string.IsNullOrEmpty(userId))
+            //    return;
 
-            firebaseMgr?.Database?.SaveChild(userId, KeyUserCurrency, JsonUtility.ToJson(User.CurrencyList.ToArray()));
+            //firebaseMgr?.Database?.SaveChild(userId, KeyUserCurrency, JsonUtility.ToJson(User.CurrencyList.ToArray()));
         }
 
         public void SaveCash(long cash)
         {
             User?.SetCash(cash);
 
-            LocalSave();
+            Save();
 
-            var firebaseMgr = GameSystem.FirebaseManager.Instance;
-            if (firebaseMgr == null)
-                return;
+            //var firebaseMgr = GameSystem.FirebaseManager.Instance;
+            //if (firebaseMgr == null)
+            //    return;
 
-            var userId = firebaseMgr.Auth?.UserId;
-            if (string.IsNullOrEmpty(userId))
-                return;
+            //var userId = firebaseMgr.Auth?.UserId;
+            //if (string.IsNullOrEmpty(userId))
+            //    return;
 
-            firebaseMgr?.Database?.SaveChild(userId, KeyUserCash, JsonUtility.ToJson(User.Cash));
+            //firebaseMgr?.Database?.SaveChild(userId, KeyUserCash, JsonUtility.ToJson(User.Cash));
         }
 
         public void SaveStory(int storyId)
         {
             User?.SetStory(GameUtils.ActivityPlaceId, storyId);
 
-            LocalSave();
+            Save();
 
-            var firebaseMgr = GameSystem.FirebaseManager.Instance;
-            if (firebaseMgr == null)
-                return;
+            //var firebaseMgr = GameSystem.FirebaseManager.Instance;
+            //if (firebaseMgr == null)
+            //    return;
 
-            var userId = firebaseMgr.Auth?.UserId;
-            if (string.IsNullOrEmpty(userId))
-                return;
+            //var userId = firebaseMgr.Auth?.UserId;
+            //if (string.IsNullOrEmpty(userId))
+            //    return;
 
-            var jsonStr = JsonHelper.ToJson(User.StoryList.ToArray());
-            Debug.Log("StoryList json str = " + jsonStr);
+            //var jsonStr = JsonHelper.ToJson(User.StoryList.ToArray());
+            //Debug.Log("StoryList json str = " + jsonStr);
 
-            firebaseMgr?.Database?.SaveChild(userId, KeyUserStory, jsonStr);
+            //firebaseMgr?.Database?.SaveChild(userId, KeyUserStory, jsonStr);
 
         }
     }

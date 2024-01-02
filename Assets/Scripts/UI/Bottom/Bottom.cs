@@ -90,7 +90,7 @@ namespace UI
         }
 
         #region EditList
-        public void ActivateEditList(Game.Type.ETab eTabType)
+        public void ActivateEditList(Game.Type.ETab eTabType, int index = -1)
         {
             if(EditList == null)
             {
@@ -103,18 +103,18 @@ namespace UI
                     .Create();
             }
 
-            EditList.Setup(eTabType).Activate();
+            EditList.Setup(eTabType, index).Activate();
             ActivateAnim(EditListRootRectTm, null);
         }
 
-        public void ActivateEditListAfterDeactivateBottom(Game.Type.ETab eTabType)
+        public void ActivateEditListAfterDeactivateBottom(Game.Type.ETab eTabType, int index)
         {
             MainGameManager.Instance?.SetGameState<Game.State.Edit>();
 
             DeactivateAnim(rootRectTm,
                 () =>
                 {
-                    ActivateEditList(eTabType);
+                    ActivateEditList(eTabType, index);
                 });
         }
 

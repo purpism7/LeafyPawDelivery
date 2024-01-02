@@ -60,15 +60,16 @@ namespace Game.Manager
                 return;
             }
 
-            if(CheckResetDailyMission)
-            {
-                _dailyMissionDateTime = System.DateTime.UtcNow;
-                PlayerPrefs.SetString(KeyDailyMissionDate, _dailyMissionDateTime.Value.ToString());
-
-                return;
-            }
-
             _dailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
+            //if (CheckResetDailyMission)
+            //{
+            //    _dailyMissionDateTime = System.DateTime.UtcNow;
+            //    PlayerPrefs.SetString(KeyDailyMissionDate, _dailyMissionDateTime.Value.ToString());
+
+            //    return;
+            //}
+
+            //_dailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
         }
 
         public bool CheckResetDailyMission
@@ -78,7 +79,7 @@ namespace Game.Manager
                 if (_dailyMissionDateTime == null)
                     return false;
 
-                return (System.DateTime.Parse(_dailyMissionDateTime.Value.ToString()).AddDays(1) - System.DateTime.UtcNow).TotalDays >= 1;
+                return (System.DateTime.UtcNow - _dailyMissionDateTime.Value.AddDays(1)).TotalDays >= 1;
             }
         }
 

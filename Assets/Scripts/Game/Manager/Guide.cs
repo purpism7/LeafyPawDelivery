@@ -71,9 +71,8 @@ namespace Game.Manager
 
                 case Game.Event.ArrangeAnimalData arrangeAnimalData:
                     {
-                        Debug.Log("Guide = " + arrangeAnimalData.id);
-                        string saveKey = KeyGuide + "_Animal";
-                        if (Boolean.TryParse(PlayerPrefs.GetString(saveKey, false.ToString()), out bool already))
+                        string keySave = KeyGuide + "_Animal";
+                        if (Boolean.TryParse(PlayerPrefs.GetString(keySave, false.ToString()), out bool already))
                         {
                             if (already)
                                 return;
@@ -91,7 +90,7 @@ namespace Game.Manager
 
                             Show(sentenceQueue);
 
-                            PlayerPrefs.SetString(saveKey, true.ToString());
+                            PlayerPrefs.SetString(keySave, true.ToString());
                         }
 
                         break;
@@ -136,8 +135,6 @@ namespace Game.Manager
 
         private void OnChangedPlaceEvnet(Game.PlaceEvent.BaseData baseData)
         {
-            Debug.Log("OnChangedPlaceEvnet");
-
             switch (baseData)
             {
                 case Game.PlaceEvent.DropItemData dropItemData:
@@ -145,9 +142,9 @@ namespace Game.Manager
                         if (dropItemData == null)
                             return;
 
-                        string saveKey = KeyGuide + "FirstDropLetter";
+                        string keySave = KeyGuide + "_FirstDropLetter";
 
-                        if (Boolean.TryParse(PlayerPrefs.GetString(saveKey, false.ToString()), out bool already))
+                        if (Boolean.TryParse(PlayerPrefs.GetString(keySave, false.ToString()), out bool already))
                         {
                             if (already)
                                 return;
@@ -163,7 +160,7 @@ namespace Game.Manager
 
                             Show(sentenceQueue);
 
-                            PlayerPrefs.SetString(saveKey, true.ToString());
+                            PlayerPrefs.SetString(keySave, true.ToString());
                         }
 
                         break;

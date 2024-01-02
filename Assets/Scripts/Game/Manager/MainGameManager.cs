@@ -86,9 +86,12 @@ public class MainGameManager : Singleton<MainGameManager>
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
         yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
 
-        yield return null;
+        Info.Connector.Create(transform);
+        Game.Notification.Create(transform);
 
-        EndLoad(true);
+        //yield return EndLoadAsync(true);
+
+        Debug.Log("End MainGameMgr Initialize");
     }
 
     private void InitializeIUpdateList(InputManager inputMgr)
@@ -152,12 +155,21 @@ public class MainGameManager : Singleton<MainGameManager>
         _iGrid?.Overlap();
     }
 
-    private void EndLoad(bool initialize)
+    public async UniTask EndLoadAsync(bool initialize)
     {
         AnimEnterPlace();
 
+        //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+        await UniTask.Yield();
+
         Starter();
     }
+    //private void EndLoad(bool initialize)
+    //{
+        
+
+    //    Starter();
+    //}
 
     private void AnimEnterPlace()
     {
@@ -221,11 +233,12 @@ public class MainGameManager : Singleton<MainGameManager>
         _startEditAction = action;
     }
 
+    // 동물 / 꾸미기 획득.
     public void Add(Game.Type.EElement EElement, int id)
     {
         if (EElement == Game.Type.EElement.Animal)
         {
-            Get<Game.AnimalManager>()?.Add(id);
+            Get<Game.AnimalManager>()?.Add(id);            
         }
         else if (EElement == Game.Type.EElement.Object)
         {
@@ -274,7 +287,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         await UniTask.Yield();
 
-        EndLoad(false);
+        await EndLoadAsync(false);
     }
     #endregion
 
@@ -303,8 +316,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
             Info.UserManager.Instance?.SaveLastPlaceId();
             
-            var connector = new Info.Connector();
-            connector.SaveOpenPlaceId(user.LastPlaceId);
+            Info.Connector.Get?.SetOpenPlace(user.LastPlaceId);
 
             return true;
         }

@@ -89,7 +89,10 @@ namespace Game
                     id = animalInfo.Id,
                 });
 
+                Info.Connector.Get?.SetAddAnimal(id);
+
                 Notification.Get?.Notify(Notification.EType.OpenPlace);
+                Notification.Get?.Notify(Notification.EType.AddAnimal);
             }
         }
 

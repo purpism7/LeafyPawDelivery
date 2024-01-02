@@ -129,18 +129,18 @@ namespace UI
             UIUtils.SetActive(iconImg?.gameObject, true);
         }
 
-        private void SetGetCurrency()
-        {
+        //private void SetGetCurrency()
+        //{
 
-        }
+        //}
 
-        private UI.Component.OpenCondition CreateGetCurrency(OpenCondition.Data openConditionData)
-        {
-            return new ComponentCreator<OpenCondition, OpenCondition.Data>()
-                    .SetData(openConditionData)
-                    .SetRootRectTm(getCurrencyRootRectTm)
-                    .Create();
-        }
+        //private UI.Component.OpenCondition CreateGetCurrency(OpenCondition.Data openConditionData)
+        //{
+        //    return new ComponentCreator<OpenCondition, OpenCondition.Data>()
+        //            .SetData(openConditionData)
+        //            .SetRootRectTm(getCurrencyRootRectTm)
+        //            .Create();
+        //}
 
         private int SelectSkinId
         {
@@ -182,26 +182,28 @@ namespace UI
                 {
                     IListener = this,
                     AnimalSkin = animalSkin,
-                    Sprite = ResourceManager.Instance.AtalsLoader.GetAnimalSkinSprite(animalSkin.ImgName),
+                    Sprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalSkinSprite(animalSkin.ImgName),
                     ToggleGroup = skinToggleGroup,
                     ToggleOn = currenctSkinId == animalSkin.Id,
                 };
 
                 var findSkinCell = _skinCellList?.Find(skinCell => skinCell != null && !skinCell.IsActivate);
+                //Debug.Log(findSkinCell.SkinId);
                 if (findSkinCell != null)
                 {
                     findSkinCell.Initialize(skinCellData);
                     findSkinCell.Activate();
-                    
+
                     continue;
                 }
-                
+
                 var component = new ComponentCreator<SkinCell, SkinCell.Data>()
                     .SetRootRectTm(skinRootRectTm)
                     .SetData(skinCellData)
                     .Create();
 
-                 _skinCellList.Add(component);
+                _skinCellList.Add(component);
+
             }
         }
 

@@ -12,6 +12,8 @@ namespace Game
             None,
 
             OpenPlace,
+            AddAnimal,
+            AddObject,
         }
 
         public interface IListener
@@ -23,8 +25,6 @@ namespace Game
 
         private void Awake()
         {
-            Create(MainGameManager.Instance?.transform);
-
             _iListenerDic?.Clear();
         }
 

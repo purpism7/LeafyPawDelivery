@@ -39,6 +39,8 @@ namespace UI
             SetNotification();
 
             UIUtils.SetActive(redDotRectTm, false);
+
+            Debug.Log("End BottomMenu Initialize");
         }
 
         public override void Activate()
@@ -56,18 +58,36 @@ namespace UI
 
                         break;
                     }
+
+                case Game.Type.EBottomType.Book:
+                    {
+                        Game.Notification.Get?.AddListener(Game.Notification.EType.AddAnimal, this);
+                        Game.Notification.Get?.AddListener(Game.Notification.EType.AddObject, this);
+
+                        break;
+                    }
             }
         }
 
         #region Notification.IListener
         void Game.Notification.IListener.Notify()
         {
+            var connector = Info.Connector.Get;
+            if (connector == null)
+                return;
+
             switch (_eType)
             {
                 case Game.Type.EBottomType.Map:
                     {
-                        var connector = new Info.Connector();
                         UIUtils.SetActive(redDotRectTm, connector.OpenPlaceId > 0);
+
+                        break;
+                    }
+
+                case Game.Type.EBottomType.Book:
+                    {
+                        UIUtils.SetActive(redDotRectTm, connector.AddAnimalId > 0 || connector.AddObjectId > 0);
 
                         break;
                     }

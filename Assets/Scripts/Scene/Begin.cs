@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using GameSystem;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using System.Threading.Tasks;
+
+using Cysharp.Threading.Tasks;
 
 using GameSystem.Load;
 using Game.Manager;
@@ -13,6 +16,8 @@ namespace Scene
 {
     public class Begin : Base, NickName.IListener, Letter.IListener
     {
+        private const string KeyPrologue = "Prologue";
+
         [SerializeField] private RectTransform uiRootRectTm = null;
         [SerializeField] private LoadData loadData = null;
         [SerializeField] private GameObject prologueGameObj = null;
@@ -21,48 +26,90 @@ namespace Scene
 
         private NickName _nickName = null;
         private Letter _letter = null;
-        private bool _endPrologue = false;
 
-        private IEnumerator Start()
+        private bool _end = false;
+        private Auth _auth = null;
+
+        private async void Start()
         {
             Info.Setting.Get?.InitializeLocale();
 
             var firebaseMgr = FirebaseManager.Instance;
 
-            yield return StartCoroutine(firebaseMgr.CoInit());
+            _auth = new Auth();
+            await _auth.AsyncInitialize();
 
-            //_iListener?.EndLoad();
+            await Plugin.Native.Instance.CoInit();
 
-            yield return new WaitForSeconds(2f);
+            Debug.Log("end Native Initialize 222");
 
-            var nickName = PlayerPrefs.GetString("KeyNickName");
+            //await firebaseMgr.CoInit();
 
-            _endPrologue = false;
-            if(firebaseMgr.Auth.IsFirst)
-            {
-                var cutscene = Cutscene.Create(new Cutscene.Data()
-                {
-                    TargetGameObj = prologueGameObj,
-                    EndAction = () =>
-                    {
-                        CreateNickName();
-                        CreateLetter();
-                    },
-                    IsConversation = false,
-                });
+            //yield return new WaitForSeconds(2f);
 
-                while (!_endPrologue)
-                {
-                    yield return null;
-                }
-            }
+            //var nickName = PlayerPrefs.GetString("KeyNickName");
 
-            if (firebaseMgr.Auth.IsValid)
-            {
-                SceneLoader.LoadWithLoading(loadData);
+            //bool already = false;
+            //Boolean.TryParse(PlayerPrefs.GetString(KeyPrologue, false.ToString()), out already);
 
-                yield break;
-            }
+            //bool endPrologue = false;
+
+            //if (!already)
+            //{
+            //    var cutscene = Cutscene.Create(new Cutscene.Data()
+            //    {
+            //        TargetGameObj = prologueGameObj,
+            //        EndAction = () =>
+            //        {
+            //            endPrologue = true;
+            //            CreateNickName();
+            //            CreateLetter();
+            //        },
+            //        IsConversation = false,
+            //    });
+
+            //    await UniTask.WaitUntil(() => endPrologue);
+            //}
+
+            await UniTask.WaitForSeconds(2f);
+
+            await PlayPrologueAsync();
+            await CreateNickNameAsync();
+            CreateLetter();
+
+            await UniTask.WaitUntil(() => _end);
+
+            SceneLoader.LoadWithLoading(loadData);
+            //PlayerPrefs.GetString(KeyPrologue)
+            //if(firebaseMgr.Auth.IsFirst)
+            //{
+            //    var cutscene = Cutscene.Create(new Cutscene.Data()
+            //    {
+            //        TargetGameObj = prologueGameObj,
+            //        EndAction = () =>
+            //        {
+            //            //CreateNickName();
+            //            //CreateLetter();
+
+
+            //        },
+            //        IsConversation = false,
+            //    });
+
+            //    //while (!_endPrologue)
+            //    //{
+            //    //    yield return null;
+            //    //}
+            //}
+
+            //await UniTask.WaitUntil(() => _endPrologue);
+
+            //if (firebaseMgr.Auth.IsValid)
+            //{
+            //    SceneLoader.LoadWithLoading(loadData);
+
+            //    yield break;
+            //}
         }
 
         public override void Init(IListener iListener)
@@ -72,8 +119,44 @@ namespace Scene
             SceneLoader.LoadWithLoading(loadData);
         }
 
-        private void CreateNickName()
+        private async UniTask PlayPrologueAsync()
         {
+            bool already = false;
+            Boolean.TryParse(PlayerPrefs.GetString(KeyPrologue, false.ToString()), out already);
+
+            bool endPrologue = false;
+
+            if (!already)
+            {
+                var cutscene = Cutscene.Create(new Cutscene.Data()
+                {
+                    TargetGameObj = prologueGameObj,
+                    EndAction = () =>
+                    {
+                        endPrologue = true;
+                    },
+                    IsConversation = false,
+                });
+
+                PlayerPrefs.SetString(KeyPrologue, true.ToString());
+
+                await UniTask.WaitUntil(() => endPrologue);
+            }
+
+            endPrologue = true;
+        }
+
+        private async UniTask CreateNickNameAsync()
+        {
+            if (!string.IsNullOrEmpty(Auth.NickName))
+            {
+                _end = true;
+
+                return;
+            }
+
+            _end = false;
+
             Sequencer.EnqueueTask(
                 () =>
                 {
@@ -88,10 +171,15 @@ namespace Scene
 
                     return _nickName;
                 });
+
+            await UniTask.Yield();
         }
 
         private void CreateLetter()
         {
+            if (_end)
+                return;
+
             Sequencer.EnqueueTask(
               () =>
               {
@@ -108,14 +196,14 @@ namespace Scene
               });
         }
 
-        void NickName.IListener.Confirm()
+        void NickName.IListener.Confirm(string nickName)
         {
-            
+            _auth?.SetNickName(nickName);
         }
 
         void Letter.IListener.End()
         {
-            _endPrologue = true;
+            _end = true;
         }
     }
 }

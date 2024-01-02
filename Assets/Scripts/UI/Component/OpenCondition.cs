@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 namespace UI.Component
 {
@@ -14,6 +15,7 @@ namespace UI.Component
             public Sprite ImgSprite = null;
             public string Text = string.Empty;
             public System.Func<bool> PossibleFunc = null;
+            public bool refreshLayout = true;
         }
 
         #region Inspector
@@ -40,7 +42,11 @@ namespace UI.Component
 
             SetColor();
 
-            LayoutRebuilder.ForceRebuildLayoutImmediate(textContentSizeFitter?.GetComponent<RectTransform>());
+            if(_data != null &&
+               _data.refreshLayout)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(textContentSizeFitter?.GetComponent<RectTransform>());
+            }
         }
 
         private void SetImg()

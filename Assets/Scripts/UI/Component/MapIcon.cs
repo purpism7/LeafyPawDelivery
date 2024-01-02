@@ -30,21 +30,16 @@ namespace UI.Component
         [SerializeField]
         private Button[] enterBtns = null;
 
-        private Info.Connector _connector = null;
-
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
             InitializeIsLock();
-            Debug.Log("Map Initialize");
         }
 
         public override void Activate()
         {
             base.Activate();
-
-            Debug.Log("MapIcon Activate");
 
             OpenPlace();
         }
@@ -58,19 +53,19 @@ namespace UI.Component
                 lastPlaceId = user.LastPlaceId;
             }
 
-            if (_connector == null)
-            {
-                _connector = new();
-            }
-
             bool isLock = true;
-            if (_connector.OpenPlaceId > 0)
+
+            var connector = Info.Connector.Get;
+            if(connector != null)
             {
-                isLock = placeId >= _connector.OpenPlaceId;
-            }
-            else
-            {
-                isLock = placeId > lastPlaceId;
+                if (connector.OpenPlaceId > 0)
+                {
+                    isLock = placeId >= connector.OpenPlaceId;
+                }
+                else
+                {
+                    isLock = placeId > lastPlaceId;
+                }
             }
 
             UIUtils.SetActive(lockRectRootTm, isLock);
@@ -81,19 +76,18 @@ namespace UI.Component
 
         private void OpenPlace()
         {
-            if(_connector == null)
-            {
-                _connector = new();
-            }
-
-            if (placeId != _connector.OpenPlaceId)
+            var connector = Info.Connector.Get;
+            if (connector == null)
                 return;
 
-            _connector?.ResetOpenPlaceId();
+            if (placeId != connector.OpenPlaceId)
+                return;
 
             AnimOpenPlace();
 
-            Game.Notification.Get?.Notify(Game.Notification.EType.OpenPlace);
+            connector?.ResetOpenPlace();
+
+            //Game.Notification.Get?.Notify(Game.Notification.EType.OpenPlace);
         }
 
         private void AnimOpenPlace()

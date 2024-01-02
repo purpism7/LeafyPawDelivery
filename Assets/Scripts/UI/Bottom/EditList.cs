@@ -52,12 +52,20 @@ namespace UI
             _editing = false;
         }
 
-        public EditList Setup(Type.ETab eTabType)
+        public EditList Setup(Type.ETab eTabType, int index = -1)
         {
             SetTab(eTabType);
 
             animalToggle?.SetIsOnWithoutNotify(eTabType == Type.ETab.Animal);
             objectToggle?.SetIsOnWithoutNotify(eTabType == Type.ETab.Object);
+
+            if(index >= 0)
+            {
+                if (eTabType == Type.ETab.Object)
+                {
+                    objectScrollRect?.MoveScrollToIndex(index);
+                }
+            }
 
             return this;
         }

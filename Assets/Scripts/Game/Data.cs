@@ -6,8 +6,6 @@ namespace Game
 {
     public class Data
     {
-        readonly public static string KeyNickName = "KeyNickName";
-
         public static Const Const = null;
     }
 }

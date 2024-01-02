@@ -14,8 +14,8 @@ namespace GameSystem
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
-            Auth auth = new Auth();
-            yield return StartCoroutine(auth.CoInitialize());
+            //Auth auth = new Auth();
+            //yield return StartCoroutine(auth.CoInitialize());
             yield return StartCoroutine(ResourceManager.Instance.CoInit());
 
             yield return StartCoroutine(CoLoadConst());

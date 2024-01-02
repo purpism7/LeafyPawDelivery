@@ -22,6 +22,8 @@ namespace GameSystem
             AdMob.Create();
             DOTween.Init();
 
+            Debug.Log("End Process End");
+
             yield return null;
         }
     }
