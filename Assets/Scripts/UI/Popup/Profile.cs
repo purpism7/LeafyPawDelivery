@@ -318,7 +318,7 @@ namespace UI
             //if (userInfo.Cash < animalSkinData.Cash)
             //    return;
 
-            userMgr.SaveCash(-animalSkinData.Cash);
+            userMgr?.User?.SetCash(-animalSkinData.Cash);
 
             ITop iTop = Game.UIManager.Instance?.Top;
             iTop?.SetCurrency();

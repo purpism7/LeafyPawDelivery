@@ -142,6 +142,11 @@ namespace UI
                         _endBuyAction = () =>
                         {
                             uiMgr.Top?.CollectCurrency(pos, shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object, shopData.Value);
+
+                            Info.UserManager.Instance?.User?.SetCash(-shopData.PaymentValue);
+
+                            ITop iTop = uiMgr.Top;
+                            iTop?.SetCurrency();
                         };
 
                         break;

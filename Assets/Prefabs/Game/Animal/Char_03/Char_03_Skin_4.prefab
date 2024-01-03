@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7659492965218608931}
   - component: {fileID: 5254236724196753284}
   m_Layer: 6
-  m_Name: Char_03
+  m_Name: Char_03_Skin_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ MonoBehaviour:
   edit: {fileID: 0}
   IsOverlap: 0
   Collider: {fileID: 0}
-  skinId: 1
+  skinId: 4
   animator: {fileID: 4174672820065212756}
 --- !u!1 &3850015810755828206
 GameObject:
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 1251880313074985567}
   - component: {fileID: 6273260538367445086}
   - component: {fileID: 4174672820065212756}
-  - component: {fileID: 3836284014760317629}
+  - component: {fileID: 4558016337429049925}
   m_Layer: 6
   m_Name: Animal
   m_TagString: Untagged
@@ -162,7 +162,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 854d523adb853440a86f90d7dcf527bf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e9601f9a3b1be445d84c769770473791, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -183,7 +183,7 @@ Animator:
   m_GameObject: {fileID: 3850015810755828206}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d4513b718534b47368ca2cc118c4850d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 96e59d32c18724a6e885ad703352254d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -194,7 +194,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &3836284014760317629
+--- !u!136 &4558016337429049925
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -213,10 +213,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 67.4
-  m_Height: 145
+  m_Radius: 73.94
+  m_Height: 161.1
   m_Direction: 1
-  m_Center: {x: 0, y: 71, z: 0}
+  m_Center: {x: 0, y: 83, z: 0}
 --- !u!1001 &2804595851780993576
 PrefabInstance:
   m_ObjectHideFlags: 0

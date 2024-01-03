@@ -302,22 +302,22 @@ namespace Info
             //firebaseMgr?.Database?.SaveChild(userId, KeyUserCurrency, JsonUtility.ToJson(User.CurrencyList.ToArray()));
         }
 
-        public void SaveCash(long cash)
-        {
-            User?.SetCash(cash);
+        //public void SaveCash(long cash)
+        //{
+        //    User?.SetCash(cash);
 
-            Save();
+        //    Save();
 
-            //var firebaseMgr = GameSystem.FirebaseManager.Instance;
-            //if (firebaseMgr == null)
-            //    return;
+        //    //var firebaseMgr = GameSystem.FirebaseManager.Instance;
+        //    //if (firebaseMgr == null)
+        //    //    return;
 
-            //var userId = firebaseMgr.Auth?.UserId;
-            //if (string.IsNullOrEmpty(userId))
-            //    return;
+        //    //var userId = firebaseMgr.Auth?.UserId;
+        //    //if (string.IsNullOrEmpty(userId))
+        //    //    return;
 
-            //firebaseMgr?.Database?.SaveChild(userId, KeyUserCash, JsonUtility.ToJson(User.Cash));
-        }
+        //    //firebaseMgr?.Database?.SaveChild(userId, KeyUserCash, JsonUtility.ToJson(User.Cash));
+        //}
 
         public void SaveStory(int storyId)
         {

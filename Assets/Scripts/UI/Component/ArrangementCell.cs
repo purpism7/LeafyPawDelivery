@@ -334,7 +334,7 @@ namespace UI.Component
                     int animalCurrency = openConditionData.AnimalCurrency;
                     int objectCurrency = openConditionData.ObjectCurrency;
 
-                    Info.UserManager.Instance.SaveCurrency(new Info.User.Currency()
+                    Info.UserManager.Instance?.User?.SetCurrency(new Info.User.Currency()
                     {
                         PlaceId = GameUtils.ActivityPlaceId,
                         Animal = -animalCurrency,
