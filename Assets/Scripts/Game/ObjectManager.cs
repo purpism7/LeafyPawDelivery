@@ -84,6 +84,8 @@ namespace Game
                         id = id,
                     });
 
+                Info.UserManager.Instance?.User?.AddObject(id);
+
                 Info.Connector.Get?.SetAddObject(id);
 
                 Notification.Get?.Notify(Notification.EType.AddObject);

@@ -58,6 +58,7 @@ namespace UI
             ObjectManager.Event?.AddListener(OnChangedObject);
 
             Game.Notification.Get?.AddListener(Notification.EType.AddAnimal, this);
+            Game.Notification.Get?.AddListener(Notification.EType.AddObject, this);
 
             _placeId = _data.PlaceId;
 

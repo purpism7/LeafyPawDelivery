@@ -17,6 +17,8 @@ namespace Game.Creature
 
             _time = System.DateTime.UtcNow;
             _duration = ClipLength * 2f;
+            Debug.Log("Duration = " + _duration);
+            SetCurrenctPos();
 
             InProgressAction();
         }

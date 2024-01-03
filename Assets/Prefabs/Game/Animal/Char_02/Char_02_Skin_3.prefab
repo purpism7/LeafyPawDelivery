@@ -52,7 +52,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2991612011475211171}
   edit: {fileID: 0}
   IsOverlap: 0
-  skinId: 4
+  Collider: {fileID: 0}
+  skinId: 3
   animator: {fileID: 1654453176783347088}
 --- !u!222 &2164901631972730589
 CanvasRenderer:
@@ -138,7 +139,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ca6426ea82aff4e6c959157bcc1033f0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bcf9e592da2e74e7f9a4f3670e4468c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -171,7 +172,7 @@ CapsuleCollider:
   m_Radius: 54.2
   m_Height: 144
   m_Direction: 1
-  m_Center: {x: 0.07, y: 77.61, z: 0}
+  m_Center: {x: 0.07, y: 81, z: 0}
 --- !u!95 &1654453176783347088
 Animator:
   serializedVersion: 5
@@ -182,7 +183,7 @@ Animator:
   m_GameObject: {fileID: 3476158958628761677}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 887c557f830c14f95b3da9ac28505bce, type: 2}
+  m_Controller: {fileID: 9100000, guid: 994417dc4ad4648a4b06f986bc41d7d9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

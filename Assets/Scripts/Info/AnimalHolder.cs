@@ -28,7 +28,23 @@ namespace Info
             var animalInfos = JsonHelper.FromJson<Info.Animal>(jsonString);
             if(animalInfos != null)
             {
-                AnimalInfoList.AddRange(animalInfos);
+                var user = Info.UserManager.Instance?.User;
+                if (user == null)
+                    return;
+
+                foreach(var animalInfo in animalInfos)
+                {
+                    if (animalInfo == null)
+                        continue;
+
+                    var animal = user.GetAnimal(animalInfo.Id);
+                    if (animal == null)
+                        continue;
+
+                    animalInfo.SkinIdList = animal.skinIdList;
+
+                    AnimalInfoList.Add(animalInfo);
+                }
             }
         }
 

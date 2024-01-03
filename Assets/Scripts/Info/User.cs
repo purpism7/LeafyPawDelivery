@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Info
 {
-    public class User
+    public partial class User
     {
         [Serializable]
         public class Currency
@@ -26,11 +26,31 @@ namespace Info
 
         [SerializeField]
         private int lastPlaceId = 1;
-        
+        [SerializeField]
+        private List<int> objectIdList = new();
+
         public List<Currency> CurrencyList = new();
         public List<Story> StoryList = new();
 
         public int LastPlaceId { get { return lastPlaceId; } }
+
+        #region Object
+        public void AddObject(int id)
+        {
+            if (CheckExistObject(id))
+                return;
+
+            objectIdList.Add(id);
+        }
+
+        public bool CheckExistObject(int id)
+        {
+            if (objectIdList == null)
+                return false;
+
+            return objectIdList.Contains(id);
+        }
+        #endregion
 
         #region Currency
         public static Currency GetInitializeCurrency(int placeId)
@@ -123,7 +143,7 @@ namespace Info
 
         public void SetCurrency(Game.Type.EElement eElement, int currency)
         {
-            int placeId = CurrentPlaceId;
+            int placeId = GameUtils.ActivityPlaceId;
             if(eElement == Game.Type.EElement.Animal)
             {
                 SetAnimalCurrency(placeId, currency);
@@ -161,19 +181,7 @@ namespace Info
         {
             get
             {
-                return GetCurrency(CurrentPlaceId);
-            }
-        }
-
-        private int CurrentPlaceId
-        {
-            get
-            {
-                var placeMgr = MainGameManager.Get<Game.PlaceManager>();
-                if (placeMgr == null)
-                    return 0;
-
-                return placeMgr.ActivityPlaceId;
+                return GetCurrency(GameUtils.ActivityPlaceId);
             }
         }
         #endregion

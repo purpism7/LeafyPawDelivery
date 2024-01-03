@@ -51,25 +51,30 @@ namespace Game.Manager
         private void SetDailyMissionDate()
         {
             string dailyMissionDate = PlayerPrefs.GetString(KeyDailyMissionDate);
-            Debug.Log(dailyMissionDate);
+            
             if (string.IsNullOrEmpty(dailyMissionDate))
             {
-                _dailyMissionDateTime = System.DateTime.UtcNow;
-                PlayerPrefs.SetString(KeyDailyMissionDate, _dailyMissionDateTime.Value.ToString());
+                SaveDailyMissionDate();
 
                 return;
             }
 
             _dailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
-            //if (CheckResetDailyMission)
-            //{
-            //    _dailyMissionDateTime = System.DateTime.UtcNow;
-            //    PlayerPrefs.SetString(KeyDailyMissionDate, _dailyMissionDateTime.Value.ToString());
 
-            //    return;
-            //}
+            if (CheckResetDailyMission)
+            {
+                SaveDailyMissionDate();
 
-            //_dailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
+                return;
+            }
+
+            _dailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
+        }
+
+        private void SaveDailyMissionDate()
+        {
+            _dailyMissionDateTime = System.DateTime.Today.ToLocalTime().AddDays(1);
+            PlayerPrefs.SetString(KeyDailyMissionDate, _dailyMissionDateTime.Value.ToString());
         }
 
         public bool CheckResetDailyMission
@@ -79,7 +84,9 @@ namespace Game.Manager
                 if (_dailyMissionDateTime == null)
                     return false;
 
-                return (System.DateTime.UtcNow - _dailyMissionDateTime.Value.AddDays(1)).TotalDays >= 1;
+                Debug.Log((System.DateTime.UtcNow.ToLocalTime() - _dailyMissionDateTime.Value).TotalSeconds);
+
+                return (System.DateTime.UtcNow.ToLocalTime() - _dailyMissionDateTime.Value).TotalDays >= 0;
             }
         }
 

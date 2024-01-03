@@ -75,7 +75,7 @@ namespace Game.Creature
                     if (clip == null)
                         continue;
 
-                    if (!clip.name.Equals(ActionName))
+                    if (!clip.name.ToLower().Contains(ActionName.ToLower()))
                         continue;
 
                     return clip.length;
@@ -83,6 +83,17 @@ namespace Game.Creature
 
                 return 0;
             }
+        }
+
+        protected void SetCurrenctPos()
+        {
+            if (_data == null)
+                return;
+
+            if (!_data.Tm)
+                return;
+  
+            _data.Tm.localPosition = new Vector3(_data.Tm.localPosition.x, _data.Tm.localPosition.y, _initPosZ);
         }
 
         //protected void SetState(EState eState)

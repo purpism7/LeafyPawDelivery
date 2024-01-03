@@ -28,13 +28,13 @@ namespace Game
 
             Game.ObjectManager.Event.AddListener(OnChangedObject);
             Game.PlaceManager.Event?.AddListener(OnChangedPlace);
-
-            _animalHolder?.LoadInfo();
         }
 
         public override IEnumerator CoInitialize(Data data)
         {
             _data = data;
+
+            _animalHolder?.LoadInfo();
 
             yield break;
         }
@@ -88,6 +88,8 @@ namespace Game
                 {
                     id = animalInfo.Id,
                 });
+
+                Info.UserManager.Instance?.User?.AddAnimal(animalInfo);
 
                 Info.Connector.Get?.SetAddAnimal(id);
 
@@ -206,6 +208,8 @@ namespace Game
                 return;
 
             _animalHolder.AddASkin(id, skinId);
+
+            Info.UserManager.Instance?.User?.AddAnimalSkin(id, skinId);
         }
         #endregion
 

@@ -44,7 +44,7 @@ namespace Info
         {
             get
             {
-                return PlayerPrefs.GetInt(string.Format(KeyAddAnimal, GameUtils.ActivityPlaceId), 0);
+                return PlayerPrefs.GetInt(string.Format(KeyAddAnimal, GameUtils.ActivityPlaceId));
             }
         }
 
@@ -69,7 +69,7 @@ namespace Info
         {
             get
             {
-                return PlayerPrefs.GetInt(string.Format(KeyAddObject, GameUtils.ActivityPlaceId), 0);
+                return PlayerPrefs.GetInt(string.Format(KeyAddObject, GameUtils.ActivityPlaceId));
             }
         }
 
