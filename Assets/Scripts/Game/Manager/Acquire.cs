@@ -12,9 +12,12 @@ namespace Game.Manager
         }
 
         private const string KeyDailyMissionDate = "KeyDailyMissionDate";
+        private const string KeyGetRewardedDailyMission = "KeyGetRewardedDailyMission_{0}";
+        private const string KeyGetRewardedAchievement = "KeyGetRewardedAchievement_{0}";
 
         private Info.AcquireHolder _acquireHolder = new();
-        private System.DateTime? _dailyMissionDateTime = null;
+
+        public System.DateTime? DailyMissionDateTime { get; set; } = null;
         
         protected override void Initialize()
         {
@@ -31,6 +34,16 @@ namespace Game.Manager
         public void Add(Type.EAcquire eAcquire, Type.EAcquireAction eAcquireAction, int value)
         {
             _acquireHolder?.Add(eAcquire, eAcquireAction, value);
+
+            if (CheckDailyMissionNotification)
+            {
+                Info.Connector.Get?.SetCompleteDailyMission(true);
+            }
+
+            if(CheckAchievementNotification)
+            {
+                Info.Connector.Get?.SetCompleteAchievement(true);
+            }
         }
 
         public void SetNextStep(int id)
@@ -51,7 +64,6 @@ namespace Game.Manager
         private void SetDailyMissionDate()
         {
             string dailyMissionDate = PlayerPrefs.GetString(KeyDailyMissionDate);
-            
             if (string.IsNullOrEmpty(dailyMissionDate))
             {
                 SaveDailyMissionDate();
@@ -59,42 +71,115 @@ namespace Game.Manager
                 return;
             }
 
-            _dailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
+            DailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
 
-            if (CheckResetDailyMission)
-            {
-                SaveDailyMissionDate();
+            //if (CheckResetDailyMission)
+            //{
+            //    SaveDailyMissionDate();
 
-                return;
-            }
+            //    return;
+            //}
 
-            _dailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
+            //_dailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
         }
 
         private void SaveDailyMissionDate()
         {
-            _dailyMissionDateTime = System.DateTime.Today.ToLocalTime().AddDays(1);
-            PlayerPrefs.SetString(KeyDailyMissionDate, _dailyMissionDateTime.Value.ToString());
+            DailyMissionDateTime = System.DateTime.Today.ToLocalTime().AddDays(1);
+            PlayerPrefs.SetString(KeyDailyMissionDate, DailyMissionDateTime.Value.ToString());
         }
 
         public bool CheckResetDailyMission
         {
             get
             {
-                if (_dailyMissionDateTime == null)
+                if (DailyMissionDateTime == null)
                     return false;
 
-                Debug.Log((System.DateTime.UtcNow.ToLocalTime() - _dailyMissionDateTime.Value).TotalSeconds);
-
-                return (System.DateTime.UtcNow.ToLocalTime() - _dailyMissionDateTime.Value).TotalDays >= 0;
+                return (System.DateTime.UtcNow.ToLocalTime() - DailyMissionDateTime.Value).TotalSeconds >= 0;
             }
-        }
+        } 
 
         public void ResetDailyMission()
         {
             _acquireHolder?.ResetDailyMission();
 
             SetDailyMissionDate();
+        }
+
+        public bool GetRewardDailyMission(int id)
+        {
+            bool getRewarded = true;
+            System.Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedDailyMission, id), false.ToString()), out getRewarded);
+
+            return getRewarded;
+        }
+
+        public bool CheckDailyMissionNotification
+        {
+            get
+            {
+                var dailyMissions = DailyMissionContainer.Instance?.Datas;
+                if (dailyMissions == null)
+                    return false;
+
+                foreach (var dailyMission in dailyMissions)
+                {
+                    if (dailyMission == null)
+                        continue;
+
+                    var info = GetDailyMission(dailyMission.Id);
+                    if (info == null)
+                        continue;
+
+                    if (GetRewardDailyMission(dailyMission.Id))
+                        continue;
+
+                    if (info.Progress >= dailyMission.Value)
+                        return true;
+                }
+
+                return false;
+            }
+        }
+
+        public bool GetRewardAchievement(int id)
+        {
+            bool getRewarded = true;
+            System.Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedAchievement, id), false.ToString()), out getRewarded);
+
+            return getRewarded;
+        }
+
+        public bool CheckAchievementNotification
+        {
+            get
+            {
+                var achievements = AchievementContainer.Instance?.Datas;
+                if (achievements == null)
+                    return false;
+
+                foreach (var achievement in achievements)
+                {
+                    if (achievement == null)
+                        continue;
+
+                    var info = GetAchievement(achievement.Id);
+                    if (info == null)
+                        continue;
+
+                    if (info.Step != achievement.Step)
+                        continue;
+
+                    if (GetRewardAchievement(achievement.Id))
+                        continue;
+
+                    if (info.Progress >= achievement.Value)
+                        return true;
+                }
+
+                return false;
+            }
         }
     }
 }

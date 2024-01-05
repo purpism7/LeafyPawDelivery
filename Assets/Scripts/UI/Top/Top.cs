@@ -474,7 +474,6 @@ namespace UI
 
         private void OnChangedPlace(int placeId)
         {
-            Debug.Log("Top OnChangedPlace = " + placeId);
             Initialize();
         }
 

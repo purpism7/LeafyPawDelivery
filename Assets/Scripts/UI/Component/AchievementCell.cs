@@ -6,18 +6,31 @@ using System.Linq;
 using UnityEngine.Localization.Settings;
 
 using TMPro;
+using System;
 
 namespace UI.Component
 {
-    public class AchievementCell : Base<AchievementCell.Data>
+    public interface IAchievement
+    {
+        bool IsCompleted { get; }
+        bool GetRewarded { get; }
+    }
+
+    public class AchievementCell : Base<AchievementCell.Data>, IAchievement
     {
         public class Data : BaseData
         {
+            public IListener iListener = null;
             public int Id = 0;
             public List<Achievement> AchievementDataList = null;
         }
 
         private const string KeyGetRewardedAchievement = "KeyGetRewardedAchievement_{0}";
+
+        public interface IListener
+        {
+            void GetReward();
+        }
 
         [SerializeField]
         private TextMeshProUGUI titleTMP = null;
@@ -40,6 +53,7 @@ namespace UI.Component
             base.Initialize(data);
             
             SetOpenCondition();
+            SetProgress();
         }
 
         public override void Activate()
@@ -80,7 +94,6 @@ namespace UI.Component
 
         private void SetProgress()
         {
-            //int id = _data != null ? _data.Id : 0;
             var achievementInfo = MainGameManager.Get<Game.Manager.Acquire>()?.GetAchievement(_data.Id);
 
             float dataProgress = DataProgress;
@@ -126,6 +139,17 @@ namespace UI.Component
             }
         }
 
+        private bool IsCompleted
+        {
+            get
+            {
+                if (_data == null)
+                    return false;
+
+                return _progress >= DataProgress;
+            }
+        }
+
         private bool GetRewarded
         {
             get
@@ -148,16 +172,32 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
-            //var dailyMissionData = _data?.DailyMissionData;
-
             var openConditionData = new OpenCondition.Data()
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
-                Text = "5",
+                Text = Game.Data.Const.AchievementRewardCount.ToString(),
             };
 
             openCondition.Initialize(openConditionData);
         }
+
+        #region IAchievement
+        bool IAchievement.IsCompleted
+        {
+            get
+            {
+                return IsCompleted;
+            }
+        }
+
+        bool IAchievement.GetRewarded
+        {
+            get
+            {
+                return GetRewarded;
+            }
+        }
+        #endregion
 
         public void OnClickGetReward()
         {
@@ -168,7 +208,7 @@ namespace UI.Component
             if (_progress < dataProgress)
                 return;
 
-            Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, 5);
+            Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, Game.Data.Const.AchievementRewardCount);
 
             if(IsLastStep)
             {
@@ -188,6 +228,8 @@ namespace UI.Component
             }
 
             Set();
+
+            _data?.iListener?.GetReward();
         }
     }
 }

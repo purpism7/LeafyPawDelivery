@@ -163,6 +163,8 @@ public class MainGameManager : Singleton<MainGameManager>
         await UniTask.Yield();
 
         Starter();
+
+        Game.Notification.Get?.AllNotify();
     }
     //private void EndLoad(bool initialize)
     //{

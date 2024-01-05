@@ -5,21 +5,27 @@ using UnityEngine.UI;
 using System.Linq;
 
 using TMPro;
+using DG.Tweening;
 
 using Game;
 
 namespace UI
 {
-    public class Acquire : BasePopup<Acquire.Data>, Component.DailyMissionCell.IListener
+    public class Acquire : BasePopup<Acquire.Data>, Component.DailyMissionCell.IListener, Component.AchievementCell.IListener
     {
         public class Data : BaseData
         {
 
         }
 
-        [SerializeField] private Toggle[] tabToggles = null;
-        [SerializeField] private ScrollRect dailyMissionScrollRect = null;
-        [SerializeField] private ScrollRect achievementsScrollRect = null;
+        [SerializeField]
+        private Toggle[] tabToggles = null;
+        [SerializeField]
+        private RectTransform[] tabRedDotRectTms = null;
+        [SerializeField]
+        private ScrollRect dailyMissionScrollRect = null;
+        [SerializeField]
+        private ScrollRect achievementsScrollRect = null;
 
         [Header("Daily Mission")]
         [SerializeField]
@@ -77,7 +83,13 @@ namespace UI
                 tabToggle.SetIsOnWithoutNotify(true);
             }
 
+            SetNotification();
             SetTotalProgress();
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();            
         }
 
         private void Update()
@@ -85,12 +97,20 @@ namespace UI
             if (!IsActivate)
                 return;
 
-            var localRemainTime = System.DateTime.Today.AddDays(1).Subtract(System.DateTime.UtcNow.ToLocalTime());
+            UpdateRemainTime();
+        }
+
+        private void UpdateRemainTime()
+        {
+            if (_acquireMgr == null)
+                return;
+
+            var localRemainTime = _acquireMgr.DailyMissionDateTime.Value.Subtract(System.DateTime.UtcNow.ToLocalTime());
 
             localRemainTimeTMP?.SetText(localRemainTime.ToString(@"hh\:mm\:ss"));
-            
+
             if (!_resetDailyMission &&
-                _acquireMgr != null && _acquireMgr.CheckResetDailyMission)
+                _acquireMgr.CheckResetDailyMission)
             {
                 _resetDailyMission = true;
 
@@ -122,7 +142,7 @@ namespace UI
                 _dailyMissionCellList.Add(cell);
             }
 
-            foreach(var dailyMissionCell in _dailyMissionCellList)
+            foreach (var dailyMissionCell in _dailyMissionCellList)
             {
                 if (dailyMissionCell == null)
                     continue;
@@ -153,24 +173,38 @@ namespace UI
 
         private void ResetDailyMission()
         {
-            Debug.Log("ResetDailyMissionList");
-
             if (_dailyMissionCellList == null)
                 return;
 
-            MainGameManager.Get<Game.Manager.Acquire>()?.ResetDailyMission();
+            _acquireMgr?.ResetDailyMission();
 
-            foreach (var dailyMissionCell in _dailyMissionCellList)
+            foreach (var cell in _dailyMissionCellList)
             {
-                if (dailyMissionCell == null)
+                if (cell == null)
                     continue;
 
-                (dailyMissionCell as UI.Component.IDailyMission)?.Reset();
+                ResetDailyMissionCell(cell);
 
-                dailyMissionCell?.Activate();
-
-                dailyMissionCell.transform.SetSiblingIndex(dailyMissionCell.Id);
+                cell.transform.SetSiblingIndex(cell.Id);
             }
+
+            ResetDailyMissionCell(totalDailyMissionCell);
+
+            SetTotalProgress();
+        }
+
+        private void ResetDailyMissionCell(Component.DailyMissionCell cell)
+        {
+            if (cell == null)
+                return;
+
+            var iDailyMission = cell as Component.IDailyMission;
+            if (iDailyMission == null)
+                return;
+
+            iDailyMission.Reset();
+
+            cell.Activate();
         }
 
         private void SetAchievementList()
@@ -179,11 +213,12 @@ namespace UI
             if (achievementListDic == null)
                 return;
 
-            foreach(var pair in achievementListDic)
+            foreach (var pair in achievementListDic)
             {
                 var cell = new GameSystem.ComponentCreator<Component.AchievementCell, Component.AchievementCell.Data>()
                   .SetData(new Component.AchievementCell.Data()
                   {
+                      iListener = this,
                       Id = pair.Key,
                       AchievementDataList = pair.Value,
                   })
@@ -212,7 +247,7 @@ namespace UI
 
             int progress = 0;
 
-            foreach(Component.IDailyMission iDailMission in _dailyMissionCellList)
+            foreach (Component.IDailyMission iDailMission in _dailyMissionCellList)
             {
                 if (iDailMission == null)
                     continue;
@@ -220,16 +255,154 @@ namespace UI
                 if (iDailMission.GetRewarded)
                 {
                     ++progress;
+
+                    continue;
                 }
             }
 
             (totalDailyMissionCell as Component.IDailyMission).SetTotalProgress(progress);
         }
 
+        private void SetNotification()
+        {
+            SetDailyMissionNotification();
+            SetAchievementNotification();
+        }
+
+        private void SetDailyMissionNotification()
+        {
+            if (tabRedDotRectTms == null)
+                return;
+
+            bool notification = false;
+            if (_acquireMgr != null)
+            {
+                notification = _acquireMgr.CheckDailyMissionNotification;
+            }
+
+            UIUtils.SetActive(tabRedDotRectTms.First(), notification);
+
+            if (!notification)
+            {
+                Info.Connector.Get?.SetCompleteDailyMission(false);
+            }
+        }
+
+        private void SetAchievementNotification()
+        {
+            if (tabRedDotRectTms == null)
+                return;
+
+            bool notification = false;
+            if (_acquireMgr != null)
+            {
+                notification = _acquireMgr.CheckAchievementNotification;
+            }
+
+            UIUtils.SetActive(tabRedDotRectTms.Last(), notification);
+
+            if(!notification)
+            {
+                Info.Connector.Get?.SetCompleteAchievement(false);
+            }
+        }
+
+        //private bool CheckDailyMissionNotification
+        //{
+        //    get
+        //    {
+        //        if (_dailyMissionCellList == null)
+        //            return false;
+
+        //        foreach (Component.IDailyMission iDailMission in _dailyMissionCellList)
+        //        {
+        //            if (iDailMission == null)
+        //                continue;
+
+        //            if (iDailMission.GetRewarded)
+        //                continue;
+
+        //            if (iDailMission.IsCompleted)
+        //                return true;
+        //        }
+
+        //        var iTotalDailyMission = totalDailyMissionCell as Component.IDailyMission;
+        //        if (iTotalDailyMission == null)
+        //            return false;
+
+        //        if (iTotalDailyMission.GetRewarded)
+        //            return false;
+
+        //        return iTotalDailyMission.IsCompleted;
+
+        //    }
+        //}
+
+        //private bool CheckAchievementNotification
+        //{
+        //    get
+        //    {
+        //        if (_achievementCellList == null)
+        //            return false;
+
+        //        foreach (Component.IAchievement iAchievement in _achievementCellList)
+        //        {
+        //            if (iAchievement == null)
+        //                continue;
+
+        //            if (iAchievement.GetRewarded)
+        //                continue;
+
+        //            if (iAchievement.IsCompleted)
+        //                return true;
+        //        }
+
+        //        return false;
+        //    }
+        //}
+
+        //private void SetCompleteDailyMission()
+        //{
+        //    var connector = Info.Connector.Get;
+        //    if (connector == null)
+        //        return;
+
+        //    UIUtils.SetActive(tabRedDotRectTms.First(), connector.CompleteDailyMission > 0);
+        //}
+
+        //private void SetCompleteAchievement()
+        //{
+        //    var connector = Info.Connector.Get;
+        //    if (connector == null)
+        //        return;
+
+        //    UIUtils.SetActive(tabRedDotRectTms.Last(), connector.CompleteAchievement > 0);
+        //}
+
         #region Component.DailyMissionCell.IListener
         void Component.DailyMissionCell.IListener.GetReward(int id)
         {
             SetTotalProgress();
+            SetDailyMissionNotification();
+        }
+
+        void Component.DailyMissionCell.IListener.Notification()
+        {
+            //bool isNotification = CheckDailyMissionNotification;
+            //UIUtils.SetActive(tabRedDotRectTms.First(), isNotification);
+
+            //Info.Connector.Get?.SetCompleteDailyMission(isNotification);
+        }
+        #endregion
+
+        #region Component.AchievementCell.IListener
+        void Component.AchievementCell.IListener.GetReward()
+        {
+            //bool isNotification = CheckAchievementNotification;
+            //UIUtils.SetActive(tabRedDotRectTms.Last(), isNotification);
+
+            //Info.Connector.Get?.SetCompleteAchievement(isNotification);
+            SetAchievementNotification();
         }
         #endregion
 

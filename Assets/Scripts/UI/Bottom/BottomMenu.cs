@@ -36,7 +36,7 @@ namespace UI
             btn?.onClick.RemoveAllListeners();
             btn?.onClick.AddListener(OnClick);
 
-            SetNotification();
+            RegisterNotification();
 
             UIUtils.SetActive(redDotRectTm, false);
 
@@ -46,9 +46,11 @@ namespace UI
         public override void Activate()
         {
             base.Activate();
+
+            //SetNotification();
         }
 
-        private void SetNotification()
+        private void RegisterNotification()
         {
             switch (_eType)
             {
@@ -66,11 +68,18 @@ namespace UI
 
                         break;
                     }
+
+                case Game.Type.EBottomType.Acquire:
+                    {
+                        Game.Notification.Get?.AddListener(Game.Notification.EType.CompleteDailyMission, this);
+                        Game.Notification.Get?.AddListener(Game.Notification.EType.CompleteAchievement, this);
+
+                        break;
+                    }
             }
         }
 
-        #region Notification.IListener
-        void Game.Notification.IListener.Notify()
+        private void SetNotification()
         {
             var connector = Info.Connector.Get;
             if (connector == null)
@@ -91,7 +100,20 @@ namespace UI
 
                         break;
                     }
+
+                case Game.Type.EBottomType.Acquire:
+                    {
+                        UIUtils.SetActive(redDotRectTm, connector.IsCompleteDailyMission || connector.IsCompleteAchievement);
+
+                        break;
+                    }
             }
+        }
+
+        #region Notification.IListener
+        void Game.Notification.IListener.Notify()
+        {
+            SetNotification();
         }
         #endregion
 

@@ -338,7 +338,7 @@ namespace UI
         //        });
         //    sequence.Restart();
         //}
-        
+
         private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
         {
             if (animalData == null)

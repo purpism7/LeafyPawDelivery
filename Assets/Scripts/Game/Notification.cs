@@ -14,6 +14,8 @@ namespace Game
             OpenPlace,
             AddAnimal,
             AddObject,
+            CompleteDailyMission,
+            CompleteAchievement,
         }
 
         public interface IListener
@@ -66,6 +68,14 @@ namespace Game
                 {
                     iListener?.Notify();
                 }
+            }
+        }
+
+        public void AllNotify()
+        {
+            foreach(EType eType in System.Enum.GetValues(typeof(Notification.EType)))
+            {
+                Notify(eType);
             }
         }
     }

@@ -35,10 +35,10 @@ namespace UI.Component
         public interface IListener
         {
             void GetReward(int id);
+            void Notification();
         }
 
         private const string KeyGetRewardedDailyMission = "KeyGetRewardedDailyMission_{0}";
-        private const int RewardCnt = 5;
 
         [SerializeField]
         private TextMeshProUGUI titleTMP = null;
@@ -75,8 +75,9 @@ namespace UI.Component
             //{
             //    getRewardBtn.interactable = _progress < DataProgress;
             //}
-
             UIUtils.SetActive(completedRootRectTm, GetRewarded);
+
+            _data?.iListener?.Notification();
         }
 
         private void SetTitleTMP()
@@ -128,7 +129,7 @@ namespace UI.Component
             var openConditionData = new OpenCondition.Data()
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
-                Text = RewardCnt.ToString(),
+                Text = Game.Data.Const.DailyMissionRewardCount.ToString(),
             };
 
             openCondition.Initialize(openConditionData);
@@ -148,9 +149,10 @@ namespace UI.Component
             {
                 bool getRewarded = true;
 
-                if(Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedDailyMission, Id), false.ToString()), out getRewarded))
+                var acquireMgr = MainGameManager.Get<Game.Manager.Acquire>();
+                if(acquireMgr != null)
                 {
-                    return getRewarded;
+                    getRewarded = acquireMgr.GetRewardDailyMission(Id);
                 }
 
                 return getRewarded;
@@ -164,7 +166,7 @@ namespace UI.Component
                 if (_data == null)
                     return false;
 
-                return _progress >= _data.progress;
+                return _progress >= DataProgress;
             }
         }
 
@@ -198,7 +200,7 @@ namespace UI.Component
             _progress = progress;
 
             float dataProgress = DataProgress;
-            Debug.Log(_progress + " / " + dataProgress);
+            
             progressImg.fillAmount = _progress / dataProgress;
             progressTMP?.SetText(_progress + " / " + dataProgress);
         }
@@ -216,7 +218,7 @@ namespace UI.Component
             if (_progress < dataProgress)
                 return;
 
-            Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, RewardCnt);
+            Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, Game.Data.Const.DailyMissionRewardCount);
 
             UIUtils.SetActive(completedRootRectTm, true);
 
@@ -231,6 +233,7 @@ namespace UI.Component
             }
 
             _data?.iListener?.GetReward(Id);
+            _data?.iListener?.Notification();
         }
     }
 }

@@ -36,12 +36,20 @@ public class Const : ScriptableObject
     [SerializeField]
     private int maxDropLetterCount = 20;
 
+    [SerializeField]
+    private int dailyMissionRewardCount = 5;
+    [SerializeField]
+    private int achievementRewardCount = 5;
+
     public int AnimalBaseSkinId { get { return animalBaseSkinId; } }
     public int StartPlaceId { get { return startPlaceId; } }
     public int TotalPlaceCount { get { return PlaceDatas != null ? PlaceDatas.Length : 1; } }
 
     public int MaxDropAnimalCurrencyCount { get { return maxDropAnimalCurrencyCount; } }
     public int MaxDropLetterCount { get { return maxDropLetterCount; } }
+
+    public int DailyMissionRewardCount { get { return dailyMissionRewardCount; } }
+    public int AchievementRewardCount { get { return achievementRewardCount; } }
 
     public PlaceData[] PlaceDatas = null;
 

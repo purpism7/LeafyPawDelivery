@@ -46,7 +46,6 @@ namespace Game
 
             if(data != null)
             {
-                //_startRootTm = data.startRootTm;
                 transform.position = _data.startPos;
                 ActivateProgress(false);
             }
@@ -195,7 +194,7 @@ namespace Game
             {
                 if (progressSpriteRenderer != null)
                 {
-                    progressSpriteRenderer.sortingOrder = sortingOrder;
+                    progressSpriteRenderer.sortingOrder = 1500;
                 }
             }
         }
@@ -242,8 +241,7 @@ namespace Game
                         {
                             var top = UIManager.Instance?.Top;
 
-                            float random = UnityEngine.Random.Range(0, 100f);
-                            Debug.Log("random = " + random);
+                            float random = UnityEngine.Random.Range(0f, 100f);
                             if(random < 3f)
                             {
                                 int value = UnityEngine.Random.Range(1, 5);

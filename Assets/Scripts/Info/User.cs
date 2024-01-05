@@ -26,31 +26,11 @@ namespace Info
 
         [SerializeField]
         private int lastPlaceId = 1;
-        [SerializeField]
-        private List<int> objectIdList = new();
 
         public List<Currency> CurrencyList = new();
         public List<Story> StoryList = new();
 
         public int LastPlaceId { get { return lastPlaceId; } }
-
-        #region Object
-        public void AddObject(int id)
-        {
-            if (CheckExistObject(id))
-                return;
-
-            objectIdList.Add(id);
-        }
-
-        public bool CheckExistObject(int id)
-        {
-            if (objectIdList == null)
-                return false;
-
-            return objectIdList.Contains(id);
-        }
-        #endregion
 
         #region Currency
         public static Currency GetInitializeCurrency(int placeId)

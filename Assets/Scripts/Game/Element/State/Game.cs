@@ -77,7 +77,6 @@ namespace Game.Element.State
             _touchDateTime = DateTime.UtcNow;
 
             var startPos = _gameCameraCtr.UICamera.ScreenToWorldPoint(touchPosition);
-            startPos.z = 10f;
 
             UIManager.Instance?.Top?.CollectCurrency(startPos, elementData.EElement, elementData.GetCurrency);
         }

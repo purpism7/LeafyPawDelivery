@@ -88,7 +88,6 @@ namespace Game
 
                 Info.Connector.Get?.SetAddObject(id);
 
-                Notification.Get?.Notify(Notification.EType.AddObject);
                 Notification.Get?.Notify(Notification.EType.OpenPlace);
             }
         }

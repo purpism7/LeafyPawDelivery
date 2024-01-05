@@ -74,11 +74,24 @@ namespace Game
 
         private void CreateTarget()
         {
+            if (_data == null)
+                return;
+
             if(_cachedElementDic != null)
             {
-                if(_cachedElementDic.TryGetValue(_data, out BaseElement baseElement))
+                foreach(KeyValuePair<Data, BaseElement> pair in _cachedElementDic)
                 {
-                    baseElement?.Activate();
+                    var data = pair.Key;
+                    if (data == null)
+                        continue;
+
+                    if (_data.Id != data.Id)
+                        continue;
+
+                    if (_data.SkinId != data.SkinId)
+                        continue;
+
+                    pair.Value?.Activate();
 
                     return;
                 }
@@ -119,13 +132,17 @@ namespace Game
             if (!targetRootTm)
                 return;
 
-            foreach (Transform childTm in targetRootTm)
+            foreach(BaseElement baseElement in _cachedElementDic.Values)
             {
-                if (!childTm)
-                    continue;
-
-                childTm.gameObject.SetActive(false);
+                baseElement?.Deactivate();
             }
+            //foreach (Transform childTm in targetRootTm)
+            //{
+            //    if (!childTm)
+            //        continue;
+
+            //    //childTm.gameObject.SetActive(false);
+            //}
         }
     }
 }

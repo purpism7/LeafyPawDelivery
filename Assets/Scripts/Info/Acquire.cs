@@ -47,11 +47,11 @@ namespace Info
                 {
                     info.Progress = dailyMissionData.Value;
                 }
-
+      
                 break;
             }
 
-            if(dailyMissionInfo ==null)
+            if (dailyMissionInfo == null)
             {
                 dailyMissionInfoList.Add(
                     new DailyMission()
