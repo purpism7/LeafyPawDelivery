@@ -46,20 +46,11 @@ namespace Game.Manager
             }
         }
 
-        public void SetNextStep(int id)
-        {
-            _acquireHolder?.SetNextStep(id);
-        }
-
+        #region Daily Mission
         public Info.Acquire.DailyMission GetDailyMission(int id)
         {
             return _acquireHolder?.GetDailyMission(id);
-        }
-
-        public Info.Acquire.Achievement GetAchievement(int id)
-        {
-            return _acquireHolder?.GetAchievement(id);
-        }
+        } 
 
         private void SetDailyMissionDate()
         {
@@ -104,7 +95,7 @@ namespace Game.Manager
         {
             _acquireHolder?.ResetDailyMission();
 
-            SetDailyMissionDate();
+            SaveDailyMissionDate();
         }
 
         public bool GetRewardDailyMission(int id)
@@ -113,6 +104,11 @@ namespace Game.Manager
             System.Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedDailyMission, id), false.ToString()), out getRewarded);
 
             return getRewarded;
+        }
+
+        public void SetGetRewardDailyMission(int id, bool getReward)
+        {
+            PlayerPrefs.SetString(string.Format(KeyGetRewardedDailyMission, id), getReward.ToString());
         }
 
         public bool CheckDailyMissionNotification
@@ -142,6 +138,18 @@ namespace Game.Manager
                 return false;
             }
         }
+        #endregion
+
+        #region Achievement
+        public Info.Acquire.Achievement GetAchievement(int id)
+        {
+            return _acquireHolder?.GetAchievement(id);
+        }
+
+        public void SetNextStep(int id)
+        {
+            _acquireHolder?.SetNextStep(id);
+        }
 
         public bool GetRewardAchievement(int id)
         {
@@ -149,6 +157,11 @@ namespace Game.Manager
             System.Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedAchievement, id), false.ToString()), out getRewarded);
 
             return getRewarded;
+        }
+
+        public void SetGetRewardAhchievement(int id, bool getReward)
+        {
+            PlayerPrefs.SetString(string.Format(KeyGetRewardedAchievement, id), getReward.ToString());
         }
 
         public bool CheckAchievementNotification
@@ -181,6 +194,7 @@ namespace Game.Manager
                 return false;
             }
         }
+        #endregion
     }
 }
 

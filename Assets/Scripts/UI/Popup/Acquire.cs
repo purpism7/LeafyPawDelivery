@@ -190,6 +190,7 @@ namespace UI
 
             ResetDailyMissionCell(totalDailyMissionCell);
 
+            SetNotification();
             SetTotalProgress();
         }
 
@@ -384,14 +385,6 @@ namespace UI
         {
             SetTotalProgress();
             SetDailyMissionNotification();
-        }
-
-        void Component.DailyMissionCell.IListener.Notification()
-        {
-            //bool isNotification = CheckDailyMissionNotification;
-            //UIUtils.SetActive(tabRedDotRectTms.First(), isNotification);
-
-            //Info.Connector.Get?.SetCompleteDailyMission(isNotification);
         }
         #endregion
 

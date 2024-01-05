@@ -10,13 +10,7 @@ using System;
 
 namespace UI.Component
 {
-    public interface IAchievement
-    {
-        bool IsCompleted { get; }
-        bool GetRewarded { get; }
-    }
-
-    public class AchievementCell : Base<AchievementCell.Data>, IAchievement
+    public class AchievementCell : Base<AchievementCell.Data>
     {
         public class Data : BaseData
         {
@@ -24,8 +18,6 @@ namespace UI.Component
             public int Id = 0;
             public List<Achievement> AchievementDataList = null;
         }
-
-        private const string KeyGetRewardedAchievement = "KeyGetRewardedAchievement_{0}";
 
         public interface IListener
         {
@@ -38,8 +30,6 @@ namespace UI.Component
         private Image progressImg = null;
         [SerializeField]
         private TextMeshProUGUI progressTMP = null;
-        //[SerializeField]
-        //private Button getRewardBtn = null;
         [SerializeField]
         private OpenConditionVertical openCondition = null;
         [SerializeField]
@@ -154,17 +144,27 @@ namespace UI.Component
         {
             get
             {
-                bool getRewarded = true;
                 if (_data == null)
-                    return getRewarded;
+                    return true;
 
-                if (System.Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedAchievement, _data.Id), false.ToString()), out getRewarded))
-                {
-                    return getRewarded;
-                }
+                var acquireMgr = MainGameManager.Get<Game.Manager.Acquire>();
+                if (acquireMgr == null)
+                    return true;
 
-                return getRewarded;
+                return acquireMgr.GetRewardAchievement(_data.Id);
             }
+        }
+
+        private void SetGetReward(bool getReward)
+        {
+            if (_data == null)
+                return;
+
+            var acquireMgr = MainGameManager.Get<Game.Manager.Acquire>();
+            if (acquireMgr == null)
+                return;
+
+            acquireMgr.SetGetRewardAhchievement(_data.Id, getReward);
         }
 
         private void SetOpenCondition()
@@ -181,24 +181,6 @@ namespace UI.Component
             openCondition.Initialize(openConditionData);
         }
 
-        #region IAchievement
-        bool IAchievement.IsCompleted
-        {
-            get
-            {
-                return IsCompleted;
-            }
-        }
-
-        bool IAchievement.GetRewarded
-        {
-            get
-            {
-                return GetRewarded;
-            }
-        }
-        #endregion
-
         public void OnClickGetReward()
         {
             var dataProgress = DataProgress;
@@ -212,14 +194,9 @@ namespace UI.Component
 
             if(IsLastStep)
             {
-                PlayerPrefs.SetString(string.Format(KeyGetRewardedAchievement, _data.Id), true.ToString());
+                SetGetReward(true);
 
                 UIUtils.SetActive(completedRootRectTm, GetRewarded);
-
-                //if (transform)
-                //{
-                //    transform.SetAsLastSibling();
-                //}
             }
 
             if(_data != null)

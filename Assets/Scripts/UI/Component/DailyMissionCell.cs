@@ -35,10 +35,7 @@ namespace UI.Component
         public interface IListener
         {
             void GetReward(int id);
-            void Notification();
         }
-
-        private const string KeyGetRewardedDailyMission = "KeyGetRewardedDailyMission_{0}";
 
         [SerializeField]
         private TextMeshProUGUI titleTMP = null;
@@ -46,8 +43,6 @@ namespace UI.Component
         private Image progressImg = null;
         [SerializeField]
         private TextMeshProUGUI progressTMP = null;
-        //[SerializeField]
-        //private Button getRewardBtn = null;
         [SerializeField]
         private OpenConditionVertical openCondition = null;
         [SerializeField]
@@ -71,13 +66,7 @@ namespace UI.Component
             SetTitleTMP();
             SetProgress();
 
-            //if(getRewardBtn != null)
-            //{
-            //    getRewardBtn.interactable = _progress < DataProgress;
-            //}
             UIUtils.SetActive(completedRootRectTm, GetRewarded);
-
-            _data?.iListener?.Notification();
         }
 
         private void SetTitleTMP()
@@ -170,6 +159,18 @@ namespace UI.Component
             }
         }
 
+        private void SetGetReward(bool getReward)
+        {
+            if (_data == null)
+                return;
+
+            var acquireMgr = MainGameManager.Get<Game.Manager.Acquire>();
+            if (acquireMgr == null)
+                return;
+
+            acquireMgr.SetGetRewardDailyMission(_data.id, getReward);
+        }
+
         #region IDailyMission
         bool IDailyMission.IsCompleted
         {
@@ -192,7 +193,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            PlayerPrefs.SetString(string.Format(KeyGetRewardedDailyMission, Id), false.ToString());
+            SetGetReward(false);
         }
 
         void IDailyMission.SetTotalProgress(int progress)
@@ -222,7 +223,7 @@ namespace UI.Component
 
             UIUtils.SetActive(completedRootRectTm, true);
 
-            PlayerPrefs.SetString(string.Format(KeyGetRewardedDailyMission, Id), true.ToString());
+            SetGetReward(true);
 
             if (Id <= 0)
                 return;
@@ -233,7 +234,6 @@ namespace UI.Component
             }
 
             _data?.iListener?.GetReward(Id);
-            _data?.iListener?.Notification();
         }
     }
 }
