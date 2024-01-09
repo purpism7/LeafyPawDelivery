@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Firebase;
-using Firebase.Analytics;
+//using Firebase;
+//using Firebase.Analytics;
 
 namespace GameSystem
 {
@@ -12,7 +12,7 @@ namespace GameSystem
         public FirebaseSystem.Auth Auth { get; private set; } = null;
         public FirebaseSystem.Database Database { get; private set; } = null;
 
-        private FirebaseApp _firebaseApp = null;
+        //private FirebaseApp _firebaseApp = null;
 
         protected override void Initialize()
         {
@@ -23,19 +23,19 @@ namespace GameSystem
         {
             yield return StartCoroutine(base.CoInit());
 
-            FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+            //FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
 
-            bool check = false;
-            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
-                (task) =>
-                {
-                    if (task.Result != DependencyStatus.Available)
-                        return;
+            //bool check = false;
+            //FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
+            //    (task) =>
+            //    {
+            //        if (task.Result != DependencyStatus.Available)
+            //            return;
 
-                    check = true;
-                });
+            //        check = true;
+            //    });
 
-            yield return new WaitUntil(() => check);
+            //yield return new WaitUntil(() => check);
 
             //Auth = gameObject.GetOrAddComponent<FirebaseSystem.Auth>();
             //Debug.Log("Auth = " + Auth.name);

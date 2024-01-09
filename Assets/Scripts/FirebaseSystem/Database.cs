@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Firebase.Firestore;
-using Firebase.Database;
+//using Firebase.Firestore;
+//using Firebase.Database;
 using Cysharp.Threading.Tasks;
 
 namespace FirebaseSystem
@@ -25,7 +25,7 @@ namespace FirebaseSystem
 
 
         //}
-        private System.Action<DataSnapshot> _dataSnapshotAction = null;
+        //private System.Action<DataSnapshot> _dataSnapshotAction = null;
 
         public override async UniTask AsyncInitialize()
         {
@@ -71,71 +71,71 @@ namespace FirebaseSystem
             yield return null;
         }
 
-        public IEnumerator CoLoad(string pathStr, System.Action<DataSnapshot> resAction)
-        {
-            _dataSnapshotAction = resAction;
+        //public IEnumerator CoLoad(string pathStr, System.Action<DataSnapshot> resAction)
+        //{
+        //    _dataSnapshotAction = resAction;
 
-            var database = FirebaseDatabase.DefaultInstance;
-            if (database == null)
-            {
-                _dataSnapshotAction?.Invoke(null);
+        //    var database = FirebaseDatabase.DefaultInstance;
+        //    if (database == null)
+        //    {
+        //        _dataSnapshotAction?.Invoke(null);
 
-                yield break;
-            }
+        //        yield break;
+        //    }
 
-            var databaseRef = database.GetReference(pathStr);
-            if (databaseRef == null)
-            {
-                _dataSnapshotAction?.Invoke(null);
+        //    var databaseRef = database.GetReference(pathStr);
+        //    if (databaseRef == null)
+        //    {
+        //        _dataSnapshotAction?.Invoke(null);
 
-                yield break;
-            }
+        //        yield break;
+        //    }
 
-            bool endLoad = false;
+        //    bool endLoad = false;
 
-            databaseRef.GetValueAsync().ContinueWith(
-                (task) =>
-                {
-                    var result = task.Result;
+        //    databaseRef.GetValueAsync().ContinueWith(
+        //        (task) =>
+        //        {
+        //            var result = task.Result;
 
-                    _dataSnapshotAction.Invoke(result);
+        //            _dataSnapshotAction.Invoke(result);
                   
-                    Debug.Log("database value async");
+        //            Debug.Log("database value async");
 
-                    endLoad = true;
-                });
+        //            endLoad = true;
+        //        });
 
-            yield return new WaitUntil(() => endLoad);
+        //    yield return new WaitUntil(() => endLoad);
 
-            Debug.Log("End Load database");
-        }
+        //    Debug.Log("End Load database");
+        //}
 
-        public void Save(string pathStr, string jsonStr)
-        {
-            var database = FirebaseDatabase.DefaultInstance;
-            if (database == null)
-                return;
+        //public void Save(string pathStr, string jsonStr)
+        //{
+        //    var database = FirebaseDatabase.DefaultInstance;
+        //    if (database == null)
+        //        return;
 
-            var databaseRef = database.GetReference(pathStr);
-            Debug.Log("jsonStr = " + jsonStr);
-            databaseRef.SetRawJsonValueAsync(jsonStr);
-        }
+        //    var databaseRef = database.GetReference(pathStr);
+        //    Debug.Log("jsonStr = " + jsonStr);
+        //    databaseRef.SetRawJsonValueAsync(jsonStr);
+        //}
 
-        public void SaveChild(string pathStr, string child, string jsonStr)
-        {
-            var database = FirebaseDatabase.DefaultInstance;
-            if (database == null)
-                return;
+        //public void SaveChild(string pathStr, string child, string jsonStr)
+        //{
+        //    var database = FirebaseDatabase.DefaultInstance;
+        //    if (database == null)
+        //        return;
 
-            var databaseRef = database.GetReference(pathStr);
-            var childDatabaseRef = databaseRef.Child(child);
-            if(childDatabaseRef == null)
-            {
-                childDatabaseRef.Push();
-            }
+        //    var databaseRef = database.GetReference(pathStr);
+        //    var childDatabaseRef = databaseRef.Child(child);
+        //    if(childDatabaseRef == null)
+        //    {
+        //        childDatabaseRef.Push();
+        //    }
 
-            childDatabaseRef.SetRawJsonValueAsync(jsonStr);
-        }
+        //    childDatabaseRef.SetRawJsonValueAsync(jsonStr);
+        //}
     }
 }
 

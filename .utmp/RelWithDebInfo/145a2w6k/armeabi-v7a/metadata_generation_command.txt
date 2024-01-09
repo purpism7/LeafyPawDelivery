@@ -1,0 +1,21 @@
+                    -H/Users/sj/Project/Animals/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp
+-DCMAKE_SYSTEM_NAME=Android
+-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+-DCMAKE_SYSTEM_VERSION=23
+-DANDROID_PLATFORM=android-23
+-DANDROID_ABI=armeabi-v7a
+-DCMAKE_ANDROID_ARCH_ABI=armeabi-v7a
+-DANDROID_NDK=/Applications/Unity/Hub/Editor/2023.2.4f1/PlaybackEngines/AndroidPlayer/NDK
+-DCMAKE_ANDROID_NDK=/Applications/Unity/Hub/Editor/2023.2.4f1/PlaybackEngines/AndroidPlayer/NDK
+-DCMAKE_TOOLCHAIN_FILE=/Applications/Unity/Hub/Editor/2023.2.4f1/PlaybackEngines/AndroidPlayer/NDK/build/cmake/android.toolchain.cmake
+-DCMAKE_MAKE_PROGRAM=/Applications/Unity/Hub/Editor/2023.2.4f1/PlaybackEngines/AndroidPlayer/SDK/cmake/3.22.1/bin/ninja
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/Users/sj/Project/Animals/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/145a2w6k/obj/armeabi-v7a
+-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=/Users/sj/Project/Animals/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/145a2w6k/obj/armeabi-v7a
+-DCMAKE_BUILD_TYPE=RelWithDebInfo
+-DCMAKE_FIND_ROOT_PATH=/Users/sj/Project/Animals/.utmp/RelWithDebInfo/145a2w6k/prefab/armeabi-v7a/prefab
+-B/Users/sj/Project/Animals/.utmp/RelWithDebInfo/145a2w6k/armeabi-v7a
+-GNinja
+-DBUILD_GRADLE_DIRECTORY=/Users/sj/Project/Animals/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary
+-DANDROID_STL=c++_shared
+                    Build command args: []
+                    Version: 2

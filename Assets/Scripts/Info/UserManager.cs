@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-using Firebase.Database;
+//using Firebase.Database;
 using Cysharp.Threading.Tasks;
 
 namespace Info

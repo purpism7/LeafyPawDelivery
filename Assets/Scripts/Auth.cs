@@ -59,6 +59,8 @@ namespace GameSystem
             await AuthenticationService.Instance?.SignInAnonymouslyAsync();
 
             _id = AuthenticationService.Instance?.PlayerId;
+
+            Debug.Log("AsyncSignInAnonymously = " + _id);
         }
 
         public void SetNickName(string nickName)

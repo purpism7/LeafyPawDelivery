@@ -293,18 +293,18 @@ namespace Info
         }
 
         #region Firebase
-        public void Save()
-        {
-            var firebaseMgr = GameSystem.FirebaseManager.Instance;
-            if (firebaseMgr == null)
-                return;
+        //public void Save()
+        //{
+        //    var firebaseMgr = GameSystem.FirebaseManager.Instance;
+        //    if (firebaseMgr == null)
+        //        return;
 
-            var userId = firebaseMgr.Auth?.UserId;
-            if (string.IsNullOrEmpty(userId))
-                return;
+        //    var userId = firebaseMgr.Auth?.UserId;
+        //    if (string.IsNullOrEmpty(userId))
+        //        return;
 
-            firebaseMgr?.Database?.Save(userId, JsonUtility.ToJson(_objectIdList));
-        }
+        //    firebaseMgr?.Database?.Save(userId, JsonUtility.ToJson(_objectIdList));
+        //}
         #endregion
     }
 }

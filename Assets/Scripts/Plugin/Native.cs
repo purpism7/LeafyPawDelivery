@@ -10,17 +10,20 @@ namespace Plugin
 
         protected override void Initialize()
         {
-            if (Application.isEditor)
+
+            if(Application.isEditor)
             {
                 _base = gameObject.GetOrAddComponent<Editor>();
             }
-            else if (Application.platform == RuntimePlatform.Android)
-            {
-                _base = gameObject.GetOrAddComponent<Android>();
-            }
             else
             {
+#if UNITY_IOS
                 _base = gameObject.GetOrAddComponent<IOS>();
+#elif UNITY_ANDROID
+                _base = gameObject.GetOrAddComponent<Editor>();
+#else
+                _base = gameObject.GetOrAddComponent<Editor>();
+#endif
             }
 
             _base?.Initialize();

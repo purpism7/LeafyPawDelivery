@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Plugin
 {
+#if UNITY_IOS
     public class IOS : Base
     {
         public enum BatteryStatus
@@ -15,6 +16,28 @@ namespace Plugin
         }
 
         private const string NOT_SUPPORTED = "not supported on this platform";
+
+        public override void Initialize()
+        {
+            string userInfoJsonFilePath = Application.persistentDataPath + "/Info/User.json";
+            if (System.IO.File.Exists(userInfoJsonFilePath))
+            {
+                System.IO.File.Delete(userInfoJsonFilePath);
+            }
+        }
+
+        public override void SetString(string key, string value)
+        {
+
+            iCloudSaveStringValue(key, value);
+
+        }
+
+        public override string GetString(string key)
+        {
+
+            return iCloudGetStringValue(key);
+        }
 
 #if UNITY_IOS
 
@@ -105,90 +128,72 @@ namespace Plugin
         {
             return _iCloudSaveBoolValue(key, value);
         }
-
-        public override void Initialize()
-        {
-            string userInfoJsonFilePath = Application.persistentDataPath + "/Info/User.json";
-            if (System.IO.File.Exists(userInfoJsonFilePath))
-            {
-                System.IO.File.Delete(userInfoJsonFilePath);
-            }
-        }
-
-        public override void SetString(string key, string value)
-        {
-            iCloudSaveStringValue(key, value);
-        }
-
-        public override string GetString(string key)
-        {
-            return iCloudGetStringValue(key);
-        }
 #else
 
-    public static void ShowAlert(string title, string message)
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-    }
+        //public static void ShowAlert(string title, string message)
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //}
 
-    public static void ShowAlertConfirmation(string title, string message)
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-    }
+        //public static void ShowAlertConfirmation(string title, string message)
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //}
 
-    public static void ShareMessage(string title, string url = "")
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-    }
+        //public static void ShareMessage(string title, string url = "")
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //}
 
-    public static int GetBatteryStatus()
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-        return 0;
-    }
+        //public static int GetBatteryStatus()
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //    return 0;
+        //}
 
-    public static void GetBatteryLevel()
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-    }
+        //public static void GetBatteryLevel()
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //}
 
-    public static string iCloudGetValue(string key)
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-        return "";
-    }
+        //public static string iCloudGetValue(string key)
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //    return "";
+        //}
 
-    public static bool iCloudSaveValue(string key, string value)
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-        return false;
-    }
+        //public static bool iCloudSaveValue(string key, string value)
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //    return false;
+        //}
 
-    public static int iCloudGetIntValue(string key)
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-        return 0;
-    }
+        //public static int iCloudGetIntValue(string key)
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //    return 0;
+        //}
 
-    public static bool iCloudSaveIntValue(string key, int value)
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-        return false;
-    }
+        //public static bool iCloudSaveIntValue(string key, int value)
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //    return false;
+        //}
 
-    public static bool iCloudGetBoolValue(string key)
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-        return false;
-    }
+        //public static bool iCloudGetBoolValue(string key)
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //    return false;
+        //}
 
-    public static bool iCloudSaveBoolValue(string key, bool value)
-    {
-        Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
-        return false;
-    }
+        //public static bool iCloudSaveBoolValue(string key, bool value)
+        //{
+        //    Debug.LogError($"{MethodBase.GetCurrentMethod()} {NOT_SUPPORTED}");
+        //    return false;
+        //}
 
 #endif
     }
+#endif
 }
 
