@@ -7,6 +7,11 @@ using Unity.Services.Core;
 
 using Cysharp.Threading.Tasks;
 
+#if UNITY_ANDROID
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+#endif
+
 namespace GameSystem
 {
     public class Auth
@@ -33,34 +38,101 @@ namespace GameSystem
             await UnityServices.InitializeAsync();
             Debug.Log(UnityServices.State);
 
+            //PlayGamesPlatform.Activate();
+
+#if UNITY_ANDROID
+            PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+#endif
+
             // 1. GameCenter / GPGS 로그인.
-            Social.localUser.Authenticate(SocialAuthenticateCallback);
+            //Social.localUser.Authenticate(SocialAuthenticateCallback);
+
+            //await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync("");
 
             _nickName = PlayerPrefs.GetString(KeyNickName, string.Empty);
         }
 
-        private void SocialAuthenticateCallback(bool success)
+        internal void ProcessAuthentication(SignInStatus status)
         {
-            if(success)
+            if (status == SignInStatus.Success)
             {
-                Debug.Log("Success Social Authenticate");
-                Debug.Log("UserName = " + Social.localUser.userName);
+                PlayGamesPlatform.Instance.RequestServerSideAccess(true,
+                    (code) =>
+                    {
+                        //AuthenticationService.Instance.PlayerInfo.Id
 
-                _id = Social.localUser.id;
+                        SignInWithGooglePlayGameServiceAsync(code).Forget();
+
+                    });
             }
             else
             {
-                AsyncSignInAnonymously().Forget();
+                SignInAnonymouslyAsync().Forget();
+            }
+            Debug.Log("ProcessAuthentication = " + status);
+        }
+
+        //private void SocialAuthenticateCallback(bool success)
+        //{
+        //    if(success)
+        //    {
+        //        Debug.Log("Success Social Authenticate");
+        //        Debug.Log("UserName = " + Social.localUser.userName);
+
+        //        _id = Social.localUser.id;
+        //    }
+        //    else
+        //    {
+        //        AsyncSignInAnonymously().Forget();
+        //    }
+        //}
+
+        private async UniTask SignWithAppleGameCenterAsync()
+        {
+            try
+            {
+                //await AuthenticationService.Instance.SignInWithAppleGameCenterAsync()
+            }
+            catch
+            {
+
             }
         }
 
-        private async UniTask AsyncSignInAnonymously()
+        // GPGS 로그인.
+        private async UniTask SignInWithGooglePlayGameServiceAsync(string code)
+        {
+            try
+            {
+                await AuthenticationService.Instance?.SignInWithGooglePlayGamesAsync(code);
+
+                SetId(AuthenticationService.Instance?.PlayerInfo?.GetGooglePlayGamesId());
+
+                Debug.Log("SignInWithGooglePlayGameServiceAsync = " + _id);
+            }
+            catch (AuthenticationException ex)
+            {
+                Debug.LogException(ex);
+            }
+            catch (RequestFailedException ex)
+            {
+                Debug.LogException(ex);
+            }
+        }
+
+        // 익명으로 로그인.
+        private async UniTask SignInAnonymouslyAsync()
         {
             await AuthenticationService.Instance?.SignInAnonymouslyAsync();
 
-            _id = AuthenticationService.Instance?.PlayerId;
+            SetId(AuthenticationService.Instance?.PlayerId);
 
-            Debug.Log("AsyncSignInAnonymously = " + _id);
+            Debug.Log("SignInAnonymouslyAsync = " + _id);
+        }
+
+        private void SetId(string id)
+        {
+            _id = id;
         }
 
         public void SetNickName(string nickName)
