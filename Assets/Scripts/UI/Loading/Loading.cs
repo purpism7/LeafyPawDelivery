@@ -75,7 +75,7 @@ namespace GameSystem
         private void InitScene()
         {
             var initSceneType = System.Type.GetType("Scene." + _loadData.SceneName);
-            var initScene = GameObject.FindObjectOfType(initSceneType) as Scene.Base;
+            var initScene = GameObject.FindAnyObjectByType(initSceneType) as Scene.Base;
             initScene?.Init(this);
         }
 

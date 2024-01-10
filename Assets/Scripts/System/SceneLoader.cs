@@ -20,7 +20,7 @@ namespace GameSystem
             Load(Type.EScene.Loading.ToString(),
                 (handle) =>
                 {
-                    var loading = GameObject.FindObjectOfType<Loading>();
+                    var loading = GameObject.FindAnyObjectByType<Loading>();
                     loading?.Init(handle.Result.Scene, loadData);
                 });
         }
@@ -31,7 +31,7 @@ namespace GameSystem
                 (handle) =>
                 {
                     var sceneType = System.Type.GetType("Scene." + loadData.SceneName);
-                    var scene = GameObject.FindObjectOfType(sceneType) as Scene.Base;
+                    var scene = GameObject.FindAnyObjectByType(sceneType) as Scene.Base;
                     scene?.Init(null);
 
                     SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());

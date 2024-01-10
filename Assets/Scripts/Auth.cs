@@ -40,18 +40,29 @@ namespace GameSystem
 
             //PlayGamesPlatform.Activate();
 
-#if UNITY_ANDROID
+            if(Application.isEditor)
+            {
+                await SignInAnonymouslyAsync();
+            }
+            else
+            {
+#if UNITY_IOS
+                //var player = await GKLocalPlayer.Authenticate();
+                //Debug.Log($"GameKit Authentication: player {player}");
+#elif UNITY_ANDROID
             PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
 #endif
+            }
 
             // 1. GameCenter / GPGS 로그인.
-            //Social.localUser.Authenticate(SocialAuthenticateCallback);
+            Social.localUser.Authenticate(SocialAuthenticateCallback);
 
             //await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync("");
 
             _nickName = PlayerPrefs.GetString(KeyNickName, string.Empty);
         }
 
+#if UNITY_ANDROID
         internal void ProcessAuthentication(SignInStatus status)
         {
             if (status == SignInStatus.Success)
@@ -71,33 +82,37 @@ namespace GameSystem
             }
             Debug.Log("ProcessAuthentication = " + status);
         }
+#endif
 
-        //private void SocialAuthenticateCallback(bool success)
-        //{
-        //    if(success)
-        //    {
-        //        Debug.Log("Success Social Authenticate");
-        //        Debug.Log("UserName = " + Social.localUser.userName);
-
-        //        _id = Social.localUser.id;
-        //    }
-        //    else
-        //    {
-        //        AsyncSignInAnonymously().Forget();
-        //    }
-        //}
-
-        private async UniTask SignWithAppleGameCenterAsync()
+        private void SocialAuthenticateCallback(bool success)
         {
-            try
+            if (success)
             {
-                //await AuthenticationService.Instance.SignInWithAppleGameCenterAsync()
-            }
-            catch
-            {
+                Debug.Log("Success Social Authenticate");
+                Debug.Log("UserName = " + Social.localUser.userName);
 
+                SetId(Social.localUser.id);
+                //_id = Social.localUser.id;
+
+                Debug.Log("SocialAuthenticateCallback = " + _id);
+            }
+            else
+            {
+                SignInAnonymouslyAsync().Forget();
             }
         }
+
+        //private async UniTask SignWithAppleGameCenterAsync()
+        //{
+        //    try
+        //    {
+        //        //await AuthenticationService.Instance.SignInWithAppleGameCenterAsync()
+        //    }
+        //    catch
+        //    {
+
+        //    }
+        //}
 
         // GPGS 로그인.
         private async UniTask SignInWithGooglePlayGameServiceAsync(string code)

@@ -20,6 +20,29 @@ namespace Info
                 System.IO.Directory.CreateDirectory(JsonFilePath);
             }
 
+            var user = Info.UserManager.Instance?.User;
+            if (user == null)
+                return;
+
+            var animalList = user.AnimalList;
+
+            foreach (var animal in animalList)
+            {
+                if (animal == null)
+                    continue;
+
+                AnimalInfoList.Add(new Animal()
+                {
+                    Id = animal.id,
+                    SkinId = Game.Data.Const.AnimalBaseSkinId,
+                    SkinIdList = animal.skinIdList,
+                });
+
+                //animalInfo.SkinIdList = animal.skinIdList;
+
+                //AnimalInfoList.Add(animalInfo);
+            }
+
             var fullPath = JsonFilePath + JsonFileName;
             if (!System.IO.File.Exists(fullPath))
                 return;
@@ -28,23 +51,7 @@ namespace Info
             var animalInfos = JsonHelper.FromJson<Info.Animal>(jsonString);
             if(animalInfos != null)
             {
-                var user = Info.UserManager.Instance?.User;
-                if (user == null)
-                    return;
-
-                foreach(var animalInfo in animalInfos)
-                {
-                    if (animalInfo == null)
-                        continue;
-
-                    var animal = user.GetAnimal(animalInfo.Id);
-                    if (animal == null)
-                        continue;
-
-                    animalInfo.SkinIdList = animal.skinIdList;
-
-                    AnimalInfoList.Add(animalInfo);
-                }
+                
             }
         }
 

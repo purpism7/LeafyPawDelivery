@@ -161,6 +161,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
         await UniTask.Yield();
+        await UniTask.Yield();
 
         Starter();
 

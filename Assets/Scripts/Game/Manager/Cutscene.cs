@@ -22,7 +22,7 @@ namespace Game.Manager
                 {
                     if (_instance == null)
                     {
-                        _instance = FindObjectOfType<Cutscene>();
+                        _instance = FindAnyObjectByType<Cutscene>();
 
                         if(_instance == null)
                         {

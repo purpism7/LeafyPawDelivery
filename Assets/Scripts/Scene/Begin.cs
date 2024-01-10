@@ -122,7 +122,7 @@ namespace Scene
         private async UniTask PlayPrologueAsync()
         {
             bool already = false;
-            //Boolean.TryParse(PlayerPrefs.GetString(KeyPrologue, false.ToString()), out already);
+            Boolean.TryParse(PlayerPrefs.GetString(KeyPrologue, false.ToString()), out already);
 
             bool endPrologue = false;
 

@@ -10,10 +10,6 @@ namespace Info
 {
     public class UserManager : Singleton<UserManager>
     {
-        //private const string KeyUserCurrency = "CurrencyList";
-        //private const string KeyUserCash = "Cash";
-        //private const string KeyUserStory = "StoryList";
-
         public User User { get; private set; } = null;
 
         private void OnApplicationPause(bool pause)

@@ -28,14 +28,12 @@ namespace Plugin
 
         public override void SetString(string key, string value)
         {
-
             iCloudSaveStringValue(key, value);
 
         }
 
         public override string GetString(string key)
         {
-
             return iCloudGetStringValue(key);
         }
 

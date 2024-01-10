@@ -12,8 +12,6 @@ namespace FirebaseSystem
 {
     public class Auth : Base
     {
-        private bool _endLoad = false;
-
         public string UserId { get; private set; } = string.Empty;
         public bool IsFirst { get; private set; } = false;
 

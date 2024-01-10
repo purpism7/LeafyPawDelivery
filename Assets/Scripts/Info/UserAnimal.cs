@@ -17,6 +17,8 @@ namespace Info
         [SerializeField]
         private List<Animal> animalList = new();
 
+        public List<Animal> AnimalList { get { return animalList; } }
+
         #region Animal
         public void AddAnimal(Info.Animal animalInfo)
         {
