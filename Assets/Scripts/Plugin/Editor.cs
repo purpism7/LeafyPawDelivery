@@ -6,12 +6,6 @@ namespace Plugin
 {
     public class Editor : Base
     {
-#if UNITY_EDITOR
-        private const string _userInfoJsonFilePath = "Assets/Info/User.json";
-#else
-        readonly private string _userInfoJsonFilePath = Application.persistentDataPath + "/Info/User.json";
-#endif
-
         public override void Initialize()
         {
             
@@ -19,15 +13,18 @@ namespace Plugin
 
         public override void SetString(string key, string value)
         {
-            System.IO.File.WriteAllText(_userInfoJsonFilePath, value);
+            var jsonFilePath = string.Format(_userInfoJsonFilePath, key);
+
+            System.IO.File.WriteAllText(jsonFilePath, value);
         }
 
         public override string GetString(string key)
         {
-            if (!System.IO.File.Exists(_userInfoJsonFilePath))
+            var jsonFilePath = string.Format(_userInfoJsonFilePath, key);
+            if (!System.IO.File.Exists(jsonFilePath))
                 return string.Empty;
 
-            return System.IO.File.ReadAllText(_userInfoJsonFilePath);
+            return System.IO.File.ReadAllText(jsonFilePath);
         }
     }
 }

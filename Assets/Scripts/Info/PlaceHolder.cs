@@ -6,7 +6,7 @@ namespace Info
 {
     public class PlaceHolder : Holder.Base
     {
-        protected override string JsonFilePath => Application.persistentDataPath + "/Info/Place_{0}.json";
+        protected override string JsonFilePath => Application.persistentDataPath + "/Place_{0}.json";
 
         private Dictionary<int, Info.Place> _placeDic = new();
 

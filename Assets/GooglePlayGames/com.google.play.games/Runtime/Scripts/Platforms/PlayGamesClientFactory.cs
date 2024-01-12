@@ -24,7 +24,8 @@ namespace GooglePlayGames
 
     internal class PlayGamesClientFactory
     {
-        internal static IPlayGamesClient GetPlatformPlayGamesClient()
+        internal static IPlayGamesClient GetPlatformPlayGamesClient(
+            PlayGamesClientConfiguration config)
         {
             if (Application.isEditor)
             {
@@ -33,7 +34,7 @@ namespace GooglePlayGames
             }
 #if UNITY_ANDROID
             GooglePlayGames.OurUtils.Logger.d("Creating Android IPlayGamesClient Client");
-            return new GooglePlayGames.Android.AndroidClient();
+            return new GooglePlayGames.Android.AndroidClient(config);
 #else
                 GooglePlayGames.OurUtils.Logger.d("Cannot create IPlayGamesClient for unknown platform, returning DummyClient");
                 return new GooglePlayGames.BasicApi.DummyClient();

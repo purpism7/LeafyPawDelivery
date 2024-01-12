@@ -100,7 +100,7 @@ namespace GooglePlayGames.Editor
         /// <summary>
         /// The game info file path, relative to the plugin root directory.  This is a generated file.
         /// </summary>
-        private const string GameInfoRelativePath = "Runtime/Scripts/GameInfo.cs";
+        private const string GameInfoRelativePath = "GameInfo.cs";
 
         /// <summary>
         /// The manifest path, relative to the plugin root directory.
@@ -108,9 +108,9 @@ namespace GooglePlayGames.Editor
         /// <remarks>The Games SDK requires additional metadata in the AndroidManifest.xml
         ///     file. </remarks>
         private const string ManifestRelativePath =
-            "../../Plugins/Android/GooglePlayGamesManifest.androidlib/AndroidManifest.xml";
+            "../Plugins/Android/GooglePlayGamesManifest.androidlib/AndroidManifest.xml";
 
-        private const string RootFolderName = "com.google.play.games";
+        private const string RootFolderName = "GooglePlayGames";
 
         /// <summary>
         /// The root path of the Google Play Games plugin
@@ -121,21 +121,12 @@ namespace GooglePlayGames.Editor
             {
                 if (string.IsNullOrEmpty(mRootPath))
                 {
-#if UNITY_2018_4_OR_NEWER
-                    // Search for root path in plugin locations for both Asset packages and UPM packages
-                    string[] dirs = Directory.GetDirectories("Packages", RootFolderName, SearchOption.AllDirectories);
-                    string[] dir1 = Directory.GetDirectories("Assets", RootFolderName, SearchOption.AllDirectories);
-                    int dirsLength = dirs.Length;
-                    Array.Resize<string>(ref dirs, dirsLength + dir1.Length);
-                    Array.Copy(dir1, 0, dirs, dirsLength, dir1.Length);
-#else
                     string[] dirs = Directory.GetDirectories("Assets", RootFolderName, SearchOption.AllDirectories);
-#endif
                     switch (dirs.Length)
                     {
                         case 0:
-                            Alert("Plugin error: com.google.play.games folder was renamed");
-                            throw new Exception("com.google.play.games folder was renamed");
+                            Alert("Plugin error: GooglePlayGames folder was renamed");
+                            throw new Exception("GooglePlayGames folder was renamed");
 
                         case 1:
                             mRootPath = SlashesToPlatformSeparator(dirs[0]);
@@ -154,20 +145,14 @@ namespace GooglePlayGames.Editor
 
                             if (string.IsNullOrEmpty(mRootPath))
                             {
-                                Alert("Plugin error: com.google.play.games folder was renamed");
-                                throw new Exception("com.google.play.games folder was renamed");
+                                Alert("Plugin error: GooglePlayGames folder was renamed");
+                                throw new Exception("GooglePlayGames folder was renamed");
                             }
 
                             break;
                     }
                 }
-                // UPM package root path is 'Library/PackageCache/com.google.play.games@.*/
-                // where the suffix can be a version number if installed with URS
-                // or a hash if from disk or tarball
-                if (mRootPath.Contains(RootFolderName + '@'))
-                {
-                    mRootPath = mRootPath.Replace("Packages", "Library/PackageCache");
-                }
+
                 return mRootPath;
             }
         }
@@ -795,4 +780,5 @@ namespace GooglePlayGames.Editor
             return version;
         }
     }
+
 }

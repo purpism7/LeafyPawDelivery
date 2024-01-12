@@ -1,4 +1,4 @@
-Assets/Plugins/Android/GooglePlayGamesManifest.androidlib/project.properties
+Assets/GooglePlayGames/anifest.androidlib/project.properties
 Assets/ExternalDependencyManager/Editor/README.md
 Assets/ExternalDependencyManager/Editor/Google.VersionHandler.dll.mdb
 Assets/ExternalDependencyManager/Editor/external-dependency-manager_version-1.2.169_manifest.txt

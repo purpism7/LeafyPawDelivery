@@ -1,4 +1,5 @@
 #if UNITY_ANDROID
+
 namespace GooglePlayGames.Android
 {
     using System;
@@ -7,16 +8,17 @@ namespace GooglePlayGames.Android
     using GooglePlayGames.BasicApi.Events;
     using GooglePlayGames.OurUtils;
     using UnityEngine;
+
     internal class AndroidEventsClient : IEventsClient
     {
         private volatile AndroidJavaObject mEventsClient;
 
-        public AndroidEventsClient()
+        public AndroidEventsClient(AndroidJavaObject account)
         {
-            using (var gamesClass = new AndroidJavaClass("com.google.android.gms.games.PlayGames"))
+            using (var gamesClass = new AndroidJavaClass("com.google.android.gms.games.Games"))
             {
                 mEventsClient = gamesClass.CallStatic<AndroidJavaObject>("getEventsClient",
-                    AndroidHelperFragment.GetActivity());
+                    AndroidHelperFragment.GetActivity(), account);
             }
         }
 
@@ -41,6 +43,7 @@ namespace GooglePlayGames.Android
                                     result.Add(CreateEvent(eventJava));
                                 }
                             }
+
                             buffer.Call("release");
                             callback.Invoke(
                                 annotatedData.Call<bool>("isStale")
@@ -50,6 +53,7 @@ namespace GooglePlayGames.Android
                             );
                         }
                     });
+
                 AndroidTaskUtils.AddOnFailureListener(
                     task,
                     exception =>
@@ -96,9 +100,11 @@ namespace GooglePlayGames.Android
                                     null
                                 );
                             }
+
                             buffer.Call("release");
                         }
                     });
+
                 AndroidTaskUtils.AddOnFailureListener(
                     task,
                     exception =>

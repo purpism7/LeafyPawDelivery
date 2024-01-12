@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 using Game;
 
@@ -10,7 +11,7 @@ namespace Info
     {
         //private readonly string ObjectUIdKey = "Object_UId_Key";
         
-        protected override string JsonFilePath => RootJsonFilePath + "/Info/Object_Place_{0}.json";
+        protected override string JsonFilePath => RootJsonFilePath + "Object_Place_{0}.json";
 
         // Key = Place Id
         private Dictionary<int, List<Info.Object>> _objectInfoDic = new();
@@ -22,31 +23,39 @@ namespace Info
 
             for(int i = 1; i <= Game.Data.Const.TotalPlaceCount; ++i)
             {
+                List<Info.Object> objectInfoList = null;
                 var jsonfilePath = string.Format(JsonFilePath, i);
-                if (!System.IO.File.Exists(jsonfilePath))
-                    break;
 
-                var jsonString = System.IO.File.ReadAllText(jsonfilePath);
-                var objectInfos = JsonHelper.FromJson<Info.Object>(jsonString);
-                if (objectInfos == null)
-                    break;
-                
-                foreach (var objectInfo in objectInfos)
+                if (System.IO.File.Exists(jsonfilePath))
                 {
-                    if (objectInfo == null)
-                        continue;
+                    var jsonString = System.IO.File.ReadAllText(jsonfilePath);
+                    objectInfoList = JsonHelper.FromJson<Info.Object>(jsonString)?.ToList();
+                }
+                
+                var user = Info.UserManager.Instance?.User;
+                if (user == null)
+                    return;
 
-                    var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
+                var objectIdList = user.ObjectIdList;
+   
+                foreach (int objectId in objectIdList)
+                {
+                    var objectData = ObjectContainer.Instance?.GetData(objectId);
                     if (objectData == null)
                         continue;
 
+                    Info.Object objectInfo = null;
+
+                    if (objectInfoList != null)
+                    {
+                        objectInfo = objectInfoList.Find(findObjectInfo => findObjectInfo != null && findObjectInfo.Id == objectId);
+                    }
+
                     AddObject(objectData.PlaceId, objectInfo.Id);
 
-                    //objectInfo.EditObjectList.Add(objectInfo.EditObjectList)
-
-                    if (_objectInfoDic.TryGetValue(objectData.PlaceId, out List<Info.Object> objectInfoList))
+                    if (_objectInfoDic.TryGetValue(objectData.PlaceId, out List<Info.Object> infoList))
                     {
-                        var findObjectInfo = objectInfoList.Find(info => info != null ? info.Id == objectInfo.Id : false);
+                        var findObjectInfo = infoList.Find(info => info != null ? info.Id == objectInfo.Id : false);
                         if (findObjectInfo != null)
                         {
                             findObjectInfo.EditObjectList.AddRange(objectInfo.EditObjectList);

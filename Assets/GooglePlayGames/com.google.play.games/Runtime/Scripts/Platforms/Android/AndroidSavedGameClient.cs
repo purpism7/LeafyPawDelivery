@@ -23,13 +23,13 @@ namespace GooglePlayGames.Android
         private volatile AndroidJavaObject mSnapshotsClient;
         private volatile AndroidClient mAndroidClient;
 
-        public AndroidSavedGameClient(AndroidClient androidClient)
+        public AndroidSavedGameClient(AndroidClient androidClient, AndroidJavaObject account)
         {
             mAndroidClient = androidClient;
-            using (var gamesClass = new AndroidJavaClass("com.google.android.gms.games.PlayGames"))
+            using (var gamesClass = new AndroidJavaClass("com.google.android.gms.games.Games"))
             {
                 mSnapshotsClient = gamesClass.CallStatic<AndroidJavaObject>("getSnapshotsClient",
-                    AndroidHelperFragment.GetActivity());
+                    AndroidHelperFragment.GetActivity(), account);
             }
         }
 
@@ -181,7 +181,7 @@ namespace GooglePlayGames.Android
                         }
                     });
 
-                AndroidTaskUtils.AddOnFailureListener(
+                AddOnFailureListenerWithSignOut(
                     task,
                     exception => {
                         OurUtils.Logger.d("InternalOpen has failed: " + exception.Call<string>("toString"));
@@ -287,16 +287,16 @@ namespace GooglePlayGames.Android
                     /* disposeResult= */ false,
                     snapshotMetadata =>
                     {
-                        OurUtils.Logger.d("commitAndClose.succeed");
+                        Debug.Log("commitAndClose.succeed");
                         callback(SavedGameRequestStatus.Success,
                             new AndroidSnapshotMetadata(snapshotMetadata, /* contents= */null));
                     });
 
-                AndroidTaskUtils.AddOnFailureListener(
+                AddOnFailureListenerWithSignOut(
                     task,
                     exception =>
                     {
-                        OurUtils.Logger.e("commitAndClose.failed: " + exception.Call<string>("toString"));
+                        Debug.Log("commitAndClose.failed: " + exception.Call<string>("toString"));
                         var status = mAndroidClient.IsAuthenticated() ?
                             SavedGameRequestStatus.InternalError :
                             SavedGameRequestStatus.AuthenticationError;
@@ -338,7 +338,7 @@ namespace GooglePlayGames.Android
                         }
                     });
 
-                AndroidTaskUtils.AddOnFailureListener(
+                AddOnFailureListenerWithSignOut(
                     task,
                     exception => {
                         OurUtils.Logger.d("FetchAllSavedGames failed: " + exception.Call<string>("toString"));
@@ -356,6 +356,25 @@ namespace GooglePlayGames.Android
             AndroidSnapshotMetadata androidMetadata = metadata as AndroidSnapshotMetadata;
             Misc.CheckNotNull(androidMetadata);
             using (mSnapshotsClient.Call<AndroidJavaObject>("delete", androidMetadata.JavaMetadata)) ;
+        }
+
+        private void AddOnFailureListenerWithSignOut(AndroidJavaObject task, Action<AndroidJavaObject> callback)
+        {
+            AndroidTaskUtils.AddOnFailureListener(
+                task,
+                exception =>
+                {
+                    if (Misc.IsApiException(exception))
+                    {
+                      var statusCode = exception.Call<int>("getStatusCode");
+                      if (statusCode == /* CommonStatusCodes.SignInRequired */ 4 ||
+                          statusCode == /* GamesClientStatusCodes.CLIENT_RECONNECT_REQUIRED */ 26502)
+                      {
+                          mAndroidClient.SignOut();
+                      }
+                    }
+                    callback(exception);
+                });
         }
 
         private ConflictCallback ToOnGameThread(ConflictCallback conflictCallback)
@@ -430,7 +449,7 @@ namespace GooglePlayGames.Android
                             task,
                             dataOrConflict => mRetryFileOpen());
 
-                        AndroidTaskUtils.AddOnFailureListener(
+                        mAndroidSavedGameClient.AddOnFailureListenerWithSignOut(
                             task,
                             exception => {
                                 OurUtils.Logger.d("ResolveConflict failed: " + exception.Call<string>("toString"));
@@ -463,7 +482,7 @@ namespace GooglePlayGames.Android
                         task,
                         dataOrConflict => mRetryFileOpen());
 
-                    AndroidTaskUtils.AddOnFailureListener(
+                    mAndroidSavedGameClient.AddOnFailureListenerWithSignOut(
                         task,
                         exception => {
                             OurUtils.Logger.d("ChooseMetadata failed: " + exception.Call<string>("toString"));

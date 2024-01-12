@@ -6,7 +6,7 @@ namespace Info
 {
     public class AcquireHolder : Holder.Base
     {
-        protected override string JsonFilePath => RootJsonFilePath + "/Info/";
+        protected override string JsonFilePath => RootJsonFilePath;
         private readonly string DailyMissionJsonFileName = "DailyMission.json";
         readonly private string AchievementJsonFileName = "Achievement.json";
 

@@ -14,17 +14,23 @@ namespace Scene
     {
         [SerializeField] private Preprocessing _preprocessing = null;
 
-        private void Start()
+        private async void Start()
         {
-            // GameScene 에서 바로 실행 시, 동작.
-            // Loading 거쳐서 들어올 경우 에는, ActiveScene 이 LoadingScene 임.
-            if (Enum.TryParse(SceneManager.GetActiveScene().name.Replace("Scene", ""), out Type.EScene eSceneType))
+            if(Application.isEditor)
             {
-                if (eSceneType == Type.EScene.Game)
+                // GameScene 에서 바로 실행 시, 동작.
+                // Loading 거쳐서 들어올 경우 에는, ActiveScene 이 LoadingScene 임.
+                if (Enum.TryParse(SceneManager.GetActiveScene().name.Replace("Scene", ""), out Type.EScene eSceneType))
                 {
-                    Info.Setting.Get?.InitializeLocale();
+                    var auth = new Auth();
+                    await auth.AsyncInitialize();
 
-                    _preprocessing?.Init(this);
+                    if (eSceneType == Type.EScene.Game)
+                    {
+                        Info.Setting.Get?.InitializeLocale();
+
+                        _preprocessing?.Init(this);
+                    }
                 }
             }
         }

@@ -10,7 +10,6 @@ namespace Plugin
 
         protected override void Initialize()
         {
-
             if(Application.isEditor)
             {
                 _base = gameObject.GetOrAddComponent<Editor>();
@@ -20,7 +19,7 @@ namespace Plugin
 #if UNITY_IOS
                 _base = gameObject.GetOrAddComponent<IOS>();
 #elif UNITY_ANDROID
-                _base = gameObject.GetOrAddComponent<Editor>();
+                _base = gameObject.GetOrAddComponent<Android>();
 #else
                 _base = gameObject.GetOrAddComponent<Editor>();
 #endif
@@ -61,6 +60,12 @@ namespace Plugin
 
     public abstract class Base : MonoBehaviour
     {
+#if UNITY_EDITOR
+        protected string _userInfoJsonFilePath = "Assets/Info/{0}/User.json";
+#else
+        protected string _userInfoJsonFilePath = Application.persistentDataPath + "/Info/{0}/User.json";
+#endif
+
         public abstract void Initialize();
 
         public abstract void SetString(string key, string value);

@@ -40,19 +40,29 @@ namespace GameSystem
 
             //PlayGamesPlatform.Activate();
 
-            if(Application.isEditor)
-            {
-                await SignInAnonymouslyAsync();
-            }
-            else
-            {
-#if UNITY_IOS
-                //var player = await GKLocalPlayer.Authenticate();
-                //Debug.Log($"GameKit Authentication: player {player}");
-#elif UNITY_ANDROID
-            PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+            //            if(Application.isEditor)
+            //            {
+            //                await SignInAnonymouslyAsync();
+            //            }
+            //            else
+            //            {
+            //#if UNITY_IOS
+            //                //var player = await GKLocalPlayer.Authenticate();
+            //                //Debug.Log($"GameKit Authentication: player {player}");
+#if UNITY_ANDROID
+            PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+                .EnableSavedGames()
+                .RequestServerAuthCode(false)
+                .Build();
+
+            PlayGamesPlatform.InitializeInstance(config);
+            PlayGamesPlatform.DebugLogEnabled = true;
+            PlayGamesPlatform.Activate();
+
+            //PlayGamesPlatform.Instance.Authenticate(SocialAuthenticateCallback);
+
 #endif
-            }
+            //            }
 
             // 1. GameCenter / GPGS 로그인.
             Social.localUser.Authenticate(SocialAuthenticateCallback);
@@ -63,25 +73,25 @@ namespace GameSystem
         }
 
 #if UNITY_ANDROID
-        internal void ProcessAuthentication(SignInStatus status)
-        {
-            if (status == SignInStatus.Success)
-            {
-                PlayGamesPlatform.Instance.RequestServerSideAccess(true,
-                    (code) =>
-                    {
-                        //AuthenticationService.Instance.PlayerInfo.Id
+        //internal void ProcessAuthentication(SignInStatus status)
+        //{
+        //    if (status == SignInStatus.Success)
+        //    {
+        //        PlayGamesPlatform.Instance.RequestServerSideAccess(true,
+        //            (code) =>
+        //            {
+        //                //AuthenticationService.Instance.PlayerInfo.Id
 
-                        SignInWithGooglePlayGameServiceAsync(code).Forget();
+        //                SignInWithGooglePlayGameServiceAsync(code).Forget();
 
-                    });
-            }
-            else
-            {
-                SignInAnonymouslyAsync().Forget();
-            }
-            Debug.Log("ProcessAuthentication = " + status);
-        }
+        //            });
+        //    }
+        //    else
+        //    {
+        //        SignInAnonymouslyAsync().Forget();
+        //    }
+        //    Debug.Log("ProcessAuthentication = " + status);
+        //}
 #endif
 
         private void SocialAuthenticateCallback(bool success)

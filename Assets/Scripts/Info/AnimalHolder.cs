@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Info
 {
     public class AnimalHolder : Holder.Base
     {
-        protected override string JsonFilePath => RootJsonFilePath + "/Info/";
+        protected override string JsonFilePath => RootJsonFilePath;
         private string JsonFileName = "Animal.json";
         
         public List<Info.Animal> AnimalInfoList { get; private set; } = new();
-        
+
         public override void LoadInfo()
         {
             AnimalInfoList.Clear();
@@ -20,6 +21,14 @@ namespace Info
                 System.IO.Directory.CreateDirectory(JsonFilePath);
             }
 
+            List<Info.Animal> animalInfoList = null;
+            var fullPath = JsonFilePath + JsonFileName;
+            if (System.IO.File.Exists(fullPath))
+            {
+                var jsonString = System.IO.File.ReadAllText(fullPath);
+                animalInfoList = JsonHelper.FromJson<Info.Animal>(jsonString).ToList();
+            }
+  
             var user = Info.UserManager.Instance?.User;
             if (user == null)
                 return;
@@ -31,27 +40,28 @@ namespace Info
                 if (animal == null)
                     continue;
 
-                AnimalInfoList.Add(new Animal()
+                Info.Animal animalInfo = null;
+
+                if(animalInfoList != null)
                 {
-                    Id = animal.id,
-                    SkinId = Game.Data.Const.AnimalBaseSkinId,
-                    SkinIdList = animal.skinIdList,
-                });
+                    animalInfo = animalInfoList.Find(findAnimalInfo => findAnimalInfo != null && findAnimalInfo.Id == animal.id);
+                }
 
-                //animalInfo.SkinIdList = animal.skinIdList;
+                if(animalInfo == null)
+                {
+                    animalInfo = new Animal()
+                    {
+                        Id = animal.id,
+                        SkinId = Game.Data.Const.AnimalBaseSkinId,
+                        SkinIdList = animal.skinIdList,
+                    };
+                }
+                else
+                {
+                    animalInfo.SkinIdList = animal.skinIdList;
+                }
 
-                //AnimalInfoList.Add(animalInfo);
-            }
-
-            var fullPath = JsonFilePath + JsonFileName;
-            if (!System.IO.File.Exists(fullPath))
-                return;
-            
-            var jsonString = System.IO.File.ReadAllText(fullPath);
-            var animalInfos = JsonHelper.FromJson<Info.Animal>(jsonString);
-            if(animalInfos != null)
-            {
-                
+                AnimalInfoList.Add(animalInfo);
             }
         }
 

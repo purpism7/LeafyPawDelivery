@@ -10,6 +10,8 @@ namespace Info
         [SerializeField]
         private List<int> objectIdList = new();
 
+        public List<int> ObjectIdList { get { return objectIdList; } }
+
         #region Object
         public void AddObject(int id)
         {

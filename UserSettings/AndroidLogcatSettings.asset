@@ -1,5 +1,5 @@
 {
-    "m_SelectedDeviceId": "",
+    "m_SelectedDeviceId": "R3CM80KCP3F",
     "m_SelectedProcess": {
         "deviceId": "",
         "name": "",
@@ -7,7 +7,32 @@
         "exited": false
     },
     "m_SelectedPriority": 0,
-    "m_KnownProcessesForSerialization": [],
+    "m_KnownProcessesForSerialization": [
+        {
+            "deviceId": "R3CM80KCP3F",
+            "name": "com.popo.leafypawdelivery",
+            "processId": 26469,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CM80KCP3F",
+            "name": "com.popo.leafypawdelivery",
+            "processId": 13541,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CM80KCP3F",
+            "name": "com.google.android.packageinstaller",
+            "processId": 24582,
+            "exited": false
+        },
+        {
+            "deviceId": "R3CM80KCP3F",
+            "name": "com.popo.leafypawdelivery",
+            "processId": 14181,
+            "exited": false
+        }
+    ],
     "m_Tags": {
         "m_Entries": [
             {
@@ -16,7 +41,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -32,7 +57,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",
@@ -45,8 +70,19 @@
         "Height": 0.0
     },
     "m_MemoryViewerState": {
-        "MemoryWindowWidth": 0.0,
-        "MemoryTypeEnabled": [],
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
         "MemoryGroup": 2,
         "AutoCapture": true
     },

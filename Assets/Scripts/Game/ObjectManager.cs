@@ -30,13 +30,13 @@ namespace Game
             Event?.RemoveAllListeners();
 
             Game.AnimalManager.Event?.AddListener(OnChangedAnimal);
-
-            _objectHolder?.LoadInfo();
         }
 
         public override IEnumerator CoInitialize(Data data)
         {
             _data = data;
+
+            _objectHolder?.LoadInfo();
 
             yield break;
         }

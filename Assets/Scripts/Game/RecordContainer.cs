@@ -6,7 +6,7 @@ namespace Game
 {
     public class RecordContainer : Info.Holder.Base
     {
-        protected override string JsonFilePath => RootJsonFilePath + "/Info/";
+        protected override string JsonFilePath => RootJsonFilePath;
         private string JsonFileName = "Record.json";
 
         private List<Info.Record> _recordList = new();

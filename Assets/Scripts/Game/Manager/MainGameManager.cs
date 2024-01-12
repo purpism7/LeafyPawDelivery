@@ -148,8 +148,6 @@ public class MainGameManager : Singleton<MainGameManager>
             Game.Carrier.Create(iGridCell);
         }
 
-        //SetGameState<Game.State.Game>();
-
         yield return null;
 
         _iGrid?.Overlap();

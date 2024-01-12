@@ -48,315 +48,367 @@ namespace GooglePlayGames.BasicApi
     /// </remarks>
     public interface IPlayGamesClient
     {
-      /// <summary>
-      /// Returns the result of the automatic sign-in attempt.
-      /// </summary>
-      /// <remarks>This returns the result
-      /// </remarks>
-      /// <param name="callback">Callback</param>
-      void Authenticate(Action<SignInStatus> callback);
+        /// <summary>
+        /// Starts the authentication process.
+        /// </summary>
+        /// <remarks>If silent == true, no UIs will be shown
+        /// (if UIs are needed, it will fail rather than show them). If silent == false,
+        /// this may show UIs, consent dialogs, etc.
+        /// At the end of the process, callback will be invoked to notify of the result.
+        /// Once the callback returns true, the user is considered to be authenticated
+        /// forever after.
+        /// </remarks>
+        /// <param name="silent">If set to <c>true</c> silent.</param>
+        /// <param name="callback">Callback</param>
+        void Authenticate(bool silent, Action<SignInStatus> callback);
 
-      /// <summary>
-      /// Manually requests that your game performs sign in with Play Games Services.
-      /// </summary>
-      /// <remarks>
-      /// Note that a sign-in attempt will be made automatically when your game's application
-      /// started. For this reason most games will not need to manually request to perform sign-in
-      /// unless the automatic sign-in attempt failed and your game requires access to Play Games
-      /// Services.
-      /// </remarks>
-      /// <param name="callback"></param>
-      void ManuallyAuthenticate(Action<SignInStatus> callback);
+        /// <summary>
+        /// Returns whether or not user is authenticated.
+        /// </summary>
+        /// <returns><c>true</c> if the user is authenticated; otherwise, <c>false</c>.</returns>
+        bool IsAuthenticated();
 
-      /// <summary>
-      /// Returns whether or not user is authenticated.
-      /// </summary>
-      /// <returns><c>true</c> if the user is authenticated; otherwise, <c>false</c>.</returns>
-      bool IsAuthenticated();
+        /// <summary>
+        /// Signs the user out.
+        /// </summary>
+        void SignOut();
 
-      /// <summary>
-      /// Requests server-side access to Player Games Services for the currently signed in player.
-      /// </summary>
-      /// When requested an authorization code is returned that can be used by your game-server to
-      /// exchange for an access token and conditionally a refresh token (when {@code forceRefreshToken}
-      /// is true). The access token may then be used by your game-server to access the Play Games
-      /// Services web APIs. This is commonly used to complete a sign-in flow by verifying the Play Games
-      /// Services player id.
-      ///
-      /// <p>If {@code forceRefreshToken} is true, when exchanging the authorization code a refresh token
-      /// will be returned in addition to the access token. The refresh token allows the game-server to
-      /// request additional access tokens, allowing your game-server to continue accesses Play Games
-      /// Services while the user is not actively playing your app.
-      /// <remarks>
-      ///
-      /// </remarks>
-      /// <param name="forceRefreshToken">If {@code true} when the returned authorization code is exchanged a
-      /// refresh token will be included in addition to an access token.</param>
-      /// <param name="callback"></param>
-      void RequestServerSideAccess(bool forceRefreshToken, Action<string> callback);
+        /// <summary>
+        /// Returns the authenticated user's ID. Note that this value may change if a user signs
+        /// on and signs in with a different account.
+        /// </summary>
+        /// <returns>The user's ID, <code>null</code> if the user is not logged in.</returns>
+        string GetUserId();
 
-      /// <summary>
-      /// Returns the authenticated user's ID. Note that this value may change if a user signs
-      /// on and signs in with a different account.
-      /// </summary>
-      /// <returns>The user's ID, <code>null</code> if the user is not logged in.</returns>
-      string GetUserId();
+        /// <summary>
+        /// Loads friends of the authenticated user. This loads the entire list of friends.
+        /// </summary>
+        /// <param name="callback">Callback invoked when complete.  bool argument
+        /// indicates success.</param>
+        void LoadFriends(Action<bool> callback);
 
-      /// <summary>
-      /// Loads friends of the authenticated user. This loads the entire list of friends.
-      /// </summary>
-      /// <param name="callback">Callback invoked when complete.  bool argument
-      /// indicates success.</param>
-      void LoadFriends(Action<bool> callback);
+        /// <summary>
+        /// Returns a human readable name for the user, if they are logged in.
+        /// </summary>
+        /// <returns>The user's human-readable name. <code>null</code> if they are not logged
+        /// in</returns>
+        string GetUserDisplayName();
 
-      /// <summary>
-      /// Returns a human readable name for the user, if they are logged in.
-      /// </summary>
-      /// <returns>The user's human-readable name. <code>null</code> if they are not logged
-      /// in</returns>
-      string GetUserDisplayName();
+        /// <summary>
+        /// Returns an id token, which can be verified server side, if they are logged in.
+        /// </summary>
+        string GetIdToken();
 
-      /// <summary>
-      /// Returns the user's avatar url, if they are logged in and have an avatar.
-      /// </summary>
-      /// <returns>The URL to load the avatar image. <code>null</code> if they are not logged
-      /// in</returns>
-      string GetUserImageUrl();
+        /// <summary>
+        /// The server auth code for this client.
+        /// </summary>
+        /// <remarks>
+        /// Note: This function is currently only implemented for Android.
+        /// </remarks>
+        string GetServerAuthCode();
 
-      /// <summary>Gets the player stats.</summary>
-      /// <param name="callback">Callback for response.</param>
-      void GetPlayerStats(Action<CommonStatusCodes, PlayerStats> callback);
+        /// <summary>
+        /// Gets another server auth code.
+        /// </summary>
+        /// <remarks>This method should be called after authenticating, and exchanging
+        /// the initial server auth code for a token.  This is implemented by signing in
+        /// silently, which if successful returns almost immediately and with a new
+        /// server auth code.
+        /// </remarks>
+        /// <param name="reAuthenticateIfNeeded">Calls Authenticate if needed when
+        /// retrieving another auth code. </param>
+        /// <param name="callback">Callback returning the auth code, or null if there
+        /// was a problem.  NOTE: This callback can be called immediately.</param>
+        void GetAnotherServerAuthCode(bool reAuthenticateIfNeeded,
+            Action<string> callback);
 
-      /// <summary>
-      /// Loads the users specified.  This is mainly used by the leaderboard
-      /// APIs to get the information of a high scorer.
-      /// </summary>
-      /// <param name="userIds">User identifiers.</param>
-      /// <param name="callback">Callback.</param>
-      void LoadUsers(string[] userIds, Action<IUserProfile[]> callback);
+        /// <summary>
+        /// Gets the user's email.
+        /// </summary>
+        /// <remarks>The email address returned is selected by the user from the accounts present
+        /// on the device.  There is no guarantee this uniquely identifies the player.
+        /// For unique identification use the id property of the local player.
+        /// The user can also choose to not select any email address, meaning it is not
+        /// available.
+        /// </remarks>
+        /// <returns>The user email or null if not authenticated or the permission is
+        /// not available.</returns>
+        string GetUserEmail();
 
-      /// <summary>
-      /// Loads the achievements for the current signed in user and invokes
-      /// the callback.
-      /// </summary>
-      void LoadAchievements(Action<Achievement[]> callback);
+        /// <summary>
+        /// Returns the user's avatar url, if they are logged in and have an avatar.
+        /// </summary>
+        /// <returns>The URL to load the avatar image. <code>null</code> if they are not logged
+        /// in</returns>
+        string GetUserImageUrl();
 
-      /// <summary>
-      /// Unlocks the achievement with the passed identifier.
-      /// </summary>
-      /// <remarks>If the operation succeeds, the callback
-      /// will be invoked on the game thread with <code>true</code>. If the operation fails, the
-      /// callback will be invoked with <code>false</code>. This operation will immediately fail if
-      /// the user is not authenticated (i.e. the callback will immediately be invoked with
-      /// <code>false</code>). If the achievement is already unlocked, this call will
-      /// succeed immediately.
-      /// </remarks>
-      /// <param name="achievementId">The ID of the achievement to unlock.</param>
-      /// <param name="successOrFailureCalllback">Callback used to indicate whether the operation
-      /// succeeded or failed.</param>
-      void UnlockAchievement(string achievementId, Action<bool> successOrFailureCalllback);
+        /// <summary>Gets the player stats.</summary>
+        /// <param name="callback">Callback for response.</param>
+        void GetPlayerStats(Action<CommonStatusCodes, PlayerStats> callback);
 
-      /// <summary>
-      /// Reveals the achievement with the passed identifier.
-      /// </summary>
-      /// <remarks>If the operation succeeds, the callback
-      /// will be invoked on the game thread with <code>true</code>. If the operation fails, the
-      /// callback will be invoked with <code>false</code>. This operation will immediately fail if
-      /// the user is not authenticated (i.e. the callback will immediately be invoked with
-      /// <code>false</code>). If the achievement is already in a revealed state, this call will
-      /// succeed immediately.
-      /// </remarks>
-      /// <param name="achievementId">The ID of the achievement to reveal.</param>
-      /// <param name="successOrFailureCalllback">Callback used to indicate whether the operation
-      /// succeeded or failed.</param>
-      void RevealAchievement(string achievementId, Action<bool> successOrFailureCalllback);
+        /// <summary>
+        /// Loads the users specified.  This is mainly used by the leaderboard
+        /// APIs to get the information of a high scorer.
+        /// </summary>
+        /// <param name="userIds">User identifiers.</param>
+        /// <param name="callback">Callback.</param>
+        void LoadUsers(string[] userIds, Action<IUserProfile[]> callback);
 
-      /// <summary>
-      /// Increments the achievement with the passed identifier.
-      /// </summary>
-      /// <remarks>If the operation succeeds, the
-      /// callback will be invoked on the game thread with <code>true</code>. If the operation
-      /// fails, the  callback will be invoked with <code>false</code>. This operation will
-      /// immediately fail if the user is not authenticated (i.e. the callback will immediately be
-      /// invoked with <code>false</code>).
-      /// </remarks>
-      /// <param name="achievementId">The ID of the achievement to increment.</param>
-      /// <param name="steps">The number of steps to increment by.</param>
-      /// <param name="successOrFailureCalllback">Callback used to indicate whether the operation
-      /// succeeded or failed.</param>
-      void IncrementAchievement(string achievementId, int steps,
-                                Action<bool> successOrFailureCalllback);
+        /// <summary>
+        /// Loads the achievements for the current signed in user and invokes
+        /// the callback.
+        /// </summary>
+        void LoadAchievements(Action<Achievement[]> callback);
 
-      /// <summary>
-      /// Set an achievement to have at least the given number of steps completed.
-      /// </summary>
-      /// <remarks>
-      /// Calling this method while the achievement already has more steps than
-      /// the provided value is a no-op. Once the achievement reaches the
-      /// maximum number of steps, the achievement is automatically unlocked,
-      /// and any further mutation operations are ignored.
-      /// </remarks>
-      /// <param name="achId">Ach identifier.</param>
-      /// <param name="steps">Steps.</param>
-      /// <param name="callback">Callback.</param>
-      void SetStepsAtLeast(string achId, int steps, Action<bool> callback);
+        /// <summary>
+        /// Unlocks the achievement with the passed identifier.
+        /// </summary>
+        /// <remarks>If the operation succeeds, the callback
+        /// will be invoked on the game thread with <code>true</code>. If the operation fails, the
+        /// callback will be invoked with <code>false</code>. This operation will immediately fail if
+        /// the user is not authenticated (i.e. the callback will immediately be invoked with
+        /// <code>false</code>). If the achievement is already unlocked, this call will
+        /// succeed immediately.
+        /// </remarks>
+        /// <param name="achievementId">The ID of the achievement to unlock.</param>
+        /// <param name="successOrFailureCalllback">Callback used to indicate whether the operation
+        /// succeeded or failed.</param>
+        void UnlockAchievement(string achievementId, Action<bool> successOrFailureCalllback);
 
-      /// <summary>
-      /// Shows the appropriate platform-specific achievements UI.
-      /// <param name="callback">The callback to invoke when complete.  If null,
-      /// no callback is called. </param>
-      /// </summary>
-      void ShowAchievementsUI(Action<UIStatus> callback);
+        /// <summary>
+        /// Reveals the achievement with the passed identifier.
+        /// </summary>
+        /// <remarks>If the operation succeeds, the callback
+        /// will be invoked on the game thread with <code>true</code>. If the operation fails, the
+        /// callback will be invoked with <code>false</code>. This operation will immediately fail if
+        /// the user is not authenticated (i.e. the callback will immediately be invoked with
+        /// <code>false</code>). If the achievement is already in a revealed state, this call will
+        /// succeed immediately.
+        /// </remarks>
+        /// <param name="achievementId">The ID of the achievement to reveal.</param>
+        /// <param name="successOrFailureCalllback">Callback used to indicate whether the operation
+        /// succeeded or failed.</param>
+        void RevealAchievement(string achievementId, Action<bool> successOrFailureCalllback);
 
-      /// <summary>
-      /// Shows the appropriate platform-specific friends sharing UI.
-      /// <param name="callback">The callback to invoke when complete. If null,
-      /// no callback is called. </param>
-      /// </summary>
-      void AskForLoadFriendsResolution(Action<UIStatus> callback);
+        /// <summary>
+        /// Increments the achievement with the passed identifier.
+        /// </summary>
+        /// <remarks>If the operation succeeds, the
+        /// callback will be invoked on the game thread with <code>true</code>. If the operation fails,
+        /// the  callback will be invoked with <code>false</code>. This operation will immediately fail
+        /// if the user is not authenticated (i.e. the callback will immediately be invoked with
+        /// <code>false</code>).
+        /// </remarks>
+        /// <param name="achievementId">The ID of the achievement to increment.</param>
+        /// <param name="steps">The number of steps to increment by.</param>
+        /// <param name="successOrFailureCalllback">Callback used to indicate whether the operation
+        /// succeeded or failed.</param>
+        void IncrementAchievement(string achievementId, int steps,
+            Action<bool> successOrFailureCalllback);
 
-      /// <summary>
-      /// Returns the latest LoadFriendsStatus obtained from loading friends.
-      /// </summary>
-      LoadFriendsStatus GetLastLoadFriendsStatus();
+        /// <summary>
+        /// Set an achievement to have at least the given number of steps completed.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method while the achievement already has more steps than
+        /// the provided value is a no-op. Once the achievement reaches the
+        /// maximum number of steps, the achievement is automatically unlocked,
+        /// and any further mutation operations are ignored.
+        /// </remarks>
+        /// <param name="achId">Ach identifier.</param>
+        /// <param name="steps">Steps.</param>
+        /// <param name="callback">Callback.</param>
+        void SetStepsAtLeast(string achId, int steps, Action<bool> callback);
 
-      /// <summary>
-      /// Shows the Play Games Player Profile UI for a specific user identifier.
-      /// </summary>
-      /// <param name="otherUserId">User Identifier.</param>
-      /// <param name="otherPlayerInGameName">
-      /// The game's own display name of the player referred to by userId.
-      /// </param>
-      /// <param name="currentPlayerInGameName">
-      /// The game's own display name of the current player.
-      /// </param>
-      /// <param name="callback">Callback invoked upon completion.</param>
-      void ShowCompareProfileWithAlternativeNameHintsUI(
-          string otherUserId, string otherPlayerInGameName, string currentPlayerInGameName,
-          Action<UIStatus> callback);
+        /// <summary>
+        /// Shows the appropriate platform-specific achievements UI.
+        /// <param name="callback">The callback to invoke when complete.  If null,
+        /// no callback is called. </param>
+        /// </summary>
+        void ShowAchievementsUI(Action<UIStatus> callback);
 
-      /// <summary>
-      /// Returns if the user has allowed permission for the game to access the friends list.
-      /// </summary>
-      /// <param name="forceReload">If true, this call will clear any locally cached data and
-      /// attempt to fetch the latest data from the server. Normally, this should be set to {@code
-      /// false} to gain advantages of data caching.</param> <param name="callback">Callback
-      /// invoked upon completion.</param>
-      void GetFriendsListVisibility(bool forceReload, Action<FriendsListVisibilityStatus> callback);
+        /// <summary>
+        /// Shows the appropriate platform-specific friends sharing UI.
+        /// <param name="callback">The callback to invoke when complete. If null,
+        /// no callback is called. </param>
+        /// </summary>
+        void AskForLoadFriendsResolution(Action<UIStatus> callback);
 
-      /// <summary>
-      /// Loads the first page of the user's friends
-      /// </summary>
-      /// <param name="pageSize">
-      /// The number of entries to request for this initial page. Note that if cached
-      /// data already exists, the returned buffer may contain more than this size, but it is
-      /// guaranteed to contain at least this many if the collection contains enough records.
-      /// </param>
-      /// <param name="forceReload">
-      /// If true, this call will clear any locally cached data and attempt to
-      /// fetch the latest data from the server. This would commonly be used for something like a
-      /// user-initiated refresh. Normally, this should be set to {@code false} to gain advantages
-      /// of data caching.</param>
-      /// <param name="callback">Callback invoked upon completion.</param>
-      void LoadFriends(int pageSize, bool forceReload, Action<LoadFriendsStatus> callback);
+        /// <summary>
+        /// Returns the latest LoadFriendsStatus obtained from loading friends.
+        /// </summary>
+        LoadFriendsStatus GetLastLoadFriendsStatus();
 
-      /// <summary>
-      /// Loads the friends list page
-      /// </summary>
-      /// <param name="pageSize">
-      /// The number of entries to request for this page. Note that if cached data already
-      /// exists, the returned buffer may contain more than this size, but it is guaranteed
-      /// to contain at least this many if the collection contains enough records.
-      /// </param>
-      /// <param name="callback"></param>
-      void LoadMoreFriends(int pageSize, Action<LoadFriendsStatus> callback);
+        /// <summary>
+        /// Shows the Play Games Player Profile UI for a specific user identifier.
+        /// </summary>
+        /// <param name="otherUserId">User Identifier.</param>
+        /// <param name="otherPlayerInGameName">
+        /// The game's own display name of the player referred to by userId.
+        /// </param>
+        /// <param name="currentPlayerInGameName">
+        /// The game's own display name of the current player.
+        /// </param>
+        /// <param name="callback">Callback invoked upon completion.</param>
+        void ShowCompareProfileWithAlternativeNameHintsUI(
+            string otherUserId, string otherPlayerInGameName, string currentPlayerInGameName,
+            Action<UIStatus> callback);
 
-      /// <summary>
-      /// Shows the leaderboard UI for a specific leaderboard.
-      /// </summary>
-      /// <remarks>If the passed ID is <code>null</code>, all leaderboards are displayed.
-      /// </remarks>
-      /// <param name="leaderboardId">The leaderboard to display. <code>null</code> to display
-      /// all.</param>
-      /// <param name="span">Timespan to display for the leaderboard</param>
-      /// <param name="callback">If non-null, the callback to invoke when the
-      /// leaderboard is dismissed.
-      /// </param>
-      void ShowLeaderboardUI(string leaderboardId, LeaderboardTimeSpan span,
-                             Action<UIStatus> callback);
+        /// <summary>
+        /// Returns if the user has allowed permission for the game to access the friends list.
+        /// </summary>
+        /// <param name="forceReload">If true, this call will clear any locally cached data and
+        /// attempt to fetch the latest data from the server. Normally, this should be set to {@code
+        /// false} to gain advantages of data caching.</param> <param name="callback">Callback
+        /// invoked upon completion.</param>
+        void GetFriendsListVisibility(bool forceReload,
+                                      Action<FriendsListVisibilityStatus> callback);
 
-      /// <summary>
-      /// Loads the score data for the given leaderboard.
-      /// </summary>
-      /// <param name="leaderboardId">Leaderboard identifier.</param>
-      /// <param name="start">Start indicating the top scores or player centric</param>
-      /// <param name="rowCount">max number of scores to return. non-positive indicates
-      /// no rows should be returned.  This causes only the summary info to
-      /// be loaded. This can be limited
-      /// by the SDK.</param>
-      /// <param name="collection">leaderboard collection: public or social</param>
-      /// <param name="timeSpan">leaderboard timespan</param>
-      /// <param name="callback">callback with the scores, and a page token.
-      ///   The token can be used to load next/prev pages.</param>
-      void LoadScores(string leaderboardId, LeaderboardStart start, int rowCount,
-                      LeaderboardCollection collection, LeaderboardTimeSpan timeSpan,
-                      Action<LeaderboardScoreData> callback);
+        /// <summary>
+        /// Loads the first page of the user's friends
+        /// </summary>
+        /// <param name="pageSize">
+        /// The number of entries to request for this initial page. Note that if cached
+        /// data already exists, the returned buffer may contain more than this size, but it is
+        /// guaranteed to contain at least this many if the collection contains enough records.
+        /// </param>
+        /// <param name="forceReload">
+        /// If true, this call will clear any locally cached data and attempt to
+        /// fetch the latest data from the server. This would commonly be used for something like a
+        /// user-initiated refresh. Normally, this should be set to {@code false} to gain advantages
+        /// of data caching.</param>
+        /// <param name="callback">Callback invoked upon completion.</param>
+        void LoadFriends(int pageSize, bool forceReload, Action<LoadFriendsStatus> callback);
 
-      /// <summary>
-      /// Loads the more scores for the leaderboard.
-      /// </summary>
-      /// <remarks>The token is accessed
-      /// by calling LoadScores() with a positive row count.
-      /// </remarks>
-      /// <param name="token">Token for tracking the score loading.</param>
-      /// <param name="rowCount">max number of scores to return.
-      ///    This can be limited by the SDK.</param>
-      /// <param name="callback">Callback.</param>
-      void LoadMoreScores(ScorePageToken token, int rowCount,
-                          Action<LeaderboardScoreData> callback);
+        /// <summary>
+        /// Loads the friends list page
+        /// </summary>
+        /// <param name="pageSize">
+        /// The number of entries to request for this page. Note that if cached data already
+        /// exists, the returned buffer may contain more than this size, but it is guaranteed
+        /// to contain at least this many if the collection contains enough records.
+        /// </param>
+        /// <param name="callback"></param>
+        void LoadMoreFriends(int pageSize, Action<LoadFriendsStatus> callback);
 
-      /// <summary>
-      /// Returns the max number of scores returned per call.
-      /// </summary>
-      /// <returns>The max results.</returns>
-      int LeaderboardMaxResults();
+        /// <summary>
+        /// Shows the leaderboard UI for a specific leaderboard.
+        /// </summary>
+        /// <remarks>If the passed ID is <code>null</code>, all leaderboards are displayed.
+        /// </remarks>
+        /// <param name="leaderboardId">The leaderboard to display. <code>null</code> to display
+        /// all.</param>
+        /// <param name="span">Timespan to display for the leaderboard</param>
+        /// <param name="callback">If non-null, the callback to invoke when the
+        /// leaderboard is dismissed.
+        /// </param>
+        void ShowLeaderboardUI(string leaderboardId,
+            LeaderboardTimeSpan span,
+            Action<UIStatus> callback);
 
-      /// <summary>
-      /// Submits the passed score to the passed leaderboard.
-      /// </summary>
-      /// <remarks>This operation will immediately fail
-      /// if the user is not authenticated (i.e. the callback will immediately be invoked with
-      /// <code>false</code>).
-      /// </remarks>
-      /// <param name="leaderboardId">Leaderboard identifier.</param>
-      /// <param name="score">Score.</param>
-      /// <param name="successOrFailureCalllback">Callback used to indicate whether the operation
-      /// succeeded or failed.</param>
-      void SubmitScore(string leaderboardId, long score, Action<bool> successOrFailureCalllback);
+        /// <summary>
+        /// Loads the score data for the given leaderboard.
+        /// </summary>
+        /// <param name="leaderboardId">Leaderboard identifier.</param>
+        /// <param name="start">Start indicating the top scores or player centric</param>
+        /// <param name="rowCount">max number of scores to return. non-positive indicates
+        /// no rows should be returned.  This causes only the summary info to
+        /// be loaded. This can be limited
+        /// by the SDK.</param>
+        /// <param name="collection">leaderboard collection: public or social</param>
+        /// <param name="timeSpan">leaderboard timespan</param>
+        /// <param name="callback">callback with the scores, and a page token.
+        ///   The token can be used to load next/prev pages.</param>
+        void LoadScores(string leaderboardId, LeaderboardStart start,
+            int rowCount, LeaderboardCollection collection,
+            LeaderboardTimeSpan timeSpan,
+            Action<LeaderboardScoreData> callback);
 
-      /// <summary>
-      /// Submits the score for the currently signed-in player.
-      /// </summary>
-      /// <param name="score">Score.</param>
-      /// <param name="leaderboardId">leaderboard id.</param>
-      /// <param name="metadata">metadata about the score.</param>
-      /// <param name="successOrFailureCalllback">Callback upon completion.</param>
-      void SubmitScore(string leaderboardId, long score, string metadata,
-                       Action<bool> successOrFailureCalllback);
+        /// <summary>
+        /// Loads the more scores for the leaderboard.
+        /// </summary>
+        /// <remarks>The token is accessed
+        /// by calling LoadScores() with a positive row count.
+        /// </remarks>
+        /// <param name="token">Token for tracking the score loading.</param>
+        /// <param name="rowCount">max number of scores to return.
+        ///    This can be limited by the SDK.</param>
+        /// <param name="callback">Callback.</param>
+        void LoadMoreScores(ScorePageToken token, int rowCount,
+            Action<LeaderboardScoreData> callback);
 
-      /// <summary>
-      /// Gets the saved game client.
-      /// </summary>
-      /// <returns>The saved game client.</returns>
-      SavedGame.ISavedGameClient GetSavedGameClient();
+        /// <summary>
+        /// Returns the max number of scores returned per call.
+        /// </summary>
+        /// <returns>The max results.</returns>
+        int LeaderboardMaxResults();
 
-      /// <summary>
-      /// Gets the events client.
-      /// </summary>
-      /// <returns>The events client.</returns>
-      Events.IEventsClient GetEventsClient();
+        /// <summary>
+        /// Submits the passed score to the passed leaderboard.
+        /// </summary>
+        /// <remarks>This operation will immediately fail
+        /// if the user is not authenticated (i.e. the callback will immediately be invoked with
+        /// <code>false</code>).
+        /// </remarks>
+        /// <param name="leaderboardId">Leaderboard identifier.</param>
+        /// <param name="score">Score.</param>
+        /// <param name="successOrFailureCalllback">Callback used to indicate whether the operation
+        /// succeeded or failed.</param>
+        void SubmitScore(string leaderboardId, long score,
+            Action<bool> successOrFailureCalllback);
 
-      IUserProfile[] GetFriends();
+        /// <summary>
+        /// Submits the score for the currently signed-in player.
+        /// </summary>
+        /// <param name="score">Score.</param>
+        /// <param name="leaderboardId">leaderboard id.</param>
+        /// <param name="metadata">metadata about the score.</param>
+        /// <param name="successOrFailureCalllback">Callback upon completion.</param>
+        void SubmitScore(string leaderboardId, long score, string metadata,
+            Action<bool> successOrFailureCalllback);
+
+        /// <summary>
+        /// Asks user to give permissions for the given scopes.
+        /// </summary>
+        /// <param name="scopes">list of scopes to ask permission for</param>
+        /// <param name="callback">Callback used to indicate the outcome of the operation.</param>
+        void RequestPermissions(string[] scopes, Action<SignInStatus> callback);
+
+        /// <summary>
+        /// Returns whether or not user has given permissions for given scopes
+        /// </summary>
+        /// <seealso cref="GooglePlayGames.BasicApi.IPlayGamesClient.HasPermissions"/>
+        /// <param name="scopes">list of scopes</param>
+        /// <returns><c>true</c>, if given, <c>false</c> otherwise.</returns>
+        bool HasPermissions(string[] scopes);
+
+        /// <summary>
+        /// Gets the saved game client.
+        /// </summary>
+        /// <returns>The saved game client.</returns>
+        SavedGame.ISavedGameClient GetSavedGameClient();
+
+        /// <summary>
+        /// Gets the events client.
+        /// </summary>
+        /// <returns>The events client.</returns>
+        Events.IEventsClient GetEventsClient();
+
+        /// <summary>
+        /// Gets the video client.
+        /// </summary>
+        /// <returns>The video client.</returns>
+        Video.IVideoClient GetVideoClient();
+
+        IUserProfile[] GetFriends();
+
+        /// <summary>
+        /// Sets the gravity for popups (Android only).
+        /// </summary>
+        /// <remarks>This can only be called after authentication.  It affects
+        /// popups for achievements and other game services elements.</remarks>
+        /// <param name="gravity">Gravity for the popup.</param>
+        void SetGravityForPopups(Gravity gravity);
     }
 }
 #endif

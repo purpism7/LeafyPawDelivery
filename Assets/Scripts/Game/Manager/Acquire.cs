@@ -44,6 +44,11 @@ namespace Game.Manager
             {
                 Info.Connector.Get?.SetCompleteAchievement(true);
             }
+
+            if(CheckResetDailyMission)
+            {
+                ResetDailyMission();
+            }
         }
 
         #region Daily Mission
