@@ -141,16 +141,16 @@ namespace UI.Component
             }
         }
 
-        //public void OnPurchaseComplete(Product product)
-        //{
-        //    Debug.Log("OnPurchaseComplete");
+        private void OnPurchaseComplete(Product product)
+        {
+            Debug.Log("OnPurchaseComplete");
 
-        //    //_data?.iListener?.Buy(_data?.shopData, product,
-        //    //    () =>
-        //    //    {
-        //    //        Game.UIManager.Instance?.Top?.CollectCashCurrency(transform.position, _data.shopData.Value);
-        //    //    });
-        //}
+            //_data?.iListener?.Buy(_data?.shopData, product,
+            //    () =>
+            //    {
+            //        Game.UIManager.Instance?.Top?.CollectCashCurrency(transform.position, _data.shopData.Value);
+            //    });
+        }
 
         //public void OnPurchaseFailed(Product product, PurchaseFailureDescription description)
         //{

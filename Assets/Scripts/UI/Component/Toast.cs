@@ -12,11 +12,9 @@ namespace UI.Component
 {
     public class Toast : Base<Toast.Data>
     {
-        public
-
-            class Data : BaseData
+        public class Data : BaseData
         {
-            public string localKey = string.Empty;
+            public string text = string.Empty;
         }
 
         [SerializeField]
@@ -40,9 +38,9 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            string text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", _data.localKey, LocalizationSettings.SelectedLocale);
+            //string text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", _data.text, LocalizationSettings.SelectedLocale);
 
-            textTMP?.SetText(text);
+            textTMP?.SetText(_data.text);
         }
 
         private void AnimActiavte()

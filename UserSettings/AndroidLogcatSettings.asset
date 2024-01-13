@@ -87,7 +87,7 @@
         "AutoCapture": true
     },
     "m_FilterOptions": {
-        "m_Filter": "",
+        "m_Filter": "ano",
         "m_UseRegularExpressions": false,
         "m_MatchCase": false
     },

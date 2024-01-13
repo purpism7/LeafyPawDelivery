@@ -51,14 +51,17 @@ namespace Info
                         objectInfo = objectInfoList.Find(findObjectInfo => findObjectInfo != null && findObjectInfo.Id == objectId);
                     }
 
-                    AddObject(objectData.PlaceId, objectInfo.Id);
+                    AddObject(objectData.PlaceId, objectId);
 
-                    if (_objectInfoDic.TryGetValue(objectData.PlaceId, out List<Info.Object> infoList))
+                    if (objectInfo != null)
                     {
-                        var findObjectInfo = infoList.Find(info => info != null ? info.Id == objectInfo.Id : false);
-                        if (findObjectInfo != null)
+                        if (_objectInfoDic.TryGetValue(objectData.PlaceId, out List<Info.Object> infoList))
                         {
-                            findObjectInfo.EditObjectList.AddRange(objectInfo.EditObjectList);
+                            var findObjectInfo = infoList.Find(info => info != null ? info.Id == objectInfo.Id : false);
+                            if (findObjectInfo != null)
+                            {
+                                findObjectInfo.EditObjectList.AddRange(objectInfo.EditObjectList);
+                            }
                         }
                     }
                 }

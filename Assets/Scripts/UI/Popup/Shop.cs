@@ -6,17 +6,14 @@ using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
 using System.Linq;
 
+using UnityEngine.Localization.Settings;
+
 using UI.Component;
 using GameSystem;
 
 namespace UI
 {
-    public interface IShop
-    {
-        Product GetProduct(string productId);
-    }
-
-    public class Shop : BasePopup<Shop.Data_>, ShopItemCell.IListener, BuyCash.IListener, IShop, IDetailedStoreListener
+    public class Shop : BasePopup<Shop.Data_>, ShopItemCell.IListener, BuyCash.IListener, Game.Manager.IAP.IListener
     {
         public class Data_ : BaseData
         {
@@ -26,8 +23,7 @@ namespace UI
         [SerializeField]
         private ScrollRect itemScrollRect = null;
 
-        private bool _initializeStore = false;
-        private IStoreController _iStoreCtr = null;
+        //private bool _initializeStore = false;
 
         private Data.Shop _buyShopData = null;
         private System.Action _endBuyAction = null;
@@ -36,21 +32,23 @@ namespace UI
         {
             yield return StartCoroutine(base.CoInitialize(data));
 
-            InitializeIAP();
+            //InitializeIAP();
 
             yield return StartCoroutine(CoSetItemList());
 
             InitializeChildComponent();
 
-            yield return new WaitUntil(() => _initializeStore);
+            //yield return new WaitUntil(() => _initializeStore);
         }
 
         public override void Activate()
         {
             base.Activate();
 
-            ActivateChildComponent(typeof(ShopItemCell));
+            Game.Manager.IAP.Instance?.SetIListener(this);
 
+            ActivateChildComponent(typeof(ShopItemCell));
+            
             itemScrollRect?.ResetScrollPos();
         }
 
@@ -59,26 +57,26 @@ namespace UI
             base.Deactivate();
         }
 
-        private void InitializeIAP()
-        {
-            _initializeStore = false;
+        //private void InitializeIAP()
+        //{
+        //    _initializeStore = false;
 
-            if (_iStoreCtr != null)
-            {
-                _initializeStore = true;
+        //    if (_iStoreCtr != null)
+        //    {
+        //        _initializeStore = true;
 
-                return;
-            }                
+        //        return;
+        //    }                
 
-            ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
+        //    ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-            foreach (var productItem in ProductCatalog.LoadDefaultCatalog().allValidProducts)
-            {
-                builder.AddProduct(productItem.id, productItem.type);
-            }
+        //    foreach (var productItem in ProductCatalog.LoadDefaultCatalog().allValidProducts)
+        //    {
+        //        builder.AddProduct(productItem.id, productItem.type);
+        //    }
 
-            UnityPurchasing.Initialize(this, builder);
-        }
+        //    UnityPurchasing.Initialize(this, builder);
+        //}
 
         private IEnumerator CoSetItemList()
         {
@@ -103,7 +101,6 @@ namespace UI
                         iShopItemCellListener = this,
                         eCategory = dataList.Count > 0 ? dataList[0].ECategory : Game.Type.ECategory.None,
                         shopDataList = dataList,
-                        iShop = this,
                     })
                     .SetRootRectTm(scrollContent)
                     .Create();
@@ -166,20 +163,13 @@ namespace UI
             }
         }
 
-        Product IShop.GetProduct(string productId)
-        {
-            if (_iStoreCtr == null)
-                return null;
-
-            return _iStoreCtr.products?.WithID(productId);
-        }
-
         #region BuyCash.IListener,
         void BuyCash.IListener.Buy(bool possible)
         {
             if(!possible)
             {
-                Game.Toast.Get?.Show("not_enough_jewel");
+                var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
+                Game.Toast.Get?.Show(text);
 
                 return;
             }
@@ -188,53 +178,15 @@ namespace UI
         }
         #endregion
 
-        #region IDetailedStoreListener
-        void IStoreListener.OnInitializeFailed(InitializationFailureReason error, string message)
+        #region Game.Manager.IAP.IListener
+        void Game.Manager.IAP.IListener.SuccessPurchase(Product product)
         {
-            Game.UIManager.Instance?.DeactivateScreenSaver();
-            Debug.Log("OnInitializeFailed = " + message);
-        }
-
-        PurchaseProcessingResult IStoreListener.ProcessPurchase(PurchaseEventArgs purchaseEvent)
-        {
-            Debug.Log("ProcessPurchase = " + purchaseEvent.purchasedProduct.metadata.localizedTitle);
-
-            Game.UIManager.Instance?.DeactivateScreenSaver();
-
-            if (_buyShopData == null)
-                return PurchaseProcessingResult.Pending;
-
             _endBuyAction?.Invoke();
-
-            return PurchaseProcessingResult.Complete;
         }
 
-        void IStoreListener.OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
+        void Game.Manager.IAP.IListener.FailPurchase(Product product)
         {
-            Game.UIManager.Instance?.DeactivateScreenSaver();
-            Debug.Log("OnPurchaseFailed = " + failureReason);
-        }
 
-        void IStoreListener.OnInitialized(IStoreController controller, IExtensionProvider extensions)
-        {
-            Debug.Log("OnInitialized");
-
-            _iStoreCtr = controller;
-
-            _initializeStore = true;
-        }
-
-        void IDetailedStoreListener.OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
-        {
-            Debug.Log("OnPurchaseFailed = " + failureDescription.message);
-            Game.UIManager.Instance?.DeactivateScreenSaver();
-
-            Game.Toast.Get?.Show(failureDescription?.message);
-        }
-
-        void IStoreListener.OnInitializeFailed(InitializationFailureReason error)
-        {
-            Debug.Log("OnInitializeFailed = " + error);
         }
         #endregion
     }

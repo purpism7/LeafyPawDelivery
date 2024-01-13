@@ -284,7 +284,9 @@ namespace UI
         {
             if(!possible)
             {
-                Game.Toast.Get?.Show("not_enough_jewel");
+                var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
+
+                Game.Toast.Get?.Show(text);
 
                 return;
             }

@@ -14,9 +14,11 @@ namespace GameSystem
 
         public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         {
-            yield return StartCoroutine(Info.UserManager.Instance.CoInit());
-            yield return StartCoroutine(MainGameManager.Instance.CoInit(iProvider));
-            yield return StartCoroutine(Game.UIManager.Instance.CoInit(iProvider));
+            yield return StartCoroutine(Info.UserManager.Instance?.CoInit());
+            yield return StartCoroutine(MainGameManager.Instance?.CoInit(iProvider));
+            yield return StartCoroutine(Game.UIManager.Instance?.CoInit(iProvider));
+
+            yield return StartCoroutine(Game.Manager.IAP.Instance?.CoInit());
 
             //Sequencer.Create();
             AdMob.Create();

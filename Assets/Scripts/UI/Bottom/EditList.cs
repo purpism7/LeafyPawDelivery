@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 using Game;
 using UI.Component;
@@ -121,9 +122,11 @@ namespace UI
             if (infoList == null)
                 return;
 
+            var infos = infoList.OrderBy(info => info.Id);
+
             int placeId = GameUtils.ActivityPlaceId;
 
-            foreach (var objectInfo in infoList)
+            foreach (var objectInfo in infos)
             {
                 if(objectInfo == null)
                     continue;

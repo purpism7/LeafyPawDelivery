@@ -29,6 +29,7 @@ namespace Plugin
        
         }
 
+#if UNITY_ANDROID
         private void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
         {
             if (status == SavedGameRequestStatus.Success)
@@ -58,13 +59,16 @@ namespace Plugin
                 // handle error
             }
         }
+#endif
 
         public override void SetString(string key, string value)
         {
+#if UNITY_ANDROID
             var jsonFilePath = string.Format(_userInfoJsonFilePath, key);
 
             ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
             savedGameClient.OpenWithAutomaticConflictResolution(jsonFilePath, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
+#endif
         }
 
         public override string GetString(string key)

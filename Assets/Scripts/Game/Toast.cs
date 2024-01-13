@@ -20,18 +20,17 @@ namespace Game
         private RectTransform rootRectTm = null;
 
         private List<UI.Component.Toast> _toastList = new();
-        private int cnt = 0;
 
         private void Awake()
         {
             _instance = this;
         }
 
-        public void Show(string localKey)
+        public void Show(string text)
         {
             var toast = Create(new UI.Component.Toast.Data()
             {
-                localKey = localKey + (++cnt),
+                text = text,
             });
         }
 

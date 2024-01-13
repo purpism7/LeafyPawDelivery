@@ -10,7 +10,7 @@
       "Id": 2,
       "StoryId": 2,
       "ReqAnimalIds": 1,
-      "ReqObjectIds": [ 1, 4 ]
+      "ReqObjectIds": [ 1, 5 ]
     },
     {
       "Id": 3,
@@ -18,7 +18,7 @@
       "ReqAnimalIds": 1,
       "ReqObjectIds": [
             1,
-            4,
+            5,
             13
         ]
     },
@@ -28,7 +28,7 @@
       "ReqAnimalIds": 1,
       "ReqObjectIds": [
             1,
-            4,
+            5,
             13,
             25
         ]

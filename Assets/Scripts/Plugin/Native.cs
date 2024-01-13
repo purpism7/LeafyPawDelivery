@@ -10,20 +10,40 @@ namespace Plugin
 
         protected override void Initialize()
         {
-            if(Application.isEditor)
+
+            var eLoginType = GameSystem.Auth.ELoginType;
+            if(eLoginType == GameSystem.Auth.EType.GooglePlayGames)
             {
-                _base = gameObject.GetOrAddComponent<Editor>();
+#if UNITY_ANDROID
+                _base = gameObject.GetOrAddComponent<Android>();
+#endif
             }
-            else
+            else if(eLoginType == GameSystem.Auth.EType.GameCenter)
             {
 #if UNITY_IOS
                 _base = gameObject.GetOrAddComponent<IOS>();
-#elif UNITY_ANDROID
-                _base = gameObject.GetOrAddComponent<Android>();
-#else
-                _base = gameObject.GetOrAddComponent<Editor>();
 #endif
             }
+            else
+            {
+                _base = gameObject.GetOrAddComponent<Local>();
+            }
+            
+
+//            if(Application.isEditor)
+//            {
+//                _base = gameObject.GetOrAddComponent<Local>();
+//            }
+//            else
+//            {
+//#if UNITY_IOS
+//                _base = gameObject.GetOrAddComponent<IOS>();
+//#elif UNITY_ANDROID
+//                _base = gameObject.GetOrAddComponent<Android>();
+//#else
+//                _base = gameObject.GetOrAddComponent<Local>();
+//#endif
+//            }
 
             _base?.Initialize();
         }

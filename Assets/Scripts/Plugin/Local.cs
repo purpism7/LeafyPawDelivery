@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Plugin
 {
-    public class Editor : Base
+    public class Local : Base
     {
         public override void Initialize()
         {
