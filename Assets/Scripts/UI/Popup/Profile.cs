@@ -19,17 +19,33 @@ namespace UI
             public Game.Type.EElement EElement = Game.Type.EElement.None;
         }
 
-        [SerializeField] private Image iconImg = null;
-        [SerializeField] private RectTransform renderTextureRootRectTm = null;
-        [SerializeField] private TextMeshProUGUI nameTMP = null;
-        [SerializeField] private TextMeshProUGUI descTMP = null;
-        [SerializeField] private RectTransform getCurrencyRootRectTm = null;
+        [Header("Animal")]
+        [SerializeField]
+        private RectTransform renderTextureRootRectTm = null;
+        [SerializeField]
+        private RectTransform animalRootRectTm = null;
+        [SerializeField]
+        private TextMeshProUGUI nameTMP = null;
+        [SerializeField]
+        private TextMeshProUGUI descTMP = null;
+        [SerializeField]
+        private OpenCondition animalGetCurrency = null;
 
         [Header("Skin")]
         [SerializeField]
         private RectTransform skinRootRectTm = null;
         [SerializeField]
         private ToggleGroup skinToggleGroup = null;
+
+        [Header("Object")]
+        [SerializeField]
+        private RectTransform objectRootRectTm = null;
+        [SerializeField]
+        private Image iconImg = null;
+        [SerializeField]
+        private TextMeshProUGUI objectNameTMP = null;
+        [SerializeField]
+        private OpenCondition objectGetCurrency = null;
 
         private List<SkinCell> _skinCellList = new();
         private SkinCell _selectSkinCell = null;
@@ -43,6 +59,9 @@ namespace UI
 
             if (_data == null)
                 return;
+
+            UIUtils.SetActive(animalRootRectTm, _data.EElement == Game.Type.EElement.Animal);
+            UIUtils.SetActive(objectRootRectTm, _data.EElement == Game.Type.EElement.Object);
 
             SetNameTMP();
             SetDescTMP();
@@ -59,6 +78,8 @@ namespace UI
             {
                 SetIconImg();
             }
+
+            SetGetCurrency();
         }
 
         public override void Activate()
@@ -87,6 +108,7 @@ namespace UI
             var localName = GameUtils.GetName(_data.EElement, _data.Id);
 
             nameTMP?.SetText(localName);
+            objectNameTMP?.SetText(localName);
         }
 
         private void SetDescTMP()
@@ -127,6 +149,45 @@ namespace UI
             iconImg.sprite = sprite;
 
             UIUtils.SetActive(iconImg?.gameObject, true);
+        }
+
+        private void SetGetCurrency()
+        {
+            if (_data == null)
+                return;
+
+            var placeData = Game.Data.Const.ActivityPlaceData;
+            if (placeData == null)
+                return;
+
+            if (_data.EElement == Game.Type.EElement.Animal)
+            {
+                var animalData = AnimalContainer.Instance.GetData(_data.Id);
+                if (animalData == null)
+                    return;
+
+                animalGetCurrency?.Initialize(new OpenCondition.Data()
+                {
+                    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(placeData.AnimalSpriteName),
+                    Text = animalData.GetCurrency.ToString(),
+                    PossibleFunc = () => true,
+                });
+                animalGetCurrency?.Activate();
+            }
+            else if(_data.EElement == Game.Type.EElement.Object)
+            {
+                var objectData = ObjectContainer.Instance.GetData(_data.Id);
+                if (objectData == null)
+                    return;
+
+                objectGetCurrency?.Initialize(new OpenCondition.Data()
+                {
+                    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(placeData.ObjectSpriteName),
+                    Text = objectData.GetCurrency.ToString(),
+                    PossibleFunc = () => true,
+                });
+                objectGetCurrency?.Activate();
+            }
         }
 
         //private void SetGetCurrency()

@@ -19,6 +19,8 @@ namespace Game
         public bool IsOverlap = false;
 
         public Collider Collider = null;
+        public Collider2D Collider2D = null;
+
         public ElementData ElementData { get; protected set; } = null;
         //public int SortingOrder { get { return spriteRenderer != null ? spriteRenderer.sortingOrder : 1; } }
 
@@ -36,7 +38,10 @@ namespace Game
             SetCollider<BoxCollider>();
             SetCollider<SphereCollider>();
 
-            Collider.enabled = enable;
+            if(Collider != null)
+            {
+                Collider.enabled = enable;
+            }
         }
 
         protected void SetCollider<T>() where T : Collider

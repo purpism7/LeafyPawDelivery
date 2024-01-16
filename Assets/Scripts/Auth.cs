@@ -7,7 +7,9 @@ using Unity.Services.Core;
 
 using Cysharp.Threading.Tasks;
 
+#if UNITY_IOS
 using UnityEngine.SocialPlatforms.GameCenter;
+#endif
 
 #if UNITY_ANDROID
 using GooglePlayGames;

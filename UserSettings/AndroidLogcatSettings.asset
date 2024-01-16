@@ -24,12 +24,24 @@
             "deviceId": "R3CM80KCP3F",
             "name": "com.google.android.packageinstaller",
             "processId": 24582,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "R3CM80KCP3F",
             "name": "com.popo.leafypawdelivery",
             "processId": 14181,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CM80KCP3F",
+            "name": "com.android.vending",
+            "processId": 18651,
+            "exited": false
+        },
+        {
+            "deviceId": "R3CM80KCP3F",
+            "name": "com.popo.leafypawdelivery",
+            "processId": 4349,
             "exited": false
         }
     ],
@@ -87,7 +99,7 @@
         "AutoCapture": true
     },
     "m_FilterOptions": {
-        "m_Filter": "ano",
+        "m_Filter": "",
         "m_UseRegularExpressions": false,
         "m_MatchCase": false
     },

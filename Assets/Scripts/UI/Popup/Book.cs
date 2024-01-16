@@ -371,11 +371,10 @@ namespace UI
         #region BookCell.IListener
         void BookCell.IListener.Click(Game.Type.EElement eElement, int id)
         {
-            if (eElement == Type.EElement.Object)
-                return;
+            //if (eElement == Type.EElement.Object)
+            //    return;
 
-            if (eElement == Type.EElement.Animal &&
-               !MainGameManager.Instance.CheckExist(eElement, id))
+            if (!MainGameManager.Instance.CheckExist(eElement, id))
                 return;
 
             var popup = new PopupCreator<Profile, Profile.Data>()

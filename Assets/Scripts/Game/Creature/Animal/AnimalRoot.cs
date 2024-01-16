@@ -11,7 +11,6 @@ namespace Game.Creature
 {
     public class AnimalRoot : MonoBehaviour, SpeechBubble.IListener
     {
-        //public Transform RewardRootTm = null;
         [SerializeField] private RectTransform editRootRectTm = null;
         [SerializeField] private RectTransform speechBubbleRootRectTm = null;
         [SerializeField] private BaseLocalData[] localDatas = null;

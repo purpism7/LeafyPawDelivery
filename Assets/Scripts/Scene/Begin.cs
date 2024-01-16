@@ -32,6 +32,8 @@ namespace Scene
 
         private async void Start()
         {
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
             Info.Setting.Get?.InitializeLocale();
 
             var firebaseMgr = FirebaseManager.Instance;

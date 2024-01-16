@@ -45,6 +45,8 @@ namespace GameSystem
 
             RaycastHit hitInfo;
             bool isHitInfo = Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Game", "Animal", "Object"));
+            var raycastHit2D = Physics2D.Raycast(ray.origin, ray.direction);
+
             bool gameStateEdit = _mainGameMgr.GameState.CheckState<Game.State.Edit>();
             Game.Base gameBase = null;
             
@@ -53,11 +55,20 @@ namespace GameSystem
                 if (_beganGameBase)
                     return;
 
+                if (CheckGetGameBase(raycastHit2D, out gameBase))
+                {
+                    OnTouchBegan(touch, gameBase);
+
+                    return;
+                }
+
                 if (isHitInfo)
                 {
                     if (CheckGetGameBase<Game.Base>(hitInfo, out gameBase))
                     {
                         OnTouchBegan(touch, gameBase);
+
+                        return;
                     }
                 }
             }
@@ -122,6 +133,21 @@ namespace GameSystem
             t = default(T);
 
             var collider = raycastHit.collider;
+            if (collider == null)
+                return false;
+
+            t = collider.GetComponentInParent<T>();
+            if (t == null)
+                return false;
+
+            return true;
+        }
+
+        private bool CheckGetGameBase<T>(RaycastHit2D raycastHit2D, out T t)
+        {
+            t = default(T);
+
+            var collider = raycastHit2D.collider;
             if (collider == null)
                 return false;
 

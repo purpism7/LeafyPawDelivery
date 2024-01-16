@@ -42,7 +42,10 @@ namespace Game.Creature
             _collider = GetComponentInChildren<CapsuleCollider>();
             _animalRoot = GetComponentInChildren<AnimalRoot>();
 
-            _animalRoot?.Initialize(_collider.center.y + _collider.height);
+            if(_collider != null)
+            {
+                _animalRoot?.Initialize(_collider.center.y + _collider.height);
+            }
 
             CreateEdit();
 

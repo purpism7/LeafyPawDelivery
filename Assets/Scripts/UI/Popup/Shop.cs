@@ -38,7 +38,7 @@ namespace UI
 
             InitializeChildComponent();
 
-            //yield return new WaitUntil(() => _initializeStore);
+            yield return null;            
         }
 
         public override void Activate()
