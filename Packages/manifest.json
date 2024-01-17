@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "com.apple.unityplugin.core": "file:/Users/sj/Downloads/unityplugins-main/Build/com.apple.unityplugin.core-2.0.0.tgz",
-    "com.apple.unityplugin.gamekit": "file:/Users/sj/Downloads/unityplugins-main/plug-ins/Apple.GameKit/Apple.GameKit_Unity/Assets/Apple.GameKit",
+    "com.apple.unityplugin.core": "file:../com.apple.unityplugin.core-2.0.0.tgz",
     "com.coffee.ui-particle": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.unity.adaptiveperformance.samsung.android": "5.0.0",

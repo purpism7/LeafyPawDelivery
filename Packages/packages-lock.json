@@ -1,18 +1,10 @@
 {
   "dependencies": {
     "com.apple.unityplugin.core": {
-      "version": "file:/Users/sj/Downloads/unityplugins-main/Build/com.apple.unityplugin.core-2.0.0.tgz",
+      "version": "file:../com.apple.unityplugin.core-2.0.0.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {}
-    },
-    "com.apple.unityplugin.gamekit": {
-      "version": "file:/Users/sj/Downloads/unityplugins-main/plug-ins/Apple.GameKit/Apple.GameKit_Unity/Assets/Apple.GameKit",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {
-        "com.apple.unityplugin.core": "2.0.0"
-      }
     },
     "com.coffee.ui-particle": {
       "version": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
