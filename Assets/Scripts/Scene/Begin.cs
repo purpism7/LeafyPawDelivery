@@ -73,7 +73,7 @@ namespace Scene
             //    await UniTask.WaitUntil(() => endPrologue);
             //}
 
-            await UniTask.WaitForSeconds(2f);
+            await UniTask.WaitForSeconds(1f);
 
             await PlayPrologueAsync();
             await CreateNickNameAsync();
@@ -124,7 +124,10 @@ namespace Scene
         private async UniTask PlayPrologueAsync()
         {
             bool already = false;
-            Boolean.TryParse(PlayerPrefs.GetString(KeyPrologue, false.ToString()), out already);
+            if(!Application.isEditor)
+            {
+                Boolean.TryParse(PlayerPrefs.GetString(KeyPrologue, false.ToString()), out already);
+            }
 
             bool endPrologue = false;
 
