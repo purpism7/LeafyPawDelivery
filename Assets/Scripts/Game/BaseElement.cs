@@ -18,38 +18,47 @@ namespace Game
 
         public bool IsOverlap = false;
 
-        public Collider Collider = null;
-        public Collider2D Collider2D = null;
+        //protected PolygonCollider2D _polygonCollider2D = null;
+        protected Collider2D _collider2D = null;
 
+        public ElementCollision ElementCollision { get; protected set; } = null;
         public ElementData ElementData { get; protected set; } = null;
-        //public int SortingOrder { get { return spriteRenderer != null ? spriteRenderer.sortingOrder : 1; } }
+        public Game.Element.State.BaseState State { get; protected set; } = null;
+
+        public override void ChainUpdate()
+        {
+            base.ChainUpdate();
+
+            State?.ChainUpdate();
+        }
 
         public void ActiveEdit(bool active)
         {
             UIUtils.SetActive(edit?.CanvasRectTm, active);
         }
 
-        public void EnableCollider(bool enable)
+        //public void EnableCollider(bool enable)
+        //{
+        //    if (!IsActivate)
+        //        return;
+
+        //    if(_polygonCollider2D != null)
+        //    {
+        //        _polygonCollider2D.enabled = enable;
+        //    }
+        //}
+
+        public void AddRigidBody2D()
         {
-            if (!IsActivate)
+            if (_collider2D == null)
                 return;
 
-            SetCollider<CapsuleCollider>();
-            SetCollider<BoxCollider>();
-            SetCollider<SphereCollider>();
-
-            if(Collider != null)
-            {
-                Collider.enabled = enable;
-            }
-        }
-
-        protected void SetCollider<T>() where T : Collider
-        {
-            if (Collider != null)
+            var rigidbody2D = _collider2D.gameObject.GetOrAddComponent<Rigidbody2D>();
+            if (rigidbody2D == null)
                 return;
 
-            Collider = transform.GetComponentInChildren<T>();
+            rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+            rigidbody2D.useFullKinematicContacts = true;
         }
 
         public void SetColor(Color color)
@@ -60,7 +69,7 @@ namespace Game
             spriteRenderer.color = color;
         }
 
-        protected void SetOutline(float width)
+        private void SetOutline(float width)
         {
             if (spriteRenderer == null)
                 return;
@@ -68,32 +77,29 @@ namespace Game
             spriteRenderer?.material?.SetFloat("_Thickness", width);
         }
 
-        protected void StartEdit()
+        protected void SetState(Game.Element.State.BaseState state)
         {
-            EState_ = EState.Edit;
-
-            SetOutline(5f);
-
-            MainGameManager.Get<Game.PlaceManager>()?.ActivityPlace?.EnableCollider(false);
-            EnableCollider(true);
-
-            Game.UIManager.Instance?.Bottom?.DeactivateEditList();
-        }
-
-        public void EndEdit()
-        {
-            EState_ = EState.None;
-
-            SetOutline(0);
-
-            var eTab = Game.Type.ETab.Animal;
-            if (ElementData != null)
+            if (State != null &&
+                state != null)
             {
-                eTab = ElementData.EElement == Game.Type.EElement.Animal? Game.Type.ETab.Animal : Game.Type.ETab.Object;
+                if (State.CheckEqual(state))
+                    return;
             }
-             
-            Game.UIManager.Instance?.Bottom?.ActivateEditList(eTab);
-            MainGameManager.Get<Game.PlaceManager>()?.ActivityPlace?.EnableCollider(true);
+
+            State?.End();
+
+            if (state is Game.Element.State.Edit)
+            {
+                SetOutline(5f);
+            }
+            else
+            {
+                SetOutline(0);
+            }
+
+            state?.Apply(this);
+
+            State = state;
         }
 
         public void InteractableArrangeBtn(bool interactable)
@@ -103,11 +109,32 @@ namespace Game
 
             edit.InteractableArrangeBtn(interactable);
         }
+
+        public void EnableCollision(bool enable)
+        {
+            if (_collider2D == null)
+                return;
+
+            if (enable)
+            {
+                ElementCollision = _collider2D.gameObject.GetOrAddComponent<ElementCollision>();
+                ElementCollision?.Initialize(this);
+            }
+            else
+            {
+                if(ElementCollision != null)
+                {
+                    Destroy(_collider2D.gameObject.GetComponent<ElementCollision>());
+                }
+                
+                ElementCollision = null;
+            }
+        }
     }
 
     public abstract class BaseElement<T> : BaseElement where T : BaseData
     {
-        readonly protected int _selectOrder = 9999;
+        protected const int SelectOrder = 9999;
 
         protected T _data = default(T);
 
@@ -126,6 +153,23 @@ namespace Game
         private void InternalInitialize(T data)
         {
             _data = data;
+
+            if (_collider2D == null)
+            {
+                _collider2D = GetComponentInChildren<PolygonCollider2D>();
+                if(_collider2D == null)
+                {
+                    _collider2D = GetComponentInChildren<CapsuleCollider2D>();
+                }
+            }
+
+            if (ElementCollision == null)
+            {
+                if(_collider2D != null)
+                {
+                    EnableCollision(false);
+                }
+            }
         }
     }
 }

@@ -4,15 +4,6 @@ using UnityEngine;
 
 namespace Game
 {
-    public enum EState
-    {
-        None,
-
-        Edit,
-        Remove,
-        Arrange,
-    }
-
     public class BaseData
     {
 
@@ -66,8 +57,6 @@ namespace Game
     public abstract class Base : Common
     {
         public int Id = 0;
-
-        public EState EState_ { get; protected set; } = EState.None;
 
         public virtual void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid) { }
         public virtual void OnTouch(Touch touch) { }

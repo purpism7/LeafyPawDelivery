@@ -22,8 +22,6 @@ namespace Game.Command
 
             _gameBaseElement = gameBaseElement;
             _pos = pos;
-
-            gameBaseElement.EndEdit();
         }
 
         public override void Execute()

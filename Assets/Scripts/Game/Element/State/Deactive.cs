@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Game.Element.State
 {
-    public class Deactive<T> : BaseState<T> where T : Game.BaseElement
+    public class Deactive : BaseState
     {
-        public override BaseState<T> Initialize()
+        public override BaseState Initialize()
         {
             base.Initialize();
 

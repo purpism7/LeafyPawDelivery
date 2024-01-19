@@ -16,5 +16,10 @@ namespace Game.State
 
             activityPlace.Boom();
         }
+
+        public override void End()
+        {
+            
+        }
     }
 }

@@ -52,7 +52,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 94659690454118510}
   edit: {fileID: 0}
   IsOverlap: 0
-  Collider: {fileID: 0}
   skinId: 2
   animator: {fileID: 4193277499131427672}
 --- !u!222 &2164901631972730589
@@ -74,7 +73,7 @@ GameObject:
   - component: {fileID: 7791163112305712424}
   - component: {fileID: 94659690454118510}
   - component: {fileID: 4193277499131427672}
-  - component: {fileID: 7194118531001997955}
+  - component: {fileID: 4662722175420281145}
   m_Layer: 6
   m_Name: Animal
   m_TagString: Untagged
@@ -170,13 +169,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &7194118531001997955
-CapsuleCollider:
+--- !u!60 &4662722175420281145
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4616245985608609277}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -185,14 +186,68 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 62
-  m_Height: 159
-  m_Direction: 1
-  m_Center: {x: 0, y: 80.1, z: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 150, y: 190}
+    newSize: {x: 200, y: 200}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 63, y: 24}
+      - {x: 67, y: 33}
+      - {x: 67, y: 43}
+      - {x: 60, y: 52}
+      - {x: 47, y: 53}
+      - {x: 56, y: 61}
+      - {x: 60, y: 69}
+      - {x: 66, y: 88}
+      - {x: 66, y: 111}
+      - {x: 62, y: 123}
+      - {x: 51, y: 143}
+      - {x: 40, y: 161}
+      - {x: 34, y: 167}
+      - {x: 21, y: 168}
+      - {x: 10, y: 160}
+      - {x: -14, y: 163}
+      - {x: -28, y: 170}
+      - {x: -37, y: 170}
+      - {x: -47, y: 159}
+      - {x: -59, y: 144}
+      - {x: -65, y: 127}
+      - {x: -71, y: 113}
+      - {x: -73, y: 103}
+      - {x: -73, y: 78}
+      - {x: -65, y: 67}
+      - {x: -53, y: 53}
+      - {x: -59, y: 47}
+      - {x: -51, y: 31}
+      - {x: -43, y: 25}
+      - {x: -40, y: 5}
+      - {x: -32, y: 1}
+      - {x: -22, y: 0}
+      - {x: 31, y: 0}
+      - {x: 46, y: 16}
+  m_UseDelaunayMesh: 0
 --- !u!1 &5936816878479032547
 GameObject:
   m_ObjectHideFlags: 0

@@ -53,7 +53,7 @@ namespace UI.Component
             wayPoint += _data.StartPos;
             wayPoint.x += UnityEngine.Random.Range(-150f, 150f);
 
-            _data.StartPos.z = 100f;
+            _data.StartPos.z = 50f;
             wayPoint.z = _data.StartPos.z;
             _data.EndPos.z = _data.StartPos.z;
 

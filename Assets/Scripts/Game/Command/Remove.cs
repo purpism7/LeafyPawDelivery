@@ -26,8 +26,6 @@ namespace Game.Command
             _eElement = gameBaseElement.ElementData.EElement;
             _id = gameBaseElement.Id;
             _uId = gameBaseElement.UId;
-
-            gameBaseElement.EndEdit();
         }
 
         public override void Execute()

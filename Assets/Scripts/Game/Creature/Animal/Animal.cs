@@ -24,12 +24,10 @@ namespace Game.Creature
         [SerializeField]
         private Animator animator = null;
 
-        private CapsuleCollider _collider = null;
         private AnimalRoot _animalRoot = null;
         private AnimalActionController _actionCtr = null;
 
         public int SkinId { get { return skinId; } }
-        public Game.Element.State.BaseState<Creature.Animal> State { get; private set; } = null;
 
         private IPlaceState.EType _iPlaceState = IPlaceState.EType.None;
 
@@ -39,12 +37,11 @@ namespace Game.Creature
 
             ElementData = AnimalContainer.Instance?.GetData(Id);
 
-            _collider = GetComponentInChildren<CapsuleCollider>();
             _animalRoot = GetComponentInChildren<AnimalRoot>();
 
-            if(_collider != null)
+            if(_collider2D != null)
             {
-                _animalRoot?.Initialize(_collider.center.y + _collider.height);
+                _animalRoot?.Initialize(_collider2D.bounds.center.y);
             }
 
             CreateEdit();
@@ -78,6 +75,8 @@ namespace Game.Creature
 
         public override void ChainUpdate()
         {
+            base.ChainUpdate();
+
             var iPlaceState = _data?.IPlaceState;
             if (iPlaceState != null)
             {
@@ -103,14 +102,19 @@ namespace Game.Creature
 
             if (gameState.CheckState<Game.State.Edit>())
             {
-                SetState(new Element.State.Edit<Animal>()?.Initialize(gameCameraCtr, iGrid));
+                var editState = gameState.Get<Game.State.Edit>();
+                if (editState != null &&
+                    editState.CheckIsEditElement(this))
+                    return;
 
-                SetSortingOrder(_selectOrder);
+                SetState(new Element.State.Edit()?.Initialize(gameCameraCtr, iGrid));
+
+                SetSortingOrder(SelectOrder);
                 ActiveEdit(true);
             }
             else
             {
-                SetState(new Element.State.Game<Animal>()?.Initialize(gameCameraCtr, iGrid));
+                SetState(new Element.State.Play()?.Initialize(gameCameraCtr, iGrid));
             }
 
             if (touch != null)
@@ -124,25 +128,6 @@ namespace Game.Creature
             base.OnTouch(touch);
 
             State?.Touch(touch);
-        }
-
-        private void SetState(Game.Element.State.BaseState<Creature.Animal> state)
-        {
-            if (State != null &&
-                state != null)
-            {
-                if (State.CheckEqual(state))
-                    return;
-            }
-
-            if (state is Game.Element.State.Edit<Creature.Animal>)
-            {
-                StartEdit();
-            }
-
-            state?.Apply(this);
-
-            State = state;
         }
 
         private void CreateEdit()
@@ -197,8 +182,6 @@ namespace Game.Creature
         #region Edit.IListener
         void UI.Edit.IListener.Remove()
         {
-            EState_ = EState.Remove;
-
             Command.Remove.Execute(this);
 
             ActiveEdit(false);
@@ -209,8 +192,6 @@ namespace Game.Creature
         {
             if (_data == null)
                 return;
-
-            EState_ = EState.Arrange;
 
             Command.Arrange.Execute(this, transform.localPosition);
 
@@ -232,7 +213,7 @@ namespace Game.Creature
             {
                 case IPlaceState.EType.Deactive:
                     {
-                        SetState(new Element.State.Deactive<Animal>()?.Initialize());
+                        SetState(new Element.State.Deactive()?.Initialize());
 
                         DeactivateChild();
 

@@ -422,24 +422,24 @@ namespace Game
             }
         }
 
-        public void EnableCollider(bool enable)
-        {
-            if(_animalList != null)
-            {
-                foreach (var animal in _animalList)
-                {
-                    animal?.EnableCollider(enable);
-                }
-            }
+        //public void EnableCollider(bool enable)
+        //{
+        //    if(_animalList != null)
+        //    {
+        //        foreach (var animal in _animalList)
+        //        {
+        //            animal?.EnableCollider(enable);
+        //        }
+        //    }
 
-            if (_objectList != null)
-            {
-                foreach (var obj in _objectList)
-                {
-                    obj?.EnableCollider(enable);
-                }
-            }
-        }
+        //    if (_objectList != null)
+        //    {
+        //        foreach (var obj in _objectList)
+        //        {
+        //            obj?.EnableCollider(enable);
+        //        }
+        //    }
+        //}
 
         public void Boom()
         {

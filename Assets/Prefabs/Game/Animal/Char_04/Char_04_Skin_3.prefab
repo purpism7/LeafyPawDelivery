@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 534433823138913160}
   - component: {fileID: 940979131949321881}
   - component: {fileID: 2799154114294592222}
-  - component: {fileID: 6789097060400310471}
+  - component: {fileID: 3247489944891686799}
   m_Layer: 6
   m_Name: Animal
   m_TagString: Untagged
@@ -107,13 +107,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &6789097060400310471
-CapsuleCollider:
+--- !u!60 &3247489944891686799
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3018987580467069867}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -122,14 +124,63 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 55
-  m_Height: 138.2
-  m_Direction: 1
-  m_Center: {x: 0, y: 63.2, z: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 110, y: 160}
+    newSize: {x: 200, y: 200}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 28, y: 0}
+      - {x: 31, y: 2}
+      - {x: 46, y: 23}
+      - {x: 53, y: 41}
+      - {x: 51, y: 79}
+      - {x: 48, y: 87}
+      - {x: 53, y: 96}
+      - {x: 55, y: 99}
+      - {x: 55, y: 118}
+      - {x: 46, y: 122}
+      - {x: 22, y: 117}
+      - {x: 15, y: 122}
+      - {x: 3, y: 123}
+      - {x: -48, y: 123}
+      - {x: -54, y: 120}
+      - {x: -55, y: 111}
+      - {x: -55, y: 93}
+      - {x: -51, y: 85}
+      - {x: -55, y: 75}
+      - {x: -55, y: 67}
+      - {x: -52, y: 61}
+      - {x: -51, y: 39}
+      - {x: -49, y: 28}
+      - {x: -37, y: 12}
+      - {x: -32, y: 0}
+      - {x: -16, y: 0}
+      - {x: -15, y: 4}
+      - {x: 11, y: 5}
+      - {x: 16, y: 0}
+  m_UseDelaunayMesh: 0
 --- !u!1 &5034679396573058153
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +232,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 940979131949321881}
   edit: {fileID: 0}
   IsOverlap: 0
-  Collider: {fileID: 0}
   skinId: 3
   animator: {fileID: 2799154114294592222}
 --- !u!1 &7638000593402345012

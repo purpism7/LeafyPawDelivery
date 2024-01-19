@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5082999346628738462}
   - component: {fileID: 8198808596251828485}
-  - component: {fileID: 2553983215344752702}
+  - component: {fileID: 4636439332779710425}
+  - component: {fileID: 6554456712987467113}
   m_Layer: 7
   m_Name: Img
   m_TagString: Untagged
@@ -85,13 +86,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!136 &2553983215344752702
-CapsuleCollider:
+--- !u!60 &4636439332779710425
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3858688592560586698}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -100,14 +103,117 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 300, y: 194}
+    newSize: {x: 500, y: 500}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 147, y: 30}
+      - {x: 150, y: 37}
+      - {x: 150, y: 47}
+      - {x: 148, y: 57}
+      - {x: 132, y: 67}
+      - {x: 130, y: 76}
+      - {x: 147, y: 101}
+      - {x: 148, y: 106}
+      - {x: 148, y: 113}
+      - {x: 145, y: 119}
+      - {x: 128, y: 121}
+      - {x: 119, y: 118}
+      - {x: 117, y: 132}
+      - {x: 104, y: 144}
+      - {x: 87, y: 143}
+      - {x: 83, y: 139}
+      - {x: 82, y: 154}
+      - {x: 70, y: 162}
+      - {x: 62, y: 157}
+      - {x: 54, y: 148}
+      - {x: 50, y: 136}
+      - {x: 43, y: 137}
+      - {x: 32, y: 139}
+      - {x: 29, y: 154}
+      - {x: 21, y: 154}
+      - {x: 21, y: 176}
+      - {x: 16, y: 186}
+      - {x: 4, y: 194}
+      - {x: -14, y: 194}
+      - {x: -22, y: 189}
+      - {x: -31, y: 177}
+      - {x: -51, y: 188}
+      - {x: -58, y: 191}
+      - {x: -69, y: 188}
+      - {x: -74, y: 183}
+      - {x: -80, y: 168}
+      - {x: -86, y: 152}
+      - {x: -96, y: 148}
+      - {x: -109, y: 141}
+      - {x: -116, y: 134}
+      - {x: -120, y: 117}
+      - {x: -121, y: 104}
+      - {x: -116, y: 93}
+      - {x: -137, y: 92}
+      - {x: -146, y: 84}
+      - {x: -147, y: 69}
+      - {x: -142, y: 55}
+      - {x: -135, y: 44}
+      - {x: -148, y: 36}
+      - {x: -149, y: 31}
+      - {x: -149, y: 20}
+      - {x: -148, y: 18}
+      - {x: -141, y: 10}
+      - {x: -130, y: 4}
+      - {x: -106, y: 3}
+      - {x: -66, y: 5}
+      - {x: -62, y: 6}
+      - {x: -49, y: 8}
+      - {x: -36, y: 6}
+      - {x: -29, y: 5}
+      - {x: -19, y: 3}
+      - {x: 17, y: 3}
+      - {x: 42, y: 4}
+      - {x: 55, y: 0}
+      - {x: 75, y: 0}
+      - {x: 84, y: 2}
+      - {x: 91, y: 0}
+      - {x: 115, y: 0}
+      - {x: 125, y: 3}
+      - {x: 132, y: 6}
+      - {x: 141, y: 14}
+  m_UseDelaunayMesh: 0
+--- !u!114 &6554456712987467113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3858688592560586698}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 91.1
-  m_Height: 278
-  m_Direction: 0
-  m_Center: {x: 0, y: 93.2, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 659511518189944e2b2a5a669209f524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7157655937583819985
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,8 +329,8 @@ MonoBehaviour:
   UId: 0
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 8860893258269408253}
-  sortingOrderOffset: 0
   IsOverlap: 0
+  sortingOrderOffset: 0
 --- !u!1001 &3742574807698289868
 PrefabInstance:
   m_ObjectHideFlags: 0

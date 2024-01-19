@@ -11,5 +11,10 @@ namespace Game.State
             // 진입 연출 전 Deactivate Top, Bottom 
             UIManager.Instance?.DeactivateAnim();
         }
+
+        public override void End()
+        {
+            
+        }
     }
 }

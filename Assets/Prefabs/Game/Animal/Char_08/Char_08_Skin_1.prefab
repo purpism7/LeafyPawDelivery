@@ -53,7 +53,7 @@ MonoBehaviour:
   edit: {fileID: 0}
   IsOverlap: 0
   Collider: {fileID: 0}
-  Collider2D: {fileID: 8537743970413085812}
+  Collider2D: {fileID: 7723415294675809003}
   skinId: 1
   animator: {fileID: 4193277499131427672}
 --- !u!222 &2164901631972730589
@@ -75,7 +75,8 @@ GameObject:
   - component: {fileID: 7791163112305712424}
   - component: {fileID: 94659690454118510}
   - component: {fileID: 4193277499131427672}
-  - component: {fileID: 8537743970413085812}
+  - component: {fileID: 7723415294675809003}
+  - component: {fileID: 7752470971938288511}
   m_Layer: 6
   m_Name: Animal
   m_TagString: Untagged
@@ -171,7 +172,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &8537743970413085812
+--- !u!60 &7723415294675809003
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -183,7 +184,7 @@ PolygonCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -207,7 +208,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 160, y: 160}
+    oldSize: {x: 160, y: 152}
     newSize: {x: 200, y: 200}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -215,41 +216,53 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 50, y: 48}
-      - {x: 55, y: 78}
-      - {x: 52, y: 102}
-      - {x: 60, y: 121}
-      - {x: 60, y: 138}
-      - {x: 47, y: 145}
-      - {x: 31, y: 140}
-      - {x: 29, y: 154}
-      - {x: 26, y: 155}
-      - {x: 14, y: 155}
-      - {x: 5, y: 145}
-      - {x: -5, y: 148}
-      - {x: -12, y: 155}
-      - {x: -21, y: 155}
-      - {x: -28, y: 152}
-      - {x: -31, y: 140}
-      - {x: -44, y: 141}
-      - {x: -53, y: 141}
-      - {x: -60, y: 134}
-      - {x: -60, y: 121}
-      - {x: -56, y: 113}
-      - {x: -52, y: 95}
-      - {x: -52, y: 85}
-      - {x: -50, y: 75}
-      - {x: -47, y: 66}
-      - {x: -44, y: 39}
-      - {x: -42, y: 31}
-      - {x: -36, y: 9}
-      - {x: -21, y: 7}
-      - {x: 14, y: 7}
-      - {x: 28, y: 8}
-      - {x: 34, y: 9}
-      - {x: 48, y: 18}
-      - {x: 56, y: 33}
+    - - {x: 45, y: 47}
+      - {x: 54, y: 71}
+      - {x: 51, y: 94}
+      - {x: 59, y: 108}
+      - {x: 60, y: 115}
+      - {x: 60, y: 128}
+      - {x: 54, y: 134}
+      - {x: 31, y: 133}
+      - {x: 29, y: 146}
+      - {x: 26, y: 147}
+      - {x: 14, y: 147}
+      - {x: 5, y: 137}
+      - {x: -5, y: 140}
+      - {x: -12, y: 147}
+      - {x: -21, y: 147}
+      - {x: -28, y: 144}
+      - {x: -31, y: 132}
+      - {x: -44, y: 133}
+      - {x: -53, y: 133}
+      - {x: -60, y: 126}
+      - {x: -60, y: 113}
+      - {x: -56, y: 105}
+      - {x: -52, y: 87}
+      - {x: -52, y: 77}
+      - {x: -50, y: 67}
+      - {x: -47, y: 58}
+      - {x: -44, y: 31}
+      - {x: -42, y: 23}
+      - {x: -36, y: 1}
+      - {x: -30, y: 0}
+      - {x: 28, y: 0}
+      - {x: 34, y: 1}
+      - {x: 55, y: 18}
+      - {x: 52, y: 31}
   m_UseDelaunayMesh: 0
+--- !u!114 &7752470971938288511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4616245985608609277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 659511518189944e2b2a5a669209f524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5936816878479032547
 GameObject:
   m_ObjectHideFlags: 0

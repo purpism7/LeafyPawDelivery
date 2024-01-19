@@ -12,5 +12,10 @@ namespace Game.State
                 .SetShowBackground(false)
                 .Create();
         }
+
+        public override void End()
+        {
+            
+        }
     }
 }

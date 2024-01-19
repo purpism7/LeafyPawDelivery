@@ -75,7 +75,7 @@ namespace GameSystem
 
             IsOverlap = false;
 
-            var colliders = Physics.OverlapBox(boxCollider.center + transform.position, _halfExtnents, Quaternion.identity);
+            var colliders = Physics2D.OverlapBoxAll(boxCollider.center + transform.position, _halfExtnents, 0);
 
             foreach (var collider in colliders)
             {

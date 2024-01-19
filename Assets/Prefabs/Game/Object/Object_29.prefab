@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5082999346628738462}
   - component: {fileID: 8198808596251828485}
-  - component: {fileID: 7791589381950173151}
+  - component: {fileID: 171403167959686783}
   m_Layer: 7
   m_Name: Img
   m_TagString: Untagged
@@ -85,13 +85,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!136 &7791589381950173151
-CapsuleCollider:
+--- !u!60 &171403167959686783
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3858688592560586698}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -100,14 +102,142 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 89.2
-  m_Height: 262.2
-  m_Direction: 1
-  m_Center: {x: -4.5, y: 134.8, z: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 238, y: 264}
+    newSize: {x: 500, y: 500}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 28, y: 23}
+      - {x: 23, y: 27}
+      - {x: 13, y: 29}
+      - {x: 8, y: 21}
+      - {x: 5, y: 25}
+      - {x: 8, y: 33}
+      - {x: 26, y: 34}
+      - {x: 36, y: 39}
+      - {x: 37, y: 30}
+      - {x: 47, y: 21}
+      - {x: 62, y: 18}
+      - {x: 75, y: 19}
+      - {x: 82, y: 25}
+      - {x: 87, y: 30}
+      - {x: 92, y: 59}
+      - {x: 92, y: 76}
+      - {x: 86, y: 84}
+      - {x: 81, y: 85}
+      - {x: 81, y: 99}
+      - {x: 76, y: 109}
+      - {x: 68, y: 109}
+      - {x: 54, y: 104}
+      - {x: 51, y: 134}
+      - {x: 50, y: 153}
+      - {x: 50, y: 163}
+      - {x: 48, y: 172}
+      - {x: 58, y: 176}
+      - {x: 68, y: 202}
+      - {x: 69, y: 208}
+      - {x: 58, y: 219}
+      - {x: 15, y: 248}
+      - {x: 3, y: 254}
+      - {x: -6, y: 263}
+      - {x: -15, y: 264}
+      - {x: -22, y: 264}
+      - {x: -37, y: 259}
+      - {x: -52, y: 250}
+      - {x: -79, y: 231}
+      - {x: -112, y: 205}
+      - {x: -119, y: 201}
+      - {x: -119, y: 194}
+      - {x: -115, y: 184}
+      - {x: -108, y: 184}
+      - {x: -98, y: 186}
+      - {x: -84, y: 192}
+      - {x: -62, y: 204}
+      - {x: -46, y: 212}
+      - {x: -44, y: 207}
+      - {x: -58, y: 198}
+      - {x: -82, y: 186}
+      - {x: -91, y: 177}
+      - {x: -91, y: 149}
+      - {x: -89, y: 139}
+      - {x: -91, y: 128}
+      - {x: -91, y: 100}
+      - {x: -92, y: 88}
+      - {x: -90, y: 78}
+      - {x: -92, y: 70}
+      - {x: -91, y: 55}
+      - {x: -75, y: 39}
+      - {x: -64, y: 34}
+      - {x: -34, y: 29}
+      - {x: -23, y: 26}
+      - {x: -30, y: 18}
+      - {x: -30, y: 6}
+      - {x: -22, y: 2}
+      - {x: -13, y: 0}
+      - {x: 2, y: 0}
+      - {x: 9, y: 6}
+      - {x: 28, y: 7}
+      - {x: 32, y: 19}
+    - - {x: 95, y: 59}
+      - {x: 91, y: 49}
+      - {x: 91, y: 42}
+      - {x: 95, y: 35}
+      - {x: 119, y: 35}
+      - {x: 119, y: 54}
+      - {x: 110, y: 59}
+    - - {x: -104, y: 69}
+      - {x: -112, y: 69}
+      - {x: -118, y: 62}
+      - {x: -118, y: 54}
+      - {x: -108, y: 46}
+      - {x: -97, y: 46}
+      - {x: -92, y: 50}
+      - {x: -92, y: 60}
+      - {x: -93, y: 65}
+    - - {x: 23, y: 192}
+      - {x: 20, y: 196}
+      - {x: 17, y: 197}
+      - {x: 14, y: 197}
+      - {x: 10, y: 202}
+      - {x: 7, y: 203}
+      - {x: 5, y: 203}
+      - {x: 2, y: 205}
+      - {x: -4, y: 207}
+      - {x: -7, y: 206}
+      - {x: -9, y: 206}
+      - {x: -8, y: 209}
+      - {x: -9, y: 214}
+      - {x: -3, y: 209}
+      - {x: 1, y: 208}
+      - {x: 4, y: 204}
+      - {x: 10, y: 201}
+      - {x: 16, y: 196}
+      - {x: 23, y: 190}
+      - {x: 27, y: 189}
+      - {x: 25, y: 192}
+  m_UseDelaunayMesh: 0
 --- !u!1 &7157655937583819985
 GameObject:
   m_ObjectHideFlags: 0

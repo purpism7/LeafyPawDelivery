@@ -64,7 +64,7 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         yield return StartCoroutine(base.CoInit(iProvider));
 
-        var activityPlaceId = Game.Data.Const.StartPlaceId;//placeMgr.ActivityPlaceId; 
+        var activityPlaceId = PlayerPrefs.GetInt("LastPlaceId", Game.Data.Const.StartPlaceId);//placeMgr.ActivityPlaceId; 
 
         var inputMgr = iProvider.Get<InputManager>();
         IGameCameraCtrProvider = inputMgr?.GameCameraCtr;
@@ -224,6 +224,8 @@ public class MainGameManager : Singleton<MainGameManager>
             GameState.Type.Equals(typeof(T)))
             return;
 
+        GameState?.End();
+
         GameState = System.Activator.CreateInstance<T>();
         GameState?.Initialize(this);
     }
@@ -278,6 +280,8 @@ public class MainGameManager : Singleton<MainGameManager>
         SetGameState<Game.State.Enter>();
 
         AsyncDelay(endMoveAction).Forget();
+
+        PlayerPrefs.SetInt("LastPlaceId", placeId);
     }
 
     private async UniTask AsyncDelay(System.Action endMoveAction)

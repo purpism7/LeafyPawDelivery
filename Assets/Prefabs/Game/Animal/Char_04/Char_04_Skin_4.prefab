@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 534433823138913160}
   - component: {fileID: 940979131949321881}
   - component: {fileID: 2799154114294592222}
-  - component: {fileID: 6789097060400310471}
+  - component: {fileID: 1920683234809625268}
   m_Layer: 6
   m_Name: Animal
   m_TagString: Untagged
@@ -107,13 +107,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!136 &6789097060400310471
-CapsuleCollider:
+--- !u!60 &1920683234809625268
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3018987580467069867}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -122,14 +124,61 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 55
-  m_Height: 122.2
-  m_Direction: 1
-  m_Center: {x: 0, y: 56.8, z: 0}
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 110, y: 160}
+    newSize: {x: 200, y: 200}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 28, y: 0}
+      - {x: 31, y: 2}
+      - {x: 43, y: 20}
+      - {x: 47, y: 28}
+      - {x: 55, y: 45}
+      - {x: 55, y: 70}
+      - {x: 54, y: 80}
+      - {x: 49, y: 103}
+      - {x: 44, y: 107}
+      - {x: 39, y: 110}
+      - {x: 27, y: 109}
+      - {x: 12, y: 112}
+      - {x: -14, y: 112}
+      - {x: -26, y: 109}
+      - {x: -38, y: 110}
+      - {x: -46, y: 105}
+      - {x: -49, y: 100}
+      - {x: -55, y: 71}
+      - {x: -55, y: 47}
+      - {x: -52, y: 32}
+      - {x: -53, y: 16}
+      - {x: -38, y: 4}
+      - {x: -29, y: 0}
+      - {x: -18, y: 0}
+      - {x: -15, y: 4}
+      - {x: 11, y: 5}
+      - {x: 16, y: 0}
+  m_UseDelaunayMesh: 0
 --- !u!1 &5034679396573058153
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,13 @@ namespace Game.State
             return Type.Equals(typeof(T));
         }
 
+        public T Get<T>() where T : Base
+        {
+            return this as T;
+        }
+
         public abstract void Initialize(MainGameManager mainGameMgr);
+        public abstract void End();
     }
 }
 

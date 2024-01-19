@@ -81,9 +81,13 @@ namespace GameSystem
                 }
                 else
                 {
-                    bool isGetGameBase = CheckGetGameBase<Game.Base>(hitInfo, out gameBase);
-                    if (!isGetGameBase)
-                        return;
+                    bool isGetGameBase = CheckGetGameBase(raycastHit2D, out gameBase);
+                    if(!isGetGameBase)
+                    {
+                        isGetGameBase = CheckGetGameBase<Game.Base>(hitInfo, out gameBase);
+                        if (!isGetGameBase)
+                            return;
+                    }
                 }
 
                 _gameBase?.OnTouch(touch);

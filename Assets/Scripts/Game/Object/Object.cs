@@ -23,7 +23,6 @@ namespace Game
         #endregion
 
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
-        public Game.Element.State.BaseState<Object> State { get; private set; } = null;
 
         private void OnDrawGizmos()
         {
@@ -79,14 +78,19 @@ namespace Game
 
             if(gameState.CheckState<Game.State.Edit>())
             {
-                SetState(new Game.Element.State.Edit<Game.Object>()?.Initialize(gameCameraCtr, iGrid));
+                var editState = gameState.Get<Game.State.Edit>();
+                if (editState != null &&
+                    editState.CheckIsEditElement(this))
+                    return;
 
-                SetSortingOrder(_selectOrder);
+                SetState(new Game.Element.State.Edit()?.Initialize(gameCameraCtr, iGrid));
+
+                SetSortingOrder(SelectOrder);
                 ActiveEdit(true);
             }
             else
             {
-                SetState(new Game.Element.State.Game<Game.Object>()?.Initialize(gameCameraCtr, iGrid));
+                SetState(new Game.Element.State.Play()?.Initialize(gameCameraCtr, iGrid));
             }
 
             if(touch != null)
@@ -110,25 +114,6 @@ namespace Game
             transform.localPosition = _data.Pos;
         }
 
-        private void SetState(Game.Element.State.BaseState<Game.Object> state)
-        {
-            if(State != null &&
-               state != null) 
-            {
-                if (State.CheckEqual(state))
-                    return;
-            }
-
-            if (state is Game.Element.State.Edit<Game.Object>)
-            {
-                StartEdit();
-            }
-
-            state?.Apply(this);
-
-            State = state;
-        }
-
         private void SetSortingOrder(int order)
         {
             if (spriteRenderer == null)
@@ -149,33 +134,9 @@ namespace Game
             _data.Pos = pos;
         }
 
-        #region Collision 
-        //private void OnCollisionEnter(Collision collision)
-        //{
-        //    //Debug.Log("OnCollisionEnter = " + collision.gameObject.name);
-        //}
-
-        //private void OnCollisionExit(Collision collision)
-        //{
-        //    //Debug.Log("OnCollisionExit = " + collision.gameObject.name);
-        //}
-
-        //private void OnCollisionStay(Collision collision)
-        //{
-        //    //Debug.Log("OnCollisionStay = " + collision.gameObject.name);
-
-        //    var obj = collision.gameObject.GetComponent<Game.Object>();
-        //    if (obj != null)
-        //    {
-        //        Debug.Log(obj.name);
-        //    }
-        //}
-        #endregion
-
         #region Edit.IListener
         void UI.Edit.IListener.Remove()
         {
-            EState_ = EState.Remove;
             Command.Remove.Execute(this);
 
             ActiveEdit(false);
@@ -184,7 +145,6 @@ namespace Game
 
         void UI.Edit.IListener.Arrange()
         {
-            EState_ = EState.Arrange;
             Command.Arrange.Execute(this, transform.localPosition);
 
             SetSortingOrder(-(int)transform.localPosition.y);

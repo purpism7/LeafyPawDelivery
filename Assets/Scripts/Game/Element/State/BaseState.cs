@@ -4,20 +4,20 @@ using UnityEngine;
 
 namespace Game.Element.State
 {
-    public class BaseState<T> where T : Game.BaseElement
+    public class BaseState
     {
-        private static BaseState<T> _instance = null;
+        private static BaseState _instance = null;
 
-        public static BaseState<T> Create()
+        public static BaseState Create()
         {
-            _instance = new BaseState<T>();
-            Debug.Log("_instance = " + _instance.GetType());
+            _instance = new BaseState();
+            
             return _instance?.Initialize();
         }
 
-        public static BaseState<T> Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
+        public static BaseState Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
-            _instance = new BaseState<T>();
+            _instance = new BaseState();
             
             return _instance?.Initialize(gameCameraCtr, iGrid);
         }
@@ -32,17 +32,17 @@ namespace Game.Element.State
             }
         }
 
-        public bool CheckEqual(BaseState<T> state)
+        public bool CheckEqual(BaseState state)
         {
             return Type.Equals(state.Type);
         }
 
-        public virtual BaseState<T> Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
+        public virtual BaseState Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             return this;
         }
 
-        public virtual BaseState<T> Initialize()
+        public virtual BaseState Initialize()
         { 
             return this;
         }
@@ -52,9 +52,19 @@ namespace Game.Element.State
 
         }
 
-        public virtual void Apply(T t)
+        public virtual void Apply(BaseElement gameBaseElement)
         {
-            _gameBaseElement = t;
+            _gameBaseElement = gameBaseElement;
+        }
+
+        public virtual void End()
+        {
+
+        }
+
+        public virtual void ChainUpdate()
+        {
+
         }
     }
 }
