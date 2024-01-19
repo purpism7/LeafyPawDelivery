@@ -442,7 +442,9 @@ namespace UI.Component
         {
             if (_data == null)
                 return;
-            
+
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
             _data.IListener?.Edit(_data.EElement, _data.Id, _data.index);
         }
     }

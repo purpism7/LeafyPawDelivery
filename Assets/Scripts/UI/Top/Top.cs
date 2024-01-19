@@ -477,21 +477,27 @@ namespace UI
             Initialize();
         }
 
-        public void OnClickCurrency()
-        {
-            var popup = new GameSystem.PopupCreator<Shop, Shop.Data_>()
-                .SetCoInit(true)
-                .Create();
-        }
+        //public void OnClickCurrency()
+        //{
+        //    var popup = new GameSystem.PopupCreator<Shop, Shop.Data_>()
+        //        .SetCoInit(true)
+        //        .Create();
+
+            
+        //}
 
         public void OnClickSetting()
         {
             var popup = new GameSystem.PopupCreator<Setting, UI.BaseData>()
                .Create();
+
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
         }
 
         public void OnClickScreenshot()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
             var mainGameMgr = MainGameManager.Instance;
             if (mainGameMgr == null)
                 return;
@@ -499,7 +505,7 @@ namespace UI
             var gameState = mainGameMgr.GameState;
             if (gameState == null)
                 return;
-            Debug.Log("gameState = " + gameState);
+            
             if (gameState.CheckState<Game.State.Edit>())
                 return;
 

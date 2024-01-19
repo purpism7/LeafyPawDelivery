@@ -365,6 +365,8 @@ namespace UI
                 _currETabType = eTabType;
 
                 ActiveContents();
+
+                EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
             }
         }
 
@@ -386,6 +388,8 @@ namespace UI
                 })
                 .Create();
 
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
         }
         #endregion
 
@@ -395,7 +399,9 @@ namespace UI
             Sequencer.EnqueueTask(() =>
             {
                 return MainGameManager.Get<Game.StoryManager>()?.PlayStory(story);
-            }); 
+            });
+
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
         }
         #endregion
 

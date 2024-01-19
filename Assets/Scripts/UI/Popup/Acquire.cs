@@ -409,6 +409,8 @@ namespace UI
                 _currETabType = eTabType;
 
                 ActiveContents();
+
+                GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
             }
         }
     }

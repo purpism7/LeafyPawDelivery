@@ -14,9 +14,7 @@ namespace Info
         private readonly string KEYLOCALEINDEX = string.Empty;
 
         public static UnityEvent<Game.Event.SettingData> Event { get; private set; } = new();
-
         private static Setting _instance = null;
-
         public static Setting Get
         {
             get
@@ -36,9 +34,7 @@ namespace Info
             {
                 string onBGM = PlayerPrefs.GetString(KeyBGM, true.ToString());
                 if (Boolean.TryParse(onBGM, out bool on))
-                {
                     return on;
-                }
 
                 return true;
             }
@@ -50,9 +46,7 @@ namespace Info
             {
                 string onEffect = PlayerPrefs.GetString(KeyEffect, true.ToString());
                 if (Boolean.TryParse(onEffect, out bool on))
-                {
                     return on;
-                }
 
                 return true;
             }

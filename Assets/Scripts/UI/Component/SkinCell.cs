@@ -134,7 +134,9 @@ namespace UI.Component
             else
             {
                 EnableBuyRoot(false);
-            }   
+            }
+
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
         }
     }
 }

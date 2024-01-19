@@ -317,7 +317,6 @@ namespace UI
         // 탭 변경 콜백.
         public void OnChanged(string tabType)
         {
-            Debug.Log("tabType = " + tabType);
             if(System.Enum.TryParse(tabType, out Game.Type.ETab eTabType))
             {
                 if(_currETabType == eTabType)
@@ -326,6 +325,8 @@ namespace UI
                 _currETabType = eTabType;
 
                 ActiveContents();
+
+                EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
             }
         }
 

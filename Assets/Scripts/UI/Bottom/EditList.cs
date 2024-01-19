@@ -330,6 +330,8 @@ namespace UI
 
             _editing = true;
 
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+
         }
         #endregion
 
@@ -346,6 +348,8 @@ namespace UI
             mainGameMgr.AddObjectToPlace(id);
 
             _editing = true;
+
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
         }
         #endregion
 
@@ -357,12 +361,16 @@ namespace UI
                     return;
                 
                 SetTab(eTabType);
+
+                GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
             }
         }
 
         public void OnClickClose()
         {
             _data?.IListener?.Close();
+
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
         }
     }
 }

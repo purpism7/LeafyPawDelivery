@@ -199,6 +199,8 @@ namespace UI
                         break;
                     }
             }
+
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
         }
         #endregion
 

@@ -36,13 +36,16 @@ namespace UI
         {
             var setting = Info.Setting.Get;
 
-            bool on = true;
+            bool onBGM = true;
+            bool onEffect = true;
             if (setting != null)
             {
-                on = setting.OnBGM;
+                onBGM = setting.OnBGM;
+                onEffect = setting.OnEffect;
             }
 
-            UIUtils.SetActive(bgmCheckImg?.gameObject, on);
+            UIUtils.SetActive(bgmCheckImg?.gameObject, onBGM);
+            UIUtils.SetActive(effectCheckImg?.gameObject, onEffect);
         }
 
         private void SetBGM()
@@ -74,11 +77,15 @@ namespace UI
         public void OnClickBGM()
         {
             SetBGM();
+
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
         }
 
         public void OnClickEffect()
         {
             SetEffect();
+
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
         }
         #endregion
 
@@ -126,6 +133,8 @@ namespace UI
                     langToggles[i]?.SetIsOnWithoutNotify(i == index);
                 }
             }
+
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
         }
         #endregion
     }

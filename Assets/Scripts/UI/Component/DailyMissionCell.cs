@@ -209,6 +209,8 @@ namespace UI.Component
 
         public void OnClickGetReward()
         {
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+
             if (_data == null)
                 return;
 
