@@ -71,27 +71,27 @@ namespace Game.Manager
 
                 case Game.Event.ArrangeAnimalData arrangeAnimalData:
                     {
-                        string keySave = KeyGuide + "_Animal";
-                        if (Boolean.TryParse(PlayerPrefs.GetString(keySave, false.ToString()), out bool already))
-                        {
-                            if (already)
-                                return;
-                        }
+                        //string keySave = KeyGuide + "_Animal";
+                        //if (Boolean.TryParse(PlayerPrefs.GetString(keySave, false.ToString()), out bool already))
+                        //{
+                        //    if (already)
+                        //        return;
+                        //}
 
-                        if (arrangeAnimalData.id == 1)
-                        {
-                            var sentenceQueue = new Queue<string>();
-                            sentenceQueue.Clear();
+                        //if (arrangeAnimalData.id == 1)
+                        //{
+                        //    var sentenceQueue = new Queue<string>();
+                        //    sentenceQueue.Clear();
 
-                            var key = "guide_object_{0}";
-                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 1), LocalizationSettings.SelectedLocale));
-                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 2), LocalizationSettings.SelectedLocale));
-                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 3), LocalizationSettings.SelectedLocale));
+                        //    var key = "guide_object_{0}";
+                        //    sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 1), LocalizationSettings.SelectedLocale));
+                        //    sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 2), LocalizationSettings.SelectedLocale));
+                        //    sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 3), LocalizationSettings.SelectedLocale));
 
-                            Show(sentenceQueue);
+                        //    Show(sentenceQueue);
 
-                            PlayerPrefs.SetString(keySave, true.ToString());
-                        }
+                        //    PlayerPrefs.SetString(keySave, true.ToString());
+                        //}
 
                         break;
                     }
@@ -116,7 +116,7 @@ namespace Game.Manager
                             var sentenceQueue = new Queue<string>();
                             sentenceQueue.Clear();
 
-                            var key = "guide_animal_{0}";
+                            var key = "guide_start_{0}";
                             sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 1), LocalizationSettings.SelectedLocale));
                             sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 2), LocalizationSettings.SelectedLocale));
                             sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 3), LocalizationSettings.SelectedLocale));

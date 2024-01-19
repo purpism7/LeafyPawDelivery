@@ -78,15 +78,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41013063703322624
-    m_Key: guide_object_1
+    m_Key: guide_start_1
     m_Metadata:
       m_Items: []
   - m_Id: 41339045966503936
-    m_Key: guide_object_2
+    m_Key: guide_start_2
     m_Metadata:
       m_Items: []
   - m_Id: 41339094389743616
-    m_Key: guide_object_3
+    m_Key: guide_start_3
     m_Metadata:
       m_Items: []
   - m_Id: 41339116418228224

@@ -16,6 +16,8 @@ namespace UI
 
         [SerializeField]
         private TextMeshProUGUI typingTMP = null;
+        [SerializeField]
+        private UnityEngine.UI.Button clickBtn = null;
 
         public override void Initialize(Data data)
         {
@@ -39,9 +41,17 @@ namespace UI
             base.Deactivate();
         }
 
+        private void SetInteractable(bool interactable)
+        {
+            if (clickBtn == null)
+                return;
+
+            clickBtn.interactable = interactable;
+        }
+
         private void FinishTyping()
         {
-            
+            SetInteractable(true);
         }
 
         private void Finish()
@@ -53,6 +63,8 @@ namespace UI
 
         private async UniTask AsyncTyping()
         {
+            SetInteractable(false);
+
             if (_data.sentenceQueue == null)
                 return;
 
@@ -77,20 +89,16 @@ namespace UI
             await UniTask.WaitForSeconds(1.5f);
 
             FinishTyping();
-
-            await UniTask.WaitForSeconds(1f);
-
-            AsyncTyping().Forget();
         }
 
-        //public void OnClick()
-        //{
-        //    if (_isTyping)
-        //        return;
+        public void OnClick()
+        {
+            //if (_isTyping)
+            //    return;
 
-
-        //    //AsyncTyping().Forget();
-        //}
+            AsyncTyping().Forget();
+            //AsyncTyping().Forget();
+        }
     }
 }
 

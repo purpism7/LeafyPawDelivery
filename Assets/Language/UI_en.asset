@@ -103,15 +103,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41339094389743616
-    m_Localized: Then you can get some object currency.
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 41339045966503936
-    m_Localized: And touch the tree 5 times.
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 41013063703322624
-    m_Localized: First, place a large tree.
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 45328183996702720

@@ -58,13 +58,6 @@ namespace Game.Element.State
             MainGameManager.Instance?.GameState?.Get<Game.State.Edit>()?.SetEditElement(null);
         }
 
-        public override void ChainUpdate()
-        {
-            base.ChainUpdate();
-
-            //Overlap();
-        }
-
         public override void Touch(Touch touch)
         {
             if(_gameBaseElement == null)
@@ -134,7 +127,6 @@ namespace Game.Element.State
             Vector3 pos = gameCamera.ScreenToWorldPoint(movePos);
 
             pos.y += -50f;
-
             pos.y = _iGrid.LimitPosY(pos.y);
 
             gameBaseTm.position = pos;
