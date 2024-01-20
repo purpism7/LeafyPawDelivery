@@ -490,7 +490,7 @@ namespace Game
 
                     if(dropItemData != null)
                     {
-                        dropItemData.startPos.z += i;
+                        dropItemData.startPos.z -= i;
                     }
 
                     dropItem.Initialize(dropItemData);
@@ -498,25 +498,11 @@ namespace Game
 
                     return;
                 }
-
-                //foreach (var dropItem in _dropItemList)
-                //{
-                //    if (dropItem == null)
-                //        continue;
-
-                //    if (dropItem.IsActivate)
-                //        continue;
-
-                //    dropItem.Initialize(dropItemData);
-                //    dropItem.Activate();
-
-                //    return;
-                //}
             }
 
             if (dropItemData != null)
             {
-                dropItemData.startPos.z += _dropItemList.Count;
+                dropItemData.startPos.z -= _dropItemList.Count;
             }
 
             var addDropItem = DropItemCreator.Get
