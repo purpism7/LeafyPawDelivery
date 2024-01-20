@@ -1856,17 +1856,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 36043585164375447, guid: bbd43f10373f941c5a5341b6e3720d7a, type: 3}
   m_PrefabInstance: {fileID: 913153266}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &913153268 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3721749009066019659, guid: bbd43f10373f941c5a5341b6e3720d7a, type: 3}
-  m_PrefabInstance: {fileID: 913153266}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1426862596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3265126b90c9c40818d539c0a84570b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &913153269 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1077639064965743031, guid: bbd43f10373f941c5a5341b6e3720d7a, type: 3}
@@ -3127,7 +3116,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 913153268}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UI.ButtonEffectPlayer, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 1

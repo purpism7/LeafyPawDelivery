@@ -101,7 +101,7 @@ public class MainGameManager : Singleton<MainGameManager>
         _iUpdaterList?.Add(inputMgr);
         _iUpdaterList?.Add(IGameCameraCtrProvider as IUpdater);
         _iUpdaterList?.Add(placeMgr);
-        _iUpdaterList?.Add(inputMgr?.grid);
+        //_iUpdaterList?.Add(inputMgr?.grid);
     }
 
     private void AddManager(Type type, MonoBehaviour monoBehaviour)

@@ -95,7 +95,7 @@ namespace Game.PlaceEvent
 
             var currencyData = new Game.DropItem.CurrencyData()
             {
-                startPos = new Vector3(randomAnimal.transform.position.x, randomAnimal.transform.position.y, 300f),
+                startPos = new Vector3(randomAnimal.transform.position.x, randomAnimal.transform.position.y),
                 EElement = Type.EElement.Animal,
                 Value = randomAnimal.ElementData.GetCurrency,
             };

@@ -97,6 +97,8 @@ namespace Game
                     if (CheckIsLetter)
                     {
                         _activateProgressCoroutine = StartCoroutine(CoActivateProgress());
+
+                        GameSystem.EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchLetter);
                     }
 
                     return;
@@ -166,11 +168,11 @@ namespace Game
 
         private void SetCollider()
         {
-            var collider = spriteRenderer.gameObject.GetOrAddComponent<CapsuleCollider>();
+            var collider = spriteRenderer.gameObject.GetOrAddComponent<CapsuleCollider2D>();
             if (collider == null)
                 return;
 
-            collider.radius += 3f;
+            collider.bounds.Expand(3f);
         }
 
         private void SetSortingOrder()
@@ -221,7 +223,7 @@ namespace Game
                 return;
 
             var startPos = gameCameraCtr.UICamera.ScreenToWorldPoint(touch.Value.position);
-            startPos.z = 10f;
+            //startPos.z = 10f;
 
             switch(_data)
             {
@@ -267,6 +269,8 @@ namespace Game
                         break;
                     }
             }
+
+            GameSystem.EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.PickItem);
         }
 
         private void Drop()

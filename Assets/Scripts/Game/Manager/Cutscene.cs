@@ -250,7 +250,10 @@ namespace Game.Manager
         #region Conversation.IListener
         void Conversation.IListener.FinishTyping(int remainCnt)
         {
-
+            if(remainCnt <= 0)
+            {
+                _playableDirector?.Stop();
+            }
         }
         #endregion
     }

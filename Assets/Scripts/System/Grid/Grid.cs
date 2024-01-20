@@ -256,10 +256,10 @@ namespace GameSystem
         #region IUpdater
         void IUpdater.ChainUpdate()
         {
-            foreach (var gridCell in _cellArray)
-            {
-                gridCell?.ChainUpdate();
-            }
+            //foreach (var gridCell in _cellArray)
+            //{
+            //    gridCell?.ChainUpdate();
+            //}
         }
         #endregion
 

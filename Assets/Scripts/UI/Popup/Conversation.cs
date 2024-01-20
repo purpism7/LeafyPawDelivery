@@ -5,6 +5,8 @@ using UI;
 using UnityEngine;
 
 using TMPro;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 namespace UI
 {
@@ -26,7 +28,7 @@ namespace UI
             public string Speaker = string.Empty;
             public string SpeakerSpriteName = string.Empty;
             public string Sentence = string.Empty;
-            public float KeepDelay = 2f;
+            public float KeepDelay = 3.5f;
 
             public void Initialize()
             {
@@ -42,18 +44,24 @@ namespace UI
             }
         }
 
-        [SerializeField] private TextMeshProUGUI speakerTMP = null;
-        [SerializeField] private TextMeshProUGUI typingTMP = null;
+        [SerializeField]
+        private TextMeshProUGUI speakerTMP = null;
+        [SerializeField]
+        private TextMeshProUGUI typingTMP = null;
         [SerializeField]
         private UnityEngine.UI.Image speakerImg = null;
         [SerializeField]
         private TextMeshProUGUI cntTMP = null;
+        [SerializeField]
+        private UnityEngine.UI.Button clickBtn = null;
 
-        private YieldInstruction _waitSec = new WaitForSeconds(0.02f);
+        private CancellationTokenSource _typingCancellationTokenSource = null;
+        private CancellationTokenSource _keepDelayCancellationTokenSource = null;
         private Queue<Constituent> _constituentQueue = new();
 
         private int _allCnt = 0;
         private int _cnt = 0;
+        private bool _isTyping = false;
 
         public override IEnumerator CoInitialize(Data data)
         {
@@ -104,27 +112,83 @@ namespace UI
             UIUtils.SetActive(speakerImg?.rectTransform, true);
         }
 
-        private IEnumerator CoTyping(Constituent constituent)
+        private async UniTask StartTypingAsync(Constituent constituent)
         {
+            _keepDelayCancellationTokenSource = new CancellationTokenSource();
+
+            await TypingAsync(constituent);
+
+            float keepDelay = 0;
+            while (keepDelay < constituent.KeepDelay)
+            {
+                await UniTask.Yield();
+
+                keepDelay += Time.deltaTime;
+
+                if (_keepDelayCancellationTokenSource.IsCancellationRequested)
+                    break;
+            }
+
+            FinishTyping();
+        }
+
+        private async UniTask TypingAsync(Constituent constituent)
+        {
+            _isTyping = true;
+
+            _typingCancellationTokenSource = new CancellationTokenSource();
+
             SetEmpty();
 
             constituent?.Initialize();
-            
+
             speakerTMP?.SetText(constituent.Speaker);
             SetSpeakerImg(constituent?.SpeakerSpriteName);
 
             Debug.Log("CoTyping = " + constituent.Sentence);
             foreach (var typingChr in constituent.Sentence)
             {
-                yield return _waitSec;
+                await UniTask.WaitForSeconds(0.02f);
+
+                if (_typingCancellationTokenSource != null &&
+                    _typingCancellationTokenSource.IsCancellationRequested)
+                {
+                    typingTMP?.SetText(constituent.Sentence);
+
+                    break;
+                }
 
                 typingTMP?.SetText(typingTMP.text + typingChr);
             }
 
-            yield return new WaitForSeconds(constituent.KeepDelay);
-
-            FinishTyping();
+            _isTyping = false;
         }
+
+        //private IEnumerator CoTyping(Constituent constituent)
+        //{
+        //    _isTyping = true;
+
+        //    SetEmpty();
+
+        //    constituent?.Initialize();
+            
+        //    speakerTMP?.SetText(constituent.Speaker);
+        //    SetSpeakerImg(constituent?.SpeakerSpriteName);
+
+        //    Debug.Log("CoTyping = " + constituent.Sentence);
+        //    foreach (var typingChr in constituent.Sentence)
+        //    {
+        //        yield return _waitSec;
+
+        //        typingTMP?.SetText(typingTMP.text + typingChr);
+        //    }
+
+        //    _isTyping = false;
+
+        //    yield return new WaitForSeconds(constituent.KeepDelay);
+
+            
+        //}
 
         private void FinishTyping()
         {
@@ -155,9 +219,9 @@ namespace UI
             if (constituent == null)
                 return;
 
-            StartCoroutine(CoTyping(constituent));
+            StartTypingAsync(constituent).Forget();
 
-            if(_allCnt > 0)
+            if (_allCnt > 0)
             {
                 cntTMP?.SetText(string.Format("{0}/{1}", ++_cnt, _allCnt));
             }
@@ -166,6 +230,23 @@ namespace UI
         public void SetAllCnt(int allCnt)
         {
             _allCnt = allCnt;
+        }
+
+        public void OnClick()
+        {
+            if(_isTyping)
+            {
+                _typingCancellationTokenSource?.Cancel();
+                _typingCancellationTokenSource?.Dispose();
+            }
+            else
+            {
+                if (_cnt >= _allCnt)
+                    return;
+
+                _keepDelayCancellationTokenSource.Cancel();
+                _keepDelayCancellationTokenSource.Dispose();
+            }
         }
     }
 }

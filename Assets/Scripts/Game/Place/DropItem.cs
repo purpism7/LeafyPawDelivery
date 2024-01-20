@@ -174,7 +174,7 @@ namespace Game.PlaceEvent
 
             var itemData = new Game.DropItem.ItemData()
             {
-                startPos = new Vector3(iGameCameraCtrProvider.RandPosXInScreenRagne, iGameCameraCtrProvider.RandPosYInScreenRagne, 310f),
+                startPos = new Vector3(iGameCameraCtrProvider.RandPosXInScreenRagne, iGameCameraCtrProvider.RandPosYInScreenRagne),
 
                 activateProgress = true,
                 totalProgress = 10,

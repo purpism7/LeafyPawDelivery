@@ -470,21 +470,53 @@ namespace Game
 
         void IPlace.CreateDropItem(DropItem.Data dropItemData)
         {
-            if(_dropItemList != null)
+            if (dropItemData != null)
             {
-                foreach(var dropItem in _dropItemList)
+                dropItemData.startPos.z = 300f;
+            }
+
+            if (_dropItemList != null)
+            {
+                //dropItemData.startPos.z = 300f + _dropItemList
+
+                for(int i = 0; i < _dropItemList.Count; ++i)
                 {
+                    var dropItem = _dropItemList[i];
                     if (dropItem == null)
                         continue;
 
                     if (dropItem.IsActivate)
                         continue;
 
+                    if(dropItemData != null)
+                    {
+                        dropItemData.startPos.z += i;
+                    }
+
                     dropItem.Initialize(dropItemData);
                     dropItem.Activate();
 
                     return;
                 }
+
+                //foreach (var dropItem in _dropItemList)
+                //{
+                //    if (dropItem == null)
+                //        continue;
+
+                //    if (dropItem.IsActivate)
+                //        continue;
+
+                //    dropItem.Initialize(dropItemData);
+                //    dropItem.Activate();
+
+                //    return;
+                //}
+            }
+
+            if (dropItemData != null)
+            {
+                dropItemData.startPos.z += _dropItemList.Count;
             }
 
             var addDropItem = DropItemCreator.Get
