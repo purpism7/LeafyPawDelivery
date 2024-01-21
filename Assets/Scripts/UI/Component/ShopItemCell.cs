@@ -89,6 +89,7 @@ namespace UI.Component
             else
             {
                 iconImg.sprite = atlasLoader.GetShopItemSprite(shopData.ECategory, shopData.IconImg);
+                iconImg.SetNativeSize();
             }
         }
 
