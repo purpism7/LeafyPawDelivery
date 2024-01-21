@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameSystem;
-using UI;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+
+using Cysharp.Threading.Tasks;
+
+using GameSystem;
+using UI;
 
 namespace Game.Manager
 {
@@ -198,18 +201,30 @@ namespace Game.Manager
 
         private void Finish(PlayableDirector playableDirector)
         {
-            StartCoroutine(CoFinish());
+            //StartCoroutine(CoFinish());
+
+            FinishAsync().Forget();
         }
 
-        private IEnumerator CoFinish()
+        private async UniTask FinishAsync()
         {
             if (_data?.EndFunc != null)
             {
-                yield return new WaitUntil(() => _data.EndFunc.Invoke());
+                await UniTask.WaitUntil(() => _data.EndFunc.Invoke());
             }
 
             Finish();
         }
+
+        //private IEnumerator CoFinish()
+        //{
+        //    if (_data?.EndFunc != null)
+        //    {
+        //        yield return new WaitUntil(() => _data.EndFunc.Invoke());
+        //    }
+
+        //    Finish();
+        //}
 
         private void Finish()
         {
