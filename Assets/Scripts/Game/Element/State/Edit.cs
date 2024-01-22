@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 namespace Game.Element.State
 {
     public class Edit : BaseState
@@ -25,9 +27,9 @@ namespace Game.Element.State
             return this;
         }
 
-        public override void Apply(BaseElement gameBaseElement)
+        public override async UniTask Apply(BaseElement gameBaseElement)
         {
-            base.Apply(gameBaseElement);
+            await base.Apply(gameBaseElement);
 
             var tm = gameBaseElement.transform;
             if (tm)
@@ -38,6 +40,8 @@ namespace Game.Element.State
 
             Game.UIManager.Instance?.Bottom?.DeactivateEditList();
             MainGameManager.Instance?.GameState?.Get<Game.State.Edit>()?.SetEditElement(_gameBaseElement);
+
+            await UniTask.WaitForFixedUpdate();
 
             Overlap();
         }

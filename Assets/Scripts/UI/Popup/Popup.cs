@@ -206,7 +206,7 @@ namespace UI
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .Append(backgroundImg.DOFade(0, 0))
-                .Append(backgroundImg.DOFade(0.7f, 0.5f));
+                .Append(backgroundImg.DOFade(0.8f, 0.5f).SetEase(Ease.Linear));
 
             sequence.Restart();
         }

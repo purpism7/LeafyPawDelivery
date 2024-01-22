@@ -260,6 +260,12 @@ namespace GameSystem
             //{
             //    gridCell?.ChainUpdate();
             //}
+            return;
+        }
+
+        void IUpdater.ChainFixedUpdate()
+        {
+            return;
         }
         #endregion
 

@@ -144,6 +144,11 @@ MonoBehaviour:
       \n\uC120\uBB3C\uC744 \uBC1B\uC744 \uC218 \uC788\uC5B4\uC694."
     m_Metadata:
       m_Items: []
+  - m_Id: 60141890723373056
+    m_Localized: "\uC800\uD76C \uB9C8\uC744\uC5D0 \uC624\uC2E0 \uAC78 \uD658\uC601\uD574\uC694!
+      \n\uC774\uAC74 \uC800\uD76C\uC758 \uC120\uBB3C\uC774\uC5D0\uC694!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

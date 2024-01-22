@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace Game
 {
-    public class ObjectManager : Manager.BaseElement<ObjectManager.Data>, IStarter
+    public class ObjectManager : Manager.BaseElement<ObjectManager.Data>, IEvent
     {
         public class Data : Game.Manager.BaseData
         {
@@ -134,7 +134,7 @@ namespace Game
             return _objectHolder.GetRemainCount(id);
         }
 
-        void IStarter.Check()
+        void IEvent.Starter()
         {
             if (_data == null)
                 return;

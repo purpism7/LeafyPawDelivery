@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 namespace Game.Element.State
 {
     public class BaseState
@@ -52,9 +54,11 @@ namespace Game.Element.State
 
         }
 
-        public virtual void Apply(BaseElement gameBaseElement)
+        public virtual async UniTask Apply(BaseElement gameBaseElement)
         {
             _gameBaseElement = gameBaseElement;
+
+            await UniTask.Yield();
         }
 
         public virtual void End()

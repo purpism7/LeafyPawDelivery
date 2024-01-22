@@ -160,6 +160,10 @@ namespace Game
                 if(_collider2D == null)
                 {
                     _collider2D = GetComponentInChildren<CapsuleCollider2D>();
+                    if(_collider2D == null)
+                    {
+                        _collider2D = GetComponentInChildren<BoxCollider2D>();
+                    }
                 }
             }
 

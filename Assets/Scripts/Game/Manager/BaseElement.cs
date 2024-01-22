@@ -7,8 +7,6 @@ namespace Game.Manager
     public class BaseElement : Base
     {
         
-        
-       
     }
 
     public abstract class BaseElement<T> : BaseElement

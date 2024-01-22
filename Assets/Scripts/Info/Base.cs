@@ -11,7 +11,7 @@ namespace Info.Holder
             //LoadInfo();
             RootJsonFilePath = string.Format(RootJsonFilePath, GameSystem.Auth.ID);
 
-            Debug.Log("Holder Type = " + RootJsonFilePath);
+            //Debug.Log("Holder Type = " + RootJsonFilePath);
         }
 
 #if UNITY_EDITOR

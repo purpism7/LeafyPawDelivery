@@ -79,6 +79,11 @@ namespace Game
             ActivityPlace?.ChainUpdate();
         }
 
+        void IUpdater.ChainFixedUpdate()
+        {
+            return;
+        }
+
         //public override IEnumerator CoProcess(IPreprocessingProvider iProvider)
         //{
         //    //var activityAnimalMgr = iProvider?.Get<ActivityAnimalManager>();

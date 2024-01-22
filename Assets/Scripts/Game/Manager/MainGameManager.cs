@@ -7,9 +7,9 @@ using Cysharp.Threading.Tasks;
 
 using GameSystem;
 
-public interface IStarter
+public interface IEvent
 {
-    void Check();
+    void Starter();
 }
 
 public class MainGameManager : Singleton<MainGameManager>
@@ -159,7 +159,6 @@ public class MainGameManager : Singleton<MainGameManager>
 
         //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
         await UniTask.Yield();
-        await UniTask.Yield();
 
         Starter();
 
@@ -194,15 +193,15 @@ public class MainGameManager : Singleton<MainGameManager>
 
     private void Starter()
     {
-        Debug.Log("Starter");
+        //Debug.Log("Starter");
 
-        foreach(var manager in _managerDic.Values)
+        foreach (var manager in _managerDic.Values)
         {
-            var iStarter = manager as IStarter;
-            if (iStarter == null)
+            var iEvent = manager as IEvent;
+            if (iEvent == null)
                 continue;
 
-            iStarter.Check();
+            iEvent.Starter();
         }
     }
 
@@ -213,6 +212,17 @@ public class MainGameManager : Singleton<MainGameManager>
             foreach (var iUpdater in _iUpdaterList)
             {
                 iUpdater?.ChainUpdate();
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (_iUpdaterList != null)
+        {
+            foreach (var iUpdater in _iUpdaterList)
+            {
+                iUpdater?.ChainFixedUpdate();
             }
         }
     }

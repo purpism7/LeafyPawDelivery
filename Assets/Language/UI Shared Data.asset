@@ -133,6 +133,10 @@ MonoBehaviour:
     m_Key: guide_drop_letter
     m_Metadata:
       m_Items: []
+  - m_Id: 60141890723373056
+    m_Key: starter_reward
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

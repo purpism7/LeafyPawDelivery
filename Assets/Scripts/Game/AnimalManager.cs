@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 namespace Game
 {
-    public class AnimalManager : Manager.BaseElement<AnimalManager.Data>, IStarter
+    public class AnimalManager : Manager.BaseElement<AnimalManager.Data>, IEvent
     {
         public class Data : Game.Manager.BaseData
         {
@@ -18,6 +18,7 @@ namespace Game
 
         private Data _data = null;
         private Info.AnimalHolder _animalHolder = new();
+        private Game.Event.Animal _animalEvent = new();
 
         public List<Info.Animal> AnimalInfoList => _animalHolder?.AnimalInfoList;
 
@@ -84,10 +85,14 @@ namespace Game
 
             if (_animalHolder.AddAnimalInfo(animalInfo))
             {
-                Event?.Invoke(new Game.Event.AddAnimalData()
+                var data = new Game.Event.AddAnimalData()
                 {
                     id = animalInfo.Id,
-                });
+                };
+
+                Event?.Invoke(data);
+
+                _animalEvent?.Emit(data);
 
                 Info.UserManager.Instance?.User?.AddAnimal(animalInfo);
 
@@ -126,55 +131,57 @@ namespace Game
             return _animalHolder?.GetAnimalInfo(animalId);
         }
 
-        void IStarter.Check()
+        void IEvent.Starter()
         {
             if (_data == null)
                 return;
 
-            var animalOpenConidtionDatas = AnimalOpenConditionContainer.Instance?.Datas;
-            if (animalOpenConidtionDatas == null)
-                return;
+            _animalEvent?.Starter();
 
-            var animalContainer = AnimalContainer.Instance;
+            //    var animalOpenConidtionDatas = AnimalOpenConditionContainer.Instance?.Datas;
+            //    if (animalOpenConidtionDatas == null)
+            //        return;
 
-            foreach(var data in animalOpenConidtionDatas)
-            {
-                if (data == null)
-                    continue;
+            //    var animalContainer = AnimalContainer.Instance;
 
-                var animalData = animalContainer?.GetData(data.Id);
-                if (animalData != null &&
-                    animalData.PlaceId != _data.PlaceId)
-                    continue;
+            //    foreach(var data in animalOpenConidtionDatas)
+            //    {
+            //        if (data == null)
+            //            continue;
 
-                if (CheckExist(data.Id))
-                    continue;
+            //        var animalData = animalContainer?.GetData(data.Id);
+            //        if (animalData != null &&
+            //            animalData.PlaceId != _data.PlaceId)
+            //            continue;
 
-                if (data.eType == OpenConditionData.EType.Starter)
-                {
-                    Sequencer.EnqueueTask(
-                        () =>
-                        {
-                            var popup = new PopupCreator<Obtain, Obtain.Data>()
-                                .SetData(new Obtain.Data()
-                                {
-                                    EElement = Type.EElement.Animal,
-                                    Id = data.Id,
-                                    ClickAction = () =>
-                                    {
+            //        if (CheckExist(data.Id))
+            //            continue;
 
-                                    },
-                                })
-                                .SetCoInit(true)
-                                .SetReInitialize(true)
-                                .Create();
+            //        if (data.eType == OpenConditionData.EType.Starter)
+            //        {
+            //            Sequencer.EnqueueTask(
+            //                () =>
+            //                {
+            //                    var popup = new PopupCreator<Obtain, Obtain.Data>()
+            //                        .SetData(new Obtain.Data()
+            //                        {
+            //                            EElement = Type.EElement.Animal,
+            //                            Id = data.Id,
+            //                            ClickAction = () =>
+            //                            {
 
-                            return popup;
-                        });
+            //                            },
+            //                        })
+            //                        .SetCoInit(true)
+            //                        .SetReInitialize(true)
+            //                        .Create();
 
-                    Add(data.Id);
-                }
-            }
+            //                    return popup;
+            //                });
+
+            //            Add(data.Id);
+            //        }
+            //    }
         }
 
         #region Skin

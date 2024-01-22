@@ -34,6 +34,7 @@ namespace GameSystem
         private float _halfHeight = 0;
         private float _dragWidth = 0;
         private Vector3 _velocity = Vector3.zero;
+        private float _smoothTime = 0.05f;
 
         public float Height { get; private set; } = 0;
         public float Width { get; private set; } = 0;
@@ -65,11 +66,21 @@ namespace GameSystem
         {
             IGrid = iGrid;
 
+            if(Application.isEditor)
+            {
+                _smoothTime = 0.01f;
+            }
+
             SetSize();
         }
 
         #region IUpdate
         void IUpdater.ChainUpdate()
+        {
+            return;
+        }
+
+        void IUpdater.ChainFixedUpdate()
         {
             if (GameCamera is null)
                 return;
@@ -148,9 +159,11 @@ namespace GameSystem
             _dragWidth = _halfHeight * Screen.width / Screen.height;
         }
 
-        private void SetOrthographicSize(float orthographicSize)
+        private void SetOrthographicSize(float orthographicSize, float timeOffset = 1f)
         {
-            GameCamera.orthographicSize = Mathf.Clamp(orthographicSize, MinOrthographicSize, MaxOrthographicSize);
+            var resOrthographicSize = Mathf.Clamp(orthographicSize, MinOrthographicSize, MaxOrthographicSize);
+            
+            GameCamera.orthographicSize = Mathf.Lerp(GameCamera.orthographicSize, resOrthographicSize, Time.deltaTime * timeOffset);
         }
 
         private float GetClampX(float posX)
@@ -178,7 +191,8 @@ namespace GameSystem
 
             var targetPos = new Vector3(clampX, clampY, InitPosZ);
             
-            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, 0.01f);
+            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, _smoothTime);
+            //cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, Time.deltaTime * 10f);
         }
 
         private void ZoomInOut()
@@ -199,8 +213,10 @@ namespace GameSystem
 
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
             //Debug.Log("res = " + res);
-            GameCamera.orthographicSize += deltaMagnitudeDiff * 0.5f;
-            SetOrthographicSize(GameCamera.orthographicSize);
+            //GameCamera.orthographicSize += deltaMagnitudeDiff * Time.deltaTime;
+            SetOrthographicSize(GameCamera.orthographicSize + deltaMagnitudeDiff, 12f);
+
+
             //GameCamera.orthographicSize = Mathf.Clamp(GameCamera.orthographicSize, MinOrthographicSize, MaxOrthographicSize);
 
             SetSize();
