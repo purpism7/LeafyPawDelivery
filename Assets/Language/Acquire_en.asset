@@ -74,6 +74,10 @@ MonoBehaviour:
     m_Localized: Make a stamp {0} times
     m_Metadata:
       m_Items: []
+  - m_Id: 23216242792849408
+    m_Localized: Complete all the daily missions
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

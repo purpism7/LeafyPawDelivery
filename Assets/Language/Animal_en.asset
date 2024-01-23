@@ -112,6 +112,46 @@ MonoBehaviour:
     m_Localized: A quiet but sweet gray wolf
     m_Metadata:
       m_Items: []
+  - m_Id: 61123996421185536
+    m_Localized: Reian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61124083994058752
+    m_Localized: Cascia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61124121990258688
+    m_Localized: Anya
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61124192236462080
+    m_Localized: Teeni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61124246603030528
+    m_Localized: Lulu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61125681939996672
+    m_Localized: Little Brother Desert Fox, Passed away from accident
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61126130910879744
+    m_Localized: Sister Desert Fox with Sparkling Eyes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61126245092417536
+    m_Localized: Bright and charming gray mouse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61126378580336640
+    m_Localized: Timid, black raccoon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61126491981733888
+    m_Localized: Young, curious, yellow chick
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
