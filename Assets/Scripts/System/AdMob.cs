@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//using GoogleMobileAds.Api;
+using GoogleMobileAds.Api;
 
 namespace GameSystem
 {
@@ -22,81 +22,98 @@ namespace GameSystem
             }
         }
 
-        //private static RewardedInterstitialAd _rewardedInterstitialAd = null;
+
+        public static AdMob Get
+        {
+            get
+            {
+                Create();
+
+                return _instance;
+            }
+        }
+
+        private static RewardedInterstitialAd _rewardedInterstitialAd = null;
 
         ////public AdMob()
         ////{
         ////    Initialize();
         ////}
 
+        private System.Action _callback = null;
+
         private void Initialize()
         {
-            //MobileAds.Initialize((InitializationStatus status) =>
-            //{
-            //    Debug.Log("AdMob InitializationStatus = " + status);
-            //});
+            MobileAds.Initialize((InitializationStatus status) =>
+            {
+                Debug.Log("AdMob InitializationStatus = " + status);
+            });
         }
 
         ///// Loads the rewarded interstitial ad.
         ///// </summary>
-        //public static void LoadRewardedInterstitialAd(string id)
-        //{
-        //    // Clean up the old ad before loading a new one.
-        //    if (_rewardedInterstitialAd != null)
-        //    {
-        //        _rewardedInterstitialAd.Destroy();
-        //        _rewardedInterstitialAd = null;
-        //    }
+        public void LoadRewardedInterstitialAd(string id, System.Action callback)
+        {
+            // Clean up the old ad before loading a new one.
+            if (_rewardedInterstitialAd != null)
+            {
+                _rewardedInterstitialAd.Destroy();
+                _rewardedInterstitialAd = null;
+            }
 
-        //    Debug.Log("Loading the rewarded interstitial ad.");
+            Debug.Log("Loading the rewarded interstitial ad = " + id);
 
-        //    // create our request used to load the ad.
-        //    var adRequest = new AdRequest();
-        //    adRequest.Keywords.Add("unity-admob-sample");
+            // create our request used to load the ad.
+            var adRequest = new AdRequest();
+            adRequest.Keywords.Add("unity-admob-sample");
 
-        //    // send the request to load the ad.
-        //    RewardedInterstitialAd.Load(id, adRequest, AdLoadCallback);
-        //      //  (RewardedInterstitialAd ad, LoadAdError error) =>
-        //      //  {
-        //      //// if error is not null, the load request failed.
-        //      //if (error != null || ad == null)
-        //      //      {
-        //      //          Debug.LogError("rewarded interstitial ad failed to load an ad " +
-        //      //                         "with error : " + error);
-        //      //          return;
-        //      //      }
+            _callback = callback;
 
-        //      //      Debug.Log("Rewarded interstitial ad loaded with response : "
-        //      //                + ad.GetResponseInfo());
+            // send the request to load the ad.
+            RewardedInterstitialAd.Load(id, adRequest, AdLoadCallback);
+            //  (RewardedInterstitialAd ad, LoadAdError error) =>
+            //  {
+            //// if error is not null, the load request failed.
+            //if (error != null || ad == null)
+            //      {
+            //          Debug.LogError("rewarded interstitial ad failed to load an ad " +
+            //                         "with error : " + error);
+            //          return;
+            //      }
 
-        //      //      _rewardedInterstitialAd = ad;
-        //      //  });
-        //}
+            //      Debug.Log("Rewarded interstitial ad loaded with response : "
+            //                + ad.GetResponseInfo());
 
-        //private static void AdLoadCallback(RewardedInterstitialAd ad, LoadAdError error)
-        //{
-        //    if (error != null || ad == null)
-        //    {
-        //        Debug.LogError("rewarded interstitial ad failed to load an ad " +
-        //                       "with error : " + error);
-        //        return;
-        //    }
+            //      _rewardedInterstitialAd = ad;
+            //  });
+        }
 
-        //    Debug.Log("Rewarded interstitial ad loaded with response : "
-        //              + ad.GetResponseInfo());
+        private void AdLoadCallback(RewardedInterstitialAd ad, LoadAdError error)
+        {
+            if (error != null || ad == null)
+            {
+                Debug.LogError("rewarded interstitial ad failed to load an ad " +
+                               "with error : " + error);
+                return;
+            }
 
-        //    _rewardedInterstitialAd = ad;
+            Debug.Log("Rewarded interstitial ad loaded with response : "
+                      + ad.GetResponseInfo());
 
-        //    if(_rewardedInterstitialAd.CanShowAd())
-        //    {
-        //        //_rewardedInterstitialAd.
-        //        _rewardedInterstitialAd.Show(
-        //            (Reward reward) =>
-        //            {
-        //                Debug.Log(reward.Type + " / " + reward.Amount);
-        //            });
-        //    }
-        //}
+            _rewardedInterstitialAd = ad;
+
+            if (_rewardedInterstitialAd.CanShowAd())
+            {
+                //_rewardedInterstitialAd.
+                _rewardedInterstitialAd.Show(
+                    (Reward reward) =>
+                    {
+                        Debug.Log(reward.Type + " / " + reward.Amount);
+
+                        _callback?.Invoke();
+                    });
+            }
+        }
     }
 }
 

@@ -262,11 +262,6 @@ namespace GameSystem
             //}
             return;
         }
-
-        void IUpdater.ChainFixedUpdate()
-        {
-            return;
-        }
         #endregion
 
         //private void InitLineRenderer()

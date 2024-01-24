@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using GameSystem;
 using GameData;
 using UI;
 
 namespace Game
 {
     [ExecuteAlways]
-    public class UIManager : Singleton<UIManager>
+    public class UIManager : Singleton<UIManager>, IUpdater
     {
         [SerializeField]
         private RectTransform uiRootRectTm = null;
@@ -71,6 +72,17 @@ namespace Game
         {
             UIUtils.SetActive(screenSaverRectTm, false);
         }
+
+        #region IUpdater
+        void IUpdater.ChainUpdate()
+        {
+            Top?.ChainUpdate();
+            Bottom?.ChainUpdate();
+            Popup?.ChainUpdate();
+
+            return;
+        }
+        #endregion
     }
 }
 

@@ -21,7 +21,6 @@ namespace GameSystem
             yield return StartCoroutine(Game.Manager.IAP.Instance?.CoInit());
 
             //Sequencer.Create();
-            AdMob.Create();
             DOTween.Init();
 
             Debug.Log("End Process End");

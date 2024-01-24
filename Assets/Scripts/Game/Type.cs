@@ -146,6 +146,13 @@ namespace Game
             AnimalCurrency,
             ObjectCurrency,
         }
+
+        public enum EBoost
+        {
+            None,
+
+            TwiceCurrency,
+        }
     }
 }
 

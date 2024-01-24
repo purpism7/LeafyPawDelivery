@@ -49,7 +49,7 @@ namespace Game
         private List<Game.DropItem> _dropItemList = new();
         private bool _initialize = false;
 
-        private PlaceEventController _placeEventCtr = new();
+        private PlaceEventController _placeEventCtr = null;
         private IPlaceState.EType _state = IPlaceState.EType.None;
 
         public override void Initialize(Data data)
@@ -57,6 +57,8 @@ namespace Game
             base.Initialize(data);
 
             _initialize = true;
+
+            _placeEventCtr = new();
             _placeEventCtr?.Initialize(this);
 
             _dropItemList?.Clear();
@@ -477,8 +479,6 @@ namespace Game
 
             if (_dropItemList != null)
             {
-                //dropItemData.startPos.z = 300f + _dropItemList
-
                 for(int i = 0; i < _dropItemList.Count; ++i)
                 {
                     var dropItem = _dropItemList[i];

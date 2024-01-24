@@ -137,6 +137,22 @@ MonoBehaviour:
     m_Key: starter_reward
     m_Metadata:
       m_Items: []
+  - m_Id: 60365843727376384
+    m_Key: cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60366412839903232
+    m_Key: buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60366439654088704
+    m_Key: show_ad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60502576800456704
+    m_Key: desc_boost_twice_currency
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

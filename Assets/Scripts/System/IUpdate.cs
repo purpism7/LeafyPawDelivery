@@ -7,6 +7,10 @@ namespace GameSystem
     public interface IUpdater
     {
         void ChainUpdate();
+    }
+
+    public interface IFixedUpdater
+    {
         void ChainFixedUpdate();
     }
 }

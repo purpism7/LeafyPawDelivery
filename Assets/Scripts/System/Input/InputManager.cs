@@ -38,11 +38,6 @@ namespace GameSystem
 
             InputHandler?.ChainUpdate();
         }
-
-        void IUpdater.ChainFixedUpdate()
-        {
-            return;
-        }
         #endregion
     }
 }

@@ -67,7 +67,7 @@ namespace UI
             Sequence sequence = DOTween.Sequence()
                .SetAutoKill(false)
                .AppendCallback(() => StartCoroutine(CoFadeTextToFullAlpha()))
-               .Join(DOTween.To(() => iGameCameraCtrProvider.MaxOrthographicSize, size => iGameCameraCtrProvider.SetOrthographicSize(size), iGameCameraCtrProvider.DefaultOrthographicSize, 2f).SetEase(Ease.OutCubic))
+               .Join(DOTween.To(() => iGameCameraCtrProvider.MaxOrthographicSize, size => iGameCameraCtrProvider.SetOrthographicSize(size), iGameCameraCtrProvider.DefaultOrthographicSize, 2f).SetEase(Ease.Linear))
                .OnComplete(() =>
                {
                    iGameCameraCtrProvider.SetSize();
@@ -110,7 +110,11 @@ namespace UI
                 yield return null;
             }
 
-            yield return new WaitUntil(() => _endAnim);
+            while(!_endAnim)
+            {
+                yield return null;
+            }
+
             yield return null;
 
             FinishAnim();

@@ -42,6 +42,7 @@ namespace Game.PathFinding
 
                 if(currentNode.Id == targetNode.Id)
                 {
+                    Debug.Log("End AStar");
                     RetracePath(startNode, currentNode);
       
                     break;
@@ -55,14 +56,15 @@ namespace Game.PathFinding
                         continue;
 
                     int cost = currentNode.GCost + GetDistanceCost(currentNode, neighbourNode);
-                    if(cost < neighbourNode.GCost ||
-                      !openList.Contains(neighbourNode))
+                    bool contain = openList.Contains(neighbourNode);
+                    if (cost < neighbourNode.GCost ||
+                       !contain)
                     {
                         neighbourNode.GCost = cost;
                         neighbourNode.HCost = GetDistanceCost(neighbourNode, targetNode);
                         neighbourNode.ParentNode = currentNode;
 
-                        if(!openList.Contains(neighbourNode))
+                        if(!contain)
                         {
                             openList.Add(neighbourNode);
                         }
@@ -86,18 +88,18 @@ namespace Game.PathFinding
         private void RetracePath(Node startNode, Node targetNode)
         {
             var path = new List<Node>();
-            path.Clear();
+            path?.Clear();
 
             var currentNode = targetNode;
 
             while(currentNode.Id != startNode.Id)
             {
-                path.Add(currentNode);
+                path?.Add(currentNode);
 
                 currentNode = currentNode.ParentNode;
             }
 
-            path.Reverse();
+            path?.Reverse();
 
             Path = path;
         }

@@ -20,6 +20,11 @@ namespace UI
         protected bool _isTouch = false;
         protected bool _endTask = true;
 
+        public virtual void ChainUpdate()
+        {
+
+        }
+
         public virtual void ClickClose()
         {
 

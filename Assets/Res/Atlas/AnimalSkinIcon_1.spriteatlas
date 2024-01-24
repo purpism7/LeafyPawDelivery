@@ -39,83 +39,128 @@ SpriteAtlas:
     packedSpriteRenderDataKeys:
     - 1a80d020cc70346e1a7ed67a6e9e8440: 21300000
     - ecc3246049c5246b291b14c852269d98: 21300000
+    - d83435b02f0d94b41851df1dcfe7f8f3: 21300000
     - 368a1281b0b6347fbbc9db3989978d99: 21300000
     - d7987281cfecd4c6286572dc41518cb1: 21300000
     - e3cdf891def9241fd99247a9b210e648: 21300000
+    - fa7ab753a0db2474aab5c0d8f8775415: 21300000
     - 07868eb356f394cea976f7701b06726f: 21300000
     - 98f005e374d9548009aec6c2973ae4f2: 21300000
     - 9f1b22642c8db46baa9c4ddbe595a25d: 21300000
+    - 8962e2253db8546ef81fbea0a410becd: 21300000
     - 4e4168261161748a79448b7b4e358e16: 21300000
+    - 404614a6c0d1f40028b2f508351b7fef: 21300000
     - 0c3021e66747a43dfb8168d234c69ee5: 21300000
     - 2a87ca17195524ab7aa524cb1ae480ba: 21300000
+    - 749750289ff5a400bbd8a0c5f32917b7: 21300000
     - 23944a48bf7c14325ab5f9dc6e8a385a: 21300000
     - 6d371188b2f894ca79a3a8bcf243913d: 21300000
     - 12b78a098906b407b9a294ea0f02e8ff: 21300000
     - 7a04d0997c8f74722aa9c1a267906900: 21300000
+    - 7506946a7f5a8430fa0d194a640a1f04: 21300000
     - 38b7296a0ecd342c088572b4373545d3: 21300000
     - e0c2aada8f2e4451db2b939f4e7b8217: 21300000
     - 8af7f1ea2168c4e86943f5aefb15658a: 21300000
+    - de80054b8f3ce4a46ab32b7ffc22dbd4: 21300000
     - 38ad00ab4913a438d9108a9628036bc4: 21300000
     - 6f5f94bbfc71442e29fd11baeef62578: 21300000
     - f1a890fb3d5664c639f8b4e7a4a30466: 21300000
     - bc9b649c6ab4f4aa988dd9ead26d9d55: 21300000
+    - ef618c2df52444e6a862f4d0b55c02d9: 21300000
+    - fb2a054d87b0b44dba50134fd6ac891b: 21300000
+    - 9787ce9d341b74b0e81a752ab6d4a479: 21300000
     - 1a1580dd4cfee4372b632b17c5d023cd: 21300000
+    - 07b1c4edda5e44381be4df77851a4e6d: 21300000
+    - 1ae8040e8970542dc914f2a3095e02a1: 21300000
+    - 32b4763e7955f4f8d922ba577df43252: 21300000
     - 7e826bfeea6114ce1952b4d306fac97c: 21300000
+    - ea2c841fdde0d408ebb8eea23a7c140a: 21300000
+    - e6a4932fa54e44d3a85daa9b4b86e913: 21300000
     - 22eb9fbf00b89439ab8589c1141af28d: 21300000
     - 5b2787cf3d6be4a619613fb33c7a336a: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 1a80d020cc70346e1a7ed67a6e9e8440, type: 3}
   - {fileID: 21300000, guid: ecc3246049c5246b291b14c852269d98, type: 3}
+  - {fileID: 21300000, guid: d83435b02f0d94b41851df1dcfe7f8f3, type: 3}
   - {fileID: 21300000, guid: 368a1281b0b6347fbbc9db3989978d99, type: 3}
   - {fileID: 21300000, guid: d7987281cfecd4c6286572dc41518cb1, type: 3}
   - {fileID: 21300000, guid: e3cdf891def9241fd99247a9b210e648, type: 3}
+  - {fileID: 21300000, guid: fa7ab753a0db2474aab5c0d8f8775415, type: 3}
   - {fileID: 21300000, guid: 07868eb356f394cea976f7701b06726f, type: 3}
   - {fileID: 21300000, guid: 98f005e374d9548009aec6c2973ae4f2, type: 3}
   - {fileID: 21300000, guid: 9f1b22642c8db46baa9c4ddbe595a25d, type: 3}
+  - {fileID: 21300000, guid: 8962e2253db8546ef81fbea0a410becd, type: 3}
   - {fileID: 21300000, guid: 4e4168261161748a79448b7b4e358e16, type: 3}
+  - {fileID: 21300000, guid: 404614a6c0d1f40028b2f508351b7fef, type: 3}
   - {fileID: 21300000, guid: 0c3021e66747a43dfb8168d234c69ee5, type: 3}
   - {fileID: 21300000, guid: 2a87ca17195524ab7aa524cb1ae480ba, type: 3}
+  - {fileID: 21300000, guid: 749750289ff5a400bbd8a0c5f32917b7, type: 3}
   - {fileID: 21300000, guid: 23944a48bf7c14325ab5f9dc6e8a385a, type: 3}
   - {fileID: 21300000, guid: 6d371188b2f894ca79a3a8bcf243913d, type: 3}
   - {fileID: 21300000, guid: 12b78a098906b407b9a294ea0f02e8ff, type: 3}
   - {fileID: 21300000, guid: 7a04d0997c8f74722aa9c1a267906900, type: 3}
+  - {fileID: 21300000, guid: 7506946a7f5a8430fa0d194a640a1f04, type: 3}
   - {fileID: 21300000, guid: 38b7296a0ecd342c088572b4373545d3, type: 3}
   - {fileID: 21300000, guid: e0c2aada8f2e4451db2b939f4e7b8217, type: 3}
   - {fileID: 21300000, guid: 8af7f1ea2168c4e86943f5aefb15658a, type: 3}
+  - {fileID: 21300000, guid: de80054b8f3ce4a46ab32b7ffc22dbd4, type: 3}
   - {fileID: 21300000, guid: 38ad00ab4913a438d9108a9628036bc4, type: 3}
   - {fileID: 21300000, guid: 6f5f94bbfc71442e29fd11baeef62578, type: 3}
   - {fileID: 21300000, guid: f1a890fb3d5664c639f8b4e7a4a30466, type: 3}
   - {fileID: 21300000, guid: bc9b649c6ab4f4aa988dd9ead26d9d55, type: 3}
+  - {fileID: 21300000, guid: ef618c2df52444e6a862f4d0b55c02d9, type: 3}
+  - {fileID: 21300000, guid: fb2a054d87b0b44dba50134fd6ac891b, type: 3}
+  - {fileID: 21300000, guid: 9787ce9d341b74b0e81a752ab6d4a479, type: 3}
   - {fileID: 21300000, guid: 1a1580dd4cfee4372b632b17c5d023cd, type: 3}
+  - {fileID: 21300000, guid: 07b1c4edda5e44381be4df77851a4e6d, type: 3}
+  - {fileID: 21300000, guid: 1ae8040e8970542dc914f2a3095e02a1, type: 3}
+  - {fileID: 21300000, guid: 32b4763e7955f4f8d922ba577df43252, type: 3}
   - {fileID: 21300000, guid: 7e826bfeea6114ce1952b4d306fac97c, type: 3}
+  - {fileID: 21300000, guid: ea2c841fdde0d408ebb8eea23a7c140a, type: 3}
+  - {fileID: 21300000, guid: e6a4932fa54e44d3a85daa9b4b86e913, type: 3}
   - {fileID: 21300000, guid: 22eb9fbf00b89439ab8589c1141af28d, type: 3}
   - {fileID: 21300000, guid: 5b2787cf3d6be4a619613fb33c7a336a, type: 3}
   m_PackedSpriteNamesToIndex:
   - Anya_Icon
   - UI_Book_Profile_GnarSkin_01
+  - UI_Book_Profile_AnyaSkin_01
   - Barnie_Icon
   - UI_Book_Profile_LeaSkin_01
   - UI_Book_Profile_GnarSkin_02
+  - UI_Book_Profile_CasciaSkin_02
   - UI_Book_Profile_BarnieSkin_02
   - UI_Book_Profile_HaleSkin_03
   - Cascia_Icon
+  - UI_Book_Profile_ReianSkin_02
   - Teeni_Icon
+  - UI_Book_Profile_TeeniSkin_02
   - UI_Book_Profile_HaleSkin_02
   - Gnar_Icon
+  - UI_Book_Profile_CasciaSkin_01
   - UI_Book_Profile_LauraSkin_03
   - UI_Book_Profile_GnarSkin_03
   - UI_Book_Profile_BarnieSkin_01
   - Lea_Icon
+  - UI_Book_Profile_ReianSkin_01
   - UI_Book_Profile_LauraSkin_02
   - Hale_Icon
   - Kara_Icon
+  - UI_Book_Profile_ReianSkin_03
   - Lulu_Icon
   - UI_Book_Profile_HaleSkin_01
   - Reian_Icon
   - UI_Book_Profile_LauraSkin_01
+  - UI_Book_Profile_TeeniSkin_03
+  - UI_Book_Profile_LuluSkin_03
+  - UI_Book_Profile_AnyaSkin_03
   - Laura_Icon
+  - UI_Book_Profile_CasciaSkin_03
+  - UI_Book_Profile_LuluSkin_02
+  - UI_Book_Profile_AnyaSkin_02
   - UI_Book_Profile_LeaSkin_03
+  - UI_Book_Profile_TeeniSkin_01
+  - UI_Book_Profile_LuluSkin_01
   - UI_Book_Profile_LeaSkin_02
   - UI_Book_Profile_BarnieSkin_03
   m_RenderDataMap: {}

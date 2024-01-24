@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
-using Game;
 using UnityEngine;
 
+using DG.Tweening;
+
+using Game;
 using GameSystem;
 using UnityEngine.UI;
 
@@ -25,6 +26,19 @@ namespace UI
         
         private List<UI.Base> _opendPopupList = new();
         private Stack<UI.Base> _popupStack = new();
+
+        public override void ChainUpdate()
+        {
+            base.ChainUpdate();
+
+            if(_opendPopupList != null)
+            {
+                for(int i = 0; i < _opendPopupList.Count; ++i)
+                {
+                    _opendPopupList[i]?.ChainUpdate();
+                }
+            }
+        }
 
         public T Instantiate<T, V>(V vData, InitData initData) 
             where T :UI.Base<V> where V : BaseData
@@ -157,16 +171,16 @@ namespace UI
             return false;
         }
         
-        private void Check()
-        {
-            foreach (RectTransform rectTm in popupRootRectTm)
-            {
-                if(!rectTm)
-                    continue;
+        //private void Check()
+        //{
+        //    foreach (RectTransform rectTm in popupRootRectTm)
+        //    {
+        //        if(!rectTm)
+        //            continue;
                 
-                Debug.Log(rectTm.name);
-            }
-        }
+        //        Debug.Log(rectTm.name);
+        //    }
+        //}
 
         public void PopPopup()
         {
@@ -206,7 +220,7 @@ namespace UI
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .Append(backgroundImg.DOFade(0, 0))
-                .Append(backgroundImg.DOFade(0.8f, 0.5f).SetEase(Ease.Linear));
+                .Append(backgroundImg.DOFade(0.75f, 0.4f).SetEase(Ease.Linear));
 
             sequence.Restart();
         }

@@ -8,12 +8,12 @@ using System;
 
 namespace Game.PlaceEvent
 {
-    public class DropItem : Base
+    public class DropItem : Base, Game.DropItem.IListener 
     {
         private Coroutine _dropItemCoroutine = null;
         private YieldInstruction _waitSecDrop = null;
 
-        //private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource _cancellationTokenSource = null;
 
         private Game.Type.EItemSub _eItemSub = Type.EItemSub.None;
 
@@ -54,7 +54,7 @@ namespace Game.PlaceEvent
             //}
         }
 
-        //private async UniTask AsyncDrop()
+        //private async UniTask DropAsync()
         //{
         //    var gameState = MainGameManager.Instance?.GameState;
         //    if (gameState == null)
@@ -96,7 +96,7 @@ namespace Game.PlaceEvent
         //            return;
         //        }
         //    }
-        //    catch(OperationCanceledException e)
+        //    catch (OperationCanceledException e)
         //    {
 
         //    }
@@ -120,14 +120,11 @@ namespace Game.PlaceEvent
             if (_eItemSub == Type.EItemSub.Letter)
             {
                 UI.ITop iTop = Game.UIManager.Instance?.Top;
-                if (iTop == null)
+                if (iTop != null)
                 {
-                    StartDrop();
-
-                    yield break;
+                    if (iTop.CheckMaxDropLetterCnt)
+                        yield break;
                 }
-
-                yield return new WaitUntil(() => !iTop.CheckMaxDropLetterCnt);
             }
 
             //AsyncDrop().Forget();
@@ -174,6 +171,8 @@ namespace Game.PlaceEvent
 
             var itemData = new Game.DropItem.ItemData()
             {
+                iListener = this,
+
                 startPos = new Vector3(iGameCameraCtrProvider.RandPosXInScreenRagne, iGameCameraCtrProvider.RandPosYInScreenRagne),
 
                 activateProgress = true,
@@ -198,6 +197,24 @@ namespace Game.PlaceEvent
                 });
             }
         }
+
+        #region Game.DropItem.IListener
+        void Game.DropItem.IListener.GetDropItem(int dropCnt, Game.Type.EItemSub eItemSub)
+        {
+            Debug.Log("DropItem = " + dropCnt);
+            UI.ITop iTop = UIManager.Instance?.Top;
+            if (iTop != null)
+            {
+                if(eItemSub == Type.EItemSub.Letter)
+                {
+                    if (dropCnt + 1 >= Game.Data.Const.MaxDropLetterCount)
+                    {
+                        StartDrop();
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }
 

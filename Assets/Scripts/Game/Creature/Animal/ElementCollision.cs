@@ -137,6 +137,9 @@ namespace Game
             var animal = gameObj.GetComponentInParent<Game.Creature.Animal>();
             if (animal != null)
             {
+                if (_isOverlapTarget)
+                    return true;
+
                 if (_element == Game.Type.EElement.Animal)
                 {
                     if (animal.Id != _id)
@@ -149,6 +152,11 @@ namespace Game
             }
 
             return false;
+        }
+
+        public void Reset()
+        {
+            _overlapList?.Clear();
         }
     }
 }

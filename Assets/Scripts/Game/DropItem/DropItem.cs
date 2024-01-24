@@ -15,6 +15,8 @@ namespace Game
     {
         public class Data : BaseData
         {
+            public DropItem.IListener iListener = null;
+
             public Game.Type.EItem EItem = Type.EItem.None;
             public Vector3 startPos = Vector3.zero;
 
@@ -28,6 +30,11 @@ namespace Game
             {
                 EItem = eItem;
             }
+        }
+
+        public interface IListener
+        {
+            void GetDropItem(int dropCnt, Game.Type.EItemSub eItemSub = Type.EItemSub.None);
         }
 
         [SerializeField]
@@ -172,7 +179,7 @@ namespace Game
             if (collider == null)
                 return;
 
-            collider.bounds.Expand(3f);
+            collider.bounds.Expand(4f);
         }
 
         private void SetSortingOrder()
@@ -223,7 +230,9 @@ namespace Game
                 return;
 
             var startPos = gameCameraCtr.UICamera.ScreenToWorldPoint(touch.Value.position);
-            //startPos.z = 10f;
+
+            int dropCnt = 0;
+            Type.EItemSub eItemSub = Type.EItemSub.None;
 
             switch(_data)
             {
@@ -232,7 +241,7 @@ namespace Game
                         UIManager.Instance?.Top?.CollectCurrency(startPos, currencyData.EElement, _data.Value);
 
                         UI.ITop iTop = UIManager.Instance?.Top;
-                        iTop?.SetDropAnimalCurrencyCnt(-1);
+                        iTop?.SetDropAnimalCurrencyCnt(-1, out dropCnt);
 
                         break;
                     }
@@ -241,6 +250,8 @@ namespace Game
                     {
                         if(itemData.eItemSub == Type.EItemSub.Letter)
                         {
+                            eItemSub = itemData.eItemSub;
+
                             var top = UIManager.Instance?.Top;
 
                             float random = UnityEngine.Random.Range(0f, 100f);
@@ -264,11 +275,13 @@ namespace Game
                         }
 
                         UI.ITop iTop = UIManager.Instance?.Top;
-                        iTop?.SetDropLetterCnt(-1, out int currCnt);
+                        iTop?.SetDropLetterCnt(-1, out dropCnt);
 
                         break;
                     }
             }
+
+            _data?.iListener?.GetDropItem(dropCnt, eItemSub);
 
             GameSystem.EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.PickItem);
         }

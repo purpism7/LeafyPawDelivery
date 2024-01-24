@@ -26,12 +26,16 @@ public class MainGameManager : Singleton<MainGameManager>
     private System.Action<Game.Base> _startEditAction = null;
     
     private IGrid _iGrid = null;
+    private bool _endInitialize = false;
 
     private List<IUpdater> _iUpdaterList = new();
+    private List<IFixedUpdater> _iFixedUpdaterList = new();
 
     private static Dictionary<Type, MonoBehaviour> _managerDic = new();
 
-    public ServerTime ServerTime { get; private set; } = null;
+    //public ServerTime ServerTime { get; private set; } = null;
+
+    public float GamePlayTimeSec { get; private set; } = 0;
 
     public static T Get<T>()
     {
@@ -47,6 +51,8 @@ public class MainGameManager : Singleton<MainGameManager>
 
     protected override void Initialize()
     {
+        _endInitialize = false;
+
         _managerDic.Clear();
 
         AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>());
@@ -57,7 +63,7 @@ public class MainGameManager : Singleton<MainGameManager>
         AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>());
         AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
 
-        ServerTime = gameObject.GetOrAddComponent<ServerTime>();
+        //ServerTime = gameObject.GetOrAddComponent<ServerTime>();
     }
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
@@ -92,15 +98,21 @@ public class MainGameManager : Singleton<MainGameManager>
         //yield return EndLoadAsync(true);
 
         Debug.Log("End MainGameMgr Initialize");
+
+        Debug.Log("End Initialize = " + GamePlayTimeSec);
+        _endInitialize = true;
     }
 
     private void InitializeIUpdateList(InputManager inputMgr)
     {
         _iUpdaterList?.Clear();
-
         _iUpdaterList?.Add(inputMgr);
-        _iUpdaterList?.Add(IGameCameraCtrProvider as IUpdater);
         _iUpdaterList?.Add(placeMgr);
+        _iUpdaterList?.Add(Game.UIManager.Instance);
+
+        _iFixedUpdaterList?.Clear();
+        _iFixedUpdaterList?.Add(IGameCameraCtrProvider as IFixedUpdater);
+
         //_iUpdaterList?.Add(inputMgr?.grid);
     }
 
@@ -164,12 +176,6 @@ public class MainGameManager : Singleton<MainGameManager>
 
         Game.Notification.Get?.AllNotify();
     }
-    //private void EndLoad(bool initialize)
-    //{
-        
-
-    //    Starter();
-    //}
 
     private void AnimEnterPlace()
     {
@@ -214,15 +220,27 @@ public class MainGameManager : Singleton<MainGameManager>
                 iUpdater?.ChainUpdate();
             }
         }
+
+        if(_endInitialize)
+        {
+            GamePlayTimeSec += Time.deltaTime;
+#if UNITY_EDITOR
+            UI.ITop iTop = Game.UIManager.Instance?.Top;
+            if (iTop != null)
+            {
+                iTop.GamePlatTimeTMP?.SetText(GamePlayTimeSec.ToString("F0"));
+            }
+#endif
+        }
     }
 
     private void FixedUpdate()
     {
-        if (_iUpdaterList != null)
+        if (_iFixedUpdaterList != null)
         {
-            foreach (var iUpdater in _iUpdaterList)
+            foreach (var iFixedUpdater in _iFixedUpdaterList)
             {
-                iUpdater?.ChainFixedUpdate();
+                iFixedUpdater?.ChainFixedUpdate();
             }
         }
     }

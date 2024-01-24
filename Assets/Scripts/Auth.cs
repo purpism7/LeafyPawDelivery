@@ -157,34 +157,37 @@ namespace GameSystem
         //}
 
         // GPGS 로그인.
-        private async UniTask SignInWithGooglePlayGameServiceAsync(string code)
-        {
-            try
-            {
-                await AuthenticationService.Instance?.SignInWithGooglePlayGamesAsync(code);
+        //private async UniTask SignInWithGooglePlayGameServiceAsync(string code)
+        //{
+        //    try
+        //    {
+        //        await AuthenticationService.Instance?.SignInWithGooglePlayGamesAsync(code);
 
-                SetId(AuthenticationService.Instance?.PlayerInfo?.GetGooglePlayGamesId());
+        //        SetId(AuthenticationService.Instance?.PlayerInfo?.GetGooglePlayGamesId());
 
-                Debug.Log("SignInWithGooglePlayGameServiceAsync = " + _id);
-            }
-            catch (AuthenticationException ex)
-            {
-                Debug.LogException(ex);
-            }
-            catch (RequestFailedException ex)
-            {
-                Debug.LogException(ex);
-            }
-        }
+        //        Debug.Log("SignInWithGooglePlayGameServiceAsync = " + _id);
+        //    }
+        //    catch (AuthenticationException ex)
+        //    {
+        //        Debug.LogException(ex);
+        //    }
+        //    catch (RequestFailedException ex)
+        //    {
+        //        Debug.LogException(ex);
+        //    }
+        //}
 
         // 익명으로 로그인.
         private async UniTask SignInAnonymouslyAsync()
         {
             _eType = EType.Local;
 
-            await AuthenticationService.Instance?.SignInAnonymouslyAsync();
+            //await AuthenticationService.Instance?.SignInAnonymouslyAsync();
 
+            //SetId(AuthenticationService.Instance?.PlayerId);
             SetId(AuthenticationService.Instance?.PlayerId);
+
+            await UniTask.Yield();
 
             Debug.Log("SignInAnonymouslyAsync = " + _id);
         }

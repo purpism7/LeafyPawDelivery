@@ -160,6 +160,18 @@ namespace UI
 
                         break;
                     }
+
+                case Game.Type.EPayment.Advertising:
+                    {
+
+                        AdMob.Get?.LoadRewardedInterstitialAd(shopData.ProductId,
+                            () =>
+                            {
+
+                            });
+
+                        break;
+                    }
             }
         }
 

@@ -21,7 +21,7 @@ namespace GameSystem
         float RandPosYInScreenRagne { get; }
     }
 
-    public class GameCameraController : MonoBehaviour, IUpdater, IGameCameraCtrProvider
+    public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtrProvider
     {
         private const float InitPosZ = -1000f;
 
@@ -74,13 +74,8 @@ namespace GameSystem
             SetSize();
         }
 
-        #region IUpdate
-        void IUpdater.ChainUpdate()
-        {
-            return;
-        }
-
-        void IUpdater.ChainFixedUpdate()
+        #region IFixedUpdater
+        void IFixedUpdater.ChainFixedUpdate()
         {
             if (GameCamera is null)
                 return;
@@ -159,11 +154,19 @@ namespace GameSystem
             _dragWidth = _halfHeight * Screen.width / Screen.height;
         }
 
-        private void SetOrthographicSize(float orthographicSize, float timeOffset = 1f)
+        private void SetOrthographicSize(float orthographicSize, float timeOffset = 1f, bool isLerp = true)
         {
             var resOrthographicSize = Mathf.Clamp(orthographicSize, MinOrthographicSize, MaxOrthographicSize);
-            
-            GameCamera.orthographicSize = Mathf.Lerp(GameCamera.orthographicSize, resOrthographicSize, Time.deltaTime * timeOffset);
+
+            if(isLerp)
+            {
+                GameCamera.orthographicSize = Mathf.Lerp(GameCamera.orthographicSize, resOrthographicSize, Time.deltaTime * timeOffset);
+            }
+            else
+            {
+                GameCamera.orthographicSize = resOrthographicSize;
+            }
+            //GameCamera.orthographicSize = Mathf.Lerp(GameCamera.orthographicSize, resOrthographicSize, Time.deltaTime * timeOffset);
         }
 
         private float GetClampX(float posX)
@@ -242,7 +245,7 @@ namespace GameSystem
 
         void IGameCameraCtrProvider.SetOrthographicSize(float orthographicSize)
         {
-            SetOrthographicSize(orthographicSize);
+            SetOrthographicSize(orthographicSize, 1f, false);
         }
 
         float IGameCameraCtrProvider.RandPosXInScreenRagne

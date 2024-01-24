@@ -15,11 +15,13 @@ namespace UI
     public interface ITop
     {
         void SetCurrency();
-        void SetDropLetterCnt(int cnt, out int currCnt);
-        void SetDropAnimalCurrencyCnt(int cnt);
+        void SetDropLetterCnt(int cnt, out int dropCnt);
+        void SetDropAnimalCurrencyCnt(int cnt, out int dropCnt);
 
         bool CheckMaxDropLetterCnt { get; }
         bool CheckMaxDropAnimalCurrencyCnt { get; }
+
+        TextMeshProUGUI GamePlatTimeTMP { get; }
     }
 
     public interface ITopAnim
@@ -42,6 +44,9 @@ namespace UI
         [SerializeField]
         private RectTransform rightRootRectTm = null;
 
+        [SerializeField]
+        private TextMeshProUGUI gamePlayTimeTMP = null;
+
         //[SerializeField] private TextMeshProUGUI lvTMP = null;
         [SerializeField] private TextMeshProUGUI animalCurrencyTMP = null;
         [SerializeField] private TextMeshProUGUI objectCurrencyTMP = null;
@@ -58,6 +63,9 @@ namespace UI
         [SerializeField] private RectTransform objectCurrencyRectTm = null;
         [SerializeField] private RectTransform animalCurrencyRectTm = null;
         [SerializeField] private RectTransform cashCurrencyRectTm = null;
+
+        [SerializeField]
+        private BoostList boostList = null;
 
         private List<CollectCurrency> _collectCurrencyList = new();
         private List<AddCurrency> _addCurrencyList = new();
@@ -77,7 +85,16 @@ namespace UI
             _dropLetterCntDic?.Clear();
             _dropAnimalCurrencyCntDic?.Clear();
 
+            boostList?.Initialize();
+
             Initialize();
+        }
+
+        public override void ChainUpdate()
+        {
+            base.ChainUpdate();
+
+            boostList?.ChainUpdate();
         }
 
         private void Initialize()
@@ -431,16 +448,18 @@ namespace UI
             SetCurrency();
         }
 
-        void ITop.SetDropLetterCnt(int cnt, out int currCnt)
+        void ITop.SetDropLetterCnt(int cnt, out int dropCnt)
         {
             SetDropLetterCnt(cnt);
 
-            currCnt = DropLetterCnt;
+            dropCnt = DropLetterCnt;
         }
 
-        void ITop.SetDropAnimalCurrencyCnt(int cnt)
+        void ITop.SetDropAnimalCurrencyCnt(int cnt, out int dropCnt)
         {
             SetDropAnimalCurrencyCnt(cnt);
+
+            dropCnt = DropAnimalCurrencyCnt;
         }
 
         bool ITop.CheckMaxDropLetterCnt
@@ -456,6 +475,14 @@ namespace UI
             get
             {
                 return DropAnimalCurrencyCnt >= Game.Data.Const.MaxDropAnimalCurrencyCount;
+            }
+        }
+
+        TextMeshProUGUI ITop.GamePlatTimeTMP
+        {
+            get
+            {
+                return gamePlayTimeTMP;
             }
         }
         #endregion
