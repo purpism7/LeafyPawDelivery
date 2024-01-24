@@ -17,6 +17,7 @@ namespace UI.Component
             public Vector3 StartPos = Vector3.zero;
             public Game.Type.EElement EElement = Game.Type.EElement.None;
             public int Currency = 0;
+            public Color color = Color.white;
             public System.Action CompleteAction = null;
         }
 
@@ -38,7 +39,16 @@ namespace UI.Component
 
         private void SetText()
         {
-            currencyTMP?.SetText("+" + _data.Currency);
+            currencyTMP?.SetText(string.Empty);
+
+            if (_data == null)
+                return;
+
+            if (currencyTMP == null)
+                return;
+
+            currencyTMP.color = _data.color;
+            currencyTMP.SetText("+" + _data.Currency);
         }
 
         private void Add()

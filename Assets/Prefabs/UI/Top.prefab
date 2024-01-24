@@ -1114,7 +1114,7 @@ MonoBehaviour:
   objectCurrencyRectTm: {fileID: 524485580336170409}
   animalCurrencyRectTm: {fileID: 4992337481775659872}
   cashCurrencyRectTm: {fileID: 314127536411549258}
-  boostList: {fileID: 5253138688948689310}
+  boostRootRectTm: {fileID: 3922011497417759597}
 --- !u!1 &3417995903615073184
 GameObject:
   m_ObjectHideFlags: 0
@@ -2447,7 +2447,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3922011497417759597}
   - component: {fileID: 6615735447327639544}
-  - component: {fileID: 5253138688948689310}
   m_Layer: 5
   m_Name: BoostRoot
   m_TagString: Untagged
@@ -2500,19 +2499,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &5253138688948689310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7531660226467794093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f45a3312ad40d426b9d20c6a912cfe19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boost: {fileID: 11400000, guid: 0980f09b51dba44a09b0b62bfd60e07a, type: 2}
 --- !u!1 &7963507425910799429
 GameObject:
   m_ObjectHideFlags: 0

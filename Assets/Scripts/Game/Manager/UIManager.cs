@@ -76,7 +76,6 @@ namespace Game
         #region IUpdater
         void IUpdater.ChainUpdate()
         {
-            Top?.ChainUpdate();
             Bottom?.ChainUpdate();
             Popup?.ChainUpdate();
 

@@ -63,9 +63,7 @@ namespace UI
         [SerializeField] private RectTransform objectCurrencyRectTm = null;
         [SerializeField] private RectTransform animalCurrencyRectTm = null;
         [SerializeField] private RectTransform cashCurrencyRectTm = null;
-
-        [SerializeField]
-        private BoostList boostList = null;
+        public RectTransform boostRootRectTm = null;
 
         private List<CollectCurrency> _collectCurrencyList = new();
         private List<AddCurrency> _addCurrencyList = new();
@@ -85,16 +83,7 @@ namespace UI
             _dropLetterCntDic?.Clear();
             _dropAnimalCurrencyCntDic?.Clear();
 
-            boostList?.Initialize();
-
             Initialize();
-        }
-
-        public override void ChainUpdate()
-        {
-            base.ChainUpdate();
-
-            boostList?.ChainUpdate();
         }
 
         private void Initialize()
@@ -332,6 +321,14 @@ namespace UI
                 currencyName = placeData.Object.ToString();
             }
 
+            // twice boost 적용.
+            var boostMgr = MainGameManager.Get<BoostManager>();
+            if (boostMgr != null &&
+                boostMgr.CheckActivateBoost(Game.Type.EBoost.TwiceCurrency))
+            {
+                currency *= 2;
+            }
+
             var data = new CollectCurrency.Data()
             {
                 StartPos = startPos,
@@ -384,12 +381,21 @@ namespace UI
             {
                 startPos = animalCurrencyTMP.transform.position;
             }
-           
+
+            bool activateBoost = false;
+            var boostMgr = MainGameManager.Get<BoostManager>();
+            if (boostMgr != null &&
+                boostMgr.CheckActivateBoost(Game.Type.EBoost.TwiceCurrency))
+            {
+                activateBoost = true;
+            }
+
             var data = new AddCurrency.Data()
             {
                 StartPos = startPos,
                 EElement = eElement,
                 Currency = currency,
+                color = activateBoost ? Color.green : Color.white,
             };
 
             AddCurrency(data);

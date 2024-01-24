@@ -17,6 +17,8 @@ public class MainGameManager : Singleton<MainGameManager>
     #region Inspector
     [SerializeField]
     private Game.PlaceManager placeMgr = null;
+    [SerializeField]
+    private Game.BoostManager boostMgr = null;
     #endregion
 
     public IGameCameraCtrProvider IGameCameraCtrProvider { get; private set; } = null;
@@ -62,6 +64,7 @@ public class MainGameManager : Singleton<MainGameManager>
         AddManager(typeof(Game.StoryManager), gameObject.GetOrAddComponent<Game.StoryManager>());
         AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>());
         AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
+        AddManager(typeof(Game.BoostManager), boostMgr);
 
         //ServerTime = gameObject.GetOrAddComponent<ServerTime>();
     }
@@ -91,6 +94,10 @@ public class MainGameManager : Singleton<MainGameManager>
 
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
         yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
+        yield return StartCoroutine(boostMgr?.CoInitialize(new Game.BoostManager.Data
+        {
+            boostRootRectTm = Game.UIManager.Instance?.Top?.boostRootRectTm,
+        }));
 
         Info.Connector.Create(transform);
         Game.Notification.Create(transform);
@@ -98,8 +105,6 @@ public class MainGameManager : Singleton<MainGameManager>
         //yield return EndLoadAsync(true);
 
         Debug.Log("End MainGameMgr Initialize");
-
-        Debug.Log("End Initialize = " + GamePlayTimeSec);
         _endInitialize = true;
     }
 
@@ -108,6 +113,7 @@ public class MainGameManager : Singleton<MainGameManager>
         _iUpdaterList?.Clear();
         _iUpdaterList?.Add(inputMgr);
         _iUpdaterList?.Add(placeMgr);
+        _iUpdaterList?.Add(boostMgr);
         _iUpdaterList?.Add(Game.UIManager.Instance);
 
         _iFixedUpdaterList?.Clear();
