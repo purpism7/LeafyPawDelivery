@@ -162,8 +162,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 60502576800456704
-    m_Localized: "{0} \uBD84\uAC04 \uC7AC\uD654\uB97C 2\uBC30\uB85C \uD68D\uB4DD
-      \uD560 \uC218\uC788\uC5B4\uC694."
+    m_Localized: "{0} \uBD84\uAC04 \uC7AC\uD654\uB97C 2\uBC30\uB85C \uD68D\uB4DD\uD560
+      \uC218\uC788\uC5B4\uC694."
     m_Metadata:
       m_Items: []
   references:

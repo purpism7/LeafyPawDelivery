@@ -91,6 +91,8 @@ namespace UI.Component
 
         private void ActivateBoost(double remainSec)
         {
+            remainTimeTMP.color = Color.green;
+
             _endDateTime = System.DateTime.UtcNow.AddSeconds(remainSec);
 
             _activate = true;
