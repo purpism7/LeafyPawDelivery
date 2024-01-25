@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Palmwoods
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: b66fd3b729ae141bba7ee0fa5564df6f, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 7893ea000ea104a6abce810556768fd8: 21300000
+    - 8c2ff110b82eb4b4da746f5caac287aa: 21300000
+    - d43efb01d69b441b3a74f9ded65218a7: 21300000
+    - 00aaed4166b7e4e53b31ba314403b904: 21300000
+    - b0228a91169e842fe827fe439c9fdc88: 21300000
+    - 630da1024bbaa4b63a9f21077d25bada: 21300000
+    - 1beb93224a2d343cd98859767d76bea4: 21300000
+    - c27a3882b6ab84100b55c8063c3ae0e5: 21300000
+    - 97b7f2135344e4772ae0586680da4910: 21300000
+    - 6b9dd433774ae40dd8a485d7894cf9ea: 21300000
+    - 90ca0293ff02f497fbe5f1d51bc7756f: 21300000
+    - b983b5b335a4c4cbd8e2d1af1c404db3: 21300000
+    - fe9c7ab3f6c70f64fb01f2adf3ae2f4a: 21300000
+    - 74824fb3065b242b3aa1aae68abc30af: 21300000
+    - 20882dc3c18d743f7809a097b277306d: 21300000
+    - d225c5a56e680463586b01eb3de6cf85: 21300000
+    - 567f9be5379274d40bd29c9fc08e37cc: 21300000
+    - f2e293863cdae4f90a97415a87243148: 21300000
+    - 37c589f6cd1714a59b2c390e909682d3: 21300000
+    - 570fa8977fff047b8a4472c8b415e7f0: 21300000
+    - 7b1862c77a60c493d8030ea26e8e9cfd: 21300000
+    - 7d60f318cc5414d06907fd11a8265a57: 21300000
+    - 7a8e9138d1fea423eaf2620d1e0332f0: 21300000
+    - 4f8ab178ba713410e81a598248925898: 21300000
+    - ead147880ebf2c140ac993405f461e40: 21300000
+    - 509ad3b9a218e4faebe9c190afcb6abc: 21300000
+    - 034a82e91f56b46b5ab98effd2261c12: 21300000
+    - 5af3864a072224ead8aa8941795a9284: 21300000
+    - 84f0d15a59ee64a7db26bdcffafe3dae: 21300000
+    - 5a37b45a741e94841a2a883f7ceeb83b: 21300000
+    - fc03047dd42634578b4197c9450e97a2: 21300000
+    - 6355347def591416aa1fc3cbe7af85d4: 21300000
+    - dbcc5afd62c1645d19bded67597c1216: 21300000
+    - 6932de8e85f3041759f9e229d160ad4a: 21300000
+    - 4139ab3f78e7043e1a280ebb663ad936: 21300000
+    - 24f901af2972845e684852eaa7bd2eef: 21300000
+    - f9dfc3ef98abc41d4b3d07e19ee5c93d: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 7893ea000ea104a6abce810556768fd8, type: 3}
+  - {fileID: 21300000, guid: 8c2ff110b82eb4b4da746f5caac287aa, type: 3}
+  - {fileID: 21300000, guid: d43efb01d69b441b3a74f9ded65218a7, type: 3}
+  - {fileID: 21300000, guid: 00aaed4166b7e4e53b31ba314403b904, type: 3}
+  - {fileID: 21300000, guid: b0228a91169e842fe827fe439c9fdc88, type: 3}
+  - {fileID: 21300000, guid: 630da1024bbaa4b63a9f21077d25bada, type: 3}
+  - {fileID: 21300000, guid: 1beb93224a2d343cd98859767d76bea4, type: 3}
+  - {fileID: 21300000, guid: c27a3882b6ab84100b55c8063c3ae0e5, type: 3}
+  - {fileID: 21300000, guid: 97b7f2135344e4772ae0586680da4910, type: 3}
+  - {fileID: 21300000, guid: 6b9dd433774ae40dd8a485d7894cf9ea, type: 3}
+  - {fileID: 21300000, guid: 90ca0293ff02f497fbe5f1d51bc7756f, type: 3}
+  - {fileID: 21300000, guid: b983b5b335a4c4cbd8e2d1af1c404db3, type: 3}
+  - {fileID: 21300000, guid: fe9c7ab3f6c70f64fb01f2adf3ae2f4a, type: 3}
+  - {fileID: 21300000, guid: 74824fb3065b242b3aa1aae68abc30af, type: 3}
+  - {fileID: 21300000, guid: 20882dc3c18d743f7809a097b277306d, type: 3}
+  - {fileID: 21300000, guid: d225c5a56e680463586b01eb3de6cf85, type: 3}
+  - {fileID: 21300000, guid: 567f9be5379274d40bd29c9fc08e37cc, type: 3}
+  - {fileID: 21300000, guid: f2e293863cdae4f90a97415a87243148, type: 3}
+  - {fileID: 21300000, guid: 37c589f6cd1714a59b2c390e909682d3, type: 3}
+  - {fileID: 21300000, guid: 570fa8977fff047b8a4472c8b415e7f0, type: 3}
+  - {fileID: 21300000, guid: 7b1862c77a60c493d8030ea26e8e9cfd, type: 3}
+  - {fileID: 21300000, guid: 7d60f318cc5414d06907fd11a8265a57, type: 3}
+  - {fileID: 21300000, guid: 7a8e9138d1fea423eaf2620d1e0332f0, type: 3}
+  - {fileID: 21300000, guid: 4f8ab178ba713410e81a598248925898, type: 3}
+  - {fileID: 21300000, guid: ead147880ebf2c140ac993405f461e40, type: 3}
+  - {fileID: 21300000, guid: 509ad3b9a218e4faebe9c190afcb6abc, type: 3}
+  - {fileID: 21300000, guid: 034a82e91f56b46b5ab98effd2261c12, type: 3}
+  - {fileID: 21300000, guid: 5af3864a072224ead8aa8941795a9284, type: 3}
+  - {fileID: 21300000, guid: 84f0d15a59ee64a7db26bdcffafe3dae, type: 3}
+  - {fileID: 21300000, guid: 5a37b45a741e94841a2a883f7ceeb83b, type: 3}
+  - {fileID: 21300000, guid: fc03047dd42634578b4197c9450e97a2, type: 3}
+  - {fileID: 21300000, guid: 6355347def591416aa1fc3cbe7af85d4, type: 3}
+  - {fileID: 21300000, guid: dbcc5afd62c1645d19bded67597c1216, type: 3}
+  - {fileID: 21300000, guid: 6932de8e85f3041759f9e229d160ad4a, type: 3}
+  - {fileID: 21300000, guid: 4139ab3f78e7043e1a280ebb663ad936, type: 3}
+  - {fileID: 21300000, guid: 24f901af2972845e684852eaa7bd2eef, type: 3}
+  - {fileID: 21300000, guid: f9dfc3ef98abc41d4b3d07e19ee5c93d, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Object_06_Flower02
+  - Object_08_Mushroom03
+  - Object_35_Reed01
+  - Object_02_Rock01
+  - Object_19_Pinecone01
+  - Object_37_PointyTree01
+  - Object_15_Rock03
+  - Object_30_House01
+  - Object_10_Mushroom02
+  - Object_11_Mushroom03
+  - Object_16_Tree02
+  - Object_23_Picnic01
+  - Object_27_Hammock01
+  - Object_04_Flower01
+  - Object_29_Well01
+  - Object_33_Karasbook
+  - Object_01_Tree01
+  - Object_31_Hidden_BabyRabbits
+  - Object_36_BigLeaves01
+  - Object_13_Butterfly01
+  - Object_28_Farm01
+  - Object_17_Flower04
+  - Object_21_Pollen01
+  - Object_05_BonnyWash01
+  - Object_25_Karas01
+  - Object_03_Bush01
+  - Object_34_LogBench01
+  - Object_22_Lake01
+  - Object_20_Mushroomtable01
+  - Object_09_Mushroom01
+  - Object_14_Stump01
+  - Object_24_Firewood01
+  - Object_07_Rock02
+  - Object_26_Swing01
+  - Object_18_Flower05
+  - Object_12_Bush02
+  - Object_32_Barniessoup
+  m_RenderDataMap: {}
+  m_Tag: Palmwoods
+  m_IsVariant: 0

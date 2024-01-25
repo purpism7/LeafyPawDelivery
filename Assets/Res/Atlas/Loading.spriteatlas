@@ -41,7 +41,6 @@ SpriteAtlas:
     - f226ddf3041ee4ef8831c44ac0196555: 21300000
     - b4338115adf9348d48112645af6c7973: 21300000
     - 327b659742d594974bc5f892b9d2d803: 21300000
-    - da62cc184b609491588270d84858251e: 21300000
     - 9d340d59a2d254bc8b8062a4238ce865: 21300000
     - 29a953ab82cdc4b54bbd3d0a98991941: 21300000
     - 2955e5bd56b114d76bbca38d91fd6188: 21300000
@@ -51,7 +50,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f226ddf3041ee4ef8831c44ac0196555, type: 3}
   - {fileID: 21300000, guid: b4338115adf9348d48112645af6c7973, type: 3}
   - {fileID: 21300000, guid: 327b659742d594974bc5f892b9d2d803, type: 3}
-  - {fileID: 21300000, guid: da62cc184b609491588270d84858251e, type: 3}
   - {fileID: 21300000, guid: 9d340d59a2d254bc8b8062a4238ce865, type: 3}
   - {fileID: 21300000, guid: 29a953ab82cdc4b54bbd3d0a98991941, type: 3}
   - {fileID: 21300000, guid: 2955e5bd56b114d76bbca38d91fd6188, type: 3}
@@ -60,7 +58,6 @@ SpriteAtlas:
   - Map02_Loading_01
   - Loading_bg_02
   - GameLogo
-  - teamlogo
   - Map01_Loading_01
   - Map02_Loading_02
   - Map01_Loading_02
