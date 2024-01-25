@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4673291588887461157}
   - component: {fileID: 2164901631972730589}
   m_Layer: 6
-  m_Name: Char_08_Skin_1
+  m_Name: Char_09_Skin_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,12 +47,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 476904825788042644}
-  Id: 8
+  Id: 9
   UId: 0
   spriteRenderer: {fileID: 94659690454118510}
   edit: {fileID: 0}
   IsOverlap: 0
-  skinId: 1
+  skinId: 3
   animator: {fileID: 4193277499131427672}
 --- !u!222 &2164901631972730589
 CanvasRenderer:
@@ -73,8 +73,8 @@ GameObject:
   - component: {fileID: 7791163112305712424}
   - component: {fileID: 94659690454118510}
   - component: {fileID: 4193277499131427672}
-  - component: {fileID: 7723415294675809003}
   - component: {fileID: 7752470971938288511}
+  - component: {fileID: 7909621701333673950}
   m_Layer: 6
   m_Name: Animal
   m_TagString: Untagged
@@ -138,7 +138,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: be9b593c3524c483887bb98ee4458c30, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bdcc0fc4d008347dbb0ce2d5104eaae3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,7 +159,7 @@ Animator:
   m_GameObject: {fileID: 4616245985608609277}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e131ed9a9f50a40b4b21eb7c145d59c9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4a8bd3926bdb541e7be8578c7d30c1cd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -170,7 +170,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &7723415294675809003
+--- !u!114 &7752470971938288511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4616245985608609277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 659511518189944e2b2a5a669209f524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!60 &7909621701333673950
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,7 +218,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 160, y: 152}
+    oldSize: {x: 177, y: 167}
     newSize: {x: 200, y: 200}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -214,53 +226,39 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 45, y: 47}
-      - {x: 54, y: 71}
-      - {x: 51, y: 94}
-      - {x: 59, y: 108}
-      - {x: 60, y: 115}
-      - {x: 60, y: 128}
-      - {x: 54, y: 134}
-      - {x: 31, y: 133}
-      - {x: 29, y: 146}
-      - {x: 26, y: 147}
-      - {x: 14, y: 147}
-      - {x: 5, y: 137}
-      - {x: -5, y: 140}
-      - {x: -12, y: 147}
-      - {x: -21, y: 147}
-      - {x: -28, y: 144}
-      - {x: -31, y: 132}
-      - {x: -44, y: 133}
-      - {x: -53, y: 133}
-      - {x: -60, y: 126}
-      - {x: -60, y: 113}
-      - {x: -56, y: 105}
-      - {x: -52, y: 87}
-      - {x: -52, y: 77}
-      - {x: -50, y: 67}
-      - {x: -47, y: 58}
-      - {x: -44, y: 31}
-      - {x: -42, y: 23}
-      - {x: -36, y: 1}
-      - {x: -30, y: 0}
-      - {x: 28, y: 0}
-      - {x: 34, y: 1}
-      - {x: 55, y: 18}
-      - {x: 52, y: 31}
+    - - {x: 48.5, y: 50}
+      - {x: 51.5, y: 60}
+      - {x: 57.5, y: 74}
+      - {x: 65.5, y: 82}
+      - {x: 64.5, y: 90}
+      - {x: 65.5, y: 100}
+      - {x: 65.5, y: 119}
+      - {x: 56.5, y: 133}
+      - {x: 24.5, y: 146}
+      - {x: -10.5, y: 146}
+      - {x: -16.5, y: 145}
+      - {x: -24.5, y: 136}
+      - {x: -39.5, y: 137}
+      - {x: -51.5, y: 134}
+      - {x: -58.5, y: 127}
+      - {x: -61.5, y: 123}
+      - {x: -62.5, y: 120}
+      - {x: -63.5, y: 118}
+      - {x: -63.5, y: 103}
+      - {x: -62.5, y: 86}
+      - {x: -52.5, y: 64}
+      - {x: -44.5, y: 51}
+      - {x: -46.5, y: 40}
+      - {x: -43.5, y: 32}
+      - {x: -34.5, y: 7}
+      - {x: -29.5, y: 3}
+      - {x: -5.5, y: 4}
+      - {x: 0.5, y: 2}
+      - {x: 35.5, y: 2}
+      - {x: 37.5, y: 8}
+      - {x: 40.5, y: 23}
+      - {x: 51.5, y: 31}
   m_UseDelaunayMesh: 0
---- !u!114 &7752470971938288511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4616245985608609277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 659511518189944e2b2a5a669209f524, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5936816878479032547
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,15 +354,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[0].Key
-      value: animal_8_1
+      value: animal_9_1
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[1].Key
-      value: animal_8_2
+      value: animal_9_2
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[2].Key
-      value: animal_8_3
+      value: animal_9_3
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[0].TableName

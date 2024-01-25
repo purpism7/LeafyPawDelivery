@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4673291588887461157}
   - component: {fileID: 2164901631972730589}
   m_Layer: 6
-  m_Name: Char_08_Skin_1
+  m_Name: Char_08_Skin_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 94659690454118510}
   edit: {fileID: 0}
   IsOverlap: 0
-  skinId: 1
+  skinId: 3
   animator: {fileID: 4193277499131427672}
 --- !u!222 &2164901631972730589
 CanvasRenderer:
@@ -73,7 +73,6 @@ GameObject:
   - component: {fileID: 7791163112305712424}
   - component: {fileID: 94659690454118510}
   - component: {fileID: 4193277499131427672}
-  - component: {fileID: 7723415294675809003}
   - component: {fileID: 7752470971938288511}
   m_Layer: 6
   m_Name: Animal
@@ -138,7 +137,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: be9b593c3524c483887bb98ee4458c30, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ee36188ea57141a99763791131ec08e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,7 +158,7 @@ Animator:
   m_GameObject: {fileID: 4616245985608609277}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e131ed9a9f50a40b4b21eb7c145d59c9, type: 2}
+  m_Controller: {fileID: 9100000, guid: feb5116601c524770bf2c8e3521286a4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -170,85 +169,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &7723415294675809003
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4616245985608609277}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 160, y: 152}
-    newSize: {x: 200, y: 200}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 45, y: 47}
-      - {x: 54, y: 71}
-      - {x: 51, y: 94}
-      - {x: 59, y: 108}
-      - {x: 60, y: 115}
-      - {x: 60, y: 128}
-      - {x: 54, y: 134}
-      - {x: 31, y: 133}
-      - {x: 29, y: 146}
-      - {x: 26, y: 147}
-      - {x: 14, y: 147}
-      - {x: 5, y: 137}
-      - {x: -5, y: 140}
-      - {x: -12, y: 147}
-      - {x: -21, y: 147}
-      - {x: -28, y: 144}
-      - {x: -31, y: 132}
-      - {x: -44, y: 133}
-      - {x: -53, y: 133}
-      - {x: -60, y: 126}
-      - {x: -60, y: 113}
-      - {x: -56, y: 105}
-      - {x: -52, y: 87}
-      - {x: -52, y: 77}
-      - {x: -50, y: 67}
-      - {x: -47, y: 58}
-      - {x: -44, y: 31}
-      - {x: -42, y: 23}
-      - {x: -36, y: 1}
-      - {x: -30, y: 0}
-      - {x: 28, y: 0}
-      - {x: 34, y: 1}
-      - {x: 55, y: 18}
-      - {x: 52, y: 31}
-  m_UseDelaunayMesh: 0
 --- !u!114 &7752470971938288511
 MonoBehaviour:
   m_ObjectHideFlags: 0

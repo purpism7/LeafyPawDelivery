@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4673291588887461157}
   - component: {fileID: 2164901631972730589}
   m_Layer: 6
-  m_Name: Char_08_Skin_1
+  m_Name: Char_08_Skin_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 94659690454118510}
   edit: {fileID: 0}
   IsOverlap: 0
-  skinId: 1
+  skinId: 2
   animator: {fileID: 4193277499131427672}
 --- !u!222 &2164901631972730589
 CanvasRenderer:
@@ -73,8 +73,8 @@ GameObject:
   - component: {fileID: 7791163112305712424}
   - component: {fileID: 94659690454118510}
   - component: {fileID: 4193277499131427672}
-  - component: {fileID: 7723415294675809003}
   - component: {fileID: 7752470971938288511}
+  - component: {fileID: 2100723838632448266}
   m_Layer: 6
   m_Name: Animal
   m_TagString: Untagged
@@ -138,7 +138,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: be9b593c3524c483887bb98ee4458c30, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7db950bc6cc224593bd95ac7fc7c5a4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,7 +159,7 @@ Animator:
   m_GameObject: {fileID: 4616245985608609277}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e131ed9a9f50a40b4b21eb7c145d59c9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 73dd74ebe4a01418f8bce4413947feca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -170,7 +170,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &7723415294675809003
+--- !u!114 &7752470971938288511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4616245985608609277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 659511518189944e2b2a5a669209f524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!60 &2100723838632448266
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,28 +251,16 @@ PolygonCollider2D:
       - {x: -52, y: 87}
       - {x: -52, y: 77}
       - {x: -50, y: 67}
-      - {x: -47, y: 58}
-      - {x: -44, y: 31}
-      - {x: -42, y: 23}
+      - {x: -46, y: 58}
+      - {x: -46, y: 42}
+      - {x: -44, y: 23}
       - {x: -36, y: 1}
-      - {x: -30, y: 0}
+      - {x: -27, y: 0}
       - {x: 28, y: 0}
       - {x: 34, y: 1}
       - {x: 55, y: 18}
       - {x: 52, y: 31}
   m_UseDelaunayMesh: 0
---- !u!114 &7752470971938288511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4616245985608609277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 659511518189944e2b2a5a669209f524, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5936816878479032547
 GameObject:
   m_ObjectHideFlags: 0
