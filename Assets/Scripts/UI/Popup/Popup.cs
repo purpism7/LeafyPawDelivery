@@ -19,6 +19,7 @@ namespace UI
             public bool reInitialize = false;
             public bool animActivate = true;
             public bool showBackground = true;
+            public float animActivateInterval = 0;
         }
 
         public RectTransform popupRootRectTm;
@@ -59,7 +60,7 @@ namespace UI
                         {
                             resPopup = basePopup.GetComponent<T>();
                         
-                            ActivatePopup<T, V>(uiBase, initData.animActivate, initData.showBackground);
+                            ActivatePopup<T, V>(uiBase, initData.animActivate, initData.showBackground, 0);
                             
                             return resPopup;
                         }
@@ -112,10 +113,10 @@ namespace UI
                 popup.Initialize(vData);
             }
 
-            ActivatePopup<T, V>(uIBase, initData.animActivate, initData.showBackground);
+            ActivatePopup<T, V>(uIBase, initData.animActivate, initData.showBackground, initData.animActivateInterval);
         }
         
-        private void ActivatePopup<T, V>(UI.Base uiBase, bool animActivate, bool showBackground) where T :UI.Base<V> where V : BaseData
+        private void ActivatePopup<T, V>(UI.Base uiBase, bool animActivate, bool showBackground, float interval) where T :UI.Base<V> where V : BaseData
         {
             if (uiBase == null)
                 return;
@@ -129,7 +130,7 @@ namespace UI
             FadeOutBackground(showBackground);
             if(animActivate)
             {
-                basePopup.AnimActivate();
+                basePopup.AnimActivate(interval);
             }
             else
             {

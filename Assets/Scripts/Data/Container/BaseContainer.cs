@@ -75,6 +75,5 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
 
         return null;
     }
-    
 }
 

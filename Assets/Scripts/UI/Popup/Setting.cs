@@ -16,7 +16,7 @@ namespace UI
         private Image effectCheckImg = null;
         [Header("Language")]
         [SerializeField]
-        private Toggle[] langToggles = null;
+        private RectTransform[] unselectedRootRectTms = null;
 
         public override void Initialize(BaseData data)
         {
@@ -100,16 +100,20 @@ namespace UI
                 index = setting.LocaleIndex;
             }
 
-            if (langToggles == null)
-                return;
-
-            if (langToggles.Length <= index)
-                return;
-
-            langToggles[index]?.SetIsOnWithoutNotify(true);
+            SetButtonState(index);
         }
 
-        public void OnChangedLanguage(int index)
+        private void SetButtonState(int index)
+        {
+            if (unselectedRootRectTms == null)
+                return;
+
+            for (int i = 0; i < unselectedRootRectTms.Length; ++i)
+            {
+                UIUtils.SetActive(unselectedRootRectTms[i], i != index);
+            }
+        }
+        public void OnClickLanguage(int index)
         {
             var locales = LocalizationSettings.AvailableLocales.Locales;
             if (locales == null)
@@ -126,13 +130,7 @@ namespace UI
 
             Info.Setting.Get?.SaveLocaleIndex(index);
 
-            if(langToggles != null)
-            {
-                for (int i = 0; i < langToggles.Length; ++i)
-                {
-                    langToggles[i]?.SetIsOnWithoutNotify(i == index);
-                }
-            }
+            SetButtonState(index);
 
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
         }

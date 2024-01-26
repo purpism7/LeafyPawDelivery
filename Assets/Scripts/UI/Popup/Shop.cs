@@ -36,9 +36,7 @@ namespace UI
 
             yield return StartCoroutine(CoSetItemList());
 
-            InitializeChildComponent();
-
-            yield return null;            
+            InitializeChildComponent();         
         }
 
         public override void Activate()

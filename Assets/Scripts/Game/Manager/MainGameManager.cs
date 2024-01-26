@@ -94,10 +94,11 @@ public class MainGameManager : Singleton<MainGameManager>
 
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
         yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
-        yield return StartCoroutine(boostMgr?.CoInitialize(new Game.BoostManager.Data
-        {
-            boostRootRectTm = Game.UIManager.Instance?.Top?.boostRootRectTm,
-        }));
+        yield return StartCoroutine(boostMgr?.CoInitialize(
+            new Game.BoostManager.Data
+            {
+                boostRootRectTm = Game.UIManager.Instance?.Top?.boostRootRectTm,
+            }));
 
         Info.Connector.Create(transform);
         Game.Notification.Create(transform);

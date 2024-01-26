@@ -48,7 +48,7 @@ namespace UI
             UIManager.Instance?.Popup?.PopPopup();
         }
 
-        public void AnimActivate()
+        public void AnimActivate(float interval)
         {
             if(!rootRectTm)
                 return;
@@ -56,7 +56,8 @@ namespace UI
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .OnStart(() => { Activate(); })
-                .Append(rootRectTm.DOScale(Vector3.one * 0.5f, 0f))                
+                .Append(rootRectTm.DOScale(Vector3.one * 0.5f, 0f))
+                .AppendInterval(interval)
                 .Append(rootRectTm.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutQuart))
                 .OnComplete(() =>
                 {
