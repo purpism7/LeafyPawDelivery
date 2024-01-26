@@ -201,7 +201,6 @@ namespace Game.PlaceEvent
         #region Game.DropItem.IListener
         void Game.DropItem.IListener.GetDropItem(int dropCnt, Game.Type.EItemSub eItemSub)
         {
-            Debug.Log("DropItem = " + dropCnt);
             UI.ITop iTop = UIManager.Instance?.Top;
             if (iTop != null)
             {

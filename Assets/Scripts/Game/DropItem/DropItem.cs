@@ -179,7 +179,33 @@ namespace Game
             if (collider == null)
                 return;
 
-            collider.bounds.Expand(4f);
+            collider.size *= ColliderSizeOffset;
+        }
+
+        private float ColliderSizeOffset
+        {
+            get
+            {
+                switch (_data)
+                {
+                    case CurrencyData currencyData:
+                        {
+                            return 1.1f;
+                        }
+
+                    case ItemData itemData:
+                        {
+                            if (itemData.eItemSub == Type.EItemSub.Letter)
+                            {
+                                return 1.5f;
+                            }
+
+                            break;
+                        }
+                }
+
+                return 1.1f;
+            }
         }
 
         private void SetSortingOrder()
