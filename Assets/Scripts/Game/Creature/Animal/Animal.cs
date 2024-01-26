@@ -70,7 +70,7 @@ namespace Game.Creature
         private void InitActionController()
         {
             _actionCtr = gameObject.GetOrAddComponent<AnimalActionController>();
-            _actionCtr?.Initialize(animator, spriteRenderer, !_data.IsEdit);
+            _actionCtr?.Initialize(Id, animator, spriteRenderer, !_data.IsEdit);
         }
 
         public override void ChainUpdate()

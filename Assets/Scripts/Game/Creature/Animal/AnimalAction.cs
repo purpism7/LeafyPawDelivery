@@ -8,6 +8,7 @@ namespace Game.Creature
     {
         public class Data : Action.Data<AnimalAction>
         {
+            public int id = 0;
             public SpriteRenderer SprRenderer = null;
         }
 

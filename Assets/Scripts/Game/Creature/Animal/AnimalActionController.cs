@@ -30,16 +30,16 @@ namespace Game.Creature
             //Gizmos.DrawLine(new Vector3(center.x - halfWidth, center.y - halfHeight), new Vector3(center.x + halfWidth, posY));
         }
 
-        public void Initialize(Animator animator, SpriteRenderer sprRenderer, bool onlyIdle)
+        public void Initialize(int id, Animator animator, SpriteRenderer sprRenderer, bool onlyIdle)
         {
             _animator = animator;
             _sprRenderer = sprRenderer;
 
-            AnimalActionList.Add(CreateaAnimalAction<IdleAction>());
+            AnimalActionList.Add(CreateaAnimalAction<IdleAction>(id));
             if(!onlyIdle)
             {
-                AnimalActionList.Add(CreateaAnimalAction<WalkAction>());
-                AnimalActionList.Add(CreateaAnimalAction<SignatureAction>());
+                AnimalActionList.Add(CreateaAnimalAction<WalkAction>(id));
+                AnimalActionList.Add(CreateaAnimalAction<SignatureAction>(id));
             }
 
             StartIdleAction();
@@ -65,7 +65,7 @@ namespace Game.Creature
             }
         }
 
-        private AnimalAction CreateaAnimalAction<T>() where T : AnimalAction, new()
+        private AnimalAction CreateaAnimalAction<T>(int id) where T : AnimalAction, new()
         {
             var data = new AnimalAction.Data()
             {
@@ -73,6 +73,7 @@ namespace Game.Creature
                 Tm = transform,
                 Animator = _animator,
 
+                id = id,
                 SprRenderer = _sprRenderer,
             };
 

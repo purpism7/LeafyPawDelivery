@@ -30,14 +30,14 @@ namespace Game
             //}
         }
 
-        public static bool Move(Vector3 targetPos, out List<Vector3> pathPosList)
+        public static bool Move(int id, Vector3 targetPos, out List<Vector3> pathPosList)
         {
             pathPosList = null;
 
             if (_instance == null)
                 return false;
 
-            return _instance.MoveByAStar(targetPos, out pathPosList);
+            return _instance.MoveByAStar(id, targetPos, out pathPosList);
         }
 
         private IGridCell _iGridCell = null;
@@ -50,7 +50,7 @@ namespace Game
             _aStar = new();
         }
 
-        private bool MoveByAStar(Vector3 targetPos, out List<Vector3> pathPosList)
+        private bool MoveByAStar(int id, Vector3 targetPos, out List<Vector3> pathPosList)
         {
             pathPosList = null;
 
@@ -74,7 +74,7 @@ namespace Game
             var startNode = new PathFinding.Node(cell.Id, !cell.IsOverlap, cell.Row, cell.Column);
             var targetNode = new PathFinding.Node(targetCell.Id, true, targetCell.Row, targetCell.Column);
 
-            _aStar.FindPath(startNode, targetNode, GetNeighbourNodeList);
+            _aStar.FindPath(id, startNode, targetNode, GetNeighbourNodeList);
 
             pathPosList = new();
             pathPosList.Clear();

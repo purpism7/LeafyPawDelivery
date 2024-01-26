@@ -10,7 +10,7 @@ namespace Game.PathFinding
     {
         public List<Node> Path { get; private set; } = new();
 
-        public void FindPath(Node startNode, Node targetNode, System.Func<int, List<Node>> findNeighbourNodeFunc)
+        public void FindPath(int id, Node startNode, Node targetNode, System.Func<int, List<Node>> findNeighbourNodeFunc)
         {
             Path.Clear();
 
@@ -42,8 +42,8 @@ namespace Game.PathFinding
 
                 if(currentNode.Id == targetNode.Id)
                 {
-                    Debug.Log("End AStar");
-                    RetracePath(startNode, currentNode);
+                    Debug.Log("End AStar = " + id);
+                    RetracePath(id, startNode, currentNode);
       
                     break;
                 }
@@ -85,7 +85,7 @@ namespace Game.PathFinding
         }
 
         // 탐색 종료 최종 노드들의 parentNode 를 추적하여 리스트에 담는다.
-        private void RetracePath(Node startNode, Node targetNode)
+        private void RetracePath(int id, Node startNode, Node targetNode)
         {
             var path = new List<Node>();
             path?.Clear();
@@ -95,13 +95,22 @@ namespace Game.PathFinding
             while(currentNode.Id != startNode.Id)
             {
                 path?.Add(currentNode);
-
+                
                 currentNode = currentNode.ParentNode;
+
+                if (currentNode == null)
+                {
+                    Debug.Log("CurrentNode is null");
+
+                    break;
+                }
             }
 
             path?.Reverse();
 
             Path = path;
+
+            Debug.Log("End RetracePath = " + id);
         }
     }
 }

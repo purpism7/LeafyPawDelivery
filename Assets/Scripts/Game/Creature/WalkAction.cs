@@ -31,7 +31,8 @@ namespace Game.Creature
 
         private void Move()
         {
-            if (Carrier.Move(_data.Tm.localPosition, out List<Vector3> pathPosList))
+            Debug.Log("Start A Star = " + _data.id); 
+            if (Carrier.Move(_data.id, _data.Tm.localPosition, out List<Vector3> pathPosList))
             {
                 _posQueue.Clear();
 
