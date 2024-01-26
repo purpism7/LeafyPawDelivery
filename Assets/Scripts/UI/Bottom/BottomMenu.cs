@@ -39,8 +39,6 @@ namespace UI
             RegisterNotification();
 
             UIUtils.SetActive(redDotRectTm, false);
-
-            Debug.Log("End BottomMenu Initialize");
         }
 
         public override void Activate()

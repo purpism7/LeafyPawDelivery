@@ -45,14 +45,16 @@ namespace UI.Component
 
         private void AnimActiavte()
         {
+            transform.DOLocalMoveY(0, 0);
+
             Sequence sequence = DOTween.Sequence()
               .SetAutoKill(false)
               .OnStart(() =>
               {
                   Activate();
-                  bgImg.DOFade(0, 0);
+                  //bgImg.DOFade(0, 0);
               })
-              .Append(bgImg.DOFade(1f, 0.2f).SetEase(Ease.Linear))
+              .Append(transform.DOLocalMoveY(-50f, 0.3f).SetEase(Ease.OutSine))
               .AppendInterval(2.5f)
               //.Append(rootRectTm.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutQuart))
               .OnComplete(() =>
@@ -70,8 +72,9 @@ namespace UI.Component
              {
                  //Activate();
                  //bgImg.DOFade(0, 0);
+                 transform.DOLocalMoveY(0, 0);
              })
-             .Append(bgImg.DOFade(0, 0.2f).SetEase(Ease.Linear))
+             //.Append(bgImg.DOFade(0, 0.2f).SetEase(Ease.Linear))
              //.Append(rootRectTm.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutQuart))
              .OnComplete(() =>
              {
