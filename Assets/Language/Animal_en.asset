@@ -27,7 +27,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3530700706799616
-    m_Localized: A warm hearted pink rabbit
+    m_Localized: 'A warm hearted pink rabbit
+
+      Hobby : Cooking stews'
     m_Metadata:
       m_Items: []
   - m_Id: 3537882001170432
@@ -53,23 +55,33 @@ MonoBehaviour:
   - m_Id: 3541437768523776
     m_Localized: 'A worried black cat
 
+      Favorite things : Yellow butterfly
+
 '
     m_Metadata:
       m_Items: []
   - m_Id: 3541083148509184
-    m_Localized: A kindful gray dog
+    m_Localized: 'A kindful gray dog
+
+      Favorite things : Warm sunshine'
     m_Metadata:
       m_Items: []
   - m_Id: 3541151591161856
-    m_Localized: A small but cool yellow hamster
+    m_Localized: 'A small but cool yellow hamster
+
+      Hobby : Playing guitar'
     m_Metadata:
       m_Items: []
   - m_Id: 3541210860871680
-    m_Localized: A picky but sweet hearted red panda
+    m_Localized: 'A picky but sweet hearted red panda
+
+      Hobby : Sleeping'
     m_Metadata:
       m_Items: []
   - m_Id: 3541267840491520
-    m_Localized: A Barnie's writer friend Kara
+    m_Localized: 'A Barnie''s writer friend Kara
+
+      Hobby : Reading books'
     m_Metadata:
       m_Items: []
   - m_Id: 45211839817048064
@@ -93,23 +105,33 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45244991805579264
-    m_Localized: A shy and emotional deer
+    m_Localized: 'A shy and emotional deer
+
+      Hobby : Writing letters'
     m_Metadata:
       m_Items: []
   - m_Id: 45245006292705280
-    m_Localized: A cheerful and bright deer
+    m_Localized: 'A cheerful and bright deer
+
+      Favorite things : Chocolate cake'
     m_Metadata:
       m_Items: []
   - m_Id: 45245017881567232
-    m_Localized: A quiet dreamer white sheep
+    m_Localized: 'A quiet dreamer white sheep
+
+      Hobby : Listening music'
     m_Metadata:
       m_Items: []
   - m_Id: 45245028866449408
-    m_Localized: A playful brown squirrel
+    m_Localized: 'A playful brown squirrel
+
+      Favorite things : Carrot cake'
     m_Metadata:
       m_Items: []
   - m_Id: 45245039486427136
-    m_Localized: A quiet but sweet gray wolf
+    m_Localized: 'A quiet but sweet gray wolf
+
+      Hobby : Walking'
     m_Metadata:
       m_Items: []
   - m_Id: 61123996421185536
@@ -133,23 +155,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 61125681939996672
-    m_Localized: Little Brother Desert Fox, Passed away from accident
+    m_Localized: "Little Brother Desert Fox, \nPassed away from accident\nFavorite
+      things : Lucky clover"
     m_Metadata:
       m_Items: []
   - m_Id: 61126130910879744
-    m_Localized: Sister Desert Fox with Sparkling Eyes
+    m_Localized: 'Sister Desert Fox with Sparkling Eyes
+
+      Hobby : Knitting'
     m_Metadata:
       m_Items: []
   - m_Id: 61126245092417536
-    m_Localized: Bright and charming gray mouse
+    m_Localized: 'Bright and charming gray mouse
+
+      Favorite things : Potato
+      chips'
     m_Metadata:
       m_Items: []
   - m_Id: 61126378580336640
-    m_Localized: Timid, black raccoon
+    m_Localized: 'Timid, black raccoon
+
+      Hobby : Puzzle'
     m_Metadata:
       m_Items: []
   - m_Id: 61126491981733888
-    m_Localized: Young, curious, yellow chick
+    m_Localized: 'Young, curious, yellow chick
+
+      Favorite things : Strawberry
+      milk'
     m_Metadata:
       m_Items: []
   references:
