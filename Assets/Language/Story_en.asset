@@ -427,6 +427,116 @@ MonoBehaviour:
     m_Localized: Okay, okay. Off you go now.
     m_Metadata:
       m_Items: []
+  - m_Id: 63196470336020480
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195387991678976
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46591943503765504
+    m_Localized: 'This must be the ocean.
+
+      The open scenery is absolutely beautiful.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46592104355323904
+    m_Localized: Excuse me...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46592127470133248
+    m_Localized: "It feels a little eerie all of a sudden\u2026\nI think it got a
+      bit chilly as well..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195041747689472
+    m_Localized: "Excuse me, can\u2019t you hear me?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195173377531904
+    m_Localized: "Who\u2019s talking to m\u2026 you have a halo over your head.\nAm
+      I dreaming?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195331355992064
+    m_Localized: "You\u2019re not dreaming. My name\u2019s Reian."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195410506702848
+    m_Localized: "I\u2019m a ghost. Did I surprise you?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195473723252736
+    m_Localized: "Don\u2019t you think that\u2019s a little scary?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195541247352832
+    m_Localized: "I mean, you\u2019re surprisingly calm for someone that was scared,
+      Mr. Mailman."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195593739067392
+    m_Localized: "Can\u2019t you see my body quivering\u2026?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195651742097408
+    m_Localized: "I won\u2019t hurt you.\nI just have a quick little favor\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195713159290880
+    m_Localized: I passed away three years ago from a traffic accident.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195776031907840
+    m_Localized: Why are you wandering around this village?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195841882480640
+    m_Localized: "Someone\u2019s waiting for me. \nI just can\u2019t bear to leave
+      her alone."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195929702817792
+    m_Localized: "Who\u2019s waiting for you?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63195975961796608
+    m_Localized: "\u2026It\u2019s my sister. She still comes to visit me every day.\n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63196035927760896
+    m_Localized: "I see. Then your favor is\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63196091196104704
+    m_Localized: Can you deliver a letter to my sister?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63196157243809792
+    m_Localized: "Of course. That\u2019s my job."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63196205880958976
+    m_Localized: "Oh, and could you give this scarf to her as well? It\u2019s hers."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63196289620238336
+    m_Localized: 'She put it around my neck when I said it was cold.
+
+      I want
+      to return it to her.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63196361577717760
+    m_Localized: "As a final gift. It\u2019s sad to think that she might forget about
+      me\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63196414929264640
+    m_Localized: but I want her to move on and live her life.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
