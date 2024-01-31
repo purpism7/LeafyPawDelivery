@@ -27,7 +27,7 @@ namespace UI
 
         public void OnClick()
         {
-            Game.UIManager.Instance?.ActivateAnim();
+            Game.UIManager.Instance?.ActivateAnim(null);
 
             Deactivate();
         }

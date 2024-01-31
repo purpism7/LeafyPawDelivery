@@ -51,9 +51,9 @@ namespace Game
             UIUtils.SetActive(uiRootRectTm, enable);
         }
 
-        public void ActivateAnim()
+        public void ActivateAnim(System.Action completeAction)
         {
-            Top?.ActivateAnim(null);
+            Top?.ActivateAnim(completeAction);
             Bottom?.ActivateAnim(null);
         }
 
@@ -76,10 +76,8 @@ namespace Game
         #region IUpdater
         void IUpdater.ChainUpdate()
         {
-            Bottom?.ChainUpdate();
+            //Bottom?.ChainUpdate();
             Popup?.ChainUpdate();
-
-            return;
         }
         #endregion
     }

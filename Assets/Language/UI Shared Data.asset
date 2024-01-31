@@ -157,6 +157,10 @@ MonoBehaviour:
     m_Key: desc_hidden_object
     m_Metadata:
       m_Items: []
+  - m_Id: 63491704366292992
+    m_Key: guide_hidden_object
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

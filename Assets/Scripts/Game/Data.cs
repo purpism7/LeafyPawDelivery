@@ -8,7 +8,7 @@ namespace Game
     {
         public static Const Const = null;
 
-        public static int PlayerPrefsVersion = 2;
+        public static int PlayerPrefsVersion = 3;
     }
 }
 

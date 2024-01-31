@@ -14,5 +14,11 @@ namespace Game.PlaceEvent
         public Game.Type.EItemSub eItemSub = Type.EItemSub.None;
         public int currCnt = 0;
     }
+
+    public class HiddneObjectData : BaseData
+    {
+        public int id = 0;
+        public Game.Type.EElement eElement = Type.EElement.None;
+    }
 }
 

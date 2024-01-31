@@ -94,6 +94,12 @@ namespace Game.PlaceEvent
                 var localPos = hiddenObject.transform.localPosition;
                 hiddenObject.transform.localPosition = new Vector3(localPos.x, localPos.y, -10f);
             }
+
+            _iListener?.Action(new HiddneObjectData()
+            {
+                id = data.Id,
+                eElement = Type.EElement.Object,
+            });
         }
 
         private bool CheckExistHiddenObject

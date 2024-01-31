@@ -71,13 +71,8 @@ namespace Game
             if (!_initialize)
                 return;
 
-            _initialize = false;
-
             SetObjectList();
             SetAnimalList();
-
-            _placeEventCtr = new();
-            _placeEventCtr?.Initialize(this, _data.Id);
         }
 
         public override void ChainUpdate()
@@ -96,7 +91,10 @@ namespace Game
 
             GameUtils.SetActive(animalRootTm, true);
 
-            Boom();
+            if(!_initialize)
+            {
+                Boom();
+            }
 
             _state = IPlaceState.EType.Active;
 
@@ -104,6 +102,11 @@ namespace Game
                _data.onBGM)
             {
                 bgmPlayer?.Play();
+            }
+
+            if(_initialize)
+            {
+                _initialize = false;
             }
         }
 
@@ -452,6 +455,12 @@ namespace Game
         public void Boom()
         {
             _state = IPlaceState.EType.Active;
+
+            if (_placeEventCtr == null)
+            {
+                _placeEventCtr = new();
+                _placeEventCtr?.Initialize(this, _data.Id);
+            }
 
             _placeEventCtr?.Start();
 

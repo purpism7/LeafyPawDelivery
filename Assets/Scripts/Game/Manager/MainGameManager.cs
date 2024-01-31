@@ -104,8 +104,6 @@ public class MainGameManager : Singleton<MainGameManager>
         Game.Notification.Create(transform);
 
         //yield return EndLoadAsync(true);
-
-        Debug.Log("End MainGameMgr Initialize");
         _endInitialize = true;
     }
 
@@ -174,7 +172,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
     public async UniTask EndLoadAsync(bool initialize)
     {
-        AnimEnterPlace();
+        await AnimEnterPlaceAsync();
 
         //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
         await UniTask.Yield();
@@ -184,8 +182,10 @@ public class MainGameManager : Singleton<MainGameManager>
         Game.Notification.Get?.AllNotify();
     }
 
-    private void AnimEnterPlace()
+    private async UniTask AnimEnterPlaceAsync()
     {
+        bool endEnterPlace = false;
+
         Sequencer.EnqueueTask(
             () =>
             {
@@ -197,11 +197,17 @@ public class MainGameManager : Singleton<MainGameManager>
                 enterPlace?.PlayAnim(IGameCameraCtrProvider,
                     () =>
                     {
-                        SetGameState<Game.State.Game>();
+                        endEnterPlace = true;
                     });
 
                 return enterPlace;
             });
+
+        await UniTask.WaitUntil(() => endEnterPlace);
+
+        SetGameState<Game.State.Game>();
+
+        await GameState.InitializeAsync(this);
     }
 
     private void Starter()
@@ -224,7 +230,10 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             foreach (var iUpdater in _iUpdaterList)
             {
-                iUpdater?.ChainUpdate();
+                if (iUpdater == null)
+                    continue;
+
+                iUpdater.ChainUpdate();
             }
         }
 
@@ -247,7 +256,10 @@ public class MainGameManager : Singleton<MainGameManager>
         {
             foreach (var iFixedUpdater in _iFixedUpdaterList)
             {
-                iFixedUpdater?.ChainFixedUpdate();
+                if (iFixedUpdater == null)
+                    continue;
+
+                iFixedUpdater.ChainFixedUpdate();
             }
         }
     }
@@ -263,6 +275,7 @@ public class MainGameManager : Singleton<MainGameManager>
 
         GameState = System.Activator.CreateInstance<T>();
         GameState?.Initialize(this);
+        GameState?.InitializeAsync(this).Forget();
     }
     #endregion
 

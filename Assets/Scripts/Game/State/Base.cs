@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 namespace Game.State
 {
     public abstract class Base
@@ -25,6 +27,11 @@ namespace Game.State
         }
 
         public abstract void Initialize(MainGameManager mainGameMgr);
+        public virtual async UniTask InitializeAsync(MainGameManager mainGameMgr)
+        {
+            await UniTask.Yield();
+        }
+
         public abstract void End();
     }
 }

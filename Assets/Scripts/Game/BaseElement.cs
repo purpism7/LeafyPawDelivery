@@ -29,7 +29,7 @@ namespace Game
         {
             base.ChainUpdate();
 
-            State?.ChainUpdate();
+            //State?.ChainUpdate();
         }
 
         public void ActiveEdit(bool active)

@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace Game
 {
-    public class PlaceEventController : PlaceEvent.DropItem.IListener
+    public class PlaceEventController : PlaceEvent.Base.IListener
     {
         public static UnityEvent<PlaceEvent.BaseData> Event = new();
 
@@ -45,13 +45,9 @@ namespace Game
             _dropItem?.StopDrop();
         }
 
-        void PlaceEvent.DropItem.IListener.Action(PlaceEvent.BaseData data)
+        void PlaceEvent.Base.IListener.Action(PlaceEvent.BaseData data)
         {
-            var dropItemData = data as PlaceEvent.DropItemData;
-            if (dropItemData == null)
-                return;
-
-            Event?.Invoke(dropItemData);
+            Event?.Invoke(data);
         }
     }
 }

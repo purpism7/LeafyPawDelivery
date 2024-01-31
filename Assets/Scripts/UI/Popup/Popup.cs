@@ -36,6 +36,9 @@ namespace UI
             {
                 for(int i = 0; i < _opendPopupList.Count; ++i)
                 {
+                    if (!_opendPopupList[i].IsActivate)
+                        continue;
+
                     _opendPopupList[i]?.ChainUpdate();
                 }
             }
