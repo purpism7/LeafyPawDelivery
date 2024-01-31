@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 namespace Game.Creature
 {
     public class WalkAction : AnimalAction
@@ -16,7 +18,7 @@ namespace Game.Creature
         {
             base.StartAction();
 
-            Move();
+            MoveAsync().Forget();
         }
 
         protected override void InProgressAction()
@@ -29,34 +31,67 @@ namespace Game.Creature
             base.EndAction();
         }
 
-        private void Move()
+        private async UniTask MoveAsync()
         {
-            Debug.Log("Start A Star = " + _data.id); 
-            if (Carrier.Move(_data.id, _data.Tm.localPosition, out List<Vector3> pathPosList))
+            List<Vector3> pathPosList = await Carrier.MoveAsync(_data.Tm.localPosition);
+            if (pathPosList == null)
             {
-                _posQueue.Clear();
+                EndAction();
 
-                foreach(Vector3 pos in pathPosList)
-                {
-                    _posQueue.Enqueue(pos);
-                }
+                return;
+            }
 
-                if(_posQueue.Count > 0)
-                {
-                    InProgressAction();
+            _posQueue.Clear();
 
-                    MoveToTarget();
-                }
-                else
-                {
-                    EndAction();
-                }
+            foreach (Vector3 pos in pathPosList)
+            {
+                _posQueue.Enqueue(pos);
+            }
+
+            if (_posQueue.Count > 0)
+            {
+                InProgressAction();
+
+                MoveToTarget();
             }
             else
             {
                 EndAction();
             }
         }
+
+        //private void Move()
+        //{
+        //    Debug.Log("Start A Star = " + _data.id);
+
+
+
+
+        //    if (Carrier.MoveAsync(_data.Tm.localPosition, out List<Vector3> pathPosList))
+        //    {
+        //        _posQueue.Clear();
+
+        //        foreach(Vector3 pos in pathPosList)
+        //        {
+        //            _posQueue.Enqueue(pos);
+        //        }
+
+        //        if(_posQueue.Count > 0)
+        //        {
+        //            InProgressAction();
+
+        //            MoveToTarget();
+        //        }
+        //        else
+        //        {
+        //            EndAction();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        EndAction();
+        //    }
+        //}
 
         private bool MoveToTarget()
         {

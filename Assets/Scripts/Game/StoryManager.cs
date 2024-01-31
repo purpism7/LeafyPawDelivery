@@ -20,7 +20,7 @@ namespace Game
         private List<GameObject> _storyPrefabList = new();
         private int _placeId = 0;
 
-        public static UnityEvent<Event.StoryData> Listener = new();
+        public static UnityEvent<Event.StoryData> Event = new();
 
         protected override void Initialize()
         {
@@ -94,34 +94,11 @@ namespace Game
             if (currStory == null)
                 return false;
 
-            var storyOpenCondition =  StoryOpenConditionContainer.Instance.GetData(currStory.Id);
-            if(storyOpenCondition == null)
+            var storyOpenConditionContainer = StoryOpenConditionContainer.Instance;
+            if (storyOpenConditionContainer == null)
                 return false;
 
-            if (!CheckReqIds(mainGameMgr, Type.EElement.Animal, storyOpenCondition.ReqAnimalIds))
-                return false;
-
-            if (!CheckReqIds(mainGameMgr, Type.EElement.Object, storyOpenCondition.ReqObjectIds))
-                return false;
-
-            return true;
-        }
-
-        private bool CheckReqIds(MainGameManager mainGameMgr, Type.EElement eElement, int[] ids)
-        {
-            if (ids != null)
-            {
-                foreach (int id in ids)
-                {
-                    if (id <= 0)
-                        continue;
-
-                    if (!mainGameMgr.CheckExist(eElement, id))
-                        return false;
-                }
-            }
-
-            return true;
+            return storyOpenConditionContainer.CheckReq(currStory.Id);
         }
 
         public Game.Manager.Cutscene PlayStory(Story story)
@@ -149,10 +126,10 @@ namespace Game
                 {
                     var cutscene = PlayStory(story);
 
-                    Listener?.Invoke(new Event.StoryData()
+                    Event?.Invoke(new Event.StoryData()
                     {
                         Id = story.Id,
-                        EState = Event.EState.Begin,
+                        EState = Game.Event.EState.Begin,
                     });
 
                     MainGameManager.Instance?.AddAcquire(Type.EAcquire.Story, Type.EAcquireAction.Obtain, 1);
@@ -167,11 +144,11 @@ namespace Game
         {
             if (story == null)
                 return;
-            
-            Listener?.Invoke(new Event.StoryData()
+
+            Event?.Invoke(new Event.StoryData()
             {
                 Id = story.Id,
-                EState = Event.EState.Begin,
+                EState = Game.Event.EState.End,
             });
 
             //storyData.Completed = true;

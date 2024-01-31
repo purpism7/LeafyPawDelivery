@@ -247,7 +247,9 @@ namespace UI
 
             int index = 0;
 
-            foreach (var data in dataList)
+            var datas = dataList.OrderBy(obj => obj.Order);
+
+            foreach (var data in datas)
             {
                 if (data == null)
                     continue;

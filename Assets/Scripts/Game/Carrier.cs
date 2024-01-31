@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using GameSystem;
 
 namespace Game
@@ -30,14 +32,12 @@ namespace Game
             //}
         }
 
-        public static bool Move(int id, Vector3 targetPos, out List<Vector3> pathPosList)
+        public static async UniTask<List<Vector3>> MoveAsync(Vector3 targetPos)
         {
-            pathPosList = null;
-
             if (_instance == null)
-                return false;
+                return null;
 
-            return _instance.MoveByAStar(id, targetPos, out pathPosList);
+            return await _instance.MoveByAStarAsync(targetPos);
         }
 
         private IGridCell _iGridCell = null;
@@ -50,31 +50,31 @@ namespace Game
             _aStar = new();
         }
 
-        private bool MoveByAStar(int id, Vector3 targetPos, out List<Vector3> pathPosList)
+        private async UniTask<List<Vector3>> MoveByAStarAsync(Vector3 targetPos)
         {
-            pathPosList = null;
+            List<Vector3> pathPosList = null;
 
             var iGridCell = _iGridCell;
             if (iGridCell == null)
-                return false;
+                return pathPosList;
 
             if (_aStar == null)
-                return false;
+                return pathPosList;
 
             _aStar.Path.Clear();
 
             var cell = _iGridCell.GetCell(targetPos);
             if (cell == null)
-                return false;
+                return pathPosList;
 
             var targetCell = _iGridCell.GetCell(GetRandomPos(targetPos.z));
             if (targetCell.IsOverlap)
-                return false;
+                return pathPosList;
 
             var startNode = new PathFinding.Node(cell.Id, !cell.IsOverlap, cell.Row, cell.Column);
             var targetNode = new PathFinding.Node(targetCell.Id, true, targetCell.Row, targetCell.Column);
 
-            _aStar.FindPath(id, startNode, targetNode, GetNeighbourNodeList);
+            await _aStar.FindPathAsync(startNode, targetNode, GetNeighbourNodeList);
 
             pathPosList = new();
             pathPosList.Clear();
@@ -91,8 +91,53 @@ namespace Game
                 pathPosList.Add(pathCell.transform.position);
             }
 
-            return true;
+            return pathPosList;
+
         }
+
+        //private bool MoveByAStar(int id, Vector3 targetPos, out List<Vector3> pathPosList)
+        //{
+        //    pathPosList = null;
+
+        //    var iGridCell = _iGridCell;
+        //    if (iGridCell == null)
+        //        return false;
+
+        //    if (_aStar == null)
+        //        return false;
+
+        //    //_aStar.Path.Clear();
+
+        //    var cell = _iGridCell.GetCell(targetPos);
+        //    if (cell == null)
+        //        return false;
+
+        //    var targetCell = _iGridCell.GetCell(GetRandomPos(targetPos.z));
+        //    if (targetCell.IsOverlap)
+        //        return false;
+
+        //    var startNode = new PathFinding.Node(cell.Id, !cell.IsOverlap, cell.Row, cell.Column);
+        //    var targetNode = new PathFinding.Node(targetCell.Id, true, targetCell.Row, targetCell.Column);
+
+        //    _aStar.FindPathAsync(id, startNode, targetNode, GetNeighbourNodeList);
+
+        //    pathPosList = new();
+        //    pathPosList.Clear();
+
+        //    foreach (var path in _aStar.Path)
+        //    {
+        //        if (path == null)
+        //            continue;
+
+        //        var pathCell = _iGridCell?.GetCell(path.Id);
+        //        if (pathCell == null)
+        //            continue;
+
+        //        pathPosList.Add(pathCell.transform.position);
+        //    }
+
+        //    return true;
+        //}
 
         private Vector3 GetRandomPos(float z)
         {

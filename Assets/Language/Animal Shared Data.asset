@@ -143,6 +143,10 @@ MonoBehaviour:
     m_Key: discription_16
     m_Metadata:
       m_Items: []
+  - m_Id: 64055390789165056
+    m_Key: name_1_skin_2
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

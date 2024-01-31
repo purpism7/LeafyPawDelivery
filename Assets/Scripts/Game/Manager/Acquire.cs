@@ -11,14 +11,23 @@ namespace Game.Manager
 
         }
 
-        private const string KeyDailyMissionDate = "KeyDailyMissionDate";
-        private const string KeyGetRewardedDailyMission = "KeyGetRewardedDailyMission_{0}";
-        private const string KeyGetRewardedAchievement = "KeyGetRewardedAchievement_{0}";
+        private readonly string KeyDailyMissionDate = "KeyDailyMissionDate";
+        private readonly string KeyGetRewardedDailyMission = "KeyGetRewardedDailyMission_{0}";
+        private readonly string KeyGetRewardedAchievement = "KeyGetRewardedAchievement_{0}";
 
         private Info.AcquireHolder _acquireHolder = new();
 
         public System.DateTime? DailyMissionDateTime { get; set; } = null;
-        
+
+        private Acquire()
+        {
+            var version = Game.Data.PlayerPrefsVersion;
+
+            KeyDailyMissionDate += "_" + version;
+            KeyGetRewardedDailyMission += "_" + version;
+            KeyGetRewardedAchievement += "_" + version;
+        }
+
         protected override void Initialize()
         {
             SetDailyMissionDate();

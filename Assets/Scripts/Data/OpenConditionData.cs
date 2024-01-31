@@ -10,6 +10,7 @@ public class OpenConditionData : Data.Base
 
         Starter,
         Buy,
+        Hidden,
         Bonus,
     };
 
@@ -21,8 +22,12 @@ public class OpenConditionData : Data.Base
     public bool Advertising = false;
     public int[] ReqAnimalIds = null;
     public int[] ReqObjectIds = null;
+    [SerializeField]
+    private int reqStoryId = 0; // 숨겨진 오브젝트를 배치를 위한 조건.
 
     public EType eType = EType.None;
+
+    public int ReqStoryId { get { return reqStoryId; } }
 
     public override void Initialize()
     {

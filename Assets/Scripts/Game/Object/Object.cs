@@ -8,18 +8,30 @@ using System;
 
 namespace Game
 {
-    public class Object : Game.BaseElement<Object.Data>, UI.Edit.IListener
+    public interface IObject
+    {
+        Transform HiddenObjectRootTm { get; }
+        bool CheckExistHiddenObject { get; }
+        int SortingOrder { get; }
+    }
+
+    public class Object : Game.BaseElement<Object.Data>, UI.Edit.IListener, IObject
     {
         public class Data : BaseData
         {
             public int ObjectId = 0;
             public int ObjectUId = 0;
             public Vector3 Pos = Vector3.zero;
+
+            public bool isHiddenObj = false;
+            public int sortingOrder = 0;
         }
 
         #region Inspector
         [SerializeField]
         private int sortingOrderOffset = 0;
+        [SerializeField]
+        private Transform hiddenRootTm = null;
         #endregion
 
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
@@ -49,7 +61,14 @@ namespace Game
                 UId = ObjectUId;
 
                 SetPos();
-                SetSortingOrder(-(int)transform.localPosition.y);
+
+                int sortingOrder = -(int)transform.localPosition.y;
+                if(data.isHiddenObj)
+                {
+                    sortingOrder = data.sortingOrder;
+                }
+
+                SetSortingOrder(sortingOrder);
             }
 
             edit?.Initialize(new Edit.Data()
@@ -78,6 +97,9 @@ namespace Game
 
             if(gameState.CheckState<Game.State.Edit>())
             {
+                if (_data.isHiddenObj)
+                    return;
+
                 var editState = gameState.Get<Game.State.Edit>();
                 if (editState != null &&
                     editState.CheckIsEditElement(this))
@@ -90,6 +112,14 @@ namespace Game
             }
             else
             {
+                if (_data.isHiddenObj)
+                {
+                    Debug.Log("Hidden Object");
+                    Command.ObtainHiddenObject.Execute(this);
+
+                    return;
+                }
+
                 SetState(new Game.Element.State.Play()?.Initialize(gameCameraCtr, iGrid));
             }
 
@@ -133,6 +163,38 @@ namespace Game
 
             _data.Pos = pos;
         }
+
+        #region IObject
+        Transform IObject.HiddenObjectRootTm
+        {
+            get
+            {
+                return hiddenRootTm;
+            }
+        }
+
+        bool IObject.CheckExistHiddenObject
+        {
+            get
+            {
+                if (!hiddenRootTm)
+                    return true;
+
+                return hiddenRootTm.childCount > 0;
+            }
+        }
+
+        int IObject.SortingOrder
+        {
+            get
+            {
+                if (spriteRenderer == null)
+                    return -9999;
+
+                return spriteRenderer.sortingOrder;
+            }
+        }
+        #endregion
 
         #region Edit.IListener
         void UI.Edit.IListener.Remove()

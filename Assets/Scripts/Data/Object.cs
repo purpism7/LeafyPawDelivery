@@ -8,12 +8,16 @@ public class Object : ElementData
     [SerializeField]
     private int Grade = 0;
     public int Count = 1;
+    [SerializeField]
+    private int order = 0;
 
     public Game.Type.EObjectGrade EGrade = Game.Type.EObjectGrade.None;
     public string ShortIconImgName = string.Empty;
     public string LargeIconImgName = string.Empty;
 
     public override Game.Type.EElement EElement => Game.Type.EElement.Object;
+
+    public int Order { get { return order; } }
 
     public override void Initialize()
     {

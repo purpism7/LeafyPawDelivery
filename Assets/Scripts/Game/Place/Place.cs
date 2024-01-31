@@ -9,6 +9,7 @@ namespace Game
     public interface IPlace
     {
         List<Game.Creature.Animal> AnimalList { get; }
+        List<Game.Object> objectList { get; }
 
         void CreateDropItem(DropItem.Data dropItemData);
     }
@@ -58,14 +59,25 @@ namespace Game
 
             _initialize = true;
 
-            _placeEventCtr = new();
-            _placeEventCtr?.Initialize(this);
-
             _dropItemList?.Clear();
 
             Info.Setting.Event?.AddListener(OnChangedSetting);
 
             Deactivate();
+        }
+
+        private void Initialize()
+        {
+            if (!_initialize)
+                return;
+
+            _initialize = false;
+
+            SetObjectList();
+            SetAnimalList();
+
+            _placeEventCtr = new();
+            _placeEventCtr?.Initialize(this, _data.Id);
         }
 
         public override void ChainUpdate()
@@ -80,13 +92,7 @@ namespace Game
         {
             base.Activate();
 
-            if (_initialize)
-            {
-                _initialize = false;
-
-                SetObjectList();
-                SetAnimalList();
-            }
+            Initialize();
 
             GameUtils.SetActive(animalRootTm, true);
 
@@ -470,6 +476,14 @@ namespace Game
             }
         }
 
+        List<Game.Object> IPlace.objectList
+        {
+            get
+            {
+                return _objectList;
+            }
+        }
+
         void IPlace.CreateDropItem(DropItem.Data dropItemData)
         {
             if (dropItemData != null)
@@ -512,7 +526,6 @@ namespace Game
 
             _dropItemList?.Add(addDropItem);
         }
-
         #endregion
 
         #region IPlaceState
@@ -523,7 +536,7 @@ namespace Game
                 return _state;
             }
         }
-        #endregion
+        #endregion       
 
         #region Setting.Event
         private void OnChangedSetting(Game.Event.SettingData settingData)

@@ -110,7 +110,7 @@ namespace GameSystem
             float height = GameCamera.orthographicSize * 2f;
             float width = height * GameCamera.aspect;
 
-            Gizmos.DrawWireCube(Center, new Vector3(width - 200f, height - 850f));
+            Gizmos.DrawWireCube(Center, new Vector3(width - 250f, height - 850f));
         }
 
         private void Drag()
@@ -253,7 +253,7 @@ namespace GameSystem
             get
             {
                 var center = Center;
-                var halfWidth = (Width - 200f) / 2f;
+                var halfWidth = (Width - 250f) / 2f;
 
                 return Random.Range(center.x - halfWidth, center.x + halfWidth);
             }

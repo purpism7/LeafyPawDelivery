@@ -121,6 +121,9 @@ public class OpenConditionContainer<T> : BaseContainer<T, OpenConditionData> whe
             if (data == null)
                 continue;
 
+            if (data.Id <= 0)
+                continue;
+
             if (!eTypes.ToList().Contains(data.eType))
                 continue;
 

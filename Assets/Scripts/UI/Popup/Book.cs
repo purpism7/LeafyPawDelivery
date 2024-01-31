@@ -193,8 +193,10 @@ namespace UI
             var objectMgr = MainGameManager.Get<ObjectManager>();
             if (objectMgr == null)
                 return;
-            
-            foreach (var data in dataList)
+
+            var datas = dataList.OrderBy(obj => obj.Order);
+
+            foreach (var data in datas)
             {
                 var objectInfo = objectMgr.GetObjectInfoById(data.Id);
                 if (objectInfo == null)

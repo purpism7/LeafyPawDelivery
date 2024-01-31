@@ -14,11 +14,13 @@ namespace Info
 
         public Connector()
         {
-            KeyOpenPlace = GetType().Name + "_OpenPlace";
-            KeyAddAnimal = GetType().Name + "_AddAnimal_{0}";
-            KeyAddObject = GetType().Name + "_AddObject_{0}";
-            KeyCompleteDailyMission = GetType().Name + "_CompleteDailyMission";
-            KeyCompleteAchievement = GetType().Name + "_CompleteAchievement";
+            var version = Game.Data.PlayerPrefsVersion;
+
+            KeyOpenPlace = GetType().Name + "_OpenPlace_" + version;
+            KeyAddAnimal = GetType().Name + "_AddAnimal_{0}_" + version;
+            KeyAddObject = GetType().Name + "_AddObject_{0}_" + version;
+            KeyCompleteDailyMission = GetType().Name + "_CompleteDailyMission_ " + version;
+            KeyCompleteAchievement = GetType().Name + "_CompleteAchievement_" + version;
         }
 
         #region Open Place

@@ -16,9 +16,9 @@ namespace Game.PlaceEvent
 
         //private CancellationTokenSource _cancellationTokenSource = new();
 
-        public override Base Initialize(IPlace iPlace, IListener iListener)
+        public override Base Initialize(IPlace iPlace, IListener iListener, int placeId)
         {
-            base.Initialize(iPlace, iListener);
+            base.Initialize(iPlace, iListener, placeId);
 
             float randWaitSec = UnityEngine.Random.Range(30f, 40f);
             Debug.Log(randWaitSec);

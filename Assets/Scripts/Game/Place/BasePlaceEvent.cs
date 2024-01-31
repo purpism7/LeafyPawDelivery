@@ -13,11 +13,13 @@ namespace Game.PlaceEvent
 
         protected IPlace _iPlace = null;
         protected IListener _iListener = null;
+        protected int _placeId = 0;
 
-        public virtual Base Initialize(IPlace iPlace, IListener iListener)
+        public virtual Base Initialize(IPlace iPlace, IListener iListener, int placeId)
         {
             _iPlace = iPlace;
             _iListener = iListener;
+            _placeId = placeId;
 
             return this;
         }

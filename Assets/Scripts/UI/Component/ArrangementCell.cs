@@ -43,6 +43,15 @@ namespace UI.Component
         private RectTransform openConditionRootRectTm = null;
         [SerializeField]
         private TextMeshProUGUI openNameTMP = null;
+        [SerializeField]
+        private TextMeshProUGUI openDescTMP = null;
+        //[SerializeField]
+        //private TextMeshProUGUI openConditionDescTMP = null;
+
+        [SerializeField]
+        private Image hiddenIconImg = null;
+        [SerializeField]
+        private Image storyIconImg = null;
 
         [Header("Lock")]
         [SerializeField]
@@ -64,15 +73,16 @@ namespace UI.Component
         {
             base.Initialize(data);
 
+            UIUtils.SetActive(openRootRectTm, !_data.Owned);
+            UIUtils.SetActive(lockRootRectTm, IsLock);
+            UIUtils.SetActive(unLockImg?.gameObject, false);
+
             SetNameTMP();
             SetDescTMP();
-            SetIconImg();
+            SetElementIconImg();
             SetButtonState();
             SetOpenConditionData();
-
-            UIUtils.SetActive(openRootRectTm, !_data.Owned);
-            UIUtils.SetActive(lockRootRectTm, _data.Lock);
-            UIUtils.SetActive(unLockImg?.gameObject, false);
+            SetStoryIcon();
         }
 
         public override void Activate()
@@ -155,14 +165,14 @@ namespace UI.Component
             descTMP?.SetText(text);
         }
 
-        private void SetIconImg()
+        private void SetElementIconImg()
         {
             if (_data == null)
                 return;
 
             iconImg.sprite = GameUtils.GetShortIconSprite(_data.EElement, _data.Id);
 
-            if (_data.Lock)
+            if (!_data.Owned)
             {
                 UIUtils.SetSilhouetteColorImg(iconImg);
             }
@@ -176,13 +186,18 @@ namespace UI.Component
         {
             DeactiveAllOpenConditionList();
 
+            UIUtils.SetActive(hiddenIconImg?.gameObject, false);
+
+            openDescTMP?.SetText(string.Empty);
+            //openConditionDescTMP?.SetText(string.Empty);
+
             if (_data == null)
                 return;
 
-            //if (!_data.Lock)
-            //    return;
+            if (_data.Owned)
+                return;
 
-            if(_data.EElement == Game.Type.EElement.Animal)
+            if (_data.EElement == Game.Type.EElement.Animal)
             {
                 SetAnimalOpenCondition();
             }
@@ -217,6 +232,20 @@ namespace UI.Component
             var placeData = Game.Data.Const.ActivityPlaceData;
             if (placeData == null)
                 return;
+
+            if(openCondition.eType == OpenConditionData.EType.Hidden)
+            {
+                UIUtils.SetActive(hiddenIconImg?.gameObject, true);
+
+                openNameTMP?.SetText(string.Empty);
+
+                var localName = GameUtils.GetName(_data.EElement, _data.Id);
+                var desc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_hidden_object", LocalizationSettings.SelectedLocale);
+                
+                openDescTMP?.SetText(string.Format(desc, localName));
+
+                return;
+            }
 
             AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
             AddOpenCondition(placeData.ObjectSpriteName, openCondition.ObjectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
@@ -273,10 +302,46 @@ namespace UI.Component
             return openCondition;
         }
 
+        private void SetStoryIcon()
+        {
+            UIUtils.SetActive(storyIconImg?.gameObject, false);
+
+            if (_data == null)
+                return;
+
+            if (_data.Owned)
+                return;
+
+            var storyList = StoryContainer.Instance?.GetStoryList(GameUtils.ActivityPlaceId);
+            if (storyList == null)
+                return;
+
+            var storyOpenConditionContainer = StoryOpenConditionContainer.Instance;
+            if (storyOpenConditionContainer == null)
+                return;
+            
+            foreach (var story in storyList)
+            {
+                if (story == null)
+                    continue;
+
+                var storyOpenCondition = storyOpenConditionContainer.GetData(story.Id);
+                if (storyOpenCondition == null)
+                    continue;
+
+                if (storyOpenConditionContainer.CheckExistReqId(story.Id, _data.EElement, _data.Id))
+                {
+                    UIUtils.SetActive(storyIconImg?.gameObject, true);
+
+                    break;
+                }
+            }
+        }
+
         private void SetButtonState()
         {
             // UIUtils.SetActive(buyBtn?.gameObject, _data.Lock);
-            UIUtils.SetActive(arrangementBtn?.gameObject, !_data.Lock);
+            UIUtils.SetActive(arrangementBtn?.gameObject, !IsLock);
         }
 
         private void CreateObtainPopup()
@@ -366,7 +431,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            Unlock(eElement, id);
+            Unlock();
 
             if (_data.EElement != eElement)
                 return;
@@ -376,25 +441,29 @@ namespace UI.Component
 
             _data.Owned = true;
 
-            SetIconImg();
+            SetElementIconImg();
             SetButtonState();
+            SetOpenConditionData();
+            SetStoryIcon();
 
             UIUtils.SetActive(openRootRectTm, !_data.Owned);
         }
 
-        private void Unlock(Game.Type.EElement eElement, int id)
+        private void Unlock()
         {
-            if (_data == null)
+            if (!IsLock)
                 return;
 
-            if (!_data.Lock)
-                return;
-
-            if (eElement != Game.Type.EElement.Object)
-                return;
-
-            _data.Lock = !ObjectOpenConditionContainer.Instance.CheckReq(_data.Id);
-            if (_data.Lock)
+            if (_data.EElement == Game.Type.EElement.Object)
+            {
+                _data.Lock = !ObjectOpenConditionContainer.Instance.CheckReq(_data.Id);
+            }
+            else if(_data.EElement == Game.Type.EElement.Animal)
+            {
+                _data.Lock = !AnimalOpenConditionContainer.Instance.CheckReq(_data.Id);
+            }
+            
+            if (IsLock)
                 return;
 
             _openConditionList?.ForEach(
@@ -422,7 +491,7 @@ namespace UI.Component
                        .Join(unLockImg.DOFade(0, 0.3f))
                        .OnComplete(() =>
                        {
-                           UIUtils.SetActive(lockRootRectTm, _data.Lock);
+                           UIUtils.SetActive(lockRootRectTm, IsLock);
 
                            _endTask = true;
                        });
@@ -431,9 +500,54 @@ namespace UI.Component
                     return this;
                 });
         }
+
+        private bool IsLock
+        {
+            get
+            {
+                if (_data == null)
+                    return true;
+
+                //if(_data.EElement == Game.Type.EElement.Object)
+                //{
+                //    var openConditionData = ObjectOpenConditionData;
+                //    if (openConditionData == null)
+                //        return true;
+
+                //    if (openConditionData.eType == OpenConditionData.EType.Hidden)
+                //        return false;
+                //}
+
+                return _data.Lock;
+            }
+        }
+
+        private OpenConditionData ObjectOpenConditionData
+        {
+            get
+            {
+                var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
+                var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
+
+                return openCondition;
+            }
+        }
         
         public void OnClickObtain()
         {
+            if (_data == null)
+                return;
+
+            if(_data.EElement == Game.Type.EElement.Object)
+            {
+                var openCondition = ObjectOpenConditionData;
+                if (openCondition == null)
+                    return;
+
+                if (openCondition.eType == OpenConditionData.EType.Hidden)
+                    return;
+            }
+
             CreateObtainPopup();
         }
 

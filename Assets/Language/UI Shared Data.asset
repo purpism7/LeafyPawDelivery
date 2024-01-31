@@ -153,6 +153,10 @@ MonoBehaviour:
     m_Key: desc_boost_twice_currency
     m_Metadata:
       m_Items: []
+  - m_Id: 62778767582420992
+    m_Key: desc_hidden_object
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
