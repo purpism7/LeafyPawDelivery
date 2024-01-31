@@ -35,7 +35,7 @@ namespace Game.Element.State
             if (tm)
             {
                 _initPosZ = tm.localPosition.z;
-                SetPosZ(-1f);
+                SetPosZ(-20f);
             }            
 
             Game.UIManager.Instance?.Bottom?.DeactivateEditList();

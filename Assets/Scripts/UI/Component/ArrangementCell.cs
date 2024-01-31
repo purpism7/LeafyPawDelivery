@@ -151,7 +151,8 @@ namespace UI.Component
             var text = string.Empty;
             if(_data.EElement == Game.Type.EElement.Animal)
             {
-                text = LocalizationSettings.StringDatabase.GetLocalizedString(_data.EElement.ToString(), "description_" + _data.Id, LocalizationSettings.SelectedLocale);
+                //text = LocalizationSettings.StringDatabase.GetLocalizedString(_data.EElement.ToString(), "description_" + _data.Id, LocalizationSettings.SelectedLocale);
+                text = String.Format("x{0}", 1);
             }
             else if(_data.EElement == Game.Type.EElement.Object)
             {

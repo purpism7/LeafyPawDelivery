@@ -43,7 +43,7 @@ namespace GameSystem
         public bool StopUpdate { get; private set; } = false;
 
         public float MaxOrthographicSize { get { return 2000f; } }
-        public float MinOrthographicSize { get { return 1000f; } }
+        public float MinOrthographicSize { get { return 1100f; } }
         public float DefaultOrthographicSize { get { return 1500f; } }
 
         public Vector3 Center
