@@ -537,6 +537,96 @@ MonoBehaviour:
     m_Localized: but I want her to move on and live her life.
     m_Metadata:
       m_Items: []
+  - m_Id: 63981274698604544
+    m_Localized: Hello. Are you Cascia?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981291530346496
+    m_Localized: I am. What can I help you with?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981338036789248
+    m_Localized: "I don\u2019t know where to start\u2026 hmm\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981405254705152
+    m_Localized: Is it Reian?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981450146340864
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981529359966208
+    m_Localized: "It must be Reian\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981545688391680
+    m_Localized: Reian asked me a favor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981600453419008
+    m_Localized: "He asked me to\u2026 deliver this letter\u2026 with this scarf."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981685438406656
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981747438608384
+    m_Localized: "I still can\u2019t get that day out of my head. \nIf only I\u2019d
+      taken him back home\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981780393254912
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63981843978903552
+    m_Localized: "\u2026Reian wants to say his final goodbye, Cascia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63982441159712768
+    m_Localized: Reian.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63982501314420736
+    m_Localized: "\u2026Cascia, you need to stop now. \nI\u2019m not going to wander
+      around anymore."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63982591487762432
+    m_Localized: "Reian, I\u2019m so sorry."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63982661473918976
+    m_Localized: "Don\u2019t be. You did nothing wrong. \nI want you to stop blaming
+      yourself."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63982736170278912
+    m_Localized: 'I made you worry for such a long time.
+
+      Thank you for being
+      by my side all this time.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63982798225006592
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63982867024175104
+    m_Localized: Reian, you go rest in peace now. Be happy.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63982887475601408
+    m_Localized: Thanks sis. Take care.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63982965539987456
+    m_Localized: Goodbye Reian. I love you very much.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
