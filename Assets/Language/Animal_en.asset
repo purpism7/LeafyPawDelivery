@@ -184,6 +184,66 @@ MonoBehaviour:
       milk'
     m_Metadata:
       m_Items: []
+  - m_Id: 64055390789165056
+    m_Localized: Farmer Barnie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64419863592951808
+    m_Localized: Princess Barnie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64419923533750272
+    m_Localized: Chef Barnie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64421990759391232
+    m_Localized: Officer Lea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64422368355803136
+    m_Localized: Yum Lea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64422658459033600
+    m_Localized: Glasses Lea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64422722879348736
+    m_Localized: Sleepy Laura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64423457813684224
+    m_Localized: Cook Laura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64423598637441024
+    m_Localized: Nurse Laura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64423677876232192
+    m_Localized: Flower Gnarr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64423819677261824
+    m_Localized: Cat Gnarr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64423912618844160
+    m_Localized: Muffler Gnarr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64424058232496128
+    m_Localized: Bandana Hale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64424318216429568
+    m_Localized: Magician Hale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64424434730000384
+    m_Localized: Pilot Hale
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
