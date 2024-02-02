@@ -147,6 +147,62 @@ MonoBehaviour:
     m_Key: name_1_skin_2
     m_Metadata:
       m_Items: []
+  - m_Id: 64419863592951808
+    m_Key: name_1_skin_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64419923533750272
+    m_Key: name_1_skin_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64421990759391232
+    m_Key: name_2_skin_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64422368355803136
+    m_Key: name_2_skin_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64422658459033600
+    m_Key: name_2_skin_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64422722879348736
+    m_Key: name_3_skin_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64423457813684224
+    m_Key: name_3_skin_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64423598637441024
+    m_Key: name_3_skin_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64423677876232192
+    m_Key: name_4_skin_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64423819677261824
+    m_Key: name_4_skin_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64423912618844160
+    m_Key: name_4_skin_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64424058232496128
+    m_Key: name_5_skin_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64424318216429568
+    m_Key: name_5_skin_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64424434730000384
+    m_Key: name_5_skin_4
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
