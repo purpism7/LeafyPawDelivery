@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5082999346628738462}
   - component: {fileID: 8198808596251828485}
-  - component: {fileID: 7170518868405093789}
+  - component: {fileID: 5831754618920733653}
   m_Layer: 7
   m_Name: Img
   m_TagString: Untagged
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5a37b45a741e94841a2a883f7ceeb83b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6355347def591416aa1fc3cbe7af85d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &7170518868405093789
+--- !u!70 &5831754618920733653
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,9 +117,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 31.5}
-  m_Size: {x: 75, y: 83.4}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 52.5}
+  m_Size: {x: 218.5, y: 117.5}
+  m_Direction: 1
 --- !u!1 &7157655937583819985
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 8202997828934454862}
   - component: {fileID: 5977427533293870108}
   m_Layer: 7
-  m_Name: Object_9
+  m_Name: Object_24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,12 +231,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 6281575790720672042}
-  Id: 9
+  Id: 24
   UId: 0
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 8860893258269408253}
   IsOverlap: 0
   sortingOrderOffset: 0
+  hiddenRootTm: {fileID: 0}
 --- !u!1001 &3742574807698289868
 PrefabInstance:
   m_ObjectHideFlags: 0

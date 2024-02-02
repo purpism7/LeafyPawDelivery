@@ -3,6 +3,17 @@ namespace Game
 {
     public class Type
     {
+        public enum EGameState
+        {
+            None,
+
+            Enter,
+            Game,
+            Edit,
+            Screenshot,
+            Tutorial,
+        }
+
         public enum ETab
         {
             Animal,

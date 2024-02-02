@@ -8,7 +8,7 @@ using Cysharp.Threading.Tasks;
 
 namespace GameSystem
 {
-    public interface IGameCameraCtrProvider
+    public interface IGameCameraCtr
     {
         float MaxOrthographicSize { get; }
         float DefaultOrthographicSize { get; }
@@ -17,11 +17,13 @@ namespace GameSystem
 
         void SetSize();
         void SetOrthographicSize(float orthographicSize);
+        void MoveCenterGameCamera();
+
         float RandPosXInScreenRagne { get; }
         float RandPosYInScreenRagne { get; }
     }
 
-    public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtrProvider
+    public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtr
     {
         private const float InitPosZ = -1000f;
 
@@ -237,18 +239,23 @@ namespace GameSystem
             StopUpdate = stopUpdate;
         }
 
-        #region IGameCameraCtrProvider
-        void IGameCameraCtrProvider.SetSize()
+        #region IGameCameraCtr
+        void IGameCameraCtr.SetSize()
         {
             SetSize();
         }
 
-        void IGameCameraCtrProvider.SetOrthographicSize(float orthographicSize)
+        void IGameCameraCtr.SetOrthographicSize(float orthographicSize)
         {
             SetOrthographicSize(orthographicSize, 1f, false);
         }
 
-        float IGameCameraCtrProvider.RandPosXInScreenRagne
+        void IGameCameraCtr.MoveCenterGameCamera()
+        {
+            GameCamera.transform.position = Vector2.zero;
+        }
+
+        float IGameCameraCtr.RandPosXInScreenRagne
         {
             get
             {
@@ -259,7 +266,7 @@ namespace GameSystem
             }
         }
 
-        float IGameCameraCtrProvider.RandPosYInScreenRagne
+        float IGameCameraCtr.RandPosYInScreenRagne
         {
             get
             {

@@ -89,6 +89,26 @@ namespace UI
             DeactivateAnim(rootRectTm, endAction);
         }
 
+        public void SetInteractable(bool interactable, Game.Type.EBottomType[] exceptBottomTypes)
+        {
+            if (_bottomMenuList == null)
+                return;
+
+            foreach(var bottomMenu in _bottomMenuList)
+            {
+                if (bottomMenu == null)
+                    continue;
+
+                if(exceptBottomTypes != null)
+                {
+                    if (exceptBottomTypes.Contains(bottomMenu.EType))
+                        continue;
+                }
+
+                bottomMenu.SetInteractable(interactable);
+            }
+        }
+
         #region EditList
         public void ActivateEditList(Game.Type.ETab eTabType, int index = -1)
         {
@@ -109,7 +129,7 @@ namespace UI
 
         public void ActivateEditListAfterDeactivateBottom(Game.Type.ETab eTabType, int index)
         {
-            MainGameManager.Instance?.SetGameState<Game.State.Edit>();
+            MainGameManager.Instance?.SetGameStateAsync(Game.Type.EGameState.Edit);
 
             DeactivateAnim(rootRectTm,
                 () =>
@@ -214,7 +234,7 @@ namespace UI
                     ActivateAnim(rootRectTm, null);
                     EditList.Deactivate();
 
-                    MainGameManager.Instance.SetGameState<Game.State.Game>();
+                    MainGameManager.Instance?.SetGameStateAsync(Game.Type.EGameState.Game);
                 });
         }
         #endregion

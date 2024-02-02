@@ -341,7 +341,7 @@ namespace UI
             {
                 var mainGameMgr = MainGameManager.Instance;
 
-                mainGameMgr?.SetGameState<Game.State.Edit>();
+                mainGameMgr?.SetGameStateAsync(Game.Type.EGameState.Edit);
 
                 Game.UIManager.Instance?.Bottom?.DeactivateAnim(
                     () =>

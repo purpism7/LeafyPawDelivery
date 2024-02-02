@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5082999346628738462}
   - component: {fileID: 8198808596251828485}
-  - component: {fileID: 1947303546934679527}
+  - component: {fileID: 6867560013289047450}
   m_Layer: 7
   m_Name: Img
   m_TagString: Untagged
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7893ea000ea104a6abce810556768fd8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6b9dd433774ae40dd8a485d7894cf9ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,8 +85,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &1947303546934679527
-PolygonCollider2D:
+--- !u!70 &6867560013289047450
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -117,65 +117,9 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 85, y: 152}
-    newSize: {x: 500, y: 500}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 36.5, y: 43}
-      - {x: 37.5, y: 50}
-      - {x: 25.5, y: 69}
-      - {x: 10.5, y: 69}
-      - {x: 21.5, y: 69}
-      - {x: 24.5, y: 70}
-      - {x: 30.5, y: 76}
-      - {x: 41.5, y: 89}
-      - {x: 42.5, y: 92}
-      - {x: 42.5, y: 105}
-      - {x: 34.5, y: 113}
-      - {x: 30.5, y: 121}
-      - {x: 27.5, y: 141}
-      - {x: 22.5, y: 147}
-      - {x: 15.5, y: 152}
-      - {x: -17.5, y: 152}
-      - {x: -23.5, y: 147}
-      - {x: -29.5, y: 126}
-      - {x: -26.5, y: 119}
-      - {x: -31.5, y: 111}
-      - {x: -41.5, y: 102}
-      - {x: -42.5, y: 101}
-      - {x: -42.5, y: 81}
-      - {x: -35.5, y: 77}
-      - {x: -25.5, y: 76}
-      - {x: -19.5, y: 76}
-      - {x: -12.5, y: 80}
-      - {x: -13.5, y: 68}
-      - {x: -22.5, y: 70}
-      - {x: -36.5, y: 58}
-      - {x: -40.5, y: 47}
-      - {x: -42.5, y: 28}
-      - {x: -42.5, y: 23}
-      - {x: -40.5, y: 15}
-      - {x: -33.5, y: 8}
-      - {x: -10.5, y: 6}
-      - {x: 8.5, y: 0}
-      - {x: 27.5, y: 0}
-      - {x: 37.5, y: 4}
-      - {x: 39.5, y: 17}
-      - {x: 29.5, y: 34}
-    - - {x: -20.5, y: 109}
-      - {x: -18.5, y: 106}
-      - {x: -13.5, y: 102}
-      - {x: -12.5, y: 103}
-      - {x: -15.5, y: 105}
-  m_UseDelaunayMesh: 0
+  m_Offset: {x: 0, y: 80}
+  m_Size: {x: 143.2, y: 175.9}
+  m_Direction: 0
 --- !u!1 &7157655937583819985
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +196,7 @@ GameObject:
   - component: {fileID: 8202997828934454862}
   - component: {fileID: 5977427533293870108}
   m_Layer: 7
-  m_Name: Object_6
+  m_Name: Object_11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -287,12 +231,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 6281575790720672042}
-  Id: 6
+  Id: 11
   UId: 0
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 8860893258269408253}
   IsOverlap: 0
   sortingOrderOffset: 0
+  hiddenRootTm: {fileID: 0}
 --- !u!1001 &3742574807698289868
 PrefabInstance:
   m_ObjectHideFlags: 0

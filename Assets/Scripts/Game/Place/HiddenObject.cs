@@ -92,7 +92,7 @@ namespace Game.PlaceEvent
             if(hiddenObject)
             {
                 var localPos = hiddenObject.transform.localPosition;
-                hiddenObject.transform.localPosition = new Vector3(localPos.x, localPos.y, -10f);
+                hiddenObject.transform.localPosition = new Vector3(localPos.x, localPos.y, -20f);
             }
 
             _iListener?.Action(new HiddneObjectData()

@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.U2D;
+
+using Cysharp.Threading.Tasks;
 
 using Game.Creature;
 using Game;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.U2D;
 
 namespace GameSystem
 {
@@ -16,6 +16,7 @@ namespace GameSystem
         public AddressableAssetLoader AddressableAssetLoader;
 
         public AtlasLoader AtalsLoader { get; private set; } = null;
+        private bool _endLoad = false;
 
         protected override void Initialize()
         {
@@ -26,22 +27,66 @@ namespace GameSystem
         {
             yield return StartCoroutine(base.CoInit());
 
-            if(AddressableAssetLoader != null)
-            {
-                AtalsLoader = new();
-                AtalsLoader.Init();
+            _endLoad = false;
+            InitializeAsync().Forget();
 
-                yield return StartCoroutine(AddressableAssetLoader.CoInit());
-                yield return StartCoroutine(AddressableAssetLoader.CoLoadAssetAsync<SpriteAtlas>(AddressableAssetLoader.AssetLabelAtlas,
-                    (asyncOperationHandle) =>
-                    {
-                        var spriteAtlas = asyncOperationHandle.Result;
-                        if(spriteAtlas != null)
-                        {
-                            AtalsLoader.Add(spriteAtlas.name, spriteAtlas);
-                        }
-                    }));
+            while(!_endLoad)
+            {
+                yield return null;
             }
+        }
+
+        private async UniTask InitializeAsync()
+        {
+            _endLoad = false;
+
+            if (AddressableAssetLoader == null)
+                return;
+
+            AtalsLoader = new();
+            AtalsLoader.Init();
+
+            await AddressableAssetLoader.InitializeAsync();
+            //var task = Task.Run();
+            //if (task != null)
+            //{
+            //    //while (!task.IsCompleted)
+            //    //{
+            //    //    yield return null;
+            //    //}
+            //}
+
+            //yield return new WaitUntil(() => task.IsCompleted);
+
+            //yield return StartCoroutine();
+            //bool endLoad = false;
+
+            await AddressableAssetLoader.LoadAssetAsync<SpriteAtlas>(AddressableAssetLoader.AssetLabelAtlas,
+                (asyncOperationHandle) =>
+                {
+                    var spriteAtlas = asyncOperationHandle.Result;
+                    if (spriteAtlas != null)
+                    {
+                        AtalsLoader.Add(spriteAtlas.name, spriteAtlas);
+                    }
+
+                    //endLoad = true;
+                    _endLoad = true;
+                });
+
+            //StartCoroutine(AddressableAssetLoader.CoLoadAssetAsync<SpriteAtlas>(AddressableAssetLoader.AssetLabelAtlas,
+            //    (asyncOperationHandle) =>
+            //    {
+            //        var spriteAtlas = asyncOperationHandle.Result;
+            //        if (spriteAtlas != null)
+            //        {
+            //            AtalsLoader.Add(spriteAtlas.name, spriteAtlas);
+            //        }
+
+            //        endLoad = true;
+            //    }));
+
+            //await UniTask.WaitUntil(() => endLoad);
         }
 
         public GameObject InstantiateUIGameObj<T>(RectTransform rootRectTm)

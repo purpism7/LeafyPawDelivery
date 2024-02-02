@@ -110,11 +110,8 @@ namespace Game.PlaceEvent
 
         private IEnumerator CoDrop()
         {
-            var gameState = MainGameManager.Instance?.GameState;
-            if (gameState == null)
-                yield break;
-
-            if (gameState.CheckState<Game.State.Edit>())
+            var eGameState = MainGameManager.Instance?.EGameState;
+            if (eGameState == Game.Type.EGameState.Edit)
                 yield break;
 
             if (_eItemSub == Type.EItemSub.Letter)
@@ -165,15 +162,15 @@ namespace Game.PlaceEvent
 
         private void Drop()
         {
-            var iGameCameraCtrProvider = MainGameManager.Instance?.IGameCameraCtrProvider;
-            if (iGameCameraCtrProvider == null)
+            var iGameCameraCtr = MainGameManager.Instance?.IGameCameraCtr;
+            if (iGameCameraCtr == null)
                 return;
 
             var itemData = new Game.DropItem.ItemData()
             {
                 iListener = this,
 
-                startPos = new Vector3(iGameCameraCtrProvider.RandPosXInScreenRagne, iGameCameraCtrProvider.RandPosYInScreenRagne),
+                startPos = new Vector3(iGameCameraCtr.RandPosXInScreenRagne, iGameCameraCtr.RandPosYInScreenRagne),
 
                 activateProgress = true,
                 totalProgress = 10,

@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootRectTm: {fileID: 0}
-  btn: {fileID: 0}
+  btn: {fileID: 1426862599}
   redDotRectTm: {fileID: 2899466346754805454}
 --- !u!1 &276792333450012335
 GameObject:

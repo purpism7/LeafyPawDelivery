@@ -216,7 +216,9 @@ namespace Game
 
         private float GetAnimalPosZ(int id)
         {
-            return -(0.1f * id / 10);
+            var posZ = id * GetPosZOffset(id);
+           
+            return -posZ;
         }
         #endregion
 
@@ -285,12 +287,24 @@ namespace Game
 
         private float GetObjectPosZ(int id, int uId)
         {
-            float offset = 0.0001f;
-            float posZ = (id * 100 + uId) * offset;
+            float posZ = (id * 10 + uId) * GetPosZOffset(id);
 
             return -posZ;
         }
         #endregion
+
+        private float GetPosZOffset(int id)
+        {
+            float offset = 0.1f;
+            int length = (int)(Mathf.Log10(id) + 1);
+
+            for (int i = 0; i < length; ++i)
+            {
+                offset *= 0.1f;
+            }
+
+            return offset;
+        }
 
         private void SetAnimalList()
         {

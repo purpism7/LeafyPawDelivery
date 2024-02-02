@@ -58,7 +58,6 @@ namespace Game
             }
 
             SetItemSprite();
-            SetCollider();
 
             Drop();
         }
@@ -175,11 +174,15 @@ namespace Game
 
         private void SetCollider()
         {
-            var collider = spriteRenderer.gameObject.GetOrAddComponent<CapsuleCollider2D>();
-            if (collider == null)
+            if (spriteRenderer == null)
                 return;
 
-            collider.size *= ColliderSizeOffset;
+            var collider = spriteRenderer.gameObject.GetComponent<CapsuleCollider2D>();
+            if (collider == null)
+            {
+                collider = spriteRenderer.gameObject.AddComponent<CapsuleCollider2D>();
+                collider.size *= ColliderSizeOffset;
+            }
         }
 
         private float ColliderSizeOffset
@@ -190,7 +193,7 @@ namespace Game
                 {
                     case CurrencyData currencyData:
                         {
-                            return 1.1f;
+                            return 1.2f;
                         }
 
                     case ItemData itemData:
@@ -204,7 +207,7 @@ namespace Game
                         }
                 }
 
-                return 1.1f;
+                return 1.2f;
             }
         }
 
@@ -326,8 +329,9 @@ namespace Game
                .Append(transform.DOJump(jumpLcoalPos, 30f, 1, 0.5f))
                .OnComplete(() =>
                {
-                    SetSortingOrder();
-                    ActivateProgress(_data.activateProgress);
+                   SetCollider();
+                   SetSortingOrder();
+                   ActivateProgress(_data.activateProgress);
 
                });
 

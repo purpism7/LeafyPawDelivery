@@ -1100,7 +1100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootRectTm: {fileID: 3040557602613828001}
   topRootRectTm: {fileID: 2711693529902603192}
-  rightRootRectTm: {fileID: 3611969013638216062}
   gamePlayTimeTMP: {fileID: 5470324256806282142}
   animalCurrencyTMP: {fileID: 1184800537530304502}
   objectCurrencyTMP: {fileID: 5197083202406173486}
@@ -1115,6 +1114,9 @@ MonoBehaviour:
   animalCurrencyRectTm: {fileID: 4992337481775659872}
   cashCurrencyRectTm: {fileID: 314127536411549258}
   boostRootRectTm: {fileID: 3922011497417759597}
+  rightRootRectTm: {fileID: 3611969013638216062}
+  settingBtn: {fileID: 329909575483132559}
+  screenshotBtn: {fileID: 6911121773764737011}
 --- !u!1 &3417995903615073184
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,17 +15,29 @@ MonoBehaviour:
   m_GroupName: Game_Object
   m_Data:
     m_SerializedData: []
-  m_GUID: 2eefddb9ae18f4e3caaf764679673fd7
+  m_GUID: 900d2fe9b965046fcbb377d89ae0ba45
   m_SerializeEntries:
-  - m_GUID: 51164d90246f4462a828e1fc4c4f160e
-    m_Address: Assets/Prefabs/Game/Object
+  - m_GUID: 92b99c244ec0748edbd8a5fe827d5941
+    m_Address: Assets/Prefabs/Game/Object/1
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Object
+    - Object_1
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 630ad046b80b24cd183f1a51ae36dc0c
+    m_Address: Assets/Prefabs/Game/Object/2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Object_2
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 34a4fd79c6e6249ddae8c7ee835138ee
+    m_Address: Assets/Prefabs/Game/Object/3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Object_3
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e7d7ed8f5841242acbc2f114c52db5f7, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: dbaaa6c3aa0b24a388a85845c56e21d5, type: 2}
-    - {fileID: 11400000, guid: 366623183087a462b9c441ea9cbcfd83, type: 2}
+    - {fileID: 11400000, guid: 00e49e781d9e945aca822f5be681c6d7, type: 2}
+    - {fileID: 11400000, guid: ec8c2bbb94ec9449fba05c8cc86f80cf, type: 2}

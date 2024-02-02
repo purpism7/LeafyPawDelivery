@@ -73,6 +73,12 @@ namespace Game
             UIUtils.SetActive(screenSaverRectTm, false);
         }
 
+        public void SetInteractable(bool interactable, Game.Type.EBottomType[] exceptBottomTypes = null)
+        {
+            Top?.SetInteractable(interactable);
+            Bottom?.SetInteractable(interactable, exceptBottomTypes);
+        }
+
         #region IUpdater
         void IUpdater.ChainUpdate()
         {

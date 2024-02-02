@@ -47,11 +47,8 @@ namespace Game.PlaceEvent
 
         private IEnumerator CoDrop()
         {
-            var gameState = MainGameManager.Instance?.GameState;
-            if (gameState == null)
-                yield break;
-
-            if (gameState.CheckState<Game.State.Edit>())
+            var eGameState = MainGameManager.Instance.EGameState;
+            if (eGameState == Game.Type.EGameState.Edit)
                 yield break;
 
             var animalList = _iPlace?.AnimalList;

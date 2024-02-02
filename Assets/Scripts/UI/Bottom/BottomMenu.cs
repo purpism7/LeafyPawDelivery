@@ -19,7 +19,8 @@ namespace UI
             void SelectBottomMenu(Game.Type.EBottomType eType);
         }
 
-        [SerializeField] private Button btn = null;
+        [SerializeField]
+        private Button btn = null;
         [SerializeField]
         private RectTransform redDotRectTm = null;
 
@@ -33,8 +34,8 @@ namespace UI
 
             System.Enum.TryParse(gameObject.name, out _eType);
 
-            btn?.onClick.RemoveAllListeners();
-            btn?.onClick.AddListener(OnClick);
+            //btn?.onClick.RemoveAllListeners();
+            //btn?.onClick.AddListener(OnClick);
 
             RegisterNotification();
 
@@ -106,6 +107,14 @@ namespace UI
                         break;
                     }
             }
+        }
+
+        public void SetInteractable(bool interactable)
+        {
+            if (btn == null)
+                return;
+
+            btn.interactable = interactable;
         }
 
         #region Notification.IListener

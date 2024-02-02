@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: e7f1cb4ba7155487fa25de6ac6473baa
   m_currentHash:
     serializedVersion: 2
-    Hash: ab4106d982e9cd1a741a55432776d3cd
+    Hash: 99095d5fe3b69c084a37d63c7b602335
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 526f1795eaf634395bb29c5316fb7d1c, type: 2}
   - {fileID: 11400000, guid: 9ae8f4db1ba1348b4a8a1b734ae3c179, type: 2}
   - {fileID: 11400000, guid: 76a03a4df7d754b2baa4003142264abc, type: 2}
-  - {fileID: 11400000, guid: 4f072fc53e56e43c68c9c965b45ff74d, type: 2}
+  - {fileID: 11400000, guid: fa9f43fc010cb4de090891dc498a598b, type: 2}
   - {fileID: 11400000, guid: b9fa42b55a75c48e2957c4ade7d3c515, type: 2}
   - {fileID: 11400000, guid: 3b5a2ae47bd014f8fb87b6e2c84ae61a, type: 2}
   - {fileID: 11400000, guid: 69a8b49dd57d642ffb9d4db22cfff0fe, type: 2}
@@ -107,6 +107,9 @@ MonoBehaviour:
     - Animal
     - Place
     - Object
+    - Object_1
+    - Object_2
+    - Object_3
     - UI
     - Data
     - Atlas

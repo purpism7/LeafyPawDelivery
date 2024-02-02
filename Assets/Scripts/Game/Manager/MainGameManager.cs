@@ -21,8 +21,8 @@ public class MainGameManager : Singleton<MainGameManager>
     private Game.BoostManager boostMgr = null;
     #endregion
 
-    public IGameCameraCtrProvider IGameCameraCtrProvider { get; private set; } = null;
-    public Game.State.Base GameState { get; private set; } = null;
+    public IGameCameraCtr IGameCameraCtr { get; private set; } = null;
+    //
     public Game.RecordContainer RecordContainer { get; private set; } = null;
 
     private System.Action<Game.Base> _startEditAction = null;
@@ -33,11 +33,15 @@ public class MainGameManager : Singleton<MainGameManager>
     private List<IUpdater> _iUpdaterList = new();
     private List<IFixedUpdater> _iFixedUpdaterList = new();
 
+    private Dictionary<Game.Type.EGameState, Game.State.Base> _gameStateDic = new();
+
     private static Dictionary<Type, MonoBehaviour> _managerDic = new();
 
     //public ServerTime ServerTime { get; private set; } = null;
 
     public float GamePlayTimeSec { get; private set; } = 0;
+    public Game.State.Base GameState { get; private set; } = null;
+    public Game.Type.EGameState EGameState { get; private set; } = Game.Type.EGameState.None;
 
     public static T Get<T>()
     {
@@ -67,16 +71,18 @@ public class MainGameManager : Singleton<MainGameManager>
         AddManager(typeof(Game.BoostManager), boostMgr);
 
         //ServerTime = gameObject.GetOrAddComponent<ServerTime>();
+
+        _gameStateDic.Clear();
     }
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
     {
         yield return StartCoroutine(base.CoInit(iProvider));
 
-        var activityPlaceId = PlayerPrefs.GetInt("LastPlaceId", Game.Data.Const.StartPlaceId);//placeMgr.ActivityPlaceId; 
+        var activityPlaceId = PlayerPrefs.GetInt(Game.Data.PlayPrefsKeyLastPlaceKey, Game.Data.Const.StartPlaceId);//placeMgr.ActivityPlaceId; 
 
         var inputMgr = iProvider.Get<InputManager>();
-        IGameCameraCtrProvider = inputMgr?.GameCameraCtr;
+        IGameCameraCtr = inputMgr?.GameCameraCtr;
 
         _iGrid = inputMgr?.grid;
 
@@ -90,7 +96,7 @@ public class MainGameManager : Singleton<MainGameManager>
         // 진입 연출 전 Deactivate Top, Bottom 
         //Game.UIManager.Instance?.DeactivateAnim();
 
-        SetGameState<Game.State.Enter>();
+        SetGameStateAsync(Game.Type.EGameState.Enter).Forget();
 
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
         yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
@@ -116,7 +122,7 @@ public class MainGameManager : Singleton<MainGameManager>
         _iUpdaterList?.Add(Game.UIManager.Instance);
 
         _iFixedUpdaterList?.Clear();
-        _iFixedUpdaterList?.Add(IGameCameraCtrProvider as IFixedUpdater);
+        _iFixedUpdaterList?.Add(IGameCameraCtr as IFixedUpdater);
 
         //_iUpdaterList?.Add(inputMgr?.grid);
     }
@@ -174,6 +180,8 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         await AnimEnterPlaceAsync();
 
+
+
         //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
         await UniTask.Yield();
 
@@ -194,7 +202,7 @@ public class MainGameManager : Singleton<MainGameManager>
                     .SetShowBackground(false)
                     .Create();
 
-                enterPlace?.PlayAnim(IGameCameraCtrProvider,
+                enterPlace?.PlayAnim(IGameCameraCtr,
                     () =>
                     {
                         endEnterPlace = true;
@@ -204,10 +212,7 @@ public class MainGameManager : Singleton<MainGameManager>
             });
 
         await UniTask.WaitUntil(() => endEnterPlace);
-
-        SetGameState<Game.State.Game>();
-
-        await GameState.InitializeAsync(this);
+        await SetGameStateAsync(Game.Type.EGameState.Game);
     }
 
     private void Starter()
@@ -265,17 +270,33 @@ public class MainGameManager : Singleton<MainGameManager>
     }
 
     #region GameState
-    public void SetGameState<T>() where T : Game.State.Base
+    public async UniTask SetGameStateAsync(Game.Type.EGameState eGameState)
     {
-        if (GameState != null &&
-            GameState.Type.Equals(typeof(T)))
+        if (EGameState == eGameState)
             return;
 
-        GameState?.End();
+        _gameStateDic?.GetValueOrDefault(EGameState)?.End();
 
-        GameState = System.Activator.CreateInstance<T>();
-        GameState?.Initialize(this);
-        GameState?.InitializeAsync(this).Forget();
+        Game.State.Base gameState = null;
+        if (!_gameStateDic.TryGetValue(eGameState, out gameState))
+        {
+            var typeStr = typeof(Game.State.Base).Namespace + "." + eGameState.ToString();
+            var type = System.Type.GetType(typeStr);
+            
+            gameState = System.Activator.CreateInstance(type) as Game.State.Base;
+            _gameStateDic?.TryAdd(eGameState, gameState);
+        }
+
+        if(gameState != null)
+        {
+            gameState.Initialize(this);
+
+            await gameState.InitializeAsync(this);
+
+            EGameState = eGameState;
+            GameState = gameState;
+        }
+
     }
     #endregion
 
@@ -314,34 +335,61 @@ public class MainGameManager : Singleton<MainGameManager>
     #region Place
     public void MovePlace(int placeId, System.Action endMoveAction)
     {
-        StartCoroutine(CoMovePlace(placeId, endMoveAction));
+        //StartCoroutine(CoMovePlace(placeId, endMoveAction));
 
-        //AsyncMovePlace(placeId, endMoveAction).Forget();
+        MovePlaceAsync(placeId, endMoveAction).Forget();
     }
 
-    private IEnumerator CoMovePlace(int placeId, System.Action endMoveAction)
+    private async UniTask MovePlaceAsync(int placeId, System.Action endMoveAction)
     {
-        yield return null;
+        await LoadAssetAsync(placeId);
+        await CoInitializeManager(placeId);
 
-        yield return StartCoroutine(CoInitializeManager(placeId));
+        SetGameStateAsync(Game.Type.EGameState.Enter).Forget();
 
-        SetGameState<Game.State.Enter>();
-
-        AsyncDelay(endMoveAction).Forget();
-
-        PlayerPrefs.SetInt("LastPlaceId", placeId);
-    }
-
-    private async UniTask AsyncDelay(System.Action endMoveAction)
-    {
-        await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(2f, 3f)));
+        await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.5f, 1f)));
 
         endMoveAction?.Invoke();
 
-        await UniTask.Yield();
+        EndLoadAsync(false).Forget();
 
-        await EndLoadAsync(false);
+        PlayerPrefs.SetInt(Game.Data.PlayPrefsKeyLastPlaceKey, placeId);
     }
+
+    //private IEnumerator CoMovePlace(int placeId, System.Action endMoveAction)
+    //{
+    //    yield return null;
+
+    //    yield return StartCoroutine(CoInitializeManager(placeId));
+
+    //    yield return LoadAsync();
+
+        
+    //}
+
+    private async UniTask LoadAssetAsync(int placeId)
+    {
+        var addressableAssetLoader = ResourceManager.Instance?.AddressableAssetLoader;
+        if (addressableAssetLoader == null)
+            return;
+
+        var typeKey = string.Format("{0}_{1}", addressableAssetLoader.AssetLabelObject, placeId);
+        Debug.Log(typeKey);
+        await addressableAssetLoader.LoaGameAssetByIdAsync(typeKey);
+
+
+    }
+
+    //private async UniTask AsyncDelay(System.Action endMoveAction)
+    //{
+    //    //await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(2f, 3f)));
+
+    //    endMoveAction?.Invoke();
+
+    //    await UniTask.Yield();
+
+    //    await EndLoadAsync(false);
+    //}
     #endregion
 
     #region Animal & Object
@@ -386,9 +434,9 @@ public class MainGameManager : Singleton<MainGameManager>
             return;
 
         Vector3 pos = Vector3.zero;
-        if (IGameCameraCtrProvider != null)
+        if (IGameCameraCtr != null)
         {
-            pos = IGameCameraCtrProvider.Center;
+            pos = IGameCameraCtr.Center;
         }
 
         var animal = activityPlace.AddAnimal(id, animalInfo.SkinId, pos);
@@ -409,9 +457,9 @@ public class MainGameManager : Singleton<MainGameManager>
             return;
 
         Vector3 pos = Vector3.zero;
-        if (IGameCameraCtrProvider != null)
+        if (IGameCameraCtr != null)
         {
-            pos = IGameCameraCtrProvider.Center;
+            pos = IGameCameraCtr.Center;
         }
 
         int currSkinId = animalMgr.GetCurrenctSkinId(id);
@@ -433,9 +481,9 @@ public class MainGameManager : Singleton<MainGameManager>
             return;
 
         Vector3 pos = Vector3.zero;
-        if (IGameCameraCtrProvider != null)
+        if (IGameCameraCtr != null)
         {
-            pos = IGameCameraCtrProvider.Center;
+            pos = IGameCameraCtr.Center;
         }
 
         var obj = activityPlace.AddObject(id, pos, editObject.UId);

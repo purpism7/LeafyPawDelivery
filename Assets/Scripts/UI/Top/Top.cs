@@ -41,8 +41,6 @@ namespace UI
 
         [SerializeField]
         private RectTransform topRootRectTm = null;
-        [SerializeField]
-        private RectTransform rightRootRectTm = null;
 
         [SerializeField]
         private TextMeshProUGUI gamePlayTimeTMP = null;
@@ -64,6 +62,14 @@ namespace UI
         [SerializeField] private RectTransform animalCurrencyRectTm = null;
         [SerializeField] private RectTransform cashCurrencyRectTm = null;
         public RectTransform boostRootRectTm = null;
+
+        [Header("Right")]
+        [SerializeField]
+        private RectTransform rightRootRectTm = null;
+        [SerializeField]
+        private Button settingBtn = null;
+        [SerializeField]
+        private Button screenshotBtn = null;
 
         private List<CollectCurrency> _collectCurrencyList = new();
         private List<AddCurrency> _addCurrencyList = new();
@@ -448,6 +454,19 @@ namespace UI
         }
         #endregion
 
+        public void SetInteractable(bool interactable)
+        {
+            if(settingBtn != null)
+            {
+                settingBtn.interactable = interactable;
+            }
+
+            if(screenshotBtn != null)
+            {
+                screenshotBtn.interactable = interactable;
+            }
+        }
+
         #region ITop
         void ITop.SetCurrency()
         {
@@ -535,14 +554,11 @@ namespace UI
             if (mainGameMgr == null)
                 return;
 
-            var gameState = mainGameMgr.GameState;
-            if (gameState == null)
+            var eGameState = mainGameMgr.EGameState;
+            if (eGameState == Type.EGameState.Edit)
                 return;
             
-            if (gameState.CheckState<Game.State.Edit>())
-                return;
-
-            mainGameMgr.SetGameState<Game.State.Screenshot>();
+            mainGameMgr?.SetGameStateAsync(Type.EGameState.Screenshot);
         }
     }
 }

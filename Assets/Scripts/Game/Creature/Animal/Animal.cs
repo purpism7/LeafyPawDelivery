@@ -96,13 +96,11 @@ namespace Game.Creature
         {
             base.OnTouchBegan(touch, gameCameraCtr, iGrid);
 
-            Game.State.Base gameState = MainGameManager.Instance?.GameState;
-            if (gameState == null)
-                return;
-
-            if (gameState.CheckState<Game.State.Edit>())
+            var eGameState = MainGameManager.Instance.EGameState;
+    
+            if (eGameState == Type.EGameState.Edit)
             {
-                var editState = gameState.Get<Game.State.Edit>();
+                var editState = MainGameManager.Instance?.GameState?.Get<Game.State.Edit>();
                 if (editState != null &&
                     editState.CheckIsEditElement(this))
                     return;

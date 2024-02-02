@@ -118,7 +118,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 91.5}
-  m_Size: {x: 92.8, y: 183}
+  m_Size: {x: 107.1, y: 183}
   m_Direction: 0
 --- !u!1 &7157655937583819985
 GameObject:
@@ -237,6 +237,7 @@ MonoBehaviour:
   edit: {fileID: 8860893258269408253}
   IsOverlap: 0
   sortingOrderOffset: 0
+  hiddenRootTm: {fileID: 0}
 --- !u!1001 &3742574807698289868
 PrefabInstance:
   m_ObjectHideFlags: 0

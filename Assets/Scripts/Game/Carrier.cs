@@ -141,12 +141,12 @@ namespace Game
 
         private Vector3 GetRandomPos(float z)
         {
-            var iGameCameraCtrProvider = MainGameManager.Instance?.IGameCameraCtrProvider;
-            if (iGameCameraCtrProvider == null)
+            var iGameCameraCtr = MainGameManager.Instance?.IGameCameraCtr;
+            if (iGameCameraCtr == null)
                 return Vector3.zero;
 
-            var randomX = iGameCameraCtrProvider.RandPosXInScreenRagne;
-            var randomY = iGameCameraCtrProvider.RandPosYInScreenRagne;
+            var randomX = iGameCameraCtr.RandPosXInScreenRagne;
+            var randomY = iGameCameraCtr.RandPosYInScreenRagne;
 
             return new Vector3(randomX, randomY, z);
         }
