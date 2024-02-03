@@ -31,11 +31,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2392367030272
-    m_Localized: Place something in the edit tab {0} times
+    m_Localized: Place animals in the edit tab {0} times
     m_Metadata:
       m_Items: []
   - m_Id: 3136776298496
-    m_Localized: Make a stamp {0} times
+    m_Localized: Place objects in the edit tab {0} times
     m_Metadata:
       m_Items: []
   - m_Id: 1709034729103360
@@ -47,7 +47,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1986566317662208
-    m_Localized: Place something {0} times in the edit tab
+    m_Localized: Place animals {0} times in the edit tab
     m_Metadata:
       m_Items: []
   - m_Id: 1986826804912128
@@ -71,7 +71,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1987963016699904
-    m_Localized: Make a stamp {0} times
+    m_Localized: Place objects in the edit tab {0} times
     m_Metadata:
       m_Items: []
   - m_Id: 23216242792849408
