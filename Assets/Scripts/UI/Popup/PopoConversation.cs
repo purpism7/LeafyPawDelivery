@@ -32,6 +32,7 @@ namespace UI
         private RectTransform clickRectTm = null;
 
         private bool _possibleTouch = false;
+        private bool _playing = false;
 
         public override void Initialize(Data data)
         {

@@ -75,6 +75,7 @@ namespace Game
 
             Acorn,
             Star,
+            Clam,
         }
 
         public enum EObjectCurrency
@@ -83,6 +84,7 @@ namespace Game
 
             Leaf,
             Moon,
+            Shellfish,
         }
 
         public enum EObjectGrade

@@ -61,7 +61,6 @@ MonoBehaviour:
   rootRectTm: {fileID: 0}
   btn: {fileID: 1426862599}
   redDotRectTm: {fileID: 2899466346754805454}
-  guideLineRectTm: {fileID: 4989146310958098584}
   guideLineImg: {fileID: 1250113549998300902}
 --- !u!1 &276792333450012335
 GameObject:
@@ -349,7 +348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4989146310958098584
 RectTransform:
   m_ObjectHideFlags: 0

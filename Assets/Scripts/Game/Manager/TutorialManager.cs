@@ -381,7 +381,7 @@ namespace Game
             var bottom = uiMgr.Bottom;
             bottom?.AllDeactivateGuideLine();
 
-            await UniTask.WaitForSeconds(0.1f);
+            await UniTask.WaitForSeconds(0.2f);
 
             bottom?.DeactivateEditList();
 
