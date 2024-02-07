@@ -12,8 +12,10 @@ namespace GameSystem
     {
         float MaxOrthographicSize { get; }
         float DefaultOrthographicSize { get; }
+        float OrthographicSizeForTutorial { get; }
 
         Vector3 Center { get; }
+        float GameCameraWidth { get; }
 
         void SetSize();
         void SetOrthographicSize(float orthographicSize);
@@ -38,14 +40,17 @@ namespace GameSystem
         private Vector3 _velocity = Vector3.zero;
         private float _smoothTime = 0.05f;
 
+        private float _width = 0;
+
         public float Height { get; private set; } = 0;
-        public float Width { get; private set; } = 0;
        
         public IGrid IGrid { get; private set; } = null;
         public bool StopUpdate { get; private set; } = false;
 
         public float MaxOrthographicSize { get { return 2000f; } }
         public float MinOrthographicSize { get { return 1100f; } }
+
+        public float OrthographicSizeForTutorial { get { return 1200f; } }
         public float DefaultOrthographicSize { get { return 1500f; } }
 
         public Vector3 Center
@@ -151,7 +156,7 @@ namespace GameSystem
 
             _halfHeight = GameCamera.orthographicSize;
             Height = _halfHeight * 2f;
-            Width = Height * GameCamera.aspect;
+            _width = Height * GameCamera.aspect;
 
             _dragWidth = _halfHeight * Screen.width / Screen.height;
         }
@@ -255,12 +260,20 @@ namespace GameSystem
             GameCamera.transform.position = Vector2.zero;
         }
 
+        float IGameCameraCtr.GameCameraWidth
+        {
+            get
+            {
+                return _width;
+            }
+        }
+
         float IGameCameraCtr.RandPosXInScreenRagne
         {
             get
             {
                 var center = Center;
-                var halfWidth = (Width - 250f) / 2f;
+                var halfWidth = (_width - 250f) / 2f;
 
                 return Random.Range(center.x - halfWidth, center.x + halfWidth);
             }

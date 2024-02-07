@@ -11,7 +11,7 @@ namespace Game.Event
             
         }
 
-        public override void Starter()
+        public override void Starter(System.Action endAction)
         {
             var animalMgr = MainGameManager.Get<AnimalManager>();
             if (animalMgr == null)
@@ -48,7 +48,7 @@ namespace Game.Event
                                     Id = data.Id,
                                     ClickAction = () =>
                                     {
-
+                                        endAction?.Invoke();
                                     },
                                 })
                                 .SetCoInit(true)

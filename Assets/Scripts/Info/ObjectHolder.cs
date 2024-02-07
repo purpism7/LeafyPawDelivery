@@ -198,14 +198,14 @@ namespace Info
             SaveInfo(objectData.PlaceId);
         }
 
-        public void ArrangeObject(int id, int objectUId, Vector3 pos, int placeId)
+        public bool ArrangeObject(int id, int objectUId, Vector3 pos, int placeId)
         {
             var objectInfo = GetObjectInfoById(id, placeId);
             if(objectInfo == null)
-                return;
+                return false;
 
             if (objectInfo.EditObjectList == null)
-                return;
+                return false;
 
             foreach(var editObject in objectInfo.EditObjectList)
             {
@@ -222,6 +222,8 @@ namespace Info
             }
 
             SaveInfo(placeId);
+
+            return true;
         }
 
         public Info.EditObject GetEditObject(int id, int objectUId, int placeId)

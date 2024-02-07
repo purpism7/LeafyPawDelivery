@@ -164,32 +164,6 @@ namespace UI
             _isTyping = false;
         }
 
-        //private IEnumerator CoTyping(Constituent constituent)
-        //{
-        //    _isTyping = true;
-
-        //    SetEmpty();
-
-        //    constituent?.Initialize();
-            
-        //    speakerTMP?.SetText(constituent.Speaker);
-        //    SetSpeakerImg(constituent?.SpeakerSpriteName);
-
-        //    Debug.Log("CoTyping = " + constituent.Sentence);
-        //    foreach (var typingChr in constituent.Sentence)
-        //    {
-        //        yield return _waitSec;
-
-        //        typingTMP?.SetText(typingTMP.text + typingChr);
-        //    }
-
-        //    _isTyping = false;
-
-        //    yield return new WaitForSeconds(constituent.KeepDelay);
-
-            
-        //}
-
         private void FinishTyping()
         {
             _data?.IListener?.FinishTyping(_constituentQueue.Count);

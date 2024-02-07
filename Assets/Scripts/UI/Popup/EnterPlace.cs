@@ -12,7 +12,7 @@ namespace UI
     {
         public class Data : BaseData
         {
-
+            public float gameCameraOrthographicSize = 0;
         }
 
         [SerializeField]
@@ -52,6 +52,13 @@ namespace UI
 
         public void PlayAnim(IGameCameraCtr iGameCameraCtr, System.Action endAction)
         {
+            if (_data == null)
+            {
+                Deactivate();
+
+                return;
+            }
+             
             if (iGameCameraCtr == null)
             {
                 Deactivate();
@@ -68,7 +75,7 @@ namespace UI
             Sequence sequence = DOTween.Sequence()
                .SetAutoKill(false)
                .AppendCallback(() => StartCoroutine(CoFadeTextToFullAlpha()))
-               .Join(DOTween.To(() => iGameCameraCtr.MaxOrthographicSize, size => iGameCameraCtr.SetOrthographicSize(size), iGameCameraCtr.DefaultOrthographicSize, 2f).SetEase(Ease.OutCubic))
+               .Join(DOTween.To(() => iGameCameraCtr.MaxOrthographicSize, size => iGameCameraCtr.SetOrthographicSize(size), _data.gameCameraOrthographicSize, 2f).SetEase(Ease.OutCubic))
                .OnComplete(() =>
                {
                    iGameCameraCtr.SetSize();

@@ -320,7 +320,7 @@ namespace Game
                 if (animalInfo == null)
                     continue;
 
-                var data = AnimalContainer.Instance.GetData(animalInfo.Id);
+                var data = AnimalContainer.Instance?.GetData(animalInfo.Id);
                 if (data == null)
                     continue;
 

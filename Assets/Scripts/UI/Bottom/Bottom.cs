@@ -35,6 +35,8 @@ namespace UI
 
             DeactivateAnim(EditListRootRectTm, null);
             InitializeBottomMenu();
+
+            AllDeactivateGuideLine();
         }
 
         private void InitializeBottomMenu()
@@ -102,10 +104,50 @@ namespace UI
                 if(exceptBottomTypes != null)
                 {
                     if (exceptBottomTypes.Contains(bottomMenu.EType))
+                    {
+                        bottomMenu.SetInteractable(!interactable);
+
                         continue;
+                    }
                 }
 
                 bottomMenu.SetInteractable(interactable);
+            }
+        }
+
+        public void AllDeactivateGuideLine()
+        {
+            if (_bottomMenuList == null)
+                return;
+
+            foreach (var bottomMenu in _bottomMenuList)
+            {
+                if (bottomMenu == null)
+                    continue;
+
+                bottomMenu.DeactivateGuideLine();
+            }
+        }
+
+        public void ActivateGuideLine(Game.Type.EBottomType[] eBottomTypes)
+        {
+            AllDeactivateGuideLine();
+
+            if (_bottomMenuList == null)
+                return;
+
+            foreach (var bottomMenu in _bottomMenuList)
+            {
+                if (bottomMenu == null)
+                    continue;
+
+                if (eBottomTypes != null)
+                {
+                    if (eBottomTypes.Contains(bottomMenu.EType))
+                    {
+                        bottomMenu.ActivateGuideLine();
+                    }
+                }
             }
         }
 

@@ -13,5 +13,10 @@ namespace Game.Event
     {
         
     }
+
+    public class ArrangeObjectData : ObjectData
+    {
+
+    }
 }
 

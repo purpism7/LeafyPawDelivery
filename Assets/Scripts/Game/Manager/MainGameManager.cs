@@ -9,16 +9,17 @@ using GameSystem;
 
 public interface IEvent
 {
-    void Starter();
+    void Starter(System.Action endAction);
 }
 
-public class MainGameManager : Singleton<MainGameManager>
+public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.IListener
 {
     #region Inspector
     [SerializeField]
     private Game.PlaceManager placeMgr = null;
     [SerializeField]
     private Game.BoostManager boostMgr = null;
+    public Transform tutorialRootTm = null;
     #endregion
 
     public IGameCameraCtr IGameCameraCtr { get; private set; } = null;
@@ -42,6 +43,9 @@ public class MainGameManager : Singleton<MainGameManager>
     public float GamePlayTimeSec { get; private set; } = 0;
     public Game.State.Base GameState { get; private set; } = null;
     public Game.Type.EGameState EGameState { get; private set; } = Game.Type.EGameState.None;
+
+    public Game.TutorialManager TutorialMgr { get; private set; } = null;
+    public bool IsTutorial { get; private set; } = true;
 
     public static T Get<T>()
     {
@@ -87,7 +91,7 @@ public class MainGameManager : Singleton<MainGameManager>
         _iGrid = inputMgr?.grid;
 
         InitializeIUpdateList(inputMgr);
-
+        
         RecordContainer = new();
 
         var acquireMgr = Get<Game.Manager.Acquire>();
@@ -109,6 +113,7 @@ public class MainGameManager : Singleton<MainGameManager>
         Info.Connector.Create(transform);
         Game.Notification.Create(transform);
 
+        IsTutorial = CheckIsTutorial;
         //yield return EndLoadAsync(true);
         _endInitialize = true;
     }
@@ -180,12 +185,12 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         await AnimEnterPlaceAsync();
 
-
-
-        //await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
         await UniTask.Yield();
 
-        Starter();
+        if(!IsTutorial)
+        {
+            Starter();
+        }
 
         Game.Notification.Get?.AllNotify();
     }
@@ -194,12 +199,22 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         bool endEnterPlace = false;
 
+        float gameCameraOrthographicSize = IGameCameraCtr.DefaultOrthographicSize;
+        if(IsTutorial)
+        {
+            gameCameraOrthographicSize = IGameCameraCtr.OrthographicSizeForTutorial;
+        }
+
         Sequencer.EnqueueTask(
             () =>
             {
                 var enterPlace = new PopupCreator<UI.EnterPlace, UI.EnterPlace.Data>()
                     .SetReInitialize(true)
                     .SetShowBackground(false)
+                    .SetData(new UI.EnterPlace.Data()
+                    {
+                        gameCameraOrthographicSize = gameCameraOrthographicSize
+                    })
                     .Create();
 
                 enterPlace?.PlayAnim(IGameCameraCtr,
@@ -212,20 +227,80 @@ public class MainGameManager : Singleton<MainGameManager>
             });
 
         await UniTask.WaitUntil(() => endEnterPlace);
+
+        if(IsTutorial)
+        {
+            TutorialMgr = gameObject.GetOrAddComponent<Game.TutorialManager>();
+            TutorialMgr?.Initialize(this, tutorialRootTm);
+            //await SetGameStateAsync(Game.Type.EGameState.Tutorial);
+
+            return;
+        }
+
         await SetGameStateAsync(Game.Type.EGameState.Game);
     }
 
     private void Starter()
     {
-        //Debug.Log("Starter");
-
         foreach (var manager in _managerDic.Values)
         {
             var iEvent = manager as IEvent;
             if (iEvent == null)
                 continue;
 
-            iEvent.Starter();
+            iEvent.Starter(null);
+        }
+    }
+
+    private bool CheckIsTutorial
+    {
+        get
+        {
+            var animalMgr = Get<Game.AnimalManager>();
+            if(animalMgr != null)
+            {
+                if(!animalMgr.CheckGetStarter)
+                    return true;
+            }
+
+            var objectMgr = Get<Game.ObjectManager>();
+            if (objectMgr != null)
+            {
+                if (!objectMgr.CheckGetStarter)
+                    return true;
+            }
+
+            //int placeId = GameUtils.ActivityPlaceId;
+            //if (placeId != Game.Data.Const.StartPlaceId)
+            //    return false;
+
+            //var animalDataList = AnimalContainer.Instance?.GetDataListByPlaceId(placeId);
+            //if (animalDataList == null)
+            //    return false;
+
+            //var openConditionDataList = AnimalOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter });
+            //foreach(var animalData in animalDataList)
+            //{
+            //    if (animalData == null)
+            //        continue;
+
+            //    if (openConditionDataList != null &&
+            //        openConditionDataList.Find(openConditionData => openConditionData.Id == animalData.Id) != null)
+            //    {
+            //        if(!CheckExist(Game.Type.EElement.Animal, animalData.Id))
+            //        {
+            //            return true;
+            //        }
+            //    }
+            //}
+
+            var connector = Info.Connector.Get;
+            if(connector != null)
+            {
+                return !connector.IsCompleteTutorial;
+            }
+
+            return false;
         }
     }
 
@@ -379,17 +454,6 @@ public class MainGameManager : Singleton<MainGameManager>
 
 
     }
-
-    //private async UniTask AsyncDelay(System.Action endMoveAction)
-    //{
-    //    //await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(2f, 3f)));
-
-    //    endMoveAction?.Invoke();
-
-    //    await UniTask.Yield();
-
-    //    await EndLoadAsync(false);
-    //}
     #endregion
 
     #region Animal & Object
@@ -587,6 +651,17 @@ public class MainGameManager : Singleton<MainGameManager>
     {
         Get<Game.Manager.Acquire>()?.Add(eAcquire, eAcquireAction, value);
         RecordContainer?.Add(eAcquire, eAcquireAction, value);
+    }
+    #endregion
+
+    #region Game.TutorialManager.IListener
+    void Game.TutorialManager.IListener.EndTutorial()
+    {
+        //Info.Connector.Get?.SetCompleteTutorial(true);
+
+        SetGameStateAsync(Game.Type.EGameState.Game).Forget();
+
+        IsTutorial = false;
     }
     #endregion
 }

@@ -23,6 +23,8 @@ namespace UI
         private Button btn = null;
         [SerializeField]
         private RectTransform redDotRectTm = null;
+        [SerializeField]
+        private Image guideLineImg = null;
 
         private Game.Type.EBottomType _eType = Game.Type.EBottomType.None;
 
@@ -115,6 +117,18 @@ namespace UI
                 return;
 
             btn.interactable = interactable;
+        }
+
+        public void DeactivateGuideLine()
+        {
+            UIUtils.SetActive(guideLineImg?.gameObject, false);
+        }
+
+        public void ActivateGuideLine()
+        {
+            UIUtils.SetActive(guideLineImg?.gameObject, true);
+
+            guideLineImg?.AnimBlink();
         }
 
         #region Notification.IListener

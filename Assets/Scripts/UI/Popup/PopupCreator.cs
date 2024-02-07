@@ -16,6 +16,7 @@ namespace GameSystem
         private bool _animActivate = true;
         private bool _showBackground = true;
         private float _animlActivateInterval = 0;
+        private bool _forTutorial = false;
         // private RectTransform _rootRecTm = null;
 
         //public static T a<T, V>() where T : UI.Base<V> where V : BaseData
@@ -65,6 +66,13 @@ namespace GameSystem
             return this;
         }
 
+        public PopupCreator<T, V> SetForTutorial(bool forTutorial)
+        {
+            _forTutorial = forTutorial;
+
+            return this;
+        }
+
         public override T Create()
         {
             var initData = new UI.Popup.InitData()
@@ -74,6 +82,7 @@ namespace GameSystem
                 animActivate = _animActivate,
                 showBackground = _showBackground,
                 animActivateInterval = _animlActivateInterval,
+                forTutorial = _forTutorial,
             };
 
             var popup = Game.UIManager.Instance?.Popup?.Instantiate<T, V>(_data, initData);

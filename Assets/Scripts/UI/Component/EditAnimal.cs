@@ -12,6 +12,7 @@ namespace UI.Component
         {
             public IListener iListener = null;
             public Animal AnimalData = null;
+            public bool isTutorial = false;
         }
 
         public interface IListener
@@ -20,12 +21,23 @@ namespace UI.Component
         }
 
         [SerializeField] private Image iconImg = null;
+        [SerializeField]
+        private Image guideLineImg = null;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
             SetIconImg();
+
+            if(data != null)
+            {
+                UIUtils.SetActive(guideLineImg?.gameObject, data.isTutorial);
+                if(data.isTutorial)
+                {
+                    guideLineImg?.AnimBlink();
+                }
+            }
         }
 
         private void SetIconImg()

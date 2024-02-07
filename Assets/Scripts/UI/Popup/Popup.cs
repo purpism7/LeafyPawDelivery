@@ -20,10 +20,14 @@ namespace UI
             public bool animActivate = true;
             public bool showBackground = true;
             public float animActivateInterval = 0;
+            public bool forTutorial = false;
         }
 
         public RectTransform popupRootRectTm;
-        [SerializeField] private Image backgroundImg = null;
+        [SerializeField]
+        private RectTransform tutorialRootRectTm = null;
+        [SerializeField]
+        private Image backgroundImg = null;
         
         private List<UI.Base> _opendPopupList = new();
         private Stack<UI.Base> _popupStack = new();
@@ -87,7 +91,14 @@ namespace UI
             UI.Base uIBase = null;
             if (!CheckGetOpendPopup<T>(out uIBase))
             {
-                var gameObj = ResourceManager.Instance.InstantiateUIGameObj<T>(popupRootRectTm);
+                var rootRctTm = popupRootRectTm;
+                if(initData != null &&
+                   initData.forTutorial)
+                {
+                    rootRctTm = tutorialRootRectTm;
+                }
+
+                var gameObj = ResourceManager.Instance.InstantiateUIGameObj<T>(rootRctTm);
                 if(!gameObj)
                     yield break;    
             

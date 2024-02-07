@@ -12,6 +12,8 @@ namespace Info
         private readonly string KeyCompleteDailyMission = string.Empty;
         private readonly string KeyCompleteAchievement = string.Empty;
 
+        private readonly string KeyCompleteTutorial = string.Empty;
+
         public Connector()
         {
             var version = Game.Data.PlayerPrefsVersion;
@@ -20,7 +22,9 @@ namespace Info
             KeyAddAnimal = GetType().Name + "_AddAnimal_{0}_" + version;
             KeyAddObject = GetType().Name + "_AddObject_{0}_" + version;
             KeyCompleteDailyMission = GetType().Name + "_CompleteDailyMission_ " + version;
-            KeyCompleteAchievement = GetType().Name + "_CompleteAchievement_" + version;
+            KeyCompleteAchievement = GetType().Name + nameof(KeyCompleteAchievement) + "_" + version;
+
+            KeyCompleteTutorial = GetType().Name + nameof(KeyCompleteTutorial) + "_" + version;
         }
 
         #region Open Place
@@ -142,9 +146,9 @@ namespace Info
             }
         }
 
-        public void SetCompleteAchievement(bool isComeplete)
+        public void SetCompleteAchievement(bool isComplete)
         {
-            PlayerPrefs.SetString(KeyCompleteAchievement, isComeplete.ToString());
+            PlayerPrefs.SetString(KeyCompleteAchievement, isComplete.ToString());
 
             Game.Notification.Get?.Notify(Game.Notification.EType.CompleteAchievement);
         }
@@ -158,6 +162,24 @@ namespace Info
 
         //    Game.Notification.Get?.Notify(Game.Notification.EType.CompleteAchievement);
         //}
+        #endregion
+
+        #region Complete Tutorial
+        public bool IsCompleteTutorial
+        {
+            get
+            {
+                bool isComplete = false;
+                System.Boolean.TryParse(PlayerPrefs.GetString(KeyCompleteTutorial, false.ToString()), out isComplete);
+
+                return isComplete;
+            }
+        }
+
+        public void SetCompleteTutorial(bool isComplete)
+        {
+            PlayerPrefs.SetString(KeyCompleteTutorial, isComplete.ToString());
+        }
         #endregion
     }
 }

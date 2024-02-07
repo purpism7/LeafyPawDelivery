@@ -111,20 +111,20 @@ namespace Game.Manager
                         //        return;
                         //}
 
-                        if (addObjectData.id == 1)
-                        {
-                            var sentenceQueue = new Queue<string>();
-                            sentenceQueue.Clear();
+                        //if (addObjectData.id == 1)
+                        //{
+                        //    var sentenceQueue = new Queue<string>();
+                        //    sentenceQueue.Clear();
 
-                            var key = "guide_start_{0}";
-                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 1), LocalizationSettings.SelectedLocale));
-                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 2), LocalizationSettings.SelectedLocale));
-                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 3), LocalizationSettings.SelectedLocale));
+                        //    var key = "guide_start_{0}";
+                        //    sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 1), LocalizationSettings.SelectedLocale));
+                        //    sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 2), LocalizationSettings.SelectedLocale));
+                        //    sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", string.Format(key, 3), LocalizationSettings.SelectedLocale));
 
-                            Show(sentenceQueue);
+                        //    Show(sentenceQueue);
 
-                            return;
-                        }
+                        //    return;
+                        //}
 
                         CheckOpenPlace();
 

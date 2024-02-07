@@ -30,7 +30,6 @@ RectTransform:
   m_Children:
   - {fileID: 2764185825395220742}
   m_Father: {fileID: 8614553739975320321}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -68,7 +67,6 @@ RectTransform:
   - {fileID: 5027965122874530308}
   - {fileID: 8614553739975320321}
   m_Father: {fileID: 715175923608640553}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -107,7 +105,6 @@ RectTransform:
   m_Children:
   - {fileID: 6059155048771174303}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -130,6 +127,8 @@ MonoBehaviour:
   tabToggles:
   - {fileID: 4377991250723215870}
   - {fileID: 7056301399087855777}
+  animalToggle: {fileID: 4377991250723215870}
+  objectToggle: {fileID: 7056301399087855777}
   animalScrollRect: {fileID: 7954188329468993619}
   objectScrollRect: {fileID: 4654141842415474688}
 --- !u!222 &4538592769003199826
@@ -171,7 +170,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6059155048771174303}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -247,7 +245,6 @@ RectTransform:
   m_Children:
   - {fileID: 3376317446738948433}
   m_Father: {fileID: 3803499913617185726}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -299,7 +296,6 @@ RectTransform:
   m_Children:
   - {fileID: 5847870419770645417}
   m_Father: {fileID: 8566275725277501842}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -369,7 +365,6 @@ RectTransform:
   - {fileID: 7651723458173686242}
   - {fileID: 3971289307375628477}
   m_Father: {fileID: 6075189277427269841}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -446,7 +441,6 @@ RectTransform:
   m_Children:
   - {fileID: 6794131053134544163}
   m_Father: {fileID: 7739746380705915291}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -514,7 +508,6 @@ RectTransform:
   m_Children:
   - {fileID: 4800547420226556112}
   m_Father: {fileID: 2764185825395220742}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -565,7 +558,6 @@ RectTransform:
   m_Children:
   - {fileID: 3803499913617185726}
   m_Father: {fileID: 8614553739975320321}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -606,7 +598,6 @@ RectTransform:
   - {fileID: 8566275725277501842}
   - {fileID: 7739746380705915291}
   m_Father: {fileID: 6059155048771174303}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -644,7 +635,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6794131053134544163}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -722,7 +712,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5847870419770645417}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -801,7 +790,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8614553739975320321}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -975,7 +963,6 @@ RectTransform:
   m_Children:
   - {fileID: 80912308213463978}
   m_Father: {fileID: 8614553739975320321}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1013,7 +1000,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8614553739975320321}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1063,6 +1049,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 80912308213463978}
     m_Modifications:
     - target: {fileID: 1176792883252249777, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
@@ -1198,6 +1185,12 @@ PrefabInstance:
       value: Tab_Object
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6925914765007150195, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1115271939659920069}
   m_SourcePrefab: {fileID: 100100000, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
 --- !u!114 &3707865231645027268 stripped
 MonoBehaviour:
@@ -1276,6 +1269,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 80912308213463978}
     m_Modifications:
     - target: {fileID: 1176792883252249777, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
@@ -1419,6 +1413,12 @@ PrefabInstance:
       value: Tab_Animal
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6925914765007150195, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7732296263652703777}
   m_SourcePrefab: {fileID: 100100000, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
 --- !u!1 &1907667917154044192 stripped
 GameObject:

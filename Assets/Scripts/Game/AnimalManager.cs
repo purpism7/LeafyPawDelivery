@@ -71,6 +71,36 @@ namespace Game
             }
         }
 
+        public bool CheckGetStarter
+        {
+            get
+            {
+                int placeId = GameUtils.ActivityPlaceId;
+                if (placeId != Game.Data.Const.StartPlaceId)
+                    return false;
+
+                var animalDataList = AnimalContainer.Instance?.GetDataListByPlaceId(placeId);
+                if (animalDataList == null)
+                    return false;
+
+                var openConditionDataList = AnimalOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter });
+                foreach (var animalData in animalDataList)
+                {
+                    if (animalData == null)
+                        continue;
+
+                    if (openConditionDataList != null &&
+                        openConditionDataList.Find(openConditionData => openConditionData.Id == animalData.Id) != null)
+                    {
+                        if (!CheckExist(animalData.Id))
+                            return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
         // Add 되는 Animal 의 Skin Id Base 인 1 일 것.
         public override void Add(int id)
         {
@@ -131,12 +161,12 @@ namespace Game
             return _animalHolder?.GetAnimalInfo(animalId);
         }
 
-        void IEvent.Starter()
+        void IEvent.Starter(System.Action endAction)
         {
             if (_data == null)
                 return;
 
-            _animalEvent?.Starter();
+            _animalEvent?.Starter(endAction);
 
             //    var animalOpenConidtionDatas = AnimalOpenConditionContainer.Instance?.Datas;
             //    if (animalOpenConidtionDatas == null)

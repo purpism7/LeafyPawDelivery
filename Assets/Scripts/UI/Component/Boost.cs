@@ -153,6 +153,13 @@ namespace UI.Component
 
         public void OnClick()
         {
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr != null)
+            {
+                if (mainGameMgr.IsTutorial)
+                    return;
+            }
+
             new GameSystem.PopupCreator<UI.Boost, UI.Boost.Data>()
                 .SetData(CreateBoostData)
                 .SetReInitialize(true)

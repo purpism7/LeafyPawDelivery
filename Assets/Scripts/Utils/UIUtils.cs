@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
+
+using DG.Tweening;
 
 public static class UIUtils
 {
@@ -74,6 +77,20 @@ public static class UIUtils
 
             GameObject.Destroy(rectTm.gameObject);
         }
+    }
+
+    public static void AnimBlink(this Image image)
+    {
+        if (image == null)
+            return;
+
+        Sequence sequence = DOTween.Sequence()
+            .SetAutoKill(false)
+            .Append(image.DOFade(0, 0.4f))
+            .Append(image.DOFade(1f, 0.4f))
+            .AppendInterval(0.4f);
+        sequence.Restart();
+        sequence.SetLoops(-1);
     }
 
     public static void ResetScrollPos(this ScrollRect scroll)

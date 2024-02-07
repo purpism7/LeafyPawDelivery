@@ -19,7 +19,13 @@ namespace UI
             public int PlaceId = 0;
         }
 
-        [SerializeField] private Toggle[] tabToggles = null;
+        //[SerializeField]
+        //private Toggle[] tabToggles = null;
+        [SerializeField]
+        private Toggle animalToggle = null;
+        [SerializeField]
+        private Toggle objectToggle = null;
+
         [SerializeField] private ScrollRect animalScrollRect = null;
         [SerializeField] private ScrollRect objectScrollRect = null;
 
@@ -27,6 +33,7 @@ namespace UI
 
         private List<ArrangementCell> _arrangementCellList = new();
         private int _placeId = 0;
+        private bool _isTutorial = false;
 
         public override IEnumerator CoInitialize(Data data)
         {
@@ -39,6 +46,12 @@ namespace UI
             AllDeactiveArrangementCellList();
             SetAnimalList();
             SetObjectList();
+
+            _isTutorial = CheckIsTutorial;
+            if (_isTutorial)
+            {
+                EnableToggle(false);
+            }
         }
 
         public override void Activate()
@@ -48,13 +61,33 @@ namespace UI
             ActivateArrangementCellList();
 
             _currETabType = Game.Type.ETab.Animal;
+
+            var isTutorial = CheckIsTutorial;
+            if (isTutorial)
+            {
+                var tutorialMgr = MainGameManager.Instance?.TutorialMgr;
+                if(tutorialMgr != null)
+                {
+                    if(tutorialMgr.ETutorialStep == Game.Type.ETutorialStep.EditObject)
+                    {
+                        _currETabType = Game.Type.ETab.Object;
+                    }
+                }
+            }
+
+            if(_isTutorial != isTutorial)
+            {
+                EnableToggle(true);
+                EnableScrollRect(animalScrollRect, true);
+                EnableScrollRect(objectScrollRect, true);
+
+                _isTutorial = isTutorial;
+            }
+
             ActiveContents();
 
-            var tabToggle = tabToggles?.First();
-            if (tabToggle != null)
-            {
-                tabToggle.SetIsOnWithoutNotify(true);
-            }
+            animalToggle?.SetIsOnWithoutNotify(_currETabType == Game.Type.ETab.Animal);
+            objectToggle?.SetIsOnWithoutNotify(_currETabType == Game.Type.ETab.Object);
 
             animalScrollRect?.ResetScrollPos();
             objectScrollRect?.ResetScrollPos();
@@ -94,6 +127,8 @@ namespace UI
 
             int index = 0;
 
+            var isTutorial = CheckIsTutorial;
+
             foreach (var cell in _arrangementCellList)
             {
                 if (cell == null)
@@ -102,6 +137,11 @@ namespace UI
                 if(cell.EElement == Game.Type.EElement.Object)
                 {
                     cell.SetIndex(GetIndex(objectMgr, cell.Id, ref index));
+                }
+
+                if(_isTutorial != isTutorial)
+                {
+                    cell.SetIsTutorial(isTutorial);
                 }
 
                 cell.Activate();
@@ -212,6 +252,10 @@ namespace UI
             if (animalOpenConditionContainer == null)
                 return;
 
+            bool isTutorial = CheckIsTutorial;
+
+            EnableScrollRect(animalScrollRect, !isTutorial);
+
             foreach (var data in dataList)
             {
                 if (data == null)
@@ -227,6 +271,7 @@ namespace UI
                         EElement = Game.Type.EElement.Animal,
                         Owned = animalInfo != null,
                         Lock = !animalOpenConditionContainer.CheckReq(data.Id),
+                        isTutorial = isTutorial,
                     }, animalScrollRect.content);
             }
         }
@@ -246,6 +291,9 @@ namespace UI
                 return;
 
             int index = 0;
+            bool isTutorial = CheckIsTutorial;
+
+            EnableScrollRect(objectScrollRect, !isTutorial);
 
             var datas = dataList.OrderBy(obj => obj.Order);
 
@@ -269,6 +317,7 @@ namespace UI
                         EElement = Game.Type.EElement.Object,
                         Owned = objectInfo != null,
                         Lock = !objectOpenConditionContainer.CheckReq(data.Id),
+                        isTutorial = isTutorial,
 
                         index = GetIndex(objectMgr, data.Id, ref index),
                     }, objectScrollRect.content);
@@ -279,6 +328,27 @@ namespace UI
         {
             UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Game.Type.ETab.Animal);
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Game.Type.ETab.Object);
+        }
+
+        private void EnableToggle(bool enable)
+        {
+            if (animalToggle != null)
+            {
+                animalToggle.enabled = enable;
+            }
+
+            if(objectToggle != null)
+            {
+                objectToggle.enabled = enable;
+            }
+        }
+
+        private void EnableScrollRect(ScrollRect scrollRect, bool enable)
+        {
+            if (scrollRect == null)
+                return;
+
+            scrollRect.enabled = enable;
         }
 
         private int GetIndex(Game.ObjectManager objectMgr, int id, ref int index)
@@ -299,7 +369,21 @@ namespace UI
                 cell?.Obtain(EElement, id);
             }
         }
-        
+
+        private bool CheckIsTutorial
+        {
+            get
+            {
+                var mainGameMgr = MainGameManager.Instance;
+                if (mainGameMgr != null)
+                {
+                    return mainGameMgr.IsTutorial;
+                }
+
+                return false;
+            }
+        }
+
         private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
         {
             if (animalData == null)
@@ -319,6 +403,9 @@ namespace UI
         // 탭 변경 콜백.
         public void OnChanged(string tabType)
         {
+            if (CheckIsTutorial)
+                return;
+
             if(System.Enum.TryParse(tabType, out Game.Type.ETab eTabType))
             {
                 if(_currETabType == eTabType)

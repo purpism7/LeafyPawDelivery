@@ -29,7 +29,7 @@ namespace Game
         {
             Event?.RemoveAllListeners();
 
-            Game.AnimalManager.Event?.AddListener(OnChangedAnimal);
+            //Game.AnimalManager.Event?.AddListener(OnChangedAnimal);
         }
 
         public override IEnumerator CoInitialize(Data data)
@@ -53,7 +53,36 @@ namespace Game
                     return false;
 
                 var openConditionDataList = ObjectOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy });
+                foreach (var objectData in objectDataList)
+                {
+                    if (objectData == null)
+                        continue;
 
+                    if (openConditionDataList != null &&
+                        openConditionDataList.Find(openConditionData => openConditionData.Id == objectData.Id) != null)
+                    {
+                        if (!CheckExist(objectData.Id))
+                            return false;
+                    }
+                }
+
+                return true;
+            }
+        }
+
+        public bool CheckGetStarter
+        {
+            get
+            {
+                int placeId = GameUtils.ActivityPlaceId;
+                if (placeId != Game.Data.Const.StartPlaceId)
+                    return false;
+
+                var objectDataList = ObjectContainer.Instance?.GetDataListByPlaceId(placeId);
+                if (objectDataList == null)
+                    return false;
+
+                var openConditionDataList = ObjectOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter });
                 foreach (var objectData in objectDataList)
                 {
                     if (objectData == null)
@@ -115,7 +144,16 @@ namespace Game
 
         public void ArrangeObject(int id, int objectUId, Vector3 pos, int placeId)
         {
-            _objectHolder?.ArrangeObject(id, objectUId, pos, placeId);
+            if (_objectHolder == null)
+                return;
+
+            if(_objectHolder.ArrangeObject(id, objectUId, pos, placeId))
+            {
+                Event?.Invoke(new Game.Event.ArrangeObjectData()
+                {
+                    id = id,
+                });
+            }
         }
 
         public Info.Object GetObjectInfoById(int objectId)
@@ -134,7 +172,7 @@ namespace Game
             return _objectHolder.GetRemainCount(id);
         }
 
-        void IEvent.Starter()
+        void IEvent.Starter(System.Action endAction)
         {
             if (_data == null)
                 return;
@@ -174,7 +212,7 @@ namespace Game
                                     Id = data.Id,
                                     ClickAction = () =>
                                     {
-
+                                        endAction?.Invoke();
                                     },
                                 })
                                 .SetCoInit(true)
@@ -189,10 +227,10 @@ namespace Game
             }
         }
 
-        private void OnChangedAnimal(Event.AnimalData animalData)
-        {
+        //private void OnChangedAnimal(Event.AnimalData animalData)
+        //{
 
-        }
+        //}
     }
 }
 

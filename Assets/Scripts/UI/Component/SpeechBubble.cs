@@ -66,16 +66,16 @@ namespace UI.Component
             sentenceTMP?.SetText(string.Empty);
         }
 
-        public void SetSentence(string sentence)
+        private void SetSentence(string sentence)
         {
             sentenceTMP?.SetText(sentence);
         }
 
-        public void Clear()
+        private void Clear()
         {
             _constituentQueue?.Clear();
         }
-
+        
         public void Enqueue(Constituent constituent)
         {
             _constituentQueue?.Enqueue(constituent);

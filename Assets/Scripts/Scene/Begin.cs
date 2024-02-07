@@ -73,7 +73,7 @@ namespace Scene
             //    await UniTask.WaitUntil(() => endPrologue);
             //}
 
-            await UniTask.WaitForSeconds(3f);
+            await UniTask.WaitForSeconds(2f);
 
             await PlayPrologueAsync();
             await CreateNickNameAsync();

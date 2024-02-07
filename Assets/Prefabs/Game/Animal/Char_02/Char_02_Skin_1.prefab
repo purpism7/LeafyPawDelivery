@@ -367,14 +367,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[0].Key
       value: animal_2_1
       objectReference: {fileID: 0}
     - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
+      propertyPath: localDatas.Array.data[1].Key
+      value: animal_2_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
+      propertyPath: localDatas.Array.data[2].Key
+      value: animal_2_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
       propertyPath: localDatas.Array.data[0].TableName
+      value: SpeechBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
+      propertyPath: localDatas.Array.data[1].TableName
+      value: SpeechBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989551174529994786, guid: c116f0335c3c04a439d68c4f1cfcd89e, type: 3}
+      propertyPath: localDatas.Array.data[2].TableName
       value: SpeechBubble
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -201,6 +201,13 @@ namespace Game
         #region Listener
         private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
         {
+            var mainGameMgr = MainGameManager.Instance;
+            if(mainGameMgr != null)
+            {
+                if (mainGameMgr.IsTutorial)
+                    return;
+            }
+
             if (Check(out Story story))
             {
                 StartStory(story);
@@ -209,6 +216,13 @@ namespace Game
 
         private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
         {
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr != null)
+            {
+                if (mainGameMgr.IsTutorial)
+                    return;
+            }
+
             if (Check(out Story story))
             {
                 StartStory(story);

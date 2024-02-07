@@ -38,7 +38,12 @@ namespace UI
 
         public override void Initialize(Data data)
         {
-            base.Initialize(data);            
+            base.Initialize(data);
+
+            if (CheckIsTutorial)
+            {
+                EnableToggle(false);
+            }
         }
 
         public override void Activate()
@@ -55,6 +60,18 @@ namespace UI
 
         public EditList Setup(Type.ETab eTabType, int index = -1)
         {
+            if (CheckIsTutorial)
+            {
+                var tutorialMgr = MainGameManager.Instance?.TutorialMgr;
+                if (tutorialMgr != null)
+                {
+                    if (tutorialMgr.ETutorialStep == Game.Type.ETutorialStep.EditObject)
+                    {
+                        eTabType = Game.Type.ETab.Object;
+                    }
+                }
+            }
+
             SetTab(eTabType);
 
             animalToggle?.SetIsOnWithoutNotify(eTabType == Type.ETab.Animal);
@@ -75,13 +92,16 @@ namespace UI
         {
             DeactviateAllAnimal();
 
-            _editAnimalList.Clear();
+            _editAnimalList?.Clear();
 
             var infoList = MainGameManager.Get<AnimalManager>()?.AnimalInfoList;
             if(infoList == null)
                 return;
 
             int placeId = GameUtils.ActivityPlaceId;
+            bool isTutorial = CheckIsTutorial;
+
+            EnableScrollRect(animalScrollRect, !isTutorial);
 
             foreach (var info in infoList)
             {
@@ -102,6 +122,7 @@ namespace UI
                 {
                     iListener = this,
                     AnimalData = animalData,
+                    isTutorial = isTutorial,
                 };
 
                 CreateEditAnimal(data);
@@ -112,7 +133,7 @@ namespace UI
         {
             DeactviateAllObject();
 
-            _editObjectList.Clear();
+            _editObjectList?.Clear();
 
             var objectMgr = MainGameManager.Get<ObjectManager>();
             if (objectMgr == null)
@@ -125,6 +146,9 @@ namespace UI
             var infos = infoList.OrderBy(info => info.Id);
 
             int placeId = GameUtils.ActivityPlaceId;
+
+            bool isTutorial = CheckIsTutorial;
+            EnableScrollRect(objectScrollRect, !isTutorial);
 
             foreach (var objectInfo in infos)
             {
@@ -148,6 +172,7 @@ namespace UI
                     ObjectId = objectInfo.Id,
                     Count = objectData.Count,
                     RemainCount = reaminCount,
+                    isTutorial = isTutorial,
                 };
 
                 CreateEditObject(data);
@@ -314,6 +339,41 @@ namespace UI
             CurrETabType = eTabType;
 
             ActiveContents();
+        }
+
+        private void EnableToggle(bool enable)
+        {
+            if (animalToggle != null)
+            {
+                animalToggle.enabled = enable;
+            }
+
+            if (objectToggle != null)
+            {
+                objectToggle.enabled = enable;
+            }
+        }
+
+        private void EnableScrollRect(ScrollRect scrollRect, bool enable)
+        {
+            if (scrollRect == null)
+                return;
+
+            scrollRect.enabled = enable;
+        }
+
+        private bool CheckIsTutorial
+        {
+            get
+            {
+                var mainGameMgr = MainGameManager.Instance;
+                if (mainGameMgr != null)
+                {
+                    return mainGameMgr.IsTutorial;
+                }
+
+                return false;
+            }
         }
 
         #region EditAnimal.IListener

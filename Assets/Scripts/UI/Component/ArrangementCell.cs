@@ -22,6 +22,7 @@ namespace UI.Component
             public string Name = string.Empty;
             public bool Owned = false;
             public bool Lock = true;
+            public bool isTutorial = false;
 
             public int index = 0;
         }
@@ -53,6 +54,9 @@ namespace UI.Component
         [SerializeField]
         private Image storyIconImg = null;
 
+        [SerializeField]
+        private Image guideLineImg = null;
+
         [Header("Lock")]
         [SerializeField]
         private RectTransform lockRootRectTm = null;
@@ -83,6 +87,12 @@ namespace UI.Component
             SetButtonState();
             SetOpenConditionData();
             SetStoryIcon();
+
+            UIUtils.SetActive(guideLineImg?.gameObject, data.isTutorial);
+            if(data.isTutorial)
+            {
+                guideLineImg?.AnimBlink();
+            }
         }
 
         public override void Activate()
@@ -427,6 +437,16 @@ namespace UI.Component
             _data.index = index;
         }
 
+        public void SetIsTutorial(bool isTutorial)
+        {
+            if (_data == null)
+                return;
+
+            _data.isTutorial = isTutorial;
+
+            UIUtils.SetActive(guideLineImg?.gameObject, isTutorial);
+        }
+
         public void Obtain(Game.Type.EElement eElement, int id)
         {
             if (_data == null)
@@ -537,6 +557,9 @@ namespace UI.Component
         public void OnClickObtain()
         {
             if (_data == null)
+                return;
+
+            if (_data.isTutorial)
                 return;
 
             if(_data.EElement == Game.Type.EElement.Object)

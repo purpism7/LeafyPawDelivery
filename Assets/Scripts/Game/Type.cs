@@ -11,7 +11,6 @@ namespace Game
             Game,
             Edit,
             Screenshot,
-            Tutorial,
         }
 
         public enum ETab
@@ -163,6 +162,31 @@ namespace Game
             None,
 
             TwiceCurrency,
+        }
+
+        public enum ETutorialStep
+        {
+            None,
+
+            HiPopo,
+            Start,
+
+            // 상단 
+            DescGame,
+            DescAnimalCurrency,
+            DescObjectCurrency,
+            DescLetter,
+            GetStarter,
+
+            // 하단
+            DescEdit,
+            DisappearPopo,
+            EditAnimal,
+            EditObject,
+            DescStory,
+            DescMap,
+
+            End,
         }
     }
 }

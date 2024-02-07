@@ -16,6 +16,7 @@ namespace UI.Component
             public int ObjectId = 0;
             public int Count = 0;
             public int RemainCount = 0;
+            public bool isTutorial = false;
         }
 
         public interface IListener
@@ -23,15 +24,28 @@ namespace UI.Component
             void Select(int id);
         }
 
-        [SerializeField] private Image iconImg = null;
-        [SerializeField] private TextMeshProUGUI countTMP = null;
-        
+        [SerializeField]
+        private Image iconImg = null;
+        [SerializeField]
+        private TextMeshProUGUI countTMP = null;
+        [SerializeField]
+        private Image guideLineImg = null;
+
         public override void Initialize(Data data)
         {
             base.Initialize(data);
             
             SetIconImg();
             SetCount();
+
+            if (data != null)
+            {
+                UIUtils.SetActive(guideLineImg?.gameObject, data.isTutorial);
+                if (data.isTutorial)
+                {
+                    guideLineImg?.AnimBlink();
+                }
+            }
         }
         
         private void SetIconImg()

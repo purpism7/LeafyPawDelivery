@@ -22,6 +22,10 @@ namespace UI
         bool CheckMaxDropAnimalCurrencyCnt { get; }
 
         TextMeshProUGUI GamePlatTimeTMP { get; }
+
+        void ActivateGuideLine(Game.Type.ECategory eCategory);
+        void ActivateLetterGuideLine();
+        void AllDeactivateGuideLine();
     }
 
     public interface ITopAnim
@@ -70,6 +74,16 @@ namespace UI
         private Button settingBtn = null;
         [SerializeField]
         private Button screenshotBtn = null;
+
+        [Header("Guide Line")]
+        [SerializeField]
+        private Image animalCurrencyGuideLineImg = null;
+        [SerializeField]
+        private Image objectCurrencyGuideLineImg = null;
+        [SerializeField]
+        private Image cashGuideLineImg = null;
+        [SerializeField]
+        private Image letterGuideLineImg = null;
 
         private List<CollectCurrency> _collectCurrencyList = new();
         private List<AddCurrency> _addCurrencyList = new();
@@ -467,6 +481,14 @@ namespace UI
             }
         }
 
+        private void AllDeactivateGuideLine()
+        {
+            UIUtils.SetActive(animalCurrencyGuideLineImg?.gameObject, false);
+            UIUtils.SetActive(objectCurrencyGuideLineImg?.gameObject, false);
+            UIUtils.SetActive(cashGuideLineImg?.gameObject, false);
+            UIUtils.SetActive(letterGuideLineImg?.gameObject, false);
+        }
+
         #region ITop
         void ITop.SetCurrency()
         {
@@ -509,6 +531,40 @@ namespace UI
             {
                 return gamePlayTimeTMP;
             }
+        }
+
+        void ITop.ActivateGuideLine(Game.Type.ECategory eCategory)
+        {
+            AllDeactivateGuideLine();
+
+            if(eCategory == Type.ECategory.AnimalCurrency)
+            {
+                UIUtils.SetActive(animalCurrencyGuideLineImg?.gameObject, true);
+                animalCurrencyGuideLineImg?.AnimBlink();
+            }
+            else if(eCategory == Type.ECategory.ObjectCurrency)
+            {
+                UIUtils.SetActive(objectCurrencyGuideLineImg?.gameObject, true);
+                objectCurrencyGuideLineImg?.AnimBlink();
+            }
+            else if (eCategory == Type.ECategory.ObjectCurrency)
+            {
+                UIUtils.SetActive(cashGuideLineImg?.gameObject, true);
+                cashGuideLineImg?.AnimBlink();
+            }
+        }
+
+        void ITop.ActivateLetterGuideLine()
+        {
+            AllDeactivateGuideLine();
+
+            UIUtils.SetActive(letterGuideLineImg?.gameObject, true);
+            letterGuideLineImg?.AnimBlink();
+        }
+
+        void ITop.AllDeactivateGuideLine()
+        {
+            AllDeactivateGuideLine();
         }
         #endregion
 
