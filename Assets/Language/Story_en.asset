@@ -627,6 +627,38 @@ MonoBehaviour:
     m_Localized: Goodbye Reian. I love you very much.
     m_Metadata:
       m_Items: []
+  - m_Id: 67261470377762816
+    m_Localized: Balla's letter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67260984689942528
+    m_Localized: Meeting with Brie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67261263867011072
+    m_Localized: Brie is waiting Balla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67261404028067840
+    m_Localized: Balla is about to leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67261966790418432
+    m_Localized: Ghost Reian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67262088064524288
+    m_Localized: Reian's Story
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67262189143056384
+    m_Localized: Meeting with Cascia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67262299818156032
+    m_Localized: Reian's Farewell
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
