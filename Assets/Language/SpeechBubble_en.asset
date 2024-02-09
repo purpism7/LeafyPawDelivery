@@ -192,6 +192,66 @@ MonoBehaviour:
     m_Localized: "It\u2019s going to be a good day tomorrow, too."
     m_Metadata:
       m_Items: []
+  - m_Id: 65106163824320512
+    m_Localized: "Everyone\u2019s as busy as ever."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65106394989191168
+    m_Localized: "I\u2019m bored. Is there anything fun to do?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65106520365326336
+    m_Localized: "Don\u2019t cry over something like that\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65106606600216576
+    m_Localized: I miss him so much.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65106742558580736
+    m_Localized: "Let\u2019s organize today\u2019s tasks."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65106834652913664
+    m_Localized: It was a day well spent.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65106933147754496
+    m_Localized: "It\u2019s gonna be okay.  after all, I\u2019m cute!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65107091746971648
+    m_Localized: "It\u2019s not big deal! Don\u2019t worry about it!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65107201574821888
+    m_Localized: "I\u2019m going to collect some pink clamshells."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65107215516688384
+    m_Localized: "I hope there isn\u2019t anybody at the beach\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65107472757547008
+    m_Localized: "Did I do something wrong yesterday\u2026?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65107503132696576
+    m_Localized: "Maybe I should\u2019ve said hello first."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65107742753284096
+    m_Localized: I want to go out to sea on a boat too!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65108257125949440
+    m_Localized: "I\u2019m going to swim my fill today."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65108354437996544
+    m_Localized: How was your day?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

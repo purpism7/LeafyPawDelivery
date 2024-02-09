@@ -274,6 +274,154 @@ MonoBehaviour:
     m_Localized: Star tree
     m_Metadata:
       m_Items: []
+  - m_Id: 67627043154550784
+    m_Localized: Brie's bag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67627188516544512
+    m_Localized: Cake for Balla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67627273316982784
+    m_Localized: Balla's muffler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67627446902448128
+    m_Localized: Yellow flowers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67630665175130112
+    m_Localized: Basket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67630799329943552
+    m_Localized: Shovel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67631100422250496
+    m_Localized: Starfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67631222514245632
+    m_Localized: Big shell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67631278248157184
+    m_Localized: Flip flops
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67631433902972928
+    m_Localized: Palm tree
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67631493399175168
+    m_Localized: Sand castle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67631638601785344
+    m_Localized: Small rock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632045654794240
+    m_Localized: Book
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632124323160064
+    m_Localized: Straw hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632253532889088
+    m_Localized: Bush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632310806110208
+    m_Localized: Red flowers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632391533879296
+    m_Localized: Footprints
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632529807499264
+    m_Localized: Wooden chair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632638117011456
+    m_Localized: Bottle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632722833563648
+    m_Localized: Ball
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632769327423488
+    m_Localized: Sunglasses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632897606017024
+    m_Localized: Rocks with tree
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632994007900160
+    m_Localized: Yellow flowers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67633059237715968
+    m_Localized: Picnic basket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67633204780064768
+    m_Localized: Parasol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67633318332456960
+    m_Localized: Swim tubes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67633569210556416
+    m_Localized: Big rocks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67633674751827968
+    m_Localized: Towel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67633758847623168
+    m_Localized: Surf board
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67633855798960128
+    m_Localized: "Flamingo \nswim tube"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67634093582442496
+    m_Localized: Snacks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67634179389513728
+    m_Localized: Sign
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67634290018476032
+    m_Localized: Icecream bus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67634385841545216
+    m_Localized: Wooden boat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67634505865748480
+    m_Localized: Reian's feather
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67634662728523776
+    m_Localized: Cascia's bouquet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67634831280824320
+    m_Localized: Reian's halo
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
