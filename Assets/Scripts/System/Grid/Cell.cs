@@ -99,11 +99,6 @@ namespace GameSystem
                 }
             }
         }
-
-        public void ChainUpdate()
-        {
-            //Overlap();
-        }
     }
 }
 

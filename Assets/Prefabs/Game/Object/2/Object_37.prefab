@@ -229,6 +229,37 @@ PolygonCollider2D:
       - {x: 68.5, y: 7}
       - {x: 78.5, y: 5}
   m_UseDelaunayMesh: 0
+--- !u!1 &4681942667120025336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 721352502888193291}
+  m_Layer: 7
+  m_Name: HiddenRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &721352502888193291
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681942667120025336}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -115, y: 25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6281575790720672042}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8059279621757282250
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +289,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 721352502888193291}
   - {fileID: 5082999346628738462}
   - {fileID: 5939185481880514635}
   m_Father: {fileID: 8202997828934454862}
@@ -314,7 +346,7 @@ MonoBehaviour:
   edit: {fileID: 5349012442606307698}
   IsOverlap: 0
   sortingOrderOffset: 0
-  hiddenRootTm: {fileID: 0}
+  hiddenRootTm: {fileID: 721352502888193291}
 --- !u!1001 &230808330410526275
 PrefabInstance:
   m_ObjectHideFlags: 0

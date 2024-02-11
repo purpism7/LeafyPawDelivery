@@ -41,6 +41,13 @@ namespace Game.PlaceEvent
                 if (objMgr.CheckExist(data.Id))
                     continue;
 
+                var objData = ObjectContainer.Instance?.GetData(data.Id);
+                if(objData != null)
+                {
+                    if (objData.PlaceId != placeId)
+                        continue;
+                }
+
                 if (data.ReqStoryId > lastStoryId)
                     continue;
 

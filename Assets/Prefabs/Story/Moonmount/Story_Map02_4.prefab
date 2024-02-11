@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9169596445628508693}
   - component: {fileID: 3473493675403046251}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Background_map2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4432801170519709416}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Brie_Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 606263786638115392}
   - component: {fileID: 8948185288462399278}
   - component: {fileID: 8650971786075524546}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Brie_Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 2518452704460910540}
   - component: {fileID: 743886801777985}
   - component: {fileID: 2081400528234037087}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8551314321927475126}
   - component: {fileID: 235401733844898463}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Story_Map02_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}

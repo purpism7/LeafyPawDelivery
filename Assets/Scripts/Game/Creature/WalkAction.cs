@@ -148,7 +148,23 @@ namespace Game.Creature
             animalTm.localPosition = movePos;
             //animalTm.localPosition = new Vector3(animalTm.localPosition.x, animalTm.localPosition.y, _initPosZ);
 
-            Debug.DrawLine(animalTm.localPosition, _targetPos);
+#if UNITY_EDITOR
+            if(_posQueue != null)
+            {
+                var list = new List<Vector3>();
+                list.AddRange(_posQueue);
+
+                for(int i = 0; i < list.Count; ++i)
+                {
+                    var start = i <= 0 ? animalTm.localPosition : list[i - 1];
+                    var end = list[i];
+
+                    Debug.DrawLine(start, end, Color.cyan);
+                }
+            }
+#endif
+
+            //Debug.DrawLine(animalTm.localPosition, _targetPos);
 
             if(_data.SprRenderer != null)
             {
