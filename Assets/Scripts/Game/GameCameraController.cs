@@ -50,7 +50,7 @@ namespace GameSystem
         public float MaxOrthographicSize { get { return 2000f; } }
         public float MinOrthographicSize { get { return 1100f; } }
 
-        public float OrthographicSizeForTutorial { get { return 1500; } }
+        public float OrthographicSizeForTutorial { get { return 1200; } }
         public float DefaultOrthographicSize { get { return 1500f; } }
 
         public Vector3 Center

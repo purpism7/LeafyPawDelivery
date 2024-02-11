@@ -178,7 +178,7 @@ namespace Game
             get
             {
                 if (!hiddenRootTm)
-                    return true;
+                    return false;
 
                 return hiddenRootTm.childCount > 0;
             }

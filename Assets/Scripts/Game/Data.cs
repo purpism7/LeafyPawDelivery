@@ -8,8 +8,7 @@ namespace Game
     {
         public static Const Const = null;
 
-        public static int PlayerPrefsVersion = 13;
-        public static string PlayPrefsKeyLastPlaceKey = "KeyLastPlaceId";
+        public static int PlayerPrefsVersion = 23;
+        public static string PlayPrefsKeyLastPlaceKey = "KeyLastPlaceId_" + PlayerPrefsVersion;
     }
 }
-

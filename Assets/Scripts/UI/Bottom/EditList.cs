@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
+using Cysharp.Threading.Tasks;
+
 using Game;
 using UI.Component;
 
@@ -32,9 +34,11 @@ namespace UI
 
         private List<Component.EditAnimal> _editAnimalList = new();
         private List<Component.EditObject> _editObjectList = new();
+
         public Type.ETab CurrETabType { get; private set; } = Type.ETab.Animal;
 
         private bool _editing = false;
+        private int _selectIndex = -1;
 
         public override void Initialize(Data data)
         {
@@ -54,6 +58,8 @@ namespace UI
 
             SetAnimalList();
             SetObjectList();
+
+            MoveScrollToIndex().Forget();
 
             _editing = false;
         }
@@ -77,15 +83,26 @@ namespace UI
             animalToggle?.SetIsOnWithoutNotify(eTabType == Type.ETab.Animal);
             objectToggle?.SetIsOnWithoutNotify(eTabType == Type.ETab.Object);
 
-            if(index >= 0)
-            {
-                if (eTabType == Type.ETab.Object)
-                {
-                    objectScrollRect?.MoveScrollToIndex(index);
-                }
-            }
+            _selectIndex = index;
 
             return this;
+        }
+
+        private async UniTask MoveScrollToIndex()
+        {
+            if (_selectIndex < 0)
+                return;
+
+            if (CurrETabType == Type.ETab.Object)
+            {
+                var gridLayoutGroup = objectScrollRect?.content?.GetComponent<GridLayoutGroup>();
+                if (gridLayoutGroup != null)
+                {
+                    await UniTask.Yield();
+
+                    objectScrollRect?.MoveHorizontalScrollToIndex(gridLayoutGroup.cellSize.x, _selectIndex);
+                }
+            }
         }
 
         private void SetAnimalList()
@@ -139,37 +156,33 @@ namespace UI
             if (objectMgr == null)
                 return;
 
-            var infoList = objectMgr.ObjectInfoList;
-            if (infoList == null)
-                return;
+            //var infoList = objectMgr.ObjectInfoList;
+            //if (infoList == null)
+            //    return;
 
-            var infos = infoList.OrderBy(info => info.Id);
+            //var infos = infoList.OrderBy(info => info.Id);
 
             int placeId = GameUtils.ActivityPlaceId;
+            var objectDataList = ObjectContainer.Instance?.GetDataListByPlaceId(placeId);
+
+            var objectDatas = objectDataList?.OrderBy(data => data.Order);
 
             bool isTutorial = CheckIsTutorial;
             EnableScrollRect(objectScrollRect, !isTutorial);
 
-            foreach (var objectInfo in infos)
+            foreach(var objectData in objectDatas)
             {
-                if(objectInfo == null)
-                    continue;
-
-                var objectData = ObjectContainer.Instance.GetData(objectInfo.Id);
                 if (objectData == null)
                     continue;
 
-                if (objectData.PlaceId != placeId)
-                    continue;
-
-                int reaminCount = objectMgr.GetRemainCount(objectInfo.Id);
+                int reaminCount = objectMgr.GetRemainCount(objectData.Id);
                 if (reaminCount <= 0)
                     continue;
 
                 var data = new Component.EditObject.Data()
                 {
                     iListener = this,
-                    ObjectId = objectInfo.Id,
+                    ObjectId = objectData.Id,
                     Count = objectData.Count,
                     RemainCount = reaminCount,
                     isTutorial = isTutorial,
@@ -177,6 +190,34 @@ namespace UI
 
                 CreateEditObject(data);
             }
+
+            //foreach (var objectInfo in infos)
+            //{
+            //    if(objectInfo == null)
+            //        continue;
+
+            //    var objectData = ObjectContainer.Instance?.GetData(objectInfo.Id);
+            //    if (objectData == null)
+            //        continue;
+
+            //    if (objectData.PlaceId != placeId)
+            //        continue;
+
+            //    int reaminCount = objectMgr.GetRemainCount(objectInfo.Id);
+            //    if (reaminCount <= 0)
+            //        continue;
+
+            //    var data = new Component.EditObject.Data()
+            //    {
+            //        iListener = this,
+            //        ObjectId = objectInfo.Id,
+            //        Count = objectData.Count,
+            //        RemainCount = reaminCount,
+            //        isTutorial = isTutorial,
+            //    };
+
+            //    CreateEditObject(data);
+            //}
         }
 
         private void CreateEditAnimal(Component.EditAnimal.Data data)

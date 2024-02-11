@@ -30,6 +30,12 @@ public class Object : ElementData
         {
             Count = 1;
         }
+
+        string placeId = PlaceId > 9 ? PlaceId.ToString() : "0" + PlaceId;
+        string id = Id > 9 ? Id.ToString() : "0" + Id;
+
+        ShortIconImgName = string.Format("EditIcon_Map{0}_Object_{1}", placeId, id);
+        LargeIconImgName = string.Format("BookIcon_Map{0}_Object_{1}", placeId, id);
     }
 
     public override int GetCurrency

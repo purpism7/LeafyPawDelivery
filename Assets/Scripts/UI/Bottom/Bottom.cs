@@ -4,8 +4,10 @@ using UnityEngine;
 using System.Linq;
 
 using DG.Tweening;
+using Cysharp.Threading.Tasks;
 
 using GameSystem;
+
 
 namespace UI
 {
@@ -154,8 +156,16 @@ namespace UI
         #region EditList
         public void ActivateEditList(Game.Type.ETab eTabType, int index = -1)
         {
-            if(EditList == null)
+            ActivateEditListAsync(eTabType, index).Forget();
+        }
+
+        private async UniTask ActivateEditListAsync(Game.Type.ETab eTabType, int index = -1)
+        {
+            bool initialiae = false;
+            if (EditList == null)
             {
+                initialiae = true;
+
                 EditList = new UICreator<EditList, EditList.Data>()
                     .SetData(new EditList.Data()
                     {
@@ -165,7 +175,16 @@ namespace UI
                     .Create();
             }
 
-            EditList.Setup(eTabType, index).Activate();
+            EditList?.Setup(eTabType, index)?.Activate();
+
+            if(initialiae)
+            {
+                await UniTask.Yield();
+            }
+
+            //EditList?.Setup(eTabType, index);
+            //await UniTask.WaitForSeconds(0.5f);
+
             ActivateAnim(EditListRootRectTm, null);
         }
 

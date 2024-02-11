@@ -10,7 +10,7 @@ using Info;
 
 namespace Game
 {
-    public class StoryManager : Manager.Base<StoryManager.Data>
+    public class StoryManager : Manager.Base<StoryManager.Data>, TutorialManager.IListener
     {
         public class Data : Manager.BaseData
         {
@@ -196,6 +196,17 @@ namespace Game
             }
 
             return null;
+        }
+
+        void TutorialManager.IListener.State(Type.ETutorialStep eTutorialStep)
+        {
+            if(eTutorialStep == Type.ETutorialStep.End)
+            {
+                if (Check(out Story story))
+                {
+                    StartStory(story);
+                }
+            }
         }
 
         #region Listener

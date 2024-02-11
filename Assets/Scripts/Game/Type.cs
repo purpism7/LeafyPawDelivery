@@ -188,7 +188,10 @@ namespace Game
             DescStory,
             DescMap,
 
+            HappyLeafyPawDelivery,
+
             End,
+            ReturnGame,
         }
     }
 }

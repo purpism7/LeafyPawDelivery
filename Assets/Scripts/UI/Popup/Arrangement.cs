@@ -33,6 +33,7 @@ namespace UI
 
         private List<ArrangementCell> _arrangementCellList = new();
         private int _placeId = 0;
+        private int _objectIndex = -1;
         private bool _isTutorial = false;
 
         public override IEnumerator CoInitialize(Data data)
@@ -125,7 +126,7 @@ namespace UI
             if (objectMgr == null)
                 return;
 
-            int index = 0;
+            int index = -1;
 
             var isTutorial = CheckIsTutorial;
 
@@ -136,7 +137,9 @@ namespace UI
 
                 if(cell.EElement == Game.Type.EElement.Object)
                 {
-                    cell.SetIndex(GetIndex(objectMgr, cell.Id, ref index));
+                    int resIndex = GetIndex(objectMgr, cell.Id, ref index);
+
+                    cell.SetIndex(resIndex);
                 }
 
                 if(_isTutorial != isTutorial)
@@ -290,7 +293,7 @@ namespace UI
             if (objectOpenConditionContainer == null)
                 return;
 
-            int index = 0;
+            _objectIndex = -1;
             bool isTutorial = CheckIsTutorial;
 
             EnableScrollRect(objectScrollRect, !isTutorial);
@@ -309,6 +312,8 @@ namespace UI
                         continue;
                 }
 
+                int resIndex = GetIndex(objectMgr, data.Id, ref _objectIndex);
+                
                 AddArrangementCell(
                     new ArrangementCell.Data()
                     {
@@ -319,7 +324,7 @@ namespace UI
                         Lock = !objectOpenConditionContainer.CheckReq(data.Id),
                         isTutorial = isTutorial,
 
-                        index = GetIndex(objectMgr, data.Id, ref index),
+                        index = resIndex,
                     }, objectScrollRect.content);
             }
         }
@@ -354,19 +359,36 @@ namespace UI
         private int GetIndex(Game.ObjectManager objectMgr, int id, ref int index)
         {
             if (objectMgr == null)
-                return 0;
+                return -1;
 
-            return objectMgr.GetRemainCount(id) > 0 ? index++ : 0;
+            if(objectMgr.GetRemainCount(id) > 0)
+            {
+                return ++index;
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         private void Obtain(Game.Type.EElement EElement, int id)
         {
+            var objectMgr = MainGameManager.Get<Game.ObjectManager>();
+            if (objectMgr == null)
+                return;
+
             if (_arrangementCellList == null)
                 return;
 
             foreach (var cell in _arrangementCellList)
             {
-                cell?.Obtain(EElement, id);
+                if (cell == null)
+                    continue;
+
+                if(cell.Obtain(EElement, id))
+                {
+                    cell.SetIndex(GetIndex(objectMgr, cell.Id, ref _objectIndex));
+                }
             }
         }
 

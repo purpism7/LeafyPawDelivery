@@ -33,6 +33,14 @@ namespace Game.Creature
 
         private async UniTask MoveAsync()
         {
+            if (_data == null ||
+               !_data.Tm)
+            {
+                EndAction();
+
+                return;
+            }
+
             List<Vector3> pathPosList = await Carrier.MoveAsync(_data.Tm.localPosition);
             if (pathPosList == null)
             {

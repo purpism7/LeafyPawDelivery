@@ -659,6 +659,14 @@ MonoBehaviour:
     m_Localized: Reian's Farewell
     m_Metadata:
       m_Items: []
+  - m_Id: 68107414619021312
+    m_Localized: Brie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68107753569116160
+    m_Localized: Balla
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

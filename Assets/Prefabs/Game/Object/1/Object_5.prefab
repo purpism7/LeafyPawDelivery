@@ -130,37 +130,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 376.6, y: 259.7}
   m_EdgeRadius: 0
---- !u!1 &7157655937583819985
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7468628462129452229}
-  m_Layer: 7
-  m_Name: HiddenRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7468628462129452229
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7157655937583819985}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6281575790720672042}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8059279621757282250
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +159,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7468628462129452229}
   - {fileID: 5082999346628738462}
   - {fileID: 7111057074680332996}
   m_Father: {fileID: 8202997828934454862}
@@ -247,6 +215,7 @@ MonoBehaviour:
   edit: {fileID: 8860893258269408253}
   IsOverlap: 0
   sortingOrderOffset: 0
+  hiddenRootTm: {fileID: 0}
 --- !u!1001 &3742574807698289868
 PrefabInstance:
   m_ObjectHideFlags: 0

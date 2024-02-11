@@ -103,14 +103,14 @@ public static class UIUtils
         scrollContent.anchoredPosition = new Vector3(x, 0, 0);
     }
 
-    public static void MoveScrollToIndex(this ScrollRect scroll, int index) 
+    public static void MoveHorizontalScrollToIndex(this ScrollRect scroll, float cellSize, int index) 
     {
         if (scroll == null)
             return;
 
         var scrollRectTm = scroll.GetComponent<RectTransform>();
 
-        float value = (index * 200f) / (scroll.content.rect.width - scrollRectTm.rect.width);
+        float value = (index * cellSize) / (scroll.content.rect.width - scrollRectTm.rect.width);
         scroll.horizontalNormalizedPosition = value;
     }
 }

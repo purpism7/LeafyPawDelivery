@@ -230,14 +230,24 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         if(IsTutorial)
         {
-            TutorialMgr = gameObject.GetOrAddComponent<Game.TutorialManager>();
-            TutorialMgr?.Initialize(this, tutorialRootTm);
+            InitializeTutorialManager();
             //await SetGameStateAsync(Game.Type.EGameState.Tutorial);
 
             return;
         }
 
         await SetGameStateAsync(Game.Type.EGameState.Game);
+    }
+
+    private void InitializeTutorialManager()
+    {
+        TutorialMgr = gameObject.GetOrAddComponent<Game.TutorialManager>();
+        TutorialMgr?.Initialize(tutorialRootTm);
+
+        TutorialMgr?.AddListener(this);
+        TutorialMgr?.AddListener(Get<Game.StoryManager>());
+
+        (IGameCameraCtr as GameSystem.GameCameraController)?.SetStopUpdate(true);
     }
 
     private void Starter()
@@ -365,7 +375,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         if(gameState != null)
         {
             gameState.Initialize(this);
-
             await gameState.InitializeAsync(this);
 
             EGameState = eGameState;
@@ -655,13 +664,35 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     #endregion
 
     #region Game.TutorialManager.IListener
-    void Game.TutorialManager.IListener.EndTutorial()
+    void Game.TutorialManager.IListener.State(Game.Type.ETutorialStep step)
     {
         //Info.Connector.Get?.SetCompleteTutorial(true);
 
-        SetGameStateAsync(Game.Type.EGameState.Game).Forget();
+        switch(step)
+        {
+            case Game.Type.ETutorialStep.EditAnimal:
+                {
+                    (IGameCameraCtr as GameSystem.GameCameraController)?.SetStopUpdate(false);
 
-        IsTutorial = false;
+                    break;
+                }
+
+            case Game.Type.ETutorialStep.DescMap:
+                {
+                    SetGameStateAsync(Game.Type.EGameState.Game).Forget();
+
+                    IsTutorial = false;
+
+                    break;
+                }
+
+            case Game.Type.ETutorialStep.ReturnGame:
+                {
+                    IGameCameraCtr.SetOrthographicSize(IGameCameraCtr.DefaultOrthographicSize);
+
+                    break;
+                }
+        }
     }
     #endregion
 }

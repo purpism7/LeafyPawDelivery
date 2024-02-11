@@ -21,7 +21,7 @@ namespace Game.PathFinding
 
             var closedSet = new HashSet<Node>();
 
-            while (openList?.Count > 0)
+            while (openList.Count > 0)
             {
                 var currentNode = openList[0];
 

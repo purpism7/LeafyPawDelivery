@@ -25,6 +25,11 @@ namespace UI
         private TextMeshProUGUI topDescTMP = null;
 
         [SerializeField]
+        private RectTransform centerRectTm = null;
+        [SerializeField]
+        private TextMeshProUGUI centerDescTMP = null;
+
+        [SerializeField]
         private RectTransform bottomRectTm = null;
         [SerializeField]
         private TextMeshProUGUI bottomDescTMP = null;
@@ -42,6 +47,7 @@ namespace UI
         public void AllDeactivate()
         {
             UIUtils.SetActive(topRectTm, false);
+            UIUtils.SetActive(centerRectTm, false);
             UIUtils.SetActive(bottomRectTm, false);
         }
 
@@ -67,6 +73,16 @@ namespace UI
             await UniTask.WaitForSeconds(3.5f);
 
             UIUtils.SetActive(topRectTm, false);
+        }
+
+        public void ActivateCenter(string sentence)
+        {
+            AllDeactivate();
+
+            UIUtils.SetActive(clickRectTm, true);
+            UIUtils.SetActive(centerRectTm, true);
+
+            SetDescAsync(centerDescTMP, sentence).Forget();
         }
 
         public void ActivateBottom(string sentence)

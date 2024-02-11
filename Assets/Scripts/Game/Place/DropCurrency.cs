@@ -47,6 +47,8 @@ namespace Game.PlaceEvent
 
         private IEnumerator CoDrop()
         {
+            yield return null;
+
             var eGameState = MainGameManager.Instance.EGameState;
             if (eGameState == Game.Type.EGameState.Edit)
                 yield break;

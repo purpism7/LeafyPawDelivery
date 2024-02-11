@@ -17,6 +17,9 @@ public class AnimalContainer : BaseContainer<AnimalContainer, Animal>
             if (data == null)
                 continue;
 
+            if (data.Id <= 0)
+                continue;
+
             if (data.PlaceId != placeId)
                 continue;
 

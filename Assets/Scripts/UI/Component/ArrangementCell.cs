@@ -24,7 +24,7 @@ namespace UI.Component
             public bool Lock = true;
             public bool isTutorial = false;
 
-            public int index = 0;
+            public int index = -1;
         }
         
         public interface IListener
@@ -447,18 +447,18 @@ namespace UI.Component
             UIUtils.SetActive(guideLineImg?.gameObject, isTutorial);
         }
 
-        public void Obtain(Game.Type.EElement eElement, int id)
+        public bool Obtain(Game.Type.EElement eElement, int id)
         {
             if (_data == null)
-                return;
+                return false;
 
             Unlock();
 
             if (_data.EElement != eElement)
-                return;
+                return false;
 
             if (_data.Id != id)
-                return;
+                return false;
 
             _data.Owned = true;
 
@@ -468,6 +468,8 @@ namespace UI.Component
             SetStoryIcon();
 
             UIUtils.SetActive(openRootRectTm, !_data.Owned);
+
+            return true;
         }
 
         private void Unlock()
