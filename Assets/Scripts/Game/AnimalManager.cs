@@ -77,7 +77,7 @@ namespace Game
             {
                 int placeId = GameUtils.ActivityPlaceId;
                 if (placeId != Game.Data.Const.StartPlaceId)
-                    return false;
+                    return true;
 
                 var animalDataList = AnimalContainer.Instance?.GetDataListByPlaceId(placeId);
                 if (animalDataList == null)

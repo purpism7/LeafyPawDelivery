@@ -98,7 +98,7 @@ namespace Game
             if (storyOpenConditionContainer == null)
                 return false;
 
-            return storyOpenConditionContainer.CheckReq(currStory.Id);
+            return storyOpenConditionContainer.CheckReq(currStory.Id, _placeId);
         }
 
         public Game.Manager.Cutscene PlayStory(Story story)

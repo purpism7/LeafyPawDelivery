@@ -76,7 +76,7 @@ namespace Game
             {
                 int placeId = GameUtils.ActivityPlaceId;
                 if (placeId != Game.Data.Const.StartPlaceId)
-                    return false;
+                    return true;
 
                 var objectDataList = ObjectContainer.Instance?.GetDataListByPlaceId(placeId);
                 if (objectDataList == null)

@@ -323,7 +323,9 @@ namespace UI.Component
             if (_data.Owned)
                 return;
 
-            var storyList = StoryContainer.Instance?.GetStoryList(GameUtils.ActivityPlaceId);
+            int placeId = GameUtils.ActivityPlaceId;
+
+            var storyList = StoryContainer.Instance?.GetStoryList(placeId);
             if (storyList == null)
                 return;
 
@@ -340,7 +342,7 @@ namespace UI.Component
                 if (storyOpenCondition == null)
                     continue;
 
-                if (storyOpenConditionContainer.CheckExistReqId(story.Id, _data.EElement, _data.Id))
+                if (storyOpenConditionContainer.CheckExistReqId(story.Id, placeId, _data.EElement, _data.Id))
                 {
                     UIUtils.SetActive(storyIconImg?.gameObject, true);
 

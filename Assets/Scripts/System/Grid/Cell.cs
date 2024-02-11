@@ -90,13 +90,13 @@ namespace GameSystem
                 var gameBaseElement = collider.GetComponentInParent<Game.BaseElement>();
                 if (gameBaseElement != null)
                 {
-                    if (!gameBaseElement.IsOverlap)
-                        continue;
+                    if (gameBaseElement.IsOverlap)
+                    {
+                        IsOverlap = true;
+
+                        break;
+                    }
                 }
-
-                IsOverlap = true;
-
-                break;
             }
         }
 

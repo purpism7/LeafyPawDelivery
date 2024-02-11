@@ -5,14 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class StoryOpenCondition : Data.Base
 {
-    public int StoryId = 0;
+    [SerializeField]
+    private int placeId = 0;
     public int[] ReqAnimalIds = null;
     public int[] ReqObjectIds = null;
+
+    public int PlaceId { get { return placeId; } }
 
     public override void Initialize()
     {
         base.Initialize();
-
-        Debug.Log("StoryId = " + StoryId);
     }
 }

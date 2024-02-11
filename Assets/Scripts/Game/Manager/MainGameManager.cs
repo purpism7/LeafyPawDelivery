@@ -110,6 +110,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                 boostRootRectTm = Game.UIManager.Instance?.Top?.boostRootRectTm,
             }));
 
+        _iGrid?.Overlap();
+
         Info.Connector.Create(transform);
         Game.Notification.Create(transform);
 
@@ -175,10 +177,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         {
             Game.Carrier.Create(iGridCell);
         }
-
-        yield return null;
-
-        _iGrid?.Overlap();
     }
 
     public async UniTask EndLoadAsync(bool initialize)
@@ -432,6 +430,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         SetGameStateAsync(Game.Type.EGameState.Enter).Forget();
 
         await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.5f, 1f)));
+
+        _iGrid?.Overlap();
 
         endMoveAction?.Invoke();
 

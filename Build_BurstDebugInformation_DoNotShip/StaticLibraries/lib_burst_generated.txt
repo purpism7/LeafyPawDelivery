@@ -30,6 +30,7 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=System.Runtime.Serialization;
 --assembly-defines=System.Xml;
 --assembly-defines=System.Xml.Linq;
+--assembly-defines=UniTask.Addressables;
 --assembly-defines=UniTask;
 --assembly-defines=Unity.2D.Animation.Runtime;
 --assembly-defines=Unity.AdaptivePerformance;
@@ -105,6 +106,7 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=System.Runtime.Serialization;
 --assembly-defines=System.Xml;
 --assembly-defines=System.Xml.Linq;
+--assembly-defines=UniTask.Addressables;
 --assembly-defines=UniTask;
 --assembly-defines=Unity.2D.Animation.Runtime;
 --assembly-defines=Unity.AdaptivePerformance;

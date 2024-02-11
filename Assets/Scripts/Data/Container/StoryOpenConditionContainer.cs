@@ -4,9 +4,34 @@ using UnityEngine;
 
 public class StoryOpenConditionContainer : BaseContainer<StoryOpenConditionContainer, StoryOpenCondition>
 {
-    public bool CheckReq(int id)
+    private StoryOpenCondition GetDataByPlaceId(int id, int placeId)
     {
-        var data = GetData(id);
+        if (_datas == null)
+            return null;
+
+        foreach (var data in _datas)
+        {
+            if (data == null)
+                continue;
+
+            if (data.Id <= 0)
+                continue;
+
+            if (data.PlaceId != placeId)
+                continue;
+
+            if (data.Id != id)
+                continue;
+
+            return data;
+        }
+
+        return null;
+    }
+
+    public bool CheckReq(int id, int placeId)
+    {
+        var data = GetDataByPlaceId(id, placeId);
         if (data == null)
             return false;
 
@@ -40,25 +65,25 @@ public class StoryOpenConditionContainer : BaseContainer<StoryOpenConditionConta
         return true;
     }
 
-    public bool CheckExistReqId(int id, Game.Type.EElement eElement, int reqId)
+    public bool CheckExistReqId(int id, int placeId, Game.Type.EElement eElement, int reqId)
     {
-        var data = GetData(id);
+        var data = GetDataByPlaceId(id, placeId);
         if (data == null)
             return false;
 
         if (eElement == Game.Type.EElement.Animal)
         {
-            return CheckExistReqId(reqId, eElement, data.ReqAnimalIds);
+            return CheckExistReqId(reqId, data.ReqAnimalIds);
         }
         else if(eElement == Game.Type.EElement.Object)
         {
-            return CheckExistReqId(reqId, eElement, data.ReqObjectIds);
+            return CheckExistReqId(reqId, data.ReqObjectIds);
         }
 
         return false;
     }
 
-    private bool CheckExistReqId(int reqId, Game.Type.EElement eElement, int[] ids)
+    private bool CheckExistReqId(int reqId, int[] ids)
     {
         if (ids != null)
         {
