@@ -63,7 +63,6 @@ namespace UI
             UIUtils.SetActive(animalRootRectTm, _data.EElement == Game.Type.EElement.Animal);
             UIUtils.SetActive(objectRootRectTm, _data.EElement == Game.Type.EElement.Object);
 
-            SetNameTMP();
             SetDescTMP();
 
             if (_data.EElement == Game.Type.EElement.Animal)
@@ -72,10 +71,11 @@ namespace UI
                 if (animalInfo == null)
                     return;
 
-                SetRenderTexture(animalInfo.SkinId);
+                SetSelectSkinInfo(animalInfo.SkinId);
             }
             else if (_data.EElement == Game.Type.EElement.Object)
             {
+                SetObjectNameTMP();
                 SetIconImg();
             }
 
@@ -100,14 +100,29 @@ namespace UI
             base.Deactivate();
         }
 
-        private void SetNameTMP()
+        private void SetAnimalNameTMP(int skinId)
+        {
+            if (_data == null)
+                return;
+
+            nameTMP?.SetText(GetAnimalName(skinId));
+        }
+
+        private string GetAnimalName(int skinId)
+        {
+            if (_data == null)
+                return string.Empty;
+
+            return GameUtils.GetName(_data.EElement, _data.Id, skinId);
+        }
+
+        private void SetObjectNameTMP()
         {
             if (_data == null)
                 return;
 
             var localName = GameUtils.GetName(_data.EElement, _data.Id);
 
-            nameTMP?.SetText(localName);
             objectNameTMP?.SetText(localName);
         }
 
@@ -120,6 +135,12 @@ namespace UI
             }
 
             descTMP?.SetText(text);
+        }
+
+        private void SetSelectSkinInfo(int skinId)
+        {
+            SetAnimalNameTMP(skinId);
+            SetRenderTexture(skinId);
         }
 
         private void SetRenderTexture(int skinId)
@@ -189,19 +210,6 @@ namespace UI
                 objectGetCurrency?.Activate();
             }
         }
-
-        //private void SetGetCurrency()
-        //{
-
-        //}
-
-        //private UI.Component.OpenCondition CreateGetCurrency(OpenCondition.Data openConditionData)
-        //{
-        //    return new ComponentCreator<OpenCondition, OpenCondition.Data>()
-        //            .SetData(openConditionData)
-        //            .SetRootRectTm(getCurrencyRootRectTm)
-        //            .Create();
-        //}
 
         private int SelectSkinId
         {
@@ -308,7 +316,7 @@ namespace UI
                 if (selectSkinId == skinId)
                     return;
 
-                SetRenderTexture(skinId);
+                SetSelectSkinInfo(skinId);
 
                 mainGameMgr.ChangeAnimalSkinToPlace(_data.Id, skinId);
             }
@@ -331,7 +339,7 @@ namespace UI
                     return;
                 }
 
-                SetRenderTexture(skinId);
+                SetSelectSkinInfo(skinId);
 
                 skinCell?.EnableBuyRoot(true);
             }
@@ -391,6 +399,11 @@ namespace UI
             mainGameMgr.AddAcquire(Game.Type.EAcquire.AnimalSkin, Game.Type.EAcquireAction.Obtain, 1);
 
             _selectSkinCell?.EnableBuyRoot(false);
+
+            var name = GetAnimalName(selectSkinId);
+            var buyAnimalSkinText = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "buy_animal_skin", LocalizationSettings.SelectedLocale), name);
+
+            Game.Toast.Get?.Show(buyAnimalSkinText);
         }
         #endregion
     }

@@ -81,7 +81,6 @@ namespace UI.Component
             UIUtils.SetActive(lockRootRectTm, IsLock);
             UIUtils.SetActive(unLockImg?.gameObject, false);
 
-            SetNameTMP();
             SetDescTMP();
             SetElementIconImg();
             SetButtonState();
@@ -98,6 +97,8 @@ namespace UI.Component
         public override void Activate()
         {
             base.Activate();
+
+            SetNameTMP();
 
             ActivateOpenConditionList();
         }
@@ -147,7 +148,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            var localName = GameUtils.GetName(_data.EElement, _data.Id);
+            var localName = GameUtils.GetName(_data.EElement, _data.Id, Game.Data.Const.AnimalBaseSkinId);
 
             nameTMP?.SetText(localName);
             openNameTMP?.SetText(localName);

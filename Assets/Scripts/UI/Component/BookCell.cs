@@ -29,8 +29,14 @@ namespace UI.Component
         {
             base.Initialize(data);
 
-            SetNameTMP();
             SetIconImg();
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            SetNameTMP();
         }
 
         private void SetNameTMP()
@@ -38,7 +44,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            var localName = GameUtils.GetName(_data.EElement, _data.Id);
+            var localName = GameUtils.GetName(_data.EElement, _data.Id, Game.Data.Const.AnimalBaseSkinId);
 
             nameTMP?.SetText(localName);
         }

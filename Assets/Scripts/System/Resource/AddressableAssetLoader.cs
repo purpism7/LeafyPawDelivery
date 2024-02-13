@@ -74,7 +74,9 @@ namespace GameSystem
                     case AssetLabelAnimal:
                         {
                             //yield return StartCoroutine(CoLoadAnimalAsset());
-                            await LoadAnimalAssetAsync();
+                            int placeId = PlayerPrefs.GetInt(Game.Data.PlayPrefsKeyLastPlaceKey, Game.Data.Const.StartPlaceId);
+
+                            await LoadAnimalAssetAsync(placeId);
 
                             break;
                         }
@@ -83,8 +85,7 @@ namespace GameSystem
                         {
                             if (typeKey.Equals(AssetLabelObject))
                             {
-                                typeKey += "_" + PlayerPrefs.GetInt(Game.Data.PlayPrefsKeyLastPlaceKey, 1);
-                               
+                                typeKey += "_" + PlayerPrefs.GetInt(Game.Data.PlayPrefsKeyLastPlaceKey, Game.Data.Const.StartPlaceId);
                             }
 
                             await LoaGameAssetByIdAsync(typeKey);
@@ -330,9 +331,11 @@ namespace GameSystem
         //    }));
         //}
 
-        private async UniTask LoadAnimalAssetAsync()
+        public async UniTask LoadAnimalAssetAsync(int placeId)
         {
-            await LoadAssetAsync<GameObject>(AssetLabelAnimal,
+            string typeKey = string.Format("{0}_{1}", AssetLabelAnimal, placeId);
+            Debug.Log("Animal typeKey = " + typeKey);
+            await LoadAssetAsync<GameObject>(typeKey,
                 (resourceLocation) =>
                 {
                     var resultGameObj = resourceLocation.Result;

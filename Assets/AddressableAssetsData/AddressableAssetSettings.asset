@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: e7f1cb4ba7155487fa25de6ac6473baa
   m_currentHash:
     serializedVersion: 2
-    Hash: 99095d5fe3b69c084a37d63c7b602335
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -105,6 +105,9 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - Animal
+    - Animal_1
+    - Animal_2
+    - Animal_3
     - Place
     - Object
     - Object_1

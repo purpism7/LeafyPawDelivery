@@ -69,12 +69,15 @@ namespace UI
 
             SetAddAnimal();
             SetAddObject();
+
+            InitializeChildComponent();
         }
 
         public override void Activate()
         {
             base.Activate();
 
+            ActivateChildComponent(typeof(BookCell));
             ActivateStoryCellList();
 
             _currETabType = Type.ETab.Animal;

@@ -457,11 +457,10 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         if (addressableAssetLoader == null)
             return;
 
+        await addressableAssetLoader.LoadAnimalAssetAsync(placeId);
+
         var typeKey = string.Format("{0}_{1}", addressableAssetLoader.AssetLabelObject, placeId);
-        Debug.Log(typeKey);
         await addressableAssetLoader.LoaGameAssetByIdAsync(typeKey);
-
-
     }
     #endregion
 

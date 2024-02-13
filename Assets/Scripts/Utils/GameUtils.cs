@@ -39,24 +39,29 @@ public static class GameUtils
         return tm.gameObject.activeSelf;
     }
 
-    public static string GetName(Type.EElement EElement, int id)
+    public static string GetName(Type.EElement EElement, int id, int skinId = 0)
     {
-        var name = string.Empty;
+        var nameKey = string.Empty;
 
         if (EElement == Type.EElement.Animal)
         {
             var data = AnimalContainer.Instance?.GetData(id);
             if (data == null)
                 return string.Empty;
+
+            nameKey = string.Format("name_{0}_skin_{1}", id, skinId);
+
         }
         else if (EElement == Type.EElement.Object)
         {
             var data = ObjectContainer.Instance?.GetData(id);
             if (data == null)
                 return string.Empty;
+
+            nameKey = string.Format("name_{0}", id);
         }
 
-        return LocalizationSettings.StringDatabase.GetLocalizedString(EElement.ToString(), "name_" + id, LocalizationSettings.SelectedLocale);
+        return LocalizationSettings.StringDatabase.GetLocalizedString(EElement.ToString(), nameKey, LocalizationSettings.SelectedLocale);
     }
     
     public static Sprite GetShortIconSprite(Type.EElement EElement, int id)

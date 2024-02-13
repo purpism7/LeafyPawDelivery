@@ -75,9 +75,23 @@ namespace Game
             var targetNode = new PathFinding.Node(targetCell.Id, true, targetCell.Row, targetCell.Column);
 
             await _aStar.FindPathAsync(startNode, targetNode, GetNeighbourNodeList);
+           //var pathList = await _aStar.FindPathAsync(cell.Id, targetCell.Id);
 
             pathPosList = new();
             pathPosList.Clear();
+
+            //_aStar.Path.Clear();
+            //_aStar.Path.Add(startNode);
+            //_aStar.Path.Add(targetNode);
+
+            //foreach(int pathId in pathList)
+            //{
+            //    var pathCell = _iGridCell?.GetCell(pathId);
+            //    if (pathCell == null)
+            //        continue;
+
+            //    pathPosList.Add(pathCell.transform.position);
+            //}
 
             foreach (var path in _aStar.Path)
             {

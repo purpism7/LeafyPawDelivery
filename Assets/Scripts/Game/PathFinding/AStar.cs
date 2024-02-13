@@ -10,7 +10,6 @@ namespace Game.PathFinding
     {
         public List<Node> Path { get; private set; } = new();
 
-
         public async UniTask FindPathAsync(Node startNode, Node targetNode, System.Func<int, List<Node>> findNeighbourNodeFunc)
         {
             Path.Clear();
@@ -21,6 +20,14 @@ namespace Game.PathFinding
 
             var closedSet = new HashSet<Node>();
 
+            float limitLoopCnt = 1000f;
+            var gameCameraCtr = MainGameManager.Instance?.IGameCameraCtr as GameSystem.GameCameraController;
+            if(gameCameraCtr != null)
+            {
+                limitLoopCnt = gameCameraCtr.GameCamera.orthographicSize;
+            }
+
+            int loopCnt = 0;
             while (openList.Count > 0)
             {
                 var currentNode = openList[0];
@@ -41,11 +48,14 @@ namespace Game.PathFinding
                 openList.Remove(currentNode);
                 closedSet.Add(currentNode);
 
-                if (currentNode.Id == targetNode.Id)
+                if (currentNode.Id == targetNode.Id ||
+                    loopCnt >= limitLoopCnt)
                 {
+                    Debug.Log(loopCnt);
+
                     await RetracePathAsync(startNode, currentNode);
 
-                    break;
+                    return;
                 }
 
                 var neighbourNodeList = findNeighbourNodeFunc?.Invoke(currentNode.Id);
@@ -70,8 +80,11 @@ namespace Game.PathFinding
                         }
                     }
                 }
+
+                ++loopCnt;
             }
         }
+
         //public void FindPath(Node startNode, Node targetNode, System.Func<int, List<Node>> findNeighbourNodeFunc)
         //{
         //    Path.Clear();
@@ -105,7 +118,7 @@ namespace Game.PathFinding
         //        if(currentNode.Id == targetNode.Id)
         //        {
         //            RetracePath(startNode, currentNode);
-      
+
         //            break;
         //        }
 

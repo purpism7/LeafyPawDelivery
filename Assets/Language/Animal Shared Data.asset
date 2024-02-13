@@ -16,27 +16,27 @@ MonoBehaviour:
   m_TableCollectionNameGuidString: 19cf67d94abc54609aa2c5bb84f6339b
   m_Entries:
   - m_Id: 69989294080
-    m_Key: name_1
+    m_Key: name_1_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 3530447756713984
-    m_Key: name_2
+    m_Key: name_2_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 3540377939206144
-    m_Key: name_3
+    m_Key: name_3_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 3540395572060160
-    m_Key: name_4
+    m_Key: name_4_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 3540410906435584
-    m_Key: name_5
+    m_Key: name_5_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 3540713164759040
-    m_Key: name_6
+    m_Key: name_6_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 3530700706799616
@@ -64,23 +64,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45211839817048064
-    m_Key: name_7
+    m_Key: name_7_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 45211911610949632
-    m_Key: name_8
+    m_Key: name_8_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 45235425860640768
-    m_Key: name_9
+    m_Key: name_9_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 45235516960923648
-    m_Key: name_10
+    m_Key: name_10_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 45235697928364032
-    m_Key: name_11
+    m_Key: name_11_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 45244991805579264
@@ -104,23 +104,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 61123996421185536
-    m_Key: name_12
+    m_Key: name_12_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 61124083994058752
-    m_Key: name_13
+    m_Key: name_13_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 61124121990258688
-    m_Key: name_14
+    m_Key: name_14_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 61124192236462080
-    m_Key: name_15
+    m_Key: name_15_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 61124246603030528
-    m_Key: name_16
+    m_Key: name_16_skin_1
     m_Metadata:
       m_Items: []
   - m_Id: 61125681939996672
