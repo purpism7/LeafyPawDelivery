@@ -161,6 +161,10 @@ MonoBehaviour:
     m_Key: guide_hidden_object
     m_Metadata:
       m_Items: []
+  - m_Id: 68110916091109376
+    m_Key: buy_animal_skin
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -400,10 +400,31 @@ namespace UI
 
             _selectSkinCell?.EnableBuyRoot(false);
 
-            var name = GetAnimalName(selectSkinId);
-            var buyAnimalSkinText = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "buy_animal_skin", LocalizationSettings.SelectedLocale), name);
+            //var name = GetAnimalName(selectSkinId);
+            //var buyAnimalSkinText = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "buy_animal_skin", LocalizationSettings.SelectedLocale), name);
 
-            Game.Toast.Get?.Show(buyAnimalSkinText);
+            //Game.Toast.Get?.Show(buyAnimalSkinText);
+
+            Sequencer.EnqueueTask(
+                () =>
+                {
+                    var popup = new GameSystem.PopupCreator<UI.Obtain, UI.Obtain.Data>()
+                        .SetData(new UI.Obtain.Data()
+                        {
+                            EElement = Game.Type.EElement.Animal,
+                            Id = animalId,
+                            skinId = selectSkinId,
+                            ClickAction = () =>
+                            {
+                                
+                            },
+                        })
+                        .SetCoInit(true)
+                        .SetReInitialize(true)
+                        .Create();
+
+                    return popup;
+                });
         }
         #endregion
     }

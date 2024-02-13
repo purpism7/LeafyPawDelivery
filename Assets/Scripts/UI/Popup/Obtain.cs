@@ -15,6 +15,7 @@ namespace UI
         {
             public Game.Type.EElement EElement = Game.Type.EElement.None;
             public int Id = 0;
+            public int skinId = Game.Data.Const.AnimalBaseSkinId;
             public Action ClickAction = null;
         }
 
@@ -38,7 +39,7 @@ namespace UI
 
             if(data.EElement == Game.Type.EElement.Animal)
             {
-                _skinId = Game.Data.Const.AnimalBaseSkinId;
+                _skinId = data.skinId;
 
                 SetRenderTexture();
             }
@@ -104,7 +105,7 @@ namespace UI
             if (_data == null)
                 return;
 
-            nameTMP?.SetText(GameUtils.GetName(_data.EElement, _data.Id));
+            nameTMP?.SetText(GameUtils.GetName(_data.EElement, _data.Id, _data.skinId));
         }
 
         public void OnClick()
