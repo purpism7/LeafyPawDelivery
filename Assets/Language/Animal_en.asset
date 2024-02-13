@@ -244,6 +244,128 @@ MonoBehaviour:
     m_Localized: Pilot Hale
     m_Metadata:
       m_Items: []
+  - m_Id: 68826430207680512
+    m_Localized: Uniform Brie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68826750811889664
+    m_Localized: Love Brie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68826841740206080
+    m_Localized: Bread Brie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68826943821176832
+    m_Localized: Uniform Balla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68827153041448960
+    m_Localized: Flower Balla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68827235023314944
+    m_Localized: Gentle Balla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68827514267492352
+    m_Localized: Scart Marie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68827801887694848
+    m_Localized: 'Sunglasses
+
+      Marie'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68827903385657344
+    m_Localized: Bear Marie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68827984188923904
+    m_Localized: Ribbon Parah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68828087108755456
+    m_Localized: Raincoat Parah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68828217748742144
+    m_Localized: Leaf Parah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68828298279378944
+    m_Localized: Winter Henry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68828625913241600
+    m_Localized: King Henry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68828701251330048
+    m_Localized: Graduated Henry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68828799905554432
+    m_Localized: Devil Reian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68828920122695680
+    m_Localized: Kid Reian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68829008958054400
+    m_Localized: Clover Reian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68829099353694208
+    m_Localized: Party Cascia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68829267708862464
+    m_Localized: Pool Cascia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68829419362312192
+    m_Localized: Princess Cascia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68829503508439040
+    m_Localized: Ribbon Anya
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68829705401262080
+    m_Localized: Strawberry Anya
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68829786489741312
+    m_Localized: Doctor Anya
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68829867448197120
+    m_Localized: Raincoat Teeni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68830058259668992
+    m_Localized: Scarf Teeni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68830134465978368
+    m_Localized: Bandana Teeni
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68830269388349440
+    m_Localized: Headphone Lulu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68830383339200512
+    m_Localized: Cat Lulu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68830534275424256
+    m_Localized: Gift Lulu
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
