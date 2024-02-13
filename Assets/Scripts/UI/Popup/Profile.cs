@@ -64,6 +64,7 @@ namespace UI
             UIUtils.SetActive(objectRootRectTm, _data.EElement == Game.Type.EElement.Object);
 
             SetDescTMP();
+            SetGetCurrency();
 
             if (_data.EElement == Game.Type.EElement.Animal)
             {
@@ -78,8 +79,6 @@ namespace UI
                 SetObjectNameTMP();
                 SetIconImg();
             }
-
-            SetGetCurrency();
         }
 
         public override void Activate()
@@ -141,6 +140,7 @@ namespace UI
         {
             SetAnimalNameTMP(skinId);
             SetRenderTexture(skinId);
+            SetAnimalGetCurrency(skinId);
         }
 
         private void SetRenderTexture(int skinId)
@@ -183,17 +183,7 @@ namespace UI
 
             if (_data.EElement == Game.Type.EElement.Animal)
             {
-                var animalData = AnimalContainer.Instance.GetData(_data.Id);
-                if (animalData == null)
-                    return;
-
-                animalGetCurrency?.Initialize(new OpenCondition.Data()
-                {
-                    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(placeData.AnimalSpriteName),
-                    Text = animalData.GetCurrency.ToString(),
-                    PossibleFunc = () => true,
-                });
-                animalGetCurrency?.Activate();
+               
             }
             else if(_data.EElement == Game.Type.EElement.Object)
             {
@@ -204,11 +194,41 @@ namespace UI
                 objectGetCurrency?.Initialize(new OpenCondition.Data()
                 {
                     ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(placeData.ObjectSpriteName),
-                    Text = objectData.GetCurrency.ToString(),
+                    Text = objectData.Currency.ToString(),
                     PossibleFunc = () => true,
                 });
                 objectGetCurrency?.Activate();
             }
+        }
+
+        private void SetAnimalGetCurrency(int skinId)
+        {
+            if (_data == null)
+                return;
+
+            var placeData = Game.Data.Const.ActivityPlaceData;
+            if (placeData == null)
+                return;
+
+            var animalData = AnimalContainer.Instance.GetData(_data.Id);
+            if (animalData == null)
+                return;
+
+            string currencyText = animalData.Currency.ToString();
+            var animalSkinData = AnimalSkinContainer.Instance?.GetData(skinId, animalData.Id);
+            if (animalSkinData != null &&
+                animalSkinData.Bonus > 0)
+            {
+                currencyText = string.Format("{0} (+{1})", animalData.Currency, animalSkinData.Bonus);
+            }
+
+            animalGetCurrency?.Initialize(new OpenCondition.Data()
+            {
+                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(placeData.AnimalSpriteName),
+                Text = currencyText,
+                PossibleFunc = () => true,
+            });
+            animalGetCurrency?.Activate();
         }
 
         private int SelectSkinId
@@ -272,7 +292,6 @@ namespace UI
                     .Create();
 
                 _skinCellList.Add(component);
-
             }
         }
 
@@ -382,13 +401,6 @@ namespace UI
             if (userMgr == null)
                 return;
 
-            //var userInfo = userMgr.User;
-            //if (userInfo == null)
-            //    return;
-
-            //if (userInfo.Cash < animalSkinData.Cash)
-            //    return;
-
             userMgr?.User?.SetCash(-animalSkinData.Cash);
 
             ITop iTop = Game.UIManager.Instance?.Top;
@@ -399,11 +411,6 @@ namespace UI
             mainGameMgr.AddAcquire(Game.Type.EAcquire.AnimalSkin, Game.Type.EAcquireAction.Obtain, 1);
 
             _selectSkinCell?.EnableBuyRoot(false);
-
-            //var name = GetAnimalName(selectSkinId);
-            //var buyAnimalSkinText = string.Format(LocalizationSettings.StringDatabase.GetLocalizedString("UI", "buy_animal_skin", LocalizationSettings.SelectedLocale), name);
-
-            //Game.Toast.Get?.Show(buyAnimalSkinText);
 
             Sequencer.EnqueueTask(
                 () =>

@@ -38,7 +38,7 @@ public class Object : ElementData
         LargeIconImgName = string.Format("BookIcon_Map{0}_Object_{1}", placeId, id);
     }
 
-    public override int GetCurrency
+    public override int Currency
     {
         get
         {

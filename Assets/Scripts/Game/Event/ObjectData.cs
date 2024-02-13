@@ -11,7 +11,7 @@ namespace Game.Event
 
     public class AddObjectData : ObjectData
     {
-        
+        public OpenConditionData.EType eOpenConditionType = OpenConditionData.EType.None;
     }
 
     public class ArrangeObjectData : ObjectData

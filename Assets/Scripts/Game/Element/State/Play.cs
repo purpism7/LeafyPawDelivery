@@ -78,7 +78,14 @@ namespace Game.Element.State
 
             var startPos = _gameCameraCtr.UICamera.ScreenToWorldPoint(touchPosition);
 
-            UIManager.Instance?.Top?.CollectCurrency(startPos, elementData.EElement, elementData.GetCurrency);
+            int currency = elementData.Currency;
+            var animal = _gameBaseElement as Creature.Animal;
+            if(animal != null)
+            {
+                currency = AnimalSkinContainer.Instance.GetCurrency(animal.SkinId, animal.Id);
+            }
+
+            UIManager.Instance?.Top?.CollectCurrency(startPos, elementData.EElement, currency);
         }
 
         private void StartSignatureAction()

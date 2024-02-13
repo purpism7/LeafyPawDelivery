@@ -151,6 +151,20 @@ namespace UI.Component
             var localName = GameUtils.GetName(_data.EElement, _data.Id, Game.Data.Const.AnimalBaseSkinId);
 
             nameTMP?.SetText(localName);
+
+            if (_data.EElement == Game.Type.EElement.Object)
+            {
+                var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
+                var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
+                if (openCondition != null)
+                {
+                    if(openCondition.eType == OpenConditionData.EType.Hidden)
+                    {
+                        localName = string.Empty;
+                    }
+                }
+            }
+
             openNameTMP?.SetText(localName);
         }
 

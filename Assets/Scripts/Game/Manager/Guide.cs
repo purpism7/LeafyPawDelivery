@@ -126,6 +126,9 @@ namespace Game.Manager
                         //    return;
                         //}
 
+                        if (addObjectData.eOpenConditionType == OpenConditionData.EType.Hidden)
+                            return;
+
                         CheckOpenPlace();
 
                         break;

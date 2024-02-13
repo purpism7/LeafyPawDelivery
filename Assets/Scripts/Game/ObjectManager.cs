@@ -107,10 +107,18 @@ namespace Game
 
             if (_objectHolder.AddObjectInfo(id))
             {
+                OpenConditionData.EType eOpenConditionType = OpenConditionData.EType.None;
+                var openConditionData = ObjectOpenConditionContainer.Instance?.GetData(id);
+                if(openConditionData != null)
+                {
+                    eOpenConditionType = openConditionData.eType;
+                }
+
                 Event?.Invoke(
                     new Event.AddObjectData()
                     {
                         id = id,
+                        eOpenConditionType = eOpenConditionType,
                     });
 
                 Info.UserManager.Instance?.User?.AddObject(id);

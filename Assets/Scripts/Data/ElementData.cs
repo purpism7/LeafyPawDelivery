@@ -7,6 +7,6 @@ public abstract class ElementData : Data.Base
 {
     public int PlaceId = 0;
 
-    public abstract int GetCurrency { get; }
+    public abstract int Currency { get; }
     public abstract Game.Type.EElement EElement { get; }
 }

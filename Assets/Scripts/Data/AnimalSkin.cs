@@ -12,14 +12,22 @@ public class AnimalSkin : Data.Base
     public string ImgName = string.Empty;
     public string ShortIconImgName = string.Empty;
     public string LargeIconImgName = string.Empty;
+    [SerializeField]
+    private int bonus = 0;
 
     public Game.Type.EAnimalSkin EAnimalSkin = Game.Type.EAnimalSkin.Base;
+    public int Bonus { get { return bonus; } }
 
     public override void Initialize()
     {
         base.Initialize();
 
         System.Enum.TryParse(Type, out EAnimalSkin);
+
+        if(EAnimalSkin != Game.Type.EAnimalSkin.Base)
+        {
+            bonus = 5;
+        }
 
         //if(string.IsNullOrEmpty(ShortIconImgName))
         //{

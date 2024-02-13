@@ -149,13 +149,15 @@ namespace Game.PlaceEvent
             if (randomAnimal.ElementData == null)
                 return;
 
+            int currency = AnimalSkinContainer.Instance.GetCurrency(randomAnimal.SkinId, randomAnimal.Id);
+
             var currencyData = new Game.DropItem.CurrencyData()
             {
                 iListener = this,
 
                 startPos = new Vector3(randomAnimal.transform.position.x, randomAnimal.transform.position.y),
                 EElement = Type.EElement.Animal,
-                Value = randomAnimal.ElementData.GetCurrency,
+                Value = currency,
             };
 
             _iPlace?.CreateDropItem(currencyData);
@@ -172,7 +174,6 @@ namespace Game.PlaceEvent
         #region Game.DropItem.IListener
         void Game.DropItem.IListener.GetDropItem(int dropCnt, Game.Type.EItemSub eItemSub)
         {
-            Debug.Log("DropCurrency = " + dropCnt);
             UI.ITop iTop = UIManager.Instance?.Top;
             if(iTop != null)
             {

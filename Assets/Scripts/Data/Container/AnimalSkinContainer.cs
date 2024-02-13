@@ -63,4 +63,17 @@ public class AnimalSkinContainer : BaseContainer<AnimalSkinContainer, AnimalSkin
 
         return null;
     }
+
+    public int GetCurrency(int id, int animalId)
+    {
+        var animalData = AnimalContainer.Instance?.GetData(animalId);
+        if (animalData == null)
+            return 0;
+
+        var data = GetData(id, animalId);
+        if (data == null)
+            return animalData.Currency;
+
+        return animalData.Currency + data.Bonus;
+    }
 }
