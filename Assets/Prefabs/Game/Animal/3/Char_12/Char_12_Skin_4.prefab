@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 476904825788042644}
-  Id: 10
+  Id: 12
   UId: 0
   spriteRenderer: {fileID: 94659690454118510}
   edit: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 94659690454118510}
   - component: {fileID: 4193277499131427672}
   - component: {fileID: 7752470971938288511}
-  - component: {fileID: 5906313923425415396}
+  - component: {fileID: 1591398472378895109}
   m_Layer: 6
   m_Name: Animal
   m_TagString: Untagged
@@ -138,7 +138,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3d51d813c06634f8894103bd8733df95, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 135f144a59a5b48d09d9601d023517a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,7 +159,7 @@ Animator:
   m_GameObject: {fileID: 4616245985608609277}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ab7970bc0e1554edfb0d276e6bb8c234, type: 2}
+  m_Controller: {fileID: 9100000, guid: b2299fea805d6427ab5af99972d653d9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659511518189944e2b2a5a669209f524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!60 &5906313923425415396
+--- !u!60 &1591398472378895109
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,7 +218,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 165, y: 200}
+    oldSize: {x: 172, y: 170}
     newSize: {x: 200, y: 200}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -226,61 +226,80 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 74.5, y: 68}
-      - {x: 77.5, y: 74}
-      - {x: 77.5, y: 93}
-      - {x: 66.5, y: 107}
-      - {x: 50.5, y: 114}
-      - {x: 49.5, y: 131}
-      - {x: 53.5, y: 147}
-      - {x: 59.5, y: 153}
-      - {x: 58.5, y: 174}
-      - {x: 54.5, y: 181}
-      - {x: 44.5, y: 192}
-      - {x: 38.5, y: 196}
-      - {x: 28.5, y: 200}
-      - {x: 5.5, y: 200}
-      - {x: -10.5, y: 195}
-      - {x: -28.5, y: 188}
-      - {x: -63.5, y: 183}
-      - {x: -70.5, y: 178}
-      - {x: -70.5, y: 173}
-      - {x: -59.5, y: 153}
-      - {x: -56.5, y: 142}
-      - {x: -54.5, y: 130}
-      - {x: -46.5, y: 126}
-      - {x: -53.5, y: 115}
-      - {x: -56.5, y: 104}
-      - {x: -64.5, y: 94}
-      - {x: -65.5, y: 81}
-      - {x: -61.5, y: 69}
-      - {x: -51.5, y: 60}
-      - {x: -54.5, y: 45}
-      - {x: -44.5, y: 36}
-      - {x: -45.5, y: 28}
-      - {x: -45.5, y: 19}
-      - {x: -43.5, y: 15}
-      - {x: -31.5, y: 12}
-      - {x: 15.5, y: 12}
-      - {x: 29.5, y: 13}
-      - {x: 48.5, y: 31}
-      - {x: 59.5, y: 56}
-      - {x: 63.5, y: 58}
-    - - {x: 12.5, y: 143}
-      - {x: 18.5, y: 145}
-      - {x: 23.5, y: 148}
-      - {x: 19.5, y: 145}
-      - {x: 16.5, y: 142}
-      - {x: 15.5, y: 143}
-    - - {x: 35.5, y: 154}
-      - {x: 35.5, y: 153}
-      - {x: 37.5, y: 154}
-      - {x: 45.5, y: 155}
-      - {x: 43.5, y: 152}
-      - {x: 43.5, y: 150}
-      - {x: 41.5, y: 147}
-      - {x: 41.5, y: 146}
-      - {x: 42.5, y: 146}
+    - - {x: 35, y: 10}
+      - {x: 47, y: 13}
+      - {x: 59, y: 22}
+      - {x: 66, y: 35}
+      - {x: 69, y: 43}
+      - {x: 69, y: 62}
+      - {x: 80, y: 69}
+      - {x: 83, y: 72}
+      - {x: 80, y: 81}
+      - {x: 76, y: 87}
+      - {x: 79, y: 92}
+      - {x: 85, y: 116}
+      - {x: 85, y: 125}
+      - {x: 78, y: 133}
+      - {x: 73, y: 133}
+      - {x: 75, y: 148}
+      - {x: 69, y: 165}
+      - {x: 67, y: 168}
+      - {x: 60, y: 168}
+      - {x: 47, y: 163}
+      - {x: 28, y: 151}
+      - {x: 14, y: 135}
+      - {x: 9, y: 137}
+      - {x: -22, y: 136}
+      - {x: -40, y: 152}
+      - {x: -56, y: 161}
+      - {x: -66, y: 168}
+      - {x: -72, y: 168}
+      - {x: -79, y: 165}
+      - {x: -82, y: 148}
+      - {x: -82, y: 141}
+      - {x: -81, y: 130}
+      - {x: -73, y: 112}
+      - {x: -56, y: 95}
+      - {x: -59, y: 88}
+      - {x: -57, y: 76}
+      - {x: -53, y: 65}
+      - {x: -50, y: 55}
+      - {x: -54, y: 48}
+      - {x: -57, y: 40}
+      - {x: -51, y: 28}
+      - {x: -44, y: 26}
+      - {x: -45, y: 7}
+      - {x: -37, y: 2}
+      - {x: 28, y: 2}
+    - - {x: 12, y: 167}
+      - {x: -13, y: 167}
+      - {x: -29, y: 164}
+      - {x: -32, y: 156}
+      - {x: -32, y: 147}
+      - {x: -25, y: 139}
+      - {x: 17, y: 139}
+      - {x: 26, y: 141}
+      - {x: 26, y: 155}
+      - {x: 17, y: 165}
+    - - {x: -12, y: 151}
+      - {x: -15, y: 153}
+      - {x: -18, y: 152}
+      - {x: -16, y: 153}
+      - {x: -14, y: 153}
+      - {x: -12, y: 152}
+      - {x: -11, y: 153}
+      - {x: -7, y: 154}
+      - {x: -6, y: 153}
+      - {x: 3, y: 153}
+      - {x: 5, y: 152}
+      - {x: 6, y: 153}
+      - {x: 8, y: 153}
+      - {x: 9, y: 152}
+      - {x: 12, y: 152}
+      - {x: 7, y: 152}
+      - {x: 3, y: 150}
+      - {x: -1, y: 150}
+      - {x: -2, y: 151}
   m_UseDelaunayMesh: 0
 --- !u!1 &5936816878479032547
 GameObject:
