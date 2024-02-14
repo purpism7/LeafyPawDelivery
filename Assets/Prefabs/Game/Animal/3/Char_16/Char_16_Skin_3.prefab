@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4673291588887461157}
   - component: {fileID: 2164901631972730589}
   m_Layer: 6
-  m_Name: Char_16_Skin_1
+  m_Name: Char_16_Skin_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 94659690454118510}
   edit: {fileID: 0}
   IsOverlap: 0
-  skinId: 1
+  skinId: 3
   animator: {fileID: 4193277499131427672}
 --- !u!222 &2164901631972730589
 CanvasRenderer:
@@ -138,7 +138,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 631ecb84f0ce24ea7bed75b54ff55468, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2af77ec39380d43da85828aca1997f45, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,7 +159,7 @@ Animator:
   m_GameObject: {fileID: 4616245985608609277}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 269d968638c69468690bbc66d43c6038, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0e749a0e477fb4adab1b830dc168f390, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -230,33 +230,34 @@ PolygonCollider2D:
       - {x: 28, y: 11}
       - {x: 32, y: 22}
       - {x: 42, y: 33}
-      - {x: 42, y: 39}
-      - {x: 35, y: 49}
-      - {x: 44, y: 56}
-      - {x: 47, y: 60}
-      - {x: 52, y: 72}
-      - {x: 53, y: 82}
-      - {x: 52, y: 90}
-      - {x: 50, y: 100}
-      - {x: 44, y: 116}
-      - {x: 35, y: 124}
-      - {x: 20, y: 134}
-      - {x: 1, y: 138}
-      - {x: -5, y: 141}
-      - {x: -15, y: 141}
-      - {x: -27, y: 135}
-      - {x: -44, y: 116}
-      - {x: -49, y: 105}
-      - {x: -53, y: 95}
-      - {x: -54, y: 87}
-      - {x: -54, y: 71}
-      - {x: -48, y: 60}
-      - {x: -44, y: 55}
-      - {x: -36, y: 49}
-      - {x: -40, y: 40}
-      - {x: -42, y: 34}
-      - {x: -36, y: 26}
-      - {x: -27, y: 11}
+      - {x: 41, y: 38}
+      - {x: 37, y: 43}
+      - {x: 43, y: 47}
+      - {x: 52, y: 55}
+      - {x: 62, y: 77}
+      - {x: 62, y: 94}
+      - {x: 57, y: 109}
+      - {x: 56, y: 120}
+      - {x: 55, y: 140}
+      - {x: 49, y: 150}
+      - {x: 36, y: 150}
+      - {x: 19, y: 142}
+      - {x: 9, y: 147}
+      - {x: -4, y: 147}
+      - {x: -19, y: 142}
+      - {x: -37, y: 148}
+      - {x: -50, y: 150}
+      - {x: -58, y: 144}
+      - {x: -63, y: 129}
+      - {x: -63, y: 115}
+      - {x: -62, y: 86}
+      - {x: -63, y: 82}
+      - {x: -63, y: 65}
+      - {x: -58, y: 57}
+      - {x: -45, y: 45}
+      - {x: -41, y: 34}
+      - {x: -39, y: 28}
+      - {x: -28, y: 11}
       - {x: -19, y: 1}
       - {x: -8, y: 1}
       - {x: -1, y: 10}

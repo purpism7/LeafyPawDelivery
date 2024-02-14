@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4673291588887461157}
   - component: {fileID: 2164901631972730589}
   m_Layer: 6
-  m_Name: Char_16_Skin_1
+  m_Name: Char_16_Skin_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 94659690454118510}
   edit: {fileID: 0}
   IsOverlap: 0
-  skinId: 1
+  skinId: 2
   animator: {fileID: 4193277499131427672}
 --- !u!222 &2164901631972730589
 CanvasRenderer:
@@ -138,7 +138,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 631ecb84f0ce24ea7bed75b54ff55468, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3e7b5c4dc66bb48a39e20f4e8ee50e37, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,7 +159,7 @@ Animator:
   m_GameObject: {fileID: 4616245985608609277}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 269d968638c69468690bbc66d43c6038, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4ea5ce7ddb56e47dfb5fccd60ee29b6b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -218,7 +218,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 126, y: 150}
+    oldSize: {x: 135, y: 150}
     newSize: {x: 200, y: 200}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -226,42 +226,41 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 19, y: 1}
-      - {x: 28, y: 11}
-      - {x: 32, y: 22}
-      - {x: 42, y: 33}
-      - {x: 42, y: 39}
-      - {x: 35, y: 49}
-      - {x: 44, y: 56}
-      - {x: 47, y: 60}
-      - {x: 52, y: 72}
-      - {x: 53, y: 82}
-      - {x: 52, y: 90}
-      - {x: 50, y: 100}
-      - {x: 44, y: 116}
-      - {x: 35, y: 124}
-      - {x: 20, y: 134}
-      - {x: 1, y: 138}
-      - {x: -5, y: 141}
-      - {x: -15, y: 141}
-      - {x: -27, y: 135}
-      - {x: -44, y: 116}
-      - {x: -49, y: 105}
-      - {x: -53, y: 95}
-      - {x: -54, y: 87}
-      - {x: -54, y: 71}
-      - {x: -48, y: 60}
-      - {x: -44, y: 55}
-      - {x: -36, y: 49}
-      - {x: -40, y: 40}
-      - {x: -42, y: 34}
-      - {x: -36, y: 26}
-      - {x: -27, y: 11}
-      - {x: -19, y: 1}
-      - {x: -8, y: 1}
-      - {x: -1, y: 10}
-      - {x: 2, y: 3}
-      - {x: 7, y: 1}
+    - - {x: 18.5, y: 1}
+      - {x: 27.5, y: 11}
+      - {x: 31.5, y: 22}
+      - {x: 41.5, y: 33}
+      - {x: 41.5, y: 39}
+      - {x: 35.5, y: 48}
+      - {x: 55.5, y: 61}
+      - {x: 57.5, y: 63}
+      - {x: 63.5, y: 71}
+      - {x: 63.5, y: 91}
+      - {x: 59.5, y: 98}
+      - {x: 52.5, y: 106}
+      - {x: 48.5, y: 119}
+      - {x: 41.5, y: 126}
+      - {x: 34.5, y: 132}
+      - {x: 23.5, y: 137}
+      - {x: 8.5, y: 140}
+      - {x: 0.5, y: 141}
+      - {x: -16.5, y: 141}
+      - {x: -33.5, y: 132}
+      - {x: -44.5, y: 125}
+      - {x: -65.5, y: 96}
+      - {x: -67.5, y: 89}
+      - {x: -67.5, y: 71}
+      - {x: -58.5, y: 62}
+      - {x: -36.5, y: 49}
+      - {x: -40.5, y: 40}
+      - {x: -42.5, y: 34}
+      - {x: -36.5, y: 26}
+      - {x: -27.5, y: 11}
+      - {x: -19.5, y: 1}
+      - {x: -8.5, y: 1}
+      - {x: -1.5, y: 10}
+      - {x: 1.5, y: 3}
+      - {x: 6.5, y: 1}
   m_UseDelaunayMesh: 0
 --- !u!1 &5936816878479032547
 GameObject:
