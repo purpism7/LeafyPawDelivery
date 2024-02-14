@@ -31,7 +31,7 @@ namespace UI.Component
         {
             base.Initialize(data);
 
-            SetStoryName();
+            //SetStoryName();
         }
 
         public override void Activate()
@@ -39,6 +39,7 @@ namespace UI.Component
             base.Activate();
 
             SetLock();
+            SetStoryName();
         }
 
         private void SetStoryName()

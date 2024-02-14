@@ -84,6 +84,11 @@ namespace UI
         //     }
         // }
 
+        public void OnClickClose()
+        {
+            Deactivate();
+        }
+
         #region MapIcon.IListener
         void MapIcon.IListener.SelectPlace(int id)
         {
