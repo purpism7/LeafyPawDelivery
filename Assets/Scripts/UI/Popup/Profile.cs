@@ -8,6 +8,7 @@ using UnityEngine.Localization.Settings;
 
 using UI.Component;
 using GameSystem;
+using Cysharp.Threading.Tasks;
 
 namespace UI
 {
@@ -181,11 +182,7 @@ namespace UI
             if (placeData == null)
                 return;
 
-            if (_data.EElement == Game.Type.EElement.Animal)
-            {
-               
-            }
-            else if(_data.EElement == Game.Type.EElement.Object)
+            if(_data.EElement == Game.Type.EElement.Object)
             {
                 var objectData = ObjectContainer.Instance.GetData(_data.Id);
                 if (objectData == null)
@@ -228,6 +225,14 @@ namespace UI
                 Text = currencyText,
                 PossibleFunc = () => true,
             });
+
+            DelayActivateAsync().Forget();
+        }
+
+        private async UniTask DelayActivateAsync()
+        {
+            await UniTask.WaitForEndOfFrame(this);
+
             animalGetCurrency?.Activate();
         }
 
