@@ -114,7 +114,6 @@ namespace Game
             {
                 if (_data.isHiddenObj)
                 {
-                    Debug.Log("Hidden Object");
                     Command.ObtainHiddenObject.Execute(this);
 
                     return;

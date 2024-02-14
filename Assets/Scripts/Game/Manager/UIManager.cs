@@ -35,10 +35,6 @@ namespace Game
             {
                 PopupRootRectTm = Popup.popupRootRectTm,
             });
-
-            yield return null;
-
-            Debug.Log("End UIManager Initialize");
         }
 
         public T Instantiate<T>(RectTransform rootRectTm)

@@ -289,13 +289,13 @@ namespace UI
         #region Edit.IListener
         void EditList.IListener.Close()
         {
+            MainGameManager.Instance?.SetGameStateAsync(Game.Type.EGameState.Game);
+
             DeactivateAnim(EditListRootRectTm,
                 () =>
                 {
                     ActivateAnim(rootRectTm, null);
                     EditList.Deactivate();
-
-                    MainGameManager.Instance?.SetGameStateAsync(Game.Type.EGameState.Game);
                 });
         }
         #endregion

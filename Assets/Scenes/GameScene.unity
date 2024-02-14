@@ -1969,6 +1969,8 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: b270ff811693a4d428ca7f9175a94969, type: 3}
   - eType: 3
     audioClip: {fileID: 8300000, guid: 09841a15c816d4b2caddbfeb4d8d2392, type: 3}
+  - eType: 4
+    audioClip: {fileID: 8300000, guid: 8f36f230c3d9d42ebb192c3c42a97303, type: 3}
 --- !u!82 &919135520
 AudioSource:
   m_ObjectHideFlags: 0

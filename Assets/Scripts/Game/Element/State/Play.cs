@@ -86,6 +86,8 @@ namespace Game.Element.State
             }
 
             UIManager.Instance?.Top?.CollectCurrency(startPos, elementData.EElement, currency);
+
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchObject);
         }
 
         private void StartSignatureAction()

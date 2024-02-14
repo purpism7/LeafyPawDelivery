@@ -25,6 +25,7 @@ namespace GameSystem
                 TouchButton,
                 TouchLetter,
                 PickItem,
+                TouchObject,
             }
 
             public EType eType = EType.None;
