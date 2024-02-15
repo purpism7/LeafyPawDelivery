@@ -38,27 +38,39 @@ SpriteAtlas:
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
     - e7045e20aa2f842e7811788ba81cf3e2: 21300000
+    - 47efdc136a70240c38d6a87ca582153b: 21300000
     - f226ddf3041ee4ef8831c44ac0196555: 21300000
     - b4338115adf9348d48112645af6c7973: 21300000
+    - 969eee659033846d59e7881317193ee7: 21300000
     - 327b659742d594974bc5f892b9d2d803: 21300000
     - 9d340d59a2d254bc8b8062a4238ce865: 21300000
+    - 7a620d993fc5042b892a905700376abe: 21300000
+    - 3852b65b7037c49fda21f6effeaa5a0d: 21300000
     - 29a953ab82cdc4b54bbd3d0a98991941: 21300000
     - 2955e5bd56b114d76bbca38d91fd6188: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: e7045e20aa2f842e7811788ba81cf3e2, type: 3}
+  - {fileID: 21300000, guid: 47efdc136a70240c38d6a87ca582153b, type: 3}
   - {fileID: 21300000, guid: f226ddf3041ee4ef8831c44ac0196555, type: 3}
   - {fileID: 21300000, guid: b4338115adf9348d48112645af6c7973, type: 3}
+  - {fileID: 21300000, guid: 969eee659033846d59e7881317193ee7, type: 3}
   - {fileID: 21300000, guid: 327b659742d594974bc5f892b9d2d803, type: 3}
   - {fileID: 21300000, guid: 9d340d59a2d254bc8b8062a4238ce865, type: 3}
+  - {fileID: 21300000, guid: 7a620d993fc5042b892a905700376abe, type: 3}
+  - {fileID: 21300000, guid: 3852b65b7037c49fda21f6effeaa5a0d, type: 3}
   - {fileID: 21300000, guid: 29a953ab82cdc4b54bbd3d0a98991941, type: 3}
   - {fileID: 21300000, guid: 2955e5bd56b114d76bbca38d91fd6188, type: 3}
   m_PackedSpriteNamesToIndex:
   - Loading_bg_01
+  - UI_LoadingBar02
   - Map02_Loading_01
   - Loading_bg_02
+  - UI_LoadingBar01
   - GameLogo
   - Map01_Loading_01
+  - Map03_Loading_01
+  - Map03_Loading_02
   - Map02_Loading_02
   - Map01_Loading_02
   m_RenderDataMap: {}

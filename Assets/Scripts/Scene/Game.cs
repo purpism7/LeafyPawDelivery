@@ -42,6 +42,11 @@ namespace Scene
             _preprocessing?.Init(this);
         }
 
+        void Preprocessing.IListener.Progress(int processIndex, float progress)
+        {
+            _iListener?.Progress(progress, processIndex == 1 ? 0.3f : 0.04f);
+        }
+
         void Preprocessing.IListener.End()
         {
             _iListener?.EndLoad();

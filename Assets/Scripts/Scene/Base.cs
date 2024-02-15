@@ -9,6 +9,7 @@ namespace Scene
     {
         public interface IListener
         {
+            void Progress(float progress, float delay);
             void EndLoad();
         }
         

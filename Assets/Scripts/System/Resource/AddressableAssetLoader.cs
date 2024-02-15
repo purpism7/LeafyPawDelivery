@@ -44,7 +44,6 @@ namespace GameSystem
                     continue;
 
                 var typeKey = assetLabel.labelString;
-                Debug.Log("typeKey = " + typeKey);
 
                 switch (typeKey)
                 {

@@ -26,6 +26,7 @@ namespace GameSystem
     {
         public interface IListener
         {
+            void Progress(int processIndex, float progress);
             void End();
         }
         
@@ -34,6 +35,9 @@ namespace GameSystem
         private Queue<Process> _processQueue = new();
         private Processing _processing = null;
         private IListener _iListener = null;
+
+        private int _process = 0;
+        private int _totalProcessCnt = 0;
 
         public void Init(IListener iListener)
         {
@@ -57,6 +61,8 @@ namespace GameSystem
             }
 
             InitializeProcess(gameObject.GetOrAddComponent<End>());
+
+            _totalProcessCnt = _processQueue.Count;
         }
 
         void InitializeProcess(Processing processing)
@@ -80,7 +86,10 @@ namespace GameSystem
                 _processing = process as Processing;
                 if (_processing != null)
                 {
-                    Debug.Log("Start Processing = " + _processing.GetType());
+                    float progress = (float)++_process / (float)_totalProcessCnt;
+             
+                    _iListener?.Progress(_process, progress);
+
                     yield return StartCoroutine(_processing.CoProcess(this));
                 }
             }
@@ -93,8 +102,6 @@ namespace GameSystem
             }
             else
             {
-                Debug.Log("End Preprocessing");
-
                 _iListener?.End();
 
                 yield break;

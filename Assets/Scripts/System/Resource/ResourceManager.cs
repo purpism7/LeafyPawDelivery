@@ -47,20 +47,7 @@ namespace GameSystem
             AtalsLoader.Init();
 
             await AddressableAssetLoader.InitializeAsync();
-            //var task = Task.Run();
-            //if (task != null)
-            //{
-            //    //while (!task.IsCompleted)
-            //    //{
-            //    //    yield return null;
-            //    //}
-            //}
-
-            //yield return new WaitUntil(() => task.IsCompleted);
-
-            //yield return StartCoroutine();
-            //bool endLoad = false;
-
+        
             await AddressableAssetLoader.LoadAssetAsync<SpriteAtlas>(AddressableAssetLoader.AssetLabelAtlas,
                 (asyncOperationHandle) =>
                 {
@@ -70,23 +57,8 @@ namespace GameSystem
                         AtalsLoader.Add(spriteAtlas.name, spriteAtlas);
                     }
 
-                    //endLoad = true;
                     _endLoad = true;
                 });
-
-            //StartCoroutine(AddressableAssetLoader.CoLoadAssetAsync<SpriteAtlas>(AddressableAssetLoader.AssetLabelAtlas,
-            //    (asyncOperationHandle) =>
-            //    {
-            //        var spriteAtlas = asyncOperationHandle.Result;
-            //        if (spriteAtlas != null)
-            //        {
-            //            AtalsLoader.Add(spriteAtlas.name, spriteAtlas);
-            //        }
-
-            //        endLoad = true;
-            //    }));
-
-            //await UniTask.WaitUntil(() => endLoad);
         }
 
         public GameObject InstantiateUIGameObj<T>(RectTransform rootRectTm)
