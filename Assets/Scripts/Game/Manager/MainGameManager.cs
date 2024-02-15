@@ -23,7 +23,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     #endregion
 
     public IGameCameraCtr IGameCameraCtr { get; private set; } = null;
-    //
     public Game.RecordContainer RecordContainer { get; private set; } = null;
 
     private System.Action<Game.Base> _startEditAction = null;
@@ -38,7 +37,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
     private static Dictionary<Type, MonoBehaviour> _managerDic = new();
 
-    //public ServerTime ServerTime { get; private set; } = null;
+    public WorldTime WorldTime { get; private set; } = null;
 
     public float GamePlayTimeSec { get; private set; } = 0;
     public Game.State.Base GameState { get; private set; } = null;
@@ -65,6 +64,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         _managerDic.Clear();
 
+        WorldTime = gameObject.GetOrAddComponent<WorldTime>();
+
         AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>());
         AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>());
 
@@ -73,8 +74,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>());
         AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
         AddManager(typeof(Game.BoostManager), boostMgr);
-
-        //ServerTime = gameObject.GetOrAddComponent<ServerTime>();
 
         _gameStateDic.Clear();
     }
@@ -235,6 +234,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
 
         await SetGameStateAsync(Game.Type.EGameState.Game);
+        GameState?.End();
     }
 
     private void InitializeTutorialManager()
@@ -358,8 +358,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         if (EGameState == eGameState)
             return;
 
-        _gameStateDic?.GetValueOrDefault(EGameState)?.End();
-
+        if(EGameState != Game.Type.EGameState.Game)
+        {
+            _gameStateDic?.GetValueOrDefault(EGameState)?.End();
+        }
+        
         Game.State.Base gameState = null;
         if (!_gameStateDic.TryGetValue(eGameState, out gameState))
         {
@@ -372,11 +375,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         if(gameState != null)
         {
-            gameState.Initialize(this);
-            await gameState.InitializeAsync(this);
-
             EGameState = eGameState;
             GameState = gameState;
+
+            gameState.Initialize(this);
+            await gameState.InitializeAsync(this);
         }
 
     }
@@ -679,7 +682,13 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             case Game.Type.ETutorialStep.DescMap:
                 {
                     SetGameStateAsync(Game.Type.EGameState.Game).Forget();
+                    GameState?.End();
 
+                    break;
+                }
+
+            case Game.Type.ETutorialStep.HappyLeafyPawDelivery:
+                {
                     IsTutorial = false;
 
                     break;
@@ -687,7 +696,9 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
             case Game.Type.ETutorialStep.ReturnGame:
                 {
+                    Debug.Log("MainGameMgr = Game.Type.ETutorialStep.ReturnGame");
                     IGameCameraCtr.SetOrthographicSize(IGameCameraCtr.DefaultOrthographicSize);
+                    Game.UIManager.Instance?.SetInteractable(true);
 
                     break;
                 }

@@ -132,7 +132,6 @@ namespace GameSystem
                 Debug.Log("UserName = " + Social.localUser.userName);
 
                 SetId(Social.localUser.id);
-                //_id = Social.localUser.id;
 
                 Debug.Log("SocialAuthenticateCallback = " + _id);
             }
@@ -184,7 +183,6 @@ namespace GameSystem
 
             //await AuthenticationService.Instance?.SignInAnonymouslyAsync();
 
-            //SetId(AuthenticationService.Instance?.PlayerId);
             SetId(AuthenticationService.Instance?.PlayerId);
 
             await UniTask.Yield();

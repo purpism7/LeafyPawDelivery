@@ -82,7 +82,7 @@ namespace Game
             if (State != null &&
                 state != null)
             {
-                if (State.CheckEqual(state))
+                if (State.CheckState(state.Type))
                     return;
             }
 

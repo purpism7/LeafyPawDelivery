@@ -8,9 +8,8 @@ namespace Game.Creature
     {
         public List<Action> AnimalActionList = new();
 
-        private Animator _animator = null;
-        private SpriteRenderer _sprRenderer = null;
         private AnimalAction _currentAnimalAction = null;
+        private IAnimal _iAnimal = null;
 
         void OnDrawGizmos()
         {
@@ -30,10 +29,12 @@ namespace Game.Creature
             //Gizmos.DrawLine(new Vector3(center.x - halfWidth, center.y - halfHeight), new Vector3(center.x + halfWidth, posY));
         }
 
-        public void Initialize(int id, Animator animator, SpriteRenderer sprRenderer, bool onlyIdle)
+        public void Initialize(int id, IAnimal iAnimal, bool onlyIdle)
         {
-            _animator = animator;
-            _sprRenderer = sprRenderer;
+            if (iAnimal == null)
+                return;
+
+            _iAnimal = iAnimal;
 
             AnimalActionList.Add(CreateaAnimalAction<IdleAction>(id));
             if(!onlyIdle)
@@ -52,6 +53,12 @@ namespace Game.Creature
 
         private void StartRandomAction()
         {
+            if (_iAnimal == null)
+                return;
+
+            if(_iAnimal.EGameState == Type.EGameState.Edit)
+                return;
+
             _currentAnimalAction = RandomAnimalAction;
             _currentAnimalAction?.StartAction();
         }
@@ -71,10 +78,10 @@ namespace Game.Creature
             {
                 IListener = this,
                 Tm = transform,
-                Animator = _animator,
+                Animator = _iAnimal.Animator,
 
                 id = id,
-                SprRenderer = _sprRenderer,
+                SprRenderer = _iAnimal.SpriteRenderer,
             };
 
             return new T().Create(data);

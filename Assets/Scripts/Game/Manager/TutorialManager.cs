@@ -5,6 +5,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 using System.Linq;
+using UnityEngine.Localization.Settings;
 
 namespace Game
 {
@@ -229,14 +230,18 @@ namespace Game
 
         private void ProcessHiPopo()
         {
-            StartSpeechBubbleAsync("안녕 난 포포야!", 3f, 0.5f).Forget();
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_hi_popo", LocalizationSettings.SelectedLocale);
+
+            StartSpeechBubbleAsync(local, 3f, 0.5f).Forget();
 
             SetStep(Game.Type.ETutorialStep.DescGame);
         }
 
         private async UniTask ProcessStartDescAsync()
         {
-            StartSpeechBubbleAsync("이 게임에 대해서 설명해줄게.", 3f).Forget();
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_start_desc", LocalizationSettings.SelectedLocale);
+
+            StartSpeechBubbleAsync(local, 3f).Forget();
 
             await UniTask.Delay(System.TimeSpan.FromSeconds(0.5f));
 
@@ -247,7 +252,9 @@ namespace Game
 
         private void ProcessDescGame()
         {
-            StartSpeechBubbleAsync("\"숲속의 우체부\"는 재화를 모아서 \n마을을 꾸미는 게임이야.", 4f).Forget();
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_desc_game", LocalizationSettings.SelectedLocale);
+
+            StartSpeechBubbleAsync(local, 4f).Forget();
 
             SetStep(Game.Type.ETutorialStep.Start);
         }
@@ -259,7 +266,9 @@ namespace Game
 
             CreatePopoConversation();
 
-            _popoConversation?.ActivateBottom("\"주민 재화\"는 배치된 주민들이 일정 시간마다 떨어트려. \n터치해서 주우면 획득할 수 있어.");
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_desc_animal_currency", LocalizationSettings.SelectedLocale);
+
+            _popoConversation?.ActivateBottom(local);
             _popoConversation?.Activate();
 
             SetStep(Game.Type.ETutorialStep.DescObjectCurrency);
@@ -270,7 +279,9 @@ namespace Game
             UI.ITop iTop = UIManager.Instance?.Top;
             iTop?.ActivateGuideLine(Game.Type.ECategory.ObjectCurrency);
 
-            _popoConversation?.ActivateBottom("\"꾸미기 재화\"는 배치된 꾸미기 요소들을 터치하면 획득할 수 있어.");
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_desc_object_currency", LocalizationSettings.SelectedLocale);
+
+            _popoConversation?.ActivateBottom(local);
 
             SetStep(Game.Type.ETutorialStep.DescLetter);
         }
@@ -280,7 +291,9 @@ namespace Game
             UI.ITop iTop = UIManager.Instance?.Top;
             iTop?.ActivateLetterGuideLine();
 
-            _popoConversation?.ActivateBottom("마을 바닥에 \"떨어진 편지\"를 연타하면 다양한 재화를 얻을 수 있어.");
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_desc_letter", LocalizationSettings.SelectedLocale);
+
+            _popoConversation?.ActivateBottom(local);
 
             SetStep(Game.Type.ETutorialStep.GetStarter);
         }
@@ -304,7 +317,9 @@ namespace Game
 
             if (isAnimalStarter || isObjectStarter)
             {
-                StartSpeechBubbleAsync("잘 따라오고 있어! 그런 의미로 이건 내가 주는 선물이야.", 3f).Forget();
+                var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_get_starter", LocalizationSettings.SelectedLocale);
+
+                StartSpeechBubbleAsync(local, 2f).Forget();
 
                 await UniTask.Delay(System.TimeSpan.FromSeconds(1.5f));
             }
@@ -353,9 +368,32 @@ namespace Game
 
         private async UniTask ProcessDescEditAsync(float delay)
         {
-            StartSpeechBubbleAsync("우리 이제 배치를 한 번 해볼까?", 3f).Forget();
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_desc_edit", LocalizationSettings.SelectedLocale);
+
+            StartSpeechBubbleAsync(local, 2f).Forget();
 
             await UniTask.Delay(System.TimeSpan.FromSeconds(delay));
+
+            SetStep(Game.Type.ETutorialStep.DisappearPopo);
+        }
+
+        private async UniTask ProcessDisappearPopoAsync()
+        {
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_disappear_popo", LocalizationSettings.SelectedLocale);
+
+            StartSpeechBubbleAsync(local, 2f).Forget();
+
+            SetStep(Game.Type.ETutorialStep.DisappearPopoEndMove);
+
+            await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
+
+            var iGameCameraCtr = MainGameManager.Instance?.IGameCameraCtr;
+            if (iGameCameraCtr == null)
+                return;
+
+            _popo?.MoveToTarget(new Vector3(iGameCameraCtr.GameCameraWidth, PopoPosY, PopoPosZ));
+
+            await UniTask.Delay(System.TimeSpan.FromSeconds(0.7f));
 
             var uiMgr = UIManager.Instance;
             if (uiMgr == null)
@@ -371,21 +409,6 @@ namespace Game
                 {
                     bottom?.ActivateGuideLine(eBottomTypes);
                 });
-
-            SetStep(Game.Type.ETutorialStep.DisappearPopo);
-        }
-
-        private async UniTask ProcessDisappearPopoAsync()
-        {
-            StartSpeechBubbleAsync("휴우~ 배치하는 동안 난 잠깐 쉬고 있을게.", 3f).Forget();
-
-            await UniTask.Delay(System.TimeSpan.FromSeconds(0.7f));
-
-            var iGameCameraCtr = MainGameManager.Instance?.IGameCameraCtr;
-            if (iGameCameraCtr == null)
-                return;
-
-            _popo?.MoveToTarget(new Vector3(iGameCameraCtr.GameCameraWidth, PopoPosY, PopoPosZ));
         }
 
         // 이미 스타터팩을 지급 받고 중간에 튜토리얼 진행 시.
@@ -395,19 +418,21 @@ namespace Game
 
             CreatePopoConversation();
 
-            _popoConversation?.ActivateTop("우리 이제 배치를 한 번 해볼까?", true);
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_desc_edit", LocalizationSettings.SelectedLocale);
+
+            _popoConversation?.ActivateTop(local, true);
             _popoConversation?.Activate();
 
             ProcessDescEditAsync(0).Forget();
-
-            //StopUpdateGameCamera(false);
 
             SetStep(Game.Type.ETutorialStep.EditAnimal);
         }
 
         private void ProcessEditObject()
         {
-            _popoConversation?.ActivateTop("잘했어! 우리 이번엔 \"커다란 나무\"를 한 번 배치해 볼까?", true);
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_edit_object", LocalizationSettings.SelectedLocale);
+
+            _popoConversation?.ActivateTop(local, true);
             _popoConversation?.Activate();
 
             SetStep(Type.ETutorialStep.EditObject);
@@ -415,7 +440,9 @@ namespace Game
 
         private async UniTask ProcessDescStory()
         {
-            _popoConversation?.ActivateCenter("꾸미기 요소를 획득하다보면, 새로운 스토리도 열릴거야.");
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_desc_story", LocalizationSettings.SelectedLocale);
+
+            _popoConversation?.ActivateCenter(local);
 
             var uiMgr = UIManager.Instance;
             if (uiMgr == null)
@@ -426,7 +453,7 @@ namespace Game
             var bottom = uiMgr.Bottom;
             bottom?.AllDeactivateGuideLine();
 
-            await UniTask.WaitForSeconds(0.5f);
+            await UniTask.WaitForSeconds(1f);
 
             bottom?.DeactivateEditList();
 
@@ -437,14 +464,18 @@ namespace Game
 
         private void ProcessDescMap()
         {
-            _popoConversation?.ActivateCenter("모든 주민과 꾸미기 요소를 획득하면 다음 마을이 열릴거야.");
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_desc_map", LocalizationSettings.SelectedLocale);
+
+            _popoConversation?.ActivateCenter(local);
 
             SetStep(Type.ETutorialStep.HappyLeafyPawDelivery);
         }
 
         private async UniTask ProcessHappyLeafyPawDeliveryAsync()
         {
-            _popoConversation?.ActivateCenter("여기까지야! \"숲속의 우체부\"를 재밌게 플레이 해줘.");
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_happy_leafypawdelivery", LocalizationSettings.SelectedLocale);
+
+            _popoConversation?.ActivateCenter(local);
 
             Info.Connector.Get?.SetCompleteTutorial(true);
 
@@ -459,8 +490,6 @@ namespace Game
             await UniTask.WaitForSeconds(1f);
 
             SetStep(Type.ETutorialStep.ReturnGame);
-
-            UIManager.Instance?.SetInteractable(true);
 
             //_popoConversation?.Deactivate();
         }
@@ -497,7 +526,7 @@ namespace Game
         #region Popo.IListener
         void Popo.IListener.EndMove()
         {
-            if (ETutorialStep == Game.Type.ETutorialStep.DisappearPopo)
+            if (ETutorialStep == Game.Type.ETutorialStep.DisappearPopoEndMove)
             {
                 _popo?.Deactivate();
                 //StopUpdateGameCamera(false);
@@ -523,6 +552,9 @@ namespace Game
 
         private void OnChangedAnimal(Game.Event.AnimalData animalData)
         {
+            if (ETutorialStep >= Type.ETutorialStep.EditObject)
+                return;
+
             switch (animalData)
             {
                 case Game.Event.ArrangeAnimalData arrangeAnimalData:

@@ -88,7 +88,7 @@ public static class UIUtils
             .SetAutoKill(false)
             .Append(image.DOFade(0, 0.4f))
             .Append(image.DOFade(1f, 0.4f))
-            .AppendInterval(0.4f);
+            .AppendInterval(0.5f);
         sequence.Restart();
         sequence.SetLoops(-1);
     }

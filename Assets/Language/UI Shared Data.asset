@@ -165,6 +165,58 @@ MonoBehaviour:
     m_Key: buy_animal_skin
     m_Metadata:
       m_Items: []
+  - m_Id: 69000945659273216
+    m_Key: tutorial_hi_popo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69001539404947456
+    m_Key: tutorial_start_desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69001728152821760
+    m_Key: tutorial_desc_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69029916908183552
+    m_Key: tutorial_desc_animal_currency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69030340021182464
+    m_Key: tutorial_desc_object_currency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69030575682347008
+    m_Key: tutorial_desc_letter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69031306288160768
+    m_Key: tutorial_get_starter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69032080376324096
+    m_Key: tutorial_desc_edit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69032336216285184
+    m_Key: tutorial_disappear_popo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69032764513443840
+    m_Key: tutorial_edit_object
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69033232601964544
+    m_Key: tutorial_desc_story
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69033578208419840
+    m_Key: tutorial_desc_map
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69033803362852864
+    m_Key: tutorial_happy_leafypawdelivery
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

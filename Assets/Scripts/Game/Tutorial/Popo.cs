@@ -80,7 +80,7 @@ namespace Game
             if (_eState != EState.Walk)
                 return;
 
-            var movePos = Vector2.MoveTowards(transform.localPosition, _targetPos, Time.deltaTime * 200f);
+            var movePos = Vector2.MoveTowards(transform.localPosition, _targetPos, Time.deltaTime * 300f);
             transform.localPosition = movePos;
 
             var distance = Vector2.Distance(transform.localPosition, _targetPos);

@@ -26,17 +26,11 @@ namespace Game.Element.State
 
         protected Game.BaseElement _gameBaseElement = null;
 
-        public System.Type Type
-        {
-            get
-            {
-                return GetType();
-            }
-        }
+        public Game.Type.EElementState Type { get; protected set; } = Game.Type.EElementState.None;
 
-        public bool CheckEqual(BaseState state)
+        public bool CheckState(Type.EElementState type)
         {
-            return Type.Equals(state.Type);
+            return Type == type;
         }
 
         public virtual BaseState Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)

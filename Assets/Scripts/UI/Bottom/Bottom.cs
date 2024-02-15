@@ -296,6 +296,8 @@ namespace UI
                 {
                     ActivateAnim(rootRectTm, null);
                     EditList.Deactivate();
+
+                    MainGameManager.Instance?.GameState?.End();
                 });
         }
         #endregion

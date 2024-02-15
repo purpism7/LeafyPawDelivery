@@ -6,8 +6,15 @@ using Game;
 
 namespace Game.Creature
 {
+    public interface IAnimal
+    {
+        Animator Animator { get; }
+        SpriteRenderer SpriteRenderer { get; }
+        Game.Type.EGameState EGameState { get; }
+    }
+
     [ExecuteInEditMode]
-    public class Animal : BaseElement<Animal.Data>, UI.Edit.IListener
+    public class Animal : BaseElement<Animal.Data>, UI.Edit.IListener, IAnimal
     {
         public class Data : BaseData
         {
@@ -70,7 +77,7 @@ namespace Game.Creature
         private void InitActionController()
         {
             _actionCtr = gameObject.GetOrAddComponent<AnimalActionController>();
-            _actionCtr?.Initialize(Id, animator, spriteRenderer, !_data.IsEdit);
+            _actionCtr?.Initialize(Id, this, !_data.IsEdit);
         }
 
         public override void ChainUpdate()
@@ -96,11 +103,15 @@ namespace Game.Creature
         {
             base.OnTouchBegan(touch, gameCameraCtr, iGrid);
 
-            var eGameState = MainGameManager.Instance.EGameState;
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                return;
+
+            var eGameState = mainGameMgr.EGameState;
     
             if (eGameState == Type.EGameState.Edit)
             {
-                var editState = MainGameManager.Instance?.GameState?.Get<Game.State.Edit>();
+                var editState = mainGameMgr?.GameState?.Get<Game.State.Edit>();
                 if (editState != null &&
                     editState.CheckIsEditElement(this))
                     return;
@@ -164,6 +175,36 @@ namespace Game.Creature
         {
             _actionCtr?.StartSignatureAction();
         }
+
+        #region IAnimal
+        Animator IAnimal.Animator
+        {
+            get
+            {
+                return animator;
+            }
+        }
+
+        SpriteRenderer IAnimal.SpriteRenderer
+        {
+            get
+            {
+                return spriteRenderer;
+            }
+        }
+
+        Game.Type.EGameState IAnimal.EGameState
+        {
+            get
+            {
+                var mainGameMgr = MainGameManager.Instance;
+                if (mainGameMgr == null)
+                    return Game.Type.EGameState.None;
+
+                return mainGameMgr.EGameState;
+            }
+        }
+        #endregion
 
         #region SpeechBubble
         public void ActivateSpeechBubble(System.Action endAction)

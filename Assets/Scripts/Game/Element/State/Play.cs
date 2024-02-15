@@ -13,6 +13,8 @@ namespace Game.Element.State
 
         public override BaseState Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
+            Type = Game.Type.EElementState.Play;
+
             _gameCameraCtr = gameCameraCtr;
 
             return this;
@@ -107,8 +109,6 @@ namespace Game.Element.State
                 return;
 
             animal.StartSignatureAction();
-
-            Debug.Log("ActionSignature");
         }
     }
 }

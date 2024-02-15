@@ -10,6 +10,12 @@ namespace Info
 {
     public class UserManager : Singleton<UserManager>
     {
+#if UNITY_EDITOR
+        private string _userInfoJsonFilePath = "Assets/Info/User.json";
+#else
+        private string _userInfoJsonFilePath = Application.persistentDataPath + "/Info/User.json";
+#endif
+
         public User User { get; private set; } = null;
 
         private void OnApplicationPause(bool pause)
@@ -45,20 +51,23 @@ namespace Info
         {
             //Debug.Log("iCloud = [" + GameSystem.Auth.ID + "] "+ iOSPlugin.iCloudGetStringValue(GameSystem.Auth.ID));
 
-            //if (!System.IO.File.Exists(_userInfoJsonFilePath))
-            //{
-            //    CreateUserInfo();
-
-            //    yield break;
-            //}
-            string jsonStr = Plugin.Native.Instance?.GetString(GameSystem.Auth.ID);
-            if(string.IsNullOrEmpty(jsonStr))
+            if (!System.IO.File.Exists(_userInfoJsonFilePath))
             {
                 CreateUserInfo();
 
                 yield break;
             }
-            //var jsonString = System.IO.File.ReadAllText(_userInfoJsonFilePath);
+            //string jsonStr = Plugin.Native.Instance?.GetString(GameSystem.Auth.ID);
+            //if(string.IsNullOrEmpty(jsonStr))
+            //{
+            //    CreateUserInfo();
+
+            //    yield break;
+            //}
+
+            var jsonStr = System.IO.File.ReadAllText(_userInfoJsonFilePath);
+            //var jsonStr = decryptJsonStr.Decrypt("leafypawdelivery");
+
             User = JsonUtility.FromJson<Info.User>(jsonStr);
             //Plugin.Native.Instance?.LoadUserJson(GameSystem.Auth.ID);
 
@@ -251,8 +260,8 @@ namespace Info
         {
             var jsonStr = JsonUtility.ToJson(User);
 
-            Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, jsonStr);
-            //System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonString);
+            //Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, jsonStr);
+            System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonStr);
 
             //iOSPlugin.iCloudSaveStringValue(GameSystem.Auth.ID, jsonString);
         }
@@ -334,6 +343,13 @@ namespace Info
 
             //firebaseMgr?.Database?.SaveChild(userId, KeyUserStory, jsonStr);
 
+        }
+
+        public void Reset()
+        {
+            Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, string.Empty);
+
+            
         }
     }
 }

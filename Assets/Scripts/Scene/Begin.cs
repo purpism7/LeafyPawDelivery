@@ -36,13 +36,6 @@ namespace Scene
 
             Info.Setting.Get?.InitializeLocale();
 
-            var firebaseMgr = FirebaseManager.Instance;
-
-            _auth = new Auth();
-            await _auth.AsyncInitialize();
-
-            await Plugin.Native.Instance.CoInit();
-
             Debug.Log("end Native Initialize 222");
 
             //await firebaseMgr.CoInit();
@@ -73,7 +66,11 @@ namespace Scene
             //    await UniTask.WaitUntil(() => endPrologue);
             //}
 
-            await UniTask.WaitForSeconds(2f);
+            //await UniTask.WaitForSeconds(2f);
+
+            _auth = new Auth();
+            await _auth.AsyncInitialize();
+            await Plugin.Native.Instance.CoInit();
 
             await PlayPrologueAsync();
             await CreateNickNameAsync();
@@ -82,6 +79,9 @@ namespace Scene
             await UniTask.WaitUntil(() => _end);
 
             SceneLoader.LoadWithLoading(loadData);
+
+            var firebaseMgr = FirebaseManager.Instance;
+            
             //PlayerPrefs.GetString(KeyPrologue)
             //if(firebaseMgr.Auth.IsFirst)
             //{

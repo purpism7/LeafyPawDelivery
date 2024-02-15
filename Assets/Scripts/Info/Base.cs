@@ -9,15 +9,15 @@ namespace Info.Holder
         protected Base()
         {
             //LoadInfo();
-            RootJsonFilePath = string.Format(RootJsonFilePath, GameSystem.Auth.ID);
+            //RootJsonFilePath = string.Format(RootJsonFilePath, GameSystem.Auth.ID);
 
             //Debug.Log("Holder Type = " + RootJsonFilePath);
         }
 
 #if UNITY_EDITOR
-        protected string RootJsonFilePath = "Assets/Info/{0}/";
+        protected string RootJsonFilePath = "Assets/Info/";
 #else
-        protected string RootJsonFilePath = Application.persistentDataPath + "/Info/{0}/";
+        protected string RootJsonFilePath = Application.persistentDataPath + "/Info/";
 #endif
         
         protected abstract string JsonFilePath { get; }

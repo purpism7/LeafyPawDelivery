@@ -112,12 +112,19 @@ namespace Game.PlaceEvent
         {
             yield return null;
 
-            var eGameState = MainGameManager.Instance.EGameState;
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                yield break;
+
+            var eGameState = mainGameMgr.EGameState;
             if (eGameState == Game.Type.EGameState.Edit)
                 yield break;
 
             if (_eItemSub == Type.EItemSub.Letter)
             {
+                if (mainGameMgr.IsTutorial)
+                    yield break;
+
                 UI.ITop iTop = Game.UIManager.Instance?.Top;
                 if (iTop != null)
                 {
@@ -125,8 +132,6 @@ namespace Game.PlaceEvent
                         yield break;
                 }
             }
-
-            //AsyncDrop().Forget();
 
             yield return _waitSecDrop;
 

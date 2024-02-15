@@ -24,10 +24,10 @@ namespace Plugin
                 _base = gameObject.GetOrAddComponent<IOS>();
 #endif
             }
-            else
-            {
-                _base = gameObject.GetOrAddComponent<Local>();
-            }
+            //else
+            //{
+            //    _base = gameObject.GetOrAddComponent<Local>();
+            //}
             
 
 //            if(Application.isEditor)

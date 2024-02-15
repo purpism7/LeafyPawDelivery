@@ -75,6 +75,8 @@ namespace UI
 
         private void SetRenderTexture()
         {
+            Game.RenderTextureElement.Destroy();
+
             if (_data == null)
                 return;
 

@@ -19,6 +19,8 @@ namespace Game.Element.State
         {
             base.Initialize(gameCameraCtr, iGrid);
 
+            Type = Game.Type.EElementState.Edit;
+
             _gameCameraCtr = gameCameraCtr;
             _iGrid = iGrid;
 
@@ -148,8 +150,8 @@ namespace Game.Element.State
         #region Overlap
         private void SetIsOverlap(bool isOverlap)
         {
-            if (_isOverlap == isOverlap)
-                return;
+            //if (_isOverlap == isOverlap)
+            //    return;
 
             _gameBaseElement.SetColor(isOverlap ? Color.gray : Color.white);
             
@@ -158,7 +160,10 @@ namespace Game.Element.State
 
         private void Overlap()
         {
-            var elementCollision = _gameBaseElement?.ElementCollision;
+            if (_gameBaseElement == null)
+                return;
+
+            var elementCollision = _gameBaseElement.ElementCollision;
             if (elementCollision == null)
                 return;
 

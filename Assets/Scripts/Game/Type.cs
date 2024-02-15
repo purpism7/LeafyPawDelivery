@@ -13,6 +13,14 @@ namespace Game
             Screenshot,
         }
 
+        public enum EElementState
+        {
+            None,
+
+            Play,
+            Edit,
+        }
+
         public enum ETab
         {
             Animal,
@@ -183,6 +191,7 @@ namespace Game
             // 하단
             DescEdit,
             DisappearPopo,
+            DisappearPopoEndMove,
             EditAnimal,
             EditObject,
             DescStory,

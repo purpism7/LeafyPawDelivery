@@ -23,6 +23,7 @@ namespace UI
             base.Deactivate();
 
             MainGameManager.Instance?.SetGameStateAsync(Game.Type.EGameState.Game);
+            MainGameManager.Instance?.GameState?.End();
         }
 
         public void OnClick()

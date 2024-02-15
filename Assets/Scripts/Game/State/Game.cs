@@ -20,24 +20,27 @@ namespace Game.State
 
         public override async UniTask InitializeAsync(MainGameManager mainGameMgr)
         {
-            bool endActivateAnim = false;
-            UIManager.Instance?.ActivateAnim(() =>
-            {
-                endActivateAnim = true;
-            });
+            //bool endActivateAnim = false;
+            //UIManager.Instance?.ActivateAnim(() =>
+            //{
+            //    endActivateAnim = true;
+            //});
 
-            await UniTask.WaitUntil(() => endActivateAnim);
+            //await UniTask.WaitUntil(() => endActivateAnim);
 
-            var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
-            if (activityPlace == null)
-                return;
-
-            activityPlace.Boom();
+            await UniTask.Yield();
         }
 
         public override void End()
         {
-            
+            UIManager.Instance?.ActivateAnim(() =>
+            {
+                var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
+                if (activityPlace == null)
+                    return;
+
+                activityPlace.Boom();
+            });
         }
     }
 }
