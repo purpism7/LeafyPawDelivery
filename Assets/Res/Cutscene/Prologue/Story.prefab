@@ -760,7 +760,7 @@ Animator:
   m_GameObject: {fileID: 2810015336131993444}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7d245e891b0c74258ad528a9e2473dcc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1325,7 +1325,6 @@ GameObject:
   m_Component:
   - component: {fileID: 807397536792870125}
   - component: {fileID: 5766903820121315534}
-  - component: {fileID: 7706469221284859234}
   - component: {fileID: 7282928118664681537}
   m_Layer: 9
   m_Name: Story_Prologue_Bus
@@ -1343,7 +1342,7 @@ Transform:
   m_GameObject: {fileID: 8106950483617637053}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1401,23 +1400,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!320 &7706469221284859234
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8106950483617637053}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 277be8e016bc746949c91aa06b54269b, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings: []
-  m_ExposedReferences:
-    m_References: []
 --- !u!95 &7282928118664681537
 Animator:
   serializedVersion: 5
@@ -1428,7 +1410,7 @@ Animator:
   m_GameObject: {fileID: 8106950483617637053}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c7071ac389584467ca5c86a2c0b4425c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

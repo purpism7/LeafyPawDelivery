@@ -29,15 +29,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 231133248741376
-    m_Localized: Oh, I'm so sorry. Are you okay?
+    m_Localized: "Oh, I'm so sorry. \nAre you okay?"
     m_Metadata:
       m_Items: []
   - m_Id: 231209421496320
-    m_Localized: I'm okay.. I got confused because this town is first.
+    m_Localized: I'm okay.. I got confused.
     m_Metadata:
       m_Items: []
   - m_Id: 233815942356992
-    m_Localized: Wouldn't it be dangerous to ride a bicycle?
+    m_Localized: 'Wouldn''t it be dangerous
+
+      to ride a bicycle?'
     m_Metadata:
       m_Items: []
   - m_Id: 235290277961728
