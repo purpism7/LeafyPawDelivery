@@ -216,12 +216,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 69032080376324096
-    m_Localized: "\uC6B0\uB9AC \uC774\uC81C \uBC30\uCE58\uB97C \uD55C \uBC88 \uD574\uBCFC\uAE4C?"
+    m_Localized: "\uC6B0\uB9AC \uC774\uC81C \uC8FC\uBBFC \uBC30\uCE58\uB97C \n\uD55C
+      \uBC88 \uD574\uBCFC\uAE4C?"
     m_Metadata:
       m_Items: []
   - m_Id: 69032336216285184
     m_Localized: "\uD734\uC6B0~ \n\uBC30\uCE58\uD558\uB294 \uB3D9\uC548 \uB09C \uC7A0\uAE50
-      \uC26C\uACE0 \uC788\uC744\uAC8C."
+      \uC26C\uACE0 \n\uC788\uC744\uAC8C."
     m_Metadata:
       m_Items: []
   - m_Id: 69032764513443840

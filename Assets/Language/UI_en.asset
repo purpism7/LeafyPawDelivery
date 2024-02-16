@@ -126,6 +126,135 @@ MonoBehaviour:
     m_Localized: Jewel
     m_Metadata:
       m_Items: []
+  - m_Id: 46398107640913920
+    m_Localized: 'You can now go to a new town.
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51479994784800768
+    m_Localized: 'If you repeat a touch dropped letters,
+
+      You can get a gift.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60141890723373056
+    m_Localized: 'Welcome to our town!
+
+      This is our gift!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60365843727376384
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60366412839903232
+    m_Localized: Buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60366439654088704
+    m_Localized: AD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60502576800456704
+    m_Localized: "You can get double amount of \ncurrency for {0} minutes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 62778767582420992
+    m_Localized: Find hidden {0}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63491704366292992
+    m_Localized: Find hidden {1} in {0}?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68110916091109376
+    m_Localized: You bought {0} right now.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69000945659273216
+    m_Localized: 'Hi, I''m Popo.
+
+      Nice to meet you.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69001539404947456
+    m_Localized: 'Let me explain how to play
+
+      this game.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69001728152821760
+    m_Localized: '''Leafy Paw Delievery'' is a game
+
+      decorating a town with
+      currency.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69029916908183552
+    m_Localized: 'Animal drops currency at certain times.
+
+      You can get "Animal
+      currency"
+
+      if you touch the fallen currency.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69030340021182464
+    m_Localized: 'You can get "Object currency"
+
+      if you touch the placed objects.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69030575682347008
+    m_Localized: 'If you repeat a touch "Dropped letters",
+
+      you can get various
+      of currency.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69031306288160768
+    m_Localized: 'You''re doing well!
+
+      This is my gift.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69032080376324096
+    m_Localized: Let's place animal first.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69032336216285184
+    m_Localized: "I'll take a break during the \nmoment."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69032764513443840
+    m_Localized: 'Good job!
+
+      And let''s place "Big tree" now.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69033232601964544
+    m_Localized: 'If you get some objects,
+
+      new story will be opened.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69033578208419840
+    m_Localized: 'If you get every animals and
+
+      objects then you can go next
+
+      town.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69033803362852864
+    m_Localized: 'That''s all!
+
+      Have fun playing
+
+      "Leafy Paw Delivery"!'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

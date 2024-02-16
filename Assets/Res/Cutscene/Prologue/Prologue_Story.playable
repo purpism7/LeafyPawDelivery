@@ -403,7 +403,7 @@ MonoBehaviour:
     m_ExposedParameterNames: []
     m_AnimationCurves: {fileID: 0}
     m_Recordable: 0
-    m_PostExtrapolationMode: 4
+    m_PostExtrapolationMode: 1
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: Infinity
     m_PreExtrapolationTime: 0
@@ -867,7 +867,7 @@ MonoBehaviour:
     LocalDatas:
     - TableName: SpeechBubble
       Key: prologue_story_3_1
-      KeepDelay: 1
+      KeepDelay: 3
     - TableName: SpeechBubble
       Key: prologue_story_4
       KeepDelay: 3
@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 6.25
+    m_Start: 5.733333333333333
     m_ClipIn: 0
     m_Asset: {fileID: 2321202704472282912}
     m_Duration: 1.4666666666666668
@@ -1055,8 +1055,8 @@ MonoBehaviour:
     m_Recordable: 0
     m_PostExtrapolationMode: 0
     m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0.43333333333333357
-    m_PreExtrapolationTime: 6.25
+    m_PostExtrapolationTime: 0.9500000000000002
+    m_PreExtrapolationTime: 5.733333333333333
     m_DisplayName: SpeechBubbleClip
   - m_Version: 1
     m_Start: 8.15
@@ -1089,7 +1089,7 @@ MonoBehaviour:
     m_PostExtrapolationMode: 0
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: Infinity
-    m_PreExtrapolationTime: 0.43333333333333357
+    m_PreExtrapolationTime: 0.9500000000000002
     m_DisplayName: SpeechBubbleClip
   m_Markers:
     m_Objects: []
@@ -1479,7 +1479,7 @@ MonoBehaviour:
     m_ExposedParameterNames: []
     m_AnimationCurves: {fileID: 0}
     m_Recordable: 0
-    m_PostExtrapolationMode: 0
+    m_PostExtrapolationMode: 1
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: Infinity
     m_PreExtrapolationTime: 0
@@ -1613,11 +1613,11 @@ MonoBehaviour:
     m_Recordable: 0
     m_PostExtrapolationMode: 0
     m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 1.583333333333333
+    m_PostExtrapolationTime: 2.533333333333333
     m_PreExtrapolationTime: 0
     m_DisplayName: SpeechBubbleClip
   - m_Version: 1
-    m_Start: 5.333333333333333
+    m_Start: 6.283333333333333
     m_ClipIn: 0
     m_Asset: {fileID: -4748522148410126851}
     m_Duration: 0.916666666666667
@@ -1682,8 +1682,8 @@ MonoBehaviour:
     m_Recordable: 0
     m_PostExtrapolationMode: 0
     m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 7.783333333333333
-    m_PreExtrapolationTime: 1.583333333333333
+    m_PostExtrapolationTime: 6.833333333333333
+    m_PreExtrapolationTime: 2.533333333333333
     m_DisplayName: SpeechBubbleClip
   - m_Version: 1
     m_Start: 14.033333333333333
@@ -1734,7 +1734,7 @@ MonoBehaviour:
     m_PostExtrapolationMode: 0
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 7.783333333333333
+    m_PreExtrapolationTime: 6.833333333333333
     m_DisplayName: SpeechBubbleClip
   - m_Version: 1
     m_Start: 14.883333333333335

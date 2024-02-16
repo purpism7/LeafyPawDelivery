@@ -62,7 +62,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2397080424275968
-    m_Localized: "\uD31C\uC6B0\uC988 \uB9C8\uC744\uC774\uAD6C\uB098. \uC232\uC73C\uB85C
+    m_Localized: "Palmwoods \uB9C8\uC744\uC774\uAD6C\uB098. \n\uC232\uC73C\uB85C
       \uAC00\uC57C\uACA0\uB124."
     m_Metadata:
       m_Items: []
@@ -91,11 +91,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18094014103281664
-    m_Localized: "\uC544\uAE30 \uD1A0\uB07C 1"
+    m_Localized: "\uBE44\uBE44"
     m_Metadata:
       m_Items: []
   - m_Id: 18094131543793664
-    m_Localized: "\uC544\uAE30 \uD1A0\uB07C 2"
+    m_Localized: "\uBC14\uBE44"
     m_Metadata:
       m_Items: []
   - m_Id: 18096676576157696
