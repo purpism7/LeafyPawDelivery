@@ -22,6 +22,21 @@ namespace Game
 
         public List<Info.Animal> AnimalInfoList => _animalHolder?.AnimalInfoList;
 
+        private void OnApplicationPause(bool pause)
+        {
+            if(pause)
+            {
+
+
+                SaveAnimalPos();
+            }
+        }
+
+        private void OnApplicationQuit()
+        {
+            SaveAnimalPos();
+        }
+
         protected override void Initialize()
         {
             Event = new UnityEvent<Event.AnimalData>();
@@ -38,6 +53,24 @@ namespace Game
             _animalHolder?.LoadInfo();
 
             yield break;
+        }
+
+        private void SaveAnimalPos()
+        {
+            var iPlace = MainGameManager.Get<PlaceManager>().ActivityPlace as IPlace;
+            var animalList = iPlace?.AnimalList;
+            if (animalList == null)
+                return;
+
+            foreach (var animal in animalList)
+            {
+                if (animal == null)
+                    continue;
+
+                _animalHolder?.SetPos(animal.Id, animal.Pos);
+            }
+
+            _animalHolder.SaveInfo();
         }
 
         public bool CheckIsAll

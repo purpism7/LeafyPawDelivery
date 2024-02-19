@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.IO;
 
 using Game;
 
@@ -10,8 +11,16 @@ namespace Info
     public class ObjectHolder : Holder.Base
     {
         //private readonly string ObjectUIdKey = "Object_UId_Key";
-        
-        protected override string JsonFilePath => RootJsonFilePath + "Object_Place_{0}.json";
+
+        protected override string JsonFilePath
+        {
+            get
+            {
+                return Path.Combine(RootJsonFilePath, "Object_Place_{0}.txt");
+            }
+        }
+
+        private const string _secretKey = "HankyuloBJect";
 
         // Key = Place Id
         private Dictionary<int, List<Info.Object>> _objectInfoDic = new();
@@ -19,19 +28,23 @@ namespace Info
 
         public override void LoadInfo()
         {
+            RootJsonFilePath = Utility.GetInfoPath();
+
             _objectInfoDic?.Clear();
 
-            for(int i = 1; i <= Game.Data.Const.TotalPlaceCount; ++i)
+            for (int i = 1; i <= Game.Data.Const.TotalPlaceCount; ++i)
             {
                 List<Info.Object> objectInfoList = null;
-                var jsonfilePath = string.Format(JsonFilePath, i);
+                var fullPath = string.Format(JsonFilePath, i);
 
-                if (System.IO.File.Exists(jsonfilePath))
+                if (System.IO.File.Exists(fullPath))
                 {
-                    var jsonString = System.IO.File.ReadAllText(jsonfilePath);
-                    objectInfoList = JsonHelper.FromJson<Info.Object>(jsonString)?.ToList();
+                    var encodeStr = System.IO.File.ReadAllText(fullPath);
+                    var jsonStr = encodeStr.Decrypt(_secretKey);
+
+                    objectInfoList = JsonHelper.FromJson<Info.Object>(jsonStr)?.ToList();
                 }
-                
+
                 var user = Info.UserManager.Instance?.User;
                 if (user == null)
                     return;
@@ -79,10 +92,12 @@ namespace Info
                     objectInfoList.Count <= 0)
                     return;
 
-                var jsonString = JsonHelper.ToJson(objectInfoList.ToArray());
-                var jsonFilePath = string.Format(JsonFilePath, placeId);
+                var jsonStr = JsonHelper.ToJson(objectInfoList.ToArray());
+                var encodeStr = jsonStr.Encrypt(_secretKey);
+
+                var fullPath = string.Format(JsonFilePath, placeId);
                 
-                System.IO.File.WriteAllText(jsonFilePath, jsonString);
+                System.IO.File.WriteAllText(fullPath, encodeStr);
             }
         }
 

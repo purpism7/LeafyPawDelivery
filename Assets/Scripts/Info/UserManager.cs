@@ -5,16 +5,16 @@ using System.Linq;
 
 //using Firebase.Database;
 using Cysharp.Threading.Tasks;
+using System.IO;
+using System;
 
 namespace Info
 {
     public class UserManager : Singleton<UserManager>
     {
-#if UNITY_EDITOR
-        private string _userInfoJsonFilePath = "Assets/Info/User.json";
-#else
-        private string _userInfoJsonFilePath = Application.persistentDataPath + "/Info/User.json";
-#endif
+        private string _jsonFilePath = string.Empty;
+        private const string _fileName = "User.txt";
+        private const string _scretKey = "hANkyulusEr";
 
         public User User { get; private set; } = null;
 
@@ -36,9 +36,9 @@ namespace Info
 
         protected override void Initialize()
         {
-            
+
         }
-        
+
         public override IEnumerator CoInit()
         {
             yield return StartCoroutine(base.CoInit());
@@ -50,13 +50,42 @@ namespace Info
         private IEnumerator CoLoadLocalUserInfo()
         {
             //Debug.Log("iCloud = [" + GameSystem.Auth.ID + "] "+ iOSPlugin.iCloudGetStringValue(GameSystem.Auth.ID));
-
-            if (!System.IO.File.Exists(_userInfoJsonFilePath))
+            try
             {
-                CreateUserInfo();
+                var path = Utility.GetInfoPath();
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
 
-                yield break;
+                _jsonFilePath = Path.Combine(path, _fileName);
+                if (!System.IO.File.Exists(_jsonFilePath))
+                {
+                    CreateUserInfo();
+
+                    yield break;
+                }
+                else
+                {
+                    var decodeStr = System.IO.File.ReadAllText(_jsonFilePath);
+                    var jsonStr = decodeStr.Decrypt(_scretKey);
+
+                    User = JsonUtility.FromJson<Info.User>(jsonStr);
+                    Debug.Log(jsonStr);
+                }
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                // 이미 UnauthorizedAccessException이 발생한 경우에는 다시 던지지 않고 예외를 처리합니다.
+                Debug.LogError("Unauthorized access: " + ex.Message);
+            }
+            catch (IOException ex)
+            {
+                // IOException을 UnauthorizedAccessException으로 다시 던집니다.
+                throw new UnauthorizedAccessException("Access to the path is unauthorized.", ex);
+            }
+
+            
             //string jsonStr = Plugin.Native.Instance?.GetString(GameSystem.Auth.ID);
             //if(string.IsNullOrEmpty(jsonStr))
             //{
@@ -64,18 +93,51 @@ namespace Info
 
             //    yield break;
             //}
+            //var fullPath = Path.Combine(path, _fileName);
+            //Debug.Log("fullPath = " + fullPath);
+            //Debug.Log("Application.persistentDataPath = " + Application.persistentDataPath);
+            //var fullPath = _userInfoJsonFilePath + _fileName;
 
-            var jsonStr = System.IO.File.ReadAllText(_userInfoJsonFilePath);
+            //FileStream fileStream = File.Open(_jsonFilePath, FileMode.Open);
+
+            //if (System.IO.File.Exists(_jsonFilePath))
+            //{
+            //    try
+            //    {
+            //        var jsonStr = System.IO.File.ReadAllText(_jsonFilePath);
+            //        User = JsonUtility.FromJson<Info.User>(jsonStr);
+            //        Debug.Log(jsonStr);
+            //        //System.Text.Encoding.ASCII.GetBytes(jsonStr);
+
+
+            //    }
+            //    catch (UnauthorizedAccessException ex)
+            //    {
+            //        // 이미 UnauthorizedAccessException이 발생한 경우에는 다시 던지지 않고 예외를 처리합니다.
+            //        Debug.LogError("Unauthorized access: " + ex.Message);
+            //    }
+            //    catch (IOException ex)
+            //    {
+            //        // IOException을 UnauthorizedAccessException으로 다시 던집니다.
+            //        throw new UnauthorizedAccessException("Access to the path is unauthorized.", ex);
+            //    }
+            //}
+            //else
+            //{
+            //    CreateUserInfo();
+            //}
+
             //var jsonStr = decryptJsonStr.Decrypt("leafypawdelivery");
 
-            User = JsonUtility.FromJson<Info.User>(jsonStr);
+
             //Plugin.Native.Instance?.LoadUserJson(GameSystem.Auth.ID);
 
-            CreateUserInfo();
+            //CreateUserInfo();
+            //Save
 
-            Debug.Log(jsonStr);
-            
-            yield return null;
+
+            Debug.Log("Load User Info");
+            //yield return null;
         }
 
         private void CreateUserInfo()
@@ -85,11 +147,13 @@ namespace Info
 
             User = new Info.User();
 
+            var placeId = Game.Data.Const.StartPlaceId;
+            var currency = Game.Data.Const.GetStartCurrency(placeId);
+
+            SaveCurrency(currency);
+
             //var jsonString = JsonUtility.ToJson(User);
             //System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonString);
-
-            
-            Save();
         }
 
         //private IEnumerator CoLoadUserInfo()
@@ -98,7 +162,7 @@ namespace Info
         //    var firebaseMgr = GameSystem.FirebaseManager.Instance;
         //    if (firebaseMgr == null)
         //        yield break;
-            
+
         //    bool endLoad = false;
 
         //    var database = firebaseMgr.Database;
@@ -177,9 +241,9 @@ namespace Info
         //        var database = firebase.Database;
         //        database?.Save(firebase.Auth.UserId, JsonUtility.ToJson(User));
 
-        //        var placeId = Game.Data.Const.StartPlaceId;
-        //        var currency = Game.Data.Const.GetStartCurrency(placeId);
-        //        SaveCurrency(currency);
+        //var placeId = Game.Data.Const.StartPlaceId;
+        //var currency = Game.Data.Const.GetStartCurrency(placeId);
+        //SaveCurrency(currency);
         //    }
         //}
 
@@ -201,7 +265,7 @@ namespace Info
         //            DictionaryEntry dicEntry = (DictionaryEntry)enumerator.Current;
 
         //            string key = dicEntry.Key.ToString();
-                    
+
         //            if (key.Equals("Animal"))
         //            {
         //                currency.Animal = (long)dicEntry.Value;
@@ -258,11 +322,21 @@ namespace Info
 
         private void Save()
         {
-            var jsonStr = JsonUtility.ToJson(User);
+            try
+            {
+                var jsonStr = JsonUtility.ToJson(User);
+                var encodeStr = jsonStr.Encrypt(_scretKey);
+                //var bytes = System.Text.Encoding.UTF8.GetBytes(jsonStr);
+                //var encodeStr = System.Convert.ToBase64String(bytes);
 
-            //Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, jsonStr);
-            System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonStr);
-
+                System.IO.File.WriteAllText(_jsonFilePath, encodeStr);
+            }
+            catch(Exception e)
+            {
+                Debug.Log(e);
+            }
+           
+            
             //iOSPlugin.iCloudSaveStringValue(GameSystem.Auth.ID, jsonString);
         }
 

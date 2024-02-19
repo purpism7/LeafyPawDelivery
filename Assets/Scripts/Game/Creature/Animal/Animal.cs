@@ -35,6 +35,17 @@ namespace Game.Creature
         private AnimalActionController _actionCtr = null;
 
         public int SkinId { get { return skinId; } }
+        public Vector3 Pos
+        {
+            get
+            {
+                return transform.localPosition;
+            }
+            set
+            {
+                transform.localPosition = value;
+            }
+        }
 
         private IPlaceState.EType _iPlaceState = IPlaceState.EType.None;
 
@@ -55,8 +66,8 @@ namespace Game.Creature
 
             if (data != null)
             {
-                SetPos(data.Pos);
-                SetSortingOrder(-(int)transform.localPosition.y);
+                Pos = data.Pos;
+                SetSortingOrder(-(int)Pos.y);
             }
 
             InitActionController();
@@ -164,11 +175,6 @@ namespace Game.Creature
                 return;
 
             spriteRenderer.sortingOrder = order;
-        }
-
-        public void SetPos(Vector3 pos)
-        {
-            transform.localPosition = pos;
         }
 
         public void StartSignatureAction()

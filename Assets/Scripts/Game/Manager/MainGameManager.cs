@@ -92,6 +92,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         InitializeIUpdateList(inputMgr);
         
         RecordContainer = new();
+        RecordContainer?.Initialize();
 
         var acquireMgr = Get<Game.Manager.Acquire>();
         yield return StartCoroutine(acquireMgr?.CoInitialize(null));
@@ -117,6 +118,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         IsTutorial = CheckIsTutorial;
         //yield return EndLoadAsync(true);
         _endInitialize = true;
+
+        yield return null;
     }
 
     private void InitializeIUpdateList(InputManager inputMgr)
@@ -248,6 +251,15 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         (IGameCameraCtr as GameSystem.GameCameraController)?.SetStopUpdate(true);
     }
 
+    private void DestroyTutorialManager()
+    {
+        if (TutorialMgr == null)
+            return;
+
+        DestroyImmediate(TutorialMgr);
+        TutorialMgr = null;
+    }
+
     private void Starter()
     {
         foreach (var manager in _managerDic.Values)
@@ -267,6 +279,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             var animalMgr = Get<Game.AnimalManager>();
             if(animalMgr != null)
             {
+                Debug.Log("CheckIsTutorial = " + animalMgr.CheckGetStarter);
                 if(!animalMgr.CheckGetStarter)
                     return true;
             }
@@ -274,6 +287,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             var objectMgr = Get<Game.ObjectManager>();
             if (objectMgr != null)
             {
+                Debug.Log("CheckIsTutorial = " + objectMgr.CheckGetStarter);
                 if (!objectMgr.CheckGetStarter)
                     return true;
             }
@@ -305,7 +319,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             var connector = Info.Connector.Get;
             if(connector != null)
             {
-                return !connector.IsCompleteTutorial;
+                Debug.Log("connector.IsCompleteTutorial = " + connector.IsCompleteTutorial);
+                return connector.IsCompleteTutorial == false;
             }
 
             return false;
@@ -681,8 +696,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
             case Game.Type.ETutorialStep.DescMap:
                 {
-                    SetGameStateAsync(Game.Type.EGameState.Game).Forget();
-                    GameState?.End();
+                   
 
                     break;
                 }
@@ -690,6 +704,9 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             case Game.Type.ETutorialStep.HappyLeafyPawDelivery:
                 {
                     IsTutorial = false;
+
+                    SetGameStateAsync(Game.Type.EGameState.Game).Forget();
+                    GameState?.End();
 
                     break;
                 }
@@ -699,6 +716,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                     Debug.Log("MainGameMgr = Game.Type.ETutorialStep.ReturnGame");
                     IGameCameraCtr.SetOrthographicSize(IGameCameraCtr.DefaultOrthographicSize);
                     Game.UIManager.Instance?.SetInteractable(true);
+
+                    DestroyTutorialManager();
 
                     break;
                 }

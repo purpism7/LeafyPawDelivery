@@ -67,6 +67,7 @@ public class Const : ScriptableObject
 
             if (data.PlaceId == placeId)
             {
+#if UNITY_EDITOR
                 if(Application.isEditor)
                 {
                     return new Info.User.Currency()
@@ -76,7 +77,7 @@ public class Const : ScriptableObject
                         PlaceId = placeId,
                     };
                 }
-
+#endif
                 return data.StartValue;
             }
         }

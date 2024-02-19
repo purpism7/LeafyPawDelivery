@@ -81,9 +81,9 @@ namespace Plugin
     public abstract class Base : MonoBehaviour
     {
 #if UNITY_EDITOR
-        protected string _userInfoJsonFilePath = "Assets/Info/{0}/User.json";
+        protected string _userInfoJsonFilePath = "Assets/Info/User.json";
 #else
-        protected string _userInfoJsonFilePath = Application.persistentDataPath + "/Info/{0}/User.json";
+        protected string _userInfoJsonFilePath = Application.persistentDataPath + "/User.json";
 #endif
 
         public abstract void Initialize();

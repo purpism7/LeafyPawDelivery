@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace Info
@@ -7,16 +8,20 @@ namespace Info
     public class AcquireHolder : Holder.Base
     {
         protected override string JsonFilePath => RootJsonFilePath;
-        private readonly string DailyMissionJsonFileName = "DailyMission.json";
-        readonly private string AchievementJsonFileName = "Achievement.json";
+
+        private const string _dailyMissionJsonFileName = "DailyMission.txt";
+        private const string _achievementJsonFileName = "Achievement.txt";
+        private const string _secretKey = "hANkyUlAcquire";
 
         private Acquire _acquire = new();
 
         public override void LoadInfo()
         {
-            if (!System.IO.Directory.Exists(JsonFilePath))
+            RootJsonFilePath = Utility.GetInfoPath();
+
+            if (!System.IO.Directory.Exists(RootJsonFilePath))
             {
-                System.IO.Directory.CreateDirectory(JsonFilePath);
+                System.IO.Directory.CreateDirectory(RootJsonFilePath);
             }
 
             LoadDailyMissionInfo();
@@ -25,44 +30,47 @@ namespace Info
 
         private void LoadDailyMissionInfo()
         {
-            var fullPath = JsonFilePath + DailyMissionJsonFileName;
+            var fullPath = Path.Combine(JsonFilePath, _dailyMissionJsonFileName);
             if (!System.IO.File.Exists(fullPath))
                 return;
 
-            var jsonString = System.IO.File.ReadAllText(fullPath);
-            var dailyMissionInfos  = JsonHelper.FromJson<Acquire.DailyMission>(jsonString);
+            var encryptStr = System.IO.File.ReadAllText(fullPath);
+            var jsonStr = encryptStr.Decrypt(_secretKey);
+            var dailyMissionInfos  = JsonHelper.FromJson<Acquire.DailyMission>(jsonStr);
 
             _acquire?.dailyMissionInfoList?.AddRange(dailyMissionInfos);
         }
 
         private void LoadAchievementInfo()
         {
-            var fullPath = JsonFilePath + AchievementJsonFileName;
+            var fullPath = Path.Combine(JsonFilePath, _achievementJsonFileName);
             if (!System.IO.File.Exists(fullPath))
                 return;
 
-            var jsonString = System.IO.File.ReadAllText(fullPath);
-            var achievementInfos = JsonHelper.FromJson<Acquire.Achievement>(jsonString);
+            var encryptStr = System.IO.File.ReadAllText(fullPath);
+            var jsonStr = encryptStr.Decrypt(_secretKey);
+            var achievementInfos = JsonHelper.FromJson<Acquire.Achievement>(jsonStr);
 
             _acquire?.AchievementInfoList?.AddRange(achievementInfos);
         }
 
         private void SaveInfo<T>(string jsonFileName, List<T> list)
         {
-            var jsonString = JsonHelper.ToJson(list.ToArray());
-            Debug.Log("jsonString = " + jsonString);
+            var jsonStr = JsonHelper.ToJson(list.ToArray());
+            var encryptStr = jsonStr.Encrypt(_secretKey);
+            var fullPath = Path.Combine(JsonFilePath, jsonFileName);
 
-            System.IO.File.WriteAllText(JsonFilePath + jsonFileName, jsonString);
+            System.IO.File.WriteAllText(fullPath, encryptStr);
         }
 
         private void SaveDailyMissionInfo()
         {
-            SaveInfo(DailyMissionJsonFileName, _acquire.dailyMissionInfoList);
+            SaveInfo(_dailyMissionJsonFileName, _acquire.dailyMissionInfoList);
         }
 
         private void SaveAchievementInfo()
         {
-            SaveInfo(AchievementJsonFileName, _acquire.AchievementInfoList);
+            SaveInfo(_achievementJsonFileName, _acquire.AchievementInfoList);
         }
 
         public void Add(Game.Type.EAcquire eAcquire, Game.Type.EAcquireAction eAcquireAction, int value)

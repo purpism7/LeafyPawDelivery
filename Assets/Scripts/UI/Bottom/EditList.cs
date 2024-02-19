@@ -43,11 +43,6 @@ namespace UI
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-
-            if (CheckIsTutorial)
-            {
-                EnableToggle(false);
-            }
         }
 
         public override void Activate()
@@ -58,6 +53,8 @@ namespace UI
 
             SetAnimalList();
             SetObjectList();
+
+            EnableToggle(!CheckIsTutorial);
 
             MoveScrollToIndex().Forget();
 

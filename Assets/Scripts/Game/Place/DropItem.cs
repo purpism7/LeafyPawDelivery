@@ -22,7 +22,6 @@ namespace Game.PlaceEvent
             base.Initialize(iPlace, iListener, placeId);
 
             float randWaitSec = UnityEngine.Random.Range(60f, 70f);
-            Debug.Log(randWaitSec);
 
             _waitSecDrop = new WaitForSeconds(randWaitSec);
 
@@ -35,8 +34,6 @@ namespace Game.PlaceEvent
 
             StopDrop();
             _dropItemCoroutine = StartCoroutine(CoDrop());
-            //AsyncDrop().Forget();
-            
         }
 
         public void StopDrop()

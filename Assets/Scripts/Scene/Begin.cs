@@ -124,7 +124,7 @@ namespace Scene
         private async UniTask PlayPrologueAsync()
         {
             bool already = false;
-            //if(!Application.isEditor)
+            if(!Application.isEditor)
             {
                 Boolean.TryParse(PlayerPrefs.GetString(KeyPrologue, false.ToString()), out already);
             }
@@ -133,15 +133,17 @@ namespace Scene
 
             if (!already)
             {
-                var cutscene = Cutscene.Create(new Cutscene.Data()
-                {
-                    TargetGameObj = prologueGameObj,
-                    EndAction = () =>
+                var cutscene = Cutscene.Create(
+                    new Cutscene.Data()
                     {
-                        endPrologue = true;
-                    },
-                    IsConversation = false,
-                });
+                        orthographicSize = 1500f,
+                        TargetGameObj = prologueGameObj,
+                        EndAction = () =>
+                        {
+                            endPrologue = true;
+                        },
+                        IsConversation = false,
+                    });
 
                 PlayerPrefs.SetString(KeyPrologue, true.ToString());
 

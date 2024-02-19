@@ -425,7 +425,9 @@ namespace Game
 
             ProcessDescEditAsync(0).Forget();
 
-            SetStep(Game.Type.ETutorialStep.EditAnimal);
+            ProcessDisappearPopoAsync().Forget();
+
+            //SetStep(Game.Type.ETutorialStep.EditAnimal);
         }
 
         private void ProcessEditObject()

@@ -170,7 +170,7 @@ namespace Info
             get
             {
                 bool isComplete = false;
-                System.Boolean.TryParse(PlayerPrefs.GetString(KeyCompleteTutorial, false.ToString()), out isComplete);
+                System.Boolean.TryParse(PlayerPrefs.GetString(KeyCompleteTutorial), out isComplete);
 
                 return isComplete;
             }
@@ -178,6 +178,7 @@ namespace Info
 
         public void SetCompleteTutorial(bool isComplete)
         {
+            Debug.Log("SetCompleteTutorial = " + isComplete);
             PlayerPrefs.SetString(KeyCompleteTutorial, isComplete.ToString());
         }
         #endregion

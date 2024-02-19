@@ -2,39 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.IO;
 
 namespace Info
 {
     public class AnimalHolder : Holder.Base
     {
         protected override string JsonFilePath => RootJsonFilePath;
-        private string JsonFileName = "Animal.json";
-        
+        private string JsonFileName = "Animal.txt";
+
+        private const string _secretKey = "hAnkyUlAnimAl";
+
         public List<Info.Animal> AnimalInfoList { get; private set; } = new();
 
         public override void LoadInfo()
         {
+            RootJsonFilePath = Utility.GetInfoPath();
+
             AnimalInfoList.Clear();
 
-            if(!System.IO.Directory.Exists(JsonFilePath))
-            {
-                System.IO.Directory.CreateDirectory(JsonFilePath);
-            }
-
             List<Info.Animal> animalInfoList = null;
-            var fullPath = JsonFilePath + JsonFileName;
+
+            var fullPath = Path.Combine(JsonFilePath, JsonFileName);
             if (System.IO.File.Exists(fullPath))
             {
-                var jsonString = System.IO.File.ReadAllText(fullPath);
-                animalInfoList = JsonHelper.FromJson<Info.Animal>(jsonString).ToList();
+                var decodeStr = System.IO.File.ReadAllText(fullPath);
+                var jsonStr = decodeStr.Decrypt(_secretKey);
+
+                animalInfoList = JsonHelper.FromJson<Info.Animal>(jsonStr).ToList();
             }
-  
+            
             var user = Info.UserManager.Instance?.User;
             if (user == null)
                 return;
 
             var animalList = user.AnimalList;
-
             foreach (var animal in animalList)
             {
                 if (animal == null)
@@ -60,19 +62,33 @@ namespace Info
                 {
                     animalInfo.SkinIdList = animal.skinIdList;
                 }
-
+                
                 AnimalInfoList.Add(animalInfo);
             }
         }
 
-        private void SaveInfo()
+        public void SaveInfo()
         {
             if(AnimalInfoList == null)
                 return;
 
-            var jsonString = JsonHelper.ToJson(AnimalInfoList.ToArray());
-            Debug.Log("jsonString = " + jsonString);
-            System.IO.File.WriteAllText(JsonFilePath + JsonFileName , jsonString);
+            var jsonStr = JsonHelper.ToJson(AnimalInfoList.ToArray());
+            var encodeStr = jsonStr.Encrypt(_secretKey);
+            var fullPath = Path.Combine(JsonFilePath, JsonFileName);
+
+            System.IO.File.WriteAllText(fullPath, encodeStr);
+        }
+
+        public void SetPos(int id, Vector3 pos)
+        {
+            var animalInfo = GetAnimalInfo(id);
+            if (animalInfo == null)
+                return;
+
+            if (!animalInfo.Arrangement)
+                return;
+
+            animalInfo.Pos = pos;
         }
 
         public bool AddAnimalInfo(Info.Animal animalInfo)

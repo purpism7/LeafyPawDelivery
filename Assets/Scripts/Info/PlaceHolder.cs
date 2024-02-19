@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace Info
 {
     public class PlaceHolder : Holder.Base
     {
-        protected override string JsonFilePath => Application.persistentDataPath + "/Place_{0}.json";
+        protected override string JsonFilePath
+        {
+            get
+            {
+                return Path.Combine(RootJsonFilePath, "Place_{0}.json");
+            }
+        }
 
         private Dictionary<int, Info.Place> _placeDic = new();
 
@@ -17,7 +24,7 @@ namespace Info
 
         public override void LoadInfo()
         {
-
+            RootJsonFilePath = Utility.GetInfoPath();
         }
 
         public void Init(List<int> placeIdList)

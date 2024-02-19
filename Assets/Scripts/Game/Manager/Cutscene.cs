@@ -80,12 +80,15 @@ namespace Game.Manager
 
         public class Data
         {
+            public float orthographicSize = 1100f;
             public GameObject TargetGameObj = null;            
             public Func<bool> EndFunc = null;
             public Action EndAction = null;
             public bool IsConversation = true;
         }
 
+        [SerializeField]
+        private Camera cutsceneCamera = null;
         [SerializeField] private Transform timelineRootTm = null;
         [SerializeField] private RectTransform uiRootRectTm = null;
 
@@ -111,7 +114,15 @@ namespace Game.Manager
 
             DestoryAllChild();
 
-            GameObject.Instantiate(_data.TargetGameObj, timelineRootTm);
+            if(data != null)
+            {
+                GameObject.Instantiate(data.TargetGameObj, timelineRootTm);
+
+                if(cutsceneCamera != null)
+                {
+                    cutsceneCamera.orthographicSize = data.orthographicSize;
+                }
+            }
 
             if (InitPlayableDirector())
             {

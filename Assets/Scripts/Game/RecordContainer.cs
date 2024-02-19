@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace Game
@@ -7,15 +8,19 @@ namespace Game
     public class RecordContainer : Info.Holder.Base
     {
         protected override string JsonFilePath => RootJsonFilePath;
-        private string JsonFileName = "Record.json";
+
+        private string JsonFileName = "Record.txt";
+        private const string _secretKey = "hanKYUlrecOrd";
 
         private List<Info.Record> _recordList = new();
 
-        public RecordContainer()
+        public void Initialize()
         {
+            RootJsonFilePath = Utility.GetInfoPath();
+
             LoadInfo();
 
-            AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
+            //AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
         }
 
         public override void LoadInfo()
@@ -28,9 +33,11 @@ namespace Game
             if (_recordList == null)
                 return;
 
-            var jsonString = JsonHelper.ToJson(_recordList.ToArray());
-            Debug.Log("jsonString = " + jsonString);
-            System.IO.File.WriteAllText(JsonFilePath + JsonFileName, jsonString);
+            var jsonStr = JsonHelper.ToJson(_recordList.ToArray());
+            var encryptStr = jsonStr.Encrypt(_secretKey);
+            var fullPath = Path.Combine(JsonFilePath, JsonFileName);
+
+            System.IO.File.WriteAllText(fullPath, encryptStr);
         }
 
         private int GetFindIndex(Info.Record record)
@@ -103,11 +110,11 @@ namespace Game
             return null;
         }
 
-        private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
-        {
-            if (animalData == null)
-                return;
-        }
+        //private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
+        //{
+        //    if (animalData == null)
+        //        return;
+        //}
     }
 }
 

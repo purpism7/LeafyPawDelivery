@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 757019243154122650}
+  cutsceneCamera: {fileID: 4625970594919834217}
   timelineRootTm: {fileID: 4677234167379180288}
   uiRootRectTm: {fileID: 4307619195347766419}
 --- !u!1 &1824200978547733478

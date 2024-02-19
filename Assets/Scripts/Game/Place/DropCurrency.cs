@@ -14,14 +14,11 @@ namespace Game.PlaceEvent
         private Coroutine _dropCurrencyCoroutine = null;
         private YieldInstruction _waitSecDrop = null;
 
-        //private CancellationTokenSource _cancellationTokenSource = new();
-
         public override Base Initialize(IPlace iPlace, IListener iListener, int placeId)
         {
             base.Initialize(iPlace, iListener, placeId);
 
             float randWaitSec = UnityEngine.Random.Range(30f, 40f);
-            Debug.Log(randWaitSec);
 
             _waitSecDrop = new WaitForSeconds(randWaitSec);
 
@@ -32,12 +29,10 @@ namespace Game.PlaceEvent
         {
             StopDrop();
             _dropCurrencyCoroutine = StartCoroutine(CoDrop());
-            //DropAsync().Forget();
         }
 
         public void StopDrop()
         {
-            //_cancellationTokenSource?.Cancel();
             if (_dropCurrencyCoroutine != null)
             {
                 StopCoroutine(_dropCurrencyCoroutine);

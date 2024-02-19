@@ -150,7 +150,6 @@ namespace GameSystem
         #region Scene.Base.IListener
         void Scene.Base.IListener.Progress(float progress, float delay)
         {
-            Debug.Log("progress = " + progress);
             if(_progressQueue == null)
             {
                 _progressQueue = new();

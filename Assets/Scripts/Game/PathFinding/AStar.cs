@@ -51,8 +51,6 @@ namespace Game.PathFinding
                 if (currentNode.Id == targetNode.Id ||
                     loopCnt >= limitLoopCnt)
                 {
-                    Debug.Log(loopCnt);
-
                     await RetracePathAsync(startNode, currentNode);
 
                     return;

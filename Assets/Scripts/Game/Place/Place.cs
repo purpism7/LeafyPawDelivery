@@ -142,7 +142,7 @@ namespace Game
                 if (animal.SkinId != skinId)
                     continue;
 
-                animal.SetPos(pos);
+                animal.Pos = pos;
                 animal.Activate();
 
                 return animal;
