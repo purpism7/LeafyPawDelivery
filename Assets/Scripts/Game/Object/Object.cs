@@ -12,6 +12,9 @@ namespace Game
     {
         Transform HiddenObjectRootTm { get; }
         bool CheckExistHiddenObject { get; }
+        void ActivateHiddenObject();
+        void DeactivateHiddenObject();
+
         int SortingOrder { get; }
     }
 
@@ -153,6 +156,17 @@ namespace Game
             spriteRenderer.sortingOrder = order;
         }
 
+        private void RemoveHiddenObject()
+        {
+            if (!CheckExistHiddenObject)
+                return;
+
+            while(hiddenRootTm.childCount > 0)
+            {
+                DestroyImmediate(hiddenRootTm.GetChild(0).gameObject);
+            }
+        }
+
         public void Reset(int uId, Vector3 pos)
         {
             UId = uId;
@@ -172,7 +186,7 @@ namespace Game
             }
         }
 
-        bool IObject.CheckExistHiddenObject
+        public bool CheckExistHiddenObject
         {
             get
             {
@@ -181,6 +195,16 @@ namespace Game
 
                 return hiddenRootTm.childCount > 0;
             }
+        }
+
+        void IObject.ActivateHiddenObject()
+        {
+            GameUtils.SetActive(hiddenRootTm, true);
+        }
+
+        void IObject.DeactivateHiddenObject()
+        {
+            GameUtils.SetActive(hiddenRootTm, false);
         }
 
         int IObject.SortingOrder
@@ -202,6 +226,8 @@ namespace Game
 
             ActiveEdit(false);
             SetState(null);
+
+            RemoveHiddenObject();
         }
 
         void UI.Edit.IListener.Arrange()

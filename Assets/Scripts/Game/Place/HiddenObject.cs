@@ -17,6 +17,34 @@ namespace Game.PlaceEvent
             return this;
         }
 
+        public void Activate()
+        {
+            var objList = _iPlace?.objectList;
+            if (objList == null)
+                return;
+
+            for (int i = 0; i < objList.Count; ++i)
+            {
+                IObject iObj = objList[i];
+
+                iObj?.ActivateHiddenObject();
+            }
+        }
+
+        public void Deactivate()
+        {
+            var objList = _iPlace?.objectList;
+            if (objList == null)
+                return;
+
+            for (int i = 0; i < objList.Count; ++i)
+            {
+                IObject iObj = objList[i];
+
+                iObj?.DeactivateHiddenObject();
+            }
+        }
+
         private void ArrangeHiddenObject(int placeId)
         {
             if (CheckExistHiddenObject)

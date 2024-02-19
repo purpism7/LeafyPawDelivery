@@ -36,6 +36,7 @@ namespace Game
             _dropCurrency?.StartDrop();
             _speechBubble?.Activate();
             _dropItem?.StartDrop();
+            _hiddenObject?.Activate();
         }
 
         public void End()
@@ -43,6 +44,7 @@ namespace Game
             _dropCurrency?.StopDrop();
             _speechBubble?.Deactivate();
             _dropItem?.StopDrop();
+            _hiddenObject?.Deactivate();
         }
 
         void PlaceEvent.Base.IListener.Action(PlaceEvent.BaseData data)
