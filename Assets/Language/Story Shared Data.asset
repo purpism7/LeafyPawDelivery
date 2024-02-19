@@ -623,6 +623,10 @@ MonoBehaviour:
     m_Key: balla
     m_Metadata:
       m_Items: []
+  - m_Id: 70862850950684672
+    m_Key: prologue_letter_4
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
