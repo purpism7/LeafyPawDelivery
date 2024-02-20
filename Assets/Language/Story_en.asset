@@ -134,8 +134,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43383524005240832
-    m_Localized: Yes, it is. But I couldn't muster up the courage, so I stayed behind
-      in our hometown. Looking back now, I feel like I could've been a little bolder.
+    m_Localized: 'Yes, it is. But I couldn''t muster up the courage, so I stayed
+      behind in our hometown. '
     m_Metadata:
       m_Items: []
   - m_Id: 43384047374688256
@@ -158,8 +158,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43384318091845632
-    m_Localized: "You still have your whole life ahead of you. Today's the youngest
-      you\u2019ll ever be. Age is but a number when it comes to dreams"
+    m_Localized: "Today's the youngest you\u2019ll ever be. Age is but a number when
+      it comes to dreams"
     m_Metadata:
       m_Items: []
   - m_Id: 43384388518404096
@@ -209,13 +209,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 46577767188258816
     m_Localized: No, no. You must be so busy. I'm happy that you were able to make
-      it at all. You seemed happy. I enjoyed your book as well!
+      it at all. I enjoyed your book as well!
     m_Metadata:
       m_Items: []
   - m_Id: 46577802965671936
-    m_Localized: "I was actually a little embarrassed to see you. I was so confident
-      when I asked you to join me, But things were harder than I thought they\u2019d
-      be."
+    m_Localized: "I was so confident when I asked you to join me, But things were
+      harder than I thought they\u2019d be."
     m_Metadata:
       m_Items: []
   - m_Id: 46577876613455872

@@ -857,8 +857,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 38
+  m_fontSizeBase: 38
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1104,7 +1104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1408593302551910780, guid: c879d77195f80481f88fc82d86cd8069, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 85.54
+      value: 106.305
       objectReference: {fileID: 0}
     - target: {fileID: 1408593302551910780, guid: c879d77195f80481f88fc82d86cd8069, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1129,6 +1129,18 @@ PrefabInstance:
     - target: {fileID: 5776343200557088969, guid: c879d77195f80481f88fc82d86cd8069, type: 3}
       propertyPath: m_text
       value: x999
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776343200557088969, guid: c879d77195f80481f88fc82d86cd8069, type: 3}
+      propertyPath: m_fontSize
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776343200557088969, guid: c879d77195f80481f88fc82d86cd8069, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776343200557088969, guid: c879d77195f80481f88fc82d86cd8069, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 6091132835286214348, guid: c879d77195f80481f88fc82d86cd8069, type: 3}
       propertyPath: m_Name

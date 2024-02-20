@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5241043397107712
-    m_Localized: Yellow berry bush
+    m_Localized: Yellow bush
     m_Metadata:
       m_Items: []
   - m_Id: 5241197336453120
@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7026338564136960
-    m_Localized: Small lock
+    m_Localized: Small rock
     m_Metadata:
       m_Items: []
   - m_Id: 7027125738528768
@@ -51,7 +51,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7027211851784192
-    m_Localized: Small red mushroom
+    m_Localized: Red mushroom
     m_Metadata:
       m_Items: []
   - m_Id: 7027372195831808
@@ -59,11 +59,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7027446330155008
-    m_Localized: Big red mushroom
+    m_Localized: Big mushroom
     m_Metadata:
       m_Items: []
   - m_Id: 7027596532375552
-    m_Localized: White berry bush
+    m_Localized: White bush
     m_Metadata:
       m_Items: []
   - m_Id: 7027682024873984
@@ -83,11 +83,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7028364886925312
-    m_Localized: Yellow flower bunch
+    m_Localized: Yellow flowers
     m_Metadata:
       m_Items: []
   - m_Id: 7028703979626496
-    m_Localized: White flower bunch
+    m_Localized: White flowers
     m_Metadata:
       m_Items: []
   - m_Id: 7028765220659200
@@ -143,7 +143,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45554380970123264
-    m_Localized: Barnie's tomato stew
+    m_Localized: Tomato stew
     m_Metadata:
       m_Items: []
   - m_Id: 45555462760816640
@@ -179,7 +179,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45557017866133504
-    m_Localized: Blue flower bush
+    m_Localized: Blue bush
     m_Metadata:
       m_Items: []
   - m_Id: 45557064594874368
@@ -259,7 +259,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45591123366764544
-    m_Localized: Lamp Garland
+    m_Localized: Lamp garland
     m_Metadata:
       m_Items: []
   - m_Id: 45591202265817088
@@ -359,7 +359,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 67632897606017024
-    m_Localized: Rocks with tree
+    m_Localized: Rocks
     m_Metadata:
       m_Items: []
   - m_Id: 67632994007900160
@@ -391,7 +391,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 67633855798960128
-    m_Localized: "Flamingo \nswim tube"
+    m_Localized: Swim tube
     m_Metadata:
       m_Items: []
   - m_Id: 67634093582442496
@@ -411,15 +411,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 67634505865748480
-    m_Localized: Reian's feather
+    m_Localized: Feather
     m_Metadata:
       m_Items: []
   - m_Id: 67634662728523776
-    m_Localized: Cascia's bouquet
+    m_Localized: Bouquet
     m_Metadata:
       m_Items: []
   - m_Id: 67634831280824320
-    m_Localized: Reian's halo
+    m_Localized: Halo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67634657213014016
+    m_Localized: 
     m_Metadata:
       m_Items: []
   references:
