@@ -116,7 +116,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 43308528356548608
     m_Localized: "Yes, she\u2019s an old friend of mine. I haven\u2019t seen her
-      since she left. It makes me quite happy that she\u2019s written to us."
+      since she left. It makes me happy that she\u2019s written to us."
     m_Metadata:
       m_Items: []
   - m_Id: 43308584807686144
@@ -125,8 +125,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43308662641385472
-    m_Localized: "Yes, I suppose it is. I\u2019m a little jealous, to be honest.
-      She suggested that I go with her so that we could travel and write together."
+    m_Localized: "Yes. I\u2019m a little jealous, to be honest. She suggested that
+      I go with her so that we could travel and write together."
     m_Metadata:
       m_Items: []
   - m_Id: 43308724649975808
@@ -144,8 +144,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43384118061293568
-    m_Localized: I know I'm happy right now, but I envy that kind of freedom at times.
-      Imagining it makes me wonder about just what kind of life that entails.
+    m_Localized: 'I know I''m happy right now, but I envy that kind of freedom at
+      times. '
     m_Metadata:
       m_Items: []
   - m_Id: 43384192132702208
@@ -183,7 +183,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18091869907968000
-    m_Localized: Baby rabbits
+    m_Localized: Rabbits
     m_Metadata:
       m_Items: []
   - m_Id: 18094014103281664
@@ -191,7 +191,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18094131543793664
-    m_Localized: Barbie
+    m_Localized: Nana
     m_Metadata:
       m_Items: []
   - m_Id: 46577387373060096
@@ -228,7 +228,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 46577978572791808
     m_Localized: I thought of you a lot. Sometimes, I regretted not staying back
-      with you. Of course, there were moments that I enjoyed as well.
+      with you.
     m_Metadata:
       m_Items: []
   - m_Id: 46578067101966336
