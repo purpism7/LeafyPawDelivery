@@ -27,6 +27,9 @@ public class Const : ScriptableObject
     }
 
     [SerializeField]
+    private string worldTimeUri = string.Empty;
+
+    [SerializeField]
     private int animalBaseSkinId = 1;
     [SerializeField]
     private int startPlaceId = 1;
@@ -40,6 +43,8 @@ public class Const : ScriptableObject
     private int dailyMissionRewardCount = 5;
     [SerializeField]
     private int achievementRewardCount = 5;
+
+    public string WorldTimeURI { get { return worldTimeUri; } }
 
     public int AnimalBaseSkinId { get { return animalBaseSkinId; } }
     public int StartPlaceId { get { return startPlaceId; } }

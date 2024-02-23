@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0088febb0dc6640bdb4611bc95f4038f, type: 3}
   m_Name: Const
   m_EditorClassIdentifier: 
+  worldTimeUri: https://worldtimeapi.org/api/ip
   animalBaseSkinId: 1
   startPlaceId: 1
   maxDropAnimalCurrencyCount: 30
