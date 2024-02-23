@@ -670,6 +670,10 @@ MonoBehaviour:
     m_Localized: What is you name, Officer?
     m_Metadata:
       m_Items: []
+  - m_Id: 72316561992441856
+    m_Localized: Kara
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

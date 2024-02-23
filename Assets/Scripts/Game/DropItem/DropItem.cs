@@ -193,14 +193,14 @@ namespace Game
                 {
                     case CurrencyData currencyData:
                         {
-                            return 1.2f;
+                            return 1.3f;
                         }
 
                     case ItemData itemData:
                         {
                             if (itemData.eItemSub == Type.EItemSub.Letter)
                             {
-                                return 1.5f;
+                                return 1.6f;
                             }
 
                             break;

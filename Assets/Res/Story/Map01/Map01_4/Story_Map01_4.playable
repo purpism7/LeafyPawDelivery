@@ -306,8 +306,8 @@ MonoBehaviour:
       SpeakerSpriteName: StoryIcon_Map01_Barnie
     - Table: Story
       Key: 1_4_12
-      SpeakerKey: 
-      SpeakerSpriteName: 
+      SpeakerKey: kara
+      SpeakerSpriteName: StoryIcon_Map01_Kara
     - Table: Story
       Key: 1_4_13
       SpeakerKey: barnie

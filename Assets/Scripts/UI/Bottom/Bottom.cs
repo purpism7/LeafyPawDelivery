@@ -262,7 +262,6 @@ namespace UI
                         break;
                     }
 
-
                 case Game.Type.EBottomType.Acquire:
                     {
                         var popup = new GameSystem.PopupCreator<Acquire, Acquire.Data>()
