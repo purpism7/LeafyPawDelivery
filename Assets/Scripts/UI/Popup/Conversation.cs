@@ -30,11 +30,16 @@ namespace UI
             public string Sentence = string.Empty;
             public float KeepDelay = 3.5f;
 
+            public bool isPlayer = false;
+
             public void Initialize()
             {
-                if(string.IsNullOrEmpty(Speaker))
+                isPlayer = false;
+
+                if (string.IsNullOrEmpty(Speaker))
                 {
                     Speaker = PlayerPrefs.GetString("KeyNickName");
+                    isPlayer = true;
                 }
 
                 if (string.IsNullOrEmpty(SpeakerSpriteName))
@@ -92,7 +97,7 @@ namespace UI
             UIUtils.SetActive(speakerImg?.rectTransform, false);
         }
 
-        private void SetSpeakerImg(string spriteName)
+        private void SetSpeakerImg(string spriteName, bool isPlayer)
         {
             UIUtils.SetActive(speakerImg?.rectTransform, false);
 
@@ -102,7 +107,16 @@ namespace UI
             if (speakerImg == null)
                 return;
 
-            var speakerSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetAnimalIconSprite(spriteName);
+            Sprite speakerSprite = null;
+            if(isPlayer)
+            {
+                speakerSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetSprite("Icon", spriteName);
+            }
+            else
+            {
+                speakerSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetAnimalIconSprite(spriteName);
+            }
+
             if (speakerSprite == null)
                 return;
 
@@ -140,12 +154,14 @@ namespace UI
 
             SetEmpty();
 
-            constituent?.Initialize();
+            if(constituent != null)
+            {
+                constituent.Initialize();
 
-            speakerTMP?.SetText(constituent.Speaker);
-            SetSpeakerImg(constituent?.SpeakerSpriteName);
+                speakerTMP?.SetText(constituent.Speaker);
+                SetSpeakerImg(constituent?.SpeakerSpriteName, constituent.isPlayer);
+            }
 
-            Debug.Log("CoTyping = " + constituent.Sentence);
             foreach (var typingChr in constituent.Sentence)
             {
                 await UniTask.WaitForSeconds(0.02f);
