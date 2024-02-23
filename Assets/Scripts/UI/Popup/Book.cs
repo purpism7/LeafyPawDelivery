@@ -250,7 +250,6 @@ namespace UI
             {
                 IListener = this,
                 Story = story,
-                PlaceId = _placeId,
             };
 
             if (storyCell != null)

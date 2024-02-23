@@ -14,7 +14,6 @@ namespace UI.Component
         {
             public IListener IListener = null;
             public Story Story = null;
-            public int PlaceId = 0;
         }
 
         public interface IListener
@@ -47,7 +46,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            var key = _data.Story.PlaceId + "_" + _data.Story.Id + "_name";
+            var key = GameUtils.ActivityPlaceId  + "_" + _data.Story.Id + "_name";
             var localStoryName = LocalizationSettings.StringDatabase.GetLocalizedString("Story", key);
 
             storyNameTMP?.SetText(localStoryName);

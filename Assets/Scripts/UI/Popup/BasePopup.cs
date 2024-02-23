@@ -32,8 +32,13 @@ namespace UI
 
         protected void ActivateChildComponent(System.Type type)
         {
-            var activateAction = _compActivateActionDic[type];
-            activateAction?.Invoke();
+            if (_compActivateActionDic == null)
+                return;
+
+            if(_compActivateActionDic.TryGetValue(type, out System.Action action))
+            {
+                action?.Invoke();
+            } 
         }
 
         public override void Activate()
