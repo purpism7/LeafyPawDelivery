@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5232913072489922472}
   - component: {fileID: 5165319654346779004}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Story_Map03_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 2783086746705177749}
   - component: {fileID: 1100178023245947620}
   - component: {fileID: 1374745607544771627}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 512491524534681906}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Reian_Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 2485150793770765432}
   - component: {fileID: 5435826646654060607}
   - component: {fileID: 2659239649137873911}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_13_Idle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8259982323651886781}
   - component: {fileID: 2982475657108385199}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Background_map3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4535663741942355891}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cascia_Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 2503473463441339351}
   - component: {fileID: 9068103472476690495}
   - component: {fileID: 3550545097608890529}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_12_Idle_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
