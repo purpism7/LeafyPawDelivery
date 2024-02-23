@@ -674,6 +674,14 @@ MonoBehaviour:
     m_Localized: Kara
     m_Metadata:
       m_Items: []
+  - m_Id: 72337287944331264
+    m_Localized: Reian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72340320266739712
+    m_Localized: Cascia
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
