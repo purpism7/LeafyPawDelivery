@@ -89,7 +89,8 @@ namespace UI
                 tabToggle.SetIsOnWithoutNotify(true);
             }
 
-            //DelayResetAddAnimal();
+            animalScrollRect?.ResetScrollPos();
+            objectScrollRect?.ResetScrollPos();
         }
 
         public override void Deactivate()

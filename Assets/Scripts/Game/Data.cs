@@ -10,5 +10,6 @@ namespace Game
 
         public static int PlayerPrefsVersion = 23;
         public static string PlayPrefsKeyLastPlaceKey = "KeyLastPlaceId_" + PlayerPrefsVersion;
+        public static string PlayPrefsKeyNickName = "KeyNickName_" + PlayerPrefsVersion;
     }
 }

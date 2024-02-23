@@ -26,8 +26,6 @@ namespace GameSystem
         public static string NickName { get { return _instance?._nickName; } }
         public static EType ELoginType { get { return _instance._eType; } } 
 
-        private readonly string KeyNickName = string.Empty;
-
         public enum EType
         {
             Local,
@@ -42,8 +40,6 @@ namespace GameSystem
         public Auth()
         {
             _instance = this;
-
-            KeyNickName = GetType() + "NickName";
         }
 
         public async UniTask AsyncInitialize()
@@ -63,7 +59,7 @@ namespace GameSystem
             //                //var player = await GKLocalPlayer.Authenticate();
             //                //Debug.Log($"GameKit Authentication: player {player}");
 
-            _nickName = PlayerPrefs.GetString(KeyNickName, string.Empty);
+            _nickName = PlayerPrefs.GetString(Game.Data.PlayPrefsKeyNickName, string.Empty);
 
             if (Application.isEditor)
             {
@@ -199,7 +195,7 @@ namespace GameSystem
         {
             _nickName = nickName;
 
-            PlayerPrefs.SetString(KeyNickName, nickName);
+            PlayerPrefs.SetString(Game.Data.PlayPrefsKeyNickName, nickName);
         }
 
         //public IEnumerator CoInitialize()

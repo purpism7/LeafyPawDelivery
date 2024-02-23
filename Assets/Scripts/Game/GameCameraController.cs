@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-using DG.Tweening;
-using Cysharp.Threading.Tasks;
-
 namespace GameSystem
 {
     public interface IGameCameraCtr
@@ -38,7 +35,7 @@ namespace GameSystem
         private float _halfHeight = 0;
         private float _dragWidth = 0;
         private Vector3 _velocity = Vector3.zero;
-        private float _smoothTime = 0.05f;
+        private float _smoothTime = 0.02f;
 
         private float _width = 0;
 
