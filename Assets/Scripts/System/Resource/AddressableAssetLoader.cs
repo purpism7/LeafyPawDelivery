@@ -278,7 +278,6 @@ namespace GameSystem
                     var gameCommon = resultGameObj.GetComponent<Game.Common>();
                     if (gameCommon != null)
                     {
-                        Debug.Log(gameCommon.GetType().FullName);
                         _gameObjDic.TryAdd(gameCommon.GetType().FullName, resultGameObj);
                     }
                 });
@@ -333,7 +332,7 @@ namespace GameSystem
         public async UniTask LoadAnimalAssetAsync(int placeId)
         {
             string typeKey = string.Format("{0}_{1}", AssetLabelAnimal, placeId);
-            Debug.Log("Animal typeKey = " + typeKey);
+            
             await LoadAssetAsync<GameObject>(typeKey,
                 (resourceLocation) =>
                 {
@@ -498,7 +497,6 @@ namespace GameSystem
             {
                 if(dic.TryGetValue(id, out GameObject gameObj))
                 {
-                     Debug.Log("instantiate = " + gameObj.name);
                     return GameObject.Instantiate(gameObj, rootTm);
                 }
             }

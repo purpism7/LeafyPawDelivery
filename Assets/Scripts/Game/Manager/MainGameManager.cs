@@ -68,11 +68,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>());
         AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>());
-
         AddManager(typeof(Game.PlaceManager), placeMgr);
         AddManager(typeof(Game.StoryManager), gameObject.GetOrAddComponent<Game.StoryManager>());
         AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>());
         AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
+        
         AddManager(typeof(Game.BoostManager), boostMgr);
 
         _gameStateDic.Clear();
@@ -114,6 +114,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         Info.Connector.Create(transform);
         Game.Notification.Create(transform);
+        Game.Timer.Create(transform);
 
         IsTutorial = CheckIsTutorial;
         //yield return EndLoadAsync(true);
@@ -279,7 +280,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             var animalMgr = Get<Game.AnimalManager>();
             if(animalMgr != null)
             {
-                Debug.Log("CheckIsTutorial = " + animalMgr.CheckGetStarter);
                 if(!animalMgr.CheckGetStarter)
                     return true;
             }
@@ -287,7 +287,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             var objectMgr = Get<Game.ObjectManager>();
             if (objectMgr != null)
             {
-                Debug.Log("CheckIsTutorial = " + objectMgr.CheckGetStarter);
                 if (!objectMgr.CheckGetStarter)
                     return true;
             }

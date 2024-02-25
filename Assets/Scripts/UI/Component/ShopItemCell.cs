@@ -4,12 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Purchasing;
+using System;
 
 using TMPro;
 
 namespace UI.Component
 {
-    public class ShopItemCell : BaseComponent<ShopItemCell.Data_>
+    public interface IShopItemCell
+    {
+        Data.Shop ShopData { get; }
+
+        void End();
+    }
+
+    public class ShopItemCell : BaseComponent<ShopItemCell.Data_>, IShopItemCell
     {
         public class Data_ : BaseData
         {
@@ -20,7 +28,7 @@ namespace UI.Component
 
         public interface IListener
         {
-            void Buy(Data.Shop shopData, Vector3 pos);
+            void Buy(IShopItemCell iShopItemCell, Vector3 pos);
         }
 
         [SerializeField]
@@ -35,11 +43,14 @@ namespace UI.Component
         [SerializeField]
         private OpenCondition openCondition = null;
 
+        //private System.DateTime? _endDateTime = null;
+
         public override void Initialize(Data_ data)
         {
             base.Initialize(data);
 
             SetItemType();
+            SetPlayTimer(true);
         }
 
         public override void Activate()
@@ -77,6 +88,9 @@ namespace UI.Component
             if (shopData == null)
                 return;
 
+            if (iconImg == null)
+                return;
+
             var atlasLoader = GameSystem.ResourceManager.Instance?.AtalsLoader;
             if (atlasLoader == null)
                 return;
@@ -102,6 +116,13 @@ namespace UI.Component
             valueTMP?.SetText("x" + shopData.Value);
         }
 
+        private void SetFreeTMP()
+        {
+            var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "free", LocalizationSettings.SelectedLocale);
+
+            paymentValueTMP?.SetText(text);
+        }
+
         private void SetPaymentValue()
         {
             var shopData = _data?.shopData;
@@ -112,9 +133,7 @@ namespace UI.Component
 
             if (shopData.EPayment == Game.Type.EPayment.Advertising)
             {
-                var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "free", LocalizationSettings.SelectedLocale);
-
-                paymentValueTMP?.SetText(text);
+                SetFreeTMP();
             }
             else
             {
@@ -142,6 +161,32 @@ namespace UI.Component
             }
         }
 
+        private void SetPlayTimer(bool initialize)
+        {
+            var shopData = _data?.shopData;
+            if (shopData == null)
+                return;
+
+            if (shopData.EPayment != Game.Type.EPayment.Advertising)
+                return;
+
+            Game.Timer.Get?.Add(
+                new Game.Timer.Data()
+                {
+                    initialize = initialize,
+                    key = shopData.ProductId,
+                    timeTMP = paymentValueTMP,
+                    btn = iAPButton?.button,
+                    //addSec = 60f * 60f * 3f,
+                    addSec = 60f * 3f,
+                    endAction = () =>
+                    {
+                        //iAPButton?.button?.SetInteractable(true);
+                        SetFreeTMP();
+                    },
+                });
+        }
+
         private void OnPurchaseComplete(Product product)
         {
             Debug.Log("OnPurchaseComplete");
@@ -163,9 +208,72 @@ namespace UI.Component
         //    Debug.Log("OnPurchaseFetched");
         //}
 
+        #region IShopItemCell
+        Data.Shop IShopItemCell.ShopData
+        {
+            get
+            {
+                if (_data == null)
+                    return null;
+
+                return _data.shopData;
+            }
+        }
+
+        //void IShopItemCell.ChainUpdate(System.DateTime dateTime, float timeSec, bool isSync)
+        //{
+        //    if (_endDateTime == null ||
+        //       !_endDateTime.HasValue)
+        //        return;
+
+        //    if (!isSync)
+        //    {
+        //        iAPButton.button.interactable = false;
+        //        paymentValueTMP?.SetText("-");
+
+        //        return;
+        //    }
+   
+        //    double remainSec = (_endDateTime.Value - dateTime.ToUniversalTime()).TotalSeconds - timeSec;
+        //    if (remainSec > 0)
+        //    {
+        //        paymentValueTMP?.SetText(TimeSpan.FromSeconds(remainSec).ToString(@"hh\:mm\:ss"));
+        //    }
+        //    else
+        //    {
+        //        _endDateTime = null;
+        //    }
+        //}
+
+        //bool IShopItemCell.CheckSetRemainPlayTime(System.DateTime dateTime)
+        //{
+        //    var utc = dateTime.ToUniversalTime();
+
+        //    if (_endDateTime != null &&
+        //        _endDateTime.HasValue)
+        //    {
+        //        if ((_endDateTime.Value - utc).TotalSeconds > 0)
+        //        {
+        //            return false;
+        //        }
+        //    }
+
+        //    _endDateTime = utc.AddSeconds(60 * 60 * 3f);
+
+        //    return true;
+        //}
+
+        void IShopItemCell.End()
+        {
+            //iAPButton?.button?.SetInteractable(false);
+
+            SetPlayTimer(false);
+        }
+        #endregion
+
         public void OnClick()
         {
-            _data?.iListener?.Buy(_data?.shopData, transform.position);
+            _data?.iListener?.Buy(this, transform.position);
         }
     }
 }

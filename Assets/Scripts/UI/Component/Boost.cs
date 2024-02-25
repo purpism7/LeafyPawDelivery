@@ -47,9 +47,11 @@ namespace UI.Component
             if (!_activate)
                 return;
 
-            if (_endDateTime == null)
+            if (_endDateTime == null ||
+                !_endDateTime.HasValue)
                 return;
-            
+
+       
             var remainTime = _endDateTime.Value.Subtract(System.DateTime.UtcNow);
 
             remainTimeTMP?.SetText(remainTime.ToString(@"mm\:ss"));

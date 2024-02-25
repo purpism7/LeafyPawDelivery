@@ -16,7 +16,7 @@ namespace UI
         {
             _compActivateActionDic.Clear();
 
-            var baseComponents = rootRectTm.GetComponentsInChildren<Base>();
+            var baseComponents = rootRectTm.GetComponentsInChildren<Base>(true);
 
             foreach(var baseComponent in baseComponents)
             {

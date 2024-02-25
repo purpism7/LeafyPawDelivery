@@ -7,6 +7,7 @@ using UnityEngine.Purchasing.Extension;
 using System.Linq;
 
 using UnityEngine.Localization.Settings;
+using Cysharp.Threading.Tasks;
 
 using UI.Component;
 using GameSystem;
@@ -23,9 +24,6 @@ namespace UI
         [SerializeField]
         private ScrollRect itemScrollRect = null;
 
-        //private bool _initializeStore = false;
-
-        private Data.Shop _buyShopData = null;
         private System.Action _endBuyAction = null;
 
         public override IEnumerator CoInitialize(Data_ data)
@@ -54,28 +52,7 @@ namespace UI
         {
             base.Deactivate();
         }
-
-        //private void InitializeIAP()
-        //{
-        //    _initializeStore = false;
-
-        //    if (_iStoreCtr != null)
-        //    {
-        //        _initializeStore = true;
-
-        //        return;
-        //    }                
-
-        //    ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-
-        //    foreach (var productItem in ProductCatalog.LoadDefaultCatalog().allValidProducts)
-        //    {
-        //        builder.AddProduct(productItem.id, productItem.type);
-        //    }
-
-        //    UnityPurchasing.Initialize(this, builder);
-        //}
-
+      
         private IEnumerator CoSetItemList()
         {
             var shopListDic = ShopContainer.Instance?.ShopListDic;
@@ -109,16 +86,17 @@ namespace UI
             yield return null;
         }
 
-        void ShopItemCell.IListener.Buy(Data.Shop shopData, Vector3 pos)
+        void ShopItemCell.IListener.Buy(IShopItemCell iShopItemCell, Vector3 pos)
         {
-            if (shopData == null)
+            if (iShopItemCell == null ||
+                iShopItemCell.ShopData == null)
                 return;
 
             var uiMgr = Game.UIManager.Instance;
             if (uiMgr == null)
                 return;
 
-            _buyShopData = shopData;
+            var shopData = iShopItemCell.ShopData;
 
             switch(shopData.EPayment)
             {
@@ -161,11 +139,20 @@ namespace UI
 
                 case Game.Type.EPayment.Advertising:
                     {
-
-                        AdMob.Get?.LoadRewardedInterstitialAd(shopData.ProductId,
+                        AdMob.Get?.ShowAd(shopData.ProductId,
                             () =>
                             {
+                                if(shopData.ECategory == Game.Type.ECategory.Cash)
+                                {
+                                    uiMgr.Top?.CollectCashCurrency(pos, shopData.Value);
+                                }
+                                else
+                                {
+                                    var eElement = shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object;
+                                    uiMgr.Top?.CollectCurrency(pos, eElement, shopData.Value);
+                                }
 
+                                iShopItemCell.End();
                             });
 
                         break;

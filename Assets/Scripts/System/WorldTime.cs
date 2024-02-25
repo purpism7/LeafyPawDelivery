@@ -15,41 +15,68 @@ namespace GameSystem
             public string datetime;
         }
 
-        public DateTime? LocalTime { get; private set; } = null;
+        public DateTime? DateTime { get; private set; } = null;
+        public bool Sync { get; private set; } = false;
 
         private void Start()
         {
-            AsyncWebRequest().Forget();
+            RequestAsync().Forget();
 
-            LocalTime = DateTime.UtcNow.ToLocalTime();
+            //LocalTime = DateTime.UtcNow.ToLocalTime();
         }
 
-        private async UniTask AsyncWebRequest()
+        private void OnApplicationPause(bool pause)
         {
-            UnityWebRequest webRequest = new UnityWebRequest();
-
-            using (webRequest = UnityWebRequest.Get("https://worldtimeapi.org/api/ip"))
+            if (!pause)
             {
-                await webRequest.SendWebRequest();
+                RequestAsync().Forget();
+            }
+            else
+            {
+                Sync = false;
+            }
+        }
 
-                if(webRequest.result == UnityWebRequest.Result.Success)
+        public async UniTask<DateTime?> RequestAsync()
+        {
+            try
+            {
+                Sync = false;
+
+                UnityWebRequest webRequest = new UnityWebRequest();
+
+                using (webRequest = UnityWebRequest.Get(Game.Data.Const.WorldTimeURI))
                 {
-                    var timeData = JsonUtility.FromJson<TimeData>(webRequest.downloadHandler.text);
+                    await webRequest.SendWebRequest();
 
-                    if (string.IsNullOrEmpty(timeData.datetime))
-                        return;
-                    
-                    if(DateTime.TryParse(timeData.datetime, out DateTime dateTime))
+                    if (webRequest.result == UnityWebRequest.Result.Success)
                     {
-                        Debug.Log("time = " + timeData.datetime);
-                        LocalTime = dateTime.ToLocalTime();
+                        var timeData = JsonUtility.FromJson<TimeData>(webRequest.downloadHandler.text);
+
+                        if (string.IsNullOrEmpty(timeData.datetime))
+                            return null;
+
+                        if (System.DateTime.TryParse(timeData.datetime, out DateTime dateTime))
+                        {
+                            DateTime = dateTime;
+
+                            Sync = true;
+
+                            return dateTime;
+                        }
+                    }
+                    else
+                    {
+
                     }
                 }
-                else
-                {
-
-                }
             }
+            catch(Exception e)
+            {
+                Debug.LogError(e);
+            }
+
+            return null;
         }
     }
 }

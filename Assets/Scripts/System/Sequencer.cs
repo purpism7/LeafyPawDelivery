@@ -115,13 +115,12 @@ public class Sequencer : Game.Common
         }
 
         _eTaskState = ETaskState.Begin;
-        Debug.Log("Sequence Begin Task = " + iTask.GetType().FullName);
+        
         iTask.Begin();
 
         await UniTask.WaitUntil(() => iTask.End);
 
         _eTaskState = ETaskState.End;
-        Debug.Log("Sequence End Task");
 
         //await UniTask.WaitForSeconds(0.1f);
 

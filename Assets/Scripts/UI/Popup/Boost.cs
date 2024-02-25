@@ -38,6 +38,13 @@ namespace UI
         [SerializeField]
         private RectTransform activateRootRectTm = null;
 
+        [SerializeField]
+        private Button buyBtn = null;
+        [SerializeField]
+        private TextMeshProUGUI remainPlayTimeTMP = null;
+
+        private bool _initialize = true;
+
         public override void Initialize(Data data)
         {
             base.Initialize(data);
@@ -50,6 +57,12 @@ namespace UI
             if (data != null)
             {
                 SetBoostState(data.activate);
+                SetPlayTimer(false);
+            }
+
+            if(_initialize)
+            {
+                _initialize = false;
             }
         }
 
@@ -121,6 +134,28 @@ namespace UI
             _data.endDateTime = null;
         }
 
+        private void SetPlayTimer(bool buy)
+        {
+            if (!_initialize || !buy)
+                return;
+
+            //buyBtn?.SetInteractable(false);
+
+            Game.Timer.Get?.Add(
+                new Game.Timer.Data()
+                {
+                    initialize = _initialize,
+                    key = _data.adId,
+                    timeTMP = remainPlayTimeTMP,
+                    btn = buyBtn,
+                    addSec = 60f * 6f,
+                    endAction = () =>
+                    {
+                        remainPlayTimeTMP.GetComponent<UnityEngine.Localization.Components.LocalizeStringEvent>()?.RefreshString();
+                    }
+                });
+        }
+
         public void OnClickCancel()
         {
             Deactivate();
@@ -131,7 +166,7 @@ namespace UI
             if (_data == null)
                 return;
 
-            GameSystem.AdMob.Get?.LoadRewardedInterstitialAd(_data.adId,
+            GameSystem.AdMob.Get?.ShowAd(_data.adId,
                 () =>
                 {
                     _data = _data?.iListener?.Buy();
@@ -140,6 +175,8 @@ namespace UI
                     {
                         SetBoostState(_data.activate);
                     }
+
+                    SetPlayTimer(true);
                 });
         }
     }

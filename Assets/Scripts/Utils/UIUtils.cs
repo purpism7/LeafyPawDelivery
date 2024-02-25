@@ -113,4 +113,12 @@ public static class UIUtils
         float value = (index * cellSize) / (scroll.content.rect.width - scrollRectTm.rect.width);
         scroll.horizontalNormalizedPosition = value;
     }
+
+    public static void SetInteractable(this Button btn, bool interactable)
+    {
+        if (btn == null)
+            return;
+
+        btn.interactable = interactable;
+    }
 }

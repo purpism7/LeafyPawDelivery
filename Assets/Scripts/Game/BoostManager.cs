@@ -17,19 +17,18 @@ namespace Game
         private Boost boost = null;
 
         private List<UI.Component.Boost> _boostCompList = null;
+        private Dictionary<Game.Type.EBoost, float> _boostRemainPlayTimeDic = null;
 
         private void OnApplicationPause(bool pause)
         {
             if (pause)
             {
-                //SaveRemainTime();
                 Save();
             }
         }
 
         private void OnApplicationQuit()
         {
-            //SaveRemainTime();
             Save();
         }
 
@@ -71,6 +70,7 @@ namespace Game
                     .SetData(new UI.Component.Boost.Data()
                     {
                         iconSprite = boostData.iconSprite,
+                        adId = boostData.adId,
                         eBoost = boostData.eBoost,
                         timeSec = boostData.timeSec,
                         localKey = boostData.localKey,
@@ -113,7 +113,7 @@ namespace Game
                     continue;
 
                 PlayerPrefs.SetString(boost.EBoost.ToString(), boost.RemainTimeSec.ToString());
-        }
+            }
         }
 
         public double GetBoostRemainSec(Game.Type.EBoost eBoost)
