@@ -90,11 +90,11 @@ SpriteAtlas:
   - Shop_Jewel_01
   - Shop_Acorn_01
   - Shop_Shellfish_02
-  - Shop_Clam_01
+  - Shop_Fish_01
   - Shop_Star_02
   - Shop_Moon_01
   - Shop_Moon_02
-  - Shop_Clam_02
+  - Shop_Fish_02
   m_RenderDataMap: {}
   m_Tag: Shop
   m_IsVariant: 0

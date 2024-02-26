@@ -52,13 +52,16 @@ SpriteAtlas:
     packedSpriteRenderDataKeys:
     - 6d4a68205fcf44a6a8965cb844b58024: 21300000
     - a3f1c512a72da42f497d8fa7b5136608: 21300000
+    - 628fdec349beb46cf9ed21a8bb8e3aa8: 21300000
     - 32cbddd52e9ad4a778cde1cccb5bd66d: 21300000
     - 1dc54b56dda6d482fbb76370c7e4032f: 21300000
     - 96ba8257925c04dc381f618dce3ccf91: 21300000
+    - bf3ef957d36384b58b55e7a0b4e3da4e: 21300000
     - 02f4a0da180774ecda98e49046272a85: 21300000
     - 64044fea1516840cfa36a9cfa1dec0e0: 21300000
     - 6f35978b4b7e543a584fa0cdb3a0bb85: 21300000
     - d46752cc575fa4268b13ddf2f3daa77d: 21300000
+    - 2aa1555e2a81b4b4eb4681b1e04e9390: 21300000
     - 926147ee6b1b34635a56e2ba26f07eef: 21300000
     - fe0b234f7590f48cdb5ae7d91fb9b6e9: 21300000
     - bff680ef452c64843b87b3c75ab5079f: 21300000
@@ -66,26 +69,32 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 6d4a68205fcf44a6a8965cb844b58024, type: 3}
   - {fileID: 21300000, guid: a3f1c512a72da42f497d8fa7b5136608, type: 3}
+  - {fileID: 21300000, guid: 628fdec349beb46cf9ed21a8bb8e3aa8, type: 3}
   - {fileID: 21300000, guid: 32cbddd52e9ad4a778cde1cccb5bd66d, type: 3}
   - {fileID: 21300000, guid: 1dc54b56dda6d482fbb76370c7e4032f, type: 3}
   - {fileID: 21300000, guid: 96ba8257925c04dc381f618dce3ccf91, type: 3}
+  - {fileID: 21300000, guid: bf3ef957d36384b58b55e7a0b4e3da4e, type: 3}
   - {fileID: 21300000, guid: 02f4a0da180774ecda98e49046272a85, type: 3}
   - {fileID: 21300000, guid: 64044fea1516840cfa36a9cfa1dec0e0, type: 3}
   - {fileID: 21300000, guid: 6f35978b4b7e543a584fa0cdb3a0bb85, type: 3}
   - {fileID: 21300000, guid: d46752cc575fa4268b13ddf2f3daa77d, type: 3}
+  - {fileID: 21300000, guid: 2aa1555e2a81b4b4eb4681b1e04e9390, type: 3}
   - {fileID: 21300000, guid: 926147ee6b1b34635a56e2ba26f07eef, type: 3}
   - {fileID: 21300000, guid: fe0b234f7590f48cdb5ae7d91fb9b6e9, type: 3}
   - {fileID: 21300000, guid: bff680ef452c64843b87b3c75ab5079f, type: 3}
   m_PackedSpriteNamesToIndex:
   - StoryIcon_Map02_Balla
   - EditIcon_Map02_Animal_11
+  - BookIcon_Map02_Animal_08
   - EditIcon_Map02_Animal_10
   - BookIcon_Map02_Animal_7
   - BookIcon_Map02_Animal_11
+  - BookIcon_Map02_Animal_07
   - BookIcon_Map02_Animal_10
   - StoryIcon_Map02_Brie
   - EditIcon_Map02_Animal_8
   - BookIcon_Map02_Animal_9
+  - BookIcon_Map02_Animal_09
   - EditIcon_Map02_Animal_9
   - EditIcon_Map02_Animal_7
   - BookIcon_Map02_Animal_8

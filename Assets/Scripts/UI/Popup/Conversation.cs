@@ -45,6 +45,7 @@ namespace UI
                 if (string.IsNullOrEmpty(SpeakerSpriteName))
                 {
                     SpeakerSpriteName = "StoryIcon_Map01_Player";
+                    isPlayer = true;
                 }
             }
         }

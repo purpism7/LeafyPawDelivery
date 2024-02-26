@@ -357,6 +357,8 @@ namespace UI
                             IListener = this,
                             Cash = animalSkinData.Cash,
                             targetSprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalSkinSprite(animalSkinData.ImgName),
+
+                            scale = 1.5f,
                         })
                         .Create();
 

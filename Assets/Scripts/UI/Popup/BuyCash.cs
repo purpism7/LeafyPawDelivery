@@ -14,6 +14,7 @@ namespace UI
             public IListener IListener = null;
             public int Cash = 0;
             public Sprite targetSprite = null;
+            public float scale = 1f;
         }
 
         public interface IListener
@@ -53,6 +54,12 @@ namespace UI
 
             buyTargetImg.sprite = _data.targetSprite;
             buyTargetImg.SetNativeSize();
+
+            var rectTm = buyTargetImg.GetComponent<RectTransform>();
+            if(rectTm)
+            {
+                rectTm.localScale = Vector3.one * _data.scale;
+            }
         }
 
         private void SetOpenCondition()

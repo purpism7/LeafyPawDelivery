@@ -7,6 +7,7 @@ using UnityEngine.Localization.Settings;
 
 using TMPro;
 using DG.Tweening;
+using UnityEngine.Localization.Components;
 
 using GameSystem;
 
@@ -101,6 +102,8 @@ namespace UI.Component
             SetNameTMP();
 
             ActivateOpenConditionList();
+
+            openDescTMP?.GetComponent<LocalizeStringEvent>()?.RefreshString();
         }
 
         public override void Deactivate()
