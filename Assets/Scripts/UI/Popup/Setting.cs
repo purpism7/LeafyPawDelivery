@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 using UnityEngine.Localization.Settings;
 
+using GameSystem;
+
 namespace UI
 {
     public class Setting : BasePopup<BaseData>
@@ -95,7 +97,7 @@ namespace UI
             var setting = Info.Setting.Get;
 
             int index = 0;
-            if(setting != null)
+            if (setting != null)
             {
                 index = setting.LocaleIndex;
             }
@@ -135,6 +137,23 @@ namespace UI
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
         }
         #endregion
+
+        public void OnClickSNS()
+        {
+            Application.OpenURL("http://www.instagram.com/leafypawdelivery/");
+        }
+
+        public void OnClickSpecialThanks()
+        {
+            Sequencer.EnqueueTask(
+                () =>
+                {
+                    var specialThanks = new PopupCreator<SpecialThanks, BaseData>()
+                        .Create();
+
+                    return specialThanks;
+                });
+        }
     }
 }
 

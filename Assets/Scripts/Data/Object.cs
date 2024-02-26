@@ -7,7 +7,7 @@ public class Object : ElementData
 {
     [SerializeField]
     private int Grade = 0;
-    public int Count = 1;
+    public int Count = 0;
     [SerializeField]
     private int order = 0;
 
@@ -25,10 +25,13 @@ public class Object : ElementData
 
         System.Enum.TryParse(Grade.ToString(), out EGrade);
 
-        Count = Grade;
-        if(EGrade == Game.Type.EObjectGrade.None)
+        if(Count <= 0)
         {
-            Count = 1;
+            Count = Grade;
+            if (EGrade == Game.Type.EObjectGrade.None)
+            {
+                Count = 1;
+            }
         }
 
         string placeId = PlaceId > 9 ? PlaceId.ToString() : "0" + PlaceId;
