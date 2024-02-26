@@ -229,6 +229,10 @@ MonoBehaviour:
     m_Key: contact
     m_Metadata:
       m_Items: []
+  - m_Id: 72908610588368896
+    m_Key: would_buy
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

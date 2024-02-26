@@ -267,6 +267,10 @@ MonoBehaviour:
     m_Localized: Contact
     m_Metadata:
       m_Items: []
+  - m_Id: 72908610588368896
+    m_Localized: Would you like to buy?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
