@@ -107,7 +107,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39133045184258048
-    m_Localized: Please don't bother me about trivial things.
+    m_Localized: Please don't bother me.
     m_Metadata:
       m_Items: []
   - m_Id: 39133232107610112
@@ -121,7 +121,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39133434998677504
-    m_Localized: 'Nice to meet you! I''m Kara, a traveling author! '
+    m_Localized: 'I''m Kara, a traveling author! '
     m_Metadata:
       m_Items: []
   - m_Id: 39133583212797952
@@ -143,7 +143,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 42994134263259136
-    m_Localized: "It\u2019s getting pretty late... where could Balla be?"
+    m_Localized: "It\u2019s getting pretty late... \nwhere could Balla be?"
     m_Metadata:
       m_Items: []
   - m_Id: 42994194006925312
@@ -191,7 +191,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 42994875992367104
-    m_Localized: "It\u2019s going to be a good day tomorrow, too."
+    m_Localized: "It\u2019s going to be a good day \ntomorrow, too."
     m_Metadata:
       m_Items: []
   - m_Id: 65106163824320512
@@ -227,7 +227,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 65107201574821888
-    m_Localized: "I\u2019m going to collect some pink clamshells."
+    m_Localized: "I\u2019m going to collect some \npink clamshells."
     m_Metadata:
       m_Items: []
   - m_Id: 65107215516688384
