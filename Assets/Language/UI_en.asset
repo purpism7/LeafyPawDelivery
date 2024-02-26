@@ -83,7 +83,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41339193681502208
-    m_Localized: Effect
+    m_Localized: Sound effect
     m_Metadata:
       m_Items: []
   - m_Id: 41339547789811712
@@ -253,6 +253,14 @@ MonoBehaviour:
       Have fun playing
 
       "Leafy Paw Delivery"!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72905299411853312
+    m_Localized: Langauge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72905367967752192
+    m_Localized: See list
     m_Metadata:
       m_Items: []
   references:
