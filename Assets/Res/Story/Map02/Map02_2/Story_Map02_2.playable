@@ -326,9 +326,9 @@ MonoBehaviour:
       SpeakerSpriteName: 
     - Table: Story
       Key: 2_2_11
-      SpeakerKey: 
+      SpeakerKey: brie
       SpeakerSpriteName: StoryIcon_Map02_Brie
     - Table: Story
       Key: 2_2_12
-      SpeakerKey: 
-      SpeakerSpriteName: 
+      SpeakerKey: brie
+      SpeakerSpriteName: StoryIcon_Map02_Brie
