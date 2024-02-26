@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using GameSystem;
-using UI.Component;
+using DG.Tweening;
+
 using UnityEngine;
 using UnityEngine.UI;
+
+using GameSystem;
+using UI.Component;
 
 namespace UI
 {
@@ -16,6 +19,8 @@ namespace UI
 
         [SerializeField]
         private MapIcon[] mapIcons = null;
+        [SerializeField]
+        private RectTransform myLocationRectTm = null;
 
         public override void Initialize(Data data)
         {
@@ -38,6 +43,13 @@ namespace UI
             SetMapIcons();
 
             InitializeChildComponent();
+
+            Sequence sequence = DOTween.Sequence()
+              .SetAutoKill(false)
+              .Append(myLocationRectTm.DOJumpAnchorPos(Vector2.up * 2f, 15f, 1, 0.7f))
+              .AppendInterval(0.1f);
+            sequence.Restart();
+            sequence.SetLoops(-1);
         }
 
         public override void Activate()
@@ -57,10 +69,11 @@ namespace UI
                 if (mapIcon == null)
                     continue;
 
-                mapIcon?.Initialize(new MapIcon.Data()
-                {
-                    IListener = this,
-                });
+                mapIcon?.Initialize(
+                    new MapIcon.Data()
+                    {
+                        IListener = this,
+                    });
             }
         }
 
@@ -90,12 +103,14 @@ namespace UI
         }
 
         #region MapIcon.IListener
-        void MapIcon.IListener.SelectPlace(int id)
+        void MapIcon.IListener.SelectPlace(int placeId, System.Action<RectTransform> action)
         {
-            if (GameUtils.ActivityPlaceId == id)
+            if (GameUtils.ActivityPlaceId == placeId)
                 return;
 
             Deactivate();
+
+            action?.Invoke(myLocationRectTm);
 
             Sequencer.EnqueueTask(
                 () =>
@@ -105,12 +120,20 @@ namespace UI
                        .SetAnimActivate(false)
                        .SetData(new Loading.Data()
                        {
-                           PlaceId = id,
+                           PlaceId = placeId,
                        })
                        .Create();
 
                     return loading;
                 }); 
+        }
+
+        void MapIcon.IListener.SetMyLocation(int placeId, System.Action<RectTransform> action)
+        {
+            if (GameUtils.ActivityPlaceId != placeId)
+                return;
+
+            action?.Invoke(myLocationRectTm);
         }
         #endregion
     }

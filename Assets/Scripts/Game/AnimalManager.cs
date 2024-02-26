@@ -26,8 +26,6 @@ namespace Game
         {
             if(pause)
             {
-
-
                 SaveAnimalPos();
             }
         }
@@ -79,7 +77,6 @@ namespace Game
             {
                 if (_data == null)
                     return false;
-
 
                 var animalDataList = AnimalContainer.Instance.GetDataListByPlaceId(_data.PlaceId);
                 if (animalDataList == null)
@@ -157,7 +154,7 @@ namespace Game
 
                 _animalEvent?.Emit(data);
 
-                Info.UserManager.Instance?.User?.AddAnimal(animalInfo);
+                Info.UserManager.Instance?.AddAnimal(animalInfo);
 
                 Info.Connector.Get?.SetAddAnimal(id);
 
@@ -279,7 +276,7 @@ namespace Game
 
             _animalHolder.AddASkin(id, skinId);
 
-            Info.UserManager.Instance?.User?.AddAnimalSkin(id, skinId);
+            Info.UserManager.Instance?.AddAnimalSkin(id, skinId);
         }
         #endregion
 

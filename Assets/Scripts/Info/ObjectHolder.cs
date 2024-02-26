@@ -45,12 +45,10 @@ namespace Info
                     objectInfoList = JsonHelper.FromJson<Info.Object>(jsonStr)?.ToList();
                 }
 
-                var user = Info.UserManager.Instance?.User;
-                if (user == null)
-                    return;
+                var objectIdList = Info.UserManager.Instance?.User?.ObjectIdList;
+                if (objectIdList == null)
+                    continue;
 
-                var objectIdList = user.ObjectIdList;
-   
                 foreach (int objectId in objectIdList)
                 {
                     var objectData = ObjectContainer.Instance?.GetData(objectId);

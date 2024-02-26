@@ -16,7 +16,9 @@ namespace Info
         private const string _fileName = "User.txt";
         private const string _scretKey = "hANkyulusEr";
 
-        public User User { get; private set; } = null;
+        private User _user = null;
+
+        public User User { get { return _user; } }
 
         private void OnApplicationPause(bool pause)
         {
@@ -70,7 +72,7 @@ namespace Info
                     var decodeStr = System.IO.File.ReadAllText(_jsonFilePath);
                     var jsonStr = decodeStr.Decrypt(_scretKey);
 
-                    User = JsonUtility.FromJson<Info.User>(jsonStr);
+                    _user = JsonUtility.FromJson<Info.User>(jsonStr);
                     Debug.Log(jsonStr);
                 }
             }
@@ -142,10 +144,10 @@ namespace Info
 
         private void CreateUserInfo()
         {
-            if (User != null)
+            if (_user != null)
                 return;
 
-            User = new Info.User();
+            _user = new Info.User();
 
             var placeId = Game.Data.Const.StartPlaceId;
             var currency = Game.Data.Const.GetStartCurrency(placeId);
@@ -154,6 +156,27 @@ namespace Info
 
             //var jsonString = JsonUtility.ToJson(User);
             //System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonString);
+        }
+
+        public void AddAnimal(Info.Animal animalInfo)
+        {
+            _user?.AddAnimal(animalInfo);
+
+            Save();
+        }
+
+        public void AddAnimalSkin(int id, int skinId)
+        {
+            _user?.AddAnimalSkin(id, skinId);
+
+            Save();
+        }
+
+        public void AddObject(int id)
+        {
+            _user?.AddObject(id);
+
+            Save();
         }
 
         //private IEnumerator CoLoadUserInfo()
@@ -324,12 +347,14 @@ namespace Info
         {
             try
             {
-                var jsonStr = JsonUtility.ToJson(User);
+                var jsonStr = JsonUtility.ToJson(_user);
                 var encodeStr = jsonStr.Encrypt(_scretKey);
                 //var bytes = System.Text.Encoding.UTF8.GetBytes(jsonStr);
                 //var encodeStr = System.Convert.ToBase64String(bytes);
 
                 System.IO.File.WriteAllText(_jsonFilePath, encodeStr);
+
+                Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, encodeStr);
             }
             catch(Exception e)
             {
@@ -342,13 +367,13 @@ namespace Info
 
         public void SaveLastPlaceId()
         {
-            if (User == null)
+            if (_user == null)
                 return;
 
-            User.SetLastPlaceId(User.LastPlaceId + 1);
+            _user.SetLastPlaceId();
 
             Save();
-        }        
+        }
 
         //private void Save()
         //{
@@ -364,9 +389,19 @@ namespace Info
         //    firebaseMgr?.Database?.Save(userId, jsonString);
         //}
 
+        public void SetCurrency(Game.Type.EElement eElement, int currency)
+        {
+            _user?.SetCurrency(eElement, currency);
+        }
+
+        public void SetCurrency(User.Currency currency)
+        {
+            _user?.SetCurrency(currency);
+        }
+
         public void SaveCurrency(User.Currency currency)
         {
-            User?.SetCurrency(currency);
+            _user?.SetCurrency(currency);
 
             Save();
 
@@ -400,7 +435,7 @@ namespace Info
 
         public void SaveStory(int storyId)
         {
-            User?.SetStory(GameUtils.ActivityPlaceId, storyId);
+            _user?.SetStory(GameUtils.ActivityPlaceId, storyId);
 
             Save();
 
@@ -417,13 +452,6 @@ namespace Info
 
             //firebaseMgr?.Database?.SaveChild(userId, KeyUserStory, jsonStr);
 
-        }
-
-        public void Reset()
-        {
-            Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, string.Empty);
-
-            
         }
     }
 }

@@ -211,8 +211,9 @@ namespace Info
         }
         #endregion
 
-        public void SetLastPlaceId(int id)
+        public void SetLastPlaceId()
         {
+            int id = lastPlaceId + 1;
             if (lastPlaceId >= id)
                 return;
 

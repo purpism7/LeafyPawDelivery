@@ -10,7 +10,6 @@ namespace Plugin
 
         protected override void Initialize()
         {
-
             var eLoginType = GameSystem.Auth.ELoginType;
             if(eLoginType == GameSystem.Auth.EType.GooglePlayGames)
             {
@@ -80,11 +79,11 @@ namespace Plugin
 
     public abstract class Base : MonoBehaviour
     {
-#if UNITY_EDITOR
-        protected string _userInfoJsonFilePath = "Assets/Info/User.json";
-#else
-        protected string _userInfoJsonFilePath = Application.persistentDataPath + "/User.json";
-#endif
+//#if UNITY_EDITOR
+//        protected string _userInfoJsonFilePath = "Assets/Info/User.json";
+//#else
+//        protected string _userInfoJsonFilePath = Application.persistentDataPath + "/User.json";
+//#endif
 
         public abstract void Initialize();
 

@@ -121,7 +121,7 @@ namespace Game
                         eOpenConditionType = eOpenConditionType,
                     });
 
-                Info.UserManager.Instance?.User?.AddObject(id);
+                Info.UserManager.Instance?.AddObject(id);
 
                 Info.Connector.Get?.SetAddObject(id);
 

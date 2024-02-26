@@ -18,7 +18,8 @@ namespace UI.Component
 
         public interface IListener
         {
-            void SelectPlace(int id);
+            void SelectPlace(int placeId, System.Action<RectTransform> action);
+            void SetMyLocation(int placeId, System.Action<RectTransform> action);
         }
 
         [SerializeField]
@@ -29,12 +30,16 @@ namespace UI.Component
         private Image placeIconImg = null;
         [SerializeField]
         private Button[] enterBtns = null;
+        [SerializeField]
+        private RectTransform myLocationRootRectTm = null;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
             InitializeIsLock();
+
+            data?.IListener?.SetMyLocation(placeId, SetMyLocation);
         }
 
         public override void Activate()
@@ -123,9 +128,21 @@ namespace UI.Component
             }
         }
 
+        private void SetMyLocation(RectTransform myLocationRectTm)
+        {
+            if (!myLocationRectTm)
+                return;
+
+            if (!myLocationRootRectTm)
+                return;
+
+            myLocationRectTm.SetParent(myLocationRootRectTm);
+            myLocationRectTm.localPosition = Vector3.zero;            
+        }
+
         public void OnClick()
         {
-            _data?.IListener?.SelectPlace(placeId);
+            _data?.IListener?.SelectPlace(placeId, SetMyLocation);
 
             //Game.Toast.Get?.Show("show");
         }
