@@ -161,7 +161,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 62778767582420992
-    m_Localized: Find hidden {0}.
+    m_Localized: Find hidden "{0}".
     m_Metadata:
       m_Items: []
   - m_Id: 63491704366292992

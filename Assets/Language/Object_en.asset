@@ -323,19 +323,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 67632045654794240
-    m_Localized: Book
-    m_Metadata:
-      m_Items: []
-  - m_Id: 67632124323160064
     m_Localized: Straw hat
     m_Metadata:
       m_Items: []
-  - m_Id: 67632253532889088
+  - m_Id: 67632124323160064
     m_Localized: Bush
     m_Metadata:
       m_Items: []
-  - m_Id: 67632310806110208
+  - m_Id: 67632253532889088
     m_Localized: Red flowers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 67632310806110208
+    m_Localized: Big rock
     m_Metadata:
       m_Items: []
   - m_Id: 67632391533879296
@@ -424,6 +424,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 67634657213014016
     m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73754077014515712
+    m_Localized: Book
     m_Metadata:
       m_Items: []
   references:
