@@ -83,7 +83,7 @@ namespace Game
 
             Acorn,
             Star,
-            Clam,
+            Fish,
         }
 
         public enum EObjectCurrency
