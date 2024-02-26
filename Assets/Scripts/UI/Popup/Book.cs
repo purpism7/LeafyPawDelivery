@@ -59,6 +59,7 @@ namespace UI
 
             Game.Notification.Get?.AddListener(Notification.EType.AddAnimal, this);
             Game.Notification.Get?.AddListener(Notification.EType.AddObject, this);
+            Game.Notification.Get?.AddListener(Notification.EType.AddStory, this);
 
             _placeId = _data.PlaceId;
 
@@ -99,6 +100,7 @@ namespace UI
 
             Info.Connector.Get?.ResetAddAnimal();
             Info.Connector.Get?.ResetAddObject();
+            Info.Connector.Get?.ResetAddStory();
         }
 
         private void ActivateStoryCellList()
@@ -331,6 +333,19 @@ namespace UI
             }
         }
 
+        private void SetAddStory()
+        {
+            var connector = Info.Connector.Get;
+            if (connector == null)
+                return;
+
+            var redDotRectTm = tabRedDotRectTms[(int)Game.Type.ETab.Story];
+            if (redDotRectTm)
+            {
+                UIUtils.SetActive(redDotRectTm, connector.AddStoryId > 0);
+            }
+        }
+
         // 도감 오픈 오픈 시, Delay 후 RedDot 안 보이게 처리.
         //private void DelayResetAddAnimal()
         //{
@@ -415,6 +430,7 @@ namespace UI
         {
             SetAddAnimal();
             SetAddObject();
+            SetAddStory();
         }
         #endregion
     }

@@ -138,6 +138,8 @@ namespace Game
                 });
 
             UserManager.Instance?.SaveStory(story.Id);
+
+            Info.Connector.Get?.SetAddStory(story.Id);
         }
 
         private void EndStory(Story story)

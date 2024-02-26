@@ -66,6 +66,7 @@ namespace UI
                     {
                         Game.Notification.Get?.AddListener(Game.Notification.EType.AddAnimal, this);
                         Game.Notification.Get?.AddListener(Game.Notification.EType.AddObject, this);
+                        Game.Notification.Get?.AddListener(Game.Notification.EType.AddStory, this);
 
                         break;
                     }

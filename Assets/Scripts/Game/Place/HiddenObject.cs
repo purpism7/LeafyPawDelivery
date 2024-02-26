@@ -47,8 +47,8 @@ namespace Game.PlaceEvent
 
         private void ArrangeHiddenObject(int placeId)
         {
-            if (CheckExistHiddenObject)
-                return;
+            //if (CheckExistHiddenObject)
+            //    return;
 
             var objMgr = MainGameManager.Get<ObjectManager>();
             if (objMgr == null)
@@ -81,7 +81,7 @@ namespace Game.PlaceEvent
 
                 CreateHiddenObject(data);
 
-                break;
+                //break;
             }
         }
 
@@ -102,6 +102,9 @@ namespace Game.PlaceEvent
                     continue;
 
                 if (!iObject.HiddenObjectRootTm)
+                    continue;
+
+                if (iObject.CheckExistHiddenObject)
                     continue;
 
                 iObjectList?.Add(iObject);

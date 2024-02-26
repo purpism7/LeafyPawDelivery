@@ -12,8 +12,11 @@ namespace Game
             None,
 
             OpenPlace,
+
             AddAnimal,
             AddObject,
+            AddStory,
+
             CompleteDailyMission,
             CompleteAchievement,
         }

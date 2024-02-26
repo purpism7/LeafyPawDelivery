@@ -9,6 +9,8 @@ namespace Info
         private readonly string KeyOpenPlace = string.Empty;
         private readonly string KeyAddAnimal = string.Empty;
         private readonly string KeyAddObject = string.Empty;
+        private readonly string KeyAddStory = string.Empty;
+
         private readonly string KeyCompleteDailyMission = string.Empty;
         private readonly string KeyCompleteAchievement = string.Empty;
 
@@ -19,8 +21,11 @@ namespace Info
             var version = Game.Data.PlayerPrefsVersion;
 
             KeyOpenPlace = GetType().Name + "_OpenPlace_" + version;
+
             KeyAddAnimal = GetType().Name + "_AddAnimal_{0}_" + version;
             KeyAddObject = GetType().Name + "_AddObject_{0}_" + version;
+            KeyAddStory = GetType().Name + "_AddStory_{0}_" + version;
+
             KeyCompleteDailyMission = GetType().Name + "_CompleteDailyMission_ " + version;
             KeyCompleteAchievement = GetType().Name + nameof(KeyCompleteAchievement) + "_" + version;
 
@@ -101,6 +106,36 @@ namespace Info
             PlayerPrefs.SetInt(string.Format(KeyAddObject, GameUtils.ActivityPlaceId), 0);
 
             Game.Notification.Get?.Notify(Game.Notification.EType.AddObject);
+        }
+        #endregion
+
+        #region Add Story
+        public int AddStoryId
+        {
+            get
+            {
+                return PlayerPrefs.GetInt(string.Format(KeyAddStory, GameUtils.ActivityPlaceId));
+            }
+        }
+
+        public void SetAddStory(int id)
+        {
+            PlayerPrefs.SetInt(string.Format(KeyAddStory, GameUtils.ActivityPlaceId), id);
+
+            if (id > 0)
+            {
+                Game.Notification.Get?.Notify(Game.Notification.EType.AddStory);
+            }
+        }
+
+        public void ResetAddStory()
+        {
+            if (AddStoryId <= 0)
+                return;
+
+            PlayerPrefs.SetInt(string.Format(KeyAddStory, GameUtils.ActivityPlaceId), 0);
+
+            Game.Notification.Get?.Notify(Game.Notification.EType.AddStory);
         }
         #endregion
 
