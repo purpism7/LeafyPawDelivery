@@ -55,6 +55,8 @@ SpriteAtlas:
     - ac195c43a3e294c77baeca81cd7177a1: 21300000
     - 35ca179303c5549f08e6faba7b1580f4: 21300000
     - a605d1c3ab78d44f7bf23bdaa1a836fe: 21300000
+    - 285f9bf3436e942278c3fd644ead4b86: 21300000
+    - 64ddf064d9dc14dcb88f97de8b538d9c: 21300000
     - fbb51ce4bbdb1460d94356bb0b25812d: 21300000
     - b1d7e9f428f104eba9ecd237e71f4987: 21300000
     - 5079e4753b76645559d41208e27d56d6: 21300000
@@ -125,6 +127,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ac195c43a3e294c77baeca81cd7177a1, type: 3}
   - {fileID: 21300000, guid: 35ca179303c5549f08e6faba7b1580f4, type: 3}
   - {fileID: 21300000, guid: a605d1c3ab78d44f7bf23bdaa1a836fe, type: 3}
+  - {fileID: 21300000, guid: 285f9bf3436e942278c3fd644ead4b86, type: 3}
+  - {fileID: 21300000, guid: 64ddf064d9dc14dcb88f97de8b538d9c, type: 3}
   - {fileID: 21300000, guid: fbb51ce4bbdb1460d94356bb0b25812d, type: 3}
   - {fileID: 21300000, guid: b1d7e9f428f104eba9ecd237e71f4987, type: 3}
   - {fileID: 21300000, guid: 5079e4753b76645559d41208e27d56d6, type: 3}
@@ -194,6 +198,8 @@ SpriteAtlas:
   - BookIcon_Map02_Object_58
   - BookIcon_Map02_Object_56
   - BookIcon_Map02_Object_53
+  - EditIcon_Map02_Object_67
+  - BookIcon_Map02_Object_67
   - EditIcon_Map02_Object_40
   - BookIcon_Map02_Object_54
   - BookIcon_Map02_Object_49

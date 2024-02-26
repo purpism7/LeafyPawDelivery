@@ -6,6 +6,8 @@ namespace Game.PlaceEvent
 {
     public class HiddenObject : Base
     {
+        private List<int> _idList = null;
+
         public override Base Initialize(IPlace iPlace, IListener iListener, int placeId)
         {
             base.Initialize(iPlace, iListener, placeId);
@@ -69,6 +71,9 @@ namespace Game.PlaceEvent
                 if (objMgr.CheckExist(data.Id))
                     continue;
 
+                if (CheckExist(data.Id))
+                    continue;
+
                 var objData = ObjectContainer.Instance?.GetData(data.Id);
                 if(objData != null)
                 {
@@ -80,8 +85,6 @@ namespace Game.PlaceEvent
                     continue;
 
                 CreateHiddenObject(data);
-
-                //break;
             }
         }
 
@@ -127,10 +130,12 @@ namespace Game.PlaceEvent
                 .SetRootTm(randIObject.HiddenObjectRootTm)
                 .Create();
 
-            if(hiddenObject)
+            if(hiddenObject != null)
             {
                 var localPos = hiddenObject.transform.localPosition;
                 hiddenObject.transform.localPosition = new Vector3(localPos.x, localPos.y, -20f);
+
+                AddId(data.Id);
             }
 
             _iListener?.Action(new HiddneObjectData()
@@ -138,6 +143,28 @@ namespace Game.PlaceEvent
                 id = data.Id,
                 eElement = Type.EElement.Object,
             });
+        }
+
+        private bool CheckExist(int checkId)
+        {
+            if (_idList == null)
+                return false;
+
+            return _idList.Find(id => id == checkId) > 0;
+        }
+
+        private void AddId(int addId)
+        {
+            if(_idList == null)
+            {
+                _idList = new();
+                _idList.Clear();
+            }
+
+            if(!CheckExist(addId))
+            {
+                _idList.Add(addId);
+            }
         }
 
         private bool CheckExistHiddenObject
