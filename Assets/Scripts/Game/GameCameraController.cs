@@ -17,6 +17,7 @@ namespace GameSystem
         void SetSize();
         void SetOrthographicSize(float orthographicSize);
         void MoveCenterGameCamera();
+        void SetStopUpdate(bool stopUpdate);
 
         float RandPosXInScreenRagne { get; }
         float RandPosYInScreenRagne { get; }

@@ -55,12 +55,13 @@ namespace Info
             try
             {
                 var path = Utility.GetInfoPath();
+                _jsonFilePath = Path.Combine(path, _fileName);
+                Debug.Log("User _jsonFilePath = " + _jsonFilePath);
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
                 }
 
-                _jsonFilePath = Path.Combine(path, _fileName);
                 if (!System.IO.File.Exists(_jsonFilePath))
                 {
                     CreateUserInfo();
@@ -73,7 +74,7 @@ namespace Info
                     var jsonStr = decodeStr.Decrypt(_scretKey);
 
                     _user = JsonUtility.FromJson<Info.User>(jsonStr);
-                    Debug.Log(jsonStr);
+                    Debug.Log("User = " + jsonStr);
                 }
             }
             catch (UnauthorizedAccessException ex)
@@ -347,6 +348,9 @@ namespace Info
         {
             try
             {
+                if (_user == null)
+                    return;
+
                 var jsonStr = JsonUtility.ToJson(_user);
                 var encodeStr = jsonStr.Encrypt(_scretKey);
                 //var bytes = System.Text.Encoding.UTF8.GetBytes(jsonStr);

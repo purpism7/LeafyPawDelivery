@@ -206,6 +206,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             gameCameraOrthographicSize = IGameCameraCtr.OrthographicSizeForTutorial;
         }
 
+        IGameCameraCtr?.SetStopUpdate(true);
+
         Sequencer.EnqueueTask(
             () =>
             {
@@ -239,6 +241,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         await SetGameStateAsync(Game.Type.EGameState.Game);
         GameState?.End();
+
+        IGameCameraCtr?.SetStopUpdate(false);
     }
 
     private void InitializeTutorialManager()
@@ -249,7 +253,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         TutorialMgr?.AddListener(this);
         TutorialMgr?.AddListener(Get<Game.StoryManager>());
 
-        (IGameCameraCtr as GameSystem.GameCameraController)?.SetStopUpdate(true);
+        //(IGameCameraCtr as GameSystem.GameCameraController)?.SetStopUpdate(true);
     }
 
     private void DestroyTutorialManager()
@@ -318,7 +322,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             var connector = Info.Connector.Get;
             if(connector != null)
             {
-                Debug.Log("connector.IsCompleteTutorial = " + connector.IsCompleteTutorial);
                 return connector.IsCompleteTutorial == false;
             }
 

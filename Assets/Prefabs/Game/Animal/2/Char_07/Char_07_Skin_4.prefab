@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4673291588887461157}
   - component: {fileID: 2164901631972730589}
   m_Layer: 6
-  m_Name: Char_07_Skin_2
+  m_Name: Char_07_Skin_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 94659690454118510}
   edit: {fileID: 0}
   IsOverlap: 0
-  skinId: 2
+  skinId: 4
   animator: {fileID: 4193277499131427672}
 --- !u!222 &2164901631972730589
 CanvasRenderer:
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 7791163112305712424}
   - component: {fileID: 94659690454118510}
   - component: {fileID: 4193277499131427672}
-  - component: {fileID: 7440062927034578792}
+  - component: {fileID: 2290155083931829931}
   m_Layer: 6
   m_Name: Animal
   m_TagString: Untagged
@@ -137,7 +137,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 91b530e923e9a4838838866d5391e1be, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7fa9ae25874354bfd936078da1527b99, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -158,7 +158,7 @@ Animator:
   m_GameObject: {fileID: 4616245985608609277}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 404b14a001b3d448d9cc41d6f5447c00, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7fa5452cc561f40a096abd95315fa5f6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -169,7 +169,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &7440062927034578792
+--- !u!60 &2290155083931829931
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,7 +205,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 160, y: 160}
+    oldSize: {x: 160, y: 180}
     newSize: {x: 200, y: 200}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -213,45 +213,43 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 49, y: 62}
-      - {x: 50, y: 82}
-      - {x: 64, y: 101}
-      - {x: 66, y: 103}
-      - {x: 66, y: 109}
-      - {x: 47, y: 123}
-      - {x: 40, y: 123}
-      - {x: 36, y: 135}
-      - {x: 35, y: 149}
-      - {x: 29, y: 155}
-      - {x: 22, y: 156}
-      - {x: 17, y: 156}
-      - {x: 11, y: 146}
-      - {x: 3, y: 132}
-      - {x: -11, y: 148}
-      - {x: -20, y: 155}
-      - {x: -28, y: 154}
-      - {x: -37, y: 146}
-      - {x: -38, y: 132}
-      - {x: -45, y: 126}
-      - {x: -69, y: 116}
-      - {x: -69, y: 107}
-      - {x: -65, y: 99}
-      - {x: -52, y: 89}
-      - {x: -55, y: 80}
-      - {x: -54, y: 68}
-      - {x: -46, y: 53}
-      - {x: -50, y: 39}
-      - {x: -42, y: 19}
+    - - {x: 53, y: 46}
+      - {x: 56, y: 56}
+      - {x: 57, y: 84}
+      - {x: 66, y: 92}
+      - {x: 73, y: 103}
+      - {x: 74, y: 111}
+      - {x: 74, y: 133}
+      - {x: 67, y: 144}
+      - {x: 50, y: 163}
+      - {x: 32, y: 174}
+      - {x: 10, y: 176}
+      - {x: -9, y: 176}
+      - {x: -27, y: 173}
+      - {x: -37, y: 170}
+      - {x: -46, y: 166}
+      - {x: -63, y: 156}
+      - {x: -71, y: 147}
+      - {x: -77, y: 133}
+      - {x: -77, y: 126}
+      - {x: -76, y: 107}
+      - {x: -74, y: 98}
+      - {x: -66, y: 88}
+      - {x: -60, y: 63}
+      - {x: -58, y: 49}
+      - {x: -50, y: 38}
+      - {x: -46, y: 29}
+      - {x: -37, y: 20}
       - {x: -36, y: 3}
       - {x: -31, y: 0}
       - {x: -4, y: 0}
       - {x: 0, y: 3}
       - {x: 9, y: 0}
-      - {x: 36, y: 0}
-      - {x: 41, y: 2}
-      - {x: 54, y: 21}
-      - {x: 46, y: 40}
-      - {x: 37, y: 46}
+      - {x: 35, y: 0}
+      - {x: 40, y: 2}
+      - {x: 49, y: 13}
+      - {x: 52, y: 25}
+      - {x: 47, y: 29}
   m_UseDelaunayMesh: 0
 --- !u!1 &5936816878479032547
 GameObject:

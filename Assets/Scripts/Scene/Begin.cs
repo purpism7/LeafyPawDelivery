@@ -124,7 +124,7 @@ namespace Scene
         private async UniTask PlayPrologueAsync()
         {
             bool already = false;
-            if(!Application.isEditor)
+            //if(!Application.isEditor)
             {
                 Boolean.TryParse(PlayerPrefs.GetString(KeyPrologue, false.ToString()), out already);
             }

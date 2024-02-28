@@ -8,7 +8,7 @@ namespace Info
 {
     public class AnimalHolder : Holder.Base
     {
-        protected override string JsonFilePath => RootJsonFilePath;
+        protected override string JsonFilePath => Path.Combine(RootJsonFilePath, JsonFileName);
         private string JsonFileName = "Animal.txt";
 
         private const string _secretKey = "hAnkyUlAnimAl";
@@ -23,10 +23,9 @@ namespace Info
 
             List<Info.Animal> animalInfoList = null;
 
-            var fullPath = Path.Combine(JsonFilePath, JsonFileName);
-            if (System.IO.File.Exists(fullPath))
+            if (System.IO.File.Exists(JsonFilePath))
             {
-                var decodeStr = System.IO.File.ReadAllText(fullPath);
+                var decodeStr = System.IO.File.ReadAllText(JsonFilePath);
                 var jsonStr = decodeStr.Decrypt(_secretKey);
 
                 animalInfoList = JsonHelper.FromJson<Info.Animal>(jsonStr).ToList();
@@ -74,9 +73,10 @@ namespace Info
 
             var jsonStr = JsonHelper.ToJson(AnimalInfoList.ToArray());
             var encodeStr = jsonStr.Encrypt(_secretKey);
-            var fullPath = Path.Combine(JsonFilePath, JsonFileName);
+            //var fullPath = Path.Combine(JsonFilePath, JsonFileName);
+            Debug.Log("Animal SaveInfo = JsonFilePath : " + JsonFilePath + " : " + jsonStr);
 
-            System.IO.File.WriteAllText(fullPath, encodeStr);
+            System.IO.File.WriteAllText(JsonFilePath, encodeStr);
         }
 
         public void SetPos(int id, Vector3 pos)

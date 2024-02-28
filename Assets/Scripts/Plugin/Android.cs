@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 
 
@@ -30,17 +31,25 @@ namespace Plugin
         }
 
 #if UNITY_ANDROID
-        private void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game)
+        private void Save(SavedGameRequestStatus status, ISavedGameMetadata game)
         {
             if (status == SavedGameRequestStatus.Success)
             {
-                // handle reading or writing of saved game.
-                //game
-
-                ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
+                ISavedGameClient iSavedGameClient = PlayGamesPlatform.Instance.SavedGame;
                 SavedGameMetadataUpdate update = new SavedGameMetadataUpdate.Builder().Build();
 
-                savedGameClient?.CommitUpdate(game, update, null, OnSavedGameWritten);
+                iSavedGameClient?.CommitUpdate(game, update, null,
+                    (SavedGameRequestStatus status, ISavedGameMetadata game) =>
+                    {
+                        if (status == SavedGameRequestStatus.Success)
+                        {
+                            // handle reading or writing of saved game.
+                        }
+                        else
+                        {
+                            // handle error
+                        }
+                    });
             }
             else
             {
@@ -48,11 +57,24 @@ namespace Plugin
             }
         }
 
-        private void OnSavedGameWritten(SavedGameRequestStatus status, ISavedGameMetadata game)
+        private void Load(SavedGameRequestStatus status, ISavedGameMetadata game)
         {
             if (status == SavedGameRequestStatus.Success)
             {
-                // handle reading or writing of saved game.
+                ISavedGameClient iSavedGameClient = PlayGamesPlatform.Instance.SavedGame;
+
+                iSavedGameClient?.ReadBinaryData(game,
+                    (SavedGameRequestStatus status, byte[] bytes) =>
+                    {
+                        if (status == SavedGameRequestStatus.Success)
+                        {
+                            // handle reading or writing of saved game.
+                        }
+                        else
+                        {
+                            // handle error
+                        }
+                    });
             }
             else
             {
@@ -64,15 +86,20 @@ namespace Plugin
         public override void SetString(string key, string value)
         {
 #if UNITY_ANDROID
-            var jsonFilePath = string.Format(_userInfoJsonFilePath, key);
 
             ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-            savedGameClient.OpenWithAutomaticConflictResolution(jsonFilePath, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
+            savedGameClient.OpenWithAutomaticConflictResolution(key, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLastKnownGood, Save);
 #endif
         }
 
         public override string GetString(string key)
         {
+#if UNITY_ANDROID
+
+            ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
+            savedGameClient.OpenWithAutomaticConflictResolution(key, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLastKnownGood, Load);
+#endif
+
             return string.Empty;
         }
     }

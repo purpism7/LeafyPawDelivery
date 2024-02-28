@@ -262,6 +262,8 @@ namespace UI.Component
             if (placeData == null)
                 return;
 
+            UIUtils.SetActive(openConditionRootRectTm, openCondition.eType != OpenConditionData.EType.Hidden);
+
             if(openCondition.eType == OpenConditionData.EType.Hidden)
             {
                 UIUtils.SetActive(hiddenIconImg?.gameObject, true);

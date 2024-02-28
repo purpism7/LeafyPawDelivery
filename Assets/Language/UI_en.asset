@@ -185,25 +185,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 69001728152821760
-    m_Localized: '''Leafy Paw Delievery'' is a game
-
-      decorating a town with
-      currency.'
+    m_Localized: '''Leafy Paw Delievery'' is a game decorating a town with currency.'
     m_Metadata:
       m_Items: []
   - m_Id: 69029916908183552
-    m_Localized: 'Animal drops currency at certain times.
-
-      You can get "Animal
-      currency"
-
-      if you touch the fallen currency.'
+    m_Localized: Animal drops currency at certain times. You can get "Animal currency"
+      if you touch the fallen currency.
     m_Metadata:
       m_Items: []
   - m_Id: 69030340021182464
-    m_Localized: 'You can get "Object currency"
-
-      if you touch the placed objects.'
+    m_Localized: You can get "Object currency" if you touch the placed objects.
     m_Metadata:
       m_Items: []
   - m_Id: 69030575682347008

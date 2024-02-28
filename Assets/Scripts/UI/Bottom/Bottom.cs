@@ -243,6 +243,7 @@ namespace UI
                             {
                                 PlaceId = _placeId,
                             })
+                            .SetAnimActivateInterval(0.05f)
                             .Create();
 
                         break;

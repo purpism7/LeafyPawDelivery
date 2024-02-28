@@ -61,15 +61,17 @@ namespace GameSystem
 
             _nickName = PlayerPrefs.GetString(Game.Data.PlayPrefsKeyNickName, string.Empty);
 
-            if (Application.isEditor)
+            //if (Application.isEditor)
+            //{
+            //    await SignInAnonymouslyAsync();
+            //}
+            //else if(Application.platform == RuntimePlatform.Android)
             {
-                await SignInAnonymouslyAsync();
-            }
-            else if(Application.platform == RuntimePlatform.Android)
-            {
-                _eType = EType.GooglePlayGames;
+
 
 #if UNITY_ANDROID
+                _eType = EType.GooglePlayGames;
+
                 PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
                     .EnableSavedGames()
                     .RequestServerAuthCode(false)
@@ -80,20 +82,23 @@ namespace GameSystem
                 PlayGamesPlatform.Activate();
 
                 PlayGamesPlatform.Instance.Authenticate(SocialAuthenticateCallback);
-#endif
-            }
-            else
-            {
+#else
                 _eType = EType.GameCenter;
 
                 Social.localUser.Authenticate(SocialAuthenticateCallback);
+#endif
 
             }
+            //else
+            //{
+
+
+            //}
             //            }
 
             //Social.Active.Authenticate()
             // 1. GameCenter / GPGS 로그인.
-            
+
 
             //await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync("");
         }
