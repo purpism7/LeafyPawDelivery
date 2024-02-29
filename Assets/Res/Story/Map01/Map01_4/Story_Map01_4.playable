@@ -262,44 +262,44 @@ MonoBehaviour:
     LocalDatas:
     - Table: Story
       Key: 1_4_1
-      SpeakerKey: 
-      SpeakerSpriteName: 
+      SpeakerKey: kara
+      SpeakerSpriteName: StoryIcon_Map01_Kara
     - Table: Story
       Key: 1_4_2
       SpeakerKey: barnie
       SpeakerSpriteName: StoryIcon_Map01_Barnie
     - Table: Story
       Key: 1_4_3
-      SpeakerKey: 
-      SpeakerSpriteName: 
+      SpeakerKey: kara
+      SpeakerSpriteName: StoryIcon_Map01_Kara
     - Table: Story
       Key: 1_4_4
       SpeakerKey: barnie
       SpeakerSpriteName: StoryIcon_Map01_Barnie
     - Table: Story
       Key: 1_4_5
-      SpeakerKey: 
-      SpeakerSpriteName: 
+      SpeakerKey: kara
+      SpeakerSpriteName: StoryIcon_Map01_Kara
     - Table: Story
       Key: 1_4_6
-      SpeakerKey: 
-      SpeakerSpriteName: 
+      SpeakerKey: kara
+      SpeakerSpriteName: StoryIcon_Map01_Kara
     - Table: Story
       Key: 1_4_7
       SpeakerKey: barnie
       SpeakerSpriteName: StoryIcon_Map01_Barnie
     - Table: Story
       Key: 1_4_8
-      SpeakerKey: 
-      SpeakerSpriteName: 
+      SpeakerKey: kara
+      SpeakerSpriteName: StoryIcon_Map01_Kara
     - Table: Story
       Key: 1_4_9
       SpeakerKey: barnie
       SpeakerSpriteName: StoryIcon_Map01_Barnie
     - Table: Story
       Key: 1_4_10
-      SpeakerKey: 
-      SpeakerSpriteName: 
+      SpeakerKey: kara
+      SpeakerSpriteName: StoryIcon_Map01_Kara
     - Table: Story
       Key: 1_4_11
       SpeakerKey: barnie

@@ -23,7 +23,8 @@ public class UnityScreenShotUtility : MonoBehaviour
             (1290, 2796),
             (1284, 2778),
             (1242, 2208),
-            (2048, 2732)
+            (2048, 2732),
+            (1080, 1920)
         };
 
         for (int i = 0; i < _screenshotSizes.Count; i++)
@@ -56,7 +57,7 @@ public class UnityScreenShotUtility : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             StartCoroutine(CaptureProcess());
         }
