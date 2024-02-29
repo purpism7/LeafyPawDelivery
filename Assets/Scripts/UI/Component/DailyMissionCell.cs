@@ -104,7 +104,14 @@ namespace UI.Component
             var dailyMissionInfo = MainGameManager.Get<Game.Manager.Acquire>()?.GetDailyMission(id);
 
             float infoProgress = dailyMissionInfo != null ? dailyMissionInfo.Progress : 0;
-            _progress = infoProgress > dataProgress ? dataProgress : infoProgress;
+            if (GetRewarded)
+            {
+                _progress = dataProgress;
+            }
+            else
+            {
+                _progress = infoProgress > dataProgress ? dataProgress : infoProgress;
+            }
 
             progressImg.fillAmount = _progress / dataProgress;
             progressTMP?.SetText(_progress + " / " + dataProgress);

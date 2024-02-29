@@ -56,7 +56,7 @@ namespace Info
             {
                 var path = Utility.GetInfoPath();
                 _jsonFilePath = Path.Combine(path, _fileName);
-                Debug.Log("User _jsonFilePath = " + _jsonFilePath);
+                //Debug.Log("User _jsonFilePath = " + _jsonFilePath);
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
@@ -74,7 +74,7 @@ namespace Info
                     var jsonStr = decodeStr.Decrypt(_scretKey);
 
                     _user = JsonUtility.FromJson<Info.User>(jsonStr);
-                    Debug.Log("User = " + jsonStr);
+                    //Debug.Log("User = " + jsonStr);
                 }
             }
             catch (UnauthorizedAccessException ex)

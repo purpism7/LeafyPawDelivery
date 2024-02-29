@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 111001198592
-    m_Localized: "\uC8FC \uC7AC\uD654 {0}\uBC88 \uC90D\uAE30"
+    m_Localized: "\uC8FC\uBBFC \uC7AC\uD654 {0}\uBC88 \uC90D\uAE30"
     m_Metadata:
       m_Items: []
   - m_Id: 2298481729536

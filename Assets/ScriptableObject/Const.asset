@@ -17,7 +17,7 @@ MonoBehaviour:
   startPlaceId: 1
   maxDropAnimalCurrencyCount: 30
   maxDropLetterCount: 20
-  dailyMissionRewardCount: 5
+  dailyMissionRewardCount: 3
   achievementRewardCount: 5
   PlaceDatas:
   - ePlaceName: 1

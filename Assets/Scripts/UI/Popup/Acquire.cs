@@ -92,10 +92,9 @@ namespace UI
             base.Deactivate();            
         }
 
-        private void Update()
+        public override void ChainUpdate()
         {
-            if (!IsActivate)
-                return;
+            base.ChainUpdate();
 
             UpdateRemainTime();
         }
