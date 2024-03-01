@@ -15,7 +15,7 @@ public class CreateOpenConditionWindow : EditorWindow
     private int _id = 0;
     private OpenConditionData _openCondition = null;
     
-    [MenuItem("Animals/Create Open Condition Window")]
+    [MenuItem("LeafyPawDelivery/Create Open Condition Window")]
     private static void Open()
     {
         var window = GetWindow<CreateOpenConditionWindow>();

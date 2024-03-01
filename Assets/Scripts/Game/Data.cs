@@ -8,6 +8,7 @@ namespace Game
     {
         public static Const Const = null;
 
+        public static string SecretKey { get { return "LEafypawDEliverY"; }  }
         public static int PlayerPrefsVersion = 23;
         public static string PlayPrefsKeyLastPlaceKey = "KeyLastPlaceId_" + PlayerPrefsVersion;
         public static string PlayPrefsKeyNickName = "KeyNickName_" + PlayerPrefsVersion;

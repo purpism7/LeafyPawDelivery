@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.IO;
 using GameData;
 using GameSystem;
 using UI;
@@ -43,15 +44,16 @@ public class Container : GameSystem.Processing
                     return;
 
                 var typeName = asyncOperationHandle.Result.name + GetType().Name;
-                Debug.Log("Container = " + typeName);
                 var type = System.Type.GetType(typeName);
                
                 if(type != null)
                 {
                     var container = System.Activator.CreateInstance(type);
                     var baseContainer = container as BaseContainer;
-                    
-                    baseContainer?.Initialize(container, result.text);
+
+                    var resText = result.text.Decrypt(Game.Data.SecretKey);
+                    Debug.Log("result.text = " + resText);
+                    baseContainer?.Initialize(container, resText);
                 }
 
                 endLoad = true;
