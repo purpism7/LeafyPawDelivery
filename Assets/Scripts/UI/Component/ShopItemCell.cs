@@ -44,8 +44,6 @@ namespace UI.Component
         [SerializeField]
         private OpenCondition openCondition = null;
 
-        //private System.DateTime? _endDateTime = null;
-
         public override void Initialize(Data_ data)
         {
             base.Initialize(data);
@@ -171,18 +169,18 @@ namespace UI.Component
             if (shopData.EPayment != Game.Type.EPayment.Advertising)
                 return;
 
-            if (_data.adData == null)
+            var adData = _data.adData;
+            if (adData == null)
                 return;
 
             Game.Timer.Get?.Add(
                 new Game.Timer.Data()
                 {
                     initialize = initialize,
-                    key = shopData.ProductId,
+                    key = adData.adId,
                     timeTMP = paymentValueTMP,
                     btn = iAPButton?.button,
-                    //addSec = 60f * 60f * 3f,
-                    addSec = _data.adData.coolTimeSec,
+                    addSec = adData.coolTimeSec,
                     endAction = () =>
                     {
                         //iAPButton?.button?.SetInteractable(true);
