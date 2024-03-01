@@ -74,6 +74,7 @@ namespace Game.Element.State
                 case TouchPhase.Began:
                     {
                         _gameBaseElement.ActiveEdit(true);
+                        _gameCameraCtr?.SetStopUpdate(true);
 
                         break;
                     }
@@ -83,7 +84,6 @@ namespace Game.Element.State
                         Drag(touch);
 
                         _gameBaseElement.ActiveEdit(false);
-                        _gameCameraCtr?.SetStopUpdate(true);
 
                         break;
                     }
