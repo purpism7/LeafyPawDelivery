@@ -24,6 +24,7 @@ namespace UI.Component
             public IListener iListener = null;
             public Data.Shop shopData = null;
             public Product product = null;
+            public AD.Data adData = null;
         }
 
         public interface IListener
@@ -170,6 +171,9 @@ namespace UI.Component
             if (shopData.EPayment != Game.Type.EPayment.Advertising)
                 return;
 
+            if (_data.adData == null)
+                return;
+
             Game.Timer.Get?.Add(
                 new Game.Timer.Data()
                 {
@@ -178,7 +182,7 @@ namespace UI.Component
                     timeTMP = paymentValueTMP,
                     btn = iAPButton?.button,
                     //addSec = 60f * 60f * 3f,
-                    addSec = 60f * 3f,
+                    addSec = _data.adData.coolTimeSec,
                     endAction = () =>
                     {
                         //iAPButton?.button?.SetInteractable(true);

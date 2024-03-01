@@ -11,11 +11,13 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
-            public Sprite iconSprite = null;
-            public string adId = string.Empty;
-            public Game.Type.EBoost eBoost = Game.Type.EBoost.None;
-            public int timeSec = 0;
-            public string localKey = string.Empty;
+            //public Sprite iconSprite = null;
+            //public string adId = string.Empty;
+            //public Game.Type.EBoost eBoost = Game.Type.EBoost.None;
+            //public int timeSec = 0;
+            //public string localKey = string.Empty;
+
+            public GameData.Boost.Data boostData = null;
         }
 
         [SerializeField]
@@ -27,7 +29,7 @@ namespace UI.Component
         private System.DateTime? _endDateTime = null;
 
         public double RemainTimeSec { get; private set; } = 0;
-        public Game.Type.EBoost EBoost { get { return _data != null ? _data.eBoost : Game.Type.EBoost.None; } }
+        public Game.Type.EBoost EBoost { get { return _data != null && _data.boostData != null ? _data.boostData.eBoost : Game.Type.EBoost.None; } }
 
         public override void Initialize(Data data)
         {
@@ -65,7 +67,7 @@ namespace UI.Component
 
         private void SetIcon()
         {
-            var sprite = _data?.iconSprite;
+            var sprite = _data?.boostData?.iconSprite;
             if (sprite == null)
                 return;
 
@@ -84,7 +86,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            double remainSec = MainGameManager.Get<Game.BoostManager>().GetBoostRemainSec(_data.eBoost);
+            double remainSec = MainGameManager.Get<Game.BoostManager>().GetBoostRemainSec(EBoost);
             if(remainSec > 0)
             {
                 ActivateBoost(remainSec);
@@ -128,12 +130,14 @@ namespace UI.Component
                 return new UI.Boost.Data()
                 {
                     iListener = this,
-                    iconSprite = _data.iconSprite,
-                    adId = _data.adId,
-                    localKey = _data.localKey,
-                    timeSec = _data.timeSec,
+                    //iconSprite = _data.iconSprite,
+                    //adId = _data.adId,
+                    //localKey = _data.localKey,
+                    //timeSec = _data.timeSec,
                     activate = _activate,
                     endDateTime = _endDateTime,
+
+                    boostData = _data.boostData,
                 };
             }
         }
@@ -141,11 +145,12 @@ namespace UI.Component
         #region UI.Boost.IListener
         UI.Boost.Data UI.Boost.IListener.Buy()
         {
-            if (_data == null)
+            var boostData = _data?.boostData;
+            if (boostData == null)
                 return null;
 
-            RemainTimeSec = _data.timeSec;
-            ActivateBoost(_data.timeSec);
+            RemainTimeSec = boostData.timeSec;
+            ActivateBoost(boostData.timeSec);
 
             MainGameManager.Get<Game.BoostManager>()?.Save();
 

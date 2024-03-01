@@ -133,6 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootRectTm: {fileID: 6059155048771174303}
   itemScrollRect: {fileID: 7954188329468993619}
+  ad: {fileID: 11400000, guid: 59b58746941f44f8db591e4453086eed, type: 2}
 --- !u!1 &2164343630762203042
 GameObject:
   m_ObjectHideFlags: 0

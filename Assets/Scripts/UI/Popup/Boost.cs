@@ -13,12 +13,14 @@ namespace UI
         public class Data : BaseData
         {
             public IListener iListener = null;
-            public Sprite iconSprite = null;
-            public string adId = string.Empty;
-            public int timeSec = 0;
-            public string localKey = string.Empty;
+            //public Sprite iconSprite = null;
+            //public string adId = string.Empty;
+            //public int timeSec = 0;
+            //public string localKey = string.Empty;
             public bool activate = false;
             public System.DateTime? endDateTime = null;
+
+            public GameData.Boost.Data boostData = null;
         }
 
         public interface IListener
@@ -91,7 +93,7 @@ namespace UI
 
         private void SetIcon()
         {
-            var sprite = _data?.iconSprite;
+            var sprite = _data?.boostData?.iconSprite;
             if (sprite == null)
                 return;
 
@@ -103,13 +105,22 @@ namespace UI
 
         private void SetDesc()
         {
-            var localKey = _data?.localKey;
+            float timeSec = 0;
+            string localKey = string.Empty;
+
+            var boostData = _data?.boostData;
+            if (boostData != null)
+            {
+                timeSec = boostData.timeSec;
+                localKey = boostData.localKey;
+            }
+
             var desc = string.Empty;
 
             if (!string.IsNullOrEmpty(localKey))
             {
                 desc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
-                desc = string.Format(desc, _data.timeSec / 60f);
+                desc = string.Format(desc, timeSec / 60f);
             }
 
             descTMP?.SetText(desc);
@@ -145,7 +156,7 @@ namespace UI
                 new Game.Timer.Data()
                 {
                     initialize = _initialize,
-                    key = _data.adId,
+                    key = _data?.boostData?.ad?.adId,
                     timeTMP = remainPlayTimeTMP,
                     btn = buyBtn,
                     addSec = 60f * 6f,
@@ -163,10 +174,11 @@ namespace UI
 
         public void OnClickBuy()
         {
-            if (_data == null)
+            var adData = _data?.boostData?.ad;
+            if (adData == null)
                 return;
 
-            GameSystem.AdMob.Get?.ShowAd(_data.adId,
+            GameSystem.AdMob.Get?.ShowAd(adData.adId,
                 () =>
                 {
                     _data = _data?.iListener?.Buy();

@@ -14,7 +14,7 @@ namespace Game
         }
 
         [SerializeField]
-        private Boost boost = null;
+        private GameData.Boost boost = null;
 
         private List<UI.Component.Boost> _boostCompList = null;
         private Dictionary<Game.Type.EBoost, float> _boostRemainPlayTimeDic = null;
@@ -69,11 +69,13 @@ namespace Game
                     .SetRootRectTm(data.boostRootRectTm)
                     .SetData(new UI.Component.Boost.Data()
                     {
-                        iconSprite = boostData.iconSprite,
-                        adId = boostData.adId,
-                        eBoost = boostData.eBoost,
-                        timeSec = boostData.timeSec,
-                        localKey = boostData.localKey,
+                        //iconSprite = boostData.iconSprite,
+                        ////adId = boostData.adId,
+                        //eBoost = boostData.eBoost,
+                        //timeSec = boostData.timeSec,
+                        //localKey = boostData.localKey,
+
+                        boostData = boostData,
                     })
                     .Create();
 

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3d09ff33f6ce4375972bbd259614f50, type: 3}
+  m_Name: ShopAD
+  m_EditorClassIdentifier: 
+  datas:
+  - eCategory: 1
+    ios: ca-app-pub-4768455296560255/9551829061
+    and: ca-app-pub-4768455296560255/9341017366
+    coolTimeSec: 10800
+  - eCategory: 2
+    ios: ca-app-pub-4768455296560255/8801181066
+    and: ca-app-pub-4768455296560255/8881852360
+    coolTimeSec: 3600
+  - eCategory: 3
+    ios: ca-app-pub-4768455296560255/1422218646
+    and: ca-app-pub-4768455296560255/5477901779
+    coolTimeSec: 3600

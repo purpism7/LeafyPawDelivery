@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(menuName = "LeafyPawDelivery/ScriptableObject/Data")]
-public class Boost : ScriptableObject
+namespace GameData
 {
-    [Serializable]
-    public class Data
+    [CreateAssetMenu(menuName = "LeafyPawDelivery/ScriptableObject/Data/Boost")]
+    public class Boost : ScriptableObject
     {
-        public Game.Type.EBoost eBoost = Game.Type.EBoost.None;
-        public Sprite iconSprite = null;
-        public int timeSec = 0;
-        public string adId = string.Empty;
-        public string localKey = string.Empty;
+        [Serializable]
+        public class Data
+        {
+            public Game.Type.EBoost eBoost = Game.Type.EBoost.None;
+            public Sprite iconSprite = null;
+            public int timeSec = 0;
+            public AD.Data ad = null;
+
+            public string localKey = string.Empty;
+        }
+
+        [SerializeField]
+        private Data[] datas = null;
+
+        public Data[] Datas { get { return datas; } }
     }
-
-    [SerializeField]
-    private Data[] datas = null;
-
-    public Data[] Datas { get { return datas; } }
 }
+
 

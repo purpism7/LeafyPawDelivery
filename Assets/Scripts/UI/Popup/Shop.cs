@@ -14,7 +14,12 @@ using GameSystem;
 
 namespace UI
 {
-    public class Shop : BasePopup<Shop.Data_>, ShopItemCell.IListener, BuyCash.IListener, Game.Manager.IAP.IListener
+    public interface IShop
+    {
+        AD.Data GetADData(Game.Type.ECategory eCategory);
+    }
+
+    public class Shop : BasePopup<Shop.Data_>, IShop, ShopItemCell.IListener, BuyCash.IListener, Game.Manager.IAP.IListener
     {
         public class Data_ : BaseData
         {
@@ -23,6 +28,8 @@ namespace UI
 
         [SerializeField]
         private ScrollRect itemScrollRect = null;
+        [SerializeField]
+        private AD ad = null;
 
         private System.Action _endBuyAction = null;
 
@@ -76,6 +83,7 @@ namespace UI
                         iShopItemCellListener = this,
                         eCategory = dataList.Count > 0 ? dataList[0].ECategory : Game.Type.ECategory.None,
                         shopDataList = dataList,
+                        iShop = this,
                     })
                     .SetRootRectTm(scrollContent)
                     .Create();
@@ -85,6 +93,13 @@ namespace UI
 
             yield return null;
         }
+
+        #region IShop
+        AD.Data IShop.GetADData(Game.Type.ECategory eCategory)
+        {
+            return ad?.GetData(eCategory);
+        }
+        #endregion
 
         void ShopItemCell.IListener.Buy(IShopItemCell iShopItemCell, Vector3 pos)
         {
@@ -139,7 +154,11 @@ namespace UI
 
                 case Game.Type.EPayment.Advertising:
                     {
-                        AdMob.Get?.ShowAd(shopData.ProductId,
+                        var adData = ad?.GetData(shopData.ECategory);
+                        if (adData == null)
+                            return;
+                        
+                        AdMob.Get?.ShowAd(adData.adId,
                             () =>
                             {
                                 if(shopData.ECategory == Game.Type.ECategory.Cash)

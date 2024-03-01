@@ -17,6 +17,7 @@ namespace UI.Component
             public ShopItemCell.IListener iShopItemCellListener = null;
             public Game.Type.ECategory eCategory = Game.Type.ECategory.None;
             public List<Data.Shop> shopDataList = null;
+            public IShop iShop = null;
         }
 
         [SerializeField]
@@ -62,8 +63,8 @@ namespace UI.Component
                 {
                     iListener = _data.iShopItemCellListener,
                     shopData = data,
-                    product = Game.Manager.IAP.Instance?.GetProduct(data.ProductId)
-                    //product = _data.iShop?.GetProduct(data.ProductId),
+                    product = Game.Manager.IAP.Instance?.GetProduct(data.ProductId),
+                    adData = data.EPayment == Game.Type.EPayment.Advertising ? _data.iShop?.GetADData(data.ECategory) : null,
                 };
 
                 var cell = new ComponentCreator<ShopItemCell, ShopItemCell.Data_>()
