@@ -137,9 +137,9 @@ namespace Game
                     return cutscene;
                 });
 
-            UserManager.Instance?.SaveStory(story.Id);
-
             Info.Connector.Get?.SetAddStory(story.Id);
+
+            UserManager.Instance?.SaveStory(story.Id);
         }
 
         private void EndStory(Story story)

@@ -157,16 +157,6 @@ namespace Info
 
             Game.Notification.Get?.Notify(Game.Notification.EType.CompleteDailyMission);
         }
-
-        //public void ResetCompleteDailyMission()
-        //{
-        //    if (CompleteDailyMission <= 0)
-        //        return;
-
-        //    PlayerPrefs.SetInt(KeyCompleteDailyMission, 0);
-
-        //    Game.Notification.Get?.Notify(Game.Notification.EType.CompleteDailyMission);
-        //}뉴
         #endregion
 
         #region Complete Achievement
@@ -187,16 +177,6 @@ namespace Info
 
             Game.Notification.Get?.Notify(Game.Notification.EType.CompleteAchievement);
         }
-
-        //public void ResetCompleteAchievement()
-        //{
-        //    if (!IsCompletedAchievement)
-        //        return;
-
-        //    PlayerPrefs.SetString(KeyCompleteAchievement, false.ToString());
-
-        //    Game.Notification.Get?.Notify(Game.Notification.EType.CompleteAchievement);
-        //}
         #endregion
 
         #region Complete Tutorial
@@ -213,7 +193,6 @@ namespace Info
 
         public void SetCompleteTutorial(bool isComplete)
         {
-            Debug.Log("SetCompleteTutorial = " + isComplete);
             PlayerPrefs.SetString(KeyCompleteTutorial, isComplete.ToString());
         }
         #endregion

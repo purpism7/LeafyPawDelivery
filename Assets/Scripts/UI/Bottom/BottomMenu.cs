@@ -36,9 +36,6 @@ namespace UI
 
             System.Enum.TryParse(gameObject.name, out _eType);
 
-            //btn?.onClick.RemoveAllListeners();
-            //btn?.onClick.AddListener(OnClick);
-
             RegisterNotification();
 
             UIUtils.SetActive(redDotRectTm, false);
@@ -47,8 +44,6 @@ namespace UI
         public override void Activate()
         {
             base.Activate();
-
-            //SetNotification();
         }
 
         private void RegisterNotification()
@@ -98,7 +93,7 @@ namespace UI
 
                 case Game.Type.EBottomType.Book:
                     {
-                        UIUtils.SetActive(redDotRectTm, connector.AddAnimalId > 0 || connector.AddObjectId > 0);
+                        UIUtils.SetActive(redDotRectTm, connector.AddAnimalId > 0 || connector.AddObjectId > 0 || connector.AddStoryId > 0);
 
                         break;
                     }

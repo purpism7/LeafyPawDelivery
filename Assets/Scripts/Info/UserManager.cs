@@ -12,6 +12,32 @@ namespace Info
 {
     public class UserManager : Singleton<UserManager>
     {
+        public static bool _isFirst = true;
+        public static bool IsFirst
+        {
+            get
+            {
+                if (!_isFirst)
+                    return false;
+
+                if(System.Boolean.TryParse(PlayerPrefs.GetString("IsFirst_1", true.ToString()), out bool isFirst))
+                {
+                    return isFirst;
+                }
+
+                return true;
+            }
+            private set
+            {
+                if (!_isFirst)
+                    return;
+
+                _isFirst = value;
+
+                PlayerPrefs.SetString("IsFirst_1", value.ToString());
+            }
+        }
+
         private string _jsonFilePath = string.Empty;
         private const string _fileName = "User.txt";
         private const string _scretKey = "hANkyulusEr";
@@ -346,10 +372,24 @@ namespace Info
 
         private void Save()
         {
+            if (_user == null)
+                return;
+
+            SaveAsync().Forget();
+        }
+
+        private async UniTask SaveAsync()
+        {
             try
             {
-                if (_user == null)
-                    return;
+                var worldTime = MainGameManager.Instance?.WorldTime;
+                DateTime? saveDateTime = null;
+                if (worldTime != null)
+                {
+                    saveDateTime = await worldTime.RequestAsync();
+                }
+
+                _user?.UpdateDateTime(saveDateTime);
 
                 var jsonStr = JsonUtility.ToJson(_user);
                 var encodeStr = jsonStr.Encrypt(_scretKey);
@@ -358,15 +398,24 @@ namespace Info
 
                 System.IO.File.WriteAllText(_jsonFilePath, encodeStr);
 
-                Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, encodeStr);
+                if (Application.platform == RuntimePlatform.Android)
+                {
+                    Plugin.Native.Instance?.SetString(typeof(User).Name, encodeStr);
+                }
+                else
+                {
+                    Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, encodeStr);
+                }
+
+                if(IsFirst)
+                {
+                    IsFirst = false;
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.Log(e);
             }
-           
-            
-            //iOSPlugin.iCloudSaveStringValue(GameSystem.Auth.ID, jsonString);
         }
 
         public void SaveLastPlaceId()

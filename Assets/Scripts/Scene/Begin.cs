@@ -14,12 +14,14 @@ using UI;
 
 namespace Scene
 {
-    public class Begin : Base, NickName.IListener, Letter.IListener
+    public class Begin : Base, ContinueGame.IListener, NickName.IListener, Letter.IListener
     {
         private const string KeyPrologue = "Prologue";
 
         [SerializeField] private RectTransform uiRootRectTm = null;
         [SerializeField] private LoadData loadData = null;
+        [SerializeField]
+        private GameObject continueGameGameObj = null;
         [SerializeField] private GameObject prologueGameObj = null;
         [SerializeField] private GameObject nickNameGameObj = null;
         [SerializeField] private GameObject letterGameObj = null;
@@ -36,41 +38,34 @@ namespace Scene
 
             Info.Setting.Get?.InitializeLocale();
 
-            Debug.Log("end Native Initialize 222");
-
-            //await firebaseMgr.CoInit();
-
-            //yield return new WaitForSeconds(2f);
-
-            //var nickName = PlayerPrefs.GetString("KeyNickName");
-
-            //bool already = false;
-            //Boolean.TryParse(PlayerPrefs.GetString(KeyPrologue, false.ToString()), out already);
-
-            //bool endPrologue = false;
-
-            //if (!already)
-            //{
-            //    var cutscene = Cutscene.Create(new Cutscene.Data()
-            //    {
-            //        TargetGameObj = prologueGameObj,
-            //        EndAction = () =>
-            //        {
-            //            endPrologue = true;
-            //            CreateNickName();
-            //            CreateLetter();
-            //        },
-            //        IsConversation = false,
-            //    });
-
-            //    await UniTask.WaitUntil(() => endPrologue);
-            //}
-
-            //await UniTask.WaitForSeconds(2f);
-
             _auth = new Auth();
             await _auth.AsyncInitialize();
             await Plugin.Native.Instance.CoInit();
+
+            Debug.Log("Auth = " + Auth.ID);
+            string value = string.Empty;
+
+            if(!Application.isEditor)
+            {
+                if (Application.platform == RuntimePlatform.Android)
+                {
+                    value = Plugin.Native.Instance?.GetString(typeof(Info.User).Name);
+                }
+                else
+                {
+                    value = Plugin.Native.Instance?.GetString(GameSystem.Auth.ID);
+                }
+            }
+
+            Debug.Log("value = " + value);
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                if(Info.UserManager.IsFirst)
+                {
+                    await ContinueGameAsync();
+                }
+            }
 
             await PlayPrologueAsync();
             await CreateNickNameAsync();
@@ -81,37 +76,6 @@ namespace Scene
             SceneLoader.LoadWithLoading(loadData);
 
             var firebaseMgr = FirebaseManager.Instance;
-            
-            //PlayerPrefs.GetString(KeyPrologue)
-            //if(firebaseMgr.Auth.IsFirst)
-            //{
-            //    var cutscene = Cutscene.Create(new Cutscene.Data()
-            //    {
-            //        TargetGameObj = prologueGameObj,
-            //        EndAction = () =>
-            //        {
-            //            //CreateNickName();
-            //            //CreateLetter();
-
-
-            //        },
-            //        IsConversation = false,
-            //    });
-
-            //    //while (!_endPrologue)
-            //    //{
-            //    //    yield return null;
-            //    //}
-            //}
-
-            //await UniTask.WaitUntil(() => _endPrologue);
-
-            //if (firebaseMgr.Auth.IsValid)
-            //{
-            //    SceneLoader.LoadWithLoading(loadData);
-
-            //    yield break;
-            //}
         }
 
         public override void Init(IListener iListener)
@@ -119,6 +83,29 @@ namespace Scene
             base.Init(iListener);
 
             SceneLoader.LoadWithLoading(loadData);
+        }
+
+        private async UniTask ContinueGameAsync()
+        {
+            _end = false;
+
+            UI.ContinueGame continueGame = null;
+            Sequencer.EnqueueTask(
+                 () =>
+                 {
+                     var gameObj = Instantiate(continueGameGameObj, uiRootRectTm) as GameObject;
+                     if (gameObj)
+                     {                         
+                         gameObj.transform.SetAsLastSibling();
+
+                         continueGame = gameObj.GetComponent<ContinueGame>();
+                         continueGame?.Initialize(this);
+                     }
+
+                     return continueGame;
+                 });
+
+            await UniTask.WaitUntil(() => _end);
         }
 
         private async UniTask PlayPrologueAsync()
@@ -202,6 +189,18 @@ namespace Scene
                   return _letter;
               });
         }
+
+        #region ContinueGame.IListener
+        void ContinueGame.IListener.New()
+        {
+            _end = true;
+        }
+
+        void ContinueGame.IListener.Continue()
+        {
+            _end = true;
+        }
+        #endregion
 
         void NickName.IListener.Confirm(string nickName)
         {

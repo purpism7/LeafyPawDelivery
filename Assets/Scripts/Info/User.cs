@@ -26,6 +26,8 @@ namespace Info
 
         [SerializeField]
         private int lastPlaceId = 1;
+        [SerializeField]
+        private string updateDateTime = string.Empty;
 
         public List<Currency> CurrencyList = new();
         public List<Story> StoryList = new();
@@ -218,6 +220,15 @@ namespace Info
                 return;
 
             lastPlaceId = id;
+        }
+
+        public void UpdateDateTime(DateTime? dateTime)
+        {
+            if (dateTime == null ||
+               !dateTime.HasValue)
+                return;
+
+            updateDateTime = dateTime.Value.ToLocalTime().ToString();
         }
     }
 }

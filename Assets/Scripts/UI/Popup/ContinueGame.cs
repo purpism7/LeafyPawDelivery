@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using TMPro;
+
 namespace UI
 {
     public class ContinueGame : Game.Common
@@ -11,6 +13,9 @@ namespace UI
             void New();
             void Continue();
         }
+
+        [SerializeField]
+        private TextMeshProUGUI updateDateTimeTMP = null;
 
         private IListener _iListener = null;
 

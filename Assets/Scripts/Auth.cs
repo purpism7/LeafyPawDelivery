@@ -24,7 +24,7 @@ namespace GameSystem
 
         public static string ID { get { return _instance?._id; } }
         public static string NickName { get { return _instance?._nickName; } }
-        public static EType ELoginType { get { return _instance._eType; } } 
+        public static EType ELoginType { get { return _instance._eType; } }
 
         public enum EType
         {
@@ -36,6 +36,8 @@ namespace GameSystem
         private string _id = string.Empty;
         private string _nickName = string.Empty;
         private EType _eType = EType.Local;
+
+        private bool _endAuth = false;
 
         public Auth()
         {
@@ -57,50 +59,31 @@ namespace GameSystem
             //            {
             //#if UNITY_IOS
             //                //var player = await GKLocalPlayer.Authenticate();
-            //                //Debug.Log($"GameKit Authentication: player {player}");
+            //                //Debug.Log($"GameKit Authentication: player {player}"); 
 
             _nickName = PlayerPrefs.GetString(Game.Data.PlayPrefsKeyNickName, string.Empty);
 
-            //if (Application.isEditor)
-            //{
-            //    await SignInAnonymouslyAsync();
-            //}
-            //else if(Application.platform == RuntimePlatform.Android)
-            {
-
-
+            _endAuth = false;
 #if UNITY_ANDROID
-                _eType = EType.GooglePlayGames;
+            _eType = EType.GooglePlayGames;
 
-                PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-                    .EnableSavedGames()
-                    .RequestServerAuthCode(false)
-                    .Build();
+            PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+                .EnableSavedGames()
+                .RequestServerAuthCode(false)
+                .Build();
 
-                PlayGamesPlatform.InitializeInstance(config);
-                PlayGamesPlatform.DebugLogEnabled = true;
-                PlayGamesPlatform.Activate();
+            PlayGamesPlatform.InitializeInstance(config);
+            PlayGamesPlatform.DebugLogEnabled = true;
+            PlayGamesPlatform.Activate();
 
-                PlayGamesPlatform.Instance.Authenticate(SocialAuthenticateCallback);
+            PlayGamesPlatform.Instance.Authenticate(SocialAuthenticateCallback);
 #else
-                _eType = EType.GameCenter;
+            _eType = EType.GameCenter;
 
-                Social.localUser.Authenticate(SocialAuthenticateCallback);
+            Social.localUser.Authenticate(SocialAuthenticateCallback);
 #endif
 
-            }
-            //else
-            //{
-
-
-            //}
-            //            }
-
-            //Social.Active.Authenticate()
-            // 1. GameCenter / GPGS 로그인.
-
-
-            //await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync("");
+            await UniTask.WaitUntil(() => _endAuth);
         }
 
 #if UNITY_ANDROID
@@ -140,56 +123,25 @@ namespace GameSystem
             {
                 Debug.Log(error);
 
-                SignInAnonymouslyAsync().Forget();
+                //SignInAnonymouslyAsync().Forget();
             }
+
+            _endAuth = true;
         }
-
-        //private async UniTask SignWithAppleGameCenterAsync()
-        //{
-        //    try
-        //    {
-        //        //await AuthenticationService.Instance.SignInWithAppleGameCenterAsync()
-        //    }
-        //    catch
-        //    {
-
-        //    }
-        //}
-
-        // GPGS 로그인.
-        //private async UniTask SignInWithGooglePlayGameServiceAsync(string code)
-        //{
-        //    try
-        //    {
-        //        await AuthenticationService.Instance?.SignInWithGooglePlayGamesAsync(code);
-
-        //        SetId(AuthenticationService.Instance?.PlayerInfo?.GetGooglePlayGamesId());
-
-        //        Debug.Log("SignInWithGooglePlayGameServiceAsync = " + _id);
-        //    }
-        //    catch (AuthenticationException ex)
-        //    {
-        //        Debug.LogException(ex);
-        //    }
-        //    catch (RequestFailedException ex)
-        //    {
-        //        Debug.LogException(ex);
-        //    }
-        //}
 
         // 익명으로 로그인.
-        private async UniTask SignInAnonymouslyAsync()
-        {
-            _eType = EType.Local;
+        //private async UniTask SignInAnonymouslyAsync()
+        //{
+        //    _eType = EType.Local;
 
-            //await AuthenticationService.Instance?.SignInAnonymouslyAsync();
+        //    //await AuthenticationService.Instance?.SignInAnonymouslyAsync();
 
-            SetId(AuthenticationService.Instance?.PlayerId);
+        //    SetId(AuthenticationService.Instance?.PlayerId);
 
-            await UniTask.Yield();
+        //    await UniTask.Yield();
 
-            Debug.Log("SignInAnonymouslyAsync = " + _id);
-        }
+        //    Debug.Log("SignInAnonymouslyAsync = " + _id);
+        //}
 
         private void SetId(string id)
         {
@@ -202,32 +154,6 @@ namespace GameSystem
 
             PlayerPrefs.SetString(Game.Data.PlayPrefsKeyNickName, nickName);
         }
-
-        //public IEnumerator CoInitialize()
-        //{
-        //    yield return UnityServices.InitializeAsync();
-        //    Debug.Log(UnityServices.State);
-
-
-        //    // 1. GameCenter / GPGS 로그인.
-        //    Social.localUser.Authenticate(
-        //      (success) =>
-        //      {
-        //          if()
-        //          Debug.Log("Success Social Authenticate");
-        //           //GameCenterPlatform.Show(true);
-        //           //Social.
-        //          Debug.Log(Social.localUser.id);
-        //          Debug.Log("UserName = " + Social.localUser.userName);
-        //      });
-
-        //    yield return AuthenticationService.Instance?.SignInAnonymouslyAsync();
-
-        //    _id = AuthenticationService.Instance?.PlayerId;
-        //    Debug.Log($"PlayerID: {_id}");
-
-           
-        //}
     }
 }
 

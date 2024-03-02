@@ -179,7 +179,6 @@ namespace UI.Component
             var text = string.Empty;
             if(_data.EElement == Game.Type.EElement.Animal)
             {
-                //text = LocalizationSettings.StringDatabase.GetLocalizedString(_data.EElement.ToString(), "description_" + _data.Id, LocalizationSettings.SelectedLocale);
                 text = String.Format("x{0}", 1);
             }
             else if(_data.EElement == Game.Type.EElement.Object)
@@ -218,7 +217,6 @@ namespace UI.Component
             UIUtils.SetActive(hiddenIconImg?.gameObject, false);
 
             openDescTMP?.SetText(string.Empty);
-            //openConditionDescTMP?.SetText(string.Empty);
 
             if (_data == null)
                 return;
@@ -373,7 +371,6 @@ namespace UI.Component
 
         private void SetButtonState()
         {
-            // UIUtils.SetActive(buyBtn?.gameObject, _data.Lock);
             UIUtils.SetActive(arrangementBtn?.gameObject, !IsLock);
         }
 
@@ -552,16 +549,6 @@ namespace UI.Component
             {
                 if (_data == null)
                     return true;
-
-                //if(_data.EElement == Game.Type.EElement.Object)
-                //{
-                //    var openConditionData = ObjectOpenConditionData;
-                //    if (openConditionData == null)
-                //        return true;
-
-                //    if (openConditionData.eType == OpenConditionData.EType.Hidden)
-                //        return false;
-                //}
 
                 return _data.Lock;
             }

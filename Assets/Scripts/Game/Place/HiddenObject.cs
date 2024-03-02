@@ -134,15 +134,16 @@ namespace Game.PlaceEvent
             {
                 var localPos = hiddenObject.transform.localPosition;
                 hiddenObject.transform.localPosition = new Vector3(localPos.x, localPos.y, -20f);
-
-                AddId(data.Id);
             }
 
-            _iListener?.Action(new HiddneObjectData()
+            if(AddId(data.Id))
             {
-                id = data.Id,
-                eElement = Type.EElement.Object,
-            });
+                _iListener?.Action(new HiddneObjectData()
+                {
+                    id = data.Id,
+                    eElement = Type.EElement.Object,
+                });
+            }
         }
 
         private bool CheckExist(int checkId)
@@ -153,7 +154,7 @@ namespace Game.PlaceEvent
             return _idList.Find(id => id == checkId) > 0;
         }
 
-        private void AddId(int addId)
+        private bool AddId(int addId)
         {
             if(_idList == null)
             {
@@ -164,7 +165,11 @@ namespace Game.PlaceEvent
             if(!CheckExist(addId))
             {
                 _idList.Add(addId);
+
+                return true;
             }
+
+            return false;
         }
 
         private bool CheckExistHiddenObject
