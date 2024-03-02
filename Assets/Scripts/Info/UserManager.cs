@@ -20,8 +20,10 @@ namespace Info
                 if (!_isFirst)
                     return false;
 
-                if(System.Boolean.TryParse(PlayerPrefs.GetString("IsFirst_1", true.ToString()), out bool isFirst))
+                if(System.Boolean.TryParse(PlayerPrefs.GetString("IsFirst"), out bool isFirst))
                 {
+                    _isFirst = isFirst;
+
                     return isFirst;
                 }
 
@@ -34,7 +36,7 @@ namespace Info
 
                 _isFirst = value;
 
-                PlayerPrefs.SetString("IsFirst_1", value.ToString());
+                PlayerPrefs.SetString("IsFirst", value.ToString());
             }
         }
 
@@ -407,6 +409,7 @@ namespace Info
                     Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, encodeStr);
                 }
 
+                Debug.Log("IsFirst = "+ IsFirst);
                 if(IsFirst)
                 {
                     IsFirst = false;
