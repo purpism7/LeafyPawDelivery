@@ -169,7 +169,7 @@ namespace Game.Manager
                         break;
                     }
 
-                case Game.PlaceEvent.HiddneObjectData hiddenObjectData:
+                case Game.PlaceEvent.HiddenObjectData hiddenObjectData:
                     {
                         var sentence = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "guide_hidden_object", LocalizationSettings.SelectedLocale);
 

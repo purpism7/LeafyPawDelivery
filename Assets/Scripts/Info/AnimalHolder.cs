@@ -73,8 +73,6 @@ namespace Info
 
             var jsonStr = JsonHelper.ToJson(AnimalInfoList.ToArray());
             var encodeStr = jsonStr.Encrypt(_secretKey);
-            //var fullPath = Path.Combine(JsonFilePath, JsonFileName);
-            Debug.Log("Animal SaveInfo = JsonFilePath : " + JsonFilePath + " : " + jsonStr);
 
             System.IO.File.WriteAllText(JsonFilePath, encodeStr);
         }

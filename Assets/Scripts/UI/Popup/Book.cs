@@ -70,6 +70,7 @@ namespace UI
 
             SetAddAnimal();
             SetAddObject();
+            SetAddStory();
 
             InitializeChildComponent();
         }

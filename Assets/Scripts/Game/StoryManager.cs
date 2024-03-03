@@ -101,19 +101,17 @@ namespace Game
             return storyOpenConditionContainer.CheckReq(currStory.Id, _placeId);
         }
 
-        public Game.Manager.Cutscene PlayStory(Story story)
+        public Game.Manager.Cutscene PlayStory(Story story, System.Action endAction = null)
         {
             if (story == null)
                 return null;
 
-            return Game.Manager.Cutscene.Create(new Game.Manager.Cutscene.Data()
-            {
-                TargetGameObj = GetStoryGameObj(story.PrefabName),
-                EndAction = () =>
+            return Game.Manager.Cutscene.Create(
+                new Game.Manager.Cutscene.Data()
                 {
-                    EndStory(story);
-                },
-            });
+                    TargetGameObj = GetStoryGameObj(story.PrefabName),
+                    EndAction = endAction,
+                });
         }
 
         private void StartStory(Story story)
@@ -124,7 +122,11 @@ namespace Game
             Sequencer.EnqueueTask(
                 () =>
                 {
-                    var cutscene = PlayStory(story);
+                    var cutscene = PlayStory(story,
+                        () =>
+                        {
+                            EndStory(story);
+                        });
 
                     Event?.Invoke(new Event.StoryData()
                     {
@@ -138,8 +140,24 @@ namespace Game
                 });
 
             Info.Connector.Get?.SetAddStory(story.Id);
+            Notification.Get?.Notify(Notification.EType.AddStory);
 
             UserManager.Instance?.SaveStory(story.Id);
+        }
+
+        private void StartStory()
+        {
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr != null)
+            {
+                if (mainGameMgr.IsTutorial)
+                    return;
+            }
+
+            if (Check(out Story story))
+            {
+                StartStory(story);
+            }
         }
 
         private void EndStory(Story story)
@@ -152,8 +170,6 @@ namespace Game
                 Id = story.Id,
                 EState = Game.Event.EState.End,
             });
-
-            //storyData.Completed = true;
         }
 
         //public bool CheckCompleted(int storyId)
@@ -214,32 +230,12 @@ namespace Game
         #region Listener
         private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
         {
-            var mainGameMgr = MainGameManager.Instance;
-            if(mainGameMgr != null)
-            {
-                if (mainGameMgr.IsTutorial)
-                    return;
-            }
-
-            if (Check(out Story story))
-            {
-                StartStory(story);
-            }
+            StartStory();
         }
 
         private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
         {
-            var mainGameMgr = MainGameManager.Instance;
-            if (mainGameMgr != null)
-            {
-                if (mainGameMgr.IsTutorial)
-                    return;
-            }
-
-            if (Check(out Story story))
-            {
-                StartStory(story);
-            }
+            StartStory();
         }
 
         private void OnChangedPlace(int placeId)

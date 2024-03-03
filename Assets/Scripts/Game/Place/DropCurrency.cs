@@ -78,57 +78,6 @@ namespace Game.PlaceEvent
             StartDrop();
         }
 
-        //private async UniTask DropAsync()
-        //{
-        //    var gameState = MainGameManager.Instance?.GameState;
-        //    if (gameState == null)
-        //        return;
-
-        //    if (gameState.CheckState<Game.State.Edit>())
-        //        return;
-
-        //    var animalList = _iPlace?.AnimalList;
-        //    if (animalList == null)
-        //        return;
-
-        //    if (animalList.Count <= 0)
-        //        return;
-
-        //    try
-        //    {
-        //        UI.ITop iTop = Game.UIManager.Instance?.Top;
-        //        if (iTop == null)
-        //        {
-        //            StartDrop();
-
-        //            return;
-        //        }
-        //        //_cancellationTokenSource = new();
-
-        //        await UniTask.WaitUntil(() => !iTop.CheckMaxDropAnimalCurrencyCnt);
-
-        //        await UniTask.WaitForSeconds(UnityEngine.Random.Range(30f, 40f));
-        //        if (_cancellationTokenSource.IsCancellationRequested)
-        //        {
-        //            _cancellationTokenSource = new();
-
-        //            StartDrop();
-
-        //            return;
-        //        }
-        //    }
-        //    catch (OperationCanceledException e)
-        //    {
-
-        //    }
-
-        //    Drop();
-
-        //    await UniTask.Yield();
-
-        //    StartDrop();
-        //}
-
         private void Drop()
         {
             var activateAnimalList = _iPlace.AnimalList.FindAll(animal => animal != null ? animal.IsActivate : false);

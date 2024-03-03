@@ -104,6 +104,9 @@ namespace Game.PlaceEvent
                 if (iObject == null)
                     continue;
 
+                if (!iObject.IsActivate)
+                    continue;
+
                 if (!iObject.HiddenObjectRootTm)
                     continue;
 
@@ -138,7 +141,7 @@ namespace Game.PlaceEvent
 
             if(AddId(data.Id))
             {
-                _iListener?.Action(new HiddneObjectData()
+                _iListener?.Action(new HiddenObjectData()
                 {
                     id = data.Id,
                     eElement = Type.EElement.Object,
@@ -198,6 +201,9 @@ namespace Game.PlaceEvent
         private void OnChangedStory(Event.StoryData storyData)
         {
             if (storyData == null)
+                return;
+
+            if (storyData.EState != Event.EState.End)
                 return;
 
             int placeId = GameUtils.ActivityPlaceId;

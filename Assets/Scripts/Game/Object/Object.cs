@@ -16,6 +16,8 @@ namespace Game
         void DeactivateHiddenObject();
 
         int SortingOrder { get; }
+
+        bool IsActivate { get; }
     }
 
     public class Object : Game.BaseElement<Object.Data>, UI.Edit.IListener, IObject

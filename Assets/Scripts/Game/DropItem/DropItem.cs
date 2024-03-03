@@ -193,7 +193,7 @@ namespace Game
                 {
                     case CurrencyData currencyData:
                         {
-                            return 1.3f;
+                            return 1.5f;
                         }
 
                     case ItemData itemData:
@@ -207,7 +207,7 @@ namespace Game
                         }
                 }
 
-                return 1.2f;
+                return 1.5f;
             }
         }
 

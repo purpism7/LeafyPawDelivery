@@ -15,7 +15,7 @@ namespace Game.PlaceEvent
         public int currCnt = 0;
     }
 
-    public class HiddneObjectData : BaseData
+    public class HiddenObjectData : BaseData
     {
         public int id = 0;
         public Game.Type.EElement eElement = Type.EElement.None;

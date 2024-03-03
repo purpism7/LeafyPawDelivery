@@ -10,6 +10,9 @@ namespace Plugin
 
         protected override void Initialize()
         {
+            if (Application.isEditor)
+                return;
+
             var eLoginType = GameSystem.Auth.ELoginType;
             if(eLoginType == GameSystem.Auth.EType.GooglePlayGames)
             {

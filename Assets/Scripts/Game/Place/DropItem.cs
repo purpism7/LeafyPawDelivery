@@ -13,8 +13,6 @@ namespace Game.PlaceEvent
         private Coroutine _dropItemCoroutine = null;
         private YieldInstruction _waitSecDrop = null;
 
-        private CancellationTokenSource _cancellationTokenSource = null;
-
         private Game.Type.EItemSub _eItemSub = Type.EItemSub.None;
 
         public override Base Initialize(IPlace iPlace, IListener iListener, int placeId)
@@ -43,67 +41,7 @@ namespace Game.PlaceEvent
                 StopCoroutine(_dropItemCoroutine);
                 _dropItemCoroutine = null;
             }
-
-            //if (_cancellationTokenSource != null)
-            //{
-            //    _cancellationTokenSource.Cancel();
-
-            //}
         }
-
-        //private async UniTask DropAsync()
-        //{
-        //    var gameState = MainGameManager.Instance?.GameState;
-        //    if (gameState == null)
-        //    {
-        //        StartDrop();
-
-        //        return;
-        //    }
-
-        //    if (gameState.CheckState<Game.State.Edit>())
-        //        return;
-
-        //    if (_eItemSub == Type.EItemSub.Letter)
-        //    {
-        //        UI.ITop iTop = Game.UIManager.Instance?.Top;
-        //        if (iTop == null)
-        //        {
-        //            StartDrop();
-
-        //            return;
-        //        }
-
-        //        if (iTop.CheckMaxDropLetterCnt)
-        //        {
-        //            StartDrop();
-
-        //            return;
-        //        }
-        //    }
-
-        //    try
-        //    {
-        //        await UniTask.WaitForSeconds(UnityEngine.Random.Range(60f, 70f), false, PlayerLoopTiming.Update, _cancellationTokenSource.Token);
-
-        //        if (_cancellationTokenSource.IsCancellationRequested)
-        //        {
-        //            StartDrop();
-
-        //            return;
-        //        }
-        //    }
-        //    catch (OperationCanceledException e)
-        //    {
-
-        //    }
-
-        //    Drop();
-
-        //    await UniTask.Yield();
-
-        //    StartDrop();
-        //}
 
         private IEnumerator CoDrop()
         {
@@ -145,24 +83,6 @@ namespace Game.PlaceEvent
 
             StartDrop();
         }
-
-        //private async UniTask AsyncDrop()
-        //{
-        //    await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(60f, 70f)));
-
-        //    if(_dropItemCoroutine == null)
-        //    {
-        //        StartDrop();
-
-        //        return;
-        //    }
-
-        //    Drop();
-
-        //    await UniTask.Yield();
-
-        //    StartDrop();
-        //}
 
         private void Drop()
         {
