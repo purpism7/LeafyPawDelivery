@@ -110,7 +110,11 @@ namespace Game
                 new Game.Manager.Cutscene.Data()
                 {
                     TargetGameObj = GetStoryGameObj(story.PrefabName),
-                    EndAction = endAction,
+                    EndAction =
+                    () =>
+                    {
+                        endAction?.Invoke();
+                    },
                 });
         }
 

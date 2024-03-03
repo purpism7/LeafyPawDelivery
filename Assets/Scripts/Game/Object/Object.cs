@@ -142,6 +142,8 @@ namespace Game
             order += sortingOrderOffset;
 
             spriteRenderer.sortingOrder = order;
+
+            SetSortingOrderHiddenObject(order);
         }
 
         private void RemoveHiddenObject()
@@ -152,6 +154,25 @@ namespace Game
             while(hiddenRootTm.childCount > 0)
             {
                 DestroyImmediate(hiddenRootTm.GetChild(0).gameObject);
+            }
+        }
+
+        private void SetSortingOrderHiddenObject(int order)
+        {
+            if (!CheckExistHiddenObject)
+                return;
+
+            for(int i = 0; i < hiddenRootTm.childCount; ++i)
+            {
+                var childTm = hiddenRootTm.GetChild(i);
+                if (!childTm)
+                    continue;
+
+                var hiddenObj = childTm.GetComponent<Object>();
+                if (hiddenObj == null)
+                    continue;
+
+                hiddenObj.SetSortingOrder(order);
             }
         }
 
