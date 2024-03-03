@@ -128,23 +128,6 @@ namespace Game
             progressSpriteRenderer?.DOFade(0, 0.2f);
         }
 
-        //private async UniTask AsyncActivateProgress()
-        //{
-        //    try
-        //    {
-        //        Debug.Log("AsyncActivateProgress");
-        //        await UniTask.Delay(TimeSpan.FromSeconds(5f), cancellationToken: _cancellationTokenSource.Token);
-        //        Debug.Log("AsyncActivateProgress22");
-
-        //        Debug.Log("progress scale");
-        //        progressSpriteRenderer?.transform.DOScaleX(0, 0);
-        //    }
-        //    catch(OperationCanceledException e)
-        //    {
-
-        //    }
-        //}
-
         private void SetItemSprite()
         {
             if (_data == null)
@@ -182,6 +165,8 @@ namespace Game
             {
                 collider = spriteRenderer.gameObject.AddComponent<CapsuleCollider2D>();
                 collider.size *= ColliderSizeOffset;
+
+                collider.includeLayers = LayerMask.NameToLayer("Game");
             }
         }
 
