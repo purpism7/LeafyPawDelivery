@@ -191,7 +191,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 42994731502788608
     m_Localized: "\uC88B\uC740 \uCE5C\uAD6C\uB294 \uB5A0\uC62C\uB9AC\uAE30\uB9CC
-      \uD574\uB3C4 \uC88B\uC544."
+      \uD574\uB3C4 \n\uC88B\uC544."
     m_Metadata:
       m_Items: []
   - m_Id: 42994771625500672
@@ -236,7 +236,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 65107091746971648
-    m_Localized: "\uB2E4 \uBCC4\uC77C \uC544\uB2C8\uC57C! \uAC71\uC815\uB9C8!"
+    m_Localized: "\uB2E4 \uBCC4\uC77C \uC544\uB2C8\uC57C! \n\uAC71\uC815\uB9C8!"
     m_Metadata:
       m_Items: []
   - m_Id: 65107201574821888
