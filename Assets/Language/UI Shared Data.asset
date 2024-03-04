@@ -233,6 +233,22 @@ MonoBehaviour:
     m_Key: would_buy
     m_Metadata:
       m_Items: []
+  - m_Id: 75364529700069376
+    m_Key: new_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75364609609949184
+    m_Key: continue_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75365109327716352
+    m_Key: desc_continue_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75395708289540096
+    m_Key: not_enough_jewel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

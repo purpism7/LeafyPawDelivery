@@ -28,11 +28,11 @@ public class OpenConditionData : Data.Base
     public EType eType = EType.None;
 
     public int ReqStoryId { get { return reqStoryId; } }
-
+    
     public override void Initialize()
     {
         base.Initialize();
-       
+
         System.Enum.TryParse(Type, out eType);
     }
 }

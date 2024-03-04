@@ -140,34 +140,34 @@ namespace Game.Manager
         {
             switch (baseData)
             {
-                case Game.PlaceEvent.DropItemData dropItemData:
-                    {
-                        if (dropItemData == null)
-                            return;
+                //case Game.PlaceEvent.DropItemData dropItemData:
+                //    {
+                //        if (dropItemData == null)
+                //            return;
 
-                        string keySave = KeyGuide + "_FirstDropLetter";
+                //        string keySave = KeyGuide + "_FirstDropLetter";
 
-                        if (Boolean.TryParse(PlayerPrefs.GetString(keySave, false.ToString()), out bool already))
-                        {
-                            if (already)
-                                return;
-                        }
+                //        if (Boolean.TryParse(PlayerPrefs.GetString(keySave, false.ToString()), out bool already))
+                //        {
+                //            if (already)
+                //                return;
+                //        }
                         
-                        if (dropItemData.currCnt == 1)
-                        {
-                            var sentenceQueue = new Queue<string>();
-                            sentenceQueue.Clear();
+                //        if (dropItemData.currCnt == 1)
+                //        {
+                //            var sentenceQueue = new Queue<string>();
+                //            sentenceQueue.Clear();
 
-                            var key = "guide_drop_letter";
-                            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", key, LocalizationSettings.SelectedLocale));
+                //            var key = "guide_drop_letter";
+                //            sentenceQueue.Enqueue(LocalizationSettings.StringDatabase.GetLocalizedString("UI", key, LocalizationSettings.SelectedLocale));
 
-                            Show(sentenceQueue);
+                //            Show(sentenceQueue);
 
-                            PlayerPrefs.SetString(keySave, true.ToString());
-                        }
+                //            PlayerPrefs.SetString(keySave, true.ToString());
+                //        }
 
-                        break;
-                    }
+                //        break;
+                //    }
 
                 case Game.PlaceEvent.HiddenObjectData hiddenObjectData:
                     {

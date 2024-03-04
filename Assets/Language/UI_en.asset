@@ -91,7 +91,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 42762563220398080
-    m_Localized: Place a lovely pink rabbit 'Barnie'!
+    m_Localized: Place a lovely pink rabbit "Barnie"!
     m_Metadata:
       m_Items: []
   - m_Id: 42762690496552960
@@ -133,7 +133,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51479994784800768
-    m_Localized: 'If you repeat a touch dropped letters,
+    m_Localized: 'If you repeat a touch "dropped letters",
 
       You can get a gift.'
     m_Metadata:
@@ -260,6 +260,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 72908610588368896
     m_Localized: Would you like to buy?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75364529700069376
+    m_Localized: New
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75364609609949184
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75365109327716352
+    m_Localized: Do you want to continue with the saved data?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75395708289540096
+    m_Localized: Not enoutgh Jewel!
     m_Metadata:
       m_Items: []
   references:
