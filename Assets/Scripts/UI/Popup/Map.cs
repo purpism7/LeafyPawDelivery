@@ -4,9 +4,11 @@ using DG.Tweening;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 
 using GameSystem;
 using UI.Component;
+
 
 namespace UI
 {
@@ -100,6 +102,14 @@ namespace UI
         public void OnClickClose()
         {
             Deactivate();
+        }
+
+        public void OnClickEmpty()
+        {
+            string localKey = "desc_map_empty";
+            var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+
+            Game.Toast.Get?.Show(text, localKey);
         }
 
         #region MapIcon.IListener

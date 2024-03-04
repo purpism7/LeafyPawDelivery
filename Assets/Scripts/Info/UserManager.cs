@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.IO;
+using System;
 
 //using Firebase.Database;
 using Cysharp.Threading.Tasks;
-using System.IO;
-using System;
+
+using GameSystem;
 
 namespace Info
 {
@@ -90,20 +92,43 @@ namespace Info
                     Directory.CreateDirectory(path);
                 }
 
-                if (!System.IO.File.Exists(_jsonFilePath))
+                string decodeStr = string.Empty;
+
+                // 재 설치 시, 클라우드에 저장된 데이터가 있는지 체크 후 가져오기.
+                if (Auth.EGameType_ == Auth.EGameType.New)
                 {
                     CreateUserInfo();
 
                     yield break;
                 }
+                else if (Auth.EGameType_ == Auth.EGameType.Continue)
+                {
+                    decodeStr = Plugin.Native.Instance?.GetString(GameSystem.Auth.ID);
+
+                    Debug.Log(decodeStr);
+                    if (string.IsNullOrEmpty(decodeStr))
+                    {
+                        CreateUserInfo();
+
+                        yield break;
+                    }
+                }
                 else
                 {
-                    var decodeStr = System.IO.File.ReadAllText(_jsonFilePath);
-                    var jsonStr = decodeStr.Decrypt(_scretKey);
+                    if (!System.IO.File.Exists(_jsonFilePath))
+                    {
+                        CreateUserInfo();
 
-                    _user = JsonUtility.FromJson<Info.User>(jsonStr);
-                    //Debug.Log("User = " + jsonStr);
+                        yield break;
+                    }
+
+                    decodeStr = System.IO.File.ReadAllText(_jsonFilePath);
                 }
+
+                var jsonStr = decodeStr.Decrypt(_scretKey);
+
+                _user = JsonUtility.FromJson<Info.User>(jsonStr);
+                //Debug.Log("User = " + jsonStr);
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -182,9 +207,6 @@ namespace Info
             var currency = Game.Data.Const.GetStartCurrency(placeId);
 
             SaveCurrency(currency);
-
-            //var jsonString = JsonUtility.ToJson(User);
-            //System.IO.File.WriteAllText(_userInfoJsonFilePath, jsonString);
         }
 
         public void AddAnimal(Info.Animal animalInfo)
@@ -399,7 +421,7 @@ namespace Info
                 //var encodeStr = System.Convert.ToBase64String(bytes);
 
                 System.IO.File.WriteAllText(_jsonFilePath, encodeStr);
-
+                Debug.Log("SaveAsync jsonStr = " + jsonStr);
                 if (Application.platform == RuntimePlatform.Android)
                 {
                     Plugin.Native.Instance?.SetString(typeof(User).Name, encodeStr);
@@ -409,7 +431,6 @@ namespace Info
                     Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, encodeStr);
                 }
 
-                Debug.Log("IsFirst = "+ IsFirst);
                 if(IsFirst)
                 {
                     IsFirst = false;

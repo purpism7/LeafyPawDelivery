@@ -172,7 +172,7 @@ namespace Game
                 if (hiddenObj == null)
                     continue;
 
-                hiddenObj.SetSortingOrder(order);
+                hiddenObj.SetSortingOrder(order - 1);
             }
         }
 

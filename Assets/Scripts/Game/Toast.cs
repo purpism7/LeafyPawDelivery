@@ -20,18 +20,34 @@ namespace Game
         private RectTransform rootRectTm = null;
 
         private List<UI.Component.Toast> _toastList = new();
+        private UI.Component.Toast _currToast = null;
 
         private void Awake()
         {
             _instance = this;
         }
 
-        public void Show(string text)
+        public void Show(string text, string key = "")
         {
-            var toast = Create(new UI.Component.Toast.Data()
+            if(_currToast != null)
             {
-                text = text,
-            });
+                if(_currToast.IsActivate)
+                {
+                    if(!string.IsNullOrEmpty(key) &&
+                       !string.IsNullOrEmpty(_currToast.Key))
+                    {
+                        if (_currToast.Key.Equals(key))
+                            return;
+                    }
+                }
+            }
+
+            _currToast = Create(
+                new UI.Component.Toast.Data()
+                {
+                    text = text,
+                    key = key,
+                });
         }
 
         private UI.Component.Toast Create(UI.Component.Toast.Data toastData)

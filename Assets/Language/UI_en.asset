@@ -278,6 +278,14 @@ MonoBehaviour:
     m_Localized: Not enoutgh Jewel!
     m_Metadata:
       m_Items: []
+  - m_Id: 75431868630032384
+    m_Localized: An update is scheduled.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75556213218074624
+    m_Localized: The payment is being processed.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

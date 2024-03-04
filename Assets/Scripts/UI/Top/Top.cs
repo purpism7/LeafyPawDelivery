@@ -445,7 +445,7 @@ namespace UI
             if (data == null)
                 return;
 
-            data.StartPos.x -= 5f;
+            data.StartPos.x -= 30f;
             data.StartPos.y += 20f;
 
             SetCurrency();

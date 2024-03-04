@@ -174,6 +174,13 @@ namespace Game
             TwiceCurrency,
         }
 
+        public enum EScreenSaverType
+        {
+            None,
+
+            InappPurchase,
+        }
+
         public enum ETutorialStep
         {
             None,

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.Localization.Settings;
+
 using GameSystem;
 using GameData;
 using UI;
@@ -19,6 +21,8 @@ namespace Game
 
         [SerializeField]
         private RectTransform screenSaverRectTm = null;
+
+        private Type.EScreenSaverType _eScreenSaverType = Type.EScreenSaverType.None;
 
         protected override void Initialize()
         {
@@ -59,13 +63,17 @@ namespace Game
             Bottom?.DeactivateAnim(null);
         }
 
-        public void ActivateSreenSaver()
+        public void ActivateSreenSaver(Type.EScreenSaverType eScreenSaverType)
         {
+            _eScreenSaverType = eScreenSaverType;
+
             UIUtils.SetActive(screenSaverRectTm, true);
         }
 
         public void DeactivateScreenSaver()
         {
+            _eScreenSaverType = Type.EScreenSaverType.None;
+
             UIUtils.SetActive(screenSaverRectTm, false);
         }
 
@@ -73,6 +81,22 @@ namespace Game
         {
             Top?.SetInteractable(interactable);
             Bottom?.SetInteractable(interactable, exceptBottomTypes);
+        }
+
+        public void OnClickScreenSaver()
+        {
+            switch(_eScreenSaverType)
+            {
+                case Type.EScreenSaverType.InappPurchase:
+                    {
+                        string localKey = "desc_inapp_purchase";
+                        var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+
+                        Game.Toast.Get?.Show(local, localKey);
+
+                        break;
+                    }
+            }
         }
 
         #region IUpdater

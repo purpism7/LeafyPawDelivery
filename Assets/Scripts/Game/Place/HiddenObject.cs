@@ -136,7 +136,7 @@ namespace Game.PlaceEvent
             if(hiddenObject != null)
             {
                 var localPos = hiddenObject.transform.localPosition;
-                hiddenObject.transform.localPosition = new Vector3(localPos.x, localPos.y, 20f);
+                hiddenObject.transform.localPosition = new Vector3(localPos.x, localPos.y, -20f);
             }
 
             if(AddId(data.Id))

@@ -147,7 +147,7 @@ namespace UI
                             uiMgr.Top?.CollectCashCurrency(pos, shopData.Value);
                         };
 
-                        uiMgr?.ActivateSreenSaver();
+                        uiMgr?.ActivateSreenSaver(Game.Type.EScreenSaverType.InappPurchase);
 
                         break;
                     }

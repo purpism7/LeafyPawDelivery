@@ -249,6 +249,14 @@ MonoBehaviour:
     m_Key: not_enough_jewel
     m_Metadata:
       m_Items: []
+  - m_Id: 75431868630032384
+    m_Key: desc_map_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75556213218074624
+    m_Key: desc_inapp_purchase
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
