@@ -103,7 +103,7 @@ namespace Info
                 }
                 else if (Auth.EGameType_ == Auth.EGameType.Continue)
                 {
-                    decodeStr = Plugin.Native.Instance?.GetString(GameSystem.Auth.ID);
+                    decodeStr = Plugin.Native.Instance.SaveValue;
 
                     //Debug.Log("decodeStr = " + decodeStr);
                     if (string.IsNullOrEmpty(decodeStr))

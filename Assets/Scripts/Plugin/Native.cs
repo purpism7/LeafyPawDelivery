@@ -8,6 +8,8 @@ namespace Plugin
     {
         private Base _base = null;
 
+        public string SaveValue { get { return _base?.SaveValue; } }
+
         protected override void Initialize()
         {
             if (Application.isEditor)
@@ -66,30 +68,32 @@ namespace Plugin
             _base?.SetString(key, value);
         }
 
-        public string GetString(string key)
+        public void GetString(string key, System.Action<bool, string> endAction)
         {
             if(!Application.isEditor)
             {
                 if (string.IsNullOrEmpty(key))
-                    return string.Empty;
+                    return;
             }
 
-            return _base?.GetString(key);
+            _base?.GetString(key, endAction);
         }
     }
 
     public abstract class Base : MonoBehaviour
     {
-//#if UNITY_EDITOR
-//        protected string _userInfoJsonFilePath = "Assets/Info/User.json";
-//#else
-//        protected string _userInfoJsonFilePath = Application.persistentDataPath + "/User.json";
-//#endif
+        //#if UNITY_EDITOR
+        //        protected string _userInfoJsonFilePath = "Assets/Info/User.json";
+        //#else
+        //        protected string _userInfoJsonFilePath = Application.persistentDataPath + "/User.json";
+        //#endif
+
+        public string SaveValue { get; protected set; } = string.Empty;
 
         public abstract void Initialize();
 
         public abstract void SetString(string key, string value);
-        public abstract string GetString(string key);
+        public abstract void GetString(string key, System.Action<bool, string> endAction);
     }
 }
 

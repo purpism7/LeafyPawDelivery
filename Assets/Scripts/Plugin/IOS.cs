@@ -29,12 +29,12 @@ namespace Plugin
         public override void SetString(string key, string value)
         {
             iCloudSaveStringValue(key, value);
-
         }
 
-        public override string GetString(string key)
+        public override void GetString(string key, System.Action<bool, string> endAction)
         {
-            return iCloudGetStringValue(key);
+            SaveValue = iCloudGetStringValue(key);
+            endAction?.Invoke(true, SaveValue);
         }
 
 #if UNITY_IOS

@@ -59,27 +59,7 @@ namespace Plugin
 
         private void Load(SavedGameRequestStatus status, ISavedGameMetadata game)
         {
-            if (status == SavedGameRequestStatus.Success)
-            {
-                ISavedGameClient iSavedGameClient = PlayGamesPlatform.Instance.SavedGame;
-
-                iSavedGameClient?.ReadBinaryData(game,
-                    (SavedGameRequestStatus status, byte[] bytes) =>
-                    {
-                        if (status == SavedGameRequestStatus.Success)
-                        {
-                            // handle reading or writing of saved game.
-                        }
-                        else
-                        {
-                            // handle error
-                        }
-                    });
-            }
-            else
-            {
-                // handle error
-            }
+            
         }
 #endif
 
@@ -88,19 +68,69 @@ namespace Plugin
 #if UNITY_ANDROID
 
             ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-            savedGameClient.OpenWithAutomaticConflictResolution(key, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLastKnownGood, Save);
+            savedGameClient.OpenWithAutomaticConflictResolution(key, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLastKnownGood,
+                (SavedGameRequestStatus status, ISavedGameMetadata game) =>
+                {
+                    if (status == SavedGameRequestStatus.Success)
+                    {
+                        ISavedGameClient iSavedGameClient = PlayGamesPlatform.Instance.SavedGame;
+                        SavedGameMetadataUpdate update = new SavedGameMetadataUpdate.Builder().Build();
+
+                        iSavedGameClient?.CommitUpdate(game, update, System.Text.Encoding.UTF8.GetBytes(value),
+                            (SavedGameRequestStatus status, ISavedGameMetadata game) =>
+                            {
+                                if (status == SavedGameRequestStatus.Success)
+                                {
+                                    // handle reading or writing of saved game.
+                                }
+                                else
+                                {
+                                    // handle error
+                                }
+                            });
+                    }
+                    else
+                    {
+                        // handle error
+                    }
+                });
 #endif
         }
 
-        public override string GetString(string key)
+        public override void GetString(string key, System.Action<bool, string> endAction)
         {
 #if UNITY_ANDROID
 
             ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-            savedGameClient.OpenWithAutomaticConflictResolution(key, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLastKnownGood, Load);
-#endif
+            savedGameClient.OpenWithAutomaticConflictResolution(key, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLastKnownGood,
+                (SavedGameRequestStatus status, ISavedGameMetadata game) =>
+                {
+                    if (status == SavedGameRequestStatus.Success)
+                    {
+                        ISavedGameClient iSavedGameClient = PlayGamesPlatform.Instance.SavedGame;
 
-            return string.Empty;
+                        iSavedGameClient?.ReadBinaryData(game,
+                            (SavedGameRequestStatus status, byte[] bytes) =>
+                            {
+                                if (status == SavedGameRequestStatus.Success)
+                                {
+                                    // handle reading or writing of saved game.
+                                    SaveValue = System.Text.Encoding.UTF8.GetString(bytes);
+                                    endAction?.Invoke(true, SaveValue);
+                                }
+                                else
+                                {
+                                    endAction?.Invoke(false, string.Empty);
+                                    // handle error
+                                }
+                            });
+                    }
+                    else
+                    {
+                        // handle error
+                    }
+                });
+#endif
         }
     }
 }

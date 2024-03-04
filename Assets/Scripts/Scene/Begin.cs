@@ -42,21 +42,24 @@ namespace Scene
             await _auth.AsyncInitialize();
             await Plugin.Native.Instance.CoInit();
 
-            string value = string.Empty;
+            string saveValue = string.Empty;
 
             if(!Application.isEditor)
             {
-                if (Application.platform == RuntimePlatform.Android)
-                {
-                    value = Plugin.Native.Instance?.GetString(typeof(Info.User).Name);
-                }
-                else
-                {
-                    value = Plugin.Native.Instance?.GetString(GameSystem.Auth.ID);
-                }
+                bool end = false;
+
+                Plugin.Native.Instance?.GetString(Application.platform == RuntimePlatform.Android ? typeof(Info.User).Name : GameSystem.Auth.ID,
+                        (success, value) =>
+                        {
+                            saveValue = value;
+
+                            end = true;
+                        });
+
+                await UniTask.WaitUntil(() => end);
             }
 
-            if (!string.IsNullOrEmpty(value))
+            if (!string.IsNullOrEmpty(saveValue))
             {
                 if(Info.UserManager.IsFirst)
                 {

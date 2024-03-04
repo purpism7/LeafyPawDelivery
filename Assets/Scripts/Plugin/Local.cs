@@ -18,14 +18,13 @@ namespace Plugin
             //System.IO.File.WriteAllText(jsonFilePath, value);
         }
 
-        public override string GetString(string key)
+        public override void GetString(string key, System.Action<bool, string> endAction)
         {
             //var jsonFilePath = string.Format(_userInfoJsonFilePath, key);
             //if (!System.IO.File.Exists(jsonFilePath))
             //    return string.Empty;
 
             //return System.IO.File.ReadAllText(jsonFilePath);
-            return string.Empty;
         }
     }
 }
