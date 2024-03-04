@@ -33,6 +33,13 @@ namespace UI.Component
             SetItemList();
         }
 
+        public override void Activate()
+        {
+            base.Activate();
+
+            SetCategory();
+        }
+
         private void SetCategory()
         {
             if (_data == null)

@@ -37,8 +37,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
     private static Dictionary<Type, MonoBehaviour> _managerDic = new();
 
-    public WorldTime WorldTime { get; private set; } = null;
-
     public float GamePlayTimeSec { get; private set; } = 0;
     public Game.State.Base GameState { get; private set; } = null;
     public Game.Type.EGameState EGameState { get; private set; } = Game.Type.EGameState.None;
@@ -63,8 +61,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         _endInitialize = false;
 
         _managerDic.Clear();
-
-        WorldTime = gameObject.GetOrAddComponent<WorldTime>();
 
         AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>());
         AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>());
@@ -295,33 +291,14 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                     return true;
             }
 
-            //int placeId = GameUtils.ActivityPlaceId;
-            //if (placeId != Game.Data.Const.StartPlaceId)
-            //    return false;
-
-            //var animalDataList = AnimalContainer.Instance?.GetDataListByPlaceId(placeId);
-            //if (animalDataList == null)
-            //    return false;
-
-            //var openConditionDataList = AnimalOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter });
-            //foreach(var animalData in animalDataList)
-            //{
-            //    if (animalData == null)
-            //        continue;
-
-            //    if (openConditionDataList != null &&
-            //        openConditionDataList.Find(openConditionData => openConditionData.Id == animalData.Id) != null)
-            //    {
-            //        if(!CheckExist(Game.Type.EElement.Animal, animalData.Id))
-            //        {
-            //            return true;
-            //        }
-            //    }
-            //}
-
             var connector = Info.Connector.Get;
             if(connector != null)
             {
+                if (Auth.EGameType_ == Auth.EGameType.Continue)
+                {
+                    connector.SetCompleteTutorial(true);
+                }
+
                 return connector.IsCompleteTutorial == false;
             }
 
@@ -685,8 +662,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     #region Game.TutorialManager.IListener
     void Game.TutorialManager.IListener.State(Game.Type.ETutorialStep step)
     {
-        //Info.Connector.Get?.SetCompleteTutorial(true);
-
         switch(step)
         {
             case Game.Type.ETutorialStep.EditAnimal:

@@ -42,7 +42,6 @@ namespace Scene
             await _auth.AsyncInitialize();
             await Plugin.Native.Instance.CoInit();
 
-            Debug.Log("Auth = " + Auth.ID);
             string value = string.Empty;
 
             if(!Application.isEditor)
@@ -56,8 +55,6 @@ namespace Scene
                     value = Plugin.Native.Instance?.GetString(GameSystem.Auth.ID);
                 }
             }
-
-            Debug.Log("value = " + value);
 
             if (!string.IsNullOrEmpty(value))
             {
@@ -193,11 +190,15 @@ namespace Scene
         #region ContinueGame.IListener
         void ContinueGame.IListener.New()
         {
+            _auth?.SetGameType(Auth.EGameType.New);
+
             _end = true;
         }
 
         void ContinueGame.IListener.Continue()
         {
+            _auth?.SetGameType(Auth.EGameType.Continue);
+
             _end = true;
         }
         #endregion

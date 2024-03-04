@@ -140,7 +140,7 @@ namespace UI
 
         public void OnClickSNS()
         {
-            Application.OpenURL("http://www.instagram.com/leafypawdelivery/");
+            Application.OpenURL("http://www.instagram.com/leafyparcels/");
         }
 
         public void OnClickSpecialThanks()

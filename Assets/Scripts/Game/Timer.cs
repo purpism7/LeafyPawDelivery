@@ -108,7 +108,7 @@ namespace Game
         {
             if (_worldTime == null)
             {
-                _worldTime = MainGameManager.Instance?.WorldTime;
+                _worldTime = GameSystem.WorldTime.Get;
             }
 
             await _worldTime.RequestAsync();

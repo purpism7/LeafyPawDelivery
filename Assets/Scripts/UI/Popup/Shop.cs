@@ -50,6 +50,7 @@ namespace UI
 
             Game.Manager.IAP.Instance?.SetIListener(this);
 
+            ActivateChildComponent(typeof(ShopItemGroup));
             ActivateChildComponent(typeof(ShopItemCell));
             
             itemScrollRect?.ResetScrollPos();

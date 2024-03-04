@@ -105,7 +105,7 @@ namespace Info
                 {
                     decodeStr = Plugin.Native.Instance?.GetString(GameSystem.Auth.ID);
 
-                    Debug.Log(decodeStr);
+                    //Debug.Log("decodeStr = " + decodeStr);
                     if (string.IsNullOrEmpty(decodeStr))
                     {
                         CreateUserInfo();
@@ -192,7 +192,6 @@ namespace Info
             //Save
 
 
-            Debug.Log("Load User Info");
             //yield return null;
         }
 
@@ -400,13 +399,34 @@ namespace Info
                 return;
 
             SaveAsync().Forget();
+
+            var jsonStr = JsonUtility.ToJson(_user);
+            var encodeStr = jsonStr.Encrypt(_scretKey);
+            //var bytes = System.Text.Encoding.UTF8.GetBytes(jsonStr);
+            //var encodeStr = System.Convert.ToBase64String(bytes);
+
+            System.IO.File.WriteAllText(_jsonFilePath, encodeStr);
+            //Debug.Log("SaveAsync jsonStr = " + jsonStr);
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                Plugin.Native.Instance?.SetString(typeof(User).Name, encodeStr);
+            }
+            else
+            {
+                Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, encodeStr);
+            }
+
+            if (IsFirst)
+            {
+                IsFirst = false;
+            }
         }
 
         private async UniTask SaveAsync()
         {
             try
             {
-                var worldTime = MainGameManager.Instance?.WorldTime;
+                var worldTime = GameSystem.WorldTime.Get;
                 DateTime? saveDateTime = null;
                 if (worldTime != null)
                 {
@@ -414,27 +434,6 @@ namespace Info
                 }
 
                 _user?.UpdateDateTime(saveDateTime);
-
-                var jsonStr = JsonUtility.ToJson(_user);
-                var encodeStr = jsonStr.Encrypt(_scretKey);
-                //var bytes = System.Text.Encoding.UTF8.GetBytes(jsonStr);
-                //var encodeStr = System.Convert.ToBase64String(bytes);
-
-                System.IO.File.WriteAllText(_jsonFilePath, encodeStr);
-                Debug.Log("SaveAsync jsonStr = " + jsonStr);
-                if (Application.platform == RuntimePlatform.Android)
-                {
-                    Plugin.Native.Instance?.SetString(typeof(User).Name, encodeStr);
-                }
-                else
-                {
-                    Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, encodeStr);
-                }
-
-                if(IsFirst)
-                {
-                    IsFirst = false;
-                }
             }
             catch (Exception e)
             {

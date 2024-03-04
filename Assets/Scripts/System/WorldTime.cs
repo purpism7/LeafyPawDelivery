@@ -10,6 +10,46 @@ namespace GameSystem
 {
     public class WorldTime : MonoBehaviour
     {
+        #region Static
+        private static WorldTime _instance = null;
+        public static WorldTime Create()
+        {
+            if (_instance == null)
+            {
+                var gameObj = new GameObject(typeof(WorldTime).Name);
+                if (!gameObj)
+                    return null;
+
+                _instance = gameObj.GetOrAddComponent<WorldTime>();
+            }
+
+            if (_instance != null)
+            {
+                DontDestroyOnLoad(_instance);
+            }
+
+            return _instance;
+        }
+
+        public static bool Validate
+        {
+            get { return _instance != null; }
+        }
+
+        public static WorldTime Get
+        {
+            get
+            {
+                if(_instance == null)
+                {
+                    Create();
+                }
+
+                return _instance;
+            }
+        }
+        #endregion
+
         struct TimeData
         {
             public string datetime;
@@ -20,7 +60,7 @@ namespace GameSystem
 
         private void Start()
         {
-            RequestAsync().Forget();
+            //RequestAsync().Forget();
 
             //LocalTime = DateTime.UtcNow.ToLocalTime();
         }

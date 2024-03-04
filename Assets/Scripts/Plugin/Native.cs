@@ -53,8 +53,6 @@ namespace Plugin
         public override IEnumerator CoInit()
         {
             yield return StartCoroutine(base.CoInit());
-
-            Debug.Log("end Native Initialize");
         }
 
         public void SetString(string key, string value)

@@ -25,6 +25,7 @@ namespace GameSystem
         public static string ID { get { return _instance?._id; } }
         public static string NickName { get { return _instance?._nickName; } }
         public static EType ELoginType { get { return _instance._eType; } }
+        public static EGameType EGameType_ { get { return _instance._eGameType; } }
 
         public enum EType
         {
@@ -33,9 +34,18 @@ namespace GameSystem
             GooglePlayGames,
         }
 
+        public enum EGameType
+        {
+            None,
+
+            New,
+            Continue,
+        }
+
         private string _id = string.Empty;
         private string _nickName = string.Empty;
         private EType _eType = EType.Local;
+        private EGameType _eGameType = EGameType.None;
 
         private bool _endAuth = false;
 
@@ -48,18 +58,6 @@ namespace GameSystem
         {
             await UnityServices.InitializeAsync();
             Debug.Log(UnityServices.State);
-
-            //PlayGamesPlatform.Activate();
-
-            //            if(Application.isEditor)
-            //            {
-            //                await SignInAnonymouslyAsync();
-            //            }
-            //            else
-            //            {
-            //#if UNITY_IOS
-            //                //var player = await GKLocalPlayer.Authenticate();
-            //                //Debug.Log($"GameKit Authentication: player {player}"); 
 
             _nickName = PlayerPrefs.GetString(Game.Data.PlayPrefsKeyNickName, string.Empty);
 
@@ -153,6 +151,11 @@ namespace GameSystem
             _nickName = nickName;
 
             PlayerPrefs.SetString(Game.Data.PlayPrefsKeyNickName, nickName);
+        }
+
+        public void SetGameType(EGameType eGameType)
+        {
+            _eGameType = eGameType;
         }
     }
 }
