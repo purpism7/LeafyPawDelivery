@@ -37,7 +37,7 @@ namespace Game.Element.State
             if (tm)
             {
                 _initPosZ = tm.localPosition.z;
-                SetPosZ(-50f);
+                SetPosZ(-100f);
             }            
 
             Game.UIManager.Instance?.Bottom?.DeactivateEditList();
@@ -52,7 +52,8 @@ namespace Game.Element.State
         {
             var elementData = _gameBaseElement?.ElementData;
 
-            SetPosZ(_initPosZ);
+            float posZ = _gameBaseElement.transform.localPosition.y * 0.001f;
+            SetPosZ(posZ);
 
             var eTab = Game.Type.ETab.Animal;
             if (elementData != null)

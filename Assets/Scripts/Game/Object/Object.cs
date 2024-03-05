@@ -27,6 +27,7 @@ namespace Game
             public int ObjectId = 0;
             public int ObjectUId = 0;
             public Vector3 Pos = Vector3.zero;
+            public float posZ = 0;
 
             public bool isHiddenObj = false;
             public int sortingOrder = 0;
@@ -60,6 +61,8 @@ namespace Game
                 }
 
                 SetSortingOrder(sortingOrder);
+
+                rootTm.localPosition = new Vector3(0, 0, data.posZ);
             }
 
             edit?.Initialize(new Edit.Data()
@@ -244,12 +247,6 @@ namespace Game
             Command.Arrange.Execute(this, transform.localPosition);
 
             SetSortingOrder(-(int)transform.localPosition.y);
-
-            // 배치된 오브젝트에 숨겨진 오브젝트가 있을 경우, 배치 시, 숨겨진 오브젝트가 앞에 보이는 현상때문엔 spriterenderer depth 수정.
-            if(spriteRenderer != null)
-            {
-                spriteRenderer.transform.localPosition = new Vector3(0, 0, 1f);
-            }
 
             ActiveEdit(false);
             SetState(null);
