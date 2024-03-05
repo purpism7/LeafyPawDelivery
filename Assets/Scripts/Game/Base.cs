@@ -12,7 +12,7 @@ namespace Game
     public abstract class Common : MonoBehaviour, Sequencer.ITask
     {
         [SerializeField]
-        private Transform rootTm = null;
+        protected Transform rootTm = null;
 
         protected bool _endTask = true;
 
