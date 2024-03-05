@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 94659690454118510}
   - component: {fileID: 4193277499131427672}
   - component: {fileID: 7752470971938288511}
+  - component: {fileID: 7376874147532993638}
   m_Layer: 6
   m_Name: Animal
   m_TagString: Untagged
@@ -181,6 +182,89 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659511518189944e2b2a5a669209f524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!60 &7376874147532993638
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4616245985608609277}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 160, y: 152}
+    newSize: {x: 200, y: 200}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 45, y: 47}
+      - {x: 52, y: 66}
+      - {x: 52, y: 85}
+      - {x: 59, y: 91}
+      - {x: 61, y: 95}
+      - {x: 61, y: 112}
+      - {x: 60, y: 126}
+      - {x: 54, y: 134}
+      - {x: 31, y: 133}
+      - {x: 29, y: 146}
+      - {x: 26, y: 147}
+      - {x: 14, y: 147}
+      - {x: 5, y: 137}
+      - {x: -3, y: 132}
+      - {x: -5, y: 140}
+      - {x: -12, y: 147}
+      - {x: -21, y: 147}
+      - {x: -28, y: 144}
+      - {x: -31, y: 132}
+      - {x: -44, y: 133}
+      - {x: -53, y: 133}
+      - {x: -60, y: 126}
+      - {x: -62, y: 91}
+      - {x: -62, y: 81}
+      - {x: -52, y: 73}
+      - {x: -51, y: 66}
+      - {x: -41, y: 51}
+      - {x: -46, y: 42}
+      - {x: -44, y: 23}
+      - {x: -36, y: 1}
+      - {x: -27, y: 0}
+      - {x: -5, y: 0}
+      - {x: 0, y: 6}
+      - {x: 4, y: 0}
+      - {x: 28, y: 0}
+      - {x: 34, y: 1}
+      - {x: 55, y: 18}
+      - {x: 52, y: 31}
+  m_UseDelaunayMesh: 0
 --- !u!1 &5936816878479032547
 GameObject:
   m_ObjectHideFlags: 0
