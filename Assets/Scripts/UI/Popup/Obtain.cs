@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Localization.Settings;
 
+using GameSystem;
+
 namespace UI
 {
     public class Obtain : BasePopup<Obtain.Data>
@@ -112,6 +114,8 @@ namespace UI
 
         public void OnClick()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
             Deactivate();
 
             Game.RenderTextureElement.Destroy();

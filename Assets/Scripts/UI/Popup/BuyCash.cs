@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using UI.Component;
+using GameSystem;
 
 namespace UI
 {
@@ -96,6 +97,8 @@ namespace UI
 
         public void OnClickBuy()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
             _data?.IListener?.Buy(_possibleBuy);
 
             Deactivate();

@@ -583,6 +583,8 @@ namespace UI.Component
                     return;
             }
 
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
             CreateObtainPopup();
         }
 

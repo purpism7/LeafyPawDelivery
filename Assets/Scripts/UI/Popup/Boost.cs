@@ -6,6 +6,8 @@ using UnityEngine.Localization.Settings;
 
 using TMPro;
 
+using GameSystem;
+
 namespace UI
 {
     public class Boost : BasePopup<Boost.Data>
@@ -169,11 +171,15 @@ namespace UI
 
         public void OnClickCancel()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
             Deactivate();
         }
 
         public void OnClickBuy()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
             var adData = _data?.boostData?.ad;
             if (adData == null)
                 return;

@@ -16,7 +16,7 @@ MonoBehaviour:
   - eCategory: 1
     ios: ca-app-pub-4768455296560255/9551829061
     and: ca-app-pub-4768455296560255/9341017366
-    coolTimeSec: 10800
+    coolTimeSec: 3600
   - eCategory: 2
     ios: ca-app-pub-4768455296560255/8801181066
     and: ca-app-pub-4768455296560255/8881852360

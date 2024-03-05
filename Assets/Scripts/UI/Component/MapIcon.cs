@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 using DG.Tweening;
 
+using GameSystem;
 
 namespace UI.Component
 {
@@ -142,6 +143,8 @@ namespace UI.Component
 
         public void OnClick()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
             _data?.IListener?.SelectPlace(placeId, SetMyLocation);
 
             //Game.Toast.Get?.Show("show");

@@ -8,6 +8,8 @@ using System;
 
 using TMPro;
 
+using GameSystem;
+
 namespace UI.Component
 {
     public interface IShopItemCell
@@ -275,6 +277,8 @@ namespace UI.Component
 
         public void OnClick()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
             _data?.iListener?.Buy(this, transform.position);
         }
     }
