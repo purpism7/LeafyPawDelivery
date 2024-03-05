@@ -232,8 +232,8 @@ namespace Game
             if (progressSpriteRenderer == null)
                 return;
 
-            float progress = (_data.totalProgress - _data.progress) * 0.1f;
-
+            float progress = (float)(_data.totalProgress - _data.progress) / (float)_data.totalProgress;
+            
             progressSpriteRenderer.DOFade(1f, 0);
             progressSpriteRenderer.transform.DOScaleX(progress, _data.progress <= 1 ? 0 : 0.2f);
         }
