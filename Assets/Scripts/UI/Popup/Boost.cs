@@ -154,14 +154,16 @@ namespace UI
 
             //buyBtn?.SetInteractable(false);
 
+            var adData = _data?.boostData?.ad;
+
             Game.Timer.Get?.Add(
                 new Game.Timer.Data()
                 {
                     initialize = _initialize,
-                    key = _data?.boostData?.ad?.adId,
+                    key = adData.adId,
                     timeTMP = remainPlayTimeTMP,
                     btn = buyBtn,
-                    addSec = 60f * 6f,
+                    addSec = adData.coolTimeSec,
                     endAction = () =>
                     {
                         remainPlayTimeTMP.GetComponent<UnityEngine.Localization.Components.LocalizeStringEvent>()?.RefreshString();

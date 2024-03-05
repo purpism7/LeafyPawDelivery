@@ -106,6 +106,8 @@ namespace UI
 
         public void OnClickEmpty()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
             string localKey = "desc_map_empty";
             var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
 

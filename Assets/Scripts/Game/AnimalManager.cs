@@ -35,13 +35,15 @@ namespace Game
             SaveAnimalPos();
         }
 
-        protected override void Initialize()
+        public override MonoBehaviour Initialize()
         {
             Event = new UnityEvent<Event.AnimalData>();
             Event?.RemoveAllListeners();
 
             Game.ObjectManager.Event.AddListener(OnChangedObject);
             Game.PlaceManager.Event?.AddListener(OnChangedPlace);
+
+            return this;
         }
 
         public override IEnumerator CoInitialize(Data data)

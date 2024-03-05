@@ -32,10 +32,9 @@ namespace Game
             Save();
         }
 
-        protected override void Initialize()
+        public override MonoBehaviour Initialize()
         {
-            
-            
+            return this;
         }
 
         public override IEnumerator CoInitialize(Data data)
@@ -69,12 +68,6 @@ namespace Game
                     .SetRootRectTm(data.boostRootRectTm)
                     .SetData(new UI.Component.Boost.Data()
                     {
-                        //iconSprite = boostData.iconSprite,
-                        ////adId = boostData.adId,
-                        //eBoost = boostData.eBoost,
-                        //timeSec = boostData.timeSec,
-                        //localKey = boostData.localKey,
-
                         boostData = boostData,
                     })
                     .Create();

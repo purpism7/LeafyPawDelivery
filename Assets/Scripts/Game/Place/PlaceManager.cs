@@ -31,12 +31,14 @@ namespace Game
             }
         }
 
-        protected override void Initialize()
+        public override MonoBehaviour Initialize()
         {
             Event = new UnityEvent<int>();
             Event?.RemoveAllListeners();
 
             PlaceEventController.Event?.RemoveAllListeners();
+
+            return this;
         }
 
         public override IEnumerator CoInitialize(Data data)

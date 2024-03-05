@@ -62,14 +62,14 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         _managerDic.Clear();
 
-        AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>());
-        AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>());
-        AddManager(typeof(Game.PlaceManager), placeMgr);
-        AddManager(typeof(Game.StoryManager), gameObject.GetOrAddComponent<Game.StoryManager>());
-        AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>());
-        AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>());
+        AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>()?.Initialize());
+        AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>()?.Initialize());
+        AddManager(typeof(Game.PlaceManager), placeMgr?.Initialize());
+        AddManager(typeof(Game.StoryManager), gameObject.GetOrAddComponent<Game.StoryManager>()?.Initialize());
+        AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>()?.Initialize());
+        AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>()?.Initialize());
         
-        AddManager(typeof(Game.BoostManager), boostMgr);
+        AddManager(typeof(Game.BoostManager), boostMgr?.Initialize());
 
         _gameStateDic.Clear();
     }

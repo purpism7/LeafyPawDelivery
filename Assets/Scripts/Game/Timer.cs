@@ -37,7 +37,7 @@ namespace Game
                 get
                 {
                     _sec += Time.deltaTime;
-                    Debug.Log((_endDateTime.Value - _startDateTime.Value).TotalSeconds);
+                    
                     return (_endDateTime.Value - _startDateTime.Value).TotalSeconds - _sec;
                 }
             }

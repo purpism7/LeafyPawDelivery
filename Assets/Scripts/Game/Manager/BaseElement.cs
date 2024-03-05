@@ -11,17 +11,17 @@ namespace Game.Manager
 
     public abstract class BaseElement<T> : BaseElement
     {
-        private void Awake()
-        {
-            Initialize();
-        }
+        //private void Awake()
+        //{
+        //    Initialize();
+        //}
 
         public virtual void ChainUpdate()
         {
 
         }
 
-        protected abstract void Initialize();
+        public abstract MonoBehaviour Initialize();
         public abstract IEnumerator CoInitialize(T data);
 
         public abstract void Add(int id);

@@ -15,11 +15,13 @@ namespace Game.Manager
             Initialize();
         }
 
-        private void Initialize()
+        public MonoBehaviour Initialize()
         {
             AnimalManager.Event?.AddListener(OnChangedAnimal);
             ObjectManager.Event?.AddListener(OnChangedObject);
             PlaceEventController.Event?.AddListener(OnChangedPlaceEvnet);
+
+            return this;
         }
 
         private void Show(Queue<string> sentenceQueue)

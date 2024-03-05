@@ -28,9 +28,11 @@ namespace Game.Manager
             KeyGetRewardedAchievement += "_" + version;
         }
 
-        protected override void Initialize()
+        public override MonoBehaviour Initialize()
         {
             SetDailyMissionDate();
+
+            return this;
         }
 
         public override IEnumerator CoInitialize(Data data)

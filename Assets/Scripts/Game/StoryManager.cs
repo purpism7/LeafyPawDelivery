@@ -20,15 +20,20 @@ namespace Game
         private List<GameObject> _storyPrefabList = new();
         private int _placeId = 0;
 
-        public static UnityEvent<Event.StoryData> Event = new();
+        public static UnityEvent<Event.StoryData> Event = null;
 
-        protected override void Initialize()
+        public override MonoBehaviour Initialize()
         {
             _storyPrefabList.Clear();
-            
+
+            Event = new UnityEvent<Event.StoryData>();
+            Event?.RemoveAllListeners();
+
             AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
             ObjectManager.Event?.AddListener(OnChangedObjectInfo);
             Game.PlaceManager.Event?.AddListener(OnChangedPlace);
+
+            return this;
         }
 
         public override IEnumerator CoInitialize(Data data)
