@@ -67,7 +67,7 @@ namespace GameSystem
 
             PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
                 .EnableSavedGames()
-                .RequestServerAuthCode(false)
+                //.RequestServerAuthCode(false)
                 .Build();
 
             PlayGamesPlatform.InitializeInstance(config);
