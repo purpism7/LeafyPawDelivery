@@ -103,7 +103,7 @@ namespace UI.Component
 
             ActivateOpenConditionList();
 
-            openDescTMP?.GetComponent<LocalizeStringEvent>()?.RefreshString();
+            SetHiddenOpenDescTMP();
         }
 
         public override void Deactivate()
@@ -234,6 +234,20 @@ namespace UI.Component
             }
         }
 
+        private void SetHiddenOpenDescTMP()
+        {
+            if (_data.EElement != Game.Type.EElement.Object)
+                return;
+
+            if (!CheckHiddenObject)
+                return;
+
+            var localName = GameUtils.GetName(_data.EElement, _data.Id);
+            var desc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_hidden_object", LocalizationSettings.SelectedLocale);
+
+            openDescTMP?.SetText(string.Format(desc, localName));
+        }
+
         private void SetAnimalOpenCondition()
         {
             var animalOpenConditionContainer = AnimalOpenConditionContainer.Instance;
@@ -268,16 +282,29 @@ namespace UI.Component
 
                 openNameTMP?.SetText(string.Empty);
 
-                var localName = GameUtils.GetName(_data.EElement, _data.Id);
-                var desc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_hidden_object", LocalizationSettings.SelectedLocale);
-                
-                openDescTMP?.SetText(string.Format(desc, localName));
+                SetHiddenOpenDescTMP();
 
                 return;
             }
 
             AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
             AddOpenCondition(placeData.ObjectSpriteName, openCondition.ObjectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
+        }
+
+        private bool CheckHiddenObject
+        {
+            get
+            {
+                if (_data == null)
+                    return false;
+
+                var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
+                var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
+                if (openCondition == null)
+                    return false;
+
+                return openCondition.eType == OpenConditionData.EType.Hidden;
+            }
         }
 
         private string GetRequireCurrency(long currency)

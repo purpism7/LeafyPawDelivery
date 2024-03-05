@@ -13,7 +13,7 @@ namespace Game.PlaceEvent
             base.Initialize(iPlace, iListener, placeId);
 
             StoryManager.Event?.AddListener(OnChangedStory);
-
+             
             ArrangeHiddenObject(placeId);
 
             return this;
@@ -207,6 +207,8 @@ namespace Game.PlaceEvent
                 return;
 
             int placeId = GameUtils.ActivityPlaceId;
+            if (_placeId != placeId)
+                return;
 
             ArrangeHiddenObject(placeId);
         }

@@ -111,6 +111,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         Info.Connector.Create(transform);
         Game.Notification.Create(transform);
         Game.Timer.Create(transform);
+        AdMob.Create();
 
         IsTutorial = CheckIsTutorial;
         //yield return EndLoadAsync(true);

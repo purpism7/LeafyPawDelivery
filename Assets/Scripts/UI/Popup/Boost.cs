@@ -149,7 +149,7 @@ namespace UI
 
         private void SetPlayTimer(bool buy)
         {
-            if (!_initialize || !buy)
+            if (!_initialize && !buy)
                 return;
 
             //buyBtn?.SetInteractable(false);
