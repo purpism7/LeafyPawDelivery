@@ -47,7 +47,6 @@ SpriteAtlas:
     - 5aabd3b26e6244fa382e7020666e0099: 21300000
     - 9ce506d335a4f4cf089de98462c0718a: 21300000
     - efb4cdf3cad3d47cb9c6bdf6f19abc50: 21300000
-    - 741ccc04098df4db4bb6f1c356a635f7: 21300000
     - e3441d7415a5441cfad69eb031556415: 21300000
     - 0b6faf351f7194ddfaee3840a406f673: 21300000
     - fe086d465a84945c4b9e9c7178c6ddcd: 21300000
@@ -70,7 +69,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 5aabd3b26e6244fa382e7020666e0099, type: 3}
   - {fileID: 21300000, guid: 9ce506d335a4f4cf089de98462c0718a, type: 3}
   - {fileID: 21300000, guid: efb4cdf3cad3d47cb9c6bdf6f19abc50, type: 3}
-  - {fileID: 21300000, guid: 741ccc04098df4db4bb6f1c356a635f7, type: 3}
   - {fileID: 21300000, guid: e3441d7415a5441cfad69eb031556415, type: 3}
   - {fileID: 21300000, guid: 0b6faf351f7194ddfaee3840a406f673, type: 3}
   - {fileID: 21300000, guid: fe086d465a84945c4b9e9c7178c6ddcd, type: 3}
@@ -92,7 +90,6 @@ SpriteAtlas:
   - UI_BoosterIcon
   - UI_Main_Shop_01
   - UI_Setting_ShortBox_Selected
-  - UI_GuideLine01
   - UI_Main_Map_01
   - UI_Setting_LongBox
   - UI_Setting_ShortBox_Unselected
