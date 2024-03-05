@@ -62,7 +62,7 @@ namespace Game
 
                 SetSortingOrder(sortingOrder);
 
-                rootTm.localPosition = new Vector3(0, 0, data.posZ);
+                //rootTm.localPosition = new Vector3(0, 0, data.posZ);
             }
 
             edit?.Initialize(new Edit.Data()

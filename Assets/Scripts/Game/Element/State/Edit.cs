@@ -38,6 +38,8 @@ namespace Game.Element.State
             {
                 _initPosZ = tm.localPosition.z;
                 SetPosZ(-100f);
+
+                tm.SetAsLastSibling();
             }            
 
             Game.UIManager.Instance?.Bottom?.DeactivateEditList();
