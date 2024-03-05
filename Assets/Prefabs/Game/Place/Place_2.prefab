@@ -305,7 +305,7 @@ PrefabInstance:
     - target: {fileID: 3835373068479795185, guid: 8391d08e6ba95401faab2f97a9000ba3, type: 3}
       propertyPath: audioClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: b5d01cf0b44834e7ab32f24bcff54941, type: 3}
+      objectReference: {fileID: 8300000, guid: d6fd96c67c58248a892c4677f665a471, type: 3}
     - target: {fileID: 5880779311851659688, guid: 8391d08e6ba95401faab2f97a9000ba3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
