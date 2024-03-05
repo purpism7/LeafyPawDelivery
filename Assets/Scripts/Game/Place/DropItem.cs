@@ -97,7 +97,7 @@ namespace Game.PlaceEvent
                 startPos = new Vector3(iGameCameraCtr.RandPosXInScreenRagne, iGameCameraCtr.RandPosYInScreenRagne),
 
                 activateProgress = true,
-                totalProgress = 10,
+                totalProgress = 5,
 
                 eItemSub = _eItemSub,
             };
