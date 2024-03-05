@@ -19,6 +19,8 @@ namespace UI
             public int Id = 0;
             public int skinId = Game.Data.Const.AnimalBaseSkinId;
             public Action ClickAction = null;
+
+            public bool keepRenderTexture = false;
         }
 
         [SerializeField] private Image iconImg = null;
@@ -118,7 +120,10 @@ namespace UI
 
             Deactivate();
 
-            Game.RenderTextureElement.Destroy();
+            if(!_data.keepRenderTexture)
+            {
+                Game.RenderTextureElement.Destroy();
+            }
         }
     }
 }

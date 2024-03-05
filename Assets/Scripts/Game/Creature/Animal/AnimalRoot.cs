@@ -85,7 +85,7 @@ namespace Game.Creature
             _speechBubble.Enqueue(new SpeechBubble.Constituent()
             {
                 Sentence = sentence,
-                KeepDelay = UnityEngine.Random.Range(3f, 5f),
+                KeepDelay = UnityEngine.Random.Range(4f, 5f),
                 EndAction = endAction,
             }) ;
 

@@ -432,6 +432,7 @@ namespace UI
                             {
                                 
                             },
+                            keepRenderTexture = true,
                         })
                         .SetCoInit(true)
                         .SetReInitialize(true)
