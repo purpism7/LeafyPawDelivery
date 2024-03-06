@@ -146,7 +146,6 @@ namespace Game.Creature
             Vector3 movePos = Vector2.MoveTowards(animalTm.localPosition, _targetPos, Time.deltaTime * 50f);
             movePos.z = _initPosZ;
             animalTm.localPosition = movePos;
-            //animalTm.localPosition = new Vector3(animalTm.localPosition.x, animalTm.localPosition.y, _initPosZ);
 
 #if UNITY_EDITOR
             if(_posQueue != null)
@@ -163,8 +162,6 @@ namespace Game.Creature
                 }
             }
 #endif
-
-            //Debug.DrawLine(animalTm.localPosition, _targetPos);
 
             if(_data.SprRenderer != null)
             {

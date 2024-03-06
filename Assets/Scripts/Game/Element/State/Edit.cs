@@ -54,8 +54,7 @@ namespace Game.Element.State
         {
             var elementData = _gameBaseElement?.ElementData;
 
-            float posZ = _gameBaseElement.transform.localPosition.y * 0.001f;
-            SetPosZ(posZ);
+            SetPosZ(_initPosZ);
 
             var eTab = Game.Type.ETab.Animal;
             if (elementData != null)

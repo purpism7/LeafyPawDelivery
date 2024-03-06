@@ -228,7 +228,7 @@ namespace Game
             if (_objectList == null)
                 return null;
 
-            pos.z = pos.y * 0.001f;// GetObjectPosZ(id, uId);
+            pos.z = GetObjectPosZ(id, uId);
 
             foreach (var obj in _objectList)
             {
@@ -406,7 +406,7 @@ namespace Game
                     if (!editObject.Arrangement)
                         continue;
 
-                    editObject.Pos.z = editObject.Pos.y * 0.001f;//GetObjectPosZ(objectInfo.Id, editObject.UId);
+                    editObject.Pos.z = GetObjectPosZ(objectInfo.Id, editObject.UId);
                     var objectData = new Game.Object.Data()
                     {
                         ObjectId = objectInfo.Id,
