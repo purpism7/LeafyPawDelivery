@@ -48,15 +48,18 @@ namespace Scene
             {
                 bool end = false;
 
-                Plugin.Native.Instance?.GetString(Application.platform == RuntimePlatform.Android ? typeof(Info.User).Name : GameSystem.Auth.ID,
-                        (success, value) =>
-                        {
-                            saveValue = value;
+                if(!string.IsNullOrEmpty(GameSystem.Auth.ID))
+                {
+                    Plugin.Native.Instance?.GetString(Application.platform == RuntimePlatform.Android ? typeof(Info.User).Name : GameSystem.Auth.ID,
+                   (success, value) =>
+                   {
+                       saveValue = value;
 
-                            end = true;
-                        });
+                       end = true;
+                   });
 
-                await UniTask.WaitUntil(() => end);
+                    await UniTask.WaitUntil(() => end);
+                }
             }
 
             if (!string.IsNullOrEmpty(saveValue))

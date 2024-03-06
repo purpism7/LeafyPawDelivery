@@ -146,6 +146,8 @@ namespace Game
 
             spriteRenderer.sortingOrder = order;
 
+            spriteRenderer.transform.localPosition = new Vector3(0, 0, 0.1f);
+
             SetSortingOrderHiddenObject(order);
         }
 

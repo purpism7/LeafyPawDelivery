@@ -191,27 +191,6 @@ namespace UI.Component
                 });
         }
 
-        private void OnPurchaseComplete(Product product)
-        {
-            Debug.Log("OnPurchaseComplete");
-
-            //_data?.iListener?.Buy(_data?.shopData, product,
-            //    () =>
-            //    {
-            //        Game.UIManager.Instance?.Top?.CollectCashCurrency(transform.position, _data.shopData.Value);
-            //    });
-        }
-
-        //public void OnPurchaseFailed(Product product, PurchaseFailureDescription description)
-        //{
-        //    Debug.Log("OnPurchaseFailed = " + description.message);
-        //}
-
-        //public void OnPurchaseFetched(Product product)
-        //{
-        //    Debug.Log("OnPurchaseFetched");
-        //}
-
         #region IShopItemCell
         Data.Shop IShopItemCell.ShopData
         {

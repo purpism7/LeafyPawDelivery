@@ -18,6 +18,8 @@ namespace Game.Manager
         private IExtensionProvider _iExtensionProvider = null;
         private IListener _iListener = null;
 
+        public bool ValidateIAP { get { return _iStoreCtr != null; } }
+
         protected override void Initialize()
         {
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());

@@ -143,6 +143,14 @@ namespace UI
 
                 case Game.Type.EPayment.Money:
                     {
+                        if (Application.internetReachability == NetworkReachability.NotReachable)
+                            return;
+
+                        var iapManager = Game.Manager.IAP.Instance;
+                        if (iapManager == null ||
+                           !iapManager.ValidateIAP)
+                            return;
+
                         _endBuyAction = () =>
                         {
                             uiMgr.Top?.CollectCashCurrency(pos, shopData.Value);

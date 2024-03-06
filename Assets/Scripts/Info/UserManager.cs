@@ -407,13 +407,16 @@ namespace Info
 
             System.IO.File.WriteAllText(_jsonFilePath, encodeStr);
             //Debug.Log("SaveAsync jsonStr = " + jsonStr);
-            if (Application.platform == RuntimePlatform.Android)
+            if (!string.IsNullOrEmpty(GameSystem.Auth.ID))
             {
-                Plugin.Native.Instance?.SetString(typeof(User).Name, encodeStr);
-            }
-            else
-            {
-                Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, encodeStr);
+                if (Application.platform == RuntimePlatform.Android)
+                {
+                    Plugin.Native.Instance?.SetString(typeof(User).Name, encodeStr);
+                }
+                else
+                {
+                    Plugin.Native.Instance?.SetString(GameSystem.Auth.ID, encodeStr);
+                }
             }
 
             if (IsFirst)
