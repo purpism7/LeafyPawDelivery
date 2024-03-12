@@ -27,7 +27,6 @@ namespace Game
             public int ObjectId = 0;
             public int ObjectUId = 0;
             public Vector3 Pos = Vector3.zero;
-            public float posZ = 0;
 
             public bool isHiddenObj = false;
             public int sortingOrder = 0;
@@ -54,15 +53,16 @@ namespace Game
 
                 SetPos();
 
-                int sortingOrder = -(int)transform.localPosition.y;
+                int sortingOrder = -(int)LocalPos.y;
                 if(data.isHiddenObj)
                 {
                     sortingOrder = data.sortingOrder;
                 }
 
                 SetSortingOrder(sortingOrder);
-
-                //rootTm.localPosition = new Vector3(0, 0, data.posZ);
+                //Debug.Log("z = " + ((LocalPos.y * 0.001f) + RandomSeed));
+                //SetLocalPosZ(LocalPos.y * 0.001f + GameUtils.RandomSeed);
+                //SetSortAtRoot(data.isHiddenObj);
             }
 
             edit?.Initialize(new Edit.Data()
@@ -145,8 +145,6 @@ namespace Game
             order += sortingOrderOffset;
 
             spriteRenderer.sortingOrder = order;
-
-            spriteRenderer.transform.localPosition = new Vector3(0, 0, 0.1f);
 
             SetSortingOrderHiddenObject(order);
         }
@@ -246,7 +244,9 @@ namespace Game
 
         void UI.Edit.IListener.Arrange()
         {
-            Command.Arrange.Execute(this, transform.localPosition);
+            SetLocalPosZ(LocalPos.y * GameUtils.PosZOffset);
+
+            Command.Arrange.Execute(this, LocalPos);
 
             SetSortingOrder(-(int)transform.localPosition.y);
 

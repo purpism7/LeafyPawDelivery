@@ -540,17 +540,17 @@ namespace UI
             if(eCategory == Type.ECategory.AnimalCurrency)
             {
                 UIUtils.SetActive(animalCurrencyGuideLineImg?.gameObject, true);
-                animalCurrencyGuideLineImg?.AnimBlink();
+                animalCurrencyGuideLineImg?.StartBlink();
             }
             else if(eCategory == Type.ECategory.ObjectCurrency)
             {
                 UIUtils.SetActive(objectCurrencyGuideLineImg?.gameObject, true);
-                objectCurrencyGuideLineImg?.AnimBlink();
+                objectCurrencyGuideLineImg?.StartBlink();
             }
             else if (eCategory == Type.ECategory.ObjectCurrency)
             {
                 UIUtils.SetActive(cashGuideLineImg?.gameObject, true);
-                cashGuideLineImg?.AnimBlink();
+                cashGuideLineImg?.StartBlink();
             }
         }
 
@@ -559,7 +559,7 @@ namespace UI
             AllDeactivateGuideLine();
 
             UIUtils.SetActive(letterGuideLineImg?.gameObject, true);
-            letterGuideLineImg?.AnimBlink();
+            letterGuideLineImg?.StartBlink();
         }
 
         void ITop.AllDeactivateGuideLine()
@@ -584,15 +584,6 @@ namespace UI
         {
             Initialize();
         }
-
-        //public void OnClickCurrency()
-        //{
-        //    var popup = new GameSystem.PopupCreator<Shop, Shop.Data_>()
-        //        .SetCoInit(true)
-        //        .Create();
-
-            
-        //}
 
         public void OnClickSetting()
         {

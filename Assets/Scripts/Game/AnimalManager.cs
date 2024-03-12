@@ -57,7 +57,7 @@ namespace Game
 
         private void SaveAnimalPos()
         {
-            var iPlace = MainGameManager.Get<PlaceManager>().ActivityPlace as IPlace;
+            var iPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace as IPlace;
             var animalList = iPlace?.AnimalList;
             if (animalList == null)
                 return;
@@ -67,7 +67,7 @@ namespace Game
                 if (animal == null)
                     continue;
 
-                _animalHolder?.SetPos(animal.Id, animal.Pos);
+                _animalHolder?.SetPos(animal.Id, animal.LocalPos);
             }
 
             _animalHolder.SaveInfo();

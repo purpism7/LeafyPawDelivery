@@ -44,27 +44,37 @@ namespace GameSystem
             var ray = _gameCameraCtr.GameCamera.ScreenPointToRay(touchPosition);
 
             RaycastHit hitInfo;
-            bool isHitInfo = Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Game", "Animal", "Object"));
-            var raycastHit2D = Physics2D.Raycast(ray.origin, ray.direction);
+            bool isHitInfo = Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Game", "Animal", "Object"));            
+            var raycastHit2Ds = Physics2D.RaycastAll(ray.origin, ray.direction);
+
+            //RaycastHit2D? raycastHit2D = null;
+            Game.Base gameBase = GetTouchGameBase(raycastHit2Ds);
 
             bool gameStateEdit = _mainGameMgr.GameState.CheckState<Game.State.Edit>();
-            Game.Base gameBase = null;
+            
             
             if (touch.phase == TouchPhase.Began)
             {
                 if (_beganGameBase)
                     return;
 
-                if (CheckGetGameBase(raycastHit2D, out gameBase))
-                {
-                    OnTouchBegan(touch, gameBase);
+                //if (CheckGetGameBase(raycastHit2D.Value, out gameBase))
+                //{
+                //    OnTouchBegan(touch, gameBase);
 
-                    return;
-                }
+                //    return;
+                //}
 
                 if (isHitInfo)
                 {
-                    if (CheckGetGameBase<Game.Base>(hitInfo, out gameBase))
+                    //if (CheckGetGameBase<Game.Base>(hitInfo, out gameBase))
+                    //{
+                    //    OnTouchBegan(touch, gameBase);
+
+                    //    return;
+                    //}
+
+                    if(gameBase != null)
                     {
                         OnTouchBegan(touch, gameBase);
 
@@ -81,13 +91,16 @@ namespace GameSystem
                 }
                 else
                 {
-                    bool isGetGameBase = CheckGetGameBase(raycastHit2D, out gameBase);
-                    if(!isGetGameBase)
-                    {
-                        isGetGameBase = CheckGetGameBase<Game.Base>(hitInfo, out gameBase);
-                        if (!isGetGameBase)
-                            return;
-                    }
+                    //bool isGetGameBase = CheckGetGameBase(raycastHit2D.Value, out gameBase);
+                    //if(!isGetGameBase)
+                    //{
+                    //    isGetGameBase = CheckGetGameBase<Game.Base>(hitInfo, out gameBase);
+                    //    if (!isGetGameBase)
+                    //        return;
+                    //}
+
+                    if (gameBase == null)
+                        return;
                 }
 
                 _gameBase?.OnTouch(touch);
@@ -160,6 +173,44 @@ namespace GameSystem
                 return false;
 
             return true;
+        }
+
+        private Game.Base GetTouchGameBase(RaycastHit2D[] raycastHit2Ds)
+        {
+            if (raycastHit2Ds == null)
+                return null;
+
+            Game.Base resGameBase = null;
+            
+            for (int i = 0; i < raycastHit2Ds.Length; ++i)
+            {
+                var raycastHit2D = raycastHit2Ds[i];
+
+                if (CheckGetGameBase(raycastHit2D, out Game.Base gameBase))
+                {
+                    if (gameBase == null)
+                        continue;
+
+                    if(gameBase is Game.DropItem)
+                    {
+                        return gameBase;
+                    }
+
+                    if(resGameBase == null)
+                    {
+                        resGameBase = gameBase;
+
+                        continue;
+                    }
+
+                    if (resGameBase.LocalPos.y > gameBase.LocalPos.y)
+                    {
+                        resGameBase = gameBase;
+                    }
+                }
+            }
+
+            return resGameBase;
         }
     }
 }

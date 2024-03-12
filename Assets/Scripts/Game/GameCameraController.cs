@@ -25,7 +25,7 @@ namespace GameSystem
 
     public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtr
     {
-        private const float InitPosZ = -1000f;
+        private const float InitPosZ = -2000f;
 
         public Camera GameCamera = null;
         public Camera UICamera = null;
@@ -171,7 +171,6 @@ namespace GameSystem
             {
                 GameCamera.orthographicSize = resOrthographicSize;
             }
-            //GameCamera.orthographicSize = Mathf.Lerp(GameCamera.orthographicSize, resOrthographicSize, Time.deltaTime * timeOffset);
         }
 
         private float GetClampX(float posX)
@@ -220,12 +219,8 @@ namespace GameSystem
             float touchDeltaMag = (firTouch.position - secTouch.position).magnitude;
 
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
-            //Debug.Log("res = " + res);
-            //GameCamera.orthographicSize += deltaMagnitudeDiff * Time.deltaTime;
+            
             SetOrthographicSize(GameCamera.orthographicSize + deltaMagnitudeDiff, 12f);
-
-
-            //GameCamera.orthographicSize = Mathf.Clamp(GameCamera.orthographicSize, MinOrthographicSize, MaxOrthographicSize);
 
             SetSize();
             
@@ -255,7 +250,7 @@ namespace GameSystem
 
         void IGameCameraCtr.MoveCenterGameCamera()
         {
-            GameCamera.transform.position = Vector2.zero;
+            GameCamera.transform.position = new Vector3(0, 0, InitPosZ);
         }
 
         float IGameCameraCtr.GameCameraWidth
@@ -273,7 +268,10 @@ namespace GameSystem
                 var center = Center;
                 var halfWidth = (_width - 250f) / 2f;
 
-                return Random.Range(center.x - halfWidth, center.x + halfWidth);
+                var randomX = Random.Range(center.x - halfWidth, center.x + halfWidth);
+                Random.InitState((int)randomX);
+
+                return randomX;
             }
         }
 
@@ -285,6 +283,7 @@ namespace GameSystem
                 var halfHeight = (Height - 850f) / 2f;
 
                 var randomY = Random.Range(center.y - halfHeight, center.y + halfHeight);
+                Random.InitState((int)randomY);
 
                 return IGrid.LimitPosY(randomY);
             }

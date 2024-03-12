@@ -28,8 +28,6 @@ namespace UI
             if(string.IsNullOrEmpty(nickName) ||
                nickName.Length < 1)
             {
-                Debug.Log("more 2 character!!");
-
                 return;
             }
            

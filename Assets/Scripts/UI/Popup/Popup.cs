@@ -185,17 +185,6 @@ namespace UI
 
             return false;
         }
-        
-        //private void Check()
-        //{
-        //    foreach (RectTransform rectTm in popupRootRectTm)
-        //    {
-        //        if(!rectTm)
-        //            continue;
-                
-        //        Debug.Log(rectTm.name);
-        //    }
-        //}
 
         public void PopPopup()
         {

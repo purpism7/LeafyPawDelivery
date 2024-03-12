@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using GameSystem;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Game
 {
@@ -37,16 +37,29 @@ namespace Game
             UIUtils.SetActive(edit?.CanvasRectTm, active);
         }
 
-        //public void EnableCollider(bool enable)
-        //{
-        //    if (!IsActivate)
-        //        return;
+        public void SetLocalPos(float x, float y, float z)
+        {
+            if (!transform)
+                return;
 
-        //    if(_polygonCollider2D != null)
-        //    {
-        //        _polygonCollider2D.enabled = enable;
-        //    }
-        //}
+            transform.localPosition = new Vector3(x, y, z);
+        }
+
+        public void SetLocalPos(Vector3 pos)
+        {
+            if (!transform)
+                return;
+
+            transform.localPosition = pos;
+        }
+
+        public void SetLocalPosZ(float z)
+        {
+            if (!transform)
+                return;
+
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, z);
+        }
 
         public void AddRigidBody2D()
         {
@@ -91,10 +104,15 @@ namespace Game
             if (state is Game.Element.State.Edit)
             {
                 SetOutline(5f);
+                //SetSortingGroupOrder(10);
+                
+
+                //transform.SetAsLastSibling();
             }
             else
             {
                 SetOutline(0);
+                //SetSortingGroupOrder(0);
             }
 
             state?.Apply(this);
@@ -128,6 +146,22 @@ namespace Game
                 }
                 
                 ElementCollision = null;
+            }
+        }
+
+        private void SetSortingGroupOrder(int order)
+        {
+            if (_sortingGroup != null)
+            {
+                _sortingGroup.sortingOrder = order;
+            }
+        }
+
+        protected void SetSortAtRoot(bool sortAtRoot)
+        {
+            if (_sortingGroup != null)
+            {
+                _sortingGroup.sortAtRoot = sortAtRoot;
             }
         }
     }
@@ -174,6 +208,8 @@ namespace Game
                     EnableCollision(false);
                 }
             }
+
+            //InitializeSorginGroup();
         }
     }
 }

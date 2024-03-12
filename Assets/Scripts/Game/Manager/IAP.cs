@@ -59,8 +59,6 @@ namespace Game.Manager
             var product = purchaseEvent?.purchasedProduct;
             if(product == null)
             {
-                Toast.Get?.Show("product is null");
-
                 return PurchaseProcessingResult.Pending;
             }
 
@@ -97,7 +95,10 @@ namespace Game.Manager
 
             _iListener?.FailPurchase(product);
 
-            Game.Toast.Get?.Show(failureDescription?.message);
+            if(!string.IsNullOrEmpty(failureDescription?.message))
+            {
+                Game.Toast.Get?.Show(failureDescription?.message);
+            }
         }
 
         void IStoreListener.OnInitializeFailed(InitializationFailureReason error)

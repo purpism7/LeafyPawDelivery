@@ -234,7 +234,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 75364529700069376
-    m_Key: new_game
+    m_Key: cance
     m_Metadata:
       m_Items: []
   - m_Id: 75364609609949184
@@ -255,6 +255,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 75556213218074624
     m_Key: desc_inapp_purchase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78492680160534528
+    m_Key: quit_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78495413483593728
+    m_Key: fail_initialize_inapp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78496380593627136
+    m_Key: check_internet_connection
     m_Metadata:
       m_Items: []
   m_Metadata:

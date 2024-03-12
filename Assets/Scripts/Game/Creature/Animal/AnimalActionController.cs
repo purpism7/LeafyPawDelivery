@@ -11,24 +11,6 @@ namespace Game.Creature
         private AnimalAction _currentAnimalAction = null;
         private IAnimal _iAnimal = null;
 
-        void OnDrawGizmos()
-        {
-            //Vector3 pos = Vector3.zero;
-            //var iGameCameraCtrProvider = MainGameManager.Instance?.IGameCameraCtrProvider;
-            //if (iGameCameraCtrProvider == null)
-            //    return;
-
-            //var center = iGameCameraCtrProvider.Center;
-            //var halfWidth = (gameCameraCtr.Width - 200f) / 2f;
-            //var halfHeight = (gameCameraCtr.Height - 850f) / 2f;
-
-            //Gizmos.color = Color.black;
-            //var posY = center.y + halfHeight;
-
-            //posY = gameCameraCtr.IGrid.LimitPosY(posY);
-            //Gizmos.DrawLine(new Vector3(center.x - halfWidth, center.y - halfHeight), new Vector3(center.x + halfWidth, posY));
-        }
-
         public void Initialize(int id, IAnimal iAnimal, bool onlyIdle)
         {
             if (iAnimal == null)

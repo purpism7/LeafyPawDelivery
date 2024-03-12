@@ -29,8 +29,6 @@ namespace Game
         {
             Event?.RemoveAllListeners();
 
-            //Game.AnimalManager.Event?.AddListener(OnChangedAnimal);
-
             return this;
         }
 
@@ -152,16 +150,16 @@ namespace Game
             return _objectHolder?.GetAddEditObject(id);
         }
 
-        public void ArrangeObject(int id, int objectUId, Vector3 pos, int placeId)
+        public void ArrangeObject(Game.Object obj, int placeId)
         {
             if (_objectHolder == null)
                 return;
 
-            if(_objectHolder.ArrangeObject(id, objectUId, pos, placeId))
+            if(_objectHolder.ArrangeObject(obj, placeId))
             {
                 Event?.Invoke(new Game.Event.ArrangeObjectData()
                 {
-                    id = id,
+                    id = obj.Id,
                 });
             }
         }
@@ -236,11 +234,6 @@ namespace Game
                 }
             }
         }
-
-        //private void OnChangedAnimal(Event.AnimalData animalData)
-        //{
-
-        //}
     }
 }
 

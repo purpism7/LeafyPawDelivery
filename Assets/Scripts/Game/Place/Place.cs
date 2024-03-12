@@ -9,8 +9,8 @@ namespace Game
     public interface IPlace
     {
         List<Game.Creature.Animal> AnimalList { get; }
-        List<Game.Object> objectList { get; }
-
+        List<Game.Object> ObjectList { get; }
+        
         void CreateDropItem(DropItem.Data dropItemData);
     }
 
@@ -52,6 +52,15 @@ namespace Game
 
         private PlaceEventController _placeEventCtr = null;
         private IPlaceState.EType _state = IPlaceState.EType.None;
+        private float _objectPosZ = GameUtils.GetPosZOrder(Type.EPosZOrder.Object);
+
+        public string KeyObjectPosZ
+        {
+            get
+            {
+                return string.Format("ObjectPosZ_{0}", Id);
+            }
+        }
 
         public override void Initialize(Data data)
         {
@@ -129,7 +138,7 @@ namespace Game
             if (_animalList == null)
                 return null;
 
-            pos.z = GetAnimalPosZ(id);
+            pos.z = GameUtils.CalcPosZ(pos.y);  //GetAnimalPosZ(id);
 
             foreach (var animal in _animalList)
             {
@@ -142,7 +151,7 @@ namespace Game
                 if (animal.SkinId != skinId)
                     continue;
 
-                animal.Pos = pos;
+                animal.SetLocalPos(pos);
                 animal.Activate();
 
                 return animal;
@@ -206,8 +215,6 @@ namespace Game
 
             if(existAnimal)
             {
-                pos.z = GetAnimalPosZ(id);
-
                 AddAnimal(id, skinId, pos);
             }
 
@@ -227,8 +234,6 @@ namespace Game
         {
             if (_objectList == null)
                 return null;
-
-            pos.z = GetObjectPosZ(id, uId);
 
             foreach (var obj in _objectList)
             {
@@ -252,7 +257,6 @@ namespace Game
                 ObjectId = id,
                 ObjectUId = uId,
                 Pos = pos,
-                posZ = GetObjectPosZ(id, uId),
             };
 
             var addObj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
@@ -291,6 +295,42 @@ namespace Game
             float posZ = (id * 10 + uId) * GetPosZOffset(id);
 
             return -posZ;
+        }
+
+        public float ObjectPosZ
+        {
+            get
+            {
+                _objectPosZ -= ObjectPosZOffset;
+
+                PlayerPrefs.SetFloat(KeyObjectPosZ, _objectPosZ);
+
+                return _objectPosZ;
+            }
+        }
+
+        private float ObjectPosZOffset
+        {
+            get
+            {
+                return GameUtils.PosZOffset * 0.1f;
+            }
+        }
+
+        private int GetCalcPos(float value, out int offset)
+        {
+            int floorInt = Mathf.FloorToInt(value);
+            int len = Mathf.FloorToInt(Mathf.Log10(floorInt)) + 1;
+            offset = 10000 / (int)Mathf.Pow(10, len);
+            Debug.Log("resOffset = " + offset);
+            //if(floorY < 100)
+            //{
+            //    offset = 
+            //}
+            //else if(floorY)
+            
+            return floorInt * offset;
+            
         }
         #endregion
 
@@ -331,7 +371,7 @@ namespace Game
                 if (!animalInfo.Arrangement)
                     continue;
 
-                animalInfo.Pos.z = GetAnimalPosZ(animalInfo.Id);
+                animalInfo.Pos.z = animalInfo.Pos.y * GameUtils.PosZOffset;// GetAnimalPosZ(animalInfo.Id);
 
                 var animalData = new Game.Creature.Animal.Data()
                 {
@@ -376,7 +416,8 @@ namespace Game
         private void SetObjectList()
         {
             _objectList.Clear();
-
+            _objectPosZ = PlayerPrefs.GetFloat(KeyObjectPosZ, GameUtils.GetPosZOrder(Type.EPosZOrder.Object));
+            
             var objectInfoList = MainGameManager.Get<ObjectManager>()?.ObjectInfoList;
             if (objectInfoList == null)
                 return;
@@ -388,7 +429,7 @@ namespace Game
                     continue;
 
                 var editObjectList = objectInfo.EditObjectList;
-                if (objectInfo.EditObjectList == null)
+                if (editObjectList == null)
                     continue;
 
                 var data = ObjectContainer.Instance?.GetData(objectInfo.Id);
@@ -406,13 +447,13 @@ namespace Game
                     if (!editObject.Arrangement)
                         continue;
 
-                    editObject.Pos.z = GetObjectPosZ(objectInfo.Id, editObject.UId);
+                    editObject.Pos.z += GameUtils.PosZOffset;
+
                     var objectData = new Game.Object.Data()
                     {
                         ObjectId = objectInfo.Id,
                         ObjectUId = editObject.UId,
                         Pos = editObject.Pos,
-                        posZ = GetObjectPosZ(objectInfo.Id, editObject.UId),
                     };
 
                     Game.Object resObj = null;
@@ -449,25 +490,6 @@ namespace Game
             }
         }
 
-        //public void EnableCollider(bool enable)
-        //{
-        //    if(_animalList != null)
-        //    {
-        //        foreach (var animal in _animalList)
-        //        {
-        //            animal?.EnableCollider(enable);
-        //        }
-        //    }
-
-        //    if (_objectList != null)
-        //    {
-        //        foreach (var obj in _objectList)
-        //        {
-        //            obj?.EnableCollider(enable);
-        //        }
-        //    }
-        //}
-
         public void Boom()
         {
             _state = IPlaceState.EType.Active;
@@ -501,7 +523,7 @@ namespace Game
             }
         }
 
-        List<Game.Object> IPlace.objectList
+        List<Game.Object> IPlace.ObjectList
         {
             get
             {
@@ -513,7 +535,7 @@ namespace Game
         {
             if (dropItemData != null)
             {
-                dropItemData.startPos.z = 300f;
+                dropItemData.startPos.z = GameUtils.GetPosZOrder(Type.EPosZOrder.DropItem);
             }
 
             if (_dropItemList != null)
@@ -537,11 +559,6 @@ namespace Game
 
                     return;
                 }
-            }
-
-            if (dropItemData != null)
-            {
-                dropItemData.startPos.z -= _dropItemList.Count;
             }
 
             var addDropItem = DropItemCreator.Get

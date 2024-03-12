@@ -41,7 +41,7 @@ namespace Info
                 {
                     var encodeStr = System.IO.File.ReadAllText(fullPath);
                     var jsonStr = encodeStr.Decrypt(_secretKey);
-
+                    //Debug.Log("jsonStr = " + jsonStr);
                     objectInfoList = JsonHelper.FromJson<Info.Object>(jsonStr)?.ToList();
                 }
 
@@ -154,20 +154,6 @@ namespace Info
             var editObjectList = objectInfo.EditObjectList;
             if (editObjectList != null)
             {
-                //for(int i = 0; i < editObjectList.Count; ++i)
-                //{
-                //    for(int j = 0; j < editObjectList.Count; ++j)
-                //    {
-                //        if (i == j)
-                //            continue;
-
-                //        if(editObjectList[i].UId == editObjectList[j].UId)
-                //        {
-                //            editObjectList[j].UId = j;
-                //        }
-                //    }
-                //}
-
                 foreach(var editObject in editObjectList)
                 {
                     if (editObject == null)
@@ -211,9 +197,12 @@ namespace Info
             SaveInfo(objectData.PlaceId);
         }
 
-        public bool ArrangeObject(int id, int objectUId, Vector3 pos, int placeId)
+        public bool ArrangeObject(Game.Object obj, int placeId)
         {
-            var objectInfo = GetObjectInfoById(id, placeId);
+            if (obj == null)
+                return false;
+
+            var objectInfo = GetObjectInfoById(obj.Id, placeId);
             if(objectInfo == null)
                 return false;
 
@@ -225,10 +214,10 @@ namespace Info
                 if (editObject == null)
                     continue;
 
-                if (editObject.UId != objectUId)
+                if (editObject.UId != obj.UId)
                     continue;
 
-                editObject.Pos = pos;
+                editObject.Pos = obj.LocalPos;
                 editObject.Arrangement = true;
 
                 break;

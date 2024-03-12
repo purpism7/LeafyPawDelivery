@@ -182,9 +182,6 @@ namespace UI
                 await UniTask.Yield();
             }
 
-            //EditList?.Setup(eTabType, index);
-            //await UniTask.WaitForSeconds(0.5f);
-
             ActivateAnim(EditListRootRectTm, null);
         }
 
@@ -228,7 +225,7 @@ namespace UI
                         var popup = new GameSystem.PopupCreator<Shop, Shop.Data_>()
                             .SetCoInit(true)
                             //.SetReInitialize(reInitialize)
-                            .SetAnimActivateInterval(0.05f)
+                            .SetAnimActivateInterval(0.07f)
                             .Create();
 
                         break;

@@ -33,6 +33,10 @@ public class Const : ScriptableObject
     private int animalBaseSkinId = 1;
     [SerializeField]
     private int startPlaceId = 1;
+    [SerializeField]
+    private int tutorialAnimalId = 1;
+    [SerializeField]
+    private int tutorialObjectId = 1;
 
     [SerializeField]
     private int maxDropAnimalCurrencyCount = 30;
@@ -48,6 +52,9 @@ public class Const : ScriptableObject
 
     public int AnimalBaseSkinId { get { return animalBaseSkinId; } }
     public int StartPlaceId { get { return startPlaceId; } }
+    public int TutorialAnimalId { get { return tutorialAnimalId; } }
+    public int TutorialObjectId { get { return tutorialObjectId; } }
+
     public int TotalPlaceCount { get { return PlaceDatas != null ? PlaceDatas.Length : 1; } }
 
     public int MaxDropAnimalCurrencyCount { get { return maxDropAnimalCurrencyCount; } }

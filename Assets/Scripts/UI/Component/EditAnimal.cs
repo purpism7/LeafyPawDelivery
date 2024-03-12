@@ -29,15 +29,21 @@ namespace UI.Component
             base.Initialize(data);
 
             SetIconImg();
+            SetTutorial();
+        }
 
-            if(data != null)
-            {
-                UIUtils.SetActive(guideLineImg?.gameObject, data.isTutorial);
-                if(data.isTutorial)
-                {
-                    guideLineImg?.AnimBlink();
-                }
-            }
+        public override void Activate()
+        {
+            base.Activate();
+
+            UIUtils.SetActive(gameObject, true);
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            UIUtils.SetActive(gameObject, false);
         }
 
         private void SetIconImg()
@@ -49,6 +55,18 @@ namespace UI.Component
                 return;
 
             iconImg.sprite = GameUtils.GetShortIconSprite(Game.Type.EElement.Animal, _data.AnimalData.Id);
+        }
+
+        private void SetTutorial()
+        {
+            if (_data == null)
+                return;
+
+            UIUtils.SetActive(guideLineImg?.gameObject, _data.isTutorial);
+            if (_data.isTutorial)
+            {
+                guideLineImg?.StartBlink();
+            }
         }
 
         public void OnClick()

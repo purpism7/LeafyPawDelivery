@@ -21,7 +21,7 @@ namespace Game.PlaceEvent
 
         public void Activate()
         {
-            var objList = _iPlace?.objectList;
+            var objList = _iPlace?.ObjectList;
             if (objList == null)
                 return;
 
@@ -35,7 +35,7 @@ namespace Game.PlaceEvent
 
         public void Deactivate()
         {
-            var objList = _iPlace?.objectList;
+            var objList = _iPlace?.ObjectList;
             if (objList == null)
                 return;
 
@@ -90,7 +90,7 @@ namespace Game.PlaceEvent
 
         private void CreateHiddenObject(OpenConditionData data)
         {
-            var objList = _iPlace?.objectList;
+            var objList = _iPlace?.ObjectList;
             if (objList == null)
                 return;
 
@@ -133,13 +133,9 @@ namespace Game.PlaceEvent
                 .SetRootTm(randIObject.HiddenObjectRootTm)
                 .Create();
 
-            if(hiddenObject != null)
-            {
-                var localPos = hiddenObject.transform.localPosition;
-                hiddenObject.transform.localPosition = new Vector3(localPos.x, localPos.y, -20f);
-            }
+            hiddenObject?.SetLocalPosZ(-20f);
 
-            if(AddId(data.Id))
+            if (AddId(data.Id))
             {
                 _iListener?.Action(new HiddenObjectData()
                 {
@@ -179,7 +175,7 @@ namespace Game.PlaceEvent
         {
             get
             {
-                var objList = _iPlace?.objectList;
+                var objList = _iPlace?.ObjectList;
                 if (objList == null)
                     return false;
 

@@ -13,7 +13,7 @@ namespace Game.Creature
         }
 
         protected Data _data = null;
-        protected float _initPosZ { get; private set; } = 0;
+        protected float _randomSeed = 0;
 
         protected abstract string ActionName { get; }
 
@@ -22,11 +22,6 @@ namespace Game.Creature
         public AnimalAction Create(Data data)
         {
             _data = data;
-
-            if(data.Tm)
-            {
-                _initPosZ = data.Tm.localPosition.z;
-            }
 
             return this;
         }
@@ -93,8 +88,9 @@ namespace Game.Creature
 
             if (!_data.Tm)
                 return;
-  
-            _data.Tm.localPosition = new Vector3(_data.Tm.localPosition.x, _data.Tm.localPosition.y, _initPosZ);
+
+            float posZ = GameUtils.CalcPosZ(_data.Tm.localPosition.y);
+            _data.Tm.localPosition = new Vector3(_data.Tm.localPosition.x, _data.Tm.localPosition.y, posZ);
         }
 
         //protected void SetState(EState eState)

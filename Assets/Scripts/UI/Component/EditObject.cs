@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
+using Game;
 
 namespace UI.Component
 {
@@ -37,17 +38,23 @@ namespace UI.Component
             
             SetIconImg();
             SetCount();
-
-            if (data != null)
-            {
-                UIUtils.SetActive(guideLineImg?.gameObject, data.isTutorial);
-                if (data.isTutorial)
-                {
-                    guideLineImg?.AnimBlink();
-                }
-            }
+            SetTutorial();
         }
-        
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            UIUtils.SetActive(gameObject, true);
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            UIUtils.SetActive(gameObject, false);
+        }
+
         private void SetIconImg()
         {
             if (_data == null)
@@ -64,12 +71,49 @@ namespace UI.Component
             countTMP?.SetText(_data.RemainCount + "/" + _data.Count);
         }
 
+        private void SetTutorial()
+        {
+            if (_data == null)
+                return;
+
+            UIUtils.SetActive(guideLineImg?.gameObject, _data.isTutorial);
+
+            if (_data.isTutorial)
+            {
+                guideLineImg?.StartBlink();
+
+                ObjectManager.Event?.RemoveListener(OnChangedObject);
+                ObjectManager.Event?.AddListener(OnChangedObject);
+            }
+        }
+
         public void OnClick()
         {
             if(_data == null)
                 return;
 
             _data.iListener?.Select(_data.ObjectId);
+        }
+
+        private void OnChangedObject(Game.Event.ObjectData objectData)
+        {
+            switch (objectData)
+            {
+                case Game.Event.ArrangeObjectData arrangeObjectData:
+                    {
+                        if (arrangeObjectData.id == Game.Data.Const.TutorialObjectId)
+                        {
+                            _data.isTutorial = false;
+
+                            guideLineImg?.StopBlink();
+                            UIUtils.SetActive(guideLineImg?.gameObject, false);
+
+                            ObjectManager.Event?.RemoveListener(OnChangedObject);
+                        }
+
+                        break;
+                    }
+            }
         }
     }
 }

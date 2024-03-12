@@ -67,6 +67,8 @@ namespace Game.Creature
             }
 
             var randomIndex = UnityEngine.Random.Range(0, localDatas.Length);
+            Random.InitState(randomIndex);
+
             var localData = localDatas[randomIndex];
             if (localData == null)
             {

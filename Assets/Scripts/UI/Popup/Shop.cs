@@ -37,8 +37,6 @@ namespace UI
         {
             yield return StartCoroutine(base.CoInitialize(data));
 
-            //InitializeIAP();
-
             yield return StartCoroutine(CoSetItemList());
 
             InitializeChildComponent();         
@@ -144,12 +142,26 @@ namespace UI
                 case Game.Type.EPayment.Money:
                     {
                         if (Application.internetReachability == NetworkReachability.NotReachable)
+                        {
+                            var localKey = "check_internet_connection";
+                            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+
+                            Game.Toast.Get?.Show(local, localKey);
+
                             return;
+                        }
 
                         var iapManager = Game.Manager.IAP.Instance;
                         if (iapManager == null ||
                            !iapManager.ValidateIAP)
+                        {
+                            var localKey = "fail_initialize_inapp";
+                            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+
+                            Game.Toast.Get?.Show(local, localKey);
+
                             return;
+                        }
 
                         _endBuyAction = () =>
                         {

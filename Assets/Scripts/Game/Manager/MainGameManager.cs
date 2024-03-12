@@ -49,11 +49,15 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         if (_managerDic == null)
             return default(T);
 
-        var manager = _managerDic[typeof(T)];
-        if (manager == null)
-            return default(T);
+        if(_managerDic.TryGetValue(typeof(T), out MonoBehaviour manager))
+        {
+            if (manager == null)
+                return default(T);
 
-        return manager.GetComponent<T>();
+            return manager.GetComponent<T>();
+        }
+
+        return default(T);
     }
 
     protected override void Initialize()
@@ -114,7 +118,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         AdMob.Create();
 
         IsTutorial = CheckIsTutorial;
-        //yield return EndLoadAsync(true);
+        
         _endInitialize = true;
 
         yield return null;
@@ -231,7 +235,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         if(IsTutorial)
         {
             InitializeTutorialManager();
-            //await SetGameStateAsync(Game.Type.EGameState.Tutorial);
 
             return;
         }
@@ -249,8 +252,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         TutorialMgr?.AddListener(this);
         TutorialMgr?.AddListener(Get<Game.StoryManager>());
-
-        //(IGameCameraCtr as GameSystem.GameCameraController)?.SetStopUpdate(true);
     }
 
     private void DestroyTutorialManager()
@@ -415,8 +416,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     #region Place
     public void MovePlace(int placeId, System.Action endMoveAction)
     {
-        //StartCoroutine(CoMovePlace(placeId, endMoveAction));
-
         MovePlaceAsync(placeId, endMoveAction).Forget();
     }
 
@@ -437,17 +436,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         PlayerPrefs.SetInt(Game.Data.PlayPrefsKeyLastPlaceKey, placeId);
     }
-
-    //private IEnumerator CoMovePlace(int placeId, System.Action endMoveAction)
-    //{
-    //    yield return null;
-
-    //    yield return StartCoroutine(CoInitializeManager(placeId));
-
-    //    yield return LoadAsync();
-
-        
-    //}
 
     private async UniTask LoadAssetAsync(int placeId)
     {
@@ -622,9 +610,12 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
             case Game.Type.EElement.Object:
                 {
-                    var objectMgr = Get<Game.ObjectManager>();
+                    var obj = gameBaseElement as Game.Object;
+                    if (obj == null)
+                        return;
 
-                    objectMgr?.ArrangeObject(gameBaseElement.Id, gameBaseElement.UId, pos, placeId);
+                    var objectMgr = Get<Game.ObjectManager>();
+                    objectMgr?.ArrangeObject(obj, placeId);
 
                     Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList(objectMgr);
 
@@ -691,7 +682,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
             case Game.Type.ETutorialStep.ReturnGame:
                 {
-                    Debug.Log("MainGameMgr = Game.Type.ETutorialStep.ReturnGame");
                     IGameCameraCtr.SetOrthographicSize(IGameCameraCtr.DefaultOrthographicSize);
                     Game.UIManager.Instance?.SetInteractable(true);
 

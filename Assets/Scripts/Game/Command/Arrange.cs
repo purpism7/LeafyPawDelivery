@@ -26,7 +26,26 @@ namespace Game.Command
 
         public override void Execute()
         {
+            SetObjectPosZ();
+
             MainGameManager.Instance?.Arrange(_gameBaseElement, _pos);
+        }
+
+        private void SetObjectPosZ()
+        {
+            var elementData = _gameBaseElement?.ElementData;
+            if (elementData == null)
+                return;
+
+            if (elementData.EElement == Game.Type.EElement.Object)
+            {
+                var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
+                if (activityPlace == null)
+                    return;
+
+                _pos.z = _gameBaseElement.LocalPos.y + activityPlace.ObjectPosZ;
+                _gameBaseElement.SetLocalPosZ(_pos.z);
+            }
         }
     }
 }

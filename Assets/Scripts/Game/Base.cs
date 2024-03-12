@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Game
 {
@@ -58,10 +59,36 @@ namespace Game
     {
         public int Id = 0;
 
+        protected SortingGroup _sortingGroup = null;
+
         public virtual void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid) { }
         public virtual void OnTouch(Touch touch) { }
         public virtual void OnTouchEnded(Touch? touch, GameSystem.IGrid iGrid) { }
         public virtual void ChainUpdate() { }
+
+        protected void InitializeSorginGroup()
+        {
+            if (_sortingGroup == null)
+            {
+                _sortingGroup = gameObject.GetOrAddComponent<SortingGroup>();
+
+                if (_sortingGroup != null)
+                {
+                    _sortingGroup.sortingLayerName = "Game";
+                }
+            }
+        }
+
+        public Vector3 LocalPos
+        {
+            get
+            {
+                if (!transform)
+                    return Vector3.zero;
+
+                return transform.localPosition;
+            }
+        }
     }
 
     public abstract class Base<T> : Base where T : BaseData

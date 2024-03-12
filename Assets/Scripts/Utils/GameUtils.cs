@@ -130,4 +130,47 @@ public static class GameUtils
             return placeMgr.ActivityPlaceId;
         }
     }
+
+    public static float RandomSeed
+    {
+        get
+        {
+            var random = Random.Range(-10000f, 10000f);
+            Random.InitState((int)random);
+
+            return random * 0.00000001f;
+        }
+    }
+
+    public static float PosZOffset
+    {
+        get
+        {
+            return 0.01f;
+        }
+    }
+
+
+    public static float CalcPosZ(float value)
+    {
+        return value * PosZOffset + RandomSeed;
+    }
+
+    public static float GetPosZOrder(Game.Type.EPosZOrder eType)
+    {
+        switch(eType)
+        {
+            case Type.EPosZOrder.EditElement:
+                return -500f;
+
+            case Type.EPosZOrder.Object:
+                return 1000f;
+
+            case Type.EPosZOrder.DropItem:
+                return -500f;
+
+            default:
+                return 0;
+        }
+    }
 }

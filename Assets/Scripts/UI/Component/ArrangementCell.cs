@@ -10,6 +10,7 @@ using DG.Tweening;
 using UnityEngine.Localization.Components;
 
 using GameSystem;
+using Game;
 
 namespace UI.Component
 {
@@ -47,8 +48,6 @@ namespace UI.Component
         private TextMeshProUGUI openNameTMP = null;
         [SerializeField]
         private TextMeshProUGUI openDescTMP = null;
-        //[SerializeField]
-        //private TextMeshProUGUI openConditionDescTMP = null;
 
         [SerializeField]
         private Image hiddenIconImg = null;
@@ -87,12 +86,7 @@ namespace UI.Component
             SetButtonState();
             SetOpenConditionData();
             SetStoryIcon();
-
-            UIUtils.SetActive(guideLineImg?.gameObject, data.isTutorial);
-            if(data.isTutorial)
-            {
-                guideLineImg?.AnimBlink();
-            }
+            SetTutorial();
         }
 
         public override void Activate()
@@ -491,6 +485,18 @@ namespace UI.Component
             _data.isTutorial = isTutorial;
 
             UIUtils.SetActive(guideLineImg?.gameObject, isTutorial);
+        }
+
+        private void SetTutorial()
+        {
+            if (_data == null)
+                return;
+
+            UIUtils.SetActive(guideLineImg?.gameObject, _data.isTutorial);
+            if (_data.isTutorial)
+            {
+                guideLineImg?.StartBlink();
+            }
         }
 
         public bool Obtain(Game.Type.EElement eElement, int id)

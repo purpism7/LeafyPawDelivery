@@ -89,50 +89,6 @@ namespace Game
 
         }
 
-        //private bool MoveByAStar(int id, Vector3 targetPos, out List<Vector3> pathPosList)
-        //{
-        //    pathPosList = null;
-
-        //    var iGridCell = _iGridCell;
-        //    if (iGridCell == null)
-        //        return false;
-
-        //    if (_aStar == null)
-        //        return false;
-
-        //    //_aStar.Path.Clear();
-
-        //    var cell = _iGridCell.GetCell(targetPos);
-        //    if (cell == null)
-        //        return false;
-
-        //    var targetCell = _iGridCell.GetCell(GetRandomPos(targetPos.z));
-        //    if (targetCell.IsOverlap)
-        //        return false;
-
-        //    var startNode = new PathFinding.Node(cell.Id, !cell.IsOverlap, cell.Row, cell.Column);
-        //    var targetNode = new PathFinding.Node(targetCell.Id, true, targetCell.Row, targetCell.Column);
-
-        //    _aStar.FindPathAsync(id, startNode, targetNode, GetNeighbourNodeList);
-
-        //    pathPosList = new();
-        //    pathPosList.Clear();
-
-        //    foreach (var path in _aStar.Path)
-        //    {
-        //        if (path == null)
-        //            continue;
-
-        //        var pathCell = _iGridCell?.GetCell(path.Id);
-        //        if (pathCell == null)
-        //            continue;
-
-        //        pathPosList.Add(pathCell.transform.position);
-        //    }
-
-        //    return true;
-        //}
-
         private Vector3 GetRandomPos(float z)
         {
             var iGameCameraCtr = MainGameManager.Instance?.IGameCameraCtr;

@@ -228,7 +228,7 @@ namespace UI
             if(_isTyping)
             {
                 _typingCancellationTokenSource?.Cancel();
-                _typingCancellationTokenSource?.Dispose();
+                //_typingCancellationTokenSource?.Dispose();
             }
             else
             {
@@ -236,7 +236,7 @@ namespace UI
                     return;
 
                 _keepDelayCancellationTokenSource.Cancel();
-                _keepDelayCancellationTokenSource.Dispose();
+                //_keepDelayCancellationTokenSource.Dispose();
             }
         }
     }

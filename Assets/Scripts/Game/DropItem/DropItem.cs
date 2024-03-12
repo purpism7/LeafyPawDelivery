@@ -57,6 +57,8 @@ namespace Game
                 ActivateProgress(false);
             }
 
+            //InitializeSorginGroup();
+
             SetItemSprite();
 
             Drop();
@@ -307,7 +309,9 @@ namespace Game
 
             float randomPosOffsetX = UnityEngine.Random.Range(100f, 200f) * (UnityEngine.Random.Range(0, 2) == 0 ? -1 : 1);
             float randomPosOffsetY = UnityEngine.Random.Range(-50f, 50f);
-            var jumpLcoalPos = new Vector3(transform.position.x + randomPosOffsetX, transform.position.y + randomPosOffsetY, _data.startPos.z);
+            float posY = transform.position.y + randomPosOffsetY;
+
+            var jumpLcoalPos = new Vector3(transform.position.x + randomPosOffsetX, posY, _data.startPos.z - (posY * GameUtils.PosZOffset));
 
             Sequence sequence = DOTween.Sequence()
                .SetAutoKill(false)

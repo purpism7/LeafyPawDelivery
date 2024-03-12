@@ -79,7 +79,7 @@ public static class UIUtils
         }
     }
 
-    public static void AnimBlink(this Image image)
+    public static void StartBlink(this Image image)
     {
         if (image == null)
             return;
@@ -89,8 +89,21 @@ public static class UIUtils
             .Append(image.DOFade(0, 0.4f))
             .Append(image.DOFade(1f, 0.4f))
             .AppendInterval(0.5f);
+
         sequence.Restart();
         sequence.SetLoops(-1);
+    }
+
+    public static void StopBlink(this Image image)
+    {
+        if (image == null)
+            return;
+
+        Sequence sequence = DOTween.Sequence()
+           .SetAutoKill(false)
+           .Append(image.DOFade(0, 0));
+
+        sequence.Restart();
     }
 
     public static void ResetScrollPos(this ScrollRect scroll)

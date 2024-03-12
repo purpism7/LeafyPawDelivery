@@ -28,6 +28,14 @@ namespace GameSystem
         #region IUpdate
         void IUpdater.ChainUpdate()
         {
+#if UNITY_ANDROID
+            if(Input.GetKey(KeyCode.Escape))
+            {
+                var quitGame = new PopupCreator<UI.QuitGame, UI.BaseData>()
+                    .Create();
+            }
+#endif
+
             int touchCnt = Input.touchCount;
             if (touchCnt <= 0)
                 return;

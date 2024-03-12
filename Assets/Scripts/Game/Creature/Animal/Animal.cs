@@ -35,17 +35,6 @@ namespace Game.Creature
         private AnimalActionController _actionCtr = null;
 
         public int SkinId { get { return skinId; } }
-        public Vector3 Pos
-        {
-            get
-            {
-                return transform.localPosition;
-            }
-            set
-            {
-                transform.localPosition = value;
-            }
-        }
 
         private IPlaceState.EType _iPlaceState = IPlaceState.EType.None;
 
@@ -66,8 +55,8 @@ namespace Game.Creature
 
             if (data != null)
             {
-                Pos = data.Pos;
-                SetSortingOrder(-(int)Pos.y);
+                SetLocalPos(data.Pos);
+                SetSortingOrder(-(int)LocalPos.y);
             }
 
             InitActionController();
@@ -238,9 +227,11 @@ namespace Game.Creature
             if (_data == null)
                 return;
 
-            Command.Arrange.Execute(this, transform.localPosition);
+            SetLocalPosZ(GameUtils.CalcPosZ(LocalPos.y));
 
-            SetSortingOrder(-(int)transform.localPosition.y);
+            Command.Arrange.Execute(this, LocalPos);
+
+            SetSortingOrder(-(int)LocalPos.y);
 
             ActiveEdit(false);
             SetState(null);

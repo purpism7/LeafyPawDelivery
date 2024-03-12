@@ -124,7 +124,7 @@ namespace UI
         {
             UIUtils.SetActive(guideLineImg?.gameObject, true);
 
-            guideLineImg?.AnimBlink();
+            guideLineImg?.StartBlink();
         }
 
         #region Notification.IListener

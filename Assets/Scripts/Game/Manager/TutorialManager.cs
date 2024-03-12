@@ -13,12 +13,9 @@ namespace Game
     {
         private const float PopoPosY = -200f;
         private const float PopoPosZ = -10f;
-        private const int StarterId = 1;
 
         public interface IListener
         {
-            //void EndTutorial();
-
             void State(Game.Type.ETutorialStep eTutorialStep);
         }
 
@@ -306,8 +303,8 @@ namespace Game
             var mainGameMgr = MainGameManager.Instance;
             if (mainGameMgr != null)
             {
-                isAnimalStarter = !mainGameMgr.CheckExist(Type.EElement.Animal, StarterId);
-                isObjectStarter = !mainGameMgr.CheckExist(Type.EElement.Object, StarterId);
+                isAnimalStarter = !mainGameMgr.CheckExist(Type.EElement.Animal, Game.Data.Const.TutorialAnimalId);
+                isObjectStarter = !mainGameMgr.CheckExist(Type.EElement.Object, Game.Data.Const.TutorialObjectId);
             }
 
             _popoConversation?.Deactivate();
@@ -426,8 +423,6 @@ namespace Game
             ProcessDescEditAsync(0).Forget();
 
             ProcessDisappearPopoAsync().Forget();
-
-            //SetStep(Game.Type.ETutorialStep.EditAnimal);
         }
 
         private void ProcessEditObject()
@@ -518,7 +513,7 @@ namespace Game
                 var mainGameMgr = MainGameManager.Instance;
                 if (mainGameMgr != null)
                 {
-                    return mainGameMgr.CheckExist(Type.EElement.Animal, StarterId) || mainGameMgr.CheckExist(Type.EElement.Object, StarterId);
+                    return mainGameMgr.CheckExist(Type.EElement.Animal, Game.Data.Const.TutorialAnimalId) || mainGameMgr.CheckExist(Type.EElement.Object, Game.Data.Const.TutorialObjectId);
                 }
 
                 return false;
@@ -561,7 +556,7 @@ namespace Game
             {
                 case Game.Event.ArrangeAnimalData arrangeAnimalData:
                     {
-                        if (arrangeAnimalData.id == StarterId)
+                        if (arrangeAnimalData.id == Game.Data.Const.TutorialAnimalId)
                         {
                             ProcessEditObject();
                         }
@@ -577,7 +572,7 @@ namespace Game
             {
                 case Game.Event.ArrangeObjectData arrangeObjectData:
                     {
-                        if (arrangeObjectData.id == StarterId)
+                        if (arrangeObjectData.id == Game.Data.Const.TutorialObjectId)
                         {
                             ProcessDescStory().Forget();
                         }
@@ -585,7 +580,6 @@ namespace Game
                         break;
                     }
             }
-
         }
     }
 }

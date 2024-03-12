@@ -185,7 +185,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 69001728152821760
-    m_Localized: '''Leafy Paw Delievery'' is a game decorating a town with currency.'
+    m_Localized: '''Leafy Parcels'' is a game decorating a town with currency.'
     m_Metadata:
       m_Items: []
   - m_Id: 69029916908183552
@@ -243,7 +243,7 @@ MonoBehaviour:
 
       Have fun playing
 
-      "Leafy Paw Delivery"!'
+      "Leafy Parcels''"!'
     m_Metadata:
       m_Items: []
   - m_Id: 72905299411853312
@@ -284,6 +284,19 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 75556213218074624
     m_Localized: The payment is being processed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78492680160534528
+    m_Localized: Would you like to end the game?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78495413483593728
+    m_Localized: We failed to initialize in-app. Please restart the game and try
+      again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78496380593627136
+    m_Localized: Please check your internet connection.
     m_Metadata:
       m_Items: []
   references:

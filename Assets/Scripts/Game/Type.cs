@@ -181,6 +181,16 @@ namespace Game
             InappPurchase,
         }
 
+        public enum EPosZOrder
+        {
+            None,
+
+            EditElement,
+
+            Object,
+            DropItem,
+        }
+
         public enum ETutorialStep
         {
             None,

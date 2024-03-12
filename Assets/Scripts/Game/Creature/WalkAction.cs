@@ -68,39 +68,6 @@ namespace Game.Creature
             }
         }
 
-        //private void Move()
-        //{
-        //    Debug.Log("Start A Star = " + _data.id);
-
-
-
-
-        //    if (Carrier.MoveAsync(_data.Tm.localPosition, out List<Vector3> pathPosList))
-        //    {
-        //        _posQueue.Clear();
-
-        //        foreach(Vector3 pos in pathPosList)
-        //        {
-        //            _posQueue.Enqueue(pos);
-        //        }
-
-        //        if(_posQueue.Count > 0)
-        //        {
-        //            InProgressAction();
-
-        //            MoveToTarget();
-        //        }
-        //        else
-        //        {
-        //            EndAction();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        EndAction();
-        //    }
-        //}
-
         private bool MoveToTarget()
         {
             if (_posQueue.Count <= 0)
@@ -116,12 +83,11 @@ namespace Game.Creature
             if (!animalTm)
                 return false;
 
+            _randomSeed = GameUtils.RandomSeed;
+
             _targetPos = _posQueue.Dequeue();
-            _targetPos.z = _initPosZ;
 
             _data.SprRenderer.flipX = animalTm.localPosition.x - _targetPos.x < 0;
-
-            //SetState(EState.InProgress);
 
             return true;
         }
@@ -136,15 +102,13 @@ namespace Game.Creature
             if (_data == null)
                 return;
 
-            //if (_data.EState != EState.InProgress)
-            //    return;
-
             var animalTm = _data.Tm;
             if (!animalTm)
                 return;
             
             Vector3 movePos = Vector2.MoveTowards(animalTm.localPosition, _targetPos, Time.deltaTime * 50f);
-            movePos.z = _initPosZ;
+            movePos.z = movePos.y * GameUtils.PosZOffset + _randomSeed;
+
             animalTm.localPosition = movePos;
 
 #if UNITY_EDITOR

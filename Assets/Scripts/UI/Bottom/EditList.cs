@@ -43,6 +43,9 @@ namespace UI
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+
+            _editObjectList?.Clear();
+            _editAnimalList?.Clear();
         }
 
         public override void Activate()
@@ -106,8 +109,6 @@ namespace UI
         {
             DeactviateAllAnimal();
 
-            _editAnimalList?.Clear();
-
             var infoList = MainGameManager.Get<AnimalManager>()?.AnimalInfoList;
             if(infoList == null)
                 return;
@@ -145,19 +146,11 @@ namespace UI
         
         private void SetObjectList()
         {
-            DeactviateAllObject();
-
-            _editObjectList?.Clear();
+            DeactviateAllObject(); 
 
             var objectMgr = MainGameManager.Get<ObjectManager>();
             if (objectMgr == null)
                 return;
-
-            //var infoList = objectMgr.ObjectInfoList;
-            //if (infoList == null)
-            //    return;
-
-            //var infos = infoList.OrderBy(info => info.Id);
 
             int placeId = GameUtils.ActivityPlaceId;
             var objectDataList = ObjectContainer.Instance?.GetDataListByPlaceId(placeId);
@@ -187,34 +180,6 @@ namespace UI
 
                 CreateEditObject(data);
             }
-
-            //foreach (var objectInfo in infos)
-            //{
-            //    if(objectInfo == null)
-            //        continue;
-
-            //    var objectData = ObjectContainer.Instance?.GetData(objectInfo.Id);
-            //    if (objectData == null)
-            //        continue;
-
-            //    if (objectData.PlaceId != placeId)
-            //        continue;
-
-            //    int reaminCount = objectMgr.GetRemainCount(objectInfo.Id);
-            //    if (reaminCount <= 0)
-            //        continue;
-
-            //    var data = new Component.EditObject.Data()
-            //    {
-            //        iListener = this,
-            //        ObjectId = objectInfo.Id,
-            //        Count = objectData.Count,
-            //        RemainCount = reaminCount,
-            //        isTutorial = isTutorial,
-            //    };
-
-            //    CreateEditObject(data);
-            //}
         }
 
         private void CreateEditAnimal(Component.EditAnimal.Data data)
@@ -222,25 +187,53 @@ namespace UI
             if (data == null)
                 return;
 
-            var editAnimal = new GameSystem.UICreator<UI.Component.EditAnimal, UI.Component.EditAnimal.Data>()
+            foreach(var editAnimal in _editAnimalList)
+            {
+                if (editAnimal == null)
+                    continue;
+
+                if (editAnimal.IsActivate)
+                    continue;
+
+                editAnimal.Initialize(data);
+                editAnimal.Activate();
+
+                return;
+            }
+
+            var addEditAnimal = new GameSystem.UICreator<UI.Component.EditAnimal, UI.Component.EditAnimal.Data>()
                       .SetData(data)
                       .SetRootRectTm(animalScrollRect.content)
                       .Create();
 
-            _editAnimalList.Add(editAnimal);
+            _editAnimalList.Add(addEditAnimal);
         }
 
-        private void CreateEditObject(Component.EditObject.Data objectData)
+        private void CreateEditObject(Component.EditObject.Data data)
         {
-            if (objectData == null)
+            if (data == null)
                 return;
 
-            var editObject = new GameSystem.UICreator<UI.Component.EditObject, UI.Component.EditObject.Data>()
-                   .SetData(objectData)
+            foreach (var editObject in _editObjectList)
+            {
+                if (editObject == null)
+                    continue;
+
+                if (editObject.IsActivate)
+                    continue;
+
+                editObject.Initialize(data);
+                editObject.Activate();
+
+                return;
+            }
+
+            var addEditObject = new GameSystem.UICreator<UI.Component.EditObject, UI.Component.EditObject.Data>()
+                   .SetData(data)
                    .SetRootRectTm(objectScrollRect.content)
                    .Create();
 
-            _editObjectList.Add(editObject);
+            _editObjectList.Add(addEditObject);
         }
         
         private void ActiveContents()
@@ -253,7 +246,7 @@ namespace UI
         {
             foreach (var animal in _editAnimalList)
             {
-                animal?.gameObject.SetActive(false);
+                animal?.Deactivate();
             }
         }
 
@@ -261,7 +254,7 @@ namespace UI
         {
             foreach(var obj in _editObjectList)
             {
-                obj?.gameObject.SetActive(false);
+                obj?.Deactivate();
             }
         }
 
@@ -299,7 +292,6 @@ namespace UI
                 {
                     iListener = this,
                     AnimalData = animalData,
-                    //SkinId = animalMgr.GetCurrenctSkinId(info.Id),
                 };
 
                 if (_editAnimalList?.Count > i)
