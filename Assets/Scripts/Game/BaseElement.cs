@@ -104,15 +104,10 @@ namespace Game
             if (state is Game.Element.State.Edit)
             {
                 SetOutline(5f);
-                //SetSortingGroupOrder(10);
-                
-
-                //transform.SetAsLastSibling();
             }
             else
             {
                 SetOutline(0);
-                //SetSortingGroupOrder(0);
             }
 
             state?.Apply(this);

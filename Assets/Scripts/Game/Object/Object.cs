@@ -16,6 +16,7 @@ namespace Game
         void DeactivateHiddenObject();
 
         int SortingOrder { get; }
+        Vector3 LocalPos { get; }
 
         bool IsActivate { get; }
     }
@@ -103,6 +104,10 @@ namespace Game
 
                 SetSortingOrder(SelectOrder);
                 ActiveEdit(true);
+
+                State?.Touch(TouchPhase.Began, null);
+
+                return;
             }
             else
             {
@@ -118,7 +123,7 @@ namespace Game
 
             if(touch != null)
             {
-                State?.Touch(touch.Value);
+                State?.Touch(touch.Value.phase, touch.Value);
             }
         }
 
@@ -126,7 +131,7 @@ namespace Game
         {
             base.OnTouch(touch);
 
-            State?.Touch(touch);
+            State?.Touch(touch.phase, touch);
         }
 
         private void SetPos()
@@ -227,6 +232,14 @@ namespace Game
                     return -9999;
 
                 return spriteRenderer.sortingOrder;
+            }
+        }
+
+        Vector3 IObject.LocalPos
+        {
+            get
+            {
+                return LocalPos;
             }
         }
         #endregion

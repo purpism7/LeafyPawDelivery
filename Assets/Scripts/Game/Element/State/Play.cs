@@ -20,7 +20,7 @@ namespace Game.Element.State
             return this;
         }
 
-        public override void Touch(Touch touch)
+        public override void Touch(TouchPhase touchPhase, Touch? touch)
         {
             if (_gameBaseElement == null)
                 return;
@@ -28,11 +28,11 @@ namespace Game.Element.State
             //if (_gameBaseElement.EState_ == EState.Edit)
             //    return;
 
-            switch (touch.phase)
+            switch (touchPhase)
             {
                 case TouchPhase.Began:
                     {
-                        CollectCurrnecy(touch);
+                        CollectCurrnecy(touch.Value);
                         StartSignatureAction();
 
                         break;
@@ -45,16 +45,12 @@ namespace Game.Element.State
 
                 case TouchPhase.Stationary:
                     {
-                        
-
                         break;
                     }
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
-                        
-
                         break;
                     }
             }

@@ -658,7 +658,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         {
             case Game.Type.ETutorialStep.EditAnimal:
                 {
-                    (IGameCameraCtr as GameSystem.GameCameraController)?.SetStopUpdate(false);
+                    //(IGameCameraCtr as GameSystem.GameCameraController)?.SetStopUpdate(false);
 
                     break;
                 }

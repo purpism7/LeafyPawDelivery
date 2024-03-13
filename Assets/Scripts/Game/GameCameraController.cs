@@ -29,17 +29,21 @@ namespace GameSystem
 
         public Camera GameCamera = null;
         public Camera UICamera = null;
-        
+        [SerializeField]
+        private AnimationCurve moveCurve = null;
+
         private Vector2 _center = Vector2.zero;
         private Vector2 _mapSize = new Vector2(2000f, 2000f);
 
         private float _halfHeight = 0;
         private float _dragWidth = 0;
         private Vector3 _velocity = Vector3.zero;
-        private float _smoothTime = 0.03f;
+        private float _smoothTime = 0.025f;
 
         private float _width = 0;
-
+        //private float _moveDeltaTime = 0;
+        //private float _moveLerpTime = 10f;
+        
         public float Height { get; private set; } = 0;
        
         public IGrid IGrid { get; private set; } = null;
@@ -197,9 +201,8 @@ namespace GameSystem
             float clampY = GetClampY(movePos.y);
 
             var targetPos = new Vector3(clampX, clampY, InitPosZ);
-            
-            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, _smoothTime);
-            //cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, Time.deltaTime * 10f);
+
+            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, moveCurve.Evaluate(_smoothTime));
         }
 
         private void ZoomInOut()

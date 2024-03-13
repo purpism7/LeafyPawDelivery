@@ -105,7 +105,11 @@ namespace UI.Component
                         {
                             _data.isTutorial = false;
 
-                            guideLineImg?.StopBlink();
+                            if(guideLineImg != null)
+                            {
+                                guideLineImg.enabled = false;
+                            }
+                            
                             UIUtils.SetActive(guideLineImg?.gameObject, false);
 
                             ObjectManager.Event?.RemoveListener(OnChangedObject);

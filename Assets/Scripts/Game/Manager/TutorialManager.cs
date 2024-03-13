@@ -431,12 +431,15 @@ namespace Game
 
             _popoConversation?.ActivateTop(local, true);
             _popoConversation?.Activate();
+            _popo?.Deactivate();
 
             SetStep(Type.ETutorialStep.EditObject);
         }
 
         private async UniTask ProcessDescStory()
         {
+            _popo?.Deactivate();
+
             var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "tutorial_desc_story", LocalizationSettings.SelectedLocale);
 
             _popoConversation?.ActivateCenter(local);

@@ -188,6 +188,7 @@ namespace Game
             EditElement,
 
             Object,
+            HiddenObject,
             DropItem,
         }
 

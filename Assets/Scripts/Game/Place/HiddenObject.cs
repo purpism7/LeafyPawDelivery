@@ -133,7 +133,7 @@ namespace Game.PlaceEvent
                 .SetRootTm(randIObject.HiddenObjectRootTm)
                 .Create();
 
-            hiddenObject?.SetLocalPosZ(-20f);
+            hiddenObject?.SetLocalPosZ(GameUtils.GetPosZOrder(Type.EPosZOrder.HiddenObject));
 
             if (AddId(data.Id))
             {

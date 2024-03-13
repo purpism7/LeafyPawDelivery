@@ -43,7 +43,7 @@ namespace Game.Element.State
             return this;
         }
 
-        public virtual void Touch(Touch touch)
+        public virtual void Touch(TouchPhase touchPhase, Touch? touch)
         {
 
         }

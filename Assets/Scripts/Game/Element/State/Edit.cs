@@ -60,18 +60,18 @@ namespace Game.Element.State
             _gameBaseElement.SetLocalPosZ(_gameBaseElement.LocalPos.y * GameUtils.PosZOffset + GameUtils.GetPosZOrder(Game.Type.EPosZOrder.EditElement));
         }
 
-        public override void Touch(Touch touch)
+        public override void Touch(TouchPhase touchPhase, Touch? touch)
         {
             if(_gameBaseElement == null)
                 return;
 
-            switch (touch.phase)
+            switch (touchPhase)
             {
                 case TouchPhase.Began:
                     {
                         _gameBaseElement.ActiveEdit(true);
                         _gameCameraCtr?.SetStopUpdate(true);
-
+                        
                         break;
                     }
 
@@ -103,8 +103,14 @@ namespace Game.Element.State
             Overlap();
         }
 
-        private void Drag(Touch touch)
+        private void Drag(Touch? touch)
         {
+            if (touch == null ||
+                !touch.HasValue)
+                return;
+
+            Vector3 touchPos = touch.Value.position;
+
             if (_gameBaseElement == null)
                 return;
 
@@ -115,7 +121,7 @@ namespace Game.Element.State
             var gameBaseTm = _gameBaseElement.transform;
 
             float distance = gameCamera.WorldToScreenPoint(gameBaseTm.position).z;
-            Vector3 movePos = new Vector3(touch.position.x, touch.position.y, distance);
+            Vector3 movePos = new Vector3(touchPos.x, touchPos.y, distance);
             Vector3 pos = gameCamera.ScreenToWorldPoint(movePos);
 
             pos.y += -10f;

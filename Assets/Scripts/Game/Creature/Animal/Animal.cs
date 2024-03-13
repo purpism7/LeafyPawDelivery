@@ -120,6 +120,10 @@ namespace Game.Creature
 
                 SetSortingOrder(SelectOrder);
                 ActiveEdit(true);
+
+                State?.Touch(TouchPhase.Began, null);
+
+                return;
             }
             else
             {
@@ -128,7 +132,7 @@ namespace Game.Creature
 
             if (touch != null)
             {
-                State?.Touch(touch.Value);
+                State?.Touch(touch.Value.phase, touch.Value);
             }
         }
 
@@ -136,7 +140,7 @@ namespace Game.Creature
         {
             base.OnTouch(touch);
 
-            State?.Touch(touch);
+            State?.Touch(touch.phase, touch);
         }
 
         private void CreateEdit()
