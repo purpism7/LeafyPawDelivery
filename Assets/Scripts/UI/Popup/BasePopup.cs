@@ -53,7 +53,7 @@ namespace UI
             UIManager.Instance?.Popup?.PopPopup();
         }
 
-        public void AnimActivate(float interval)
+        public void AnimActivate(float interval, System.Action endAction)
         {
             if(!rootRectTm)
                 return;
@@ -66,7 +66,7 @@ namespace UI
                 .Append(rootRectTm.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutQuart))
                 .OnComplete(() =>
                 {
-                    
+                    endAction?.Invoke();
                 });
             sequence.Restart();
         }

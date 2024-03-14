@@ -32,6 +32,8 @@ namespace UI
         private List<UI.Base> _opendPopupList = new();
         private Stack<UI.Base> _popupStack = new();
 
+        private bool possibleTouch = false;
+
         public override void ChainUpdate()
         {
             base.ChainUpdate();
@@ -141,14 +143,22 @@ namespace UI
             if (basePopup == null)
                 return;
 
+            possibleTouch = false;
+
             FadeOutBackground(showBackground);
             if(animActivate)
             {
-                basePopup.AnimActivate(interval);
+                basePopup.AnimActivate(interval,
+                    () =>
+                    {
+                        possibleTouch = true;
+                    });
             }
             else
             {
                 basePopup.Activate();
+
+                possibleTouch = true;
             }
 
             if (_popupStack.Count > 0)
@@ -242,6 +252,9 @@ namespace UI
         
         public void OnClickBackground()
         {
+            if (!possibleTouch)
+                return;
+
             var uiBase = _popupStack?.Peek();
             if (uiBase == null)
                 return;
