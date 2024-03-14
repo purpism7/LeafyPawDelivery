@@ -69,7 +69,6 @@ namespace Game.Event
             {
                 case AddAnimalData data:
                     {
-                        Debug.Log("Emit = " + data.id);
                         break;
                     }
             }
