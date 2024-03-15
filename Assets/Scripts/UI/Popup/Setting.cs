@@ -154,6 +154,11 @@ namespace UI
                     return specialThanks;
                 });
         }
+
+        public void OnclickPrivacyPolish()
+        {
+            Application.OpenURL("https://leafypawdelivery.blogspot.com/2024/02/blogger-30.html");
+        }
     }
 }
 
