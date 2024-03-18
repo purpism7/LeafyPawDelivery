@@ -303,6 +303,10 @@ MonoBehaviour:
     m_Localized: Privacy Polish
     m_Metadata:
       m_Items: []
+  - m_Id: 79914647765901312
+    m_Localized: AD is loading.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

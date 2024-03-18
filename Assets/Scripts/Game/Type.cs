@@ -179,6 +179,7 @@ namespace Game
             None,
 
             InappPurchase,
+            ShowAD,
         }
 
         public enum EPosZOrder

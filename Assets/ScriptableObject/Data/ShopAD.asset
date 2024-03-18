@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datas:
   - eCategory: 1
-    ios: ca-app-pub-4768455296560255/9551829061
-    and: ca-app-pub-4768455296560255/9341017366
+    ios: ca-app-pub-4768455296560255/9380996498
+    and: ca-app-pub-4768455296560255/6860497134
     coolTimeSec: 3600
   - eCategory: 2
-    ios: ca-app-pub-4768455296560255/8801181066
-    and: ca-app-pub-4768455296560255/8881852360
+    ios: ca-app-pub-4768455296560255/4531994490
+    and: ca-app-pub-4768455296560255/6723823817
     coolTimeSec: 3600
   - eCategory: 3
-    ios: ca-app-pub-4768455296560255/1422218646
-    and: ca-app-pub-4768455296560255/5477901779
+    ios: ca-app-pub-4768455296560255/1679488496
+    and: ca-app-pub-4768455296560255/4097660475
     coolTimeSec: 3600

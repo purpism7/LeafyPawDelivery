@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using GoogleMobileAds.Api;
+using UnityEngine.Localization.Settings;
 
 namespace GameSystem
 {
@@ -22,7 +23,6 @@ namespace GameSystem
             }
         }
 
-
         public static AdMob Get
         {
             get
@@ -33,18 +33,30 @@ namespace GameSystem
             }
         }
 
-        //private Dictionary<string, RewardedInterstitialAd> _rewardedInterstitialAdDic = null;
-        private RewardedInterstitialAd _rewardedInterstitialAd = null;
+        private Dictionary<string, RewardedInterstitialAd> _rewardedInterstitialAdDic = null;
+        //private RewardedInterstitialAd _rewardedInterstitialAd = null;
+
+        private Reward _reward = null;
+        private string _adId = string.Empty;
+        private System.Action<double> _callback = null;
 
         private void Initialize()
         {
             MobileAds.Initialize((InitializationStatus status) =>
             {
-                Debug.Log("AdMob InitializationStatus = " + status);
+                //Debug.Log("AdMob InitializationStatus = " + status);
             });
 
-            //_rewardedInterstitialAdDic = new();
-            //_rewardedInterstitialAdDic.Clear();
+            InitializeRewardedInterstitialAdDic();
+        }
+
+        private void InitializeRewardedInterstitialAdDic()
+        {
+            if (_rewardedInterstitialAdDic != null)
+                return;
+
+            _rewardedInterstitialAdDic = new();
+            _rewardedInterstitialAdDic?.Clear();
         }
 
         ///// Loads the rewarded interstitial ad.
@@ -53,18 +65,26 @@ namespace GameSystem
         {
             // Clean up the old ad before loading a new one.
 
-            if(_rewardedInterstitialAd != null)
+            if(_rewardedInterstitialAdDic != null)
             {
-                _rewardedInterstitialAd.Destroy();
-                _rewardedInterstitialAd = null;
+                if(_rewardedInterstitialAdDic.TryGetValue(id, out RewardedInterstitialAd ad))
+                {
+                    _rewardedInterstitialAdDic[id].Destroy();
+                    _rewardedInterstitialAdDic[id] = null;
+                }
             }
 
-            Debug.Log("Loading the rewarded interstitial ad = " + id);
+            //if(_rewardedInterstitialAd != null)
+            //{
+            //    _rewardedInterstitialAd.Destroy();
+            //    _rewardedInterstitialAd = null;
+            //}
+
+            //Debug.Log("Loading the rewarded interstitial ad = " + id);
 
             // create our request used to load the ad.
             var adRequest = new AdRequest();
             adRequest.Keywords.Add("unity-admob-sample");
-
             // send the request to load the ad.
 
             //RewardedAd.Load(id, new AdRequest.Builder().Build(),
@@ -91,31 +111,40 @@ namespace GameSystem
                         return;
                     }
 
-                    _rewardedInterstitialAd = ad;
-                    //_rewardedInterstitialAdDic?.TryAdd(id, ad);
+                    InitializeRewardedInterstitialAdDic();
 
+                    _rewardedInterstitialAdDic?.TryAdd(id, ad);
+
+                    ad.OnAdFullScreenContentFailed += OnAdFullScreenContentFailed;
+                    ad.OnAdFullScreenContentClosed += OnAdFullScreenContentClosed;
+                   
                     callbck?.Invoke();
                 });
-            //  (RewardedInterstitialAd ad, LoadAdError error) =>
-            //  {
-            //// if error is not null, the load request failed.
-            //if (error != null || ad == null)
-            //      {
-            //          Debug.LogError("rewarded interstitial ad failed to load an ad " +
-            //                         "with error : " + error);
-            //          return;
-            //      }
-
-            //      Debug.Log("Rewarded interstitial ad loaded with response : "
-            //                + ad.GetResponseInfo());
-
-            //      _rewardedInterstitialAd = ad;
-            //  });
         }
 
-        public void ShowAd(string id, System.Action callback)
+        public void ShowAd(string id, System.Action<double> callback)
         {
-            if (_rewardedInterstitialAd == null)
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                var localKey = "check_internet_connection";
+                var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+
+                Game.Toast.Get?.Show(local, localKey);
+
+                return;
+            }
+
+            _callback = callback;
+
+            Game.UIManager.Instance?.ActivateSreenSaver(Game.Type.EScreenSaverType.ShowAD);
+
+            InitializeRewardedInterstitialAdDic();
+
+            RewardedInterstitialAd ad = null;
+
+            _rewardedInterstitialAdDic?.TryGetValue(id, out ad);
+
+            if (ad == null)
             {
                 LoadRewardedInterstitialAd(id,
                     () =>
@@ -126,51 +155,49 @@ namespace GameSystem
                 return;
             }
 
-            if (_rewardedInterstitialAd.CanShowAd())
+            if (ad.CanShowAd())
             {
-                _rewardedInterstitialAd.Show(
+                ad.Show(
                     (reward) =>
-                    {
-                        callback?.Invoke();
+                    {                        
+                        _adId = id;
+                        _reward = reward;
                     });
             }
             else
             {
                 LoadRewardedInterstitialAd(id,
-                      () =>
-                      {
-                          ShowAd(id, callback);
-                      });
+                    () =>
+                    {
+                        ShowAd(id, callback);
+                    });
             }
         }
 
-        //private void AdLoadCallback(RewardedInterstitialAd ad, LoadAdError error)
-        //{
-        //    if (error != null || ad == null)
-        //    {
-        //        Debug.LogError("rewarded interstitial ad failed to load an ad " +
-        //                       "with error : " + error);
-        //        return;
-        //    }
+        private void OnAdFullScreenContentFailed(AdError adError)
+        {
+            if (adError == null)
+                return;
 
-        //    Debug.Log("Rewarded interstitial ad loaded with response : "
-        //              + ad.GetResponseInfo());
+            Debug.Log(adError.GetMessage());
 
-        //    _rewardedInterstitialAd = ad;
+            Game.UIManager.Instance?.DeactivateScreenSaver();
+        }
 
-           
-        //    //if (_rewardedInterstitialAd.CanShowAd())
-        //    //{
-        //    //    //_rewardedInterstitialAd.
-        //    //    _rewardedInterstitialAd.Show(
-        //    //        (Reward reward) =>
-        //    //        {
-        //    //            Debug.Log(reward.Type + " / " + reward.Amount);
+        private void OnAdFullScreenContentClosed()
+        {
+            _callback?.Invoke(_reward != null ? _reward.Amount : 0);
+            _callback = null;
 
-        //    //            _callback?.Invoke();
-        //    //        });
-        //    //}
-        //}
+            Game.UIManager.Instance?.DeactivateScreenSaver();
+
+            if(!string.IsNullOrEmpty(_adId))
+            {
+                LoadRewardedInterstitialAd(_adId, null);
+            }
+
+            _adId = string.Empty;
+        }
     }
 }
 

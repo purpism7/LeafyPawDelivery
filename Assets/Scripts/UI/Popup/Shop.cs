@@ -180,16 +180,19 @@ namespace UI
                             return;
                         
                         AdMob.Get?.ShowAd(adData.adId,
-                            () =>
+                            (rewardValue) =>
                             {
-                                if(shopData.ECategory == Game.Type.ECategory.Cash)
+                                if(rewardValue > 0)
                                 {
-                                    uiMgr.Top?.CollectCashCurrency(pos, shopData.Value);
-                                }
-                                else
-                                {
-                                    var eElement = shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object;
-                                    uiMgr.Top?.CollectCurrency(pos, eElement, shopData.Value);
+                                    if (shopData.ECategory == Game.Type.ECategory.Cash)
+                                    {
+                                        uiMgr.Top?.CollectCashCurrency(pos, shopData.Value);
+                                    }
+                                    else
+                                    {
+                                        var eElement = shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object;
+                                        uiMgr.Top?.CollectCurrency(pos, eElement, shopData.Value);
+                                    }
                                 }
 
                                 iShopItemCell.End();

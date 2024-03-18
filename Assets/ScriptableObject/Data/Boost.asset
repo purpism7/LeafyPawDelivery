@@ -18,7 +18,7 @@ MonoBehaviour:
     timeSec: 300
     ad:
       eCategory: 0
-      ios: ca-app-pub-4768455296560255/4218430076
-      and: ca-app-pub-4768455296560255/7812313272
+      ios: ca-app-pub-4768455296560255/1018456597
+      and: ca-app-pub-4768455296560255/6228165640
       coolTimeSec: 3600
     localKey: desc_boost_twice_currency

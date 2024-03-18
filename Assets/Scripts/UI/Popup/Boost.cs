@@ -187,13 +187,16 @@ namespace UI
                 return;
 
             GameSystem.AdMob.Get?.ShowAd(adData.adId,
-                () =>
+                (rewardValue) =>
                 {
-                    _data = _data?.iListener?.Buy();
-
-                    if(_data != null)
+                    if(rewardValue > 0)
                     {
-                        SetBoostState(_data.activate);
+                        _data = _data?.iListener?.Buy();
+
+                        if (_data != null)
+                        {
+                            SetBoostState(_data.activate);
+                        }
                     }
 
                     SetPlayTimer(true);

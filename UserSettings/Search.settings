@@ -11,14 +11,19 @@ scopes = {
 	"last_search.B655092D" = "st:Animal"
 	"OpenInspectorPreview.B655092D" = "0"
 	"currentGroup.B655092D" = "all"
-	"picker_window_position_offset.45F317DD" = "106.5;336;320;550"
-	"picker_search_text.45F317DD" = "buy"
-	"last_search.45F317DD" = "buy"
+	"picker_window_position_offset.45F317DD" = "108;336;320;550"
+	"picker_search_text.45F317DD" = "ok"
+	"last_search.45F317DD" = "ok"
 	"OpenInspectorPreview.45F317DD" = "0"
 	"currentGroup.45F317DD" = "all"
 	"last_search.310DEAA3" = "iap"
 	"OpenInspectorPreview.310DEAA3" = "0"
 	"currentGroup.310DEAA3" = "all"
+	"picker_window_position_offset.768FEAAC" = "1148;-137;320;550"
+	"picker_search_text.768FEAAC" = ""
+	"last_search.768FEAAC" = ""
+	"OpenInspectorPreview.768FEAAC" = "0"
+	"currentGroup.768FEAAC" = "all"
 }
 providers = {
 	log = {
@@ -80,9 +85,16 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
-	"b"
-	""
+	"pr"
+	"quit_game "
+	"o"
+	"ca"
+	"desc_hidden_object"
 	" "
+	"desc_continue_game"
+	""
+	"s"
+	"b"
 	"l"
 	"st:alias{}"
 ]

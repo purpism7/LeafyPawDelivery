@@ -23,22 +23,20 @@ namespace Game
 
             private DateTime? _startDateTime = null;
             private DateTime? _endDateTime = null;
-            private double _sec = 0;
+            private float _offsetSec = 0;
 
-            public void SetDateTime(DateTime? startDateTime, DateTime? endDateTime)
+            public void SetDateTime(DateTime? startDateTime, DateTime? endDateTime, float offsetSec = 0)
             {
                 _startDateTime = startDateTime;
                 _endDateTime = endDateTime;
-                _sec = 0;
+                _offsetSec = offsetSec;
             }
 
             public double RemainSec
             {
                 get
                 {
-                    _sec += Time.deltaTime;
-                    
-                    return (_endDateTime.Value - _startDateTime.Value).TotalSeconds - _sec;
+                    return (_endDateTime.Value - _startDateTime.Value).TotalSeconds + _offsetSec - Time.realtimeSinceStartup;
                 }
             }
         }
@@ -62,14 +60,15 @@ namespace Game
                 _dataList.Count <= 0)
                 return;
 
-            if (_worldTime == null)
-                return;
+            //var worldTime = GameSystem.WorldTime.Get;
+            //if (worldTime == null)
+            //    return;
 
-            if (_worldTime.DateTime == null ||
-               !_worldTime.DateTime.HasValue)
-                return;
+            //if (worldTime.DateTime == null ||
+            //   !worldTime.DateTime.HasValue)
+            //    return;
 
-            var worldDateTime = _worldTime.DateTime.Value;
+            //var worldDateTime = worldTime.DateTime.Value;
 
             //int timeSec = (int)MainGameManager.Instance.GamePlayTimeSec;
 
@@ -90,6 +89,7 @@ namespace Game
                 double remainSec = data.RemainSec;
                 if (remainSec > 0)
                 {
+                    //Debug.Log("remainSec = " + i + " / " + remainSec);
                     data.timeTMP?.SetText(TimeSpan.FromSeconds(remainSec).ToString(@"hh\:mm\:ss"));
                 }
                 else
@@ -97,7 +97,7 @@ namespace Game
                     data.btn?.SetInteractable(true);
                     data.endAction?.Invoke();
 
-                    _dataList.Remove(data);
+                    RemoveTimer(data);
 
                     break;
                 }
@@ -150,7 +150,7 @@ namespace Game
 
                 return;
             }
-
+            
             if (_dataList == null)
             {
                 _dataList = new();
@@ -159,7 +159,7 @@ namespace Game
 
             bool setDateTime = false;
             var worldUTCDateTime = _worldTime.DateTime.Value.ToUniversalTime();
-
+            
             if (!string.IsNullOrEmpty(data.key))
             {
                 var dateTimeStr = PlayerPrefs.GetString(data.key);
@@ -167,14 +167,13 @@ namespace Game
                 {
                     if (System.DateTime.TryParse(dateTimeStr, out DateTime dateTime))
                     {
+                        
                         if ((dateTime - worldUTCDateTime).TotalSeconds <= 0)
                         {
-                            PlayerPrefs.SetString(data.key, string.Empty);
+                            RemoveTimer(data);
                         }
                         else
                         {
-                            //data.endDateTime = dateTime;
-
                             data.SetDateTime(worldUTCDateTime, dateTime);
 
                             setDateTime = true;
@@ -194,8 +193,11 @@ namespace Game
                 }
                 else
                 {
+                    //data.addSec = 60f * 5f;
+
                     DateTime endDateTime = worldUTCDateTime.AddSeconds(data.addSec);
-                    data.SetDateTime(worldUTCDateTime, endDateTime);
+                    
+                    data.SetDateTime(worldUTCDateTime, endDateTime, Time.realtimeSinceStartup);
 
                     PlayerPrefs.SetString(data.key, endDateTime.ToString());
 
@@ -207,11 +209,19 @@ namespace Game
             {
                 _dataList?.Add(data);
             }
+        }
 
-            //if(_updateCoroutine == null)
-            //{
-            //    StartUpdateCor();
-            //}
+        private void RemoveTimer(Timer.Data data)
+        {
+            if (data == null)
+                return;
+
+            PlayerPrefs.SetString(data.key, string.Empty);
+
+            if(_dataList != null)
+            {
+                bool isRemove = _dataList.Remove(data);
+            }
         }
     }
 }

@@ -10,38 +10,32 @@
     "m_KnownProcessesForSerialization": [
         {
             "deviceId": "R3CM80KCP3F",
-            "name": "com.popo.leafypawdelivery",
-            "processId": 26469,
-            "exited": true
-        },
-        {
-            "deviceId": "R3CM80KCP3F",
-            "name": "com.popo.leafypawdelivery",
-            "processId": 13541,
-            "exited": true
-        },
-        {
-            "deviceId": "R3CM80KCP3F",
-            "name": "com.google.android.packageinstaller",
-            "processId": 24582,
-            "exited": true
-        },
-        {
-            "deviceId": "R3CM80KCP3F",
-            "name": "com.popo.leafypawdelivery",
-            "processId": 14181,
-            "exited": true
-        },
-        {
-            "deviceId": "R3CM80KCP3F",
             "name": "com.android.vending",
             "processId": 18651,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "R3CM80KCP3F",
             "name": "com.popo.leafypawdelivery",
             "processId": 4349,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CM80KCP3F",
+            "name": "com.popo.leafypawdelivery",
+            "processId": 30671,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CM80KCP3F",
+            "name": "com.popo.leafypawdelivery",
+            "processId": 1493,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CM80KCP3F",
+            "name": "com.sec.android.app.myfiles",
+            "processId": 32040,
             "exited": false
         }
     ],

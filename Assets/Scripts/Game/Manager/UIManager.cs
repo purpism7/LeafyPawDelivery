@@ -96,6 +96,16 @@ namespace Game
 
                         break;
                     }
+
+                case Type.EScreenSaverType.ShowAD:
+                    {
+                        string localKey = "desc_show_ad";
+                        var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+
+                        Game.Toast.Get?.Show(local, localKey);
+
+                        break;
+                    }
             }
         }
 
