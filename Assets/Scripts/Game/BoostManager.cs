@@ -17,7 +17,7 @@ namespace Game
         private GameData.Boost boost = null;
 
         private List<UI.Component.Boost> _boostCompList = null;
-        private Dictionary<Game.Type.EBoost, float> _boostRemainPlayTimeDic = null;
+        //private Dictionary<Game.Type.EBoost, float> _boostRemainPlayTimeDic = null;
 
         private void OnApplicationPause(bool pause)
         {
@@ -107,15 +107,22 @@ namespace Game
                 if (boost.EBoost == Type.EBoost.None)
                     continue;
 
-                PlayerPrefs.SetString(boost.EBoost.ToString(), boost.RemainTimeSec.ToString());
+                if (boost.EndDateTime == null ||
+                    !boost.EndDateTime.HasValue)
+                    continue;
+
+                PlayerPrefs.SetString(boost.EBoost.ToString(), boost.EndDateTime.ToString());
             }
         }
 
         public double GetBoostRemainSec(Game.Type.EBoost eBoost)
         {
-            double.TryParse(PlayerPrefs.GetString(eBoost.ToString()), out double remainSec);
+            if(System.DateTime.TryParse(PlayerPrefs.GetString(eBoost.ToString()), out System.DateTime endDateTime))
+            {
+                return (endDateTime - System.DateTime.UtcNow).TotalSeconds;
+            }
 
-            return remainSec;
+            return 0;
         }
 
         public bool CheckActivateBoost(Game.Type.EBoost eBoost)

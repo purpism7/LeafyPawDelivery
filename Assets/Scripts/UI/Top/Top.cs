@@ -326,7 +326,7 @@ namespace UI
             Info.UserManager.Instance?.User?.SetCash(currency);
         }
 
-        public void CollectCurrency(Vector3 startPos, Type.EElement eElement, int currency)
+        public void CollectCurrency(Vector3 startPos, Type.EElement eElement, int currency, bool applyBoost)
         {
             if (_collectCurrencyList == null)
                 return;
@@ -341,12 +341,15 @@ namespace UI
                 currencyName = placeData.Object.ToString();
             }
 
-            // twice boost 적용.
-            var boostMgr = MainGameManager.Get<BoostManager>();
-            if (boostMgr != null &&
-                boostMgr.CheckActivateBoost(Game.Type.EBoost.TwiceCurrency))
+            if(applyBoost)
             {
-                currency *= 2;
+                // twice boost 적용.
+                var boostMgr = MainGameManager.Get<BoostManager>();
+                if (boostMgr != null &&
+                    boostMgr.CheckActivateBoost(Game.Type.EBoost.TwiceCurrency))
+                {
+                    currency *= 2;
+                }
             }
 
             var data = new CollectCurrency.Data()
@@ -357,7 +360,7 @@ namespace UI
                 CollectEndAction =
                     () =>
                     {
-                        AddCurrency(eElement, currency);
+                        AddCurrency(eElement, currency, applyBoost);
                     },
             };
 
@@ -391,7 +394,7 @@ namespace UI
         #endregion
 
         #region Add Currency (Action Currency Text)
-        private void AddCurrency(Type.EElement eElement, int currency)
+        private void AddCurrency(Type.EElement eElement, int currency, bool applyBoost)
         {
             if (_addCurrencyList == null)
                 return;
@@ -403,11 +406,14 @@ namespace UI
             }
 
             bool activateBoost = false;
-            var boostMgr = MainGameManager.Get<BoostManager>();
-            if (boostMgr != null &&
-                boostMgr.CheckActivateBoost(Game.Type.EBoost.TwiceCurrency))
+            if(applyBoost)
             {
-                activateBoost = true;
+                var boostMgr = MainGameManager.Get<BoostManager>();
+                if (boostMgr != null &&
+                    boostMgr.CheckActivateBoost(Game.Type.EBoost.TwiceCurrency))
+                {
+                    activateBoost = true;
+                }
             }
 
             var data = new AddCurrency.Data()

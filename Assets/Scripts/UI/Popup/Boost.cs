@@ -15,10 +15,6 @@ namespace UI
         public class Data : BaseData
         {
             public IListener iListener = null;
-            //public Sprite iconSprite = null;
-            //public string adId = string.Empty;
-            //public int timeSec = 0;
-            //public string localKey = string.Empty;
             public bool activate = false;
             public System.DateTime? endDateTime = null;
 
@@ -83,8 +79,8 @@ namespace UI
             if (_data.endDateTime == null)
                 return;
 
-            var remainTime = _data.endDateTime.Value.Subtract(System.DateTime.UtcNow);
-
+            var remainTime = _data.endDateTime.Value - System.DateTime.UtcNow;
+            
             remainTimeTMP?.SetText(remainTime.ToString(@"mm\:ss"));
   
             if (remainTime.TotalSeconds <= 0)
@@ -151,8 +147,6 @@ namespace UI
         {
             if (!_initialize && !buy)
                 return;
-
-            //buyBtn?.SetInteractable(false);
 
             var adData = _data?.boostData?.ad;
 

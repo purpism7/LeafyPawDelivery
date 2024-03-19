@@ -307,6 +307,10 @@ MonoBehaviour:
     m_Localized: AD is loading.
     m_Metadata:
       m_Items: []
+  - m_Id: 80825275053498368
+    m_Localized: The town hasn't opened yet.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

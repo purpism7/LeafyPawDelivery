@@ -39,11 +39,15 @@ namespace UI
 
         public void OnClickRemove()
         {
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+
             _data?.IListener?.Remove();
         }
 
         public void OnClickArrange()
         {
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+
             _data?.IListener?.Arrange();
         }
     }

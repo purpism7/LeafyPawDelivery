@@ -83,7 +83,7 @@ namespace Game.Element.State
                 currency = AnimalSkinContainer.Instance.GetCurrency(animal.SkinId, animal.Id);
             }
 
-            UIManager.Instance?.Top?.CollectCurrency(startPos, elementData.EElement, currency);
+            UIManager.Instance?.Top?.CollectCurrency(startPos, elementData.EElement, currency, true);
 
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchObject);
         }

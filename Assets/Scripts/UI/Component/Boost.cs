@@ -11,12 +11,6 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
-            //public Sprite iconSprite = null;
-            //public string adId = string.Empty;
-            //public Game.Type.EBoost eBoost = Game.Type.EBoost.None;
-            //public int timeSec = 0;
-            //public string localKey = string.Empty;
-
             public GameData.Boost.Data boostData = null;
         }
 
@@ -26,9 +20,10 @@ namespace UI.Component
         private TextMeshProUGUI remainTimeTMP = null;
 
         private bool _activate = false;
-        private System.DateTime? _endDateTime = null;
+        public double _remainTimeSec = 0;
 
-        public double RemainTimeSec { get; private set; } = 0;
+        public System.DateTime? EndDateTime { get; private set; } = null;
+       
         public Game.Type.EBoost EBoost { get { return _data != null && _data.boostData != null ? _data.boostData.eBoost : Game.Type.EBoost.None; } }
 
         public override void Initialize(Data data)
@@ -49,17 +44,20 @@ namespace UI.Component
             if (!_activate)
                 return;
 
-            if (_endDateTime == null ||
-                !_endDateTime.HasValue)
-                return;
+            if (EndDateTime == null ||
+                !EndDateTime.HasValue)
+            {
+                EndBoost();
 
-       
-            var remainTime = _endDateTime.Value.Subtract(System.DateTime.UtcNow);
+                return;
+            }
+
+            var remainTime = EndDateTime.Value - System.DateTime.UtcNow;
 
             remainTimeTMP?.SetText(remainTime.ToString(@"mm\:ss"));
-            RemainTimeSec = remainTime.TotalSeconds;
+            _remainTimeSec = remainTime.TotalSeconds;
 
-            if(RemainTimeSec <= 0)
+            if(_remainTimeSec <= 0)
             {
                 EndBoost();
             }
@@ -95,32 +93,20 @@ namespace UI.Component
 
         private void ActivateBoost(double remainSec)
         {
-            _endDateTime = System.DateTime.UtcNow.AddSeconds(remainSec);
-
+            EndDateTime = System.DateTime.UtcNow.AddSeconds(remainSec);
+            
             _activate = true;
         }
 
-        //private void SaveRemainTime()
-        //{
-        //    if (_data == null)
-        //        return;
-
-        //    if (!_activate)
-        //        return;
-
-        //    PlayerPrefs.SetString(_data.eBoost.ToString(), _remainSec.ToString());
-        //}
-
         private void EndBoost()
         {
-            _endDateTime = null;
+            EndDateTime = null;
             _activate = false;
+            _remainTimeSec = 0;
 
             remainTimeTMP?.SetText(string.Empty);
 
-            RemainTimeSec = 0;
             MainGameManager.Get<Game.BoostManager>()?.Save();
-            //PlayerPrefs.SetString(_data.eBoost.ToString(), _remainSec.ToString());
         }
 
         private UI.Boost.Data CreateBoostData
@@ -130,13 +116,8 @@ namespace UI.Component
                 return new UI.Boost.Data()
                 {
                     iListener = this,
-                    //iconSprite = _data.iconSprite,
-                    //adId = _data.adId,
-                    //localKey = _data.localKey,
-                    //timeSec = _data.timeSec,
                     activate = _activate,
-                    endDateTime = _endDateTime,
-
+                    endDateTime = EndDateTime,
                     boostData = _data.boostData,
                 };
             }
@@ -149,7 +130,7 @@ namespace UI.Component
             if (boostData == null)
                 return null;
 
-            RemainTimeSec = boostData.timeSec;
+            _remainTimeSec = boostData.timeSec;
             ActivateBoost(boostData.timeSec);
 
             MainGameManager.Get<Game.BoostManager>()?.Save();

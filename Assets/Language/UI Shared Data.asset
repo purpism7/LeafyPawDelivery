@@ -277,6 +277,10 @@ MonoBehaviour:
     m_Key: desc_show_ad
     m_Metadata:
       m_Items: []
+  - m_Id: 80825275053498368
+    m_Key: desc_not_opened_yet
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

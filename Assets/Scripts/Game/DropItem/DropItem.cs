@@ -254,7 +254,7 @@ namespace Game
             {
                 case CurrencyData currencyData:
                     {
-                        UIManager.Instance?.Top?.CollectCurrency(startPos, currencyData.EElement, _data.Value);
+                        UIManager.Instance?.Top?.CollectCurrency(startPos, currencyData.EElement, _data.Value, true);
 
                         UI.ITop iTop = UIManager.Instance?.Top;
                         iTop?.SetDropAnimalCurrencyCnt(-1, out dropCnt);
@@ -270,21 +270,29 @@ namespace Game
 
                             var top = UIManager.Instance?.Top;
 
-                            float random = UnityEngine.Random.Range(0f, 100f);
-                            if(random < 3f)
+                            int random = UnityEngine.Random.Range(0, 100);
+                            UnityEngine.Random.InitState(random);
+
+                            if(random < 3)
                             {
                                 int value = UnityEngine.Random.Range(1, 5);
+                                UnityEngine.Random.InitState(value);
+
                                 top?.CollectCashCurrency(startPos, value);
                             }
-                            else if(random < 55f)
+                            else if(random < 55)
                             {
-                                int value = UnityEngine.Random.Range(5, 15);
-                                top?.CollectCurrency(startPos, Type.EElement.Animal, value);
+                                int value = UnityEngine.Random.Range(5, 20);
+                                UnityEngine.Random.InitState(value);
+
+                                top?.CollectCurrency(startPos, Type.EElement.Animal, value, true);
                             }
                             else
                             {
                                 int value = UnityEngine.Random.Range(50, 100);
-                                top?.CollectCurrency(startPos, Type.EElement.Object, value);
+                                UnityEngine.Random.InitState(value);
+
+                                top?.CollectCurrency(startPos, Type.EElement.Object, value, true);
                             }
 
                             MainGameManager.Instance?.AddAcquire(Type.EAcquire.Letter, Type.EAcquireAction.Obtain, 1);

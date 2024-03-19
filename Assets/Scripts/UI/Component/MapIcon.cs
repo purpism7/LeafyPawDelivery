@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using DG.Tweening;
+using UnityEngine.Localization.Settings;
 
 using GameSystem;
 
@@ -34,6 +35,8 @@ namespace UI.Component
         [SerializeField]
         private RectTransform myLocationRootRectTm = null;
 
+        private bool _isLock = false;
+
         public override void Initialize(Data data)
         {
             base.Initialize(data);
@@ -59,25 +62,25 @@ namespace UI.Component
                 lastPlaceId = user.LastPlaceId;
             }
 
-            bool isLock = true;
+            _isLock = true;
 
             var connector = Info.Connector.Get;
             if(connector != null)
             {
                 if (connector.OpenPlaceId > 0)
                 {
-                    isLock = placeId >= connector.OpenPlaceId;
+                    _isLock = placeId >= connector.OpenPlaceId;
                 }
                 else
                 {
-                    isLock = placeId > lastPlaceId;
+                    _isLock = placeId > lastPlaceId;
                 }
             }
 
-            UIUtils.SetActive(lockRectRootTm, isLock);
-            UIUtils.SetActive(placeIconImg?.gameObject, !isLock);
+            UIUtils.SetActive(lockRectRootTm, _isLock);
+            UIUtils.SetActive(placeIconImg?.gameObject, !_isLock);
 
-            SetInteractableEnterBtn(!isLock);
+            //SetInteractableEnterBtn(!_isLock);
         }
 
         private void OpenPlace()
@@ -98,6 +101,8 @@ namespace UI.Component
 
         private void AnimOpenPlace()
         {
+            SetInteractableEnterBtn(false);
+
             UIUtils.SetActive(placeIconImg?.gameObject, true);
             placeIconImg.DOFade(0, 0);
 
@@ -144,6 +149,16 @@ namespace UI.Component
         public void OnClick()
         {
             EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
+            if(_isLock)
+            {
+                var localKey = "desc_not_opened_yet";
+                var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+
+                Game.Toast.Get?.Show(local, localKey);
+
+                return;
+            }
 
             _data?.IListener?.SelectPlace(placeId, SetMyLocation);
 

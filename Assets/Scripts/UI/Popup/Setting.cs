@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using UnityEngine.Localization.Settings;
+using TMPro;
 
 using GameSystem;
 
@@ -19,6 +20,8 @@ namespace UI
         [Header("Language")]
         [SerializeField]
         private RectTransform[] unselectedRootRectTms = null;
+        [SerializeField]
+        private TextMeshProUGUI buildVersionTMP = null;
 
         public override void Initialize(BaseData data)
         {
@@ -26,6 +29,8 @@ namespace UI
 
             SetSound();
             SetLanguage();
+
+            buildVersionTMP?.SetText(string.Format("ver. {0}", Application.version));
         }
 
         public override void Activate()

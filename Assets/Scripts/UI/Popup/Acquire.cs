@@ -104,7 +104,7 @@ namespace UI
             if (_acquireMgr == null)
                 return;
 
-            var localRemainTime = _acquireMgr.DailyMissionDateTime.Value.Subtract(System.DateTime.UtcNow.ToLocalTime());
+            var localRemainTime = _acquireMgr.DailyMissionDateTime.Value - System.DateTime.UtcNow.ToLocalTime();
 
             localRemainTimeTMP?.SetText(localRemainTime.ToString(@"hh\:mm\:ss"));
 

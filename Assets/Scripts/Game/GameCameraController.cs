@@ -38,7 +38,8 @@ namespace GameSystem
         private float _halfHeight = 0;
         private float _dragWidth = 0;
         private Vector3 _velocity = Vector3.zero;
-        private float _smoothTime = 0.025f;
+        private float _smoothTime = 0.045f;
+        //private float _smoothTime = 1f;
 
         private float _width = 0;
         //private float _moveDeltaTime = 0;
@@ -202,7 +203,7 @@ namespace GameSystem
 
             var targetPos = new Vector3(clampX, clampY, InitPosZ);
 
-            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, moveCurve.Evaluate(_smoothTime));
+            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, _smoothTime);
         }
 
         private void ZoomInOut()

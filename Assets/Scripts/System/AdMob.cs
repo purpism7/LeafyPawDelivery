@@ -134,6 +134,7 @@ namespace GameSystem
                 return;
             }
 
+            _adId = id;
             _callback = callback;
 
             Game.UIManager.Instance?.ActivateSreenSaver(Game.Type.EScreenSaverType.ShowAD);
@@ -160,7 +161,6 @@ namespace GameSystem
                 ad.Show(
                     (reward) =>
                     {                        
-                        _adId = id;
                         _reward = reward;
                     });
             }
@@ -180,6 +180,8 @@ namespace GameSystem
                 return;
 
             Debug.Log(adError.GetMessage());
+
+            Game.Toast.Get?.Show(adError.GetMessage());
 
             Game.UIManager.Instance?.DeactivateScreenSaver();
         }

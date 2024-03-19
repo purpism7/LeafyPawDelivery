@@ -128,7 +128,7 @@ namespace UI
 
                         _endBuyAction = () =>
                         {
-                            uiMgr.Top?.CollectCurrency(pos, shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object, shopData.Value);
+                            uiMgr.Top?.CollectCurrency(pos, shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object, shopData.Value, false);
 
                             Info.UserManager.Instance?.User?.SetCash(-shopData.PaymentValue);
 
@@ -191,7 +191,7 @@ namespace UI
                                     else
                                     {
                                         var eElement = shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object;
-                                        uiMgr.Top?.CollectCurrency(pos, eElement, shopData.Value);
+                                        uiMgr.Top?.CollectCurrency(pos, eElement, shopData.Value, false);
                                     }
                                 }
 
