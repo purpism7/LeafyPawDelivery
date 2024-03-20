@@ -221,12 +221,12 @@ namespace Game
             return existAnimal;
         }
 
-        private float GetAnimalPosZ(int id)
-        {
-            var posZ = id * GetPosZOffset(id);
+        //private float GetAnimalPosZ(int id)
+        //{
+        //    var posZ = id * GetPosZOffset(id);
            
-            return -posZ;
-        }
+        //    return -posZ;
+        //}
         #endregion
 
         #region Object

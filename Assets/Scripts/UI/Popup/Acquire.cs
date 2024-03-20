@@ -175,8 +175,6 @@ namespace UI
             if (_dailyMissionCellList == null)
                 return;
 
-            _acquireMgr?.ResetDailyMission();
-
             foreach (var cell in _dailyMissionCellList)
             {
                 if (cell == null)
@@ -191,6 +189,8 @@ namespace UI
 
             SetNotification();
             SetTotalProgress();
+
+            _acquireMgr?.ResetDailyMission();
         }
 
         private void ResetDailyMissionCell(Component.DailyMissionCell cell)

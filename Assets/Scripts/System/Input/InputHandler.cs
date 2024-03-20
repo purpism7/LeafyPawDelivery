@@ -148,20 +148,20 @@ namespace GameSystem
             _gameBase = null;
         }
 
-        private bool CheckGetGameBase<T>(RaycastHit raycastHit, out T t)
-        {
-            t = default(T);
+        //private bool CheckGetGameBase<T>(RaycastHit raycastHit, out T t)
+        //{
+        //    t = default(T);
 
-            var collider = raycastHit.collider;
-            if (collider == null)
-                return false;
+        //    var collider = raycastHit.collider;
+        //    if (collider == null)
+        //        return false;
 
-            t = collider.GetComponentInParent<T>();
-            if (t == null)
-                return false;
+        //    t = collider.GetComponentInParent<T>();
+        //    if (t == null)
+        //        return false;
 
-            return true;
-        }
+        //    return true;
+        //}
 
         private bool CheckGetGameBase<T>(RaycastHit2D raycastHit2D, out T t)
         {
@@ -184,6 +184,7 @@ namespace GameSystem
                 return null;
 
             Game.Base resGameBase = null;
+            Game.Base hiddenObject= null;
             
             for (int i = 0; i < raycastHit2Ds.Length; ++i)
             {
@@ -194,7 +195,7 @@ namespace GameSystem
                     if (gameBase == null)
                         continue;
 
-                    if(gameBase is Game.DropItem)
+                    if (gameBase is Game.DropItem)
                     {
                         return gameBase;
                     }
@@ -219,6 +220,31 @@ namespace GameSystem
                         {
                             resGameBase = gameBase;
                         }
+
+                        IObject iObject = gameBase as Game.Object;
+                        if (iObject != null &&
+                            iObject.IsHiddenObject)
+                        {
+                            if(hiddenObject == null)
+                            {
+                                hiddenObject = gameBase;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!isEdit)
+            {
+                if(resGameBase as Game.Creature.Animal)
+                {
+                    return resGameBase;
+                }
+                else
+                {
+                    if(hiddenObject != null)
+                    {
+                        return hiddenObject;
                     }
                 }
             }

@@ -67,40 +67,18 @@ namespace GameSystem
 
             if(_rewardedInterstitialAdDic != null)
             {
-                if(_rewardedInterstitialAdDic.TryGetValue(id, out RewardedInterstitialAd ad))
+                if(_rewardedInterstitialAdDic.TryGetValue(id, out RewardedInterstitialAd rewardedInterstitialAd))
                 {
-                    _rewardedInterstitialAdDic[id].Destroy();
+                    _rewardedInterstitialAdDic[id]?.Destroy();
                     _rewardedInterstitialAdDic[id] = null;
                 }
             }
-
-            //if(_rewardedInterstitialAd != null)
-            //{
-            //    _rewardedInterstitialAd.Destroy();
-            //    _rewardedInterstitialAd = null;
-            //}
-
-            //Debug.Log("Loading the rewarded interstitial ad = " + id);
 
             // create our request used to load the ad.
             var adRequest = new AdRequest();
             adRequest.Keywords.Add("unity-admob-sample");
             // send the request to load the ad.
 
-            //RewardedAd.Load(id, new AdRequest.Builder().Build(),
-            //    (ad, error) =>
-            //    {
-            //        if (error != null || ad == null)
-            //        {
-            //            Debug.LogError(error);
-
-            //            return;
-            //        }
-
-            //        _rewardedInterstitialAdDic?.TryAdd(id, ad);
-
-            //        callbck?.Invoke();
-            //    });
             RewardedInterstitialAd.Load(id, adRequest,
                 (ad, error) =>
                 {
@@ -113,7 +91,14 @@ namespace GameSystem
 
                     InitializeRewardedInterstitialAdDic();
 
-                    _rewardedInterstitialAdDic?.TryAdd(id, ad);
+                    if(_rewardedInterstitialAdDic.TryGetValue(id, out RewardedInterstitialAd rewardedInterstitialAd))
+                    {
+                        _rewardedInterstitialAdDic[id] = ad;
+                    }
+                    else
+                    {
+                        _rewardedInterstitialAdDic?.TryAdd(id, ad);
+                    }
 
                     ad.OnAdFullScreenContentFailed += OnAdFullScreenContentFailed;
                     ad.OnAdFullScreenContentClosed += OnAdFullScreenContentClosed;
@@ -136,6 +121,7 @@ namespace GameSystem
 
             _adId = id;
             _callback = callback;
+            _reward = null;
 
             Game.UIManager.Instance?.ActivateSreenSaver(Game.Type.EScreenSaverType.ShowAD);
 
@@ -199,6 +185,7 @@ namespace GameSystem
             }
 
             _adId = string.Empty;
+            _reward = null;
         }
     }
 }

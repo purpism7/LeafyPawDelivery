@@ -85,7 +85,6 @@ namespace Info
 
         public void SaveLocaleIndex(int index)
         {
-            Debug.Log("SaveLocaleIndex = " + index);
             PlayerPrefs.SetInt(KEYLOCALEINDEX, index);
         }
 

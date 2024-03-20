@@ -14,6 +14,7 @@ namespace Game
         bool CheckExistHiddenObject { get; }
         void ActivateHiddenObject();
         void DeactivateHiddenObject();
+        bool IsHiddenObject { get; }
 
         int SortingOrder { get; }
         Vector3 LocalPos { get; }
@@ -61,9 +62,11 @@ namespace Game
                 }
 
                 SetSortingOrder(sortingOrder);
-                //Debug.Log("z = " + ((LocalPos.y * 0.001f) + RandomSeed));
-                //SetLocalPosZ(LocalPos.y * 0.001f + GameUtils.RandomSeed);
-                //SetSortAtRoot(data.isHiddenObj);
+            }
+
+            if (isWind)
+            {
+                SetMaterial(Game.Type.EMaterial.WindEffect);
             }
 
             edit?.Initialize(new Edit.Data()
@@ -222,6 +225,17 @@ namespace Game
         void IObject.DeactivateHiddenObject()
         {
             GameUtils.SetActive(hiddenRootTm, false);
+        }
+
+        bool IObject.IsHiddenObject
+        {
+            get
+            {
+                if (_data == null)
+                    return false;
+
+                return _data.isHiddenObj;
+            }
         }
 
         int IObject.SortingOrder

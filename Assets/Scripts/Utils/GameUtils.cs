@@ -161,16 +161,16 @@ public static class GameUtils
         switch(eType)
         {
             case Type.EPosZOrder.EditElement:
-                return -500f;
+                return -6000f;
 
             case Type.EPosZOrder.Object:
-                return 1000f;
+                return 5000f;
 
             case Type.EPosZOrder.HiddenObject:
-                return -300f;
+                return -2000f;
 
             case Type.EPosZOrder.DropItem:
-                return -500f;
+                return -5000f;
 
             default:
                 return 0;

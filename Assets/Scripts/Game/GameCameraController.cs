@@ -25,7 +25,7 @@ namespace GameSystem
 
     public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtr
     {
-        private const float InitPosZ = -2000f;
+        private const float InitPosZ = -10000f;
 
         public Camera GameCamera = null;
         public Camera UICamera = null;

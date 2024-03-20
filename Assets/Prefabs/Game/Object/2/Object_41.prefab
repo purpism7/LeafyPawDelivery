@@ -346,6 +346,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 5349012442606307698}
   IsOverlap: 0
+  isWind: 1
   sortingOrderOffset: 0
   hiddenRootTm: {fileID: 8672531410455722582}
 --- !u!1001 &230808330410526275

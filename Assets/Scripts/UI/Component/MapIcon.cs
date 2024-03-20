@@ -92,6 +92,8 @@ namespace UI.Component
             if (placeId != connector.OpenPlaceId)
                 return;
 
+            _isLock = false;
+
             AnimOpenPlace();
 
             connector?.ResetOpenPlace();
@@ -161,8 +163,6 @@ namespace UI.Component
             }
 
             _data?.IListener?.SelectPlace(placeId, SetMyLocation);
-
-            //Game.Toast.Get?.Show("show");
         }
     }
 }

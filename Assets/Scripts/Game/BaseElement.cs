@@ -17,9 +17,11 @@ namespace Game
         protected UI.Edit edit = null;
 
         public bool IsOverlap = false;
+        [SerializeField]
+        protected bool isWind = false;
 
-        //protected PolygonCollider2D _polygonCollider2D = null;
         protected Collider2D _collider2D = null;
+        protected Game.Type.EMaterial _eMaterial = Type.EMaterial.None;
 
         public ElementCollision ElementCollision { get; protected set; } = null;
         public ElementData ElementData { get; protected set; } = null;
@@ -28,8 +30,6 @@ namespace Game
         public override void ChainUpdate()
         {
             base.ChainUpdate();
-
-            //State?.ChainUpdate();
         }
 
         public void ActiveEdit(bool active)
@@ -90,6 +90,30 @@ namespace Game
             spriteRenderer?.material?.SetFloat("_Thickness", width);
         }
 
+        protected void SetMaterial(Game.Type.EMaterial eMaterial)
+        {
+            if (_eMaterial == eMaterial)
+                return;
+
+            var material = GameSystem.ResourceManager.Instance?.GetMaterial(eMaterial);
+            if (material == null)
+                return;
+
+            if (spriteRenderer?.material == null)
+                return;
+
+
+            if(eMaterial == Type.EMaterial.WindEffect)
+            {
+                material.SetFloat("_WindIntensity", Random.Range(13f, 15f));
+                material.SetFloat("_WindSpeed", 1f);
+            }
+
+            spriteRenderer.material = material;
+
+            _eMaterial = eMaterial;
+        }
+
         protected void SetState(Game.Element.State.BaseState state)
         {
             if (State != null &&
@@ -103,11 +127,17 @@ namespace Game
 
             if (state is Game.Element.State.Edit)
             {
+                SetMaterial(Game.Type.EMaterial.Outline);
                 SetOutline(5f);
             }
             else
             {
                 SetOutline(0);
+
+                if (isWind)
+                {
+                    SetMaterial(Game.Type.EMaterial.WindEffect);
+                }
             }
 
             state?.Apply(this);
@@ -144,21 +174,21 @@ namespace Game
             }
         }
 
-        private void SetSortingGroupOrder(int order)
-        {
-            if (_sortingGroup != null)
-            {
-                _sortingGroup.sortingOrder = order;
-            }
-        }
+        //private void SetSortingGroupOrder(int order)
+        //{
+        //    if (_sortingGroup != null)
+        //    {
+        //        _sortingGroup.sortingOrder = order;
+        //    }
+        //}
 
-        protected void SetSortAtRoot(bool sortAtRoot)
-        {
-            if (_sortingGroup != null)
-            {
-                _sortingGroup.sortAtRoot = sortAtRoot;
-            }
-        }
+        //protected void SetSortAtRoot(bool sortAtRoot)
+        //{
+        //    if (_sortingGroup != null)
+        //    {
+        //        _sortingGroup.sortAtRoot = sortAtRoot;
+        //    }
+        //}
     }
 
     public abstract class BaseElement<T> : BaseElement where T : BaseData

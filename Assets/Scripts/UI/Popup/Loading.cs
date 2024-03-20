@@ -12,7 +12,9 @@ namespace UI
         }
 
         [SerializeField]
-        private Transform[] rootTms = null;
+        private RectTransform[] rootRectTms = null;
+        [SerializeField]
+        private Transform[] targetTms = null;
 
         public override void Initialize(Data data)
         {
@@ -41,19 +43,28 @@ namespace UI
             if (_data == null)
                 return;
 
-            if (rootTms == null)
-                return;
-
             int index = _data.PlaceId - 1;
-            if (rootTms.Length <= index)
-                return;
+            if (rootRectTms != null &&
+                rootRectTms.Length > index)
+            {
+                rootRectTms[index].SetActive(true);
+            }
 
-            rootTms[index].SetActive(true);
+            if(targetTms != null &&
+               targetTms.Length > index)
+            {
+                targetTms[index].SetActive(true);
+            }
         }
 
         private void AllDeactiveLoading()
         {
-            foreach(Transform tm in rootTms)
+            foreach(RectTransform rectTm in rootRectTms)
+            {
+                rectTm.SetActive(false);
+            }
+
+            foreach (Transform tm in targetTms)
             {
                 tm.SetActive(false);
             }

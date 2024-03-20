@@ -100,6 +100,7 @@ namespace GameSystem
                         {
                             DateTime = dateTime;
 
+                            //Debug.Log("RequestAsync = " + dateTime);
                             Sync = true;
 
                             return dateTime;

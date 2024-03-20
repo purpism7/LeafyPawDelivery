@@ -162,7 +162,8 @@ namespace UI
 
         public void OnclickPrivacyPolish()
         {
-            Application.OpenURL("https://leafypawdelivery.blogspot.com/2024/02/blogger-30.html");
+            //Application.OpenURL("https://leafypawdelivery.blogspot.com/2024/02/blogger-30.html");
+            Application.OpenURL("https://sites.google.com/view/leafy-parcels-privacy-policy/%ED%99%88");
         }
     }
 }

@@ -85,7 +85,7 @@ namespace Game
 
         public void OnClickScreenSaver()
         {
-            switch(_eScreenSaverType)
+            switch (_eScreenSaverType)
             {
                 case Type.EScreenSaverType.InappPurchase:
                     {
@@ -99,8 +99,20 @@ namespace Game
 
                 case Type.EScreenSaverType.ShowAD:
                     {
-                        string localKey = "desc_show_ad";
+                        var localKey = "check_internet_connection";
                         var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+
+                        if (Application.internetReachability == NetworkReachability.NotReachable)
+                        {
+                            Game.Toast.Get?.Show(local, localKey);
+
+                            DeactivateScreenSaver();
+
+                            return;
+                        }
+
+                        localKey = "desc_show_ad";
+                        local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
 
                         Game.Toast.Get?.Show(local, localKey);
 

@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5a6db85ebb9466f4b90af9ebdd3c4fdc, type: 2}
+  - {fileID: 2100000, guid: 5227c2161b01b4079bb24fbbb7123b52, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -330,6 +330,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 8860893258269408253}
   IsOverlap: 0
+  isWind: 1
   sortingOrderOffset: 0
   hiddenRootTm: {fileID: 7468628462129452229}
 --- !u!1001 &3742574807698289868

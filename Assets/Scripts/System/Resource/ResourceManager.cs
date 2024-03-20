@@ -11,9 +11,18 @@ using Game;
 
 namespace GameSystem
 {
+    [System.Serializable]
+    public class MaterialData
+    {
+        public Game.Type.EMaterial eMaterial = Game.Type.EMaterial.None;
+        public Material material = null;
+    }
+
     public class ResourceManager : Singleton<ResourceManager>
     {
         public AddressableAssetLoader AddressableAssetLoader;
+        [SerializeField]
+        private MaterialData[] materialDatas = null;
 
         public AtlasLoader AtalsLoader { get; private set; } = null;
         private bool _endLoad = false;
@@ -100,7 +109,6 @@ namespace GameSystem
             if (AddressableAssetLoader == null)
                 return null;
 
-            //var fullName = typeof(Game.Creature.Animal).FullName;
             var gameObj = AddressableAssetLoader.InstantiateAnimal(animalId, skinId, rootTm);
             if (gameObj)
             {
@@ -122,6 +130,25 @@ namespace GameSystem
             }
 
             return default(T);
+        }
+
+        public Material GetMaterial(Game.Type.EMaterial eMaterial)
+        {
+            if (materialDatas == null)
+                return null;
+
+            foreach(var materialData in materialDatas)
+            {
+                if (materialData == null)
+                    continue;
+
+                if(materialData.eMaterial == eMaterial)
+                {
+                    return materialData.material;
+                }
+            }
+
+            return null;
         }
     }
 }

@@ -21,15 +21,16 @@ namespace Game.Manager
 
         private Acquire()
         {
-            var version = Game.Data.PlayerPrefsVersion;
+            //var version = Game.Data.PlayerPrefsVersion;
 
-            KeyDailyMissionDate += "_" + version;
-            KeyGetRewardedDailyMission += "_" + version;
-            KeyGetRewardedAchievement += "_" + version;
+            //KeyDailyMissionDate += "_" + version;
+            //KeyGetRewardedDailyMission += "_" + version;
+            //KeyGetRewardedAchievement += "_" + version;
         }
 
         public override MonoBehaviour Initialize()
         {
+
             SetDailyMissionDate();
 
             return this;
@@ -71,15 +72,16 @@ namespace Game.Manager
         private void SetDailyMissionDate()
         {
             string dailyMissionDate = PlayerPrefs.GetString(KeyDailyMissionDate);
+            //Debug.Log("dailyMissionDate = " + dailyMissionDate);
             if (string.IsNullOrEmpty(dailyMissionDate))
             {
-                SaveDailyMissionDate();
+                //SaveDailyMissionDate();
 
                 return;
             }
 
             DailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
-
+            //Debug.Log("DailyMissionDateTime = " + DailyMissionDateTime.Value);
             //if (CheckResetDailyMission)
             //{
             //    SaveDailyMissionDate();
@@ -101,9 +103,9 @@ namespace Game.Manager
             get
             {
                 if (DailyMissionDateTime == null)
-                    return false;
+                    return true;
 
-                return (System.DateTime.UtcNow.ToLocalTime() - DailyMissionDateTime.Value).TotalSeconds >= 0;
+                return (DailyMissionDateTime.Value - System.DateTime.UtcNow.ToLocalTime()).TotalSeconds < 0;
             }
         } 
 
@@ -116,8 +118,7 @@ namespace Game.Manager
 
         public bool GetRewardDailyMission(int id)
         {
-            bool getRewarded = true;
-            System.Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedDailyMission, id), false.ToString()), out getRewarded);
+            System.Boolean.TryParse(PlayerPrefs.GetString(string.Format(KeyGetRewardedDailyMission, id), false.ToString()), out bool getRewarded);
 
             return getRewarded;
         }

@@ -193,6 +193,14 @@ namespace Game
             DropItem,
         }
 
+        public enum EMaterial
+        {
+            None,
+
+            Outline,
+            WindEffect,
+        }
+
         public enum ETutorialStep
         {
             None,
