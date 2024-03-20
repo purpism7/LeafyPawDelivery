@@ -60,8 +60,8 @@ MonoBehaviour:
       SpeakerSpriteName: StoryIcon_Map03_Reian
     - Table: Story
       Key: 3_2_12
-      SpeakerKey: 
-      SpeakerSpriteName: 
+      SpeakerKey: reian
+      SpeakerSpriteName: StoryIcon_Map03_Reian
 --- !u!114 &-5242389959958694944
 MonoBehaviour:
   m_ObjectHideFlags: 1
