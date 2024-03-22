@@ -107,7 +107,7 @@ namespace UI
             var localRemainTime = _acquireMgr.DailyMissionDateTime.Value - System.DateTime.UtcNow.ToLocalTime();
 
             localRemainTimeTMP?.SetText(localRemainTime.ToString(@"hh\:mm\:ss"));
-
+            
             if (!_resetDailyMission &&
                 _acquireMgr.CheckResetDailyMission)
             {
@@ -175,6 +175,8 @@ namespace UI
             if (_dailyMissionCellList == null)
                 return;
 
+            _acquireMgr?.ResetDailyMission();
+
             foreach (var cell in _dailyMissionCellList)
             {
                 if (cell == null)
@@ -189,22 +191,19 @@ namespace UI
 
             SetNotification();
             SetTotalProgress();
-
-            _acquireMgr?.ResetDailyMission();
         }
 
-        private void ResetDailyMissionCell(Component.DailyMissionCell cell)
+        private void ResetDailyMissionCell(Component.IDailyMission iDailyMission)
         {
-            if (cell == null)
-                return;
-
-            var iDailyMission = cell as Component.IDailyMission;
             if (iDailyMission == null)
                 return;
 
             iDailyMission.Reset();
+            //var iDailyMission = cell as Component.IDailyMission;
+            //if (iDailyMission == null)
+            //    return;
 
-            cell.Activate();
+            //iDailyMission.Reset();
         }
 
         private void SetAchievementList()

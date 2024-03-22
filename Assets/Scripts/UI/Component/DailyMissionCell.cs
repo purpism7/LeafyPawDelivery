@@ -201,6 +201,8 @@ namespace UI.Component
                 return;
 
             SetGetReward(false);
+
+            Activate();
         }
 
         void IDailyMission.SetTotalProgress(int progress)

@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using GameSystem;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
-using System.Threading.Tasks;
 
 using Cysharp.Threading.Tasks;
 
@@ -34,7 +32,7 @@ namespace Scene
 
         private async void Start()
         {
-            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+            InitializeScreenSetting();
 
             Info.Setting.Get?.InitializeLocale();
 
@@ -86,6 +84,13 @@ namespace Scene
             base.Init(iListener);
 
             SceneLoader.LoadWithLoading(loadData);
+        }
+
+        private void InitializeScreenSetting()
+        {
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+            //Screen.orientation = ScreenOrientation.AutoRotation;
+            //Screen.autorotateToPortraitUpsideDown = true;
         }
 
         private async UniTask ContinueGameAsync()

@@ -20,10 +20,7 @@ namespace GameSystem
 
             yield return StartCoroutine(Game.Manager.IAP.Instance?.CoInit());
 
-            //Sequencer.Create();
             DOTween.Init();
-
-            Debug.Log("End Process End");
 
             yield return null;
         }

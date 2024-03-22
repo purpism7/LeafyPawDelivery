@@ -83,10 +83,12 @@ namespace GameSystem
             {
                 Sync = false;
 
-                UnityWebRequest webRequest = new UnityWebRequest();
-
-                using (webRequest = UnityWebRequest.Get(Game.Data.Const.WorldTimeURI))
+                //using ()
+                using (UnityWebRequest webRequest = UnityWebRequest.Get(Game.Data.Const.WorldTimeURI))   
                 {
+                    if (webRequest == null)
+                        return null;
+
                     await webRequest.SendWebRequest();
 
                     if (webRequest.result == UnityWebRequest.Result.Success)
