@@ -311,6 +311,10 @@ MonoBehaviour:
     m_Localized: The town hasn't opened yet.
     m_Metadata:
       m_Items: []
+  - m_Id: 82233551825657856
+    m_Localized: Preparing an advertisement. Please try again later.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

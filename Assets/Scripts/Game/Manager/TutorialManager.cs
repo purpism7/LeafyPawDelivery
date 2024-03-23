@@ -214,11 +214,12 @@ namespace Game
             if (iGameCameraCtr == null)
                 return;
 
-            _popo.Initialize(new Popo.Data()
-            {
-                iListener = this,
-                startPos = new Vector3(-iGameCameraCtr.GameCameraWidth + 500f, PopoPosY, PopoPosZ),
-            });
+            _popo?.Initialize(
+                new Popo.Data()
+                {
+                    iListener = this,
+                    startPos = new Vector3(-iGameCameraCtr.GameCameraWidth + 500f, PopoPosY, PopoPosZ),
+                });
 
             _popo?.MoveToTarget(new Vector3(0, PopoPosY, PopoPosZ));
 

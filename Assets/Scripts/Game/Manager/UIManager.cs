@@ -63,7 +63,7 @@ namespace Game
             Bottom?.DeactivateAnim(null);
         }
 
-        public void ActivateSreenSaver(Type.EScreenSaverType eScreenSaverType)
+        public void ActivateSreenSaver(Type.EScreenSaverType eScreenSaverType = Type.EScreenSaverType.None)
         {
             _eScreenSaverType = eScreenSaverType;
 

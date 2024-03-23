@@ -4,6 +4,7 @@ using UnityEngine;
 
 using GoogleMobileAds.Api;
 using UnityEngine.Localization.Settings;
+using Cysharp.Threading.Tasks;
 
 namespace GameSystem
 {
@@ -39,6 +40,8 @@ namespace GameSystem
         private Reward _reward = null;
         private string _adId = string.Empty;
         private System.Action<double> _callback = null;
+        //private int _retryCnt = 0;
+        //private bool _showAd = false;
 
         private void Initialize()
         {
@@ -48,6 +51,8 @@ namespace GameSystem
             });
 
             InitializeRewardedInterstitialAdDic();
+
+            MobileAds.RaiseAdEventsOnUnityMainThread = true;
         }
 
         private void InitializeRewardedInterstitialAdDic()
@@ -57,6 +62,14 @@ namespace GameSystem
 
             _rewardedInterstitialAdDic = new();
             _rewardedInterstitialAdDic?.Clear();
+        }
+
+        private void ShowToastTryLater()
+        {
+            var localKey = "desc_try_later";
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+
+            Game.Toast.Get?.Show(local, localKey);
         }
 
         ///// Loads the rewarded interstitial ad.
@@ -84,7 +97,13 @@ namespace GameSystem
                 {
                     if (error != null || ad == null)
                     {
-                        Debug.LogError(error);
+                        Debug.Log(error);
+
+                        _callback?.Invoke(0);
+
+                        ShowToastTryLater();
+
+                        Game.UIManager.Instance?.DeactivateScreenSaver();
 
                         return;
                     }
@@ -109,6 +128,8 @@ namespace GameSystem
 
         public void ShowAd(string id, System.Action<double> callback)
         {
+            //_showAd = false;
+
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 var localKey = "check_internet_connection";
@@ -119,17 +140,38 @@ namespace GameSystem
                 return;
             }
 
+            //if(_retryCnt >= 3)
+            //{
+            //    _adId = string.Empty;
+            //    _reward = null;
+            //    _retryCnt = 0;
+
+            //    callback?.Invoke(0);
+
+            //    ShowToastTryLater();
+
+            //    return;
+            //}
+
             _adId = id;
             _callback = callback;
+
             _reward = null;
 
+            //++_retryCnt;
+
+#if UNITY_IOS
             Game.UIManager.Instance?.ActivateSreenSaver(Game.Type.EScreenSaverType.ShowAD);
+#else
+            Game.UIManager.Instance?.ActivateSreenSaver();
+#endif
 
             InitializeRewardedInterstitialAdDic();
 
             RewardedInterstitialAd ad = null;
-
             _rewardedInterstitialAdDic?.TryGetValue(id, out ad);
+
+            //DeactivateScreenSaverAsync().Forget();
 
             if (ad == null)
             {
@@ -141,14 +183,18 @@ namespace GameSystem
 
                 return;
             }
-
+            
             if (ad.CanShowAd())
             {
                 ad.Show(
                     (reward) =>
-                    {                        
+                    {
                         _reward = reward;
                     });
+
+                //_showAd = true;
+                //_retryCnt = 0;
+                Game.UIManager.Instance?.DeactivateScreenSaver();
             }
             else
             {
@@ -159,6 +205,16 @@ namespace GameSystem
                     });
             }
         }
+
+        //private async UniTask DeactivateScreenSaverAsync()
+        //{
+        //    await UniTask.WaitForSeconds(4f);
+
+        //    if(!_showAd)
+        //    {
+        //        Game.UIManager.Instance?.DeactivateScreenSaver();
+        //    }
+        //}
 
         private void OnAdFullScreenContentFailed(AdError adError)
         {
@@ -174,18 +230,19 @@ namespace GameSystem
 
         private void OnAdFullScreenContentClosed()
         {
-            _callback?.Invoke(_reward != null ? _reward.Amount : 0);
-            _callback = null;
-
             Game.UIManager.Instance?.DeactivateScreenSaver();
 
-            if(!string.IsNullOrEmpty(_adId))
-            {
-                LoadRewardedInterstitialAd(_adId, null);
-            }
+            _callback?.Invoke(_reward != null ? _reward.Amount : 0);
+           
+            //if(!string.IsNullOrEmpty(_adId))
+            //{
+            //    LoadRewardedInterstitialAd(_adId, null);
+            //}
 
             _adId = string.Empty;
             _reward = null;
+            _callback = null;
+            //_retryCnt = 0; 
         }
     }
 }

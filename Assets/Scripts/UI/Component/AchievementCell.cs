@@ -183,6 +183,8 @@ namespace UI.Component
 
         public void OnClickGetReward()
         {
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+
             var dataProgress = DataProgress;
             if (dataProgress <= 0)
                 return;
