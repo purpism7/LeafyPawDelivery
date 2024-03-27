@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using DG.Tweening;
+using Cysharp.Threading.Tasks;
 
 public static class UIUtils
 {
@@ -22,6 +23,14 @@ public static class UIUtils
             return;
 
         gameObj.SetActive(active);
+    }
+
+    public static void SetActive(this Image img, bool active)
+    {
+        if (img == null)
+            return;
+
+        SetActive(img.gameObject, active);
     }
 
     public static void SetSpritie(this SpriteRenderer spriteRenderer, Sprite sprite)
@@ -118,13 +127,43 @@ public static class UIUtils
 
     public static void MoveHorizontalScrollToIndex(this ScrollRect scroll, float cellSize, int index) 
     {
-        if (scroll == null)
+        if (scroll == null ||
+            scroll.content == null)
             return;
 
         var scrollRectTm = scroll.GetComponent<RectTransform>();
+        float scrollRectTmWidth = scrollRectTm.rect.width;
+        float value = (index * cellSize) / (scroll.content.rect.width - scrollRectTmWidth);
 
-        float value = (index * cellSize) / (scroll.content.rect.width - scrollRectTm.rect.width);
         scroll.horizontalNormalizedPosition = value;
+    }
+
+    public static void MoveVerticalScrollToIndex(this ScrollRect scroll, float cellSize, int index, bool isAnim)
+    {
+        if (scroll == null ||
+            scroll.content == null)
+            return;
+
+        var scrollRectTm = scroll.GetComponent<RectTransform>();
+        float scrollRectTmHeight = scrollRectTm.rect.height;
+
+        float resValue = (index * cellSize) / (scroll.content.rect.height - scrollRectTmHeight);
+
+        if(isAnim)
+        {
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(DOTween.To(() => 1f, value => scroll.verticalNormalizedPosition = value, 1f - resValue, resValue * 0.5f).SetEase(Ease.Linear))
+                .OnComplete(() =>
+                {
+                    //completeAction?.Invoke();
+                });
+            sequence.Restart();
+        }
+        else
+        {
+            scroll.verticalNormalizedPosition = 1f - resValue;
+        }
     }
 
     public static void SetInteractable(this Button btn, bool interactable)

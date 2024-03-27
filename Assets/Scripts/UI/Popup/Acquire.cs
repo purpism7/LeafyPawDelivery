@@ -70,7 +70,7 @@ namespace UI
             {
                 if (_acquireMgr.CheckResetDailyMission)
                 {
-                    ResetDailyMission();
+                    ResetDailyMission(true);
                 }
             }
 
@@ -109,11 +109,11 @@ namespace UI
             localRemainTimeTMP?.SetText(localRemainTime.ToString(@"hh\:mm\:ss"));
             
             if (!_resetDailyMission &&
-                _acquireMgr.CheckResetDailyMission)
+                _acquireMgr.CheckResetDailyMissionDate)
             {
                 _resetDailyMission = true;
 
-                ResetDailyMission();
+                ResetDailyMission(false);
             }
         }
 
@@ -170,12 +170,17 @@ namespace UI
             totalDailyMissionCell?.Activate();
         }
 
-        private void ResetDailyMission()
+        private void ResetDailyMission(bool already)
         {
             if (_dailyMissionCellList == null)
                 return;
 
-            _acquireMgr?.ResetDailyMission();
+            _resetDailyMission = true;
+
+            if(!already)
+            {
+                _acquireMgr?.ResetDailyMission();
+            }
 
             foreach (var cell in _dailyMissionCellList)
             {

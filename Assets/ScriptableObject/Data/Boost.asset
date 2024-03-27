@@ -16,6 +16,7 @@ MonoBehaviour:
   - eBoost: 1
     iconSprite: {fileID: 21300000, guid: 5aabd3b26e6244fa382e7020666e0099, type: 3}
     timeSec: 300
+    reqCash: 50
     ad:
       eCategory: 0
       ios: ca-app-pub-4768455296560255/1018456597

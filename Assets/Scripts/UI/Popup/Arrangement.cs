@@ -4,30 +4,35 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-using Game.Creature;
-using Data;
-using GameData;
+using Cysharp.Threading.Tasks;
+
 using GameSystem;
 using UI.Component;
 
 namespace UI
 {
-    public class Arrangement : BasePopup<Arrangement.Data>, ArrangementCell.IListener
+    public class Arrangement : BasePopup<Arrangement.Data>, ArrangementCell.IListener, Game.Notification.IListener
     {
         public class Data : BaseData
         {
             public int PlaceId = 0;
         }
 
-        //[SerializeField]
-        //private Toggle[] tabToggles = null;
         [SerializeField]
         private Toggle animalToggle = null;
         [SerializeField]
         private Toggle objectToggle = null;
+        [SerializeField]
+        private RectTransform[] tabRedDotRectTms = null;
 
-        [SerializeField] private ScrollRect animalScrollRect = null;
-        [SerializeField] private ScrollRect objectScrollRect = null;
+        [SerializeField]
+        private ScrollRect animalScrollRect = null;
+        [SerializeField]
+        private GridLayoutGroup animalGridLayoutGroup = null;
+        [SerializeField]
+        private ScrollRect objectScrollRect = null;
+        [SerializeField]
+        private GridLayoutGroup objectGridLayoutGroup = null;
 
         private Game.Type.ETab _currETabType = Game.Type.ETab.Animal;
 
@@ -35,6 +40,7 @@ namespace UI
         private int _placeId = 0;
         private int _objectIndex = -1;
         private bool _isTutorial = false;
+        private bool[] _initActivateTab = { false, false };
 
         public override IEnumerator CoInitialize(Data data)
         {
@@ -48,6 +54,9 @@ namespace UI
             SetAnimalList();
             SetObjectList();
 
+            SetNotificationPossibleBuyAnimal();
+            SetNotificationPossibleBuyObject();
+
             _isTutorial = CheckIsTutorial;
             if (_isTutorial)
             {
@@ -59,7 +68,11 @@ namespace UI
         {
             base.Activate();
 
-            ActivateArrangementCellList();
+            if (_initActivateTab != null)
+            {
+                _initActivateTab[(int)Game.Type.ETab.Animal] = false;
+                _initActivateTab[(int)Game.Type.ETab.Object] = false;
+            }
 
             _currETabType = Game.Type.ETab.Animal;
 
@@ -76,7 +89,16 @@ namespace UI
                 }
             }
 
-            if(_isTutorial != isTutorial)
+            animalToggle?.SetIsOnWithoutNotify(_currETabType == Game.Type.ETab.Animal);
+            objectToggle?.SetIsOnWithoutNotify(_currETabType == Game.Type.ETab.Object);
+
+            animalScrollRect?.ResetScrollPos();
+            objectScrollRect?.ResetScrollPos();
+
+            ActiveContents();
+
+            // 튜토리얼 종료시, 활성화.
+            if (_isTutorial != isTutorial)
             {
                 EnableToggle(true);
                 EnableScrollRect(animalScrollRect, true);
@@ -84,14 +106,6 @@ namespace UI
 
                 _isTutorial = isTutorial;
             }
-
-            ActiveContents();
-
-            animalToggle?.SetIsOnWithoutNotify(_currETabType == Game.Type.ETab.Animal);
-            objectToggle?.SetIsOnWithoutNotify(_currETabType == Game.Type.ETab.Object);
-
-            animalScrollRect?.ResetScrollPos();
-            objectScrollRect?.ResetScrollPos();
         }
 
         public override void Deactivate()
@@ -115,6 +129,9 @@ namespace UI
 
             Game.ObjectManager.Event?.RemoveListener(OnChangedObjectInfo);
             Game.ObjectManager.Event?.AddListener(OnChangedObjectInfo);
+
+            Game.Notification.Get?.AddListener(Game.Notification.EType.PossibleBuyAnimal, this);
+            Game.Notification.Get?.AddListener(Game.Notification.EType.PossibleBuyObject, this);
         }
 
         private void ActivateArrangementCellList()
@@ -135,16 +152,24 @@ namespace UI
                 if (cell == null)
                     continue;
 
-                if(cell.EElement == Game.Type.EElement.Object)
+                if (_isTutorial != isTutorial)
                 {
+                    cell.SetIsTutorial(isTutorial);
+                }
+
+                if (cell.EElement == Game.Type.EElement.Animal)
+                {
+                    if (_currETabType != Game.Type.ETab.Animal)
+                        continue;
+                }
+                else if(cell.EElement == Game.Type.EElement.Object)
+                {
+                    if (_currETabType != Game.Type.ETab.Object)
+                        continue;
+
                     int resIndex = GetIndex(objectMgr, cell.Id, ref index);
 
                     cell.SetIndex(resIndex);
-                }
-
-                if(_isTutorial != isTutorial)
-                {
-                    cell.SetIsTutorial(isTutorial);
                 }
 
                 cell.Activate();
@@ -213,34 +238,6 @@ namespace UI
             }
         }
 
-        //private void AddArrangementCell(int id, Game.Type.EElement eElement, bool isLock, RectTransform rootRectTm)
-        //{
-        //    ArrangementCell arrangementCell = DeactiveArrangementCell;
-        //    var cellData = new ArrangementCell.Data()
-        //    {
-        //        IListener = this,
-        //        Id = id,
-        //        EElement = eElement,
-        //        Lock = isLock,
-        //    };
-
-        //    if (arrangementCell != null)
-        //    {
-        //        arrangementCell.Initialize(cellData);
-        //        arrangementCell.SetParent(rootRectTm);
-        //        arrangementCell.SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        arrangementCell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
-        //            .SetData(cellData)
-        //            .SetRootRectTm(rootRectTm)
-        //            .Create();
-
-        //        _arrangementCellList.Add(arrangementCell);
-        //    }
-        //}
-
         private void SetAnimalList()
         {
             var dataList = AnimalContainer.Instance?.GetDataListByPlaceId(_placeId);
@@ -259,13 +256,15 @@ namespace UI
 
             EnableScrollRect(animalScrollRect, !isTutorial);
 
-            foreach (var data in dataList)
+            for(int i = 0; i < dataList.Count; ++i)
             {
+                var data = dataList[i];
                 if (data == null)
                     continue;
 
                 var animalInfo = animalMgr.GetAnimalInfo(data.Id);
-
+                bool isLock = !animalOpenConditionContainer.CheckReq(data.Id);
+                
                 AddArrangementCell(
                     new ArrangementCell.Data()
                     {
@@ -273,7 +272,7 @@ namespace UI
                         Id = data.Id,
                         EElement = Game.Type.EElement.Animal,
                         Owned = animalInfo != null,
-                        Lock = !animalOpenConditionContainer.CheckReq(data.Id),
+                        Lock = isLock,
                         isTutorial = isTutorial,
                     }, animalScrollRect.content);
             }
@@ -333,6 +332,15 @@ namespace UI
         {
             UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Game.Type.ETab.Animal);
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Game.Type.ETab.Object);
+
+            if(_initActivateTab != null &&
+               !_initActivateTab[(int)_currETabType])
+            {
+                _initActivateTab[(int)_currETabType] = true;
+
+                ActivateArrangementCellList();
+                MoveScrollPossibleBuy().Forget();
+            }
         }
 
         private void EnableToggle(bool enable)
@@ -387,6 +395,15 @@ namespace UI
 
                 if(cell.Obtain(EElement, id))
                 {
+                    if(EElement == Game.Type.EElement.Animal)
+                    {
+                        Info.Connector.Get?.ResetPossibleBuyAnimal();
+                    }
+                    else if(EElement == Game.Type.EElement.Object)
+                    {
+                        Info.Connector.Get?.ResetPossibleBuyObject();
+                    }
+
                     cell.SetIndex(GetIndex(objectMgr, cell.Id, ref _objectIndex));
                 }
             }
@@ -406,12 +423,122 @@ namespace UI
             }
         }
 
+        private int GetArrangementCellIndex(Game.Type.EElement eElement, int id)
+        {
+            if (id <= 0)
+                return -1;
+
+            var sortArrangementCellList = _arrangementCellList?.OrderBy(cell => cell.Id)?.ToList();
+            if (sortArrangementCellList == null)
+                return -1;
+
+            int index = 0;
+
+            for (int i = 0; i < sortArrangementCellList.Count ; ++i)
+            {
+                var cell = _arrangementCellList[i];
+                if (cell == null)
+                    continue;
+
+                if (cell.EElement != eElement)
+                    continue;
+
+                if (cell.Id == id)
+                {
+                    return index;
+                }
+
+                ++index;
+            }
+
+            return index;
+        }
+
+        private async UniTask MoveScrollPossibleBuy()
+        {
+            if(_currETabType == Game.Type.ETab.Animal)
+            {
+                int index = GetArrangementCellIndex(Game.Type.EElement.Animal, PossibleBuyAnimal);
+                if (index < 0)
+                    return;
+
+                if (animalGridLayoutGroup != null)
+                {
+                    await UniTask.Yield();
+
+                    animalScrollRect?.MoveVerticalScrollToIndex(animalGridLayoutGroup.cellSize.y, index, false);
+                }
+
+                //Debug.Log("index = " + index);
+            }
+            else if(_currETabType == Game.Type.ETab.Object)
+            {
+                int index = GetArrangementCellIndex(Game.Type.EElement.Object, PossibleBuyObject);
+                if (index < 0)
+                    return;
+
+                if(objectGridLayoutGroup != null)
+                {
+                    await UniTask.Yield();
+
+                    objectScrollRect?.MoveVerticalScrollToIndex(objectGridLayoutGroup.cellSize.y, index, true);
+                }
+            }
+        }
+
+        #region Notification
+        private void SetNotificationPossibleBuyAnimal()
+        {
+            var redDotRectTm = tabRedDotRectTms[(int)Game.Type.ETab.Animal];
+            if (redDotRectTm)
+            {
+                UIUtils.SetActive(redDotRectTm, PossibleBuyAnimal > 0);
+            }
+        }
+
+        private void SetNotificationPossibleBuyObject()
+        {
+            var redDotRectTm = tabRedDotRectTms[(int)Game.Type.ETab.Object];
+            if (redDotRectTm)
+            {
+                UIUtils.SetActive(redDotRectTm, PossibleBuyObject > 0);
+            }
+        }
+
+        private int PossibleBuyAnimal
+        {
+            get
+            {
+                var connector = Info.Connector.Get;
+                if (connector == null)
+                    return 0;
+
+                return connector.PossibleBuyAnimal;
+            }
+        }
+
+        private int PossibleBuyObject
+        {
+            get
+            {
+                var connector = Info.Connector.Get;
+                if (connector == null)
+                    return 0;
+
+                return connector.PossibleBuyObject;
+            }
+        }
+        #endregion
+
         private void OnChangedAnimalInfo(Game.Event.AnimalData animalData)
         {
             if (animalData == null)
                 return;
 
-            Obtain(Game.Type.EElement.Animal, animalData.id);
+            if(animalData is Game.Event.AddAnimalData)
+            {
+                Obtain(Game.Type.EElement.Animal, animalData.id);
+            }
         }
         
         private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
@@ -419,7 +546,17 @@ namespace UI
             if (objectData == null)
                 return;
 
-            Obtain(Game.Type.EElement.Object, objectData.id);
+            if(objectData is Game.Event.AddObjectData)
+            {
+                bool isHiddenObject = (objectData as Game.Event.AddObjectData).eOpenConditionType == OpenConditionData.EType.Hidden;
+
+                Obtain(Game.Type.EElement.Object, objectData.id);
+
+                if(isHiddenObject)
+                {
+                    Info.Connector.Get?.SetPossibleBuyObject();
+                }
+            }
         }
 
         // 탭 변경 콜백.
@@ -463,6 +600,14 @@ namespace UI
                 var eTab = EElement == Game.Type.EElement.Animal ? Game.Type.ETab.Animal : Game.Type.ETab.Object;
                 Game.UIManager.Instance?.Bottom?.ActivateEditListAfterDeactivateBottom(eTab, index);
             }
+        }
+        #endregion
+
+        #region Game.Notification.IListener
+        void Game.Notification.IListener.Notify()
+        {
+            SetNotificationPossibleBuyAnimal();
+            SetNotificationPossibleBuyObject();
         }
         #endregion
 

@@ -10,7 +10,7 @@ using GameSystem;
 
 namespace UI
 {
-    public class Boost : BasePopup<Boost.Data>
+    public class Boost : BasePopup<Boost.Data>, BuyCash.IListener
     {
         public class Data : BaseData
         {
@@ -41,7 +41,12 @@ namespace UI
         [SerializeField]
         private Button buyBtn = null;
         [SerializeField]
+        private UI.Component.OpenCondition openCondition = null;
+
+        [SerializeField]
         private TextMeshProUGUI remainPlayTimeTMP = null;
+        [SerializeField]
+        private UnityEngine.UI.Image adIconImg = null;
 
         private bool _initialize = true;
 
@@ -58,6 +63,7 @@ namespace UI
             {
                 SetBoostState(data.activate);
                 SetPlayTimer(false);
+                SetReqCash();
             }
 
             if(_initialize)
@@ -124,6 +130,35 @@ namespace UI
             descTMP?.SetText(desc);
         }
 
+        private void SetReqCash()
+        {
+            if (openCondition == null)
+                return;
+
+            openCondition?.Deactivate();
+
+            var boostData = _data?.boostData;
+            if (boostData == null)
+                return;
+
+            var user = Info.UserManager.Instance?.User;
+            long userCash = 0;
+            if (user != null)
+            {
+                userCash = user.Cash;
+            }
+
+            openCondition.Initialize(
+                new Component.OpenCondition.Data()
+                {
+                    ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
+                    Text = boostData.reqCash.ToString(),
+                    PossibleFunc = () => userCash >= boostData.reqCash,
+                });
+
+            openCondition.Activate();
+        }
+
         private void SetBoostState(bool activate)
         {
             UIUtils.SetActive(buyRootRectTm, !activate);
@@ -150,6 +185,8 @@ namespace UI
 
             var adData = _data?.boostData?.ad;
 
+            UIUtils.SetActive(adIconImg, false);
+
             Game.Timer.Get?.Add(
                 new Game.Timer.Data()
                 {
@@ -160,10 +197,48 @@ namespace UI
                     addSec = adData.coolTimeSec,
                     endAction = () =>
                     {
-                        remainPlayTimeTMP.GetComponent<UnityEngine.Localization.Components.LocalizeStringEvent>()?.RefreshString();
+                        //remainPlayTimeTMP.GetComponent<UnityEngine.Localization.Components.LocalizeStringEvent>()?.RefreshString();
+                        remainPlayTimeTMP?.SetText(string.Empty);
+                        UIUtils.SetActive(adIconImg, true);
                     }
                 });
         }
+
+        private void SuccessActivateBoost()
+        {
+            _data = _data?.iListener?.Buy();
+            if (_data != null)
+            {
+                SetBoostState(_data.activate);
+            }
+
+            SetPlayTimer(true);
+        }
+
+        #region BuyCash.IListener
+        void BuyCash.IListener.Buy(bool possible)
+        {
+            var boostData = _data?.boostData;
+            if (boostData == null)
+                return;
+
+            if (!possible)
+            {
+                var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
+
+                Game.Toast.Get?.Show(text);
+
+                return;
+            }
+
+            SuccessActivateBoost();
+
+            Info.UserManager.Instance?.User?.SetCash(-boostData.reqCash);
+
+            ITop iTop = Game.UIManager.Instance?.Top;
+            iTop?.SetCurrency();
+        }
+        #endregion
 
         public void OnClickCancel()
         {
@@ -185,16 +260,40 @@ namespace UI
                 {
                     if(rewardValue > 0)
                     {
-                        _data = _data?.iListener?.Buy();
-
-                        if (_data != null)
-                        {
-                            SetBoostState(_data.activate);
-                        }
+                        SuccessActivateBoost();
                     }
-
-                    SetPlayTimer(true);
+                    else
+                    {
+                        SetPlayTimer(true);
+                    }
                 });
+        }
+
+        public void OnClickBuyCash()
+        {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+
+            var boostData = _data?.boostData;
+            if (boostData == null)
+                return;
+
+            Sequencer.EnqueueTask(
+                () =>
+                {
+                    var buyCash = new PopupCreator<BuyCash, BuyCash.Data>()
+                        .SetReInitialize(true)
+                        .SetData(new BuyCash.Data()
+                        {
+                            IListener = this,
+                            Cash = boostData.reqCash,
+                            targetSprite = ResourceManager.Instance?.AtalsLoader?.GetSprite("UI_Common", "UI_BoosterIcon"),
+                        })
+                        .Create();
+
+                    return buyCash;
+                });
+
+           
         }
     }
 }

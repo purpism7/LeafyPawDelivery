@@ -13,6 +13,9 @@ namespace Game
 
             OpenPlace,
 
+            PossibleBuyAnimal,
+            PossibleBuyObject,
+
             AddAnimal,
             AddObject,
             AddStory,

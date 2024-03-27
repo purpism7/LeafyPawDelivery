@@ -25,14 +25,18 @@ namespace GameSystem
 
             //FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
 
-            //bool check = false;
+            //FirebaseAnalytics.SetConsent(
+            //    new Dictionary<ConsentType, ConsentStatus>
+            //    {
+            //        { ConsentType.AdStorage, ConsentStatus.Denied },
+            //        { ConsentType.AnalyticsStorage, ConsentStatus.Denied }, // Changing this make it work.
+            //    });
+
             //FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(
             //    (task) =>
             //    {
             //        if (task.Result != DependencyStatus.Available)
             //            return;
-
-            //        check = true;
             //    });
 
             //yield return new WaitUntil(() => check);

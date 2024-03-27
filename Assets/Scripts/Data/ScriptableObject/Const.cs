@@ -13,6 +13,8 @@ public class Const : ScriptableObject
         public Game.Type.EAnimalCurrency Animal = Game.Type.EAnimalCurrency.None;
         public Game.Type.EObjectCurrency Object = Game.Type.EObjectCurrency.None;
         public Info.User.Currency StartValue = null;
+        public float animalCurrencyRate = 1f;
+        public float objectCurrencyRate = 1f;
 
         public string AnimalSpriteName { get { return Animal.ToString().ToLower(); } }
         public string ObjectSpriteName { get { return Object.ToString().ToLower(); } }
@@ -114,6 +116,30 @@ public class Const : ScriptableObject
         }
 
         return null;
+    }
+
+    public int LastPlaceId
+    {
+        get
+        {
+            int placeId = 0;
+
+            if (PlaceDatas == null)
+                return placeId;
+
+            foreach (var data in PlaceDatas)
+            {
+                if (data == null)
+                    continue;
+
+                if (data.PlaceId > placeId)
+                {
+                    placeId = data.PlaceId;
+                }
+            }
+
+            return placeId;
+        }
     }
 
     public PlaceData ActivityPlaceData

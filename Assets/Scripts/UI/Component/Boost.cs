@@ -94,7 +94,7 @@ namespace UI.Component
         private void ActivateBoost(double remainSec)
         {
             EndDateTime = System.DateTime.UtcNow.AddSeconds(remainSec);
-            
+
             _activate = true;
         }
 

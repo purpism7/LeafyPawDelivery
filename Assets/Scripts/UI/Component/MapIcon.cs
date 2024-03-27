@@ -152,9 +152,14 @@ namespace UI.Component
         {
             EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
 
-            if(_isLock)
+            if(_isLock || placeId == 4)
             {
                 var localKey = "desc_not_opened_yet";
+                if (placeId == 4)
+                {
+                    localKey = "desc_see_you_spring";
+                }
+
                 var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
 
                 Game.Toast.Get?.Show(local, localKey);

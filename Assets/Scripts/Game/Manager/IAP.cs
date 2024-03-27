@@ -81,8 +81,6 @@ namespace Game.Manager
 
         void IStoreListener.OnInitialized(IStoreController controller, IExtensionProvider extensions)
         {
-            Debug.Log("OnInitialized");
-
             _iStoreCtr = controller;
 
             //_initializeStore = true;

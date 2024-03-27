@@ -79,7 +79,16 @@ namespace UI.Component
 
             UIUtils.SetActive(openRootRectTm, !_data.Owned);
             UIUtils.SetActive(lockRootRectTm, IsLock);
-            UIUtils.SetActive(unLockImg?.gameObject, false);
+            UIUtils.SetActive(lockImg, IsLock);
+            UIUtils.SetActive(lockBgImg, IsLock);
+            if(IsLock)
+            {
+                lockBgImg.DOFade(1f, 0);
+                unLockImg.DOFade(1f, 0);
+            }
+
+            UIUtils.SetActive(unLockImg, false);
+           
 
             SetDescTMP();
             SetElementIconImg();
@@ -532,10 +541,14 @@ namespace UI.Component
             if (_data.EElement == Game.Type.EElement.Object)
             {
                 _data.Lock = !ObjectOpenConditionContainer.Instance.CheckReq(_data.Id);
+
+                SetNotificationPossibleBuyObject();
             }
             else if(_data.EElement == Game.Type.EElement.Animal)
             {
                 _data.Lock = !AnimalOpenConditionContainer.Instance.CheckReq(_data.Id);
+
+                SetNotificationPossibleBuyAnimal();
             }
             
             if (IsLock)
@@ -595,6 +608,28 @@ namespace UI.Component
                 var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
 
                 return openCondition;
+            }
+        }
+
+        private void SetNotificationPossibleBuyAnimal()
+        {
+            var connector = Info.Connector.Get;
+            if (!_data.Lock &&
+                connector != null &&
+                connector.PossibleBuyAnimal <= 0)
+            {
+                connector.SetPossibleBuyAnimal(_data.Id);
+            }
+        }
+
+        private void SetNotificationPossibleBuyObject()
+        {
+            var connector = Info.Connector.Get;
+            if (!_data.Lock &&
+                connector != null &&
+                connector.PossibleBuyObject <= 0)
+            {
+                connector.SetPossibleBuyObject(_data.Id);
             }
         }
         

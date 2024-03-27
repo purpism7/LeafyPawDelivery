@@ -74,25 +74,39 @@ public class OpenConditionContainer<T> : BaseContainer<T, OpenConditionData> whe
         if (data == null)
             return false;
 
+        if (!CheckAnimalReq(data.ReqAnimalIds))
+            return false;
+
+        if (!CheckObjectReq(data.ReqObjectIds))
+            return false;
+
+        return true;
+    }
+
+    protected bool CheckAnimalReq(int[] reqIds)
+    {
         var animalMgr = MainGameManager.Get<Game.AnimalManager>();
         if (animalMgr == null)
             return false;
 
-        var objectMgr = MainGameManager.Get<Game.ObjectManager>();
-        if (objectMgr == null)
-            return false;
-
-        var reqIds = data.ReqAnimalIds;
         if (reqIds != null)
         {
             foreach (int animalId in reqIds)
             {
-                if(!animalMgr.CheckExist(animalId))
+                if (!animalMgr.CheckExist(animalId))
                     return false;
             }
         }
 
-        reqIds = data.ReqObjectIds;
+        return true;
+    }
+
+    protected bool CheckObjectReq(int[] reqIds)
+    {
+        var objectMgr = MainGameManager.Get<Game.ObjectManager>();
+        if (objectMgr == null)
+            return false;
+
         if (reqIds != null)
         {
             foreach (int objectId in reqIds)

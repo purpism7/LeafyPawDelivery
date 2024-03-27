@@ -117,8 +117,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 33.8}
-  m_Size: {x: 146.2, y: 91.3}
+  m_Offset: {x: 0, y: 37.4}
+  m_Size: {x: 167.6, y: 86.8}
   m_Direction: 1
 --- !u!1 &8059279621757282250
 GameObject:
@@ -204,6 +204,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 5349012442606307698}
   IsOverlap: 0
+  isWind: 0
   sortingOrderOffset: 0
   hiddenRootTm: {fileID: 0}
 --- !u!1001 &230808330410526275

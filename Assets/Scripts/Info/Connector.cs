@@ -7,6 +7,10 @@ namespace Info
     public class Connector : Statics<Connector>
     {
         private readonly string KeyOpenPlace = string.Empty;
+
+        private readonly string KeyPossibleBuyAnimal = string.Empty;
+        private readonly string KeyPossibleBuyObject = string.Empty;
+
         private readonly string KeyAddAnimal = string.Empty;
         private readonly string KeyAddObject = string.Empty;
         private readonly string KeyAddStory = string.Empty;
@@ -21,6 +25,9 @@ namespace Info
             var version = Game.Data.PlayerPrefsVersion;
 
             KeyOpenPlace = GetType().Name + "_OpenPlace_" + version;
+
+            KeyPossibleBuyAnimal = GetType().Name + Game.Notification.EType.PossibleBuyAnimal + "_{0}";
+            KeyPossibleBuyObject = GetType().Name + Game.Notification.EType.PossibleBuyObject + "_{0}";
 
             KeyAddAnimal = GetType().Name + "_AddAnimal_{0}_" + version;
             KeyAddObject = GetType().Name + "_AddObject_{0}_" + version;
@@ -51,6 +58,132 @@ namespace Info
             PlayerPrefs.SetInt(KeyOpenPlace, 0);
 
             Game.Notification.Get?.Notify(Game.Notification.EType.OpenPlace);
+        }
+        #endregion
+
+        #region Possible Buy Animal
+        public int PossibleBuyAnimal
+        {
+            get
+            {
+                return PlayerPrefs.GetInt(string.Format(KeyPossibleBuyAnimal, GameUtils.ActivityPlaceId), 0);
+            }
+        }
+
+        public bool CheckPossibleBuyAnimal
+        {
+            get
+            {
+                return PossibleBuyAnimal > 0;
+            }
+        }
+
+        public void SetPossibleBuyAnimal()
+        {
+            if (PossibleBuyAnimal > 0)
+                return;
+
+            var openConditionCtr = AnimalOpenConditionContainer.Instance;
+            if (openConditionCtr == null)
+                return;
+
+            if (!openConditionCtr.CheckPossibleBuy(out int id))
+                return;
+
+            SavePossibleBuyAnimal(id);
+        }
+
+        public void SetPossibleBuyAnimal(int id)
+        {
+            if (PossibleBuyAnimal > 0)
+                return;
+
+            var animalOpenConditionCtr = AnimalOpenConditionContainer.Instance;
+            if (animalOpenConditionCtr == null)
+                return;
+
+            if (!animalOpenConditionCtr.CheckPossibleBuy(id))
+                return;
+
+            SavePossibleBuyAnimal(id);
+        }
+
+        public void ResetPossibleBuyAnimal()
+        {
+            if (PossibleBuyAnimal <= 0)
+                return;
+
+            SavePossibleBuyAnimal(0);
+        }
+
+        private void SavePossibleBuyAnimal(int id)
+        {
+            PlayerPrefs.SetInt(string.Format(KeyPossibleBuyAnimal, GameUtils.ActivityPlaceId), id);
+
+            Game.Notification.Get?.Notify(Game.Notification.EType.PossibleBuyAnimal);
+        }
+        #endregion
+
+        #region Possible Buy Object
+        public int PossibleBuyObject
+        {
+            get
+            {
+                return PlayerPrefs.GetInt(string.Format(KeyPossibleBuyObject, GameUtils.ActivityPlaceId), 0);
+            }
+        }
+
+        public bool CheckPossibleBuyObject
+        {
+            get
+            {
+                return PossibleBuyObject > 0;
+            }
+        }
+
+        public void SetPossibleBuyObject()
+        {
+            if (PossibleBuyObject > 0)
+                return;
+
+            var openConditionCtr = ObjectOpenConditionContainer.Instance;
+            if (openConditionCtr == null)
+                return;
+
+            if (!openConditionCtr.CheckPossibleBuy(out int id))
+                return;
+
+            SavePossibleBuyObject(id);
+        }
+
+        public void SetPossibleBuyObject(int id)
+        {
+            if (PossibleBuyObject > 0)
+                return;
+
+            var openConditionCtr = ObjectOpenConditionContainer.Instance;
+            if (openConditionCtr == null)
+                return;
+
+            if (!openConditionCtr.CheckPossibleBuy(id))
+                return;
+
+            SavePossibleBuyObject(id);
+        }
+
+        public void ResetPossibleBuyObject()
+        {
+            if (PossibleBuyObject <= 0)
+                return;
+
+            SavePossibleBuyObject(0);
+        }
+
+        private void SavePossibleBuyObject(int id)
+        {
+            PlayerPrefs.SetInt(string.Format(KeyPossibleBuyObject, GameUtils.ActivityPlaceId), id);
+
+            Game.Notification.Get?.Notify(Game.Notification.EType.PossibleBuyObject);
         }
         #endregion
 

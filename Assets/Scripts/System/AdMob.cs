@@ -97,8 +97,6 @@ namespace GameSystem
                 {
                     if (error != null || ad == null)
                     {
-                        Debug.Log(error);
-
                         _callback?.Invoke(0);
 
                         ShowToastTryLater();
@@ -234,10 +232,10 @@ namespace GameSystem
 
             _callback?.Invoke(_reward != null ? _reward.Amount : 0);
            
-            //if(!string.IsNullOrEmpty(_adId))
-            //{
-            //    LoadRewardedInterstitialAd(_adId, null);
-            //}
+            if(!string.IsNullOrEmpty(_adId))
+            {
+                LoadRewardedInterstitialAd(_adId, null);
+            }
 
             _adId = string.Empty;
             _reward = null;

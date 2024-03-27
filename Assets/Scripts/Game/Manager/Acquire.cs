@@ -12,26 +12,18 @@ namespace Game.Manager
         }
 
         private readonly string KeyDailyMissionDate = "KeyDailyMissionDate";
+        private readonly string KeyResetDailyMission = "KeyResetDailyMission";
         private readonly string KeyGetRewardedDailyMission = "KeyGetRewardedDailyMission_{0}";
         private readonly string KeyGetRewardedAchievement = "KeyGetRewardedAchievement_{0}";
 
         private Info.AcquireHolder _acquireHolder = new();
 
-        public System.DateTime? DailyMissionDateTime { get; set; } = null;
-
-        private Acquire()
-        {
-            //var version = Game.Data.PlayerPrefsVersion;
-
-            //KeyDailyMissionDate += "_" + version;
-            //KeyGetRewardedDailyMission += "_" + version;
-            //KeyGetRewardedAchievement += "_" + version;
-        }
+        public System.DateTime? DailyMissionDateTime { get; private set; } = null;
 
         public override MonoBehaviour Initialize()
         {
-
-            SetDailyMissionDate();
+            //DailyMissionDateTime = System.DateTime.Today.ToLocalTime().AddDays(-1);
+            //PlayerPrefs.SetString(KeyDailyMissionDate, DailyMissionDateTime.Value.ToString());
 
             return this;
         }
@@ -39,6 +31,8 @@ namespace Game.Manager
         public override IEnumerator CoInitialize(Data data)
         {
             _acquireHolder?.LoadInfo();
+
+            InitializeDailyMissionDate();
 
             yield break;
         }
@@ -57,9 +51,11 @@ namespace Game.Manager
                 Info.Connector.Get?.SetCompleteAchievement(true);
             }
 
-            if(CheckResetDailyMission)
+            if(DailyMissionDateTime != null &&
+               CheckResetDailyMissionDate)
             {
                 ResetDailyMission();
+                PlayerPrefs.SetString(KeyResetDailyMission, true.ToString());
             }
         }
 
@@ -69,36 +65,32 @@ namespace Game.Manager
             return _acquireHolder?.GetDailyMission(id);
         } 
 
-        private void SetDailyMissionDate()
+        private void InitializeDailyMissionDate()
         {
             string dailyMissionDate = PlayerPrefs.GetString(KeyDailyMissionDate);
-            //Debug.Log("dailyMissionDate = " + dailyMissionDate);
             if (string.IsNullOrEmpty(dailyMissionDate))
             {
-                //SaveDailyMissionDate();
+                ResetDailyMission();
+                PlayerPrefs.SetString(KeyResetDailyMission, true.ToString());
 
                 return;
             }
 
             DailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
-            //Debug.Log("DailyMissionDateTime = " + DailyMissionDateTime.Value);
-            //if (CheckResetDailyMission)
-            //{
-            //    SaveDailyMissionDate();
-
-            //    return;
-            //}
-
-            //_dailyMissionDateTime = System.DateTime.Parse(dailyMissionDate);
+            if (CheckResetDailyMissionDate)
+            {
+                ResetDailyMission();
+                PlayerPrefs.SetString(KeyResetDailyMission, true.ToString());
+            }
         }
 
-        private void SaveDailyMissionDate()
+        private void SetDailyMissionDate()
         {
             DailyMissionDateTime = System.DateTime.Today.ToLocalTime().AddDays(1);
             PlayerPrefs.SetString(KeyDailyMissionDate, DailyMissionDateTime.Value.ToString());
         }
 
-        public bool CheckResetDailyMission
+        public bool CheckResetDailyMissionDate
         {
             get
             {
@@ -107,13 +99,33 @@ namespace Game.Manager
 
                 return (DailyMissionDateTime.Value - System.DateTime.UtcNow.ToLocalTime()).TotalSeconds < 0;
             }
-        } 
+        }
+
+        public bool CheckResetDailyMission
+        {
+            get
+            {
+                if(System.Boolean.TryParse(PlayerPrefs.GetString(KeyResetDailyMission), out bool reset))
+                {
+                    if(reset)
+                    {
+                        PlayerPrefs.SetString(KeyResetDailyMission, false.ToString());
+                    }
+
+                    return reset;
+                }
+
+                return false;
+            }
+        }
 
         public void ResetDailyMission()
         {
+            Info.Connector.Get?.SetCompleteDailyMission(false);
+
             _acquireHolder?.ResetDailyMission();
 
-            SaveDailyMissionDate();
+            SetDailyMissionDate();
         }
 
         public bool GetRewardDailyMission(int id)

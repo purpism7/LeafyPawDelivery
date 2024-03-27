@@ -45,6 +45,13 @@ namespace UI
             openCondition?.Activate();
         }
 
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            _endTask = true;
+        }
+
         private void SetImg()
         {
             if (buyTargetImg == null)
@@ -102,6 +109,13 @@ namespace UI
             _data?.IListener?.Buy(_possibleBuy);
 
             Deactivate();
+        }
+
+        public override void Begin()
+        {
+            base.Begin();
+
+            _endTask = false;
         }
     }
 }

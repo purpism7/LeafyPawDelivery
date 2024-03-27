@@ -444,14 +444,19 @@ namespace Info
             }
         }
 
-        public void SaveLastPlaceId()
+        public bool SaveLastPlaceId()
         {
             if (_user == null)
-                return;
+                return false;
+
+            if (Game.Data.Const.LastPlaceId <= User.LastPlaceId)
+                return false;
 
             _user.SetLastPlaceId();
 
             Save();
+
+            return true;
         }
 
         //private void Save()

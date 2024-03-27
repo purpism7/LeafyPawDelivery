@@ -41,11 +41,11 @@ namespace UI.Component
             base.Activate();
 
             SetColor();
-
-            if(_data != null &&
+            
+            if (_data != null &&
                _data.refreshLayout)
             {
-                LayoutRebuilder.ForceRebuildLayoutImmediate(textContentSizeFitter?.GetComponent<RectTransform>());
+                LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());
             }
         }
 

@@ -315,6 +315,10 @@ MonoBehaviour:
     m_Localized: Preparing an advertisement. Please try again later.
     m_Metadata:
       m_Items: []
+  - m_Id: 83042105750970368
+    m_Localized: See you in spring!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

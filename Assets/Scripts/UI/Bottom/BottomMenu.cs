@@ -57,6 +57,14 @@ namespace UI
                         break;
                     }
 
+                case Game.Type.EBottomType.Arrangement:
+                    {
+                        Game.Notification.Get?.AddListener(Game.Notification.EType.PossibleBuyAnimal, this);
+                        Game.Notification.Get?.AddListener(Game.Notification.EType.PossibleBuyObject, this);
+
+                        break;
+                    }
+
                 case Game.Type.EBottomType.Book:
                     {
                         Game.Notification.Get?.AddListener(Game.Notification.EType.AddAnimal, this);
@@ -87,6 +95,13 @@ namespace UI
                 case Game.Type.EBottomType.Map:
                     {
                         UIUtils.SetActive(redDotRectTm, connector.OpenPlaceId > 0);
+
+                        break;
+                    }
+
+                case Game.Type.EBottomType.Arrangement:
+                    {
+                        UIUtils.SetActive(redDotRectTm, connector.PossibleBuyAnimal > 0 || connector.PossibleBuyObject > 0);
 
                         break;
                     }

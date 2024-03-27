@@ -66,6 +66,9 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         _managerDic.Clear();
 
+        Info.Connector.Create(transform);
+        Game.Notification.Create(transform);
+
         AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>()?.Initialize());
         AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>()?.Initialize());
         AddManager(typeof(Game.PlaceManager), placeMgr?.Initialize());
@@ -112,13 +115,19 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         _iGrid?.Overlap();
 
-        Info.Connector.Create(transform);
-        Game.Notification.Create(transform);
+        ResetNotificationPossibleBuy();
+    
         Game.Timer.Create(transform);
         AdMob.Create();
 
         IsTutorial = CheckIsTutorial;
-        
+
+        if(!IsTutorial)
+        {
+            Info.Connector.Get?.SetPossibleBuyAnimal();
+            Info.Connector.Get?.SetPossibleBuyObject();
+        }
+
         _endInitialize = true;
 
         yield return null;
@@ -426,6 +435,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         SetGameStateAsync(Game.Type.EGameState.Enter).Forget();
 
+        ResetNotificationPossibleBuy();
+
         await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.5f, 1f)));
 
         _iGrid?.Overlap();
@@ -455,29 +466,52 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     {
         get
         {
+            if (!CheckIsAllAnimal)
+                return false;
+
+            if (!CheckIsAllObject)
+                return false;
+
+            var userMgr = Info.UserManager.Instance;
+            if (userMgr == null)
+                return false;
+            
+            var user = userMgr.User;
+            if (user == null)
+                return false;
+
+            if(userMgr.SaveLastPlaceId())
+            {
+                Info.Connector.Get?.SetOpenPlace(user.LastPlaceId);
+
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    private bool CheckIsAllAnimal
+    {
+        get
+        {
             var animalMgr = Get<Game.AnimalManager>();
             if (animalMgr == null)
                 return false;
 
-            if (!animalMgr.CheckIsAll)
-                return false;
+            return animalMgr.CheckIsAll;
+        }
+    }
 
+    private bool CheckIsAllObject
+    {
+        get
+        {
             var objectMgr = Get<Game.ObjectManager>();
             if (objectMgr == null)
                 return false;
 
-            if (!objectMgr.CheckIsAll)
-                return false;
-
-            var user = Info.UserManager.Instance?.User;
-            if (user == null)
-                return false;
-
-            Info.UserManager.Instance?.SaveLastPlaceId();
-            
-            Info.Connector.Get?.SetOpenPlace(user.LastPlaceId);
-
-            return true;
+            return objectMgr.CheckIsAll;
         }
     }
 
@@ -549,6 +583,25 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             return;
 
         _startEditAction?.Invoke(obj);
+    }
+
+    private void ResetNotificationPossibleBuy()
+    {
+        var connector = Info.Connector.Get;
+        if (connector == null)
+            return;
+
+        if (connector.CheckPossibleBuyAnimal &&
+            CheckIsAllAnimal)
+        {
+            Info.Connector.Get?.ResetPossibleBuyAnimal();
+        }
+
+        if(connector.CheckPossibleBuyObject &&
+           CheckIsAllObject)
+        {
+            Info.Connector.Get?.ResetPossibleBuyObject();
+        }
     }
     #endregion
 
@@ -635,6 +688,16 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         var eAcquire = eElement == Game.Type.EElement.Animal ? Game.Type.EAcquire.AnimalCurrency : Game.Type.EAcquire.ObjectCurrency;
 
         AddAcquire(eAcquire, eAcquireAction, value);
+
+        if(!CheckIsTutorial)
+        {
+            var connector = Info.Connector.Get;
+            if (connector != null)
+            {
+                connector.SetPossibleBuyAnimal();
+                connector.SetPossibleBuyObject();
+            }
+        }
     }
 
     public void AddAcquireArrange(Game.Type.EElement eElement, Game.Type.EAcquireAction eAcquireAction, int value)
@@ -656,19 +719,15 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     {
         switch(step)
         {
-            case Game.Type.ETutorialStep.EditAnimal:
-                {
-                    //(IGameCameraCtr as GameSystem.GameCameraController)?.SetStopUpdate(false);
+            //case Game.Type.ETutorialStep.EditAnimal:
+            //    {
+            //        break;
+            //    }
 
-                    break;
-                }
-
-            case Game.Type.ETutorialStep.DescMap:
-                {
-                   
-
-                    break;
-                }
+            //case Game.Type.ETutorialStep.DescMap:
+            //    {
+            //        break;
+            //    }
 
             case Game.Type.ETutorialStep.HappyLeafyPawDelivery:
                 {
@@ -686,6 +745,9 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                     Game.UIManager.Instance?.SetInteractable(true);
 
                     DestroyTutorialManager();
+
+                    Info.Connector.Get?.SetPossibleBuyAnimal();
+                    Info.Connector.Get?.SetPossibleBuyObject();
 
                     break;
                 }

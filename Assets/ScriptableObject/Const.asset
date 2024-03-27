@@ -29,6 +29,8 @@ MonoBehaviour:
       PlaceId: 1
       Animal: 51
       Object: 1088
+    animalCurrencyRate: 1
+    objectCurrencyRate: 1.2
   - ePlaceName: 2
     Animal: 2
     Object: 2
@@ -36,6 +38,8 @@ MonoBehaviour:
       PlaceId: 2
       Animal: 51
       Object: 1088
+    animalCurrencyRate: 1
+    objectCurrencyRate: 1.2
   - ePlaceName: 3
     Animal: 3
     Object: 3
@@ -43,3 +47,5 @@ MonoBehaviour:
       PlaceId: 3
       Animal: 51
       Object: 1088
+    animalCurrencyRate: 1
+    objectCurrencyRate: 1.4
