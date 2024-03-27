@@ -143,8 +143,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         _iFixedUpdaterList?.Clear();
         _iFixedUpdaterList?.Add(IGameCameraCtr as IFixedUpdater);
-
-        //_iUpdaterList?.Add(inputMgr?.grid);
     }
 
     private void AddManager(Type type, MonoBehaviour monoBehaviour)
@@ -163,7 +161,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                 new Game.PlaceManager.Data()
                 {
                     placeId = placeId,
-                    //setting = setting,
                 }));
         }
 
@@ -515,7 +512,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
     }
 
-    public void AddAnimalToPlace(int id)
+    // 배치 목록에서 선택한 주민을 해당 place 에 생성.
+    public void SpwanAnimalToPlace(int id)
     {
         var animalInfo = Get<Game.AnimalManager>()?.GetAnimalInfo(id);
         if (animalInfo == null)
@@ -531,7 +529,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             pos = IGameCameraCtr.Center;
         }
 
-        var animal = activityPlace.AddAnimal(id, animalInfo.SkinId, pos);
+        var animal = activityPlace.SpwanAnimal(id, animalInfo.SkinId, pos);
         if (animal == null)
             return;
 
@@ -562,7 +560,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
     }
 
-    public void AddObjectToPlace(int id)
+    public void SpwanObjectToPlace(int id)
     {
         var activityPlace = placeMgr?.ActivityPlace;
         if (activityPlace == null)
@@ -578,7 +576,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             pos = IGameCameraCtr.Center;
         }
 
-        var obj = activityPlace.AddObject(id, pos, editObject.UId);
+        var obj = activityPlace.SpwanObject(id, pos, editObject.UId);
         if (obj == null)
             return;
 
@@ -636,6 +634,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         _iGrid?.Overlap();
     }
 
+    // 배치한 animal / object 저장.
     public void Arrange(Game.BaseElement gameBaseElement, Vector3 pos)
     {
         if (gameBaseElement == null ||
@@ -719,16 +718,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     {
         switch(step)
         {
-            //case Game.Type.ETutorialStep.EditAnimal:
-            //    {
-            //        break;
-            //    }
-
-            //case Game.Type.ETutorialStep.DescMap:
-            //    {
-            //        break;
-            //    }
-
             case Game.Type.ETutorialStep.HappyLeafyPawDelivery:
                 {
                     IsTutorial = false;

@@ -28,10 +28,11 @@ namespace Game.Element.State
         {
             await base.Apply(gameBaseElement);
 
+            gameBaseElement?.InteractableReturnBtn();
             SetSelectedLocalPosZ();
 
             Game.UIManager.Instance?.Bottom?.DeactivateEditList();
-            MainGameManager.Instance?.GameState?.Get<Game.State.Edit>()?.SetEditElement(_gameBaseElement);
+            MainGameManager.Instance?.GameState?.Get<Game.State.Edit>()?.SetEditElement(gameBaseElement);
 
             await UniTask.WaitForFixedUpdate();
 

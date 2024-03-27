@@ -118,6 +118,11 @@ namespace Game.Creature
 
                 SetState(new Element.State.Edit()?.Initialize(gameCameraCtr, iGrid));
 
+                if(!_spwaned)
+                {
+                    _data.Pos = LocalPos;
+                }
+
                 SetSortingOrder(SelectOrder);
                 ActiveEdit(true);
 
@@ -160,14 +165,6 @@ namespace Game.Creature
                 .Create();
 
             ActiveEdit(false);
-        }
-
-        private void SetSortingOrder(int order)
-        {
-            if (spriteRenderer == null)
-                return;
-
-            spriteRenderer.sortingOrder = order;
         }
 
         public void StartSignatureAction()
@@ -218,12 +215,16 @@ namespace Game.Creature
         #endregion
 
         #region Edit.IListener
+        void UI.Edit.IListener.Return()
+        {
+            SetLocalPos(_data.Pos);
+
+            Arrange();
+        }
+
         void UI.Edit.IListener.Remove()
         {
-            Command.Remove.Execute(this);
-
-            ActiveEdit(false);
-            SetState(null);
+            Remove();
         }
 
         void UI.Edit.IListener.Arrange()
@@ -233,12 +234,7 @@ namespace Game.Creature
 
             SetLocalPosZ(GameUtils.CalcPosZ(LocalPos.y));
 
-            Command.Arrange.Execute(this, LocalPos);
-
-            SetSortingOrder(-(int)LocalPos.y);
-
-            ActiveEdit(false);
-            SetState(null);
+            Arrange();
         }
         #endregion
 

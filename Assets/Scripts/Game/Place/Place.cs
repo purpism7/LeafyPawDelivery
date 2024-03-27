@@ -133,7 +133,7 @@ namespace Game
         }
 
         #region Animal
-        public Creature.Animal AddAnimal(int id, int skinId, Vector3 pos)
+        public Creature.Animal SpwanAnimal(int id, int skinId, Vector3 pos)
         {
             if (_animalList == null)
                 return null;
@@ -151,6 +151,7 @@ namespace Game
                 if (animal.SkinId != skinId)
                     continue;
 
+                animal.SetSpwaned(true);
                 animal.SetLocalPos(pos);
                 animal.Activate();
 
@@ -163,6 +164,8 @@ namespace Game
                  .SetPos(pos)
                  .SetIPlaceState(this)
                  .Create();
+
+            addAnimal?.SetSpwaned(true);
 
             _animalList.Add(addAnimal);
 
@@ -215,7 +218,7 @@ namespace Game
 
             if(existAnimal)
             {
-                AddAnimal(id, skinId, pos);
+                SpwanAnimal(id, skinId, pos);
             }
 
             return existAnimal;
@@ -230,7 +233,7 @@ namespace Game
         #endregion
 
         #region Object
-        public Game.Object AddObject(int id, Vector3 pos, int uId)
+        public Game.Object SpwanObject(int id, Vector3 pos, int uId)
         {
             if (_objectList == null)
                 return null;
@@ -246,6 +249,7 @@ namespace Game
                 if (obj.Id != id)
                     continue;
 
+                obj.SetSpwaned(true);
                 obj.Reset(uId, pos);
                 obj.Activate();
 
@@ -264,6 +268,8 @@ namespace Game
                 .SetId(id)
                 .SetRootTm(objectRootTm)
                 .Create();
+
+            addObj?.SetSpwaned(true);
 
             _objectList.Add(addObj);
 
@@ -290,12 +296,12 @@ namespace Game
             }
         }
 
-        private float GetObjectPosZ(int id, int uId)
-        {
-            float posZ = (id * 10 + uId) * GetPosZOffset(id);
+        //private float GetObjectPosZ(int id, int uId)
+        //{
+        //    float posZ = (id * 10 + uId) * GetPosZOffset(id);
 
-            return -posZ;
-        }
+        //    return -posZ;
+        //}
 
         public float ObjectPosZ
         {
@@ -317,21 +323,21 @@ namespace Game
             }
         }
 
-        private int GetCalcPos(float value, out int offset)
-        {
-            int floorInt = Mathf.FloorToInt(value);
-            int len = Mathf.FloorToInt(Mathf.Log10(floorInt)) + 1;
-            offset = 10000 / (int)Mathf.Pow(10, len);
-            Debug.Log("resOffset = " + offset);
-            //if(floorY < 100)
-            //{
-            //    offset = 
-            //}
-            //else if(floorY)
+        //private int GetCalcPos(float value, out int offset)
+        //{
+        //    int floorInt = Mathf.FloorToInt(value);
+        //    int len = Mathf.FloorToInt(Mathf.Log10(floorInt)) + 1;
+        //    offset = 10000 / (int)Mathf.Pow(10, len);
+        //    Debug.Log("resOffset = " + offset);
+        //    //if(floorY < 100)
+        //    //{
+        //    //    offset = 
+        //    //}
+        //    //else if(floorY)
             
-            return floorInt * offset;
+        //    return floorInt * offset;
             
-        }
+        //}
         #endregion
 
         private float GetPosZOffset(int id)

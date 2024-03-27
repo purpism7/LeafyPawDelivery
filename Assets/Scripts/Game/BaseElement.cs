@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Game
 {
@@ -22,6 +21,7 @@ namespace Game
 
         protected Collider2D _collider2D = null;
         protected Game.Type.EMaterial _eMaterial = Type.EMaterial.None;
+        protected bool _spwaned = false;
 
         public ElementCollision ElementCollision { get; protected set; } = null;
         public ElementData ElementData { get; protected set; } = null;
@@ -58,7 +58,7 @@ namespace Game
             if (!transform)
                 return;
 
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, z);
+            SetLocalPos(transform.localPosition.x, transform.localPosition.y, z);
         }
 
         public void AddRigidBody2D()
@@ -105,7 +105,7 @@ namespace Game
 
             if(eMaterial == Type.EMaterial.WindEffect)
             {
-                material.SetFloat("_WindIntensity", Random.Range(13f, 15f));
+                material.SetFloat("_WindIntensity", Random.Range(13f, 16f));
                 material.SetFloat("_WindSpeed", 1f);
             }
 
@@ -145,6 +145,14 @@ namespace Game
             State = state;
         }
 
+        public void InteractableReturnBtn()
+        {
+            if (edit == null)
+                return;
+
+            edit.InteractableReturnBtn(!_spwaned);
+        }
+
         public void InteractableArrangeBtn(bool interactable)
         {
             if (edit == null)
@@ -174,21 +182,10 @@ namespace Game
             }
         }
 
-        //private void SetSortingGroupOrder(int order)
-        //{
-        //    if (_sortingGroup != null)
-        //    {
-        //        _sortingGroup.sortingOrder = order;
-        //    }
-        //}
-
-        //protected void SetSortAtRoot(bool sortAtRoot)
-        //{
-        //    if (_sortingGroup != null)
-        //    {
-        //        _sortingGroup.sortAtRoot = sortAtRoot;
-        //    }
-        //}
+        public void SetSpwaned(bool spwaned)
+        {
+            _spwaned = spwaned;
+        }
     }
 
     public abstract class BaseElement<T> : BaseElement where T : BaseData
@@ -233,8 +230,34 @@ namespace Game
                     EnableCollision(false);
                 }
             }
+        }
 
-            //InitializeSorginGroup();
+        protected virtual void SetSortingOrder(int order)
+        {
+            if (spriteRenderer == null)
+                return;
+
+            spriteRenderer.sortingOrder = order;
+        }
+
+        protected void Arrange()
+        {
+            Command.Arrange.Execute(this, LocalPos);
+
+            SetSortingOrder(-(int)LocalPos.y);
+
+            SetSpwaned(false);
+            ActiveEdit(false);
+            SetState(null);
+        }
+
+        protected void Remove()
+        {
+            Command.Remove.Execute(this);
+
+            SetSpwaned(true);
+            ActiveEdit(false);
+            SetState(null);
         }
     }
 }

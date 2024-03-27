@@ -416,7 +416,7 @@ namespace UI
             if (mainGameMgr == null)
                 return;
 
-            mainGameMgr.AddAnimalToPlace(id);
+            mainGameMgr.SpwanAnimalToPlace(id);
 
             _editing = true;
 
@@ -435,7 +435,7 @@ namespace UI
             if (mainGameMgr == null)
                 return;
 
-            mainGameMgr.AddObjectToPlace(id);
+            mainGameMgr.SpwanObjectToPlace(id);
 
             _editing = true;
 
@@ -461,6 +461,11 @@ namespace UI
             _data?.IListener?.Close();
 
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+        }
+
+        public void OnClickAllReset()
+        {
+
         }
     }
 }

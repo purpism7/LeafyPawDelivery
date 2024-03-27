@@ -145,14 +145,14 @@ namespace Game
             transform.localPosition = _data.Pos;
         }
 
-        private void SetSortingOrder(int order)
+        protected override void SetSortingOrder(int order)
         {
             if (spriteRenderer == null)
                 return;
 
             order += sortingOrderOffset;
 
-            spriteRenderer.sortingOrder = order;
+            base.SetSortingOrder(order);
 
             SetSortingOrderHiddenObject(order);
         }
@@ -259,12 +259,16 @@ namespace Game
         #endregion
 
         #region Edit.IListener
+        void UI.Edit.IListener.Return()
+        {
+            SetLocalPos(_data.Pos);
+
+            Arrange();
+        }
+
         void UI.Edit.IListener.Remove()
         {
-            Command.Remove.Execute(this);
-
-            ActiveEdit(false);
-            SetState(null);
+            Remove();
 
             RemoveHiddenObject();
         }
@@ -273,12 +277,9 @@ namespace Game
         {
             SetLocalPosZ(LocalPos.y * GameUtils.PosZOffset);
 
-            Command.Arrange.Execute(this, LocalPos);
+            _data.Pos = LocalPos;
 
-            SetSortingOrder(-(int)transform.localPosition.y);
-
-            ActiveEdit(false);
-            SetState(null);
+            Arrange();
         }
         #endregion
     }

@@ -13,10 +13,13 @@ namespace UI
 
         public interface IListener
         {
+            void Return();
             void Remove();
             void Arrange();
         }
 
+        [SerializeField]
+        private UnityEngine.UI.Button returnBtn = null;
         [SerializeField]
         private UnityEngine.UI.Button arrangeBtn = null;
 
@@ -29,12 +32,27 @@ namespace UI
             base.Initialize(data);
         }
 
+        public void InteractableReturnBtn(bool interactable)
+        {
+            if (returnBtn == null)
+                return;
+
+            returnBtn.interactable = interactable;
+        }
+
         public void InteractableArrangeBtn(bool interactable)
         {
             if (arrangeBtn == null)
                 return;
 
             arrangeBtn.interactable = interactable;
+        }
+
+        public void OnClickReturn()
+        {
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+
+            _data?.IListener?.Return();
         }
 
         public void OnClickRemove()
