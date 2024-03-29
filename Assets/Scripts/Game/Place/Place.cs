@@ -133,7 +133,7 @@ namespace Game
         }
 
         #region Animal
-        public Creature.Animal SpwanAnimal(int id, int skinId, Vector3 pos)
+        public Creature.Animal SpwanAnimal(int id, int skinId, Vector3 pos, bool spwaned)
         {
             if (_animalList == null)
                 return null;
@@ -151,7 +151,7 @@ namespace Game
                 if (animal.SkinId != skinId)
                     continue;
 
-                animal.SetSpwaned(true);
+                animal.SetSpwaned(spwaned);
                 animal.SetLocalPos(pos);
                 animal.Activate();
 
@@ -165,7 +165,7 @@ namespace Game
                  .SetIPlaceState(this)
                  .Create();
 
-            addAnimal?.SetSpwaned(true);
+            addAnimal?.SetSpwaned(spwaned);
 
             _animalList.Add(addAnimal);
 
@@ -218,7 +218,7 @@ namespace Game
 
             if(existAnimal)
             {
-                SpwanAnimal(id, skinId, pos);
+                SpwanAnimal(id, skinId, pos, false);
             }
 
             return existAnimal;

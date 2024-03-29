@@ -32,9 +32,6 @@ namespace Game.Element.State
             {
                 case TouchPhase.Began:
                     {
-                        CollectCurrnecy(touch.Value);
-                        StartSignatureAction();
-
                         break;
                     }
 
@@ -49,6 +46,12 @@ namespace Game.Element.State
                     }
 
                 case TouchPhase.Ended:
+                    {
+                        CollectCurrnecy(touch.Value);
+                        StartSignatureAction();
+
+                        break;
+                    }
                 case TouchPhase.Canceled:
                     {
                         break;

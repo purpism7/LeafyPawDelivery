@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public abstract class BaseElement : Game.Base
+    public abstract class BaseElement : Game.Base, UI.Edit.IListener
     {
         [HideInInspector]
         public int UId = 0;
@@ -26,15 +26,19 @@ namespace Game
         public ElementCollision ElementCollision { get; protected set; } = null;
         public ElementData ElementData { get; protected set; } = null;
         public Game.Element.State.BaseState State { get; protected set; } = null;
+        public bool IsMoving { get; private set; } = false;
 
         public override void ChainUpdate()
         {
             base.ChainUpdate();
         }
 
-        public void ActiveEdit(bool active)
+        protected virtual void SetSortingOrder(int order)
         {
-            UIUtils.SetActive(edit?.CanvasRectTm, active);
+            if (spriteRenderer == null)
+                return;
+
+            spriteRenderer.sortingOrder = order;
         }
 
         public void SetLocalPos(float x, float y, float z)
@@ -128,7 +132,7 @@ namespace Game
             if (state is Game.Element.State.Edit)
             {
                 SetMaterial(Game.Type.EMaterial.Outline);
-                SetOutline(5f);
+                SetOutline(6f);
             }
             else
             {
@@ -186,6 +190,84 @@ namespace Game
         {
             _spwaned = spwaned;
         }
+
+        #region Edit
+        protected void CreateEdit(Transform rootTm)
+        {
+            edit = new GameSystem.UICreator<UI.Edit, UI.Edit.Data>()
+                .SetData(new UI.Edit.Data()
+                {
+                    IListener = this,
+                })
+                .SetRooTm(rootTm)
+                .Create();
+
+            if(edit != null)
+            {
+                edit.transform.localPosition = Vector3.zero;
+            }
+
+            ActiveEdit(false);
+        }
+
+        public void ActiveEdit(bool active)
+        {
+            UIUtils.SetActive(edit?.CanvasRectTm, active);
+        }
+
+        protected abstract void Return();
+
+        protected virtual void Arrange()
+        {
+            Command.Arrange.Execute(this, LocalPos);
+
+            SetSortingOrder(-(int)LocalPos.y);
+
+            SetSpwaned(false);
+            ActiveEdit(false);
+            SetState(null);
+        }
+
+        protected virtual void Remove()
+        {
+            Command.Remove.Execute(this);
+
+            SetSpwaned(true);
+            ActiveEdit(false);
+            SetState(null);
+        }
+        #endregion
+
+        #region Edit.IListener
+        void UI.Edit.IListener.Move(bool isMoving)
+        {
+            IsMoving = isMoving;
+        }
+
+        void UI.Edit.IListener.Return()
+        {
+            Return();
+
+            _touchEndAction?.Invoke();
+            SetTouchEndAction(null);
+        }
+
+        void UI.Edit.IListener.Remove()
+        {
+            Remove();
+
+            _touchEndAction?.Invoke();
+            SetTouchEndAction(null);
+        }
+
+        void UI.Edit.IListener.Arrange()
+        {
+            Arrange();
+
+            _touchEndAction?.Invoke();
+            SetTouchEndAction(null);
+        }
+        #endregion
     }
 
     public abstract class BaseElement<T> : BaseElement where T : BaseData
@@ -230,34 +312,6 @@ namespace Game
                     EnableCollision(false);
                 }
             }
-        }
-
-        protected virtual void SetSortingOrder(int order)
-        {
-            if (spriteRenderer == null)
-                return;
-
-            spriteRenderer.sortingOrder = order;
-        }
-
-        protected void Arrange()
-        {
-            Command.Arrange.Execute(this, LocalPos);
-
-            SetSortingOrder(-(int)LocalPos.y);
-
-            SetSpwaned(false);
-            ActiveEdit(false);
-            SetState(null);
-        }
-
-        protected void Remove()
-        {
-            Command.Remove.Execute(this);
-
-            SetSpwaned(true);
-            ActiveEdit(false);
-            SetState(null);
         }
     }
 }

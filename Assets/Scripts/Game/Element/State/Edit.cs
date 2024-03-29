@@ -24,9 +24,9 @@ namespace Game.Element.State
             return this;
         }
 
-        public override async UniTask Apply(BaseElement gameBaseElement)
+        public override void Apply(BaseElement gameBaseElement)
         {
-            await base.Apply(gameBaseElement);
+            base.Apply(gameBaseElement);
 
             gameBaseElement?.InteractableReturnBtn();
             SetSelectedLocalPosZ();
@@ -34,14 +34,14 @@ namespace Game.Element.State
             Game.UIManager.Instance?.Bottom?.DeactivateEditList();
             MainGameManager.Instance?.GameState?.Get<Game.State.Edit>()?.SetEditElement(gameBaseElement);
 
-            await UniTask.WaitForFixedUpdate();
-
-            Overlap();
+            OverlapAsync().Forget();
         }
 
         public override void End()
         {
             var elementData = _gameBaseElement?.ElementData;
+
+            _gameBaseElement?.SetColor(Color.white);
 
             var eTab = Game.Type.ETab.Animal;
             if (elementData != null)
@@ -70,18 +70,21 @@ namespace Game.Element.State
             {
                 case TouchPhase.Began:
                     {
-                        _gameBaseElement.ActiveEdit(true);
-                        _gameCameraCtr?.SetStopUpdate(true);
+                        //_gameBaseElement.ActiveEdit(true);
+                        //_gameCameraCtr?.SetStopUpdate(true);
                         
                         break;
                     }
 
                 case TouchPhase.Moved:
                     {
-                        Drag(touch);
+                        if (_gameBaseElement.IsMoving)
+                        {
+                            Drag(touch);
 
-                        SetSelectedLocalPosZ();
-                        _gameBaseElement.ActiveEdit(false);
+                            SetSelectedLocalPosZ();
+                        }
+                        //_gameBaseElement.ActiveEdit(false);
                         
                         break;
                     }
@@ -94,14 +97,14 @@ namespace Game.Element.State
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
-                        _gameBaseElement.ActiveEdit(true);
-                        _gameCameraCtr?.SetStopUpdate(false);
+                        //_gameBaseElement.ActiveEdit(true);
+                        //_gameCameraCtr?.SetStopUpdate(false);
 
                         break;
                     }
             }
 
-            Overlap();
+            OverlapAsync().Forget();
         }
 
         private void Drag(Touch? touch)
@@ -125,14 +128,15 @@ namespace Game.Element.State
             Vector3 movePos = new Vector3(touchPos.x, touchPos.y, distance);
             Vector3 pos = gameCamera.ScreenToWorldPoint(movePos);
 
-            pos.y += -10f;
+            pos.y += 160f;
             pos.y = _iGrid.LimitPosY(pos.y);
 
-            gameBaseTm.position = pos;
+            _gameBaseElement?.SetLocalPos(pos);
+            //gameBaseTm.position = pos;
         }
 
         #region Overlap
-        private void Overlap()
+        private async UniTask OverlapAsync()
         {
             if (_gameBaseElement == null)
                 return;
@@ -141,8 +145,10 @@ namespace Game.Element.State
             if (elementCollision == null)
                 return;
 
+            await UniTask.WaitForFixedUpdate();
+
             bool isOverlap = elementCollision.IsOverlap;
-           
+
             _gameBaseElement.SetColor(isOverlap ? Color.gray : Color.white);
             _gameBaseElement.InteractableArrangeBtn(!isOverlap);
         }

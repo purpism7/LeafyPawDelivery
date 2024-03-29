@@ -41,9 +41,9 @@ namespace Game
             });
         }
 
-        public T Instantiate<T>(RectTransform rootRectTm)
+        public T Instantiate<T>(Transform rootTm)
         {
-            return GameSystem.ResourceManager.Instance.InstantiateUI<T>(rootRectTm);
+            return GameSystem.ResourceManager.Instance.InstantiateUI<T>(rootTm);
         }
 
         public void EnalbeUIRoot(bool enable)

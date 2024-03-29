@@ -14,7 +14,7 @@ namespace Game.Creature
     }
 
     [ExecuteInEditMode]
-    public class Animal : BaseElement<Animal.Data>, UI.Edit.IListener, IAnimal
+    public class Animal : BaseElement<Animal.Data>, IAnimal
     {
         public class Data : BaseData
         {
@@ -51,10 +51,13 @@ namespace Game.Creature
                 _animalRoot?.Initialize(_collider2D.bounds.center.y);
             }
 
-            CreateEdit();
-
             if (data != null)
             {
+                if(data.IsEdit)
+                {
+                    CreateEdit(_animalRoot?.EditRootRectTm);
+                }
+
                 SetLocalPos(data.Pos);
                 SetSortingOrder(-(int)LocalPos.y);
             }
@@ -148,23 +151,24 @@ namespace Game.Creature
             State?.Touch(touch.phase, touch);
         }
 
-        private void CreateEdit()
+        protected override void Return()
+        {
+            if (_spwaned)
+                return;
+
+            SetLocalPos(_data.Pos);
+
+            Arrange();
+        }
+
+        protected override void Arrange()
         {
             if (_data == null)
                 return;
 
-            if (!_data.IsEdit)
-                return;
+            SetLocalPosZ(GameUtils.CalcPosZ(LocalPos.y));
 
-            edit = new GameSystem.UICreator<UI.Edit, UI.Edit.Data>()
-                .SetData(new UI.Edit.Data()
-                {
-                    IListener = this,
-                })
-                .SetRootRectTm(_animalRoot?.EditRootRectTm)
-                .Create();
-
-            ActiveEdit(false);
+            base.Arrange();
         }
 
         public void StartSignatureAction()
@@ -211,30 +215,6 @@ namespace Game.Creature
         public void DeactivateSpeechBubble()
         {
             _animalRoot?.DeactivateSpeechBubble();
-        }
-        #endregion
-
-        #region Edit.IListener
-        void UI.Edit.IListener.Return()
-        {
-            SetLocalPos(_data.Pos);
-
-            Arrange();
-        }
-
-        void UI.Edit.IListener.Remove()
-        {
-            Remove();
-        }
-
-        void UI.Edit.IListener.Arrange()
-        {
-            if (_data == null)
-                return;
-
-            SetLocalPosZ(GameUtils.CalcPosZ(LocalPos.y));
-
-            Arrange();
         }
         #endregion
 

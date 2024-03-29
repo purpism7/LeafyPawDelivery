@@ -13,7 +13,7 @@ namespace Game
     public abstract class Common : MonoBehaviour, Sequencer.ITask
     {
         [SerializeField]
-        private Transform rootTm = null;
+        protected Transform rootTm = null;
 
         protected bool _endTask = true;
 
@@ -59,25 +59,13 @@ namespace Game
     {
         public int Id = 0;
 
-        protected SortingGroup _sortingGroup = null;
+        protected System.Action _touchEndAction = null;
 
         public virtual void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid) { }
         public virtual void OnTouch(Touch touch) { }
         public virtual void OnTouchEnded(Touch? touch, GameSystem.IGrid iGrid) { }
+
         public virtual void ChainUpdate() { }
-
-        protected void InitializeSorginGroup()
-        {
-            if (_sortingGroup == null)
-            {
-                _sortingGroup = gameObject.GetOrAddComponent<SortingGroup>();
-
-                if (_sortingGroup != null)
-                {
-                    _sortingGroup.sortingLayerName = "Game";
-                }
-            }
-        }
 
         public Vector3 LocalPos
         {
@@ -88,6 +76,11 @@ namespace Game
 
                 return transform.localPosition;
             }
+        }
+
+        public void SetTouchEndAction(System.Action touchEndAction)
+        {
+            _touchEndAction = touchEndAction;
         }
     }
 

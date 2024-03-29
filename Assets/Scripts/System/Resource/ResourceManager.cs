@@ -70,17 +70,17 @@ namespace GameSystem
                 });
         }
 
-        public GameObject InstantiateUIGameObj<T>(RectTransform rootRectTm)
+        public GameObject InstantiateUIGameObj<T>(Transform rootTm)
         {
             if (AddressableAssetLoader == null)
                 return null;
 
-            return AddressableAssetLoader.InstantiateUI(typeof(T).FullName, rootRectTm);
+            return AddressableAssetLoader.InstantiateUI(typeof(T).FullName, rootTm);
         }
 
-        public T InstantiateUI<T>(RectTransform rootRectTm)
+        public T InstantiateUI<T>(Transform rootTm)
         {
-            var gameObj = InstantiateUIGameObj<T>(rootRectTm);
+            var gameObj = InstantiateUIGameObj<T>(rootTm);
             if (gameObj)
             {
                 return gameObj.GetComponent<T>();

@@ -13,23 +13,29 @@ namespace UI
 
         public interface IListener
         {
+            void Move(bool isMoving);
             void Return();
             void Remove();
             void Arrange();
         }
-
+        
+        #region Inspector
         [SerializeField]
         private UnityEngine.UI.Button returnBtn = null;
         [SerializeField]
         private UnityEngine.UI.Button arrangeBtn = null;
-
-        #region Inspector
+        [SerializeField]
+        private RectTransform editRootRectTm = null;
         public RectTransform CanvasRectTm = null;
         #endregion
+
+        private bool _isMoving = false;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+
+            _isMoving = false;
         }
 
         public void InteractableReturnBtn(bool interactable)
@@ -46,6 +52,34 @@ namespace UI
                 return;
 
             arrangeBtn.interactable = interactable;
+        }
+
+        public void OnPressDownMove()
+        {
+            if(!_isMoving)
+            {
+                GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+
+                MainGameManager.Instance?.IGameCameraCtr.SetStopUpdate(true);
+
+                UIUtils.SetActive(editRootRectTm, false);
+
+                _data?.IListener?.Move(true);
+            }
+
+            _isMoving = true;
+        }
+
+        public void OnPressUpMove()
+        {
+            UIUtils.SetActive(editRootRectTm, true);
+
+            MainGameManager.Instance?.IGameCameraCtr.SetStopUpdate(false);
+           
+            _data?.IListener?.Move(false);
+
+            _isMoving = false;
+
         }
 
         public void OnClickReturn()

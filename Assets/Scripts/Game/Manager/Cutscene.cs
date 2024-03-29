@@ -190,8 +190,7 @@ namespace Game.Manager
             Fade.Create.In(
                 () =>
                 {
-                    //UIManager.Instance?.EnalbeUIRoot(false);
-                    //UIManager.Instance?.ActivateAnim();
+                   
                 });
         }
 
@@ -202,18 +201,15 @@ namespace Game.Manager
                 {
                     IListener = this,
                 })
-               .SetRootRectTm(uiRootRectTm)
+               .SetRooTm(uiRootRectTm)
                .Create();
 
 
             UIUtils.SetActive(Conversation?.rootRectTm, false);
-            //Conversation?.Deactivate();
         }
 
         private void Finish(PlayableDirector playableDirector)
         {
-            //StartCoroutine(CoFinish());
-
             FinishAsync().Forget();
         }
 

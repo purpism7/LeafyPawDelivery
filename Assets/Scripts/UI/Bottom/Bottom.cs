@@ -171,7 +171,7 @@ namespace UI
                     {
                         IListener = this,
                     })
-                    .SetRootRectTm(EditListRootRectTm)
+                    .SetRooTm(EditListRootRectTm)
                     .Create();
             }
 

@@ -9,7 +9,7 @@ namespace GameSystem
     public class UICreator<T, V> : BaseCreator<T> where T : UI.Base<V> where V : BaseData
     {
         private V _data = null;
-        private RectTransform _rootRecTm = null;
+        private Transform _rootTm = null;
 
         public UICreator<T, V> SetData(V vData)
         {
@@ -18,16 +18,16 @@ namespace GameSystem
             return this;
         }
 
-        public UICreator<T, V> SetRootRectTm(RectTransform rootRectTm)
+        public UICreator<T, V> SetRooTm(Transform rootTm)
         {
-            _rootRecTm = rootRectTm;
+            _rootTm = rootTm;
 
             return this;
         }
 
         public override T Create()
         {
-            var ui = Game.UIManager.Instance.Instantiate<T>(_rootRecTm);
+            var ui = Game.UIManager.Instance.Instantiate<T>(_rootTm);
             if (ui == null)
                 return default(T);
 

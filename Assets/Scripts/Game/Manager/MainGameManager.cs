@@ -513,7 +513,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     }
 
     // 배치 목록에서 선택한 주민을 해당 place 에 생성.
-    public void SpwanAnimalToPlace(int id)
+    public void SpwanAnimalToPlace(int id, bool spwaned)
     {
         var animalInfo = Get<Game.AnimalManager>()?.GetAnimalInfo(id);
         if (animalInfo == null)
@@ -529,7 +529,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             pos = IGameCameraCtr.Center;
         }
 
-        var animal = activityPlace.SpwanAnimal(id, animalInfo.SkinId, pos);
+        var animal = activityPlace.SpwanAnimal(id, animalInfo.SkinId, pos, spwaned);
         if (animal == null)
             return;
 

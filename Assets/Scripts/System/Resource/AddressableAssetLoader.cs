@@ -444,14 +444,14 @@ namespace GameSystem
         //    }));
         //}
 
-        public GameObject InstantiateUI(string typeKey, RectTransform rootRectTm)
+        public GameObject InstantiateUI(string typeKey, Transform rootTm)
         {
             if (_uiGameObjDic == null)
                 return null;
 
             if (_uiGameObjDic.TryGetValue(typeKey, out GameObject gameObj))
             {
-                return GameObject.Instantiate(gameObj, rootRectTm);
+                return GameObject.Instantiate(gameObj, rootTm);
             }
 
             return null;

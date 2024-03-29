@@ -203,7 +203,7 @@ namespace UI
 
             var addEditAnimal = new GameSystem.UICreator<UI.Component.EditAnimal, UI.Component.EditAnimal.Data>()
                       .SetData(data)
-                      .SetRootRectTm(animalScrollRect.content)
+                      .SetRooTm(animalScrollRect.content)
                       .Create();
 
             _editAnimalList.Add(addEditAnimal);
@@ -230,7 +230,7 @@ namespace UI
 
             var addEditObject = new GameSystem.UICreator<UI.Component.EditObject, UI.Component.EditObject.Data>()
                    .SetData(data)
-                   .SetRootRectTm(objectScrollRect.content)
+                   .SetRooTm(objectScrollRect.content)
                    .Create();
 
             _editObjectList.Add(addEditObject);
@@ -416,7 +416,7 @@ namespace UI
             if (mainGameMgr == null)
                 return;
 
-            mainGameMgr.SpwanAnimalToPlace(id);
+            mainGameMgr.SpwanAnimalToPlace(id, true);
 
             _editing = true;
 

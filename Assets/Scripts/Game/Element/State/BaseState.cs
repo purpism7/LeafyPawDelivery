@@ -48,11 +48,9 @@ namespace Game.Element.State
 
         }
 
-        public virtual async UniTask Apply(BaseElement gameBaseElement)
+        public virtual void Apply(BaseElement gameBaseElement)
         {
             _gameBaseElement = gameBaseElement;
-
-            await UniTask.Yield();
         }
 
         public virtual void End()

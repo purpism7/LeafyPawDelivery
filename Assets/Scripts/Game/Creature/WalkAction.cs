@@ -85,7 +85,7 @@ namespace Game.Creature
             if (!animalTm)
                 return false;
 
-            _randomSeed = GameUtils.RandomSeed * 1000f;
+            _randomSeed = GameUtils.RandomSeed * 100000f;
 
             _targetPos = _posQueue.Dequeue();
 

@@ -22,7 +22,7 @@ namespace Game
         bool IsActivate { get; }
     }
 
-    public class Object : Game.BaseElement<Object.Data>, UI.Edit.IListener, IObject
+    public class Object : Game.BaseElement<Object.Data>, IObject
     {
         public class Data : BaseData
         {
@@ -59,6 +59,10 @@ namespace Game
                 if(data.isHiddenObj)
                 {
                     sortingOrder = data.sortingOrder;
+                }
+                else
+                {
+                    CreateEdit(rootTm);
                 }
 
                 SetSortingOrder(sortingOrder);
@@ -197,6 +201,32 @@ namespace Game
             _data.Pos = pos;
         }
 
+        protected override void Return()
+        {
+            if (_spwaned)
+                return;
+
+            SetLocalPos(_data.Pos);
+
+            Arrange();
+        }
+
+        protected override void Remove()
+        {
+            base.Remove();
+
+            RemoveHiddenObject();
+        }
+
+        protected override void Arrange()
+        {
+            SetLocalPosZ(LocalPos.y * GameUtils.PosZOffset);
+
+            _data.Pos = LocalPos;
+
+            base.Arrange();
+        }
+
         #region IObject
         Transform IObject.HiddenObjectRootTm
         {
@@ -255,31 +285,6 @@ namespace Game
             {
                 return LocalPos;
             }
-        }
-        #endregion
-
-        #region Edit.IListener
-        void UI.Edit.IListener.Return()
-        {
-            SetLocalPos(_data.Pos);
-
-            Arrange();
-        }
-
-        void UI.Edit.IListener.Remove()
-        {
-            Remove();
-
-            RemoveHiddenObject();
-        }
-
-        void UI.Edit.IListener.Arrange()
-        {
-            SetLocalPosZ(LocalPos.y * GameUtils.PosZOffset);
-
-            _data.Pos = LocalPos;
-
-            Arrange();
         }
         #endregion
     }
