@@ -120,12 +120,6 @@ namespace Game.Creature
                     return;
 
                 SetState(new Element.State.Edit()?.Initialize(gameCameraCtr, iGrid));
-
-                if(!_spwaned)
-                {
-                    _data.Pos = LocalPos;
-                }
-
                 SetSortingOrder(SelectOrder);
                 ActiveEdit(true);
 
@@ -237,6 +231,8 @@ namespace Game.Creature
                     }
                 case IPlaceState.EType.Edit:
                     {
+                        _data.Pos = LocalPos;
+
                         DeactivateChild();
 
                         break;

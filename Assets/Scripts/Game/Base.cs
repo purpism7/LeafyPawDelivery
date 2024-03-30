@@ -59,6 +59,7 @@ namespace Game
     {
         public int Id = 0;
 
+        protected System.Action<bool> _possibleTouchAction = null;
         protected System.Action _touchEndAction = null;
 
         public virtual void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid) { }
@@ -78,8 +79,9 @@ namespace Game
             }
         }
 
-        public void SetTouchEndAction(System.Action touchEndAction)
+        public void SetTouchAction(System.Action<bool> possibleTouchAction = null, System.Action touchEndAction = null)
         {
+            _possibleTouchAction = possibleTouchAction;
             _touchEndAction = touchEndAction;
         }
     }

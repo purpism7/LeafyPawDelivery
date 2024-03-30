@@ -242,6 +242,8 @@ namespace Game
         void UI.Edit.IListener.Move(bool isMoving)
         {
             IsMoving = isMoving;
+
+            _possibleTouchAction?.Invoke(isMoving);
         }
 
         void UI.Edit.IListener.Return()
@@ -249,7 +251,7 @@ namespace Game
             Return();
 
             _touchEndAction?.Invoke();
-            SetTouchEndAction(null);
+            SetTouchAction();
         }
 
         void UI.Edit.IListener.Remove()
@@ -257,7 +259,7 @@ namespace Game
             Remove();
 
             _touchEndAction?.Invoke();
-            SetTouchEndAction(null);
+            SetTouchAction();
         }
 
         void UI.Edit.IListener.Arrange()
@@ -265,7 +267,7 @@ namespace Game
             Arrange();
 
             _touchEndAction?.Invoke();
-            SetTouchEndAction(null);
+            SetTouchAction();
         }
         #endregion
     }

@@ -138,7 +138,7 @@ public static class GameUtils
             var random = Random.Range(-10000f, 10000f);
             Random.InitState((int)random);
 
-            return random * 0.00000001f;
+            return random * 0.000001f;
         }
     }
 

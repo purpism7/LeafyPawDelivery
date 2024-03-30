@@ -10,7 +10,7 @@ namespace GameSystem
 {
     public class InputHandler : MonoBehaviour
     {
-        private const float LongPressTime = 2f;
+        private const float LongPressTime = 1.5f;
 
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private IGrid _iGrid = null;
@@ -63,8 +63,7 @@ namespace GameSystem
             var touchPosition = touch.position;
             if (IsPointerOverUIObject(touchPosition))
                 return;
-                //return;
-
+                
             var ray = _gameCameraCtr.GameCamera.ScreenPointToRay(touchPosition);
 
             //RaycastHit hitInfo;
@@ -80,25 +79,15 @@ namespace GameSystem
             }
 
             Game.Base gameBase = GetTouchGameBase(raycastHit2Ds, gameStateEdit);
-
+            
             switch(touch.phase)
             {
                 case TouchPhase.Began:
                     {
-                        //if (!gameStateEdit)
-                        //{
-                        //    _pressTime += Time.deltaTime;
-
-                        //    if (_pressTime >= LongPressTime)
-                        //    {
-                        //        Debug.Log("LongPress");
-                        //    }
-                        //    //OnTouchBegan(touch, gameBase);
-                        //}
-
                         _isMove = false;
-                        _possibleTouch = true;
                         _pressTime = 0;
+
+                        SetPossibleTouch(true);
 
                         break;
                     }
@@ -132,7 +121,8 @@ namespace GameSystem
                                 if(gameBase != null)
                                 {
                                     OnTouchBegan(touch, gameBase);
-                                    gameBase.SetTouchEndAction(ReleaseGameBase);
+
+                                    gameBase.SetTouchAction(SetPossibleTouch, ReleaseGameBase);
                                 }
                             }
                             else if(_gameBase != null)
@@ -153,6 +143,8 @@ namespace GameSystem
                             OnTouchEnded(touch);
                         }
 
+                        SetPossibleTouch(false);
+
                         _isMove = false;
                         _pressTime = 0;
 
@@ -163,18 +155,7 @@ namespace GameSystem
                     {
                         if (!gameStateEdit)
                         {
-                            if(!_longPress)
-                            {
-                                _pressTime += Time.deltaTime;
-
-                                if (_pressTime >= LongPressTime)
-                                {
-                                    Debug.Log("LongPress");
-                                    _longPress = true;
-                                    _possibleTouch = false;
-                                    _pressTime = 0;
-                                }
-                            }
+                            LongPress(gameBase);
                         }
 
                         break;
@@ -184,7 +165,8 @@ namespace GameSystem
                     {
                         OnTouchEnded(touch);
 
-                        _possibleTouch = false;
+                        SetPossibleTouch(false);
+
                         _pressTime = 0;
 
                         break;
@@ -245,9 +227,7 @@ namespace GameSystem
         private void OnTouchBegan(Game.Base gameBase)
         {
             OnTouchBegan(null, gameBase);
-            gameBase?.SetTouchEndAction(ReleaseGameBase);
-
-            _possibleTouch = true;
+            gameBase?.SetTouchAction(SetPossibleTouch, ReleaseGameBase);
         }
 
         private void OnTouchEnded(Touch? touch)
@@ -262,10 +242,45 @@ namespace GameSystem
             if (_gameBase == null)
                 return;
 
-            //_beganGameBase = false;
             _gameBase = null;
 
-            _possibleTouch = false;
+            SetPossibleTouch(false);
+        }
+
+        private void SetPossibleTouch(bool possibleTouch)
+        {
+            _possibleTouch = possibleTouch;
+        }
+
+        private void LongPress(Game.Base gameBase)
+        {
+            if (_longPress)
+                return;
+
+            _pressTime += Time.deltaTime;
+
+            if (_pressTime < LongPressTime)
+                return;
+
+            if (gameBase != null)
+            {
+                SetPossibleTouch(false);
+
+                _longPress = true;
+
+                MainGameManager.Instance?.SetGameStateAsync(Game.Type.EGameState.Edit);
+
+                Game.UIManager.Instance?.Bottom?.DeactivateAnim(
+                    () =>
+                    {       
+                        OnTouchBegan(gameBase);
+
+                        gameBase.SetTouchAction(SetPossibleTouch, ReleaseGameBase);
+
+                        _longPress = false;
+                        _pressTime = 0;
+                    });
+            }
         }
 
         //private bool CheckGetGameBase<T>(RaycastHit raycastHit, out T t)

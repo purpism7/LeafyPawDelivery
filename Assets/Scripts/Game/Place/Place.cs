@@ -340,18 +340,18 @@ namespace Game
         //}
         #endregion
 
-        private float GetPosZOffset(int id)
-        {
-            float offset = 0.1f;
-            int length = (int)(Mathf.Log10(id) + 1);
+        //private float GetPosZOffset(int id)
+        //{
+        //    float offset = 0.1f;
+        //    int length = (int)(Mathf.Log10(id) + 1);
 
-            for (int i = 0; i < length; ++i)
-            {
-                offset *= 0.1f;
-            }
+        //    for (int i = 0; i < length; ++i)
+        //    {
+        //        offset *= 0.1f;
+        //    }
 
-            return offset;
-        }
+        //    return offset;
+        //}
 
         private void SetAnimalList()
         {
