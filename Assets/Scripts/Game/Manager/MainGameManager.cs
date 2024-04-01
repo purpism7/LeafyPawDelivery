@@ -604,7 +604,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     #endregion
 
     #region Edit
-    public void Remove(Game.Type.EElement EElement, int id, int uId)
+    public void Remove(Game.Type.EElement EElement, int id, int uId, bool refresh)
     {
         switch (EElement)
         {
@@ -613,19 +613,27 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                     placeMgr?.ActivityPlace?.RemoveAnimal(id);
                     Get<Game.AnimalManager>()?.Remove(id);
 
-                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshAnimalList();
+                    if(refresh)
+                    {
+                        Game.UIManager.Instance?.Bottom?.EditList?.RefreshAnimalList();
+                    }
 
                     break;
                 }
 
             case Game.Type.EElement.Object:
                 {
-                    var objectMgr = Get<Game.ObjectManager>();
+                    var placeMgr = Get<Game.PlaceManager>();
 
-                    placeMgr?.ActivityPlace?.RemoveObject(id, uId);
-                    objectMgr?.Remove(id, uId);
+                    Game.IPlace iPlace = placeMgr?.ActivityPlace;
+                    iPlace?.RemoveObject(id, uId);
 
-                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList(objectMgr);
+                    Get<Game.ObjectManager>()?.Remove(id, uId);
+
+                    if(refresh)
+                    {
+                        Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
+                    }
 
                     break;
                 }
@@ -666,10 +674,9 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                     if (obj == null)
                         return;
 
-                    var objectMgr = Get<Game.ObjectManager>();
-                    objectMgr?.ArrangeObject(obj, placeId);
+                    Get<Game.ObjectManager>()?.ArrangeObject(obj, placeId);
 
-                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList(objectMgr);
+                    Game.UIManager.Instance?.Bottom?.EditList?.RefreshObjectList();
 
                     break;
                 }

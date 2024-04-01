@@ -67,6 +67,9 @@ namespace UI.Component
                 if (!data.Show)
                     continue;
 
+                if (data.EPayment == Game.Type.EPayment.Advertising)
+                    continue;
+
                 var shopItemCellData = new ShopItemCell.Data_()
                 {
                     iListener = _data.iShopItemCellListener,
@@ -75,11 +78,22 @@ namespace UI.Component
                     adData = data.EPayment == Game.Type.EPayment.Advertising ? _data.iShop?.GetADData(data.ECategory) : null,
                 };
 
-                var cell = new ComponentCreator<ShopItemCell, ShopItemCell.Data_>()
+                new ComponentCreator<ShopItemCell, ShopItemCell.Data_>()
                     .SetData(shopItemCellData)
                     .SetRootRectTm(itemRootRectTm)
                     .Create();
             }
+
+            var cell = new ComponentCreator<ShopItemCell, ShopItemCell.Data_>()
+                   .SetData(new ShopItemCell.Data_()
+                   {
+                       empty = true,
+                   })
+                   .SetRootRectTm(itemRootRectTm)
+                   .Create();
+
+            //cell?.GetOrAddComponent<UnityEngine.UI.Image>()?.CrossFadeAlpha(0, 0, true);
+            //cell?.Deactivate();
         }
     }
 }

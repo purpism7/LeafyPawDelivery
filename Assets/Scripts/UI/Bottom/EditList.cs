@@ -11,7 +11,7 @@ using UI.Component;
 
 namespace UI
 {
-    public class EditList : Base<EditList.Data>, EditAnimal.IListener, EditObject.IListener
+    public class EditList : Base<EditList.Data>, EditAnimal.IListener, EditObject.IListener, ResetArrange.IListener
     {
         public class Data : BaseData
         {
@@ -31,6 +31,8 @@ namespace UI
         private Toggle animalToggle = null;
         [SerializeField]
         private Toggle objectToggle = null;
+        [SerializeField]
+        private Button resetBtn = null;
 
         private List<Component.EditAnimal> _editAnimalList = new();
         private List<Component.EditObject> _editObjectList = new();
@@ -57,9 +59,12 @@ namespace UI
             SetAnimalList();
             SetObjectList();
 
-            EnableToggle(!CheckIsTutorial);
+            EnableToggleAndBtn(!CheckIsTutorial);
 
-            MoveScrollToIndex().Forget();
+            if(CurrETabType == Type.ETab.Object)
+            {
+                MoveScrollToIndex(objectScrollRect, _selectIndex).Forget();
+            }
 
             _editing = false;
         }
@@ -88,20 +93,17 @@ namespace UI
             return this;
         }
 
-        private async UniTask MoveScrollToIndex()
+        private async UniTask MoveScrollToIndex(ScrollRect scrollRect, int index)
         {
-            if (_selectIndex < 0)
+            if (index < 0)
                 return;
 
-            if (CurrETabType == Type.ETab.Object)
+            var gridLayoutGroup = scrollRect?.content?.GetComponent<GridLayoutGroup>();
+            if (gridLayoutGroup != null)
             {
-                var gridLayoutGroup = objectScrollRect?.content?.GetComponent<GridLayoutGroup>();
-                if (gridLayoutGroup != null)
-                {
-                    await UniTask.Yield();
+                await UniTask.Yield();
 
-                    objectScrollRect?.MoveHorizontalScrollToIndex(gridLayoutGroup.cellSize.x, _selectIndex);
-                }
+                scrollRect?.MoveHorizontalScrollToIndex(gridLayoutGroup.cellSize.x, index);
             }
         }
 
@@ -155,7 +157,7 @@ namespace UI
             int placeId = GameUtils.ActivityPlaceId;
             var objectDataList = ObjectContainer.Instance?.GetDataListByPlaceId(placeId);
 
-            var objectDatas = objectDataList?.OrderBy(data => data.Order);
+            var objectDatas = objectDataList?.OrderBy(data => data.Id);
 
             bool isTutorial = CheckIsTutorial;
             EnableScrollRect(objectScrollRect, !isTutorial);
@@ -192,11 +194,11 @@ namespace UI
                 if (editAnimal == null)
                     continue;
 
-                if (editAnimal.IsActivate)
+                if (editAnimal.gameObject.IsActive())
                     continue;
 
                 editAnimal.Initialize(data);
-                editAnimal.Activate();
+                editAnimal.gameObject?.SetActive(true);
 
                 return;
             }
@@ -219,11 +221,11 @@ namespace UI
                 if (editObject == null)
                     continue;
 
-                if (editObject.IsActivate)
+                if (editObject.gameObject.IsActive())
                     continue;
 
                 editObject.Initialize(data);
-                editObject.Activate();
+                editObject.gameObject?.SetActive(true);
 
                 return;
             }
@@ -246,7 +248,7 @@ namespace UI
         {
             foreach (var animal in _editAnimalList)
             {
-                animal?.Deactivate();
+                animal?.gameObject.SetActive(false);
             }
         }
 
@@ -254,7 +256,7 @@ namespace UI
         {
             foreach(var obj in _editObjectList)
             {
-                obj?.Deactivate();
+                obj?.gameObject.SetActive(false);
             }
         }
 
@@ -310,8 +312,9 @@ namespace UI
             }
         }
 
-        public void RefreshObjectList(ObjectManager objectMgr)
+        public void RefreshObjectList()
         {
+            var objectMgr = MainGameManager.Get<ObjectManager>();
             if (objectMgr == null)
                 return;
 
@@ -371,7 +374,7 @@ namespace UI
             ActiveContents();
         }
 
-        private void EnableToggle(bool enable)
+        private void EnableToggleAndBtn(bool enable)
         {
             if (animalToggle != null)
             {
@@ -381,6 +384,11 @@ namespace UI
             if (objectToggle != null)
             {
                 objectToggle.enabled = enable;
+            }
+
+            if(resetBtn != null)
+            {
+                resetBtn.interactable = enable;
             }
         }
 
@@ -443,6 +451,24 @@ namespace UI
         }
         #endregion
 
+        #region ResetArrange.IListener
+        void ResetArrange.IListener.Reset()
+        {
+            var placeMgr = MainGameManager.Get<Game.PlaceManager>();
+
+            IPlace iPlace = placeMgr?.ActivityPlace;
+            iPlace?.RemoveAll(
+                () =>
+                {
+                    RefreshAnimalList();
+                    RefreshObjectList();
+
+                    MoveScrollToIndex(animalScrollRect, 0).Forget();
+                    MoveScrollToIndex(objectScrollRect, 0).Forget();
+                });
+        }
+        #endregion
+
         public void OnChanged(string tabType)
         {
             if(System.Enum.TryParse(tabType, out Type.ETab eTabType))
@@ -465,7 +491,18 @@ namespace UI
 
         public void OnClickAllReset()
         {
+            Sequencer.EnqueueTask(
+                () =>
+                {
+                    var resetArrange = new GameSystem.PopupCreator<ResetArrange, ResetArrange.Data>()
+                        .SetData(new ResetArrange.Data()
+                        {
+                            iListener = this,
+                        })
+                        .Create();
 
+                    return resetArrange;
+                });
         }
     }
 }

@@ -319,6 +319,10 @@ MonoBehaviour:
     m_Localized: See you in spring!
     m_Metadata:
       m_Items: []
+  - m_Id: 85365102654513152
+    m_Localized: Do you want to reset the arrangement?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

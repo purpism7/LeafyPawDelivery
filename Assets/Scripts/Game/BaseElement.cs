@@ -228,9 +228,9 @@ namespace Game
             SetState(null);
         }
 
-        protected virtual void Remove()
+        protected virtual void Remove(bool refresh)
         {
-            Command.Remove.Execute(this);
+            Command.Remove.Execute(this, refresh);
 
             SetSpwaned(true);
             ActiveEdit(false);
@@ -256,7 +256,7 @@ namespace Game
 
         void UI.Edit.IListener.Remove()
         {
-            Remove();
+            Remove(true);
 
             _touchEndAction?.Invoke();
             SetTouchAction();

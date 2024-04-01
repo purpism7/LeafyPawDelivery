@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using Game;
 
 namespace Game.Creature
 {
     public interface IAnimal
     {
+        void Remove(bool refresh);
+
         Animator Animator { get; }
         SpriteRenderer SpriteRenderer { get; }
         Game.Type.EGameState EGameState { get; }
@@ -69,11 +73,13 @@ namespace Game.Creature
         {
             base.Deactivate();
 
-            DeactivateChild();
+            DeactivateChild().Forget();
         }
 
-        private void DeactivateChild()
+        private async UniTask DeactivateChild()
         {
+            await UniTask.Yield();
+
             _actionCtr?.Deactivate();
         }
 
@@ -171,6 +177,11 @@ namespace Game.Creature
         }
 
         #region IAnimal
+        void IAnimal.Remove(bool refresh)
+        {
+            Remove(refresh);
+        }
+
         Animator IAnimal.Animator
         {
             get
@@ -225,7 +236,7 @@ namespace Game.Creature
                     {
                         SetState(new Element.State.Deactive()?.Initialize());
 
-                        DeactivateChild();
+                        DeactivateChild().Forget();
 
                         break;
                     }
@@ -233,7 +244,7 @@ namespace Game.Creature
                     {
                         _data.Pos = LocalPos;
 
-                        DeactivateChild();
+                        DeactivateChild().Forget();
 
                         break;
                     }

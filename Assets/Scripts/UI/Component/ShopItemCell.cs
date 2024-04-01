@@ -24,9 +24,11 @@ namespace UI.Component
         public class Data_ : BaseData
         {
             public IListener iListener = null;
+
             public Data.Shop shopData = null;
             public Product product = null;
             public AD.Data adData = null;
+            public bool empty = false;
         }
 
         public interface IListener
@@ -52,11 +54,28 @@ namespace UI.Component
 
             SetItemType();
             SetPlayTimer(true);
+
+            //if (data != null)
+            //{
+            //    if (data.empty)
+            //    {
+            //        Deactivate();
+            //    }
+            //}
         }
 
         public override void Activate()
         {
             base.Activate();
+
+            if(_data.empty)
+            {
+                gameObject.GetOrAddComponent<Image>()?.CrossFadeAlpha(0, 0, false);
+
+                Deactivate();
+
+                return;
+            }
 
             SetIconImg();
             SetValue();

@@ -1765,6 +1765,7 @@ MonoBehaviour:
   objectScrollRect: {fileID: 7775372434446777809}
   animalToggle: {fileID: 2951676036973564659}
   objectToggle: {fileID: 6133499551694407534}
+  resetBtn: {fileID: 6897764614069408887}
 --- !u!1 &8724812519489004112
 GameObject:
   m_ObjectHideFlags: 0

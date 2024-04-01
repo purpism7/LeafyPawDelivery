@@ -10,6 +10,8 @@ namespace Game
 {
     public interface IObject
     {
+        void Remove(bool refresh);
+
         Transform HiddenObjectRootTm { get; }
         bool CheckExistHiddenObject { get; }
         void ActivateHiddenObject();
@@ -211,9 +213,9 @@ namespace Game
             Arrange();
         }
 
-        protected override void Remove()
+        protected override void Remove(bool refresh)
         {
-            base.Remove();
+            base.Remove(refresh);
 
             RemoveHiddenObject();
         }
@@ -228,6 +230,11 @@ namespace Game
         }
 
         #region IObject
+        void IObject.Remove(bool refresh)
+        {
+            Remove(refresh);
+        }
+
         Transform IObject.HiddenObjectRootTm
         {
             get

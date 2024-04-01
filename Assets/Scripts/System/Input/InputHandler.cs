@@ -10,7 +10,7 @@ namespace GameSystem
 {
     public class InputHandler : MonoBehaviour
     {
-        private const float LongPressTime = 1.5f;
+        private const float LongPressTime = 0.7f;
 
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private IGrid _iGrid = null;
@@ -262,7 +262,7 @@ namespace GameSystem
             if (_pressTime < LongPressTime)
                 return;
 
-            if (gameBase != null)
+            if (gameBase is Game.BaseElement)
             {
                 SetPossibleTouch(false);
 

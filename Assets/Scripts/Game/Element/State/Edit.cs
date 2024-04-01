@@ -128,7 +128,7 @@ namespace Game.Element.State
             Vector3 movePos = new Vector3(touchPos.x, touchPos.y, distance);
             Vector3 pos = gameCamera.ScreenToWorldPoint(movePos);
 
-            pos.y += 150f;
+            pos.y += 160f;
             pos.y = _iGrid.LimitPosY(pos.y);
 
             //_gameBaseElement?.SetLocalPos(pos);

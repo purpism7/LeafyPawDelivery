@@ -41,8 +41,6 @@ namespace Game.Creature
                 return;
             }
 
-            await UniTask.Yield();
-
             List<Vector3> pathPosList = await Carrier.MoveAsync(_data.Tm.localPosition);
             if (pathPosList == null)
             {
@@ -50,6 +48,9 @@ namespace Game.Creature
 
                 return;
             }
+
+            _randomSeed = GameUtils.RandomSeed;
+            _randomSeed *= 1000f;
 
             _posQueue.Clear();
 
@@ -84,9 +85,6 @@ namespace Game.Creature
             var animalTm = _data.Tm;
             if (!animalTm)
                 return false;
-
-            _randomSeed = GameUtils.RandomSeed;
-            _randomSeed *= 1000f;
 
             _targetPos = _posQueue.Dequeue();
 

@@ -43,7 +43,7 @@ namespace Game.Command
                 if (activityPlace == null)
                     return;
 
-                _pos.z = _gameBaseElement.LocalPos.y + activityPlace.ObjectPosZ;
+                _pos.z = _gameBaseElement.LocalPos.y + activityPlace.ObjectPosZ();
                 _gameBaseElement.SetLocalPosZ(_pos.z);
             }
         }

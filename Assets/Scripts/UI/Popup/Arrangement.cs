@@ -333,12 +333,13 @@ namespace UI
             UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Game.Type.ETab.Animal);
             UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Game.Type.ETab.Object);
 
-            if(_initActivateTab != null &&
+            ActivateArrangementCellList();
+
+            if (_initActivateTab != null &&
                !_initActivateTab[(int)_currETabType])
             {
                 _initActivateTab[(int)_currETabType] = true;
 
-                ActivateArrangementCellList();
                 MoveScrollPossibleBuy().Forget();
             }
         }
@@ -379,7 +380,7 @@ namespace UI
             }
         }
 
-        private void Obtain(Game.Type.EElement EElement, int id)
+        private void Obtain(Game.Type.EElement eElement, int id)
         {
             var objectMgr = MainGameManager.Get<Game.ObjectManager>();
             if (objectMgr == null)
@@ -393,16 +394,10 @@ namespace UI
                 if (cell == null)
                     continue;
 
-                if(cell.Obtain(EElement, id))
+                if(cell.Obtain(eElement, id))
                 {
-                    if(EElement == Game.Type.EElement.Animal)
-                    {
-                        Info.Connector.Get?.ResetPossibleBuyAnimal();
-                    }
-                    else if(EElement == Game.Type.EElement.Object)
-                    {
-                        Info.Connector.Get?.ResetPossibleBuyObject();
-                    }
+                    Info.Connector.Get?.ResetPossibleBuyAnimal();
+                    Info.Connector.Get?.ResetPossibleBuyObject();
 
                     cell.SetIndex(GetIndex(objectMgr, cell.Id, ref _objectIndex));
                 }
@@ -538,6 +533,8 @@ namespace UI
             if(animalData is Game.Event.AddAnimalData)
             {
                 Obtain(Game.Type.EElement.Animal, animalData.id);
+
+                Info.Connector.Get?.SetPossibleBuyObject();
             }
         }
         
@@ -556,6 +553,8 @@ namespace UI
                 {
                     Info.Connector.Get?.SetPossibleBuyObject();
                 }
+
+                Info.Connector.Get?.SetPossibleBuyAnimal();
             }
         }
 

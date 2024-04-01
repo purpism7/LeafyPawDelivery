@@ -289,6 +289,10 @@ MonoBehaviour:
     m_Key: desc_see_you_spring
     m_Metadata:
       m_Items: []
+  - m_Id: 85365102654513152
+    m_Key: desc_reset_arrange
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -10,7 +10,10 @@ namespace Game
     {
         List<Game.Creature.Animal> AnimalList { get; }
         List<Game.Object> ObjectList { get; }
-        
+
+        void RemoveObject(int id, int uId);
+        void RemoveAll(System.Action endAction);
+
         void CreateDropItem(DropItem.Data dropItemData);
     }
 
@@ -276,7 +279,7 @@ namespace Game
             return addObj;
         }
 
-        public void RemoveObject(int id, int objectUId)
+        private void RemoveObject(int id, int objectUId)
         {
             if(_objectList == null)
                 return;
@@ -303,16 +306,13 @@ namespace Game
         //    return -posZ;
         //}
 
-        public float ObjectPosZ
+        public float ObjectPosZ()
         {
-            get
-            {
-                _objectPosZ -= ObjectPosZOffset;
+            _objectPosZ -= ObjectPosZOffset;
 
-                PlayerPrefs.SetFloat(KeyObjectPosZ, _objectPosZ);
+            PlayerPrefs.SetFloat(KeyObjectPosZ, _objectPosZ);
 
-                return _objectPosZ;
-            }
+            return _objectPosZ;
         }
 
         private float ObjectPosZOffset
@@ -535,6 +535,41 @@ namespace Game
             {
                 return _objectList;
             }
+        }
+
+        void IPlace.RemoveObject(int id, int uId)
+        {
+            RemoveObject(id, uId);
+        }
+
+        void IPlace.RemoveAll(System.Action endAction)
+        {
+            if(_animalList != null)
+            {
+                foreach (Creature.IAnimal iAnimal in _animalList)
+                {
+                    if (iAnimal == null)
+                        continue;
+
+                    iAnimal.Remove(false);
+                }
+            }
+
+            if (_objectList != null)
+            {
+                foreach (IObject iObj in _objectList)
+                {
+                    if (iObj == null)
+                        continue;
+
+                    iObj.Remove(false);
+                }
+
+                _objectPosZ = GameUtils.GetPosZOrder(Type.EPosZOrder.Object);
+                ObjectPosZ();
+            }
+
+            endAction?.Invoke();
         }
 
         void IPlace.CreateDropItem(DropItem.Data dropItemData)
