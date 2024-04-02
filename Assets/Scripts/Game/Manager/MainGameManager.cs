@@ -438,9 +438,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         _iGrid?.Overlap();
 
-        endMoveAction?.Invoke();
-
         EndLoadAsync(false).Forget();
+
+        await UniTask.Yield();
+
+        endMoveAction?.Invoke();
 
         PlayerPrefs.SetInt(Game.Data.PlayPrefsKeyLastPlaceKey, placeId);
     }
