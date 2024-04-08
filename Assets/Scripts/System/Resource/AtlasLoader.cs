@@ -53,7 +53,8 @@ namespace GameSystem
 
         public Sprite GetAnimalCurrencySpriteByPlaceId(int placeId)
         {
-            var placeData = Game.Data.Const.GetPlaceData(placeId);
+            Game.IPlaceData iPlaceData = MainGameManager.Get<Game.PlaceManager>();
+            var placeData = iPlaceData?.GetPlaceData(placeId);
             if (placeData == null)
                 return null;
 
@@ -82,7 +83,7 @@ namespace GameSystem
                 return GetSprite("Shop", name);
             }
 
-            var placeData = Game.Data.Const.ActivityPlaceData;
+            var placeData = MainGameManager.Get<Game.PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return null;
 

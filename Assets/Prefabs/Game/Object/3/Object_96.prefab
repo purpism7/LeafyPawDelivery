@@ -250,11 +250,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 6281575790720672042}
-  Id: 95
+  Id: 96
   UId: 0
   spriteRenderer: {fileID: 8198808596251828485}
   edit: {fileID: 0}
   IsOverlap: 1
+  goPass: 0
   isWind: 0
   sortingOrderOffset: -1000
   hiddenRootTm: {fileID: 0}

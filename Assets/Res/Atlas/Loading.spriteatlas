@@ -42,7 +42,9 @@ SpriteAtlas:
     - f226ddf3041ee4ef8831c44ac0196555: 21300000
     - b4338115adf9348d48112645af6c7973: 21300000
     - 969eee659033846d59e7881317193ee7: 21300000
+    - d39d0b079b9db4a82a342801bff082fd: 21300000
     - 327b659742d594974bc5f892b9d2d803: 21300000
+    - 2e2247a8f103e4246a5582360e3e9803: 21300000
     - 9d340d59a2d254bc8b8062a4238ce865: 21300000
     - 7a620d993fc5042b892a905700376abe: 21300000
     - 3852b65b7037c49fda21f6effeaa5a0d: 21300000
@@ -55,7 +57,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f226ddf3041ee4ef8831c44ac0196555, type: 3}
   - {fileID: 21300000, guid: b4338115adf9348d48112645af6c7973, type: 3}
   - {fileID: 21300000, guid: 969eee659033846d59e7881317193ee7, type: 3}
+  - {fileID: 21300000, guid: d39d0b079b9db4a82a342801bff082fd, type: 3}
   - {fileID: 21300000, guid: 327b659742d594974bc5f892b9d2d803, type: 3}
+  - {fileID: 21300000, guid: 2e2247a8f103e4246a5582360e3e9803, type: 3}
   - {fileID: 21300000, guid: 9d340d59a2d254bc8b8062a4238ce865, type: 3}
   - {fileID: 21300000, guid: 7a620d993fc5042b892a905700376abe, type: 3}
   - {fileID: 21300000, guid: 3852b65b7037c49fda21f6effeaa5a0d, type: 3}
@@ -67,7 +71,9 @@ SpriteAtlas:
   - Map02_Loading_01
   - Loading_bg_02
   - UI_LoadingBar01
+  - Map04_Loading_01
   - GameLogo
+  - Map04_Loading_02
   - Map01_Loading_01
   - Map03_Loading_01
   - Map03_Loading_02

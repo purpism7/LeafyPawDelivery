@@ -132,7 +132,7 @@ namespace UI
 
         private void SetCurrencyImg()
         {
-            var placeData = Game.Data.Const.GetPlaceData(GameUtils.ActivityPlaceId);
+            var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return;
 
@@ -331,7 +331,7 @@ namespace UI
             if (_collectCurrencyList == null)
                 return;
 
-            var placeData = Game.Data.Const.GetPlaceData(GameUtils.ActivityPlaceId);
+            var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return;
 

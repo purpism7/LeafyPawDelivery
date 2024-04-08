@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "LeafyPawDelivery/ScriptableObject/Data/AD")]
+[CreateAssetMenu(menuName = "Leafy Parcels/ScriptableObject/Data/AD")]
 public class AD : ScriptableObject
 {
     [Serializable]

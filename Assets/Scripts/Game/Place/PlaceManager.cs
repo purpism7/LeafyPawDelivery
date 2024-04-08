@@ -9,7 +9,15 @@ using UnityEngine.UI;
 
 namespace Game
 {
-    public class PlaceManager : Manager.Base<PlaceManager.Data>, IUpdater
+    public interface IPlaceData
+    {
+        GameData.Place.Data GetPlaceData(int placeId);
+
+        int LastPlaceId { get; }
+        int TotalPlaceCount { get; }
+    }
+
+    public class PlaceManager : Manager.Base<PlaceManager.Data>, IUpdater, IPlaceData
     {
         public class Data : Manager.BaseData
         {
@@ -19,6 +27,8 @@ namespace Game
         public static UnityEvent<int> Event { get; private set; } = null;
 
         public Transform RootTm;
+        [SerializeField]
+        private GameData.Place placeData = null;
 
         private List<Place> _placeList = new List<Place>();
 
@@ -80,5 +90,55 @@ namespace Game
 
             ActivityPlace?.ChainUpdate();
         }
+
+        public GameData.Place.Data ActivityPlaceData
+        {
+            get
+            {
+                if (placeData == null)
+                    return null;
+
+                return placeData.GetPlaceData(ActivityPlaceId);
+            }
+        }
+
+
+        #region IPlaceData
+        GameData.Place.Data IPlaceData.GetPlaceData(int placeId)
+        {
+            if (placeData == null)
+                return null;
+
+            return placeData.GetPlaceData(placeId);
+        }
+
+        int IPlaceData.LastPlaceId
+        {
+            get
+            {
+                if (placeData == null)
+                    return 0;
+
+                return placeData.LastPlaceId;
+            }
+        }
+
+        int IPlaceData.TotalPlaceCount
+        {
+            get
+            {
+                if (placeData == null ||
+                    placeData.Datas == null)
+                    return 0;
+
+                return placeData.Datas.Length;
+            }
+        }
+
+        //public Info.User.Currency GetStartCurrency(int placeId)
+        //{
+        //    return placeData?.GetStartCurrency(placeId);
+        //}
+        #endregion
     }
 }

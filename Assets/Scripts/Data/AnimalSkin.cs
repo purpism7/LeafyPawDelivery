@@ -10,13 +10,21 @@ public class AnimalSkin : Data.Base
     public string Type = string.Empty;
     public bool Advertising = false;
     public string ImgName = string.Empty;
-    public string ShortIconImgName = string.Empty;
-    public string LargeIconImgName = string.Empty;
     [SerializeField]
     private int bonus = 0;
 
     public Game.Type.EAnimalSkin EAnimalSkin = Game.Type.EAnimalSkin.Base;
     public int Bonus { get { return bonus; } }
+
+    public string GetShortIconImgName(int placeId)
+    {
+        return string.Format("EditIcon_Map{0}_Animal_{1}", placeId, AnimalId);
+    }
+
+    public string GetLargeIconImgName(int placeId)
+    {
+        return string.Format("BookIcon_Map{0}_Animal_{1}", placeId, AnimalId);
+    }
 
     public override void Initialize()
     {

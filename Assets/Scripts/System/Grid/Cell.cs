@@ -90,7 +90,7 @@ namespace GameSystem
                 var gameBaseElement = collider.GetComponentInParent<Game.BaseElement>();
                 if (gameBaseElement != null)
                 {
-                    if (gameBaseElement.IsOverlap)
+                    if (!gameBaseElement.GoPass)
                     {
                         IsOverlap = true;
 

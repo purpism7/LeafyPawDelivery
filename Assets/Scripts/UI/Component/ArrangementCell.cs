@@ -258,7 +258,7 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
-            var placeData = Game.Data.Const.ActivityPlaceData;
+            var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return;
 
@@ -273,7 +273,7 @@ namespace UI.Component
             if (openCondition == null)
                 return;
 
-            var placeData = Game.Data.Const.ActivityPlaceData;
+            var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return;
 
@@ -459,12 +459,13 @@ namespace UI.Component
                     int animalCurrency = openConditionData.AnimalCurrency;
                     int objectCurrency = openConditionData.ObjectCurrency;
 
-                    Info.UserManager.Instance?.SetCurrency(new Info.User.Currency()
-                    {
-                        PlaceId = GameUtils.ActivityPlaceId,
-                        Animal = -animalCurrency,
-                        Object = -objectCurrency,
-                    });
+                    Info.UserManager.Instance?.SetCurrency(
+                        new Info.User.Currency()
+                        {
+                            PlaceId = GameUtils.ActivityPlaceId,
+                            Animal = -animalCurrency,
+                            Object = -objectCurrency,
+                        });
 
                     ITop iTop = Game.UIManager.Instance?.Top;
                     iTop?.SetCurrency();

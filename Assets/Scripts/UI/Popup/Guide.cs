@@ -78,13 +78,6 @@ namespace UI
             string sentence = _data.sentenceQueue.Dequeue();
             typingTMP?.SetText(sentence);
 
-            //foreach (var typingChr in sentence)
-            //{
-            //    await UniTask.WaitForSeconds(0.02f);
-
-            //    typingTMP?.SetText(typingTMP.text + typingChr);
-            //}
-
             await UniTask.WaitForSeconds(1.5f);
 
             FinishTyping();

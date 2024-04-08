@@ -32,7 +32,16 @@ namespace Info
 
             _objectInfoDic?.Clear();
 
-            for (int i = 1; i <= Game.Data.Const.TotalPlaceCount; ++i)
+            int totalPlaceCount = 0;
+            IPlaceData iPlaceData = MainGameManager.Get<PlaceManager>();
+            if(iPlaceData != null)
+            {
+                totalPlaceCount = iPlaceData.TotalPlaceCount;
+            }
+            
+            Debug.Log(totalPlaceCount);
+
+            for (int i = 1; i <= totalPlaceCount; ++i)
             {
                 List<Info.Object> objectInfoList = null;
                 var fullPath = string.Format(JsonFilePath, i);

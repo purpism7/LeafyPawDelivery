@@ -46,7 +46,9 @@ SpriteAtlas:
     - 44ed85392bcaa48809aee6e88e94b8a3: 21300000
     - 365a7ce9dc3b84ed6a97d25a0fb3acaa: 21300000
     - ccca135b277c54800bd2ed42eb141185: 21300000
+    - 031bf58be75334d729d712b4b2cea967: 21300000
     - 106c7ddc9c1f441a88621f8cb1b1596f: 21300000
+    - d92a1efdf47e14dfab64ed1e6d0fb03b: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 65d01401a900945a09b501a06646e551, type: 3}
@@ -58,7 +60,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 44ed85392bcaa48809aee6e88e94b8a3, type: 3}
   - {fileID: 21300000, guid: 365a7ce9dc3b84ed6a97d25a0fb3acaa, type: 3}
   - {fileID: 21300000, guid: ccca135b277c54800bd2ed42eb141185, type: 3}
+  - {fileID: 21300000, guid: 031bf58be75334d729d712b4b2cea967, type: 3}
   - {fileID: 21300000, guid: 106c7ddc9c1f441a88621f8cb1b1596f, type: 3}
+  - {fileID: 21300000, guid: d92a1efdf47e14dfab64ed1e6d0fb03b, type: 3}
   m_PackedSpriteNamesToIndex:
   - fish
   - letter_bar
@@ -69,7 +73,9 @@ SpriteAtlas:
   - shellfish
   - moon
   - jewel
+  - snow
   - acorn
+  - ice
   m_RenderDataMap: {}
   m_Tag: Currency
   m_IsVariant: 0

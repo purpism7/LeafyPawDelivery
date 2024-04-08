@@ -479,7 +479,14 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             if (user == null)
                 return false;
 
-            if(userMgr.SaveLastPlaceId())
+            int lastPlaceId = 0;
+            Game.IPlaceData iPlaceData = MainGameManager.Get<Game.PlaceManager>();
+            if(iPlaceData != null)
+            {
+                lastPlaceId = iPlaceData.LastPlaceId;
+            }
+            
+            if(userMgr.SaveLastPlaceId(lastPlaceId))
             {
                 Info.Connector.Get?.SetOpenPlace(user.LastPlaceId);
 

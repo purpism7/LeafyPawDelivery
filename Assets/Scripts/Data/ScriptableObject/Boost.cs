@@ -5,7 +5,7 @@ using System;
 
 namespace GameData
 {
-    [CreateAssetMenu(menuName = "LeafyPawDelivery/ScriptableObject/Data/Boost")]
+    [CreateAssetMenu(menuName = "Leafy Parcels/ScriptableObject/Data/Boost")]
     public class Boost : ScriptableObject
     {
         [Serializable]

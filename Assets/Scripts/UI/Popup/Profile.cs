@@ -178,7 +178,7 @@ namespace UI
             if (_data == null)
                 return;
 
-            var placeData = Game.Data.Const.ActivityPlaceData;
+            var placeData = MainGameManager.Get<Game.PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return;
 
@@ -203,7 +203,7 @@ namespace UI
             if (_data == null)
                 return;
 
-            var placeData = Game.Data.Const.ActivityPlaceData;
+            var placeData = MainGameManager.Get<Game.PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return;
 

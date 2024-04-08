@@ -76,7 +76,7 @@ public static class GameUtils
             if (data == null)
                 return null;
 
-            return atlasLoader?.GetAnimalIconSprite(data.ShortIconImgName);
+            return atlasLoader?.GetAnimalIconSprite(data.GetShortIconImgName(ActivityPlaceId));
         }
         else if (EElement == Type.EElement.Object)
         {
@@ -102,7 +102,7 @@ public static class GameUtils
             if (data == null)
                 return null;
     
-            return atlasLoader.GetAnimalIconSprite(data.LargeIconImgName);
+            return atlasLoader.GetAnimalIconSprite(data.GetLargeIconImgName(ActivityPlaceId));
         }
         else if (EElement == Type.EElement.Object)
         {

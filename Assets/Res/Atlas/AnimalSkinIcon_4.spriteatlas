@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AnimalSkinIcon_4
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: bd64691f042d0492996fccef4934ab13, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 61660de0f977144a282e86f69e4f4725: 21300000
+    - 3c10f24232509424fbec0e7c6ad0cf0c: 21300000
+    - d44b46520b0b14755812678dc675ec65: 21300000
+    - fd5332561251a4f6aa70b18a01851c29: 21300000
+    - 26ca69b765415435d8d3535f5bfea17e: 21300000
+    - 8c7858e797aba4136b6f539ec6097d48: 21300000
+    - 72fd9a28ffed4435aafcedbe19435ae1: 21300000
+    - 4ee02b28ad67b4fd5b433bd899aa0ab1: 21300000
+    - 46397689d3db3485cbbc86859b96fb36: 21300000
+    - 7328daa94104b4e0389f13a9485de15a: 21300000
+    - fa7f0ec90f174456e93c2ac7b121363a: 21300000
+    - a1edeb1cf16ca486495f9d5461ea3e96: 21300000
+    - 353951ccca57844f4bdf1b9203db433b: 21300000
+    - 923014dc0f95b4d88a188076ea20d4ae: 21300000
+    - 807f5cdc8404240bfad74f6535890547: 21300000
+    - 4b1b7ddc2b9964635aabc5b32e02d80e: 21300000
+    - 6a860efd842a8409db5a8b5312701e83: 21300000
+    - e8cf408ed3e324052a314381b97f57fa: 21300000
+    - 857f34aec784849f5bf9d1b0e5b19799: 21300000
+    - 8944391f6ebdd43e3bf57342b4a3634f: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 61660de0f977144a282e86f69e4f4725, type: 3}
+  - {fileID: 21300000, guid: 3c10f24232509424fbec0e7c6ad0cf0c, type: 3}
+  - {fileID: 21300000, guid: d44b46520b0b14755812678dc675ec65, type: 3}
+  - {fileID: 21300000, guid: fd5332561251a4f6aa70b18a01851c29, type: 3}
+  - {fileID: 21300000, guid: 26ca69b765415435d8d3535f5bfea17e, type: 3}
+  - {fileID: 21300000, guid: 8c7858e797aba4136b6f539ec6097d48, type: 3}
+  - {fileID: 21300000, guid: 72fd9a28ffed4435aafcedbe19435ae1, type: 3}
+  - {fileID: 21300000, guid: 4ee02b28ad67b4fd5b433bd899aa0ab1, type: 3}
+  - {fileID: 21300000, guid: 46397689d3db3485cbbc86859b96fb36, type: 3}
+  - {fileID: 21300000, guid: 7328daa94104b4e0389f13a9485de15a, type: 3}
+  - {fileID: 21300000, guid: fa7f0ec90f174456e93c2ac7b121363a, type: 3}
+  - {fileID: 21300000, guid: a1edeb1cf16ca486495f9d5461ea3e96, type: 3}
+  - {fileID: 21300000, guid: 353951ccca57844f4bdf1b9203db433b, type: 3}
+  - {fileID: 21300000, guid: 923014dc0f95b4d88a188076ea20d4ae, type: 3}
+  - {fileID: 21300000, guid: 807f5cdc8404240bfad74f6535890547, type: 3}
+  - {fileID: 21300000, guid: 4b1b7ddc2b9964635aabc5b32e02d80e, type: 3}
+  - {fileID: 21300000, guid: 6a860efd842a8409db5a8b5312701e83, type: 3}
+  - {fileID: 21300000, guid: e8cf408ed3e324052a314381b97f57fa, type: 3}
+  - {fileID: 21300000, guid: 857f34aec784849f5bf9d1b0e5b19799, type: 3}
+  - {fileID: 21300000, guid: 8944391f6ebdd43e3bf57342b4a3634f, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - UI_Book_Profile_ShashaSkin_03
+  - UI_Book_Profile_AmiSkin_02
+  - UI_Book_Profile_AmiSkin_04
+  - UI_Book_Profile_DellaSkin_04
+  - UI_Book_Profile_ShashaSkin_04
+  - Benny_Icon
+  - UI_Book_Profile_BennySkin_04
+  - UI_Book_Profile_DaliSkin_04
+  - UI_Book_Profile_AmiSkin_03
+  - Della_Icon
+  - UI_Book_Profile_DellaSkin_02
+  - Ami_Icon
+  - Shasha_Icon
+  - UI_Book_Profile_ShashaSkin_02
+  - UI_Book_Profile_DellaSkin_03
+  - UI_Book_Profile_DaliSkin_03
+  - Dali_Icon
+  - UI_Book_Profile_BennySkin_03
+  - UI_Book_Profile_BennySkin_02
+  - UI_Book_Profile_DaliSkin_02
+  m_RenderDataMap: {}
+  m_Tag: AnimalSkinIcon_4
+  m_IsVariant: 0

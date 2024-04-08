@@ -377,6 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RootTm: {fileID: 338535113}
+  placeData: {fileID: 11400000, guid: 82068fa4f4eac48e28cb78f7ab880ebb, type: 2}
 --- !u!4 &175762253
 Transform:
   m_ObjectHideFlags: 0

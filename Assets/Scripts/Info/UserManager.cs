@@ -203,7 +203,7 @@ namespace Info
             _user = new Info.User();
 
             var placeId = Game.Data.Const.StartPlaceId;
-            var currency = Game.Data.Const.GetStartCurrency(placeId);
+            var currency = _user.GetCurrency(placeId);
 
             SaveCurrency(currency);
         }
@@ -444,12 +444,12 @@ namespace Info
             }
         }
 
-        public bool SaveLastPlaceId()
+        public bool SaveLastPlaceId(int lastPlaceId)
         {
             if (_user == null)
                 return false;
 
-            if (Game.Data.Const.LastPlaceId <= User.LastPlaceId)
+            if (lastPlaceId <= User.LastPlaceId)
                 return false;
 
             _user.SetLastPlaceId();

@@ -45,9 +45,14 @@ namespace UI
 
         private void SetPlaceName()
         {
-            var placeData = Game.Data.Const.ActivityPlaceData;
+            string placeName = string.Empty;
+            var placeData = MainGameManager.Get<Game.PlaceManager>()?.ActivityPlaceData;
+            if (placeData != null)
+            {
+                placeName = placeData.ePlaceName.ToString();
+            }
 
-            placeNameTMP?.SetText(placeData.ePlaceName.ToString());
+            placeNameTMP?.SetText(placeName);
         }
 
         public void PlayAnim(IGameCameraCtr iGameCameraCtr, System.Action endAction)

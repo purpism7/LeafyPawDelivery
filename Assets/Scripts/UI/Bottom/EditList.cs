@@ -96,7 +96,9 @@ namespace UI
         private async UniTask MoveScrollToIndex(ScrollRect scrollRect, int index)
         {
             if (index < 0)
-                return;
+            {
+                index = 0;
+            }
 
             var gridLayoutGroup = scrollRect?.content?.GetComponent<GridLayoutGroup>();
             if (gridLayoutGroup != null)

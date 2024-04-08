@@ -176,8 +176,14 @@ namespace Game.Manager
                         var sentence = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "guide_hidden_object", LocalizationSettings.SelectedLocale);
 
                         var localName = GameUtils.GetName(hiddenObjectData.eElement, hiddenObjectData.id);
-                        string placeName = Game.Data.Const?.GetPlaceData(GameUtils.ActivityPlaceId).ePlaceName.ToString();
 
+                        string placeName = string.Empty;
+                        var placeData = MainGameManager.Get<Game.PlaceManager>()?.ActivityPlaceData;
+                        if (placeData != null)
+                        {
+                            placeName = placeData.ePlaceName.ToString();
+                        }
+                            
                         var sentenceQueue = new Queue<string>();
                         sentenceQueue.Clear();
 

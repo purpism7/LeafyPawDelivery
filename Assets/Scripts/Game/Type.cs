@@ -48,6 +48,7 @@ namespace Game
             Palmwoods,
             Moonmount,
             Heartsand,
+            Cherryait,
         }
 
         public enum EElement
@@ -84,6 +85,7 @@ namespace Game
             Acorn,
             Star,
             Fish,
+            Snow,
         }
 
         public enum EObjectCurrency
@@ -93,6 +95,7 @@ namespace Game
             Leaf,
             Moon,
             Shellfish,
+            Ice,
         }
 
         public enum EObjectGrade

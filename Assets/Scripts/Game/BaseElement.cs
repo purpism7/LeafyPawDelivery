@@ -15,7 +15,11 @@ namespace Game
         [SerializeField]
         protected UI.Edit edit = null;
 
+        [Tooltip("배치 중 다른 주민 / 꾸미기 요소와 겹쳐서 배치 가능한지 여부. (체크 시, 겹쳐서 배치 불가.)")]
         public bool IsOverlap = false;
+        [Tooltip("배치 후 주민들이 통과 이동 가능 여부. (체크 시, 통과 이동 가능.)")]
+        [SerializeField]
+        private bool goPass = true;
         [SerializeField]
         protected bool isWind = false;
 
@@ -27,6 +31,7 @@ namespace Game
         public ElementData ElementData { get; protected set; } = null;
         public Game.Element.State.BaseState State { get; protected set; } = null;
         public bool IsMoving { get; private set; } = false;
+        public bool GoPass { get { return goPass; } }
 
         public override void ChainUpdate()
         {

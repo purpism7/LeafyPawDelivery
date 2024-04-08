@@ -10,6 +10,7 @@ namespace Game
         private int _uId = 0;
         private Game.Type.EElement _element = Type.EElement.None;
         private bool _isOverlapTarget = false;
+        private bool _goPass = true;
 
         public bool IsOverlap { get; private set; } = false;
 
@@ -33,6 +34,7 @@ namespace Game
             {
                 var obj = gameBaseElement as Game.Object;
                 _isOverlapTarget = obj.IsOverlap;
+                _goPass = obj.GoPass;
             }
 
             _overlapList?.Clear();
@@ -123,7 +125,9 @@ namespace Game
                     }
                     else
                     {
-                        if (obj.IsOverlap)
+                        if (obj.IsOverlap ||
+                           (_element == Type.EElement.Animal && !obj.GoPass) ||
+                           (!_goPass && !obj.GoPass))
                         {
                             id = obj.Id;
                             uId = obj.UId;

@@ -53,47 +53,59 @@ SpriteAtlas:
     - 8a2639d1b78d74f68bf3856a9abda546: 21300000
     - 36193e4222ac6485ab701e7f65afa143: 21300000
     - 664d2ab215c1649ea9c4d85b5bbadb24: 21300000
+    - 2fcc21f27697848e185d1e515a2160b7: 21300000
     - 5a721793f6f6f4a30900bb453f990fae: 21300000
     - 90fd55a3802dc46e6ab10a671c6b7977: 21300000
     - bed0d4053a0f84cd8a72beee802676f8: 21300000
     - a2d27725dbfc14ce39ab5e5bd66b86a3: 21300000
     - b12356c5ca05846f19dedef54e8bf24d: 21300000
     - cd93123735452477ca108c5651044c78: 21300000
+    - c8066d78110844ec68d5841f014bec6b: 21300000
     - 7208ed199a0d8419a803290334769af5: 21300000
     - 485beff907b00481bb8da696885b9677: 21300000
+    - 4dc2fb2b75b97469989a50dfaf30247b: 21300000
     - 91b19c4c5dc0945d893cd72b53e97753: 21300000
     - 69c263ac989724ebe9252c9588196bce: 21300000
+    - 328dba9dc0c4d49e383a5f180aa01cc0: 21300000
     - d35d519fb393f4075a0cc8934c259e90: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 8a2639d1b78d74f68bf3856a9abda546, type: 3}
   - {fileID: 21300000, guid: 36193e4222ac6485ab701e7f65afa143, type: 3}
   - {fileID: 21300000, guid: 664d2ab215c1649ea9c4d85b5bbadb24, type: 3}
+  - {fileID: 21300000, guid: 2fcc21f27697848e185d1e515a2160b7, type: 3}
   - {fileID: 21300000, guid: 5a721793f6f6f4a30900bb453f990fae, type: 3}
   - {fileID: 21300000, guid: 90fd55a3802dc46e6ab10a671c6b7977, type: 3}
   - {fileID: 21300000, guid: bed0d4053a0f84cd8a72beee802676f8, type: 3}
   - {fileID: 21300000, guid: a2d27725dbfc14ce39ab5e5bd66b86a3, type: 3}
   - {fileID: 21300000, guid: b12356c5ca05846f19dedef54e8bf24d, type: 3}
   - {fileID: 21300000, guid: cd93123735452477ca108c5651044c78, type: 3}
+  - {fileID: 21300000, guid: c8066d78110844ec68d5841f014bec6b, type: 3}
   - {fileID: 21300000, guid: 7208ed199a0d8419a803290334769af5, type: 3}
   - {fileID: 21300000, guid: 485beff907b00481bb8da696885b9677, type: 3}
+  - {fileID: 21300000, guid: 4dc2fb2b75b97469989a50dfaf30247b, type: 3}
   - {fileID: 21300000, guid: 91b19c4c5dc0945d893cd72b53e97753, type: 3}
   - {fileID: 21300000, guid: 69c263ac989724ebe9252c9588196bce, type: 3}
+  - {fileID: 21300000, guid: 328dba9dc0c4d49e383a5f180aa01cc0, type: 3}
   - {fileID: 21300000, guid: d35d519fb393f4075a0cc8934c259e90, type: 3}
   m_PackedSpriteNamesToIndex:
   - Shop_Leaf_02
   - Shop_Star_01
   - Shop_Jewel_02
+  - Shop_Ice_01
   - Shop_Leaf_01
   - Shop_Acorn_02
   - Shop_Shellfish_01
   - Shop_Jewel_01
   - Shop_Acorn_01
   - Shop_Shellfish_02
+  - Shop_Snow_02
   - Shop_Fish_01
   - Shop_Star_02
+  - Shop_Snow_01
   - Shop_Moon_01
   - Shop_Moon_02
+  - Shop_Ice_02
   - Shop_Fish_02
   m_RenderDataMap: {}
   m_Tag: Shop

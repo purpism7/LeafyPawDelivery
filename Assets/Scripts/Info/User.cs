@@ -40,14 +40,29 @@ namespace Info
             return new Currency()
             {
                 PlaceId = placeId,
-                Animal = 0,
-                Object = 0,
+                Animal = 51,
+                Object = 1088,
             };
         }
 
         private Currency GetStartCurrency(int placeId)
         {
-            return Game.Data.Const.GetStartCurrency(placeId);
+#if UNITY_EDITOR
+            if (Application.isEditor)
+            {
+                return new Info.User.Currency()
+                {
+                    Animal = 999999,
+                    Object = 999999,
+                    PlaceId = placeId,
+                };
+            }
+#endif
+            //        return data.StartValue;
+            //    }
+            //}
+
+            return GetInitializeCurrency(placeId);
         }
 
         private Currency InitializeCurrency(int placeId)
