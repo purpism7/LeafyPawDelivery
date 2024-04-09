@@ -13,39 +13,27 @@ MonoBehaviour:
   m_Name: Place
   m_EditorClassIdentifier: 
   datas:
-  - ePlaceName: 1
+  - placeId: 1
+    ePlaceName: 1
     Animal: 1
     Object: 1
-    StartValue:
-      PlaceId: 1
-      Animal: 51
-      Object: 1088
     animalCurrencyRate: 1
     objectCurrencyRate: 1.2
-  - ePlaceName: 2
+  - placeId: 2
+    ePlaceName: 2
     Animal: 2
     Object: 2
-    StartValue:
-      PlaceId: 2
-      Animal: 51
-      Object: 1088
     animalCurrencyRate: 1
     objectCurrencyRate: 1.2
-  - ePlaceName: 3
+  - placeId: 3
+    ePlaceName: 3
     Animal: 3
     Object: 3
-    StartValue:
-      PlaceId: 3
-      Animal: 51
-      Object: 1088
     animalCurrencyRate: 1
     objectCurrencyRate: 1.4
-  - ePlaceName: 4
+  - placeId: 4
+    ePlaceName: 4
     Animal: 4
     Object: 4
-    StartValue:
-      PlaceId: 4
-      Animal: 51
-      Object: 1088
     animalCurrencyRate: 1
     objectCurrencyRate: 1.6
