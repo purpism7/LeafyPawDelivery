@@ -70,21 +70,21 @@ SpriteAtlas:
   - {fileID: 21300000, guid: dca5e4fc9644b41a8a98596ac82f73bd, type: 3}
   - {fileID: 21300000, guid: 5595e85eedf5aba49b8b80da1a63b92b, type: 3}
   m_PackedSpriteNamesToIndex:
-  - BookIcon_Map01_Char_02
-  - EditIcon_Map01_Char_03
+  - BookIcon_Map01_Animal_2
+  - EditIcon_Map01_Animal_3
   - StoryIcon_Map01_Kara
-  - EditIcon_Map01_Char_05
-  - BookIcon_Map01_Char_04
-  - EditIcon_Map01_Char_02
-  - BookIcon_Map01_Char_03
-  - BookIcon_Map01_Char_06
+  - EditIcon_Map01_Animal_5
+  - BookIcon_Map01_Animal_4
+  - EditIcon_Map01_Animal_2
+  - BookIcon_Map01_Animal_3
+  - BookIcon_Map01_Animal_6
   - StoryIcon_Map01_Barnie
-  - EditIcon_Map01_Char_06
-  - EditIcon_Map01_Char_04
-  - EditIcon_Map01_Char_01
-  - BookIcon_Map01_Char_05
+  - EditIcon_Map01_Animal_6
+  - EditIcon_Map01_Animal_4
+  - EditIcon_Map01_Animal_1
+  - BookIcon_Map01_Animal_5
   - StoryIcon_Map01_BabyRabbits
-  - BookIcon_Map01_Char_01
+  - BookIcon_Map01_Animal_1
   m_RenderDataMap: {}
   m_Tag: AnimalIcon_1
   m_IsVariant: 0

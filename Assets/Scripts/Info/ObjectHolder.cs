@@ -38,8 +38,6 @@ namespace Info
             {
                 totalPlaceCount = iPlaceData.TotalPlaceCount;
             }
-            
-            Debug.Log(totalPlaceCount);
 
             for (int i = 1; i <= totalPlaceCount; ++i)
             {

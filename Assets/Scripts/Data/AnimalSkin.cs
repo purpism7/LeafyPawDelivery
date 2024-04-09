@@ -18,12 +18,17 @@ public class AnimalSkin : Data.Base
 
     public string GetShortIconImgName(int placeId)
     {
-        return string.Format("EditIcon_Map{0}_Animal_{1}", placeId, AnimalId);
+        return string.Format("EditIcon_Map{0}_Animal_{1}", GetPlaceIdStr(placeId), AnimalId);
     }
 
     public string GetLargeIconImgName(int placeId)
     {
-        return string.Format("BookIcon_Map{0}_Animal_{1}", placeId, AnimalId);
+        return string.Format("BookIcon_Map{0}_Animal_{1}", GetPlaceIdStr(placeId), AnimalId);
+    }
+
+    private string GetPlaceIdStr(int placeId)
+    {
+        return placeId > 9 ? placeId.ToString() : "0" + placeId;
     }
 
     public override void Initialize()

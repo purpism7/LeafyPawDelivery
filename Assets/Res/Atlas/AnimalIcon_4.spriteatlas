@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AnimalIcon_4
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 2b3da7e372a8a4a42b9a0af767446344, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 794ffeb2f2b114fc9993dc6097722f43: 21300000
+    - 3835ec13c81964c9fafbdced9af31c56: 21300000
+    - 7f910205eee4849b49d992c31b68d33d: 21300000
+    - ab52958658a9e48eb95258e5c0d17a3b: 21300000
+    - a93bfb0a4d6ed45299c0c35393280949: 21300000
+    - cc95fb9ba34924a5780d988b51f87c87: 21300000
+    - 4597580cfe2734f83938c52b71b37b65: 21300000
+    - 5cf2390d49ff04d91bbd20b60c4a6174: 21300000
+    - 8900366e6b2c648e199ba1332c5fcf97: 21300000
+    - ffd3ddcef5f46414da22c249e83d5678: 21300000
+    - e9f5205f7f7f5406aa601e2c717c6f06: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 794ffeb2f2b114fc9993dc6097722f43, type: 3}
+  - {fileID: 21300000, guid: 3835ec13c81964c9fafbdced9af31c56, type: 3}
+  - {fileID: 21300000, guid: 7f910205eee4849b49d992c31b68d33d, type: 3}
+  - {fileID: 21300000, guid: ab52958658a9e48eb95258e5c0d17a3b, type: 3}
+  - {fileID: 21300000, guid: a93bfb0a4d6ed45299c0c35393280949, type: 3}
+  - {fileID: 21300000, guid: cc95fb9ba34924a5780d988b51f87c87, type: 3}
+  - {fileID: 21300000, guid: 4597580cfe2734f83938c52b71b37b65, type: 3}
+  - {fileID: 21300000, guid: 5cf2390d49ff04d91bbd20b60c4a6174, type: 3}
+  - {fileID: 21300000, guid: 8900366e6b2c648e199ba1332c5fcf97, type: 3}
+  - {fileID: 21300000, guid: ffd3ddcef5f46414da22c249e83d5678, type: 3}
+  - {fileID: 21300000, guid: e9f5205f7f7f5406aa601e2c717c6f06, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - EditIcon_Map04_Animal_17
+  - BookIcon_Map04_Animal_21
+  - BookIcon_Map04_Animal_20
+  - EditIcon_Map04_Animal_20
+  - EditIcon_Map04_Animal_21
+  - BookIcon_Map04_Animal_18
+  - EditIcon_Map04_Animal_18
+  - StoryIcon_Map04_Ami
+  - BookIcon_Map04_Animal_19
+  - EditIcon_Map04_Animal_19
+  - BookIcon_Map04_Animal_17
+  m_RenderDataMap: {}
+  m_Tag: AnimalIcon_4
+  m_IsVariant: 0
