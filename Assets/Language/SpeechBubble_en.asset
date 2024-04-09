@@ -254,6 +254,66 @@ MonoBehaviour:
     m_Localized: How was your day?
     m_Metadata:
       m_Items: []
+  - m_Id: 86838121977602048
+    m_Localized: Good work today!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838187756871680
+    m_Localized: How about we play the piano today?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838247261462528
+    m_Localized: I feel blue sometimes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838305902026752
+    m_Localized: I need to pick up some strawberries.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838364592922624
+    m_Localized: What is love?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838420893065216
+    m_Localized: "How\u2019s your day going?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838535124934656
+    m_Localized: "Maybe I\u2019ll go hiking tomorrow."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838465927307264
+    m_Localized: "I\u2019m tired. I need some sleep."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838689173331968
+    m_Localized: "Still gotta do it anyways. After all, I\u2019m an adult."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838746035511296
+    m_Localized: This flower symbolizes taking up a challenge.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838798871158784
+    m_Localized: Things have been going great lately!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838850125553664
+    m_Localized: How about buying a flower later?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838892391555072
+    m_Localized: Do you have any plans for tomorrow?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86838961882783744
+    m_Localized: I want to send a letter to someone!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 86839007902687232
+    m_Localized: Buying a pretty postcard makes me happy!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

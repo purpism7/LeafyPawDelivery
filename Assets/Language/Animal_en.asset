@@ -366,6 +366,112 @@ MonoBehaviour:
     m_Localized: Gift Lulu
     m_Metadata:
       m_Items: []
+  - m_Id: 89047335722541056
+    m_Localized: Ami
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89047393994006528
+    m_Localized: Straw hat Ami
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89047889362280448
+    m_Localized: Cherryblossom Ami
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89048031398191104
+    m_Localized: Birthday Ami
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89048164743503872
+    m_Localized: Shasha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89048658153037824
+    m_Localized: Rose Shasha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89049308043665408
+    m_Localized: Bud Shasha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89049503053635584
+    m_Localized: Cat Shasha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89049595227660288
+    m_Localized: Della
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89049722960994304
+    m_Localized: Winter Della
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89049808201834496
+    m_Localized: Beanie Della
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89049978763206656
+    m_Localized: Cook Della
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89050075836178432
+    m_Localized: Dali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89050272779722752
+    m_Localized: Officer Dali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89050381194092544
+    m_Localized: Strawberry Dali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89050501704835072
+    m_Localized: Wreath Dali
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89050819192676352
+    m_Localized: Benny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89050890160300032
+    m_Localized: Sleepy Benny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89051070909636608
+    m_Localized: Frog Benny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89051147585708032
+    m_Localized: Rabbit Benny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89051700415946752
+    m_Localized: 'Bright and cheerful purple penguin
+
+      Likes: Writing Letters
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89051341521936384
+    m_Localized: 'Gentle and friendly black penguin
+
+      Hobby: Playing the piano'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89051467074232320
+    m_Localized: "Silly but adorable pink penguin\r\nLikes: Strawberry Latte\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89051620506066944
+    m_Localized: "Optimistic and happy blue penguin\r\nHobby: Looking at flower illustrations\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89051474904997888
+    m_Localized: "Chic and level-headed gray penguin\r\nHobby: Hiking\r"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

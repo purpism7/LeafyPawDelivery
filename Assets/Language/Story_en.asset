@@ -682,6 +682,187 @@ MonoBehaviour:
     m_Localized: Cascia
     m_Metadata:
       m_Items: []
+  - m_Id: 88975127092387840
+    m_Localized: Ami
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975230343569408
+    m_Localized: "It\u2019s as if the whole world is bathed in pink. It\u2019s beautiful!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975312044417024
+    m_Localized: Greetings! Is it always this flowery and pink here year-round?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975367614750720
+    m_Localized: "Hello. Yes, the cherry blossoms are always in full bloom here.
+      Isn\u2019t it lovely?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975423130558464
+    m_Localized: "Yes, indeed. I feel like I\u2019m dreaming."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975476666654720
+    m_Localized: These cherry blossoms always remind me of a certain someone.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975526931193856
+    m_Localized: Gazing at these blossoms year-round makes me long for them all year.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975586817466368
+    m_Localized: "Why don\u2019t you go visit them?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975636217978880
+    m_Localized: "Haha, yes, that would be nice. If only I could\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975684842545152
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975704933261312
+    m_Localized: I found myself torn between adoring him and despising him each and
+      every day with all my heart.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975759803146240
+    m_Localized: It seems like both of you loved each other very much.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88975818229800960
+    m_Localized: They say everything has a time and place.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976209604501504
+    m_Localized: Without a doubt. Timing is crucial.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976252801638400
+    m_Localized: "Yes. It\u2019s not anyone\u2019s fault, yet there are fates that
+      are just not meant to be."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976306006384640
+    m_Localized: Hmm, I think I understand.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976347060232192
+    m_Localized: "Fate isn\u2019t always kind to us. I always believed that love
+      could overcome any obstacle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976409488252928
+    m_Localized: "Now, I\u2019ve come to the point where I cherish him even in his
+      absence."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976466644033536
+    m_Localized: Will you never see them again?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976517026013184
+    m_Localized: "Sadly, it seems that\u2019s the way now."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976577533042688
+    m_Localized: "He\u2019s getting married soon."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976624354058240
+    m_Localized: "Hello! Aren\u2019t you going to go see the flowers today?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976688870842368
+    m_Localized: Hello. I have other plans today.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976736413278208
+    m_Localized: I see. Do you have any letters that need to be delivered? I was
+      just passing along.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976911311560704
+    m_Localized: "Oh, um\u2026 no, I don\u2019t think so."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976956941393920
+    m_Localized: "Alright! I\u2019ll be off then\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88976999152869376
+    m_Localized: Wait a moment!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977091230425088
+    m_Localized: "Yes, but I\u2019m hesitant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977038302502912
+    m_Localized: Did you write a letter?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977146205167616
+    m_Localized: "There\u2019s plenty of time, but like you said, there\u2019s always
+      a right time and place for everything."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977218477219840
+    m_Localized: "I\u2019ll stick around for a while, so think it over and let me
+      know!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977268599152640
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977285514780672
+    m_Localized: How about it? Did you bring the letter?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977359162564608
+    m_Localized: "No, I\u2019ve decided to not send it."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977410429542400
+    m_Localized: After all the effort you put into writing it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977477806841856
+    m_Localized: "Writing the letter itself wasn\u2019t the issue.. it\u2019s just\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977523822551040
+    m_Localized: It just feels like the right time has already passed by.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977646631772160
+    m_Localized: "It\u2019s not like clinging onto a past relationship will make
+      any difference\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977578621132800
+    m_Localized: ...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977662259748864
+    m_Localized: "It doesn\u2019t feel like the right time for me to express my feelings."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977707734392832
+    m_Localized: "Well, if that\u2019s how you feel\u2026"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977748633051136
+    m_Localized: Today is the day of his wedding.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 88977811681828864
+    m_Localized: "I\u2019ll just wish for him to live happily ever after."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
