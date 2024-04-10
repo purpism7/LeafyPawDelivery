@@ -863,6 +863,10 @@ MonoBehaviour:
     m_Localized: "I\u2019ll just wish for him to live happily ever after."
     m_Metadata:
       m_Items: []
+  - m_Id: 89509681238630400
+    m_Localized: Ami
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
