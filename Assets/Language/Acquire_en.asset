@@ -19,11 +19,11 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 111001198592
-    m_Localized: Pick up the animal currency {0} times
+    m_Localized: Pick up animal currency {0} times
     m_Metadata:
       m_Items: []
   - m_Id: 2114716688384
-    m_Localized: Get the object currency {0} times
+    m_Localized: Get object currency {0} times
     m_Metadata:
       m_Items: []
   - m_Id: 2298481729536
@@ -39,27 +39,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1709034729103360
-    m_Localized: Get some object currency {0} times
+    m_Localized: Get object currency {0} times
     m_Metadata:
       m_Items: []
   - m_Id: 1709230405967872
-    m_Localized: Pick up some animal currency {0} times
+    m_Localized: Pick up animal currency {0} times
     m_Metadata:
       m_Items: []
   - m_Id: 1986566317662208
-    m_Localized: Place animals {0} times in the edit tab
+    m_Localized: Place animals from the edit tab {0} times
     m_Metadata:
       m_Items: []
   - m_Id: 1986826804912128
-    m_Localized: 'Use animal currency {0} '
+    m_Localized: Use {0} animal currency
     m_Metadata:
       m_Items: []
   - m_Id: 1987347221569536
-    m_Localized: Use object currency {0}
+    m_Localized: Use {0} object currency
     m_Metadata:
       m_Items: []
   - m_Id: 1987624062410752
-    m_Localized: Buy animal skin {0}
+    m_Localized: Purchase {0} animal skins
     m_Metadata:
       m_Items: []
   - m_Id: 1987715980582912
@@ -75,7 +75,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 23216242792849408
-    m_Localized: Complete all the daily missions
+    m_Localized: Complete all daily missions
     m_Metadata:
       m_Items: []
   references:
