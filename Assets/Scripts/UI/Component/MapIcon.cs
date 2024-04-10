@@ -152,7 +152,7 @@ namespace UI.Component
         {
             EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
 
-            if(_isLock || placeId == 4)
+            if(_isLock)
             {
                 var localKey = "desc_not_opened_yet";
                 if (placeId == 4)
