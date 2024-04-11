@@ -139,6 +139,8 @@ PlayerSettings:
   bundleVersion: 2.0.0
   preloadedAssets:
   - {fileID: 11400000, guid: b725200179d5f4e1bb784d1ed461c4d6, type: 2}
+  - {fileID: 11400000, guid: 6c53165d38e394f4683ddf58a46b309f, type: 2}
+  - {fileID: 8421263368358385619, guid: 61065a90afb814f21a510bef56ba9408, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -253,9 +255,9 @@ PlayerSettings:
   clonedFromGUID: f918f204a65eb664ba9e5b39d533ff8e
   templatePackageId: com.unity.template.mobile2d@2.0.1
   templateDefaultScene: Assets/Scenes/SampleScene.unity
-  useCustomMainManifest: 0
+  useCustomMainManifest: 1
   useCustomLauncherManifest: 0
-  useCustomMainGradleTemplate: 0
+  useCustomMainGradleTemplate: 1
   useCustomLauncherGradleManifest: 0
   useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 0
@@ -797,7 +799,8 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    iPhone: 
+    Android: LEVELPLAY_DEPENDENCIES_INSTALLED
+    iPhone: LEVELPLAY_DEPENDENCIES_INSTALLED
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

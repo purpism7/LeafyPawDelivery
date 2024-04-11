@@ -41,33 +41,27 @@ namespace Game
             yield break;
         }
 
-        public bool CheckIsAll
+        public bool CheckIsAll(int placeId)
         {
-            get
+            var objectDataList = ObjectContainer.Instance.GetDataListByPlaceId(placeId);
+            if (objectDataList == null)
+                return false;
+
+            var openConditionDataList = ObjectOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy });
+            foreach (var objectData in objectDataList)
             {
-                if (_data == null)
-                    return false;
+                if (objectData == null)
+                    continue;
 
-                var objectDataList = ObjectContainer.Instance.GetDataListByPlaceId(_data.PlaceId);
-                if (objectDataList == null)
-                    return false;
-
-                var openConditionDataList = ObjectOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy });
-                foreach (var objectData in objectDataList)
+                if (openConditionDataList != null &&
+                    openConditionDataList.Find(openConditionData => openConditionData.Id == objectData.Id) != null)
                 {
-                    if (objectData == null)
-                        continue;
-
-                    if (openConditionDataList != null &&
-                        openConditionDataList.Find(openConditionData => openConditionData.Id == objectData.Id) != null)
-                    {
-                        if (!CheckExist(objectData.Id))
-                            return false;
-                    }
+                    if (!CheckExist(objectData.Id))
+                        return false;
                 }
-
-                return true;
             }
+
+            return true;
         }
 
         public bool CheckGetStarter
