@@ -16,12 +16,15 @@ MonoBehaviour:
   - eCategory: 1
     ios: ca-app-pub-4768455296560255/9380996498
     and: ca-app-pub-4768455296560255/6860497134
+    placement: Free_Jewel_10
     coolTimeSec: 3600
   - eCategory: 2
     ios: ca-app-pub-4768455296560255/4531994490
     and: ca-app-pub-4768455296560255/6723823817
+    placement: 
     coolTimeSec: 1800
   - eCategory: 3
     ios: ca-app-pub-4768455296560255/1679488496
     and: ca-app-pub-4768455296560255/4097660475
+    placement: 
     coolTimeSec: 1800

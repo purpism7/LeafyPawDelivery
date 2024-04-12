@@ -115,10 +115,10 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         _iGrid?.Overlap();
 
-        ResetNotificationPossibleBuy();
+        ResetNotificationPossibleBuy(activityPlaceId);
     
         Game.Timer.Create(transform);
-        AdMob.Create();
+        AdProvider.Create();
 
         IsTutorial = CheckIsTutorial;
 
@@ -432,9 +432,9 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         SetGameStateAsync(Game.Type.EGameState.Enter).Forget();
 
-        ResetNotificationPossibleBuy();
+        ResetNotificationPossibleBuy(placeId);
 
-        await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.5f, 1f)));
+        await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.2f, 0.5f)));
 
         _iGrid?.Overlap();
 
@@ -465,10 +465,12 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     {
         get
         {
-            if (!CheckIsAllAnimal)
+            Debug.Log("CheckIsAll = " + GameUtils.ActivityPlaceId);
+            int placeId = GameUtils.ActivityPlaceId;
+            if (!CheckIsAllAnimal(placeId))
                 return false;
 
-            if (!CheckIsAllObject)
+            if (!CheckIsAllObject(placeId))
                 return false;
 
             var userMgr = Info.UserManager.Instance;
@@ -480,7 +482,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                 return false;
 
             int lastPlaceId = 0;
-            Game.IPlaceData iPlaceData = MainGameManager.Get<Game.PlaceManager>();
+            Game.IPlaceData iPlaceData = Get<Game.PlaceManager>();
             if(iPlaceData != null)
             {
                 lastPlaceId = iPlaceData.LastPlaceId;
@@ -497,28 +499,22 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
     }
 
-    private bool CheckIsAllAnimal
+    private bool CheckIsAllAnimal(int placeId)
     {
-        get
-        {
-            var animalMgr = Get<Game.AnimalManager>();
-            if (animalMgr == null)
-                return false;
+        var animalMgr = Get<Game.AnimalManager>();
+        if (animalMgr == null)
+            return false;
 
-            return animalMgr.CheckIsAll;
-        }
+        return animalMgr.CheckIsAll(placeId);
     }
 
-    private bool CheckIsAllObject
+    private bool CheckIsAllObject(int placeId)
     {
-        get
-        {
-            var objectMgr = Get<Game.ObjectManager>();
-            if (objectMgr == null)
-                return false;
+        var objectMgr = Get<Game.ObjectManager>();
+        if (objectMgr == null)
+            return false;
 
-            return objectMgr.CheckIsAll;
-        }
+        return objectMgr.CheckIsAll(placeId);
     }
 
     // 배치 목록에서 선택한 주민을 해당 place 에 생성.
@@ -592,20 +588,20 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         _startEditAction?.Invoke(obj);
     }
 
-    private void ResetNotificationPossibleBuy()
+    private void ResetNotificationPossibleBuy(int placeId)
     {
         var connector = Info.Connector.Get;
         if (connector == null)
             return;
 
         if (connector.CheckPossibleBuyAnimal &&
-            CheckIsAllAnimal)
+            CheckIsAllAnimal(placeId))
         {
             Info.Connector.Get?.ResetPossibleBuyAnimal();
         }
 
         if(connector.CheckPossibleBuyObject &&
-           CheckIsAllObject)
+           CheckIsAllObject(placeId))
         {
             Info.Connector.Get?.ResetPossibleBuyObject();
         }

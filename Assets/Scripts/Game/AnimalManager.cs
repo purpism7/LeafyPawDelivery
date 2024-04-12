@@ -73,34 +73,28 @@ namespace Game
             _animalHolder.SaveInfo();
         }
 
-        public bool CheckIsAll
+        public bool CheckIsAll(int placeId)
         {
-            get
+            var animalDataList = AnimalContainer.Instance?.GetDataListByPlaceId(placeId);
+            if (animalDataList == null)
+                return false;
+
+            var openConditionDataList = AnimalOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy });
+
+            foreach (var animalData in animalDataList)
             {
-                if (_data == null)
-                    return false;
+                if (animalData == null)
+                    continue;
 
-                var animalDataList = AnimalContainer.Instance.GetDataListByPlaceId(_data.PlaceId);
-                if (animalDataList == null)
-                    return false;
-
-                var openConditionDataList = AnimalOpenConditionContainer.Instance?.GetDataList(new[] { OpenConditionData.EType.Starter, OpenConditionData.EType.Buy });
-
-                foreach (var animalData in animalDataList)
+                if (openConditionDataList != null &&
+                    openConditionDataList.Find(openConditionData => openConditionData.Id == animalData.Id) != null)
                 {
-                    if (animalData == null)
-                        continue;
-
-                    if (openConditionDataList != null &&
-                        openConditionDataList.Find(openConditionData => openConditionData.Id == animalData.Id) != null)
-                    {
-                        if (!CheckExist(animalData.Id))
-                            return false;
-                    }
+                    if (!CheckExist(animalData.Id))
+                        return false;
                 }
-
-                return true;
             }
+
+            return true;
         }
 
         public bool CheckGetStarter

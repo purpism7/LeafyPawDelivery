@@ -255,7 +255,7 @@ namespace UI
             if (adData == null)
                 return;
 
-            GameSystem.AdMob.Get?.ShowAd(adData.adId,
+            AdProvider.Get?.ShowAd(adData.adId,
                 (rewardValue) =>
                 {
                     if(rewardValue > 0)

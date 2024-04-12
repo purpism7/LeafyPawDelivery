@@ -14,17 +14,22 @@ public class AD : ScriptableObject
         private string ios = string.Empty;
         [SerializeField]
         private string and = string.Empty;
+        [Header("Iron Source")]
+        [SerializeField]
+        private string placement = string.Empty;
+
         public float coolTimeSec = 0;
 
         public string adId
         {
             get
             {
-#if UNITY_IOS
-                return ios;
-#elif UNITY_ANDROID
-                return and;
-#endif
+                return placement;
+//#if UNITY_IOS
+//                return ios;
+//#elif UNITY_ANDROID
+//                return and;
+//#endif
             }
         }
     }

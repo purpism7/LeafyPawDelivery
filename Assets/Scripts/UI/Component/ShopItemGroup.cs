@@ -67,8 +67,8 @@ namespace UI.Component
                 if (!data.Show)
                     continue;
 
-                if (data.EPayment == Game.Type.EPayment.Advertising)
-                    continue;
+                //if (data.EPayment == Game.Type.EPayment.Advertising)
+                //    continue;
 
                 var shopItemCellData = new ShopItemCell.Data_()
                 {
@@ -84,13 +84,13 @@ namespace UI.Component
                     .Create();
             }
 
-            var cell = new ComponentCreator<ShopItemCell, ShopItemCell.Data_>()
-                   .SetData(new ShopItemCell.Data_()
-                   {
-                       empty = true,
-                   })
-                   .SetRootRectTm(itemRootRectTm)
-                   .Create();
+            //var cell = new ComponentCreator<ShopItemCell, ShopItemCell.Data_>()
+            //       .SetData(new ShopItemCell.Data_()
+            //       {
+            //           empty = true,
+            //       })
+            //       .SetRootRectTm(itemRootRectTm)
+            //       .Create();
 
             //cell?.GetOrAddComponent<UnityEngine.UI.Image>()?.CrossFadeAlpha(0, 0, true);
             //cell?.Deactivate();

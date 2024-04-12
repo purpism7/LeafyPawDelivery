@@ -178,8 +178,8 @@ namespace UI
                         var adData = ad?.GetData(shopData.ECategory);
                         if (adData == null)
                             return;
-                        
-                        AdMob.Get?.ShowAd(adData.adId,
+
+                        AdProvider.Get?.ShowAd(adData.adId,
                             (rewardValue) =>
                             {
                                 if(rewardValue > 0)
