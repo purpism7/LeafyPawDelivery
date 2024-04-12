@@ -40,6 +40,7 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=Unity.Burst.Unsafe;
 --assembly-defines=Unity.Collections;
 --assembly-defines=Unity.InternalAPIEngineBridge.001;
+--assembly-defines=Unity.LevelPlay;
 --assembly-defines=Unity.Localization;
 --assembly-defines=Unity.Mathematics;
 --assembly-defines=Unity.Profiling.Core;
@@ -47,6 +48,7 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=Unity.RenderPipelines.Core.Runtime;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.ResourceManager;
+--assembly-defines=Unity.Services.Analytics;
 --assembly-defines=Unity.Services.Authentication;
 --assembly-defines=Unity.Services.Authentication.PlayerAccounts;
 --assembly-defines=Unity.Services.Core.Configuration;
@@ -116,6 +118,7 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=Unity.Burst.Unsafe;
 --assembly-defines=Unity.Collections;
 --assembly-defines=Unity.InternalAPIEngineBridge.001;
+--assembly-defines=Unity.LevelPlay;
 --assembly-defines=Unity.Localization;
 --assembly-defines=Unity.Mathematics;
 --assembly-defines=Unity.Profiling.Core;
@@ -123,6 +126,7 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=Unity.RenderPipelines.Core.Runtime;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.ResourceManager;
+--assembly-defines=Unity.Services.Analytics;
 --assembly-defines=Unity.Services.Authentication;
 --assembly-defines=Unity.Services.Authentication.PlayerAccounts;
 --assembly-defines=Unity.Services.Core.Configuration;
