@@ -101,6 +101,7 @@ MonoBehaviour:
   - {fileID: 2072170984063942522}
   - {fileID: 4704908001025028573}
   - {fileID: 6690250756203131659}
+  - {fileID: 985404072058426723}
   myLocationRectTm: {fileID: 6398650874878970241}
 --- !u!1 &1881684906257714613
 GameObject:
@@ -1341,10 +1342,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1035911521271266573}
-  - {fileID: 6046830629543637930}
-  - {fileID: 5654571768642122108}
   - {fileID: 2237518557336246036}
+  - {fileID: 5654571768642122108}
+  - {fileID: 6046830629543637930}
+  - {fileID: 1035911521271266573}
   m_Father: {fileID: 4069109082104241845}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1383,6 +1384,10 @@ PrefabInstance:
     - target: {fileID: 3298096249227990720, guid: e3b059d9bc3e646259f88fd83cd1e5ce, type: 3}
       propertyPath: placeId
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298096249227990720, guid: e3b059d9bc3e646259f88fd83cd1e5ce, type: 3}
+      propertyPath: enterBtns.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3515334005422676282, guid: e3b059d9bc3e646259f88fd83cd1e5ce, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1553,6 +1558,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3b059d9bc3e646259f88fd83cd1e5ce, type: 3}
+--- !u!114 &985404072058426723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3298096249227990720, guid: e3b059d9bc3e646259f88fd83cd1e5ce, type: 3}
+  m_PrefabInstance: {fileID: 2335656098709390243}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d50d89f3687714a989843a9a2e2e54b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &2237518557336246036 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4567962414730138807, guid: e3b059d9bc3e646259f88fd83cd1e5ce, type: 3}

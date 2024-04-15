@@ -6,8 +6,6 @@ using UnityEngine.Localization.Settings;
 using TMPro;
 using DG.Tweening;
 
-
-
 namespace UI.Component
 {
     public class Toast : Base<Toast.Data>

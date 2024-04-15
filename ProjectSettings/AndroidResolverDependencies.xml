@@ -1,14 +1,10 @@
 <dependencies>
   <packages>
-    <package>com.google.android.gms:play-services-ads:22.5.0</package>
-    <package>com.google.android.gms:play-services-ads:23.0.0</package>
     <package>com.google.android.gms:play-services-ads-identifier:18.0.1</package>
     <package>com.google.android.gms:play-services-basement:18.1.0</package>
-    <package>com.google.android.ump:user-messaging-platform:2.1.0</package>
     <package>com.google.games:gpgs-plugin-support:0.10.14</package>
-    <package>com.ironsource.adapters:admobadapter:4.3.43</package>
     <package>com.ironsource.adapters:unityadsadapter:4.3.37</package>
-    <package>com.ironsource.sdk:mediationsdk:8.0.0</package>
+    <package>com.ironsource.sdk:mediationsdk:7.9.0</package>
     <package>com.unity3d.ads:unity-ads:4.10.0</package>
   </packages>
   <files>

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
-
+using Game;
+using Game.Event;
 using GameSystem;
+using Type = System.Type;
 
 public interface IEvent
 {
@@ -100,9 +102,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         var acquireMgr = Get<Game.Manager.Acquire>();
         yield return StartCoroutine(acquireMgr?.CoInitialize(null));
 
-        // 진입 연출 전 Deactivate Top, Bottom 
-        //Game.UIManager.Instance?.DeactivateAnim();
-
         SetGameStateAsync(Game.Type.EGameState.Enter).Forget();
 
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
@@ -129,8 +128,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
 
         _endInitialize = true;
-
-        yield return null;
     }
 
     private void InitializeIUpdateList(InputManager inputMgr)
@@ -192,7 +189,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     public async UniTask EndLoadAsync(bool initialize)
     {
         await AnimEnterPlaceAsync();
-
         await UniTask.Yield();
 
         if(!IsTutorial)
@@ -200,6 +196,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             Starter();
         }
 
+        if (initialize)
+        {
+            CheckOpenLastPlace();
+        }
+        
         Game.Notification.Get?.AllNotify();
     }
 
@@ -314,6 +315,26 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
     }
 
+    private bool CheckOpenLastPlace()
+    {
+        IPlaceData iPlaceData = placeMgr;
+        if (iPlaceData == null)
+            return false;
+        
+        Debug.Log(iPlaceData.LastPlaceId);
+        int lastPlaceId = iPlaceData.LastPlaceId;
+
+        if (CheckIsAllAnimal(lastPlaceId) &&
+            CheckIsAllObject(lastPlaceId))
+        {
+            AnimalManager.Event?.Invoke(new AddAnimalData());
+
+            return true;
+        }
+
+        return false;
+    }
+
     private void Update()
     {
         if (_iUpdaterList != null)
@@ -383,7 +404,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             gameState.Initialize(this);
             await gameState.InitializeAsync(this);
         }
-
     }
     #endregion
 
@@ -465,7 +485,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     {
         get
         {
-            Debug.Log("CheckIsAll = " + GameUtils.ActivityPlaceId);
             int placeId = GameUtils.ActivityPlaceId;
             if (!CheckIsAllAnimal(placeId))
                 return false;
@@ -482,7 +501,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                 return false;
 
             int lastPlaceId = 0;
-            Game.IPlaceData iPlaceData = Get<Game.PlaceManager>();
+            Game.IPlaceData iPlaceData = placeMgr;
             if(iPlaceData != null)
             {
                 lastPlaceId = iPlaceData.LastPlaceId;
