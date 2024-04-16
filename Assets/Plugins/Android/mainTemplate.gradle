@@ -7,9 +7,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1' // Assets/IronSource/Editor/IronSourceSDKDependencies.xml:17
     implementation 'com.google.android.gms:play-services-basement:18.1.0' // Assets/IronSource/Editor/IronSourceSDKDependencies.xml:25
     implementation 'com.google.games:gpgs-plugin-support:0.10.14' // Assets/GooglePlayGames/Editor/GooglePlayGamesPluginDependencies.xml:11
-    implementation 'com.ironsource.adapters:unityadsadapter:4.3.37' // Assets/IronSource/Editor/ISUnityAdsAdapterDependencies.xml:8
     implementation 'com.ironsource.sdk:mediationsdk:7.9.0' // Assets/IronSource/Editor/IronSourceSDKDependencies.xml:9
-    implementation 'com.unity3d.ads:unity-ads:4.10.0' // Assets/IronSource/Editor/ISUnityAdsAdapterDependencies.xml:15
 // Android Resolver Dependencies End
 **DEPS**}
 
