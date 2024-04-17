@@ -301,11 +301,11 @@ PrefabInstance:
     - target: {fileID: 3835373068479795185, guid: 8391d08e6ba95401faab2f97a9000ba3, type: 3}
       propertyPath: audioClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: e5fe328982038428f897c529ee55211e, type: 3}
+      objectReference: {fileID: 8300000, guid: cab20b65278344dc3a678fbf50f56dd4, type: 3}
     - target: {fileID: 3835373068479795185, guid: 8391d08e6ba95401faab2f97a9000ba3, type: 3}
       propertyPath: audioClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: f4f961ec7198b45e58632d4279a211f1, type: 3}
+      objectReference: {fileID: 8300000, guid: 6f53545fe61a54b0385e5eb0932e50ce, type: 3}
     - target: {fileID: 5880779311851659688, guid: 8391d08e6ba95401faab2f97a9000ba3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
