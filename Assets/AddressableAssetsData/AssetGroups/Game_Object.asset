@@ -35,6 +35,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Object_3
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 24dcea072a61246b6b2ded2f850ac3e6
+    m_Address: Assets/Prefabs/Game/Object/4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Object_4
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e7d7ed8f5841242acbc2f114c52db5f7, type: 2}
   m_SchemaSet:

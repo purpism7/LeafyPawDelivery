@@ -41,6 +41,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Animal_3
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0d13e8731ce8f4d92917b48e9a11c7d6
+    m_Address: Assets/Prefabs/Game/Animal/4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Animal_4
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e7d7ed8f5841242acbc2f114c52db5f7, type: 2}
   m_SchemaSet:
