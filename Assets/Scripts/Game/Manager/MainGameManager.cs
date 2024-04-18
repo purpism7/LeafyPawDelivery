@@ -454,7 +454,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         ResetNotificationPossibleBuy(placeId);
 
-        await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.2f, 0.5f)));
+        await UniTask.Yield();
+        // await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.2f, 0.4f)));
 
         _iGrid?.Overlap();
 
