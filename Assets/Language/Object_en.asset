@@ -430,6 +430,142 @@ MonoBehaviour:
     m_Localized: Book
     m_Metadata:
       m_Items: []
+  - m_Id: 92757657444671488
+    m_Localized: White bush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92757912533852160
+    m_Localized: Stone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92758081836933120
+    m_Localized: Vane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92758257372749824
+    m_Localized: Yellow Pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92758455457144832
+    m_Localized: Foxtail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92758601599279104
+    m_Localized: Pink Pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92759010686525440
+    m_Localized: Pink Flowers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92759238001025024
+    m_Localized: Water Pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92759397392965632
+    m_Localized: Sign
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92759538552266752
+    m_Localized: Blue Flowers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92759601869479936
+    m_Localized: Bicycle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92759666889580544
+    m_Localized: Bench
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92759738951917568
+    m_Localized: Big Pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92759789489086464
+    m_Localized: Picnic Mat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92759988181655552
+    m_Localized: Pink Pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92760088991752192
+    m_Localized: Big Stump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92760180012343296
+    m_Localized: Table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92760222999764992
+    m_Localized: Flower Basket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92760330319421440
+    m_Localized: Kite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92760370584739840
+    m_Localized: Pink Scooter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92760499920297984
+    m_Localized: Easel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92760581965078528
+    m_Localized: Swing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92760617406947328
+    m_Localized: Flower Cart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92760732519620608
+    m_Localized: Big Flower Pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92760904754520064
+    m_Localized: Streetlamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92761032450105344
+    m_Localized: Log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92761118156513280
+    m_Localized: Telephonebox
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92761189791031296
+    m_Localized: Flower Stand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92761319248224256
+    m_Localized: Blue Flower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92762481326284800
+    m_Localized: Small Pond
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92762605637066752
+    m_Localized: Flower Truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92762646187597824
+    m_Localized: Floral Leaves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92762893131440128
+    m_Localized: Wreath
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92762971518787584
+    m_Localized: Letter
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
