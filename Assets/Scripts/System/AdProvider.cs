@@ -132,13 +132,13 @@ namespace GameSystem
 //            _rewardedInterstitialAdDic?.Clear();
 //        }
 
-        private void ShowToastTryLater()
-        {
-            var localKey = "desc_try_later";
-            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
-
-            Game.Toast.Get?.Show(local, localKey);
-        }
+        // private void ShowToastTryLater()
+        // {
+        //     var localKey = "desc_try_later";
+        //     var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+        //
+        //     Game.Toast.Get?.Show(local, localKey);
+        // }
 
         //        ///// Loads the rewarded interstitial ad.
         //        ///// </summary>
