@@ -115,11 +115,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45328183996702720
-    m_Localized: Animal
+    m_Localized: Animal Currency
     m_Metadata:
       m_Items: []
   - m_Id: 45328302171217920
-    m_Localized: Deco
+    m_Localized: Deco Currency
     m_Metadata:
       m_Items: []
   - m_Id: 45328471499464704

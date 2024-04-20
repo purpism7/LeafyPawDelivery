@@ -55,7 +55,7 @@ MonoBehaviour:
   - m_Id: 3541437768523776
     m_Localized: 'A worried black cat
 
-      Favorite things : Yellow butterfly
+      Likes : Yellow butterfly
 
 '
     m_Metadata:
@@ -63,7 +63,7 @@ MonoBehaviour:
   - m_Id: 3541083148509184
     m_Localized: 'A kindful gray dog
 
-      Favorite things : Warm sunshine'
+      Likes : Warm sunshine'
     m_Metadata:
       m_Items: []
   - m_Id: 3541151591161856
@@ -113,7 +113,7 @@ MonoBehaviour:
   - m_Id: 45245006292705280
     m_Localized: 'A cheerful and bright deer
 
-      Favorite things : Chocolate cake'
+      Likes : Chocolate cake'
     m_Metadata:
       m_Items: []
   - m_Id: 45245017881567232
@@ -125,7 +125,7 @@ MonoBehaviour:
   - m_Id: 45245028866449408
     m_Localized: 'A playful brown squirrel
 
-      Favorite things : Carrot cake'
+      Likes : Carrot cake'
     m_Metadata:
       m_Items: []
   - m_Id: 45245039486427136
@@ -155,8 +155,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 61125681939996672
-    m_Localized: "Little Brother Desert Fox, \nPassed away from accident\nFavorite
-      things : Lucky clover"
+    m_Localized: "Little Brother Desert Fox, \nPassed away from accident\nLikes :
+      Lucky clover"
     m_Metadata:
       m_Items: []
   - m_Id: 61126130910879744
@@ -168,7 +168,7 @@ MonoBehaviour:
   - m_Id: 61126245092417536
     m_Localized: 'Charming gray mouse
 
-      Favorite things : Potato chips'
+      Likes : Potato chips'
     m_Metadata:
       m_Items: []
   - m_Id: 61126378580336640
@@ -180,8 +180,7 @@ MonoBehaviour:
   - m_Id: 61126491981733888
     m_Localized: 'Young, curious, yellow chick
 
-      Favorite things : Strawberry
-      milk'
+      Likess : Strawberry milk'
     m_Metadata:
       m_Items: []
   - m_Id: 64055390789165056
