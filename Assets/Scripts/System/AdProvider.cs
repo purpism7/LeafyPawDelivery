@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//using GoogleMobileAds.Api;
+using GoogleMobileAds.Api;
 using UnityEngine.Localization.Settings;
 using Cysharp.Threading.Tasks;
 
@@ -11,6 +11,7 @@ namespace GameSystem
     public class AdProvider : MonoBehaviour
     {
         private static AdProvider _instance = null;
+
         public static void Create()
         {
             if (_instance == null)
@@ -34,34 +35,34 @@ namespace GameSystem
             }
         }
 
-        //private Dictionary<string, RewardedInterstitialAd> _rewardedInterstitialAdDic = null;
+        private Dictionary<string, RewardedInterstitialAd> _rewardedInterstitialAdDic = null;
 
-        //private Reward _reward = null;
+        private Reward _reward = null;
         private string _adId = string.Empty;
         private System.Action<double> _callback = null;
 
-        //private void Initialize()
-        //{
-        //    MobileAds.Initialize((InitializationStatus status) =>
-        //    {
-        //        //Debug.Log("AdMob InitializationStatus = " + status);
-        //    });
-
-        //    InitializeRewardedInterstitialAdDic();
-
-        //    MobileAds.RaiseAdEventsOnUnityMainThread = true;
-        //}
-
         private void Initialize()
         {
-            // IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
-            // IronSourceRewardedVideoEvents.onAdClosedEvent += RewardedVideoOnAdClosedEvent;
-            // IronSourceRewardedVideoEvents.onAdAvailableEvent += RewardedVideoOnAdAvailable;
-            // IronSourceRewardedVideoEvents.onAdUnavailableEvent += RewardedVideoOnAdUnavailable;
-            // IronSourceRewardedVideoEvents.onAdShowFailedEvent += RewardedVideoOnAdShowFailedEvent;
-            // IronSourceRewardedVideoEvents.onAdRewardedEvent += RewardedVideoOnAdRewardedEvent;
-            // IronSourceRewardedVideoEvents.onAdClickedEvent += RewardedVideoOnAdClickedEvent;
+            MobileAds.Initialize((InitializationStatus status) =>
+            {
+                //Debug.Log("AdMob InitializationStatus = " + status);
+            });
+
+            InitializeRewardedInterstitialAdDic();
+
+            MobileAds.RaiseAdEventsOnUnityMainThread = true;
         }
+
+        // private void Initialize()
+        // {
+        //     IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
+        //     IronSourceRewardedVideoEvents.onAdClosedEvent += RewardedVideoOnAdClosedEvent;
+        //     IronSourceRewardedVideoEvents.onAdAvailableEvent += RewardedVideoOnAdAvailable;
+        //     IronSourceRewardedVideoEvents.onAdUnavailableEvent += RewardedVideoOnAdUnavailable;
+        //     IronSourceRewardedVideoEvents.onAdShowFailedEvent += RewardedVideoOnAdShowFailedEvent;
+        //     IronSourceRewardedVideoEvents.onAdRewardedEvent += RewardedVideoOnAdRewardedEvent;
+        //     IronSourceRewardedVideoEvents.onAdClickedEvent += RewardedVideoOnAdClickedEvent;
+        // }
 
         /************* RewardedVideo AdInfo Delegates *************/
         // Indicates that there’s an available ad.
@@ -116,168 +117,163 @@ namespace GameSystem
         // {
         // }
 
-        public void ShowAd(string adId, System.Action<double> callbackAction)
-        {
-            _callback = callbackAction;
-
-            // IronSource.Agent.showRewardedVideo(adId);
-        }
-
-//        private void InitializeRewardedInterstitialAdDic()
-//        {
-//            if (_rewardedInterstitialAdDic != null)
-//                return;
-
-//            _rewardedInterstitialAdDic = new();
-//            _rewardedInterstitialAdDic?.Clear();
-//        }
-
-        // private void ShowToastTryLater()
+        // public void ShowAd(string adId, System.Action<double> callbackAction)
         // {
-        //     var localKey = "desc_try_later";
-        //     var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+        //     _callback = callbackAction;
         //
-        //     Game.Toast.Get?.Show(local, localKey);
+        //     // IronSource.Agent.showRewardedVideo(adId);
         // }
 
-        //        ///// Loads the rewarded interstitial ad.
-        //        ///// </summary>
-        //        public void LoadRewardedInterstitialAd(string id, System.Action callbck = null)
-        //        {
-        //            // Clean up the old ad before loading a new one.
+        private void InitializeRewardedInterstitialAdDic()
+        {
+            if (_rewardedInterstitialAdDic != null)
+                return;
 
-        //            if(_rewardedInterstitialAdDic != null)
-        //            {
-        //                if(_rewardedInterstitialAdDic.TryGetValue(id, out RewardedInterstitialAd rewardedInterstitialAd))
-        //                {
-        //                    _rewardedInterstitialAdDic[id]?.Destroy();
-        //                    _rewardedInterstitialAdDic[id] = null;
-        //                }
-        //            }
+            _rewardedInterstitialAdDic = new();
+            _rewardedInterstitialAdDic?.Clear();
+        }
 
-        //            // create our request used to load the ad.
-        //            var adRequest = new AdRequest();
-        //            adRequest.Keywords.Add("unity-admob-sample");
-        //            // send the request to load the ad.
+        private void ShowToastTryLater()
+        {
+            var localKey = "desc_try_later";
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+        
+            Game.Toast.Get?.Show(local, localKey);
+        }
 
-        //            RewardedInterstitialAd.Load(id, adRequest,
-        //                (ad, error) =>
-        //                {
-        //                    if (error != null || ad == null)
-        //                    {
-        //                        _callback?.Invoke(0);
+        private void ShowToastInternetConnection()
+        {
+            var localKey = "check_internet_connection";
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
 
-        //                        ShowToastTryLater();
+            Game.Toast.Get?.Show(local, localKey);
+        }
 
-        //                        Game.UIManager.Instance?.DeactivateScreenSaver();
+        ///// Loads the rewarded interstitial ad.
+        ///// </summary>
+        private void LoadRewardedInterstitialAd(string id, System.Action callback = null)
+        {
+            // Clean up the old ad before loading a new one.
 
-        //                        return;
-        //                    }
+            if (_rewardedInterstitialAdDic != null)
+            {
+                if (_rewardedInterstitialAdDic.TryGetValue(id, out RewardedInterstitialAd rewardedInterstitialAd))
+                {
+                    _rewardedInterstitialAdDic[id]?.Destroy();
+                    _rewardedInterstitialAdDic[id] = null;
+                }
+            }
 
-        //                    InitializeRewardedInterstitialAdDic();
+            // create our request used to load the ad.
+            var adRequest = new AdRequest();
+            adRequest.Keywords.Add("unity-admob-sample");
+            // send the request to load the ad.
 
-        //                    if(_rewardedInterstitialAdDic.TryGetValue(id, out RewardedInterstitialAd rewardedInterstitialAd))
-        //                    {
-        //                        _rewardedInterstitialAdDic[id] = ad;
-        //                    }
-        //                    else
-        //                    {
-        //                        _rewardedInterstitialAdDic?.TryAdd(id, ad);
-        //                    }
+            RewardedInterstitialAd.Load(id, adRequest,
+                (ad, error) =>
+                {
+                    if (error != null || ad == null)
+                    {
+                        _callback?.Invoke(0);
 
-        //                    ad.OnAdFullScreenContentFailed += OnAdFullScreenContentFailed;
-        //                    ad.OnAdFullScreenContentClosed += OnAdFullScreenContentClosed;
+                        ShowToastTryLater();
 
-        //                    callbck?.Invoke();
-        //                });
-        //        }
+                        Game.UIManager.Instance?.DeactivateScreenSaver();
 
-        //        public void ShowAd(string id, System.Action<double> callback)
-        //        {
-        //            if (Application.internetReachability == NetworkReachability.NotReachable)
-        //            {
-        //                var localKey = "check_internet_connection";
-        //                var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+                        return;
+                    }
 
-        //                Game.Toast.Get?.Show(local, localKey);
+                    InitializeRewardedInterstitialAdDic();
 
-        //                return;
-        //            }
+                    if (_rewardedInterstitialAdDic.TryGetValue(id, out RewardedInterstitialAd rewardedInterstitialAd))
+                    {
+                        _rewardedInterstitialAdDic[id] = ad;
+                    }
+                    else
+                    {
+                        _rewardedInterstitialAdDic?.TryAdd(id, ad);
+                    }
 
-        //            _adId = id;
-        //            _callback = callback;
+                    ad.OnAdFullScreenContentFailed += OnAdFullScreenContentFailed;
+                    ad.OnAdFullScreenContentClosed += OnAdFullScreenContentClosed;
 
-        //            _reward = null;
+                    callback?.Invoke();
+                });
+        }
 
-        //#if UNITY_IOS
-        //            Game.UIManager.Instance?.ActivateSreenSaver(Game.Type.EScreenSaverType.ShowAD);
-        //#else
-        //            Game.UIManager.Instance?.ActivateSreenSaver();
-        //#endif
+        public void ShowAd(string id, System.Action<double> callback)
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                ShowToastInternetConnection();
 
-        //            InitializeRewardedInterstitialAdDic();
+                return;
+            }
 
-        //            RewardedInterstitialAd ad = null;
-        //            _rewardedInterstitialAdDic?.TryGetValue(id, out ad);
+            _adId = id;
+            _callback = callback;
 
-        //            if (ad == null)
-        //            {
-        //                LoadRewardedInterstitialAd(id,
-        //                    () =>
-        //                    {
-        //                        ShowAd(id, callback);
-        //                    });
+            _reward = null;
 
-        //                return;
-        //            }
+#if UNITY_IOS
+            Game.UIManager.Instance?.ActivateSreenSaver(Game.Type.EScreenSaverType.ShowAD);
+#else
+            Game.UIManager.Instance?.ActivateSreenSaver();
+#endif
 
-        //            if (ad.CanShowAd())
-        //            {
-        //                ad.Show(
-        //                    (reward) =>
-        //                    {
-        //                        _reward = reward;
-        //                    });
+            InitializeRewardedInterstitialAdDic();
 
-        //                Game.UIManager.Instance?.DeactivateScreenSaver();
-        //            }
-        //            else
-        //            {
-        //                LoadRewardedInterstitialAd(id,
-        //                    () =>
-        //                    {
-        //                        ShowAd(id, callback);
-        //                    });
-        //            }
-        //        }
+            RewardedInterstitialAd ad = null;
+            _rewardedInterstitialAdDic?.TryGetValue(id, out ad);
 
-        //        private void OnAdFullScreenContentFailed(AdError adError)
-        //        {
-        //            if (adError == null)
-        //                return;
+            if (ad == null)
+            {
+                LoadRewardedInterstitialAd(id,
+                    () => { ShowAd(id, callback); });
 
-        //            Debug.Log(adError.GetMessage());
+                return;
+            }
 
-        //            Game.Toast.Get?.Show(adError.GetMessage());
+            if (ad.CanShowAd())
+            {
+                ad.Show(
+                    (reward) => { _reward = reward; });
 
-        //            Game.UIManager.Instance?.DeactivateScreenSaver();
-        //        }
+                Game.UIManager.Instance?.DeactivateScreenSaver();
+            }
+            else
+            {
+                LoadRewardedInterstitialAd(id,
+                    () => { ShowAd(id, callback); });
+            }
+        }
 
-        //        private void OnAdFullScreenContentClosed()
-        //        {
-        //            Game.UIManager.Instance?.DeactivateScreenSaver();
 
-        //            _callback?.Invoke(_reward != null ? _reward.Amount : 0);
+    private void OnAdFullScreenContentFailed(AdError adError)
+        {
+            if (adError == null)
+                return;
 
-        //            if(!string.IsNullOrEmpty(_adId))
-        //            {
-        //                LoadRewardedInterstitialAd(_adId, null);
-        //            }
+            Game.Toast.Get?.Show(adError.GetMessage());
 
-        //            _adId = string.Empty;
-        //            _reward = null;
-        //            _callback = null;
-        //        }
+            Game.UIManager.Instance?.DeactivateScreenSaver();
+        }
+
+        private void OnAdFullScreenContentClosed()
+        {
+            Game.UIManager.Instance?.DeactivateScreenSaver();
+
+            _callback?.Invoke(_reward != null ? _reward.Amount : 0);
+
+            if(!string.IsNullOrEmpty(_adId))
+            {
+                LoadRewardedInterstitialAd(_adId, null);
+            }
+
+            _adId = string.Empty;
+            _reward = null;
+            _callback = null;
+        }
     }
 }
 
