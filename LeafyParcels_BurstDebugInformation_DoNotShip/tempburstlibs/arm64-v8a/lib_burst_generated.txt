@@ -11,6 +11,12 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_
 --assembly-defines=Assembly-CSharp;
 --assembly-defines=DOTween;
 --assembly-defines=Google.Play.Games;
+--assembly-defines=GoogleMobileAds.Android;
+--assembly-defines=GoogleMobileAds.Common;
+--assembly-defines=GoogleMobileAds.Core;
+--assembly-defines=GoogleMobileAds;
+--assembly-defines=GoogleMobileAds.Ump.Android;
+--assembly-defines=GoogleMobileAds.Ump;
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
 --assembly-defines=Newtonsoft.Json;
@@ -114,6 +120,12 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/tempburstlibs/arm64-v8a/lib_
 --assembly-defines=Assembly-CSharp;
 --assembly-defines=DOTween;
 --assembly-defines=Google.Play.Games;
+--assembly-defines=GoogleMobileAds.Android;
+--assembly-defines=GoogleMobileAds.Common;
+--assembly-defines=GoogleMobileAds.Core;
+--assembly-defines=GoogleMobileAds;
+--assembly-defines=GoogleMobileAds.Ump.Android;
+--assembly-defines=GoogleMobileAds.Ump;
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
 --assembly-defines=Newtonsoft.Json;

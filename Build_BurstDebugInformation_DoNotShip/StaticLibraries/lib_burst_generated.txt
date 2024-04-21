@@ -12,6 +12,11 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=Assembly-CSharp-firstpass;
 --assembly-defines=Assembly-CSharp;
 --assembly-defines=DOTween;
+--assembly-defines=GoogleMobileAds.Common;
+--assembly-defines=GoogleMobileAds.Core;
+--assembly-defines=GoogleMobileAds.iOS;
+--assembly-defines=GoogleMobileAds.Ump;
+--assembly-defines=GoogleMobileAds.Ump.iOS;
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
 --assembly-defines=Newtonsoft.Json;
@@ -83,6 +88,11 @@ Library: /Users/sj/Project/Animals/Temp/BurstOutput/StaticLibraries/lib_burst_ge
 --assembly-defines=Assembly-CSharp-firstpass;
 --assembly-defines=Assembly-CSharp;
 --assembly-defines=DOTween;
+--assembly-defines=GoogleMobileAds.Common;
+--assembly-defines=GoogleMobileAds.Core;
+--assembly-defines=GoogleMobileAds.iOS;
+--assembly-defines=GoogleMobileAds.Ump;
+--assembly-defines=GoogleMobileAds.Ump.iOS;
 --assembly-defines=Mono.Security;
 --assembly-defines=mscorlib;
 --assembly-defines=Newtonsoft.Json;

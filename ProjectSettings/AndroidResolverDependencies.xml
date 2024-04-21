@@ -1,9 +1,8 @@
 <dependencies>
   <packages>
-    <package>com.google.android.gms:play-services-ads-identifier:18.0.1</package>
-    <package>com.google.android.gms:play-services-basement:18.1.0</package>
+    <package>com.google.android.gms:play-services-ads:[22.3.0]</package>
+    <package>com.google.android.ump:user-messaging-platform:2.1.0</package>
     <package>com.google.games:gpgs-plugin-support:0.10.14</package>
-    <package>com.ironsource.sdk:mediationsdk:7.9.0</package>
   </packages>
   <files>
     <file>Assets/GeneratedLocalRepo/GooglePlayGames/com.google.play.games/Editor/m2repository/com/google/games/gpgs-plugin-support/0.10.14/gpgs-plugin-support-0.10.14.aar</file>

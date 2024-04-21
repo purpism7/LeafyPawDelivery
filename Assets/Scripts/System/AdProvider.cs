@@ -54,73 +54,73 @@ namespace GameSystem
 
         private void Initialize()
         {
-            IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
-            IronSourceRewardedVideoEvents.onAdClosedEvent += RewardedVideoOnAdClosedEvent;
-            IronSourceRewardedVideoEvents.onAdAvailableEvent += RewardedVideoOnAdAvailable;
-            IronSourceRewardedVideoEvents.onAdUnavailableEvent += RewardedVideoOnAdUnavailable;
-            IronSourceRewardedVideoEvents.onAdShowFailedEvent += RewardedVideoOnAdShowFailedEvent;
-            IronSourceRewardedVideoEvents.onAdRewardedEvent += RewardedVideoOnAdRewardedEvent;
-            IronSourceRewardedVideoEvents.onAdClickedEvent += RewardedVideoOnAdClickedEvent;
+            // IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
+            // IronSourceRewardedVideoEvents.onAdClosedEvent += RewardedVideoOnAdClosedEvent;
+            // IronSourceRewardedVideoEvents.onAdAvailableEvent += RewardedVideoOnAdAvailable;
+            // IronSourceRewardedVideoEvents.onAdUnavailableEvent += RewardedVideoOnAdUnavailable;
+            // IronSourceRewardedVideoEvents.onAdShowFailedEvent += RewardedVideoOnAdShowFailedEvent;
+            // IronSourceRewardedVideoEvents.onAdRewardedEvent += RewardedVideoOnAdRewardedEvent;
+            // IronSourceRewardedVideoEvents.onAdClickedEvent += RewardedVideoOnAdClickedEvent;
         }
 
         /************* RewardedVideo AdInfo Delegates *************/
         // Indicates that there’s an available ad.
         // The adInfo object includes information about the ad that was loaded successfully
         // This replaces the RewardedVideoAvailabilityChangedEvent(true) event
-        void RewardedVideoOnAdAvailable(IronSourceAdInfo adInfo)
-        {
-        }
-
-        // Indicates that no ads are available to be displayed
-        // This replaces the RewardedVideoAvailabilityChangedEvent(false) event
-        void RewardedVideoOnAdUnavailable()
-        {
-        }
-
-        // The Rewarded Video ad view has opened. Your activity will loose focus.
-        void RewardedVideoOnAdOpenedEvent(IronSourceAdInfo adInfo)
-        {
-            Debug.Log("RewardedVideoOnAdOpenedEvent");
-        }
-
-        // The Rewarded Video ad view is about to be closed. Your activity will regain its focus.
-        void RewardedVideoOnAdClosedEvent(IronSourceAdInfo adInfo)
-        {
-            Debug.Log("RewardedVideoOnAdClosedEvent");
-        }
-
-        // The user completed to watch the video, and should be rewarded.
-        // The placement parameter will include the reward data.
-        // When using server-to-server callbacks, you may ignore this event and wait for the ironSource server callback.
-        void RewardedVideoOnAdRewardedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
-        {
-            if (placement == null)
-                return;
-
-            _callback?.Invoke(placement.getRewardAmount());
-        }
-
-        // The rewarded video ad was failed to show.
-        void RewardedVideoOnAdShowFailedEvent(IronSourceError error, IronSourceAdInfo adInfo)
-        {
-            if (error == null)
-                return;
-
-            Game.Toast.Get?.Show(error.getDescription(), error.getErrorCode().ToString());
-        }
-
-        // Invoked when the video ad was clicked.
-        // This callback is not supported by all networks, and we recommend using it only if
-        // it’s supported by all networks you included in your build.
-        void RewardedVideoOnAdClickedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
-        {
-        }
+        // void RewardedVideoOnAdAvailable(IronSourceAdInfo adInfo)
+        // {
+        // }
+        //
+        // // Indicates that no ads are available to be displayed
+        // // This replaces the RewardedVideoAvailabilityChangedEvent(false) event
+        // void RewardedVideoOnAdUnavailable()
+        // {
+        // }
+        //
+        // // The Rewarded Video ad view has opened. Your activity will loose focus.
+        // void RewardedVideoOnAdOpenedEvent(IronSourceAdInfo adInfo)
+        // {
+        //     Debug.Log("RewardedVideoOnAdOpenedEvent");
+        // }
+        //
+        // // The Rewarded Video ad view is about to be closed. Your activity will regain its focus.
+        // void RewardedVideoOnAdClosedEvent(IronSourceAdInfo adInfo)
+        // {
+        //     Debug.Log("RewardedVideoOnAdClosedEvent");
+        // }
+        //
+        // // The user completed to watch the video, and should be rewarded.
+        // // The placement parameter will include the reward data.
+        // // When using server-to-server callbacks, you may ignore this event and wait for the ironSource server callback.
+        // void RewardedVideoOnAdRewardedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
+        // {
+        //     if (placement == null)
+        //         return;
+        //
+        //     _callback?.Invoke(placement.getRewardAmount());
+        // }
+        //
+        // // The rewarded video ad was failed to show.
+        // void RewardedVideoOnAdShowFailedEvent(IronSourceError error, IronSourceAdInfo adInfo)
+        // {
+        //     if (error == null)
+        //         return;
+        //
+        //     Game.Toast.Get?.Show(error.getDescription(), error.getErrorCode().ToString());
+        // }
+        //
+        // // Invoked when the video ad was clicked.
+        // // This callback is not supported by all networks, and we recommend using it only if
+        // // it’s supported by all networks you included in your build.
+        // void RewardedVideoOnAdClickedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
+        // {
+        // }
 
         public void ShowAd(string adId, System.Action<double> callbackAction)
         {
             _callback = callbackAction;
 
-            IronSource.Agent.showRewardedVideo(adId);
+            // IronSource.Agent.showRewardedVideo(adId);
         }
 
 //        private void InitializeRewardedInterstitialAdDic()
