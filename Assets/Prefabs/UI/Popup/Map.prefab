@@ -1515,11 +1515,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6010521435052714563, guid: e3b059d9bc3e646259f88fd83cd1e5ce, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 29.7
+      value: 2.56
       objectReference: {fileID: 0}
     - target: {fileID: 6010521435052714563, guid: e3b059d9bc3e646259f88fd83cd1e5ce, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -7.91
+      value: 12.95
       objectReference: {fileID: 0}
     - target: {fileID: 6082806331686416354, guid: e3b059d9bc3e646259f88fd83cd1e5ce, type: 3}
       propertyPath: m_Sprite
