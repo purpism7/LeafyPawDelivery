@@ -24,12 +24,12 @@ public class AD : ScriptableObject
         {
             get
             {
-                return placement;
-//#if UNITY_IOS
-//                return ios;
-//#elif UNITY_ANDROID
-//                return and;
-//#endif
+                //return placement;
+#if UNITY_IOS
+                return ios;
+#elif UNITY_ANDROID
+                return and;
+#endif
             }
         }
     }
