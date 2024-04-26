@@ -453,9 +453,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         SetGameStateAsync(Game.Type.EGameState.Enter).Forget();
 
         ResetNotificationPossibleBuy(placeId);
-
-        await UniTask.Yield();
-        // await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.2f, 0.4f)));
+        
+        await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.2f, 0.4f)));
 
         _iGrid?.Overlap();
 
