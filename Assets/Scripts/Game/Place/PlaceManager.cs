@@ -135,11 +135,6 @@ namespace Game
                 return placeData.Datas.Length;
             }
         }
-
-        //public Info.User.Currency GetStartCurrency(int placeId)
-        //{
-        //    return placeData?.GetStartCurrency(placeId);
-        //}
         #endregion
     }
 }

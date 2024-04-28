@@ -324,13 +324,13 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         
         int lastPlaceId = iPlaceData.LastPlaceId;
         var userLastPlaceId = UserManager.Instance?.User.LastPlaceId ?? 0;
-        Debug.Log(iPlaceData.LastPlaceId + " / " + userLastPlaceId);
         
         if (userLastPlaceId >= iPlaceData.LastPlaceId)
             return false;
-        
-        if (CheckIsAllAnimal(lastPlaceId) &&
-            CheckIsAllObject(lastPlaceId))
+
+        int prevPlaceId = lastPlaceId - 1;
+        if (CheckIsAllAnimal(prevPlaceId) &&
+            CheckIsAllObject(prevPlaceId))
         {
             PlaceManager.Event?.Invoke(new OpenPlaceData(lastPlaceId));
 
