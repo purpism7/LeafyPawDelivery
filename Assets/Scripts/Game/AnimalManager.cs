@@ -41,7 +41,6 @@ namespace Game
             Event?.RemoveAllListeners();
 
             Game.ObjectManager.Event.AddListener(OnChangedObject);
-            Game.PlaceManager.Event?.AddListener(OnChangedPlace);
 
             return this;
         }
@@ -275,11 +274,6 @@ namespace Game
             Info.UserManager.Instance?.AddAnimalSkin(id, skinId);
         }
         #endregion
-
-        private void OnChangedPlace(int placeId)
-        {
-            
-        }
 
         private void OnChangedObject(Game.Event.ObjectData objectData)
         {

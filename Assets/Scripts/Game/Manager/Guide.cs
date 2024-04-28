@@ -19,6 +19,7 @@ namespace Game.Manager
         {
             AnimalManager.Event?.AddListener(OnChangedAnimal);
             ObjectManager.Event?.AddListener(OnChangedObject);
+            PlaceManager.Event?.AddListener(OnChangedPlace);
             PlaceEventController.Event?.AddListener(OnChangedPlaceEvnet);
 
             return this;
@@ -135,6 +136,19 @@ namespace Game.Manager
 
                         break;
                     }
+            }
+        }
+
+        private void OnChangedPlace(Game.Event.PlaceData placeData)
+        {
+            switch (placeData)
+            {
+                case Event.OpenPlaceData openPlaceData:
+                {
+                    CheckOpenPlace();
+                    
+                    break;
+                }
             }
         }
 

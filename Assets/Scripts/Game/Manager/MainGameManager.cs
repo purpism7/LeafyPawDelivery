@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using Game;
 using Game.Event;
 using GameSystem;
+using Info;
 using Type = System.Type;
 
 public interface IEvent
@@ -321,13 +322,17 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         if (iPlaceData == null)
             return false;
         
-        Debug.Log(iPlaceData.LastPlaceId);
         int lastPlaceId = iPlaceData.LastPlaceId;
-
+        var userLastPlaceId = UserManager.Instance?.User.LastPlaceId ?? 0;
+        Debug.Log(iPlaceData.LastPlaceId + " / " + userLastPlaceId);
+        
+        if (userLastPlaceId >= iPlaceData.LastPlaceId)
+            return false;
+        
         if (CheckIsAllAnimal(lastPlaceId) &&
             CheckIsAllObject(lastPlaceId))
         {
-            AnimalManager.Event?.Invoke(new AddAnimalData());
+            PlaceManager.Event?.Invoke(new OpenPlaceData(lastPlaceId));
 
             return true;
         }
