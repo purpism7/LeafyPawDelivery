@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
-
+using Game.Event;
 using GameSystem;
 using Info;
 
@@ -247,11 +247,12 @@ namespace Game
             StartStory();
         }
 
-        private void OnChangedPlace(int placeId)
+        private void OnChangedPlace(Game.Event.PlaceData placeData)
         {
-            _placeId = placeId;
-
-            //SetStoryList();
+            if (placeData == null)
+                return;
+            
+            _placeId = placeData.Id;
         }
         #endregion
     }

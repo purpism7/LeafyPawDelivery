@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-using GameSystem;
 using UnityEngine.Events;
 using UnityEngine.UI;
+
+using Game.Event;
+using GameSystem;
 
 namespace Game
 {
@@ -24,7 +25,7 @@ namespace Game
             public int placeId = 0;
         }
 
-        public static UnityEvent<int> Event { get; private set; } = null;
+        public static UnityEvent<Game.Event.PlaceData> Event { get; private set; } = null;
 
         public Transform RootTm;
         [SerializeField]
@@ -43,7 +44,7 @@ namespace Game
 
         public override MonoBehaviour Initialize()
         {
-            Event = new UnityEvent<int>();
+            Event = new();
             Event?.RemoveAllListeners();
 
             PlaceEventController.Event?.RemoveAllListeners();
@@ -81,7 +82,7 @@ namespace Game
                 _placeList?.Add(ActivityPlace);
             }
 
-            Event?.Invoke(ActivityPlaceId);
+            Event?.Invoke(new PlaceData(ActivityPlaceId));
         }
 
         public override void ChainUpdate()

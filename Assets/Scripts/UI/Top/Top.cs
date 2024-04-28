@@ -123,11 +123,11 @@ namespace UI
             var currency = userInfo.GetCurrency(GameUtils.ActivityPlaceId);
             if (currency != null)
             {
-                animalCurrencyTMP?.SetText(currency.Animal + "");
-                objectCurrencyTMP?.SetText(currency.Object + "");
+                animalCurrencyTMP?.SetText($"{currency.Animal}");
+                objectCurrencyTMP?.SetText($"{currency.Object}");
             }
 
-            cashTMP?.SetText(userInfo.Cash + "");
+            cashTMP?.SetText($"{userInfo.Cash}");
         }
 
         private void SetCurrencyImg()
@@ -586,7 +586,7 @@ namespace UI
         }
         #endregion
 
-        private void OnChangedPlace(int placeId)
+        private void OnChangedPlace(Game.Event.PlaceData placeData)
         {
             Initialize();
         }
