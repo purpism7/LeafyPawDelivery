@@ -9,7 +9,6 @@ using UnityEngine.Localization.Settings;
 using UI.Component;
 using GameSystem;
 using Cysharp.Threading.Tasks;
-using Game;
 
 namespace UI
 {
@@ -33,17 +32,13 @@ namespace UI
         [SerializeField]
         private OpenCondition animalGetCurrency = null;
 
-        [Header("Profile")] 
-        [SerializeField] 
-        private RectTransform profileRootRectTm = null;
+        [Header("Skin")]
         [SerializeField]
         private RectTransform skinRootRectTm = null;
         [SerializeField]
         private ToggleGroup skinToggleGroup = null;
 
         [Header("Friendship")] 
-        [SerializeField]
-        private RectTransform friendshipRootRectTm = null;
         [SerializeField]
         private FriendshipCell friendshipCell = null;
 
@@ -59,9 +54,6 @@ namespace UI
 
         private List<SkinCell> _skinCellList = new();
         private SkinCell _selectSkinCell = null;
-        private Game.Type.ETab _currETabType = Type.ETab.Profile;
-
-        private bool _initializeFriendship = false;
 
         public override void Initialize(Data data)
         {
@@ -86,12 +78,6 @@ namespace UI
                     return;
 
                 SetSelectSkinInfo(animalInfo.SkinId);
-                
-                if (!_initializeFriendship)
-                {
-                    friendshipCell?.Initialize(null);
-                    _initializeFriendship = true;
-                }
             }
             else if (_data.EElement == Game.Type.EElement.Object)
             {
@@ -103,9 +89,7 @@ namespace UI
         public override void Activate()
         {
             base.Activate();
-            
-            ActiveContents();
-            
+
             SetAnimalSkinList();
         }
 
@@ -261,39 +245,6 @@ namespace UI
             get
             {
                 return _selectSkinCell != null ? _selectSkinCell.SkinId : 0;
-            }
-        }
-        
-        private void ActiveContents()
-        {
-            UIUtils.SetActive(profileRootRectTm, _currETabType == Type.ETab.Profile);
-            UIUtils.SetActive(friendshipRootRectTm, _currETabType == Type.ETab.Friendship);
-
-            if (_currETabType == Type.ETab.Friendship)
-            {
-                if (_data == null)
-                    return;
-                
-                friendshipCell?.Activate(
-                    new FriendshipCell.Data()
-                    {
-                        Id = _data.Id
-                    });
-            }
-        }
-        
-        public void OnChanged(string tabType)
-        {
-            if(System.Enum.TryParse(tabType, out Game.Type.ETab eTabType))
-            {
-                if(_currETabType == eTabType)
-                    return;
-
-                _currETabType = eTabType;
-
-                ActiveContents();
-
-                EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
             }
         }
 
