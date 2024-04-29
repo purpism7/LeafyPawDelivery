@@ -293,6 +293,8 @@ MonoBehaviour:
     m_Key: desc_reset_arrange
     m_Metadata:
       m_Items: []
+  - m_Id: 95867652939964416
+    m_Key: gift
   - m_Id: 98744242308898816
     m_Key: desc_boost_all_pick_up
     m_Metadata:

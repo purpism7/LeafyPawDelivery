@@ -38,6 +38,10 @@ namespace UI
         [SerializeField]
         private ToggleGroup skinToggleGroup = null;
 
+        [Header("Friendship")] 
+        [SerializeField]
+        private FriendshipCell friendshipCell = null;
+
         [Header("Object")]
         [SerializeField]
         private RectTransform objectRootRectTm = null;

@@ -12,8 +12,8 @@ scopes = {
 	"OpenInspectorPreview.B655092D" = "0"
 	"currentGroup.B655092D" = "all"
 	"picker_window_position_offset.45F317DD" = "108;336;320;550"
-	"picker_search_text.45F317DD" = "map"
-	"last_search.45F317DD" = "map"
+	"picker_search_text.45F317DD" = "gift"
+	"last_search.45F317DD" = "gift"
 	"OpenInspectorPreview.45F317DD" = "0"
 	"currentGroup.45F317DD" = "all"
 	"last_search.310DEAA3" = "iap"
@@ -85,12 +85,12 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	" "
 	"pr"
 	"quit_game "
 	"o"
 	"ca"
 	"desc_hidden_object"
-	" "
 	"desc_continue_game"
 	""
 	"s"

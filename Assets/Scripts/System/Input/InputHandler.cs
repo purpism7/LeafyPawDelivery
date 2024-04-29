@@ -240,22 +240,7 @@ namespace GameSystem
                     });
             }
         }
-
-        //private bool CheckGetGameBase<T>(RaycastHit raycastHit, out T t)
-        //{
-        //    t = default(T);
-
-        //    var collider = raycastHit.collider;
-        //    if (collider == null)
-        //        return false;
-
-        //    t = collider.GetComponentInParent<T>();
-        //    if (t == null)
-        //        return false;
-
-        //    return true;
-        //}
-
+        
         private bool CheckGetGameBase<T>(RaycastHit2D raycastHit2D, out T t)
         {
             t = default(T);
