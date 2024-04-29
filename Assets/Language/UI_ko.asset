@@ -326,6 +326,8 @@ MonoBehaviour:
   - m_Id: 98744242308898816
     m_Localized: "\uBC14\uB2E5\uC5D0 \uB5A8\uC5B4\uC9C4 \uC7AC\uD654\uB97C \n\uD55C
       \uBC88\uC5D0 \uC8FC\uC6B8 \uC218 \uC788\uC5B4\uC694."
+  - m_Id: 95867652939964416
+    m_Localized: "\uC120\uBB3C"
     m_Metadata:
       m_Items: []
   references:
