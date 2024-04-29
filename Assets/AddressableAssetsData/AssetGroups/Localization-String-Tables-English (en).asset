@@ -45,13 +45,6 @@ MonoBehaviour:
     - Locale-en
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8186d1034eaf745f68fbce7832d8cfc8
-    m_Address: SpeechBubble_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a59f4d586af4408e9b4fddb31cb3e33
     m_Address: Acquire_en
     m_ReadOnly: 1
@@ -60,6 +53,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: da39db3f58415425f97db016a9d378c9
     m_Address: App_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8186d1034eaf745f68fbce7832d8cfc8
+    m_Address: SpeechBubble_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
