@@ -591,7 +591,7 @@ namespace UI
                 Game.UIManager.Instance?.Bottom?.DeactivateAnim(
                     () =>
                     {
-                        mainGameMgr?.SpwanAnimalToPlace(id, false);
+                        mainGameMgr?.SpwanAnimalToPlace(id, true);
                     });
             }
             else if (EElement == Game.Type.EElement.Object)
