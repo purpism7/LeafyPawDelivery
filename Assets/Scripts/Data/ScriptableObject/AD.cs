@@ -32,6 +32,11 @@ public class AD : ScriptableObject
 #endif
             }
         }
+
+        public string Placement
+        {
+            get { return placement; }
+        }
     }
 
     [SerializeField]

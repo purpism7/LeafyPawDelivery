@@ -21,10 +21,10 @@ MonoBehaviour:
   - eCategory: 2
     ios: ca-app-pub-4768455296560255/4531994490
     and: ca-app-pub-4768455296560255/6723823817
-    placement: 
+    placement: Free_Animal_Currency
     coolTimeSec: 1800
   - eCategory: 3
     ios: ca-app-pub-4768455296560255/1679488496
     and: ca-app-pub-4768455296560255/4097660475
-    placement: 
+    placement: Free_Object_Currency
     coolTimeSec: 1800

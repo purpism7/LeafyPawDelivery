@@ -21,5 +21,6 @@ MonoBehaviour:
       eCategory: 0
       ios: ca-app-pub-4768455296560255/1018456597
       and: ca-app-pub-4768455296560255/6228165640
+      placement: Boost_Twice_Currency
       coolTimeSec: 3600
     localKey: desc_boost_twice_currency

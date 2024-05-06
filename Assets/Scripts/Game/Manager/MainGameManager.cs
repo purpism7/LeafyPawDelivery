@@ -562,6 +562,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         if (animal == null)
             return;
 
+        animal?.SetSpwaned(true);
+        
         _startEditAction?.Invoke(animal);
     }
 
