@@ -179,7 +179,7 @@ namespace UI
                         if (adData == null)
                             return;
 
-                        AdProvider.Get?.ShowAd(adData.adId,
+                        AdProvider.Get?.ShowAd(adData,
                             (rewardValue) =>
                             {
                                 if(rewardValue > 0)

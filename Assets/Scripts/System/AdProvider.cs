@@ -16,7 +16,7 @@ namespace GameSystem
         {
             if (_instance == null)
             {
-                var gameObj = new GameObject(typeof(AdProvider).Name);
+                var gameObj = new GameObject(nameof(AdProvider));
                 if (!gameObj)
                     return;
 
@@ -38,7 +38,7 @@ namespace GameSystem
         private Dictionary<string, RewardedInterstitialAd> _rewardedInterstitialAdDic = null;
 
         private Reward _reward = null;
-        private string _adId = string.Empty;
+        private AD.Data _adData = null;
         private System.Action<double> _callback = null;
 
         private void Initialize()
@@ -77,6 +77,7 @@ namespace GameSystem
         // This replaces the RewardedVideoAvailabilityChangedEvent(false) event
         void RewardedVideoOnAdUnavailable()
         {
+            Game.UIManager.Instance?.DeactivateScreenSaver();
         }
         
         // The Rewarded Video ad view has opened. Your activity will loose focus.
@@ -89,6 +90,10 @@ namespace GameSystem
         void RewardedVideoOnAdClosedEvent(IronSourceAdInfo adInfo)
         {
             Debug.Log("RewardedVideoOnAdClosedEvent");
+            
+            _callback?.Invoke(0);
+            
+            Game.UIManager.Instance?.DeactivateScreenSaver();
         }
         
         // The user completed to watch the video, and should be rewarded.
@@ -96,19 +101,34 @@ namespace GameSystem
         // When using server-to-server callbacks, you may ignore this event and wait for the ironSource server callback.
         void RewardedVideoOnAdRewardedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
         {
-            if (placement == null)
+            Debug.Log("RewardedVideoOnAdRewardedEvent");
+            
+            Game.UIManager.Instance?.DeactivateScreenSaver();
+            
+            if (!CheckPossibleReward(placement))
+            {
+                _callback?.Invoke(0);
+                
                 return;
-        
+            }
+            
             _callback?.Invoke(placement.getRewardAmount());
         }
         
         // The rewarded video ad was failed to show.
         void RewardedVideoOnAdShowFailedEvent(IronSourceError error, IronSourceAdInfo adInfo)
         {
+            Debug.Log("RewardedVideoOnAdShowFailedEvent");
+            
+            _callback?.Invoke(0);
+            
+            Game.UIManager.Instance?.DeactivateScreenSaver();
+            
             if (error == null)
                 return;
-        
-            Game.Toast.Get?.Show(error.getDescription(), error.getErrorCode().ToString());
+
+            ShowToastTryLater();
+            // Game.Toast.Get?.Show(error.getDescription(), error.getErrorCode().ToString());
         }
         
         // Invoked when the video ad was clicked.
@@ -116,6 +136,21 @@ namespace GameSystem
         // it’s supported by all networks you included in your build.
         void RewardedVideoOnAdClickedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
         {
+            // Game.UIManager.Instance?.DeactivateScreenSaver();
+        }
+
+        private bool CheckPossibleReward(IronSourcePlacement placement)
+        {
+            if (placement == null)
+                return false;
+
+            if (_adData == null)
+                return false;
+
+            if (!_adData.Placement.Equals(placement.getPlacementName()))
+                return false;
+
+            return true;
         }
 
         // public void ShowAd(string adId, System.Action<double> callbackAction)
@@ -175,6 +210,13 @@ namespace GameSystem
                 {
                     if (error != null || ad == null)
                     {
+                        if (_adData != null)
+                        {
+                            IronSource.Agent?.showRewardedVideo(_adData.Placement);
+
+                            return;
+                        }
+                        
                         _callback?.Invoke(0);
 
                         ShowToastTryLater();
@@ -202,8 +244,12 @@ namespace GameSystem
                 });
         }
 
-        public void ShowAd(string id, System.Action<double> callback)
+        public void ShowAd(AD.Data adData, System.Action<double> callback)
+        // public void ShowAd(string id, System.Action<double> callback)
         {
+            if (adData == null)
+                return;
+            
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 ShowToastInternetConnection();
@@ -211,7 +257,7 @@ namespace GameSystem
                 return;
             }
 
-            _adId = id;
+            _adData = adData;
             _callback = callback;
 
             _reward = null;
@@ -221,36 +267,41 @@ namespace GameSystem
 #else
             Game.UIManager.Instance?.ActivateSreenSaver();
 #endif
+            
+            // IronSource.Agent?.showRewardedVideo(_adData.Placement);
+            //
+            // return;
 
             InitializeRewardedInterstitialAdDic();
 
-            RewardedInterstitialAd ad = null;
-            _rewardedInterstitialAdDic?.TryGetValue(id, out ad);
+            var adId = adData.adId;
+            RewardedInterstitialAd rewardedInterstitialAd = null;
+            
+            _rewardedInterstitialAdDic?.TryGetValue(adData.adId, out rewardedInterstitialAd);
 
-            if (ad == null)
+            if (rewardedInterstitialAd == null)
             {
-                LoadRewardedInterstitialAd(id,
-                    () => { ShowAd(id, callback); });
+                LoadRewardedInterstitialAd(adId,
+                    () => { ShowAd(adData, callback); });
 
                 return;
             }
 
-            if (ad.CanShowAd())
+            if (rewardedInterstitialAd.CanShowAd())
             {
-                ad.Show(
+                rewardedInterstitialAd.Show(
                     (reward) => { _reward = reward; });
 
                 Game.UIManager.Instance?.DeactivateScreenSaver();
             }
             else
             {
-                LoadRewardedInterstitialAd(id,
-                    () => { ShowAd(id, callback); });
+                LoadRewardedInterstitialAd(adId,
+                    () => { ShowAd(adData, callback); });
             }
         }
 
-
-    private void OnAdFullScreenContentFailed(AdError adError)
+         private void OnAdFullScreenContentFailed(AdError adError)
         {
             if (adError == null)
                 return;
@@ -266,12 +317,13 @@ namespace GameSystem
 
             _callback?.Invoke(_reward != null ? _reward.Amount : 0);
 
-            if(!string.IsNullOrEmpty(_adId))
+            if(_adData != null && 
+               !string.IsNullOrEmpty(_adData.adId))
             {
-                LoadRewardedInterstitialAd(_adId, null);
+                LoadRewardedInterstitialAd(_adData.adId, null);
             }
 
-            _adId = string.Empty;
+            _adData = null;
             _reward = null;
             _callback = null;
         }
