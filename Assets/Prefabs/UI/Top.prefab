@@ -974,6 +974,7 @@ RectTransform:
   - {fileID: 8798534791773758714}
   - {fileID: 2711693529902603192}
   - {fileID: 4757803008134759927}
+  - {fileID: 3922011497417759597}
   - {fileID: 3611969013638216062}
   - {fileID: 4627736380213755255}
   - {fileID: 996598040777350339}
@@ -1231,8 +1232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -19.5, y: -1.699997}
-  m_SizeDelta: {x: 186.7, y: 500}
+  m_AnchoredPosition: {x: -19.5, y: 0}
+  m_SizeDelta: {x: 150, y: 500}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &3684653795275742580
 GameObject:
@@ -2333,7 +2334,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1698644249854689299}
-  - {fileID: 3922011497417759597}
   m_Father: {fileID: 3040557602613828001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2358,7 +2358,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3922011497417759597}
-  - component: {fileID: 6615735447327639544}
+  - component: {fileID: 4133490295001042809}
   m_Layer: 5
   m_Name: BoostRoot
   m_TagString: Untagged
@@ -2378,14 +2378,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2711693529902603192}
+  m_Father: {fileID: 3040557602613828001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: -50}
-  m_SizeDelta: {x: 400, y: 80}
-  m_Pivot: {x: 0, y: 0.5}
---- !u!114 &6615735447327639544
+  m_AnchoredPosition: {x: 20, y: 0}
+  m_SizeDelta: {x: 150, y: 500}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &4133490295001042809
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2394,7 +2394,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7531660226467794093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -2402,10 +2402,10 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 20
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 1
+  m_ChildAlignment: 1
+  m_Spacing: 30
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0

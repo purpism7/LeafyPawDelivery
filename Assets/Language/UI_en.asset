@@ -323,6 +323,10 @@ MonoBehaviour:
     m_Localized: Do you want to reset the arrangement?
     m_Metadata:
       m_Items: []
+  - m_Id: 98744242308898816
+    m_Localized: You can pick up things that fall on the floor at once.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 
 using TMPro;
@@ -20,7 +21,7 @@ namespace UI.Component
         private TextMeshProUGUI remainTimeTMP = null;
 
         private bool _activate = false;
-        public double _remainTimeSec = 0;
+        private double _remainTimeSec = 0;
 
         public System.DateTime? EndDateTime { get; private set; } = null;
        
@@ -94,7 +95,7 @@ namespace UI.Component
         private void ActivateBoost(double remainSec)
         {
             EndDateTime = System.DateTime.UtcNow.AddSeconds(remainSec);
-
+            
             _activate = true;
         }
 
@@ -124,16 +125,15 @@ namespace UI.Component
         }
 
         #region UI.Boost.IListener
-        UI.Boost.Data UI.Boost.IListener.Buy()
+        UI.Boost.Data UI.Boost.IListener.Buy(Type.EBoost eBoost)
         {
             var boostData = _data?.boostData;
             if (boostData == null)
                 return null;
 
-            _remainTimeSec = boostData.timeSec;
             ActivateBoost(boostData.timeSec);
 
-            MainGameManager.Get<Game.BoostManager>()?.Save();
+            MainGameManager.Get<Game.BoostManager>()?.Apply(eBoost);
 
             return CreateBoostData;
         }
@@ -147,7 +147,7 @@ namespace UI.Component
                 if (mainGameMgr.IsTutorial)
                     return;
             }
-
+            
             new GameSystem.PopupCreator<UI.Boost, UI.Boost.Data>()
                 .SetData(CreateBoostData)
                 .SetReInitialize(true)

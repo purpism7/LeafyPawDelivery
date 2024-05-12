@@ -12,6 +12,7 @@ namespace Game.State
         {
             UI.ITopAnim iTopAnim = UIManager.Instance?.Top;
             iTopAnim?.DeactivateRight(null);
+            iTopAnim?.DeactivateLeft(null);
 
             var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
             if (activityPlace == null)

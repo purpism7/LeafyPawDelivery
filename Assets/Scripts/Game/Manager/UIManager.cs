@@ -24,6 +24,14 @@ namespace Game
 
         private Type.EScreenSaverType _eScreenSaverType = Type.EScreenSaverType.None;
 
+        public RectTransform UIRootRectTm
+        {
+            get
+            {
+                return uiRootRectTm;
+            }
+        }
+
         protected override void Initialize()
         {
             

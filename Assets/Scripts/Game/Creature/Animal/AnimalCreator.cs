@@ -18,9 +18,7 @@ namespace GameSystem
         private bool _isEdit = true;
         private bool _isSpeechBubble = true;
         private IPlaceState _iPlaceState = null;
-
-        //private System.Action<DropItem, Transform> _dropItemAction = null;
-
+        
         public AnimalCreator SetAnimalId(int id)
         {
             _animalId = id;

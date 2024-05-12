@@ -93,6 +93,24 @@ namespace Game
             }
         }
 
+        public void Apply(Type.EBoost eBoost)
+        {
+            if (eBoost == Type.EBoost.AllPickUp)
+            {
+                IPlace iPlace = MainGameManager.Get<PlaceManager>().ActivityPlace;
+                if (iPlace != null)
+                {
+                    // MainGameManager.Instance?.IGameCameraCtr?.SetPositionUICamera(false, Vector3.zero);
+                    
+                    iPlace.AllPickUpDropItem(MainGameManager.Instance.IGameCameraCtr.WorldToScreenPoint);
+                }
+            }
+
+            // MainGameManager.Instance?.IGameCameraCtr?.SetPositionUICamera(true, Vector3.zero);
+            
+            Save();
+        }
+        
         public void Save()
         {
             if (_boostCompList == null)

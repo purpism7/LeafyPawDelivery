@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
@@ -23,7 +24,7 @@ namespace UI
 
         public interface IListener
         {
-            Data Buy();
+            Data Buy(Type.EBoost eBoost);
         }
 
         [SerializeField]
@@ -48,7 +49,7 @@ namespace UI
         [SerializeField]
         private UnityEngine.UI.Image adIconImg = null;
 
-        private bool _initialize = true;
+        // private bool _initialize = true;
 
         public override void Initialize(Data data)
         {
@@ -58,17 +59,13 @@ namespace UI
             SetDesc();
 
             remainTimeTMP?.SetText(string.Empty);
+            remainPlayTimeTMP?.SetText(string.Empty);
 
             if (data != null)
             {
                 SetBoostState(data.activate);
-                SetPlayTimer(false);
+                SetPlayTimer(true);
                 SetReqCash();
-            }
-
-            if(_initialize)
-            {
-                _initialize = false;
             }
         }
 
@@ -84,9 +81,8 @@ namespace UI
 
             if (_data.endDateTime == null)
                 return;
-
-            var remainTime = _data.endDateTime.Value - System.DateTime.UtcNow;
             
+            var remainTime = _data.endDateTime.Value - System.DateTime.UtcNow;
             remainTimeTMP?.SetText(remainTime.ToString(@"mm\:ss"));
   
             if (remainTime.TotalSeconds <= 0)
@@ -148,7 +144,7 @@ namespace UI
                 userCash = user.Cash;
             }
 
-            openCondition.Initialize(
+            openCondition?.Initialize(
                 new Component.OpenCondition.Data()
                 {
                     ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
@@ -156,7 +152,7 @@ namespace UI
                     PossibleFunc = () => userCash >= boostData.reqCash,
                 });
 
-            openCondition.Activate();
+            openCondition?.Activate();
         }
 
         private void SetBoostState(bool activate)
@@ -178,23 +174,34 @@ namespace UI
             _data.endDateTime = null;
         }
 
-        private void SetPlayTimer(bool buy)
+        private void SetPlayTimer(bool initialize)
         {
-            if (!_initialize && !buy)
+            var timer = Game.Timer.Get;
+            if (timer == null)
+                return;
+            
+            var adData = _data?.boostData?.ad;
+            if (adData == null)
                 return;
 
-            var adData = _data?.boostData?.ad;
+            float addSec = 0;
+            if (!initialize)
+            {
+                addSec = adData.coolTimeSec;
+            }
 
             UIUtils.SetActive(adIconImg, false);
 
+            Game.Timer.Get?.SetRootType($"{_data.boostData.eBoost}");
             Game.Timer.Get?.Add(
                 new Game.Timer.Data()
                 {
-                    initialize = _initialize,
+                    // initialize = _initialize,
                     key = adData.adId,
+                    ShowRootType = $"{_data.boostData.eBoost}",
                     timeTMP = remainPlayTimeTMP,
                     btn = buyBtn,
-                    addSec = adData.coolTimeSec,
+                    addSec = addSec,
                     endAction = () =>
                     {
                         //remainPlayTimeTMP.GetComponent<UnityEngine.Localization.Components.LocalizeStringEvent>()?.RefreshString();
@@ -204,15 +211,22 @@ namespace UI
                 });
         }
 
-        private void SuccessActivateBoost()
+        private void SuccessActivateBoost(bool buyAd)
         {
-            _data = _data?.iListener?.Buy();
-            if (_data != null)
+            var eBoost = _data?.boostData?.eBoost ?? Type.EBoost.None;
+            if (eBoost != Type.EBoost.None)
             {
-                SetBoostState(_data.activate);
+                _data = _data?.iListener?.Buy(eBoost);
+                if (_data != null)
+                {
+                    SetBoostState(_data.activate);
+                }
             }
 
-            SetPlayTimer(true);
+            if (buyAd)
+            {
+                SetPlayTimer(false);
+            }
         }
 
         #region BuyCash.IListener
@@ -231,7 +245,12 @@ namespace UI
                 return;
             }
 
-            SuccessActivateBoost();
+            if (boostData.eBoost == Type.EBoost.AllPickUp)
+            {
+                Deactivate();
+            }
+            
+            SuccessActivateBoost(false);
 
             Info.UserManager.Instance?.User?.SetCash(-boostData.reqCash);
 
@@ -260,11 +279,11 @@ namespace UI
                 {
                     if(rewardValue > 0)
                     {
-                        SuccessActivateBoost();
+                        SuccessActivateBoost(true);
                     }
                     else
                     {
-                        SetPlayTimer(true);
+                        SetPlayTimer(false);
                     }
                 });
         }
@@ -286,7 +305,7 @@ namespace UI
                         {
                             IListener = this,
                             Cash = boostData.reqCash,
-                            targetSprite = ResourceManager.Instance?.AtalsLoader?.GetSprite("UI_Common", "UI_BoosterIcon"),
+                            targetSprite = boostData.iconSprite,
                         })
                         .Create();
 

@@ -172,48 +172,6 @@ namespace GameSystem
                         break;
                     }
             }
-
-            //if (touch.phase == TouchPhase.Began)
-            //{
-            //    if (_beganGameBase)
-            //        return;
-
-            //    {
-            //        if (isHitInfo)
-            //        {
-            //            if (gameBase != null)
-            //            {
-            //                OnTouchBegan(touch, gameBase);
-
-            //                return;
-            //            }
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    if (gameStateEdit)
-            //    {
-            //        if (!_beganGameBase)
-            //            return;
-            //    }
-            //    else
-            //    {
-            //        if (gameBase == null)
-            //            return;
-            //    }
-
-            //    _gameBase?.OnTouch(touch);
-
-            //    if (touch.phase == TouchPhase.Ended)
-            //    {
-            //        OnTouchEnded(touch);
-            //    }
-            //    else if (touch.phase == TouchPhase.Canceled)
-            //    {
-            //        OnTouchEnded(touch);
-            //    }
-            //}
         }
 
         private void OnTouchBegan(Touch? touch, Game.Base gameBase)

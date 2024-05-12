@@ -11,7 +11,13 @@ using System;
 
 namespace Game
 {
-    public partial class DropItem : Game.Base<DropItem.Data>
+    public interface IDropItem
+    {
+        Type.EItem EItemType { get; }
+        void PickUp(Func<Vector3, Vector3> startPosFunc);
+    }
+    
+    public partial class DropItem : Game.Base<DropItem.Data>, IDropItem
     {
         public class Data : BaseData
         {
@@ -113,9 +119,12 @@ namespace Game
                 }
             }
 
-            Collect(touch, gameCameraCtr);
-
-            Deactivate();
+            IGameCameraCtr iGameCameraCtr = gameCameraCtr;
+            if (iGameCameraCtr != null)
+            {
+                var startPos = iGameCameraCtr.ScreenToWorldPoint(touch.Value.position);
+                PickUp(startPos);
+            }
         }
 
         public override void OnTouch(Touch touch)
@@ -239,13 +248,10 @@ namespace Game
             progressSpriteRenderer.DOFade(1f, 0);
             progressSpriteRenderer.transform.DOScaleX(progress, _data.progress <= 1 ? 0 : 0.2f);
         }
-
-        private void Collect(Touch? touch, GameCameraController gameCameraCtr)
+        
+        private void PickUp(Vector3 startPos)
         {
-            if (gameCameraCtr == null)
-                return;
-
-            var startPos = gameCameraCtr.UICamera.ScreenToWorldPoint(touch.Value.position);
+            // var startPos = gameCameraCtr.UICamera.ScreenToWorldPoint(touch.Value.position);
 
             int dropCnt = 0;
             Type.EItemSub eItemSub = Type.EItemSub.None;
@@ -308,6 +314,8 @@ namespace Game
             _data?.iListener?.GetDropItem(dropCnt, eItemSub);
 
             GameSystem.EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.PickItem);
+            
+            Deactivate();
         }
 
         private void Drop()
@@ -346,6 +354,31 @@ namespace Game
                 return itemData.eItemSub == Type.EItemSub.Letter;
             }
         }
+
+        #region IDropItem
+
+        Type.EItem IDropItem.EItemType
+        {
+            get
+            {
+                if (_data == null)
+                    return Type.EItem.None;
+                
+                return _data.EItem;
+            }
+        }
+        
+        void IDropItem.PickUp(Func<Vector3, Vector3> startPosFunc)
+        {
+            if (!IsActivate)
+                return;
+
+            if (startPosFunc == null)
+                return;
+
+            PickUp(startPosFunc.Invoke(transform.localPosition));
+        }
+        #endregion
     }
 }
 

@@ -9,6 +9,8 @@ using System;
 using TMPro;
 
 using GameSystem;
+using Unity.VisualScripting;
+using Product = UnityEngine.Purchasing.Product;
 
 namespace UI.Component
 {
@@ -194,11 +196,13 @@ namespace UI.Component
             if (adData == null)
                 return;
 
+            var rootType = GetType().Name;
             Game.Timer.Get?.Add(
                 new Game.Timer.Data()
                 {
                     initialize = initialize,
                     key = adData.adId,
+                    ShowRootType = nameof(Shop),
                     timeTMP = paymentValueTMP,
                     btn = iAPButton?.button,
                     addSec = adData.coolTimeSec,

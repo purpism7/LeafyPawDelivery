@@ -24,3 +24,14 @@ MonoBehaviour:
       placement: Boost_Twice_Currency
       coolTimeSec: 3600
     localKey: desc_boost_twice_currency
+  - eBoost: 2
+    iconSprite: {fileID: 21300000, guid: 3abc7f6492665455eb0a71e5a2718f3d, type: 3}
+    timeSec: 0
+    reqCash: 30
+    ad:
+      eCategory: 0
+      ios: ca-app-pub-4768455296560255~8801833721
+      and: ca-app-pub-4768455296560255~7168286809
+      placement: Boost_Twice_Currency
+      coolTimeSec: 3600
+    localKey: desc_boost_all_pick_up

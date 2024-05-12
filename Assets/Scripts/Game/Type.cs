@@ -175,6 +175,7 @@ namespace Game
             None,
 
             TwiceCurrency,
+            AllPickUp,
         }
 
         public enum EScreenSaverType

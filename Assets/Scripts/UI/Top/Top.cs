@@ -32,6 +32,7 @@ namespace UI
     {
         void ActivateRight(System.Action completeAction);
         void DeactivateRight(System.Action completeAction);
+        void DeactivateLeft(System.Action completeAction);
     }
 
     public class Top : Common<Top.Data>, ITop, ITopAnim
@@ -65,6 +66,8 @@ namespace UI
         [SerializeField] private RectTransform objectCurrencyRectTm = null;
         [SerializeField] private RectTransform animalCurrencyRectTm = null;
         [SerializeField] private RectTransform cashCurrencyRectTm = null;
+        
+        [Header("Left (Boost)")]
         public RectTransform boostRootRectTm = null;
 
         [Header("Right")]
@@ -233,12 +236,14 @@ namespace UI
         {
             ActivateAnimTop(completeAction);
             ActivateAnimRight(completeAction);
+            ActivateAnimLeft(completeAction);
         }
 
         public void DeactivateAnim(System.Action completeAction)
         {
             DeactivateAnimTop(completeAction);
             DeactivateAnimRight(completeAction);
+            DeactivateAnimLeft(completeAction);
         }
 
         private void ActivateAnimTop(System.Action completeAction)
@@ -278,7 +283,7 @@ namespace UI
 
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
-                .Append(rightRootRectTm.DOAnchorPosX(0, 0.3f).SetEase(Ease.OutBack))
+                .Append(rightRootRectTm.DOAnchorPosX(-20f, 0.3f).SetEase(Ease.OutBack))
                 .OnComplete(() =>
                 {
                     completeAction?.Invoke();
@@ -294,6 +299,36 @@ namespace UI
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .Append(rightRootRectTm.DOAnchorPosX(InitPos, 0.3f).SetEase(Ease.InBack))
+                .OnComplete(() =>
+                {
+                    completeAction?.Invoke();
+                });
+            sequence.Restart();
+        }
+
+        private void ActivateAnimLeft(System.Action completeAction)
+        {
+            if (!boostRootRectTm)
+                return;
+
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(boostRootRectTm.DOAnchorPosX(20f, 0.3f).SetEase(Ease.OutBack))
+                .OnComplete(() =>
+                {
+                    completeAction?.Invoke();
+                });
+            sequence.Restart();
+        }
+        
+        private void DeactivateAnimLeft(System.Action completeAction)
+        {
+            if (!boostRootRectTm)
+                return;
+
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(boostRootRectTm.DOAnchorPosX(-InitPos, 0.3f).SetEase(Ease.InBack))
                 .OnComplete(() =>
                 {
                     completeAction?.Invoke();
@@ -376,7 +411,7 @@ namespace UI
             if (data == null)
                 return;
 
-            var collectCurrency = _collectCurrencyList.Find(collectCurrency => !collectCurrency.IsActivate);
+            var collectCurrency = _collectCurrencyList?.Find(collectCurrency => !collectCurrency.IsActivate);
             if (collectCurrency != null)
             {
                 collectCurrency.Initialize(data);
@@ -583,6 +618,11 @@ namespace UI
         void ITopAnim.DeactivateRight(System.Action completeAction)
         {
             DeactivateAnimRight(completeAction);
+        }
+
+        void ITopAnim.DeactivateLeft(System.Action completeAction)
+        {
+            DeactivateAnimLeft(completeAction);
         }
         #endregion
 

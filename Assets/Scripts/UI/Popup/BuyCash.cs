@@ -105,10 +105,10 @@ namespace UI
         public void OnClickBuy()
         {
             EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
-
-            _data?.IListener?.Buy(_possibleBuy);
-
+            
             Deactivate();
+            
+            _data?.IListener?.Buy(_possibleBuy);
         }
 
         public override void Begin()

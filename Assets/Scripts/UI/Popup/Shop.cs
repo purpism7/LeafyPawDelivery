@@ -46,6 +46,8 @@ namespace UI
         {
             base.Activate();
 
+            Game.Timer.Get?.SetRootType(nameof(Shop));
+            
             Game.Manager.IAP.Instance?.SetIListener(this);
 
             ActivateChildComponent(typeof(ShopItemGroup));

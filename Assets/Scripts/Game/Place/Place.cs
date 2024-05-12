@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using GameSystem;
@@ -15,6 +16,7 @@ namespace Game
         void RemoveAll(System.Action endAction);
 
         void CreateDropItem(DropItem.Data dropItemData);
+        void AllPickUpDropItem(System.Func<Vector3, Vector3> func);
     }
 
     public interface IPlaceState
@@ -141,7 +143,7 @@ namespace Game
             if (_animalList == null)
                 return null;
 
-            pos.z = GameUtils.CalcPosZ(pos.y);  //GetAnimalPosZ(id);
+            pos.z = GameUtils.CalcPosZ(pos.y);  
 
             foreach (var animal in _animalList)
             {
@@ -153,11 +155,11 @@ namespace Game
 
                 if (animal.SkinId != skinId)
                     continue;
-
+                
                 animal.SetSpwaned(spwaned);
                 animal.SetLocalPos(pos);
                 animal.Activate();
-
+                
                 return animal;
             }
 
@@ -608,6 +610,42 @@ namespace Game
                .Create();
 
             _dropItemList?.Add(addDropItem);
+        }
+
+        void IPlace.AllPickUpDropItem(System.Func<Vector3, Vector3> func)
+        {
+            AllPickUpDropItemAsync(func).Forget();
+        }
+
+        private async UniTask AllPickUpDropItemAsync(System.Func<Vector3, Vector3> func)
+        {
+            if (_dropItemList == null)
+                return;
+
+            var iGameCameraCtr = MainGameManager.Instance?.IGameCameraCtr;
+            if (iGameCameraCtr == null)
+                return;
+            
+            iGameCameraCtr.SetPositionUICamera(false, Vector3.zero);
+
+            await UniTask.Yield();
+            
+            foreach (IDropItem iDropItem in _dropItemList)
+            {
+                if(iDropItem == null)
+                    continue;
+                
+                if(iDropItem.EItemType != Type.EItem.Currency)
+                    continue;
+                
+                iDropItem?.PickUp(func);
+
+                await UniTask.WaitForSeconds(0.1f);
+            }
+            
+            await UniTask.WaitForSeconds(2f);
+            
+            iGameCameraCtr.SetPositionUICamera(true, Vector3.zero);
         }
         #endregion
 

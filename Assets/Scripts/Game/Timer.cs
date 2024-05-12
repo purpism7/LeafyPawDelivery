@@ -15,6 +15,7 @@ namespace Game
         {
             public bool initialize = false;
             public string key = string.Empty;
+            public string ShowRootType = null;
 
             public TextMeshProUGUI timeTMP = null;
             public Button btn = null;
@@ -36,6 +37,12 @@ namespace Game
             {
                 get
                 {
+                    if (_endDateTime == null)
+                        return 0;
+
+                    if (_startDateTime == null)
+                        return 0;
+                    
                     return (_endDateTime.Value - _startDateTime.Value).TotalSeconds + _offsetSec - Time.realtimeSinceStartup;
                 }
             }
@@ -43,6 +50,7 @@ namespace Game
 
         private List<Data> _dataList = null;
         private GameSystem.WorldTime _worldTime = null;
+        private string _currRootType = null; 
 
         public void Initialize()
         {
@@ -60,32 +68,16 @@ namespace Game
                 _dataList.Count <= 0)
                 return;
 
-            //var worldTime = GameSystem.WorldTime.Get;
-            //if (worldTime == null)
-            //    return;
-
-            //if (worldTime.DateTime == null ||
-            //   !worldTime.DateTime.HasValue)
-            //    return;
-
-            //var worldDateTime = worldTime.DateTime.Value;
-
-            //int timeSec = (int)MainGameManager.Instance.GamePlayTimeSec;
-
             for (int i = 0; i < _dataList.Count; ++i)
             {
                 var data = _dataList[i];
                 if (data == null)
                     continue;
 
-                //var endDateTime = data.endDateTime;
-                //if (data.endDateTime == null)
-                //{
-                //    _dataList.Remove(data);
-
-                //    break;
-                //}
-
+                if(_currRootType == null ||
+                   _currRootType != data.ShowRootType)
+                    continue;
+                
                 double remainSec = data.RemainSec;
                 if (remainSec > 0)
                 {
@@ -104,7 +96,7 @@ namespace Game
             }
         }
 
-        public async UniTask CheckTimeSyncAsync(System.Action<bool> callback)
+        private async UniTask CheckTimeSyncAsync(System.Action<bool> callback)
         {
             if (_worldTime == null)
             {
@@ -114,14 +106,6 @@ namespace Game
             await _worldTime.RequestAsync();
 
             callback?.Invoke(_worldTime.Sync);
-        }
-
-        public void Add(Data data)
-        {
-            if (data == null)
-                return;
-
-            AddAsync(data).Forget();
         }
 
         private async UniTask AddAsync(Data data)
@@ -158,7 +142,7 @@ namespace Game
             }
 
             bool setDateTime = false;
-            var worldUTCDateTime = _worldTime.DateTime.Value.ToUniversalTime();
+            var worldUtcDateTime = _worldTime.DateTime.Value.ToUniversalTime();
             
             if (!string.IsNullOrEmpty(data.key))
             {
@@ -167,14 +151,17 @@ namespace Game
                 {
                     if (System.DateTime.TryParse(dateTimeStr, out DateTime dateTime))
                     {
-                        
-                        if ((dateTime - worldUTCDateTime).TotalSeconds <= 0)
+                        if ((dateTime - worldUtcDateTime).TotalSeconds <= 0)
                         {
                             RemoveTimer(data);
                         }
                         else
                         {
-                            data.SetDateTime(worldUTCDateTime, dateTime);
+
+                            if (CheckExist(data.key))
+                                return;
+                            
+                            data.SetDateTime(worldUtcDateTime, dateTime);
 
                             setDateTime = true;
                         }
@@ -193,22 +180,23 @@ namespace Game
                 }
                 else
                 {
-                    //data.addSec = 60f * 5f;
+                    if (data.addSec <= 0)
+                    {
+                        data.btn?.SetInteractable(true);
+                        data.endAction?.Invoke();
 
-                    DateTime endDateTime = worldUTCDateTime.AddSeconds(data.addSec);
+                        return;
+                    }
                     
-                    data.SetDateTime(worldUTCDateTime, endDateTime, Time.realtimeSinceStartup);
+                    DateTime endDateTime = worldUtcDateTime.AddSeconds(data.addSec);
+                    
+                    data.SetDateTime(worldUtcDateTime, endDateTime, Time.realtimeSinceStartup);
 
                     PlayerPrefs.SetString(data.key, endDateTime.ToString());
-
-                    setDateTime = true;
                 }    
             }
 
-            if (setDateTime)
-            {
-                _dataList?.Add(data);
-            }
+            _dataList?.Add(data);
         }
 
         private void RemoveTimer(Timer.Data data)
@@ -222,6 +210,31 @@ namespace Game
             {
                 bool isRemove = _dataList.Remove(data);
             }
+        }
+
+        public void SetRootType(string rootType)
+        {
+            _currRootType = rootType;
+        }
+        
+        public void Add(Data data)
+        {
+            if (data == null)
+                return;
+
+            AddAsync(data).Forget();
+        }
+
+        public bool CheckExist(string key)
+        {
+            if (_dataList == null)
+                return false;
+
+            var findData = _dataList.Find(data => data.key == key);
+            if (findData == null)
+                return false;
+
+            return findData.RemainSec > 0;
         }
     }
 }

@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
+
+using Game;
 
 namespace GameSystem
 {
@@ -21,6 +24,11 @@ namespace GameSystem
 
         float RandPosXInScreenRagne { get; }
         float RandPosYInScreenRagne { get; }
+
+        Vector3 ScreenToWorldPoint(Vector3 pos);
+        Vector3 WorldToScreenPoint(Vector3 pos);
+
+        void SetPositionUICamera(bool origin, Vector3 pos);
     }
 
     public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtr
@@ -32,6 +40,7 @@ namespace GameSystem
         [SerializeField]
         private AnimationCurve moveCurve = null;
 
+        private Vector3 _originUICameraPos = new Vector3(3000f, 0, 0);
         private Vector2 _center = Vector2.zero;
         private Vector2 _mapSize = new Vector2(2000f, 2000f);
 
@@ -290,6 +299,46 @@ namespace GameSystem
                 Random.InitState((int)randomY);
 
                 return IGrid.LimitPosY(randomY);
+            }
+        }
+
+        Vector3 IGameCameraCtr.ScreenToWorldPoint(Vector3 pos)
+        {
+            if (UICamera == null)
+                return pos;
+
+            return UICamera.ScreenToWorldPoint(pos);
+        }
+        
+        Vector3 IGameCameraCtr.WorldToScreenPoint(Vector3 pos)
+        {
+            if (GameCamera == null)
+                return pos;
+
+            RectTransform rectTm = UIManager.Instance?.UIRootRectTm;
+            if (!rectTm)
+                return pos;
+    
+            Vector2 viewportPos= GameCamera.WorldToViewportPoint(pos);
+            
+            return new Vector2(
+                (viewportPos.x * rectTm.sizeDelta.x) - (rectTm.sizeDelta.x * 0.5f),
+                (viewportPos.y * rectTm.sizeDelta.y) - (rectTm.sizeDelta.y * 0.5f));
+        }
+
+        void IGameCameraCtr.SetPositionUICamera(bool origin, Vector3 pos)
+        {
+            var uiCameraTm = UICamera?.GetComponent<Transform>();
+            if (!uiCameraTm)
+                return;
+            
+            if (origin)
+            {
+                UICamera.GetComponent<Transform>().position = _originUICameraPos;
+            }
+            else
+            {
+                UICamera.GetComponent<Transform>().position = pos;
             }
         }
         #endregion
