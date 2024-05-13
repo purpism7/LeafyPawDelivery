@@ -552,12 +552,14 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         {
             pos = IGameCameraCtr.Center;
         }
-        
-        var animal = placeMgr?.ActivityPlace?.SpwanAnimal(id, animalInfo.SkinId, pos, spwaned);
+
+        bool activate = false;
+        var animal = placeMgr?.ActivityPlace?.SpwanAnimal(id, animalInfo.SkinId, pos, spwaned, out activate);
         if (animal == null)
             return;
 
-        if (!spwaned)
+        if (!spwaned && 
+            !activate)
         {
             animal?.SetSpwaned(true);
         }

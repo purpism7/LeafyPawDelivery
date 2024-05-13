@@ -138,8 +138,10 @@ namespace Game
         }
 
         #region Animal
-        public Creature.Animal SpwanAnimal(int id, int skinId, Vector3 pos, bool spwaned)
+        public Creature.Animal SpwanAnimal(int id, int skinId, Vector3 pos, bool spwaned, out bool activate)
         {
+            activate = false;
+            
             if (_animalList == null)
                 return null;
 
@@ -155,7 +157,9 @@ namespace Game
 
                 if (animal.SkinId != skinId)
                     continue;
-                
+
+                activate = animal.IsActivate;
+      
                 animal.SetSpwaned(spwaned);
                 animal.SetLocalPos(pos);
                 animal.Activate();
@@ -223,18 +227,11 @@ namespace Game
 
             if(existAnimal)
             {
-                SpwanAnimal(id, skinId, pos, false);
+                SpwanAnimal(id, skinId, pos, false, out bool activate);
             }
 
             return existAnimal;
         }
-
-        //private float GetAnimalPosZ(int id)
-        //{
-        //    var posZ = id * GetPosZOffset(id);
-           
-        //    return -posZ;
-        //}
         #endregion
 
         #region Object
