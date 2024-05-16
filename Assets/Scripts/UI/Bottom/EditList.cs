@@ -157,7 +157,7 @@ namespace UI
             int placeId = GameUtils.ActivityPlaceId;
             var objectDataList = ObjectContainer.Instance?.GetDataListByPlaceId(placeId);
 
-            var objectDatas = objectDataList?.OrderBy(data => data.Id);
+            var objectDatas = objectDataList?.OrderBy(data => data.Order);
 
             bool isTutorial = CheckIsTutorial;
             EnableScrollRect(objectScrollRect, !isTutorial);

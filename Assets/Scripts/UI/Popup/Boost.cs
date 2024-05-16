@@ -216,6 +216,11 @@ namespace UI
             var eBoost = _data?.boostData?.eBoost ?? Type.EBoost.None;
             if (eBoost != Type.EBoost.None)
             {
+                if (eBoost == Type.EBoost.AllPickUp)
+                {
+                    Deactivate();
+                }
+                
                 _data = _data?.iListener?.Buy(eBoost);
                 if (_data != null)
                 {
@@ -243,11 +248,6 @@ namespace UI
                 Game.Toast.Get?.Show(text);
 
                 return;
-            }
-
-            if (boostData.eBoost == Type.EBoost.AllPickUp)
-            {
-                Deactivate();
             }
             
             SuccessActivateBoost(false);
