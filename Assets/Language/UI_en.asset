@@ -325,8 +325,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 95867652939964416
     m_Localized: Gift
+    m_Metadata:
+      m_Items: []
   - m_Id: 98744242308898816
     m_Localized: You can pick up things that fall on the floor at once.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 101278469084667904
+    m_Localized: Friendship
     m_Metadata:
       m_Items: []
   references:
