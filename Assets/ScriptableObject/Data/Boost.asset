@@ -33,5 +33,5 @@ MonoBehaviour:
       ios: ca-app-pub-4768455296560255/2456271121
       and: ca-app-pub-4768455296560255/9049599635
       placement: Boost_All_Pick_Up
-      coolTimeSec: 3600
+      coolTimeSec: 1800
     localKey: desc_boost_all_pick_up
