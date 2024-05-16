@@ -28,6 +28,8 @@ namespace Game
             Story,
             DailyMission,
             Achievement,
+            Profile,
+            Friendship,
         }
 
         public enum EBottomType

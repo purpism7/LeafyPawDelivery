@@ -9,6 +9,7 @@ using UnityEngine.Localization.Settings;
 using UI.Component;
 using GameSystem;
 using Cysharp.Threading.Tasks;
+using Game;
 
 namespace UI
 {
@@ -32,13 +33,17 @@ namespace UI
         [SerializeField]
         private OpenCondition animalGetCurrency = null;
 
-        [Header("Skin")]
+        [Header("Profile")] 
+        [SerializeField] 
+        private RectTransform profileRootRectTm = null;
         [SerializeField]
         private RectTransform skinRootRectTm = null;
         [SerializeField]
         private ToggleGroup skinToggleGroup = null;
 
         [Header("Friendship")] 
+        [SerializeField]
+        private RectTransform friendshipRootRectTm = null;
         [SerializeField]
         private FriendshipCell friendshipCell = null;
 
@@ -54,6 +59,7 @@ namespace UI
 
         private List<SkinCell> _skinCellList = new();
         private SkinCell _selectSkinCell = null;
+        private Game.Type.ETab _currETabType = Type.ETab.Profile;
 
         public override void Initialize(Data data)
         {
@@ -90,6 +96,8 @@ namespace UI
         {
             base.Activate();
 
+            ActiveContents();
+            
             SetAnimalSkinList();
         }
 
@@ -245,6 +253,27 @@ namespace UI
             get
             {
                 return _selectSkinCell != null ? _selectSkinCell.SkinId : 0;
+            }
+        }
+        
+        private void ActiveContents()
+        {
+            UIUtils.SetActive(profileRootRectTm, _currETabType == Type.ETab.Profile);
+            UIUtils.SetActive(friendshipRootRectTm, _currETabType == Type.ETab.Friendship);
+        }
+        
+        public void OnChanged(string tabType)
+        {
+            if(System.Enum.TryParse(tabType, out Game.Type.ETab eTabType))
+            {
+                if(_currETabType == eTabType)
+                    return;
+
+                _currETabType = eTabType;
+
+                ActiveContents();
+
+                EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
             }
         }
 
