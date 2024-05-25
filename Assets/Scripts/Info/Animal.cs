@@ -17,7 +17,7 @@ namespace Info
         
         public int FriendshipPoint
         {
-            get { return 34; }
+            get { return fp; }
         }
     }
 }
