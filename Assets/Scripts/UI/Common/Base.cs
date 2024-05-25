@@ -109,6 +109,13 @@ namespace UI
 
             _data = data;
         }
+
+        public virtual void Activate(T data)
+        {
+            base.Activate();
+            
+            _data = data;
+        }
     }
 }
 

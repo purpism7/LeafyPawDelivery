@@ -61,6 +61,8 @@ namespace UI
         private SkinCell _selectSkinCell = null;
         private Game.Type.ETab _currETabType = Type.ETab.Profile;
 
+        private bool _initializeFriendship = false;
+
         public override void Initialize(Data data)
         {
             base.Initialize(data);
@@ -84,6 +86,12 @@ namespace UI
                     return;
 
                 SetSelectSkinInfo(animalInfo.SkinId);
+                
+                if (!_initializeFriendship)
+                {
+                    friendshipCell?.Initialize(null);
+                    _initializeFriendship = true;
+                }
             }
             else if (_data.EElement == Game.Type.EElement.Object)
             {
@@ -95,7 +103,7 @@ namespace UI
         public override void Activate()
         {
             base.Activate();
-
+            
             ActiveContents();
             
             SetAnimalSkinList();
@@ -260,6 +268,11 @@ namespace UI
         {
             UIUtils.SetActive(profileRootRectTm, _currETabType == Type.ETab.Profile);
             UIUtils.SetActive(friendshipRootRectTm, _currETabType == Type.ETab.Friendship);
+
+            if (_currETabType == Type.ETab.Friendship)
+            {
+                friendshipCell?.Activate();
+            }
         }
         
         public void OnChanged(string tabType)

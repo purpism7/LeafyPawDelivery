@@ -33,16 +33,32 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 2800000, guid: 599edaa5963704dadb6e31cfdb1225ea, type: 3}
+    - {fileID: 102900000, guid: 447a24d50857140c096e9180e2796b41, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
+    - 57bf46f2ce9694f50966c89d71f1e6ff: 21300000
+    - 4c3046c46ebe04cc4aa96ab35ac45680: 21300000
     - 599edaa5963704dadb6e31cfdb1225ea: 21300000
+    - d90081b5a3acc44daa5bd7a0d8305072: 21300000
+    - 4e0bf9b7f9bc545f79267ed75bb492fb: 21300000
+    - 0878a49808e1c4777984f2a796d8ac81: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 57bf46f2ce9694f50966c89d71f1e6ff, type: 3}
+  - {fileID: 21300000, guid: 4c3046c46ebe04cc4aa96ab35ac45680, type: 3}
   - {fileID: 21300000, guid: 599edaa5963704dadb6e31cfdb1225ea, type: 3}
+  - {fileID: 21300000, guid: d90081b5a3acc44daa5bd7a0d8305072, type: 3}
+  - {fileID: 21300000, guid: 4e0bf9b7f9bc545f79267ed75bb492fb, type: 3}
+  - {fileID: 21300000, guid: 0878a49808e1c4777984f2a796d8ac81, type: 3}
   m_PackedSpriteNamesToIndex:
+  - Friendship_Gift_3
+  - Friendship_Gift_2
   - StoryIcon_Map01_Player
+  - UI_Friendship_Heart
+  - Friendship_Gift_1
+  - UI_Friendship_HeartBG
   m_RenderDataMap: {}
   m_Tag: Icon
   m_IsVariant: 0
