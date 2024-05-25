@@ -7,6 +7,29 @@ using Game;
 [CreateAssetMenu(menuName = "Game/ScriptableObject/Const")]
 public class Const : ScriptableObject
 {
+    //[System.Serializable]
+    //public class PlaceData
+    //{
+    //    public Game.Type.EPlaceName ePlaceName = Game.Type.EPlaceName.None;
+
+    //    public Game.Type.EAnimalCurrency Animal = Game.Type.EAnimalCurrency.None;
+    //    public Game.Type.EObjectCurrency Object = Game.Type.EObjectCurrency.None;
+    //    public Info.User.Currency StartValue = null;
+    //    public float animalCurrencyRate = 1f;
+    //    public float objectCurrencyRate = 1f;
+
+    //    public string AnimalSpriteName { get { return Animal.ToString().ToLower(); } }
+    //    public string ObjectSpriteName { get { return Object.ToString().ToLower(); } }
+
+    //    public int PlaceId
+    //    {
+    //        get
+    //        {
+    //            return StartValue != null ? StartValue.PlaceId : 0;
+    //        }
+    //    }
+    //}
+
     [SerializeField]
     private string worldTimeUri = string.Empty;
 
@@ -30,7 +53,6 @@ public class Const : ScriptableObject
     private int achievementRewardCount = 5;
 
     [SerializeField] private int maxFriendshipPoint = 100;
-    [SerializeField] private int maxFriendshipHeartCount = 3;
 
     public string WorldTimeURI { get { return worldTimeUri; } }
 
@@ -49,13 +71,4 @@ public class Const : ScriptableObject
     {
         get { return maxFriendshipPoint; }
     }
-
-    public int MaxFriendshipHeartCount
-    {
-        get
-        {
-            return maxFriendshipHeartCount;
-        }
-    }
-    
 }
