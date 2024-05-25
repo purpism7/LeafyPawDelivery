@@ -58,7 +58,7 @@ namespace UI
         {
             base.Activate();
 
-            ActivateChildComponent(typeof(MapIcon));
+            ActivateChildComponent<MapIcon>();
         }
 
         private void SetMapIcons()

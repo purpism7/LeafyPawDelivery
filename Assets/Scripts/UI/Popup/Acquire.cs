@@ -235,7 +235,14 @@ namespace UI
 
         private void ActiveContents()
         {
-            ActivateChildComponent(_currETabType == Game.Type.ETab.DailyMission ? typeof(Component.DailyMissionCell) : typeof(Component.AchievementCell));
+            if (_currETabType == Game.Type.ETab.DailyMission)
+            {
+                ActivateChildComponent<Component.DailyMissionCell>();
+            }
+            else
+            {
+                ActivateChildComponent<Component.AchievementCell>();
+            }
 
             UIUtils.SetActive(dailyMissionRootRectTm, _currETabType == Game.Type.ETab.DailyMission);
             UIUtils.SetActive(achievementsScrollRect?.gameObject, _currETabType == Game.Type.ETab.Achievement);
