@@ -52,6 +52,8 @@ public class Const : ScriptableObject
     [SerializeField]
     private int achievementRewardCount = 5;
 
+    [SerializeField] private int maxFriendshipPoint = 100;
+
     public string WorldTimeURI { get { return worldTimeUri; } }
 
     public int AnimalBaseSkinId { get { return animalBaseSkinId; } }
@@ -64,4 +66,9 @@ public class Const : ScriptableObject
 
     public int DailyMissionRewardCount { get { return dailyMissionRewardCount; } }
     public int AchievementRewardCount { get { return achievementRewardCount; } }
+
+    public int MaxFriendshipPoint
+    {
+        get { return maxFriendshipPoint; }
+    }
 }

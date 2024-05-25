@@ -79,7 +79,7 @@ namespace UI
         {
             base.Activate();
 
-            ActivateChildComponent(typeof(BookCell));
+            ActivateChildComponent<BookCell>();
             ActivateStoryCellList();
 
             _currETabType = Type.ETab.Animal;

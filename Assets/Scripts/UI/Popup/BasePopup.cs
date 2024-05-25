@@ -30,12 +30,12 @@ namespace UI
             }
         }
 
-        protected void ActivateChildComponent(System.Type type)
+        protected void ActivateChildComponent<T>()
         {
             if (_compActivateActionDic == null)
                 return;
 
-            if(_compActivateActionDic.TryGetValue(type, out System.Action action))
+            if(_compActivateActionDic.TryGetValue(typeof(T), out System.Action action))
             {
                 action?.Invoke();
             } 

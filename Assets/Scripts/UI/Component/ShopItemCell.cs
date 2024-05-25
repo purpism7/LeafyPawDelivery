@@ -11,6 +11,7 @@ using TMPro;
 using GameSystem;
 using Unity.VisualScripting;
 using Product = UnityEngine.Purchasing.Product;
+using Type = Game.Type;
 
 namespace UI.Component
 {
@@ -116,14 +117,18 @@ namespace UI.Component
             var atlasLoader = GameSystem.ResourceManager.Instance?.AtalsLoader;
             if (atlasLoader == null)
                 return;
-
+            
             if(shopData.EPayment == Game.Type.EPayment.Advertising)
             {
-                iconImg.sprite = atlasLoader.GetCurrencySprite("ad");
-                iconImg.rectTransform.sizeDelta = new Vector2(190f, 170f);
+                
             }
             else
             {
+                if (shopData.ECategory == Type.ECategory.Gift)
+                {
+                        // atlasLoader.GetSprite("Icon", )
+                }
+                
                 iconImg.sprite = atlasLoader.GetShopItemSprite(shopData.ECategory, shopData.IconImg);
                 iconImg.SetNativeSize();
             }

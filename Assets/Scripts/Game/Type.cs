@@ -26,10 +26,15 @@ namespace Game
             Animal,
             Object,
             Story,
+            
             DailyMission,
             Achievement,
+            
             Profile,
             Friendship,
+            
+            Currency,
+            Item,
         }
 
         public enum EBottomType
@@ -170,6 +175,7 @@ namespace Game
             Cash,
             AnimalCurrency,
             ObjectCurrency,
+            Gift,
         }
 
         public enum EBoost
