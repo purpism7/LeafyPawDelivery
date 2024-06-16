@@ -10,7 +10,8 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
-            public int Id = 0;
+            // public int Id = 0;
+            public float Progress = 0;
         }
 
         [SerializeField] private Image progressImg = null;
@@ -37,11 +38,11 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            var animalInfo = MainGameManager.Get<AnimalManager>()?.GetAnimalInfo(_data.Id);
-            if (animalInfo == null)
-                return;
+            // var animalInfo = MainGameManager.Get<AnimalManager>()?.GetAnimalInfo(_data.Id);
+            // if (animalInfo == null)
+            //     return;
             
-            progressImg.fillAmount = animalInfo.FriendshipPoint / (float)Game.Data.Const.MaxFriendshipPoint;
+            progressImg.fillAmount = _data.Progress;
         }
     }
 }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Item
+public class Item : Data.Base
 {
-    public int Id = 0;
+    [SerializeField]
+    private int id = 0;
 }
 
