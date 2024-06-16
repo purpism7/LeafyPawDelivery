@@ -271,7 +271,14 @@ namespace UI
 
             if (_currETabType == Type.ETab.Friendship)
             {
-                friendshipCell?.Activate();
+                if (_data == null)
+                    return;
+                
+                friendshipCell?.Activate(
+                    new FriendshipCell.Data()
+                    {
+                        Id = _data.Id
+                    });
             }
         }
         
