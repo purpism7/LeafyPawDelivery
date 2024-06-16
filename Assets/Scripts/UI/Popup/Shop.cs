@@ -126,13 +126,7 @@ namespace UI
                     .Create();
             }
         }
-
-        private void SetItemList()
-
-        {
-            
-        }
-
+        
         #region IShop
         AD.Data IShop.GetADData(Game.Type.ECategory eCategory)
         {
@@ -222,15 +216,39 @@ namespace UI
                 {
                     if(rewardValue > 0)
                     {
-                        if (shopData.ECategory == Game.Type.ECategory.Cash)
+                        switch (shopData.ECategory)
                         {
-                            uiMgr.Top?.CollectCashCurrency(pos, shopData.Value);
+                            case Game.Type.ECategory.Cash:
+                            {
+                                uiMgr.Top?.CollectCashCurrency(pos, shopData.Value);
+                                
+                                break;
+                            }
+
+                            case Type.ECategory.Gift:
+                            {
+                                break;
+                            }
+
+                            default:
+                            {
+                                var eElement = shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object;
+                                uiMgr.Top?.CollectCurrency(pos, eElement, shopData.Value, false);
+
+                                break;
+                            }
                         }
-                        else
-                        {
-                            var eElement = shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object;
-                            uiMgr.Top?.CollectCurrency(pos, eElement, shopData.Value, false);
-                        }
+                        
+                        // if (shopData.ECategory == Game.Type.ECategory.Cash)
+                        // {
+                        //     uiMgr.Top?.CollectCashCurrency(pos, shopData.Value);
+                        // }
+                        //
+                        // else
+                        // {
+                        //     var eElement = shopData.ECategory == Game.Type.ECategory.AnimalCurrency ? Game.Type.EElement.Animal : Game.Type.EElement.Object;
+                        //     uiMgr.Top?.CollectCurrency(pos, eElement, shopData.Value, false);
+                        // }
                     }
 
                     iShopItemCell.End();
