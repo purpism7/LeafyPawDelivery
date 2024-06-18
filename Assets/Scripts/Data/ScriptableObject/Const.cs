@@ -52,7 +52,8 @@ public class Const : ScriptableObject
     [SerializeField]
     private int achievementRewardCount = 5;
 
-    [SerializeField] private int maxFriendshipPoint = 100;
+    [SerializeField] 
+    private int maxFriendshipPoint = 100;
 
     public string WorldTimeURI { get { return worldTimeUri; } }
 
