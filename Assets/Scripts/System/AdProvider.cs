@@ -49,109 +49,109 @@ namespace GameSystem
             });
 
             InitializeRewardedInterstitialAdDic();
-            InitializeIronSource();
+            // InitializeIronSource();
             
             MobileAds.RaiseAdEventsOnUnityMainThread = true;
         }
 
-        private void InitializeIronSource()
-        {
-            IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
-            IronSourceRewardedVideoEvents.onAdClosedEvent += RewardedVideoOnAdClosedEvent;
-            IronSourceRewardedVideoEvents.onAdAvailableEvent += RewardedVideoOnAdAvailable;
-            IronSourceRewardedVideoEvents.onAdUnavailableEvent += RewardedVideoOnAdUnavailable;
-            IronSourceRewardedVideoEvents.onAdShowFailedEvent += RewardedVideoOnAdShowFailedEvent;
-            IronSourceRewardedVideoEvents.onAdRewardedEvent += RewardedVideoOnAdRewardedEvent;
-            IronSourceRewardedVideoEvents.onAdClickedEvent += RewardedVideoOnAdClickedEvent;
-        }
-
-        /************* RewardedVideo AdInfo Delegates *************/
-        // Indicates that there’s an available ad.
-        // The adInfo object includes information about the ad that was loaded successfully
-        // This replaces the RewardedVideoAvailabilityChangedEvent(true) event
-        void RewardedVideoOnAdAvailable(IronSourceAdInfo adInfo)
-        {
-        }
-        
-        // Indicates that no ads are available to be displayed
-        // This replaces the RewardedVideoAvailabilityChangedEvent(false) event
-        void RewardedVideoOnAdUnavailable()
-        {
-            Game.UIManager.Instance?.DeactivateScreenSaver();
-        }
-        
-        // The Rewarded Video ad view has opened. Your activity will loose focus.
-        void RewardedVideoOnAdOpenedEvent(IronSourceAdInfo adInfo)
-        {
-            Debug.Log("RewardedVideoOnAdOpenedEvent");
-        }
-        
-        // The Rewarded Video ad view is about to be closed. Your activity will regain its focus.
-        void RewardedVideoOnAdClosedEvent(IronSourceAdInfo adInfo)
-        {
-            Debug.Log("RewardedVideoOnAdClosedEvent");
-            
-            _callback?.Invoke(0);
-            
-            Game.UIManager.Instance?.DeactivateScreenSaver();
-        }
-        
-        // The user completed to watch the video, and should be rewarded.
-        // The placement parameter will include the reward data.
-        // When using server-to-server callbacks, you may ignore this event and wait for the ironSource server callback.
-        void RewardedVideoOnAdRewardedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
-        {
-            Debug.Log("RewardedVideoOnAdRewardedEvent");
-            
-            Game.UIManager.Instance?.DeactivateScreenSaver();
-            
-            if (!CheckPossibleReward(placement))
-            {
-                _callback?.Invoke(0);
-                
-                return;
-            }
-            
-            _callback?.Invoke(placement.getRewardAmount());
-        }
-        
-        // The rewarded video ad was failed to show.
-        void RewardedVideoOnAdShowFailedEvent(IronSourceError error, IronSourceAdInfo adInfo)
-        {
-            Debug.Log("RewardedVideoOnAdShowFailedEvent");
-            
-            _callback?.Invoke(0);
-            
-            Game.UIManager.Instance?.DeactivateScreenSaver();
-            
-            if (error == null)
-                return;
-
-            ShowToastTryLater();
-            // Game.Toast.Get?.Show(error.getDescription(), error.getErrorCode().ToString());
-        }
-        
-        // Invoked when the video ad was clicked.
-        // This callback is not supported by all networks, and we recommend using it only if
-        // it’s supported by all networks you included in your build.
-        void RewardedVideoOnAdClickedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
-        {
-            // Game.UIManager.Instance?.DeactivateScreenSaver();
-        }
-
-        private bool CheckPossibleReward(IronSourcePlacement placement)
-        {
-            if (placement == null)
-                return false;
-
-            if (_adData == null)
-                return false;
-
-            if (!_adData.Placement.Equals(placement.getPlacementName()))
-                return false;
-
-            return true;
-        }
+        // private void InitializeIronSource()
+        // {
+        //     IronSourceRewardedVideoEvents.onAdOpenedEvent += RewardedVideoOnAdOpenedEvent;
+        //     IronSourceRewardedVideoEvents.onAdClosedEvent += RewardedVideoOnAdClosedEvent;
+        //     IronSourceRewardedVideoEvents.onAdAvailableEvent += RewardedVideoOnAdAvailable;
+        //     IronSourceRewardedVideoEvents.onAdUnavailableEvent += RewardedVideoOnAdUnavailable;
+        //     IronSourceRewardedVideoEvents.onAdShowFailedEvent += RewardedVideoOnAdShowFailedEvent;
+        //     IronSourceRewardedVideoEvents.onAdRewardedEvent += RewardedVideoOnAdRewardedEvent;
+        //     IronSourceRewardedVideoEvents.onAdClickedEvent += RewardedVideoOnAdClickedEvent;
+        // }
+        //
+        // /************* RewardedVideo AdInfo Delegates *************/
+        // // Indicates that there’s an available ad.
+        // // The adInfo object includes information about the ad that was loaded successfully
+        // // This replaces the RewardedVideoAvailabilityChangedEvent(true) event
+        // void RewardedVideoOnAdAvailable(IronSourceAdInfo adInfo)
+        // {
+        // }
+        //
+        // // Indicates that no ads are available to be displayed
+        // // This replaces the RewardedVideoAvailabilityChangedEvent(false) event
+        // void RewardedVideoOnAdUnavailable()
+        // {
+        //     Game.UIManager.Instance?.DeactivateScreenSaver();
+        // }
+        //
+        // // The Rewarded Video ad view has opened. Your activity will loose focus.
+        // void RewardedVideoOnAdOpenedEvent(IronSourceAdInfo adInfo)
+        // {
+        //     Debug.Log("RewardedVideoOnAdOpenedEvent");
+        // }
+        //
+        // // The Rewarded Video ad view is about to be closed. Your activity will regain its focus.
+        // void RewardedVideoOnAdClosedEvent(IronSourceAdInfo adInfo)
+        // {
+        //     Debug.Log("RewardedVideoOnAdClosedEvent");
+        //     
+        //     _callback?.Invoke(0);
+        //     
+        //     Game.UIManager.Instance?.DeactivateScreenSaver();
+        // }
+        //
+        // // The user completed to watch the video, and should be rewarded.
+        // // The placement parameter will include the reward data.
+        // // When using server-to-server callbacks, you may ignore this event and wait for the ironSource server callback.
+        // void RewardedVideoOnAdRewardedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
+        // {
+        //     Debug.Log("RewardedVideoOnAdRewardedEvent");
+        //     
+        //     Game.UIManager.Instance?.DeactivateScreenSaver();
+        //     
+        //     if (!CheckPossibleReward(placement))
+        //     {
+        //         _callback?.Invoke(0);
+        //         
+        //         return;
+        //     }
+        //     
+        //     _callback?.Invoke(placement.getRewardAmount());
+        // }
+        //
+        // // The rewarded video ad was failed to show.
+        // void RewardedVideoOnAdShowFailedEvent(IronSourceError error, IronSourceAdInfo adInfo)
+        // {
+        //     Debug.Log("RewardedVideoOnAdShowFailedEvent");
+        //     
+        //     _callback?.Invoke(0);
+        //     
+        //     Game.UIManager.Instance?.DeactivateScreenSaver();
+        //     
+        //     if (error == null)
+        //         return;
+        //
+        //     ShowToastTryLater();
+        //     // Game.Toast.Get?.Show(error.getDescription(), error.getErrorCode().ToString());
+        // }
+        //
+        // // Invoked when the video ad was clicked.
+        // // This callback is not supported by all networks, and we recommend using it only if
+        // // it’s supported by all networks you included in your build.
+        // void RewardedVideoOnAdClickedEvent(IronSourcePlacement placement, IronSourceAdInfo adInfo)
+        // {
+        //     // Game.UIManager.Instance?.DeactivateScreenSaver();
+        // }
+        //
+        // private bool CheckPossibleReward(IronSourcePlacement placement)
+        // {
+        //     if (placement == null)
+        //         return false;
+        //
+        //     if (_adData == null)
+        //         return false;
+        //
+        //     if (!_adData.Placement.Equals(placement.getPlacementName()))
+        //         return false;
+        //
+        //     return true;
+        // }
 
         // public void ShowAd(string adId, System.Action<double> callbackAction)
         // {
@@ -210,12 +210,12 @@ namespace GameSystem
                 {
                     if (error != null || ad == null)
                     {
-                        if (_adData != null)
-                        {
-                            IronSource.Agent?.showRewardedVideo(_adData.Placement);
-
-                            return;
-                        }
+                        // if (_adData != null)
+                        // {
+                        //     IronSource.Agent?.showRewardedVideo(_adData.Placement);
+                        //
+                        //     return;
+                        // }
                         
                         _callback?.Invoke(0);
 
