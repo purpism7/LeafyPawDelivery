@@ -39,24 +39,36 @@ SpriteAtlas:
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
     - 57bf46f2ce9694f50966c89d71f1e6ff: 21300000
+    - a51b6723adf5d497e855dbc3c1c5c421: 21300000
+    - 54cfade3c1c0d4681a45c80bc30acae6: 21300000
     - 4c3046c46ebe04cc4aa96ab35ac45680: 21300000
+    - 84698295e790540c3b436ba9edaf0052: 21300000
     - 599edaa5963704dadb6e31cfdb1225ea: 21300000
     - d90081b5a3acc44daa5bd7a0d8305072: 21300000
+    - 5f99d0869959c42c3a6bc54919e96de6: 21300000
     - 4e0bf9b7f9bc545f79267ed75bb492fb: 21300000
     - 0878a49808e1c4777984f2a796d8ac81: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 57bf46f2ce9694f50966c89d71f1e6ff, type: 3}
+  - {fileID: 21300000, guid: a51b6723adf5d497e855dbc3c1c5c421, type: 3}
+  - {fileID: 21300000, guid: 54cfade3c1c0d4681a45c80bc30acae6, type: 3}
   - {fileID: 21300000, guid: 4c3046c46ebe04cc4aa96ab35ac45680, type: 3}
+  - {fileID: 21300000, guid: 84698295e790540c3b436ba9edaf0052, type: 3}
   - {fileID: 21300000, guid: 599edaa5963704dadb6e31cfdb1225ea, type: 3}
   - {fileID: 21300000, guid: d90081b5a3acc44daa5bd7a0d8305072, type: 3}
+  - {fileID: 21300000, guid: 5f99d0869959c42c3a6bc54919e96de6, type: 3}
   - {fileID: 21300000, guid: 4e0bf9b7f9bc545f79267ed75bb492fb, type: 3}
   - {fileID: 21300000, guid: 0878a49808e1c4777984f2a796d8ac81, type: 3}
   m_PackedSpriteNamesToIndex:
   - Friendship_Gift_3
+  - Friendship_SpeechBubble
+  - Friendship_GiftIcon
   - Friendship_Gift_2
+  - FriendshipBar_1
   - StoryIcon_Map01_Player
   - UI_Friendship_Heart
+  - FriendshipBar_2
   - Friendship_Gift_1
   - UI_Friendship_HeartBG
   m_RenderDataMap: {}

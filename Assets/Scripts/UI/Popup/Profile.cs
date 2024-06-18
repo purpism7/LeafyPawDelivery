@@ -89,7 +89,11 @@ namespace UI
                 
                 if (!_initializeFriendship)
                 {
-                    friendshipCell?.Initialize(null);
+                    friendshipCell?.Initialize(
+                        new FriendshipCell.Data()
+                        {
+                            Id = _data.Id,
+                        });
                     _initializeFriendship = true;
                 }
             }
@@ -236,7 +240,7 @@ namespace UI
             if (animalSkinData != null &&
                 animalSkinData.Bonus > 0)
             {
-                currencyText = string.Format("{0} (+{1})", animalData.Currency, animalSkinData.Bonus);
+                currencyText = $"{animalData.Currency} (+{animalSkinData.Bonus})";
             }
 
             animalGetCurrency?.Initialize(new OpenCondition.Data()
