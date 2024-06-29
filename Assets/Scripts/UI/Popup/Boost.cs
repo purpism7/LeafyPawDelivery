@@ -311,8 +311,6 @@ namespace UI
 
                     return buyCash;
                 });
-
-           
         }
     }
 }

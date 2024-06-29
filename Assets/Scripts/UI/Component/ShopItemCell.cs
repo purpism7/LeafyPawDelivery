@@ -120,7 +120,8 @@ namespace UI.Component
             
             if(shopData.EPayment == Game.Type.EPayment.Advertising)
             {
-                
+                iconImg.sprite = atlasLoader.GetCurrencySprite("ad");
+                iconImg.rectTransform.sizeDelta = new Vector2(190f, 170f);
             }
             else
             {

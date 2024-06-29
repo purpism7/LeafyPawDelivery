@@ -88,6 +88,14 @@ public static class UIUtils
         }
     }
 
+    public static void ResetLocalScale(this Image img)
+    {
+        if (img == null)
+            return;
+        
+        img.transform.localScale = Vector3.one;
+    }
+
     public static void StartBlink(this Image image)
     {
         if (image == null)
