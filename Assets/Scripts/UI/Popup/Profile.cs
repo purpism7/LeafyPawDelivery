@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,6 +58,10 @@ namespace UI
         [SerializeField]
         private OpenCondition objectGetCurrency = null;
 
+        [Header("Common")]
+        [SerializeField]
+        private Toggle[] tabToggles = null;
+        
         private List<SkinCell> _skinCellList = new();
         private SkinCell _selectSkinCell = null;
         private Game.Type.ETab _currETabType = Type.ETab.Profile;
@@ -108,7 +113,14 @@ namespace UI
         {
             base.Activate();
             
+            _currETabType = Type.ETab.Profile;
             ActiveContents();
+            
+            var tabToggle = tabToggles?.First();
+            if (tabToggle != null)
+            {
+                tabToggle.SetIsOnWithoutNotify(true);
+            }
             
             SetAnimalSkinList();
         }

@@ -91,6 +91,11 @@ namespace GameSystem
 
             return GetSprite("Shop", string.Format(name, currencyName));
         }
+
+        public Sprite GetItemSprite(string name)
+        {
+            return GetSprite("Item", name);
+        }
     }
 }
 

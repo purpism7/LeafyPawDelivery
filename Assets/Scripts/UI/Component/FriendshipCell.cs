@@ -4,12 +4,14 @@ using System.Resources;
 using Game;
 using GameSystem;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
+using ResourceManager = System.Resources.ResourceManager;
 
 namespace  UI.Component
 {
-    public class FriendshipCell : BaseComponent<FriendshipCell.Data>
+    public class FriendshipCell : BaseComponent<FriendshipCell.Data>, GiftItemCell.IListener
     {
         public class Data : BaseData
         {
@@ -18,40 +20,30 @@ namespace  UI.Component
 
         // [SerializeField]
         // private RectTransform heartRootReectTm = null;
+        [Header("Friendship")]
         [SerializeField] 
         private Image progressImg = null;
         [SerializeField] 
         private TextMeshProUGUI pointTMP = null;
         [SerializeField] 
         private FriendshipGiftCell[] friendshipGiftCells = null;
-         
+
+        [Header("Gift")]
+        [SerializeField] 
+        private RectTransform giftRootRectTm = null;
+        
         // private List<HeartCell> _heartCellList = new();
         
         public override void Initialize(Data data)
         {
             base.Initialize(data);
             
-            // _heartCellList?.Clear();
+            foreach (var cell in friendshipGiftCells) 
+            { 
+                cell?.Initialize(null);
+            }
 
-            // var component = new ComponentCreator<HeartCell, HeartCell.Data>()
-            //     .SetRootRectTm(heartRootReectTm)
-            //     .Create();
-            
-            // _heartCellList?.Add(component);
-
-            
-                
-                
-                
-                // foreach (var cell in friendshipGiftCells)
-                // {
-                //     cell?.Initialize(
-                //         new FriendshipGiftCell.Data()
-                //         {
-                //             
-                //         });
-                // }
-            // }
+            SetGiftItemList();
         }
 
         public override void Activate()
@@ -86,34 +78,6 @@ namespace  UI.Component
                         });
                 }
             }
-
-            // if (friendshipGiftCells != null)
-            // {
-            //     foreach (var cell in friendshipGiftCells)
-            //     {
-            //         cell?.Activate(
-            //             new FriendshipGiftCell.Data()
-            //             {
-            //                 Point = 
-            //             });
-            //     }
-            // }
-            
-            // if (_heartCellList != null)
-            // {
-            //     if (_data != null)
-            //     {
-            //         foreach (var cell in _heartCellList)
-            //         {
-            //             cell?.Activate(
-            //                 new HeartCell.Data()
-            //                 {
-            //                     Id = _data.Id,
-            //                 });
-            //         }
-            //     }
-            // }
-
         }
 
         private void SetPointTMP(int point)
@@ -131,5 +95,36 @@ namespace  UI.Component
 
             progressImg.fillAmount = point / (float)Game.Data.Const.MaxFriendshipPoint;
         }
+
+        private void SetGiftItemList()
+        {
+            var  giftItemList = ItemContainer.Instance?.GetDataList(Type.EItemSub.Gift);
+            if (giftItemList == null)
+                return;
+
+            for (int i = 0; i < giftItemList.Count; ++i)
+            {
+                var giftItem = giftItemList[i];
+                if(giftItem == null)
+                    continue;
+                
+                var giftItemCell = new ComponentCreator<GiftItemCell, GiftItemCell.Data>()
+                    .SetData(new GiftItemCell.Data()
+                    {
+                        IListener = this,
+                        GiftItem = giftItem,
+                    })
+                    .SetRootRectTm(giftRootRectTm)
+                    .Create();
+            }
+        }
+        
+        #region GiftCell.IListener
+
+        void GiftItemCell.IListener.Select(IGiftCell iGiftCell)
+        {
+            
+        }
+        #endregion
     }
 }

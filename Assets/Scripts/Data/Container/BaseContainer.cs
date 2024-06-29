@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public abstract class BaseContainer
@@ -36,10 +37,24 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
     {
         _instance = (T)obj;
 
-        var json = JsonUtility.FromJson<V>(jsonStr);
+        if (typeof(T) == typeof(ItemContainer))
+        {
+            var settings = new JsonSerializerSettings()
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+            };
+            
+            var datas = JsonConvert.DeserializeObject<V[]>(jsonStr, settings);
+            _datas = datas;
+            
+            InternalInitialize();
+
+            return;
+        }
+        
         // _datas = json.;
         
-        Debug.Log("json = " + json);
+        
         
         var wrapper = JsonHelper.WrapperFromJson<V>(jsonStr);
         if (wrapper != null)

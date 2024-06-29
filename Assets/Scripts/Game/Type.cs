@@ -135,6 +135,7 @@ namespace Game
             None,
 
             Letter,
+            Gift
         }
 
         public enum EAcquire
