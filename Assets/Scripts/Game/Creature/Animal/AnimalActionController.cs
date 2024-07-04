@@ -17,13 +17,14 @@ namespace Game.Creature
                 return;
 
             _iAnimal = iAnimal;
-
-            AnimalActionList.Add(CreateaAnimalAction<IdleAction>(id));
+            
             if(!onlyIdle)
             {
                 AnimalActionList.Add(CreateaAnimalAction<WalkAction>(id));
-                AnimalActionList.Add(CreateaAnimalAction<SignatureAction>(id));
             }
+            
+            AnimalActionList.Add(CreateaAnimalAction<IdleAction>(id));
+            AnimalActionList.Add(CreateaAnimalAction<SignatureAction>(id));
 
             StartIdleAction();
         }
@@ -41,7 +42,13 @@ namespace Game.Creature
             if(_iAnimal.EGameState == Type.EGameState.Edit)
                 return;
 
+            int count = 0;
             _currentAnimalAction = RandomAnimalAction;
+            if (_currentAnimalAction is SignatureAction)
+            {
+                count = 2;
+            }
+
             _currentAnimalAction?.StartAction();
         }
 
@@ -83,7 +90,7 @@ namespace Game.Creature
             }
         }
 
-        private void StartAction<T>() where T : AnimalAction
+        private void StartAction<T>(int count = 1) where T : AnimalAction
         {
             if (AnimalActionList == null)
                 return;

@@ -27,7 +27,7 @@ namespace Game.Creature
         }
 
         public abstract void ChainUpdate();
-
+        
         public virtual void StartAction()
         {
             if (_data == null)

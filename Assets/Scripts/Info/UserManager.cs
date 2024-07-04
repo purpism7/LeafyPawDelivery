@@ -321,6 +321,13 @@ namespace Info
             //firebaseMgr?.Database?.SaveChild(userId, KeyUserStory, jsonStr);
 
         }
+
+        public void AddFriendshipPoint(int id, int point)
+        {
+            User?.AddFriendshipPoint(id, point);
+            
+            Save();
+        }
     }
 }
 

@@ -292,16 +292,8 @@ namespace UI
         }
 
         #region BuyCash.IListener,
-        void BuyCash.IListener.Buy(bool possible)
+        void BuyCash.IListener.Buy()
         {
-            if(!possible)
-            {
-                var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
-                Game.Toast.Get?.Show(text);
-
-                return;
-            }
-
             _endBuyAction?.Invoke();
         }
         #endregion

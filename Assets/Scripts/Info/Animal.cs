@@ -12,12 +12,17 @@ namespace Info
         public bool Arrangement = false;
         public int SkinId = 0;
         public List<int> SkinIdList = null;
-        [SerializeField] 
+        
         private int fp = 0;
         
         public int FriendshipPoint
         {
-            get { return 34; }
+            get { return fp; }
+        }
+
+        public void AddFriendshipPoint(int point)
+        {
+            fp += point;
         }
     }
 }

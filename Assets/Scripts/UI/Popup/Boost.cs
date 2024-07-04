@@ -235,20 +235,11 @@ namespace UI
         }
 
         #region BuyCash.IListener
-        void BuyCash.IListener.Buy(bool possible)
+        void BuyCash.IListener.Buy()
         {
             var boostData = _data?.boostData;
             if (boostData == null)
                 return;
-
-            if (!possible)
-            {
-                var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
-
-                Game.Toast.Get?.Show(text);
-
-                return;
-            }
             
             SuccessActivateBoost(false);
 

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using UI.Component;
 using GameSystem;
+using UnityEngine.Localization.Settings;
 
 namespace UI
 {
@@ -20,7 +21,7 @@ namespace UI
 
         public interface IListener
         {
-            void Buy(bool possible);
+            void Buy();
         }
 
         [SerializeField]
@@ -108,7 +109,16 @@ namespace UI
             
             Deactivate();
             
-            _data?.IListener?.Buy(_possibleBuy);
+            if (!_possibleBuy)
+            {
+                var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
+
+                Game.Toast.Get?.Show(text);
+
+                return;
+            }
+            
+            _data?.IListener?.Buy();
         }
 
         public override void Begin()

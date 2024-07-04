@@ -21,7 +21,7 @@ namespace UI.Component
         
         public interface IListener
         {
-            void Select(IGiftCell iGiftCell);
+            void GiveGift(Item item, Vector3 startPos);
         }
         
         [SerializeField]
@@ -83,9 +83,13 @@ namespace UI.Component
         
         #region BuyCash.IListener
 
-        void BuyCash.IListener.Buy(bool possible)
+        void BuyCash.IListener.Buy()
         {
+            var giftItem = _data?.GiftItem;
+            if (giftItem == null)
+                return;
             
+            _data?.IListener?.GiveGift(giftItem, transform.position);
         }
         #endregion
 

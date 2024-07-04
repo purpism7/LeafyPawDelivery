@@ -7,29 +7,6 @@ using Game;
 [CreateAssetMenu(menuName = "Game/ScriptableObject/Const")]
 public class Const : ScriptableObject
 {
-    //[System.Serializable]
-    //public class PlaceData
-    //{
-    //    public Game.Type.EPlaceName ePlaceName = Game.Type.EPlaceName.None;
-
-    //    public Game.Type.EAnimalCurrency Animal = Game.Type.EAnimalCurrency.None;
-    //    public Game.Type.EObjectCurrency Object = Game.Type.EObjectCurrency.None;
-    //    public Info.User.Currency StartValue = null;
-    //    public float animalCurrencyRate = 1f;
-    //    public float objectCurrencyRate = 1f;
-
-    //    public string AnimalSpriteName { get { return Animal.ToString().ToLower(); } }
-    //    public string ObjectSpriteName { get { return Object.ToString().ToLower(); } }
-
-    //    public int PlaceId
-    //    {
-    //        get
-    //        {
-    //            return StartValue != null ? StartValue.PlaceId : 0;
-    //        }
-    //    }
-    //}
-
     [SerializeField]
     private string worldTimeUri = string.Empty;
 

@@ -30,10 +30,10 @@ namespace UI.Component
 
             DisableGiftImg();
             
-            _sequence = DOTween.Sequence()
-                .SetAutoKill(false)
-                .Append(giftImg.transform.DOShakeScale(1f, 0.3f, 5));
-            _sequence.SetLoops(-1);
+            // _sequence = DOTween.Sequence()
+            //     .SetAutoKill(false)
+            //     .Append(giftImg.transform.DOShakeScale(1f, 0.3f, 5));
+            // _sequence.SetLoops(-1);
         }
 
         public override void Activate(Data data)
