@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Creature;
 using Game.Manager;
 using UnityEngine;
 
@@ -136,13 +137,30 @@ namespace Game
             {
                 baseElement?.Deactivate();
             }
-            //foreach (Transform childTm in targetRootTm)
-            //{
-            //    if (!childTm)
-            //        continue;
+        }
 
-            //    //childTm.gameObject.SetActive(false);
-            //}
+        public static Creature.Animal GetAnimal(int id, int skinId)
+        {
+            var dic = _instance?._cachedElementDic;
+            if (dic == null)
+                return null;
+            
+            foreach(KeyValuePair<Data, BaseElement> pair in dic)
+            {
+                var data = pair.Key;
+                if (data == null)
+                    continue;
+
+                if (data.Id != id)
+                    continue;
+
+                if (data.SkinId != skinId)
+                    continue;
+
+                return pair.Value as Creature.Animal;
+            }
+
+            return null;
         }
     }
 }

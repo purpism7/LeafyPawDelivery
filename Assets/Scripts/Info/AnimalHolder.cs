@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.IO;
+using System.Security.Policy;
 
 namespace Info
 {
@@ -61,6 +62,8 @@ namespace Info
                 {
                     animalInfo.SkinIdList = animal.skinIdList;
                 }
+                
+                animalInfo?.AddFriendshipPoint(animal.fp);
                 
                 AnimalInfoList.Add(animalInfo);
             }
@@ -182,9 +185,6 @@ namespace Info
         public bool CheckExist(int id, int skinId)
         {
             var animalInfo = GetAnimalInfo(id);
-            if (animalInfo == null)
-                return false;
-
             var skinIdList = animalInfo?.SkinIdList;
             if (skinIdList == null)
                 return false;
@@ -207,6 +207,19 @@ namespace Info
                 return 0;
 
             return animalInfo.SkinId;
+        }
+        #endregion
+        
+        #region Friendship Point
+        public bool AddFriendshipPoint(int id, int point)
+        {
+            var animalInfo = GetAnimalInfo(id);
+            if (animalInfo == null)
+                return false;
+
+            animalInfo.AddFriendshipPoint(point);
+
+            return true;
         }
         #endregion
 

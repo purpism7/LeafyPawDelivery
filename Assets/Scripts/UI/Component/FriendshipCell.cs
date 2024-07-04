@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Resources;
 using Game;
 using GameSystem;
+using Info;
 using TMPro;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -16,10 +17,14 @@ namespace  UI.Component
         public class Data : BaseData
         {
             public int Id = 0;
+            public IListener IListener = null;
+        }
+        
+        public interface IListener
+        {
+            void GiveGift(Item item, Vector3 startPos, System.Action endAction);
         }
 
-        // [SerializeField]
-        // private RectTransform heartRootReectTm = null;
         [Header("Friendship")]
         [SerializeField] 
         private Image progressImg = null;
@@ -31,8 +36,6 @@ namespace  UI.Component
         [Header("Gift")]
         [SerializeField] 
         private RectTransform giftRootRectTm = null;
-        
-        // private List<HeartCell> _heartCellList = new();
         
         public override void Initialize(Data data)
         {
@@ -46,10 +49,15 @@ namespace  UI.Component
             SetGiftItemList();
         }
 
-        public override void Activate()
+        public override void Activate(Data data)
         {
-            base.Activate();
+            base.Activate(data);
 
+            SetPointInfo();
+        }
+
+        private void SetPointInfo()
+        {
             if (_data == null)
                 return;
             
@@ -121,9 +129,21 @@ namespace  UI.Component
         
         #region GiftCell.IListener
 
-        void GiftItemCell.IListener.Select(IGiftCell iGiftCell)
+        void GiftItemCell.IListener.GiveGift(Item item, Vector3 startPos)
         {
+            if (item == null)
+                return;
             
+            _data?.IListener?.GiveGift(item, startPos,
+                () =>
+                {
+                    if (_data == null)
+                        return;
+                    
+                    MainGameManager.Get<AnimalManager>().AddFriendshipPoint(_data.Id, item.Value);
+
+                    SetPointInfo();
+                });
         }
         #endregion
     }

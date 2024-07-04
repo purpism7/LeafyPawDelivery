@@ -10,11 +10,12 @@ using UnityEngine.Localization.Settings;
 using UI.Component;
 using GameSystem;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Game;
 
 namespace UI
 {
-    public class Profile : BasePopup<Profile.Data>, SkinCell.IListener, BuyCash.IListener
+    public class Profile : BasePopup<Profile.Data>, SkinCell.IListener, FriendshipCell.IListener, BuyCash.IListener
     {
         public class Data : BaseData
         {
@@ -65,8 +66,9 @@ namespace UI
         private List<SkinCell> _skinCellList = new();
         private SkinCell _selectSkinCell = null;
         private Game.Type.ETab _currETabType = Type.ETab.Profile;
-
+        
         private bool _initializeFriendship = false;
+        private HeartCell _hearCell = null;
 
         public override void Initialize(Data data)
         {
@@ -83,21 +85,15 @@ namespace UI
 
             SetDescTMP();
             SetGetCurrency();
-
             if (_data.EElement == Game.Type.EElement.Animal)
             {
-                var animalInfo = MainGameManager.Get<Game.AnimalManager>()?.GetAnimalInfo(data.Id);
-                if (animalInfo == null)
-                    return;
-
-                SetSelectSkinInfo(animalInfo.SkinId);
-                
                 if (!_initializeFriendship)
                 {
                     friendshipCell?.Initialize(
                         new FriendshipCell.Data()
                         {
                             Id = _data.Id,
+                            IListener = this,
                         });
                     _initializeFriendship = true;
                 }
@@ -173,6 +169,18 @@ namespace UI
             descTMP?.SetText(text);
         }
 
+        private void SetOriginSkinInfo()
+        {
+            if (_data == null)
+                return;
+            
+            var animalInfo = MainGameManager.Get<Game.AnimalManager>()?.GetAnimalInfo(_data.Id);
+            if (animalInfo == null)
+                return;
+
+            SetSelectSkinInfo(animalInfo.SkinId);
+        }
+        
         private void SetSelectSkinInfo(int skinId)
         {
             SetAnimalNameTMP(skinId);
@@ -284,10 +292,30 @@ namespace UI
         {
             UIUtils.SetActive(profileRootRectTm, _currETabType == Type.ETab.Profile);
             UIUtils.SetActive(friendshipRootRectTm, _currETabType == Type.ETab.Friendship);
-
+            
+            int skinId = Game.Data.Const.AnimalBaseSkinId;
             if (_currETabType == Type.ETab.Friendship)
             {
-                friendshipCell?.Activate();
+                SetSelectSkinInfo(skinId);
+                
+                friendshipCell?.Activate(
+                    new FriendshipCell.Data()
+                    {
+                        Id = _data.Id,
+                        IListener = this,
+                    });
+            }
+            else
+            {
+                if (SelectSkinId > 0)
+                {
+                    skinId = SelectSkinId;
+                    SetSelectSkinInfo(skinId);
+                }
+                else
+                {
+                    SetOriginSkinInfo();
+                }
             }
         }
         
@@ -372,7 +400,7 @@ namespace UI
                 skinCell?.Deactivate();
             }
         }
-
+        
         void SkinCell.IListener.Select(SkinCell skinCell)
         {
             if (skinCell == null)
@@ -436,18 +464,45 @@ namespace UI
         }
         #endregion
 
-        #region BuyCash.IListener
-        void BuyCash.IListener.Buy(bool possible)
+        #region FriendshipCell.IListener
+
+        void FriendshipCell.IListener.GiveGift(Item item, Vector3 startPos, System.Action endAction)
         {
-            if(!possible)
-            {
-                var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
-
-                Game.Toast.Get?.Show(text);
-
+            if (!renderTextureRootRectTm)
                 return;
-            }
 
+            var endPos = renderTextureRootRectTm.position;
+            
+            if (_hearCell == null)
+            {
+                _hearCell = new ComponentCreator<HeartCell, HeartCell.Data>()
+                    .SetRootRectTm(friendshipRootRectTm)
+                    .Create();
+            }
+            
+            var data = new HeartCell.Data()
+            {
+                Id = _data.Id,
+                SkinId = Game.Data.Const.AnimalBaseSkinId,
+                
+                StartPos = startPos,
+                EndPos = endPos,
+                EndAction = () =>
+                {
+                    var animal = Game.RenderTextureElement.GetAnimal(_data.Id, Game.Data.Const.AnimalBaseSkinId);
+                    animal?.StartSignatureAction();
+                    
+                    endAction?.Invoke();
+                },
+            };
+            
+            _hearCell?.Activate(data);
+        }
+        #endregion
+        
+        #region BuyCash.IListener
+        void BuyCash.IListener.Buy()
+        {
             if (_data == null)
                 return;
 

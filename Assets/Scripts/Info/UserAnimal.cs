@@ -12,6 +12,7 @@ namespace Info
         {
             public int id = 0;
             public List<int> skinIdList = new();
+            public int fp = 0;
         }
 
         [SerializeField]
@@ -75,6 +76,18 @@ namespace Info
                 return false;
 
             return GetAnimal(id) != null;
+        }
+        #endregion
+        
+        #region Friendship Point
+        public void AddFriendshipPoint(int id, int point)
+        {
+            var animal = GetAnimal(id);
+            if (animal == null)
+                return;
+        
+            animal.fp += point;
+            Debug.Log(animal.fp);
         }
         #endregion
     }

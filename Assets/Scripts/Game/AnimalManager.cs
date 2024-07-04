@@ -192,51 +192,6 @@ namespace Game
                 return;
 
             _animalEvent?.Starter(endAction);
-
-            //    var animalOpenConidtionDatas = AnimalOpenConditionContainer.Instance?.Datas;
-            //    if (animalOpenConidtionDatas == null)
-            //        return;
-
-            //    var animalContainer = AnimalContainer.Instance;
-
-            //    foreach(var data in animalOpenConidtionDatas)
-            //    {
-            //        if (data == null)
-            //            continue;
-
-            //        var animalData = animalContainer?.GetData(data.Id);
-            //        if (animalData != null &&
-            //            animalData.PlaceId != _data.PlaceId)
-            //            continue;
-
-            //        if (CheckExist(data.Id))
-            //            continue;
-
-            //        if (data.eType == OpenConditionData.EType.Starter)
-            //        {
-            //            Sequencer.EnqueueTask(
-            //                () =>
-            //                {
-            //                    var popup = new PopupCreator<Obtain, Obtain.Data>()
-            //                        .SetData(new Obtain.Data()
-            //                        {
-            //                            EElement = Type.EElement.Animal,
-            //                            Id = data.Id,
-            //                            ClickAction = () =>
-            //                            {
-
-            //                            },
-            //                        })
-            //                        .SetCoInit(true)
-            //                        .SetReInitialize(true)
-            //                        .Create();
-
-            //                    return popup;
-            //                });
-
-            //            Add(data.Id);
-            //        }
-            //    }
         }
 
         #region Skin
@@ -272,6 +227,20 @@ namespace Game
             _animalHolder.AddASkin(id, skinId);
 
             Info.UserManager.Instance?.AddAnimalSkin(id, skinId);
+        }
+        #endregion
+        
+        #region Friendship Point
+
+        public void AddFriendshipPoint(int id, int point)
+        {
+            if (_animalHolder == null)
+                return;
+
+            if (_animalHolder.AddFriendshipPoint(id, point))
+            {
+                Info.UserManager.Instance?.AddFriendshipPoint(id, point);
+            }
         }
         #endregion
 
