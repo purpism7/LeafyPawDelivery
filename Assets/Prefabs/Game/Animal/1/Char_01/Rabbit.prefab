@@ -51,6 +51,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 7920135936743495098}
   edit: {fileID: 0}
   IsOverlap: 0
+  goPass: 1
+  isWind: 0
   skinId: 1
   animator: {fileID: 2020088319687372597}
 --- !u!1 &2487678514946157006

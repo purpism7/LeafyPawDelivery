@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 namespace UI
 {
     public class Edit : Base<Edit.Data>
@@ -17,6 +19,8 @@ namespace UI
             void Return();
             void Remove();
             void Arrange();
+
+            void Conversation();
         }
         
         #region Inspector
@@ -25,7 +29,13 @@ namespace UI
         [SerializeField]
         private UnityEngine.UI.Button arrangeBtn = null;
         [SerializeField]
+        private RectTransform bottomBtnsRootRectTm = null;
+        [SerializeField]
         private RectTransform editRootRectTm = null;
+
+        [SerializeField] 
+        private RectTransform topRootRectTm = null;
+        
         public RectTransform CanvasRectTm = null;
         #endregion
 
@@ -54,6 +64,26 @@ namespace UI
             arrangeBtn.interactable = interactable;
         }
 
+        private void ActivateEdit()
+        {
+            UIUtils.SetActive(editRootRectTm, true);   
+        }
+
+        private void DeactivateEdit()
+        {
+            UIUtils.SetActive(editRootRectTm, false);  
+        }
+
+        public async UniTask ActivateTopAsync()
+        {
+            DeactivateEdit();
+            UIUtils.SetActive(topRootRectTm, true);
+
+            await UniTask.WaitForSeconds(3f);
+            
+            UIUtils.SetActive(topRootRectTm, false);
+        }
+
         public void OnPressDownMove()
         {
             if(!_isMoving)
@@ -62,7 +92,7 @@ namespace UI
 
                 MainGameManager.Instance?.IGameCameraCtr.SetStopUpdate(true);
 
-                UIUtils.SetActive(editRootRectTm, false);
+                UIUtils.SetActive(bottomBtnsRootRectTm, false);
 
                 _data?.IListener?.Move(true);
             }
@@ -72,7 +102,7 @@ namespace UI
 
         public void OnPressUpMove()
         {
-            UIUtils.SetActive(editRootRectTm, true);
+            UIUtils.SetActive(bottomBtnsRootRectTm, true);
 
             MainGameManager.Instance?.IGameCameraCtr.SetStopUpdate(false);
            
@@ -101,6 +131,13 @@ namespace UI
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
 
             _data?.IListener?.Arrange();
+        }
+
+        public void OnClickConversation()
+        {
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+            
+            _data?.IListener?.Conversation();
         }
     }
 }

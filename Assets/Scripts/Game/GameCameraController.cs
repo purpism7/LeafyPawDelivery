@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -29,6 +29,8 @@ namespace GameSystem
         Vector3 WorldToScreenPoint(Vector3 pos);
 
         void SetPositionUICamera(bool origin, Vector3 pos);
+
+        void ZoomIn(Vector3 targetPos);
     }
 
     public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtr
@@ -40,9 +42,9 @@ namespace GameSystem
         [SerializeField]
         private AnimationCurve moveCurve = null;
 
-        private Vector3 _originUICameraPos = new Vector3(3000f, 0, 0);
-        private Vector2 _center = Vector2.zero;
-        private Vector2 _mapSize = new Vector2(2000f, 2000f);
+        private readonly Vector3 _originUICameraPos = new Vector3(3000f, 0, 0);
+        private readonly Vector2 _center = Vector2.zero;
+        private readonly Vector2 _mapSize = new Vector2(2000f, 2000f);
 
         private float _halfHeight = 0;
         private float _dragWidth = 0;
@@ -115,6 +117,7 @@ namespace GameSystem
         }
         #endregion
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (GameCamera == null)
@@ -131,7 +134,8 @@ namespace GameSystem
 
             Gizmos.DrawWireCube(Center, new Vector3(width - 250f, height - 850f));
         }
-
+#endif
+        
         private void Drag()
         {
             int touchCnt = Input.touchCount;
@@ -340,6 +344,28 @@ namespace GameSystem
             {
                 UICamera.GetComponent<Transform>().position = pos;
             }
+        }
+
+        void IGameCameraCtr.ZoomIn(Vector3 targetPos)
+        {
+            StopUpdate = true;
+            
+            // GameCamera.transform.position = new Vector3(targetPos.x, targetPos.y, InitPosZ);
+
+            var endPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
+            float duration = 0.5f;
+            
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(DOTween.To(() => GameCamera.transform.position, pos => GameCamera.transform.position = pos, endPos, duration).SetEase(Ease.OutQuad))
+                .Join(DOTween.To(() => GameCamera.orthographicSize, size => GameCamera.orthographicSize = size, 900f, duration).SetEase(Ease.Linear))
+                .OnComplete(() =>
+                {
+                    // iGameCameraCtr.SetSize();
+            
+                    // _endAnim = true;
+                });
+            sequence.Restart();
         }
         #endregion
     }

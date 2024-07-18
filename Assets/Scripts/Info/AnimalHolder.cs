@@ -63,7 +63,8 @@ namespace Info
                     animalInfo.SkinIdList = animal.skinIdList;
                 }
                 
-                animalInfo?.AddFriendshipPoint(animal.fp);
+                animalInfo.AddFriendshipPoint(animal.fp);
+                animalInfo.SetGetFriendshipRewards(animal.getFpRewards);
                 
                 AnimalInfoList.Add(animalInfo);
             }
@@ -210,7 +211,7 @@ namespace Info
         }
         #endregion
         
-        #region Friendship Point
+        #region Friendship
         public bool AddFriendshipPoint(int id, int point)
         {
             var animalInfo = GetAnimalInfo(id);
@@ -220,6 +221,15 @@ namespace Info
             animalInfo.AddFriendshipPoint(point);
 
             return true;
+        }
+
+        public bool GetFriendshipReward(int id, int index)
+        {
+            var animalInfo = GetAnimalInfo(id);
+            if (animalInfo == null)
+                return false;
+
+            return animalInfo.GetFriendshipReward(index);
         }
         #endregion
 

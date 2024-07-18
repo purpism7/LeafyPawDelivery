@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Game.Creature;
 using UnityEngine;
 
 namespace Game.Element.State
@@ -48,7 +49,7 @@ namespace Game.Element.State
                 case TouchPhase.Ended:
                     {
                         CollectCurrnecy(touch.Value);
-                        StartSignatureAction();
+                        TouchAnimal();
 
                         break;
                     }
@@ -91,7 +92,8 @@ namespace Game.Element.State
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchObject);
         }
 
-        private void StartSignatureAction()
+        
+        private void TouchAnimal()
         {
             if (_gameCameraCtr == null)
                 return;
@@ -103,11 +105,11 @@ namespace Game.Element.State
             if (elementData.EElement != Game.Type.EElement.Animal)
                 return;
 
-            var animal = _gameBaseElement as Creature.Animal;
-            if (animal == null)
+            var iAnimal = _gameBaseElement as IAnimal;
+            if (iAnimal == null)
                 return;
 
-            animal.StartSignatureAction();
+            iAnimal.Touch();
         }
     }
 }

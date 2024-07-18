@@ -8,6 +8,7 @@ using Game;
 using Game.Event;
 using GameSystem;
 using Info;
+using Base = Game.State.Base;
 using Type = System.Type;
 
 public interface IEvent
@@ -381,7 +382,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     }
 
     #region GameState
-    public async UniTask SetGameStateAsync(Game.Type.EGameState eGameState)
+
+    public async UniTask SetGameStateAsync(Game.Type.EGameState eGameState, Base.Data data = null)
     {
         if (EGameState == eGameState)
             return;
@@ -394,7 +396,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         Game.State.Base gameState = null;
         if (!_gameStateDic.TryGetValue(eGameState, out gameState))
         {
-            var typeStr = typeof(Game.State.Base).Namespace + "." + eGameState.ToString();
+            var typeStr = typeof(Game.State.Base).Namespace + "." + eGameState;
             var type = System.Type.GetType(typeStr);
             
             gameState = System.Activator.CreateInstance(type) as Game.State.Base;

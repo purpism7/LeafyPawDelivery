@@ -13,6 +13,7 @@ namespace Info
             public int id = 0;
             public List<int> skinIdList = new();
             public int fp = 0;
+            public bool[] getFpRewards = { false, false, false };
         }
 
         [SerializeField]
@@ -79,7 +80,7 @@ namespace Info
         }
         #endregion
         
-        #region Friendship Point
+        #region Friendship
         public void AddFriendshipPoint(int id, int point)
         {
             var animal = GetAnimal(id);
@@ -88,6 +89,21 @@ namespace Info
         
             animal.fp += point;
             Debug.Log(animal.fp);
+        }
+
+        public bool GetFriendshipReward(int id, int index)
+        {
+            var animal = GetAnimal(id);
+            if (animal == null)
+                return false;
+
+            if (animal.getFpRewards == null ||
+                animal.getFpRewards.Length <= index)
+                return false;
+
+            animal.getFpRewards[index] = true;
+
+            return true;
         }
         #endregion
     }

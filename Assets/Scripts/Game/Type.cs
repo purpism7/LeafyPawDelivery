@@ -11,6 +11,7 @@ namespace Game
             Game,
             Edit,
             Screenshot,
+            Conversation,
         }
 
         public enum EElementState

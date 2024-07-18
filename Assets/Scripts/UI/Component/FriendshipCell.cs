@@ -54,6 +54,26 @@ namespace  UI.Component
             base.Activate(data);
 
             SetPointInfo();
+            
+            if (friendshipGiftCells != null)
+            {
+                for (int i = 1; i <= friendshipGiftCells.Length; ++i)
+                {
+                    int point = i * 30;
+                    if (i >= friendshipGiftCells.Length)
+                    {
+                        point = Game.Data.Const.MaxFriendshipPoint;
+                    }
+
+                    friendshipGiftCells[i - 1]?.Activate(
+                        new FriendshipGiftCell.Data()
+                        {
+                            Id = _data.Id,
+                            Point =  point,
+                            Index = i - 1,
+                        });
+                }
+            }
         }
 
         private void SetPointInfo()
@@ -68,24 +88,6 @@ namespace  UI.Component
             Debug.Log("progress = " + (animalInfo.FriendshipPoint / (float)Game.Data.Const.MaxFriendshipPoint));
             SetPointTMP(animalInfo.FriendshipPoint);
             SetProgresss(animalInfo.FriendshipPoint);
-
-            if (friendshipGiftCells != null)
-            {
-                for (int i = 1; i <= friendshipGiftCells.Length; ++i)
-                {
-                    int point = i * 30;
-                    if (i >= friendshipGiftCells.Length)
-                    {
-                        point = Game.Data.Const.MaxFriendshipPoint;
-                    }
-
-                    friendshipGiftCells[i - 1]?.Activate(
-                        new FriendshipGiftCell.Data()
-                        {
-                            Point =  point,
-                        });
-                }
-            }
         }
 
         private void SetPointTMP(int point)
@@ -126,6 +128,17 @@ namespace  UI.Component
                     .Create();
             }
         }
+
+        private void RefreshGiftItemCell()
+        {
+            if (friendshipGiftCells == null)
+                return;
+
+            foreach (var cell in friendshipGiftCells)
+            {
+                cell?.Refresh();
+            }
+        }
         
         #region GiftCell.IListener
 
@@ -143,6 +156,7 @@ namespace  UI.Component
                     MainGameManager.Get<AnimalManager>().AddFriendshipPoint(_data.Id, item.Value);
 
                     SetPointInfo();
+                    RefreshGiftItemCell();
                 });
         }
         #endregion
