@@ -8,7 +8,12 @@ namespace Game.State
 {
     public abstract class Base
     {
-        public System.Type Type
+        public class Data
+        {
+            
+        }
+        
+        private System.Type Type
         {
             get
             {
@@ -18,7 +23,7 @@ namespace Game.State
 
         public bool CheckState<T>() where T : Base
         {
-            return Type.Equals(typeof(T));
+            return Type == typeof(T);
         }
 
         public T Get<T>() where T : Base

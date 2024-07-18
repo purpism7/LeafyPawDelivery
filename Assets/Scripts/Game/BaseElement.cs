@@ -215,7 +215,7 @@ namespace Game
             ActiveEdit(false);
         }
 
-        public void ActiveEdit(bool active)
+        protected void ActiveEdit(bool active)
         {
             UIUtils.SetActive(edit?.CanvasRectTm, active);
         }
@@ -273,6 +273,11 @@ namespace Game
 
             _touchEndAction?.Invoke();
             SetTouchAction();
+        }
+
+        void UI.Edit.IListener.Conversation()
+        {
+            
         }
         #endregion
     }

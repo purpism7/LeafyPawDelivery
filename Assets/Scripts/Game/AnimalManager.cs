@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using GameSystem;
-using UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,6 +17,8 @@ namespace Game
         private Data _data = null;
         private Info.AnimalHolder _animalHolder = new();
         private Game.Event.Animal _animalEvent = new();
+
+        public int SelectIdForConversation { get; private set; } = 0;
 
         public List<Info.Animal> AnimalInfoList => _animalHolder?.AnimalInfoList;
 
@@ -181,6 +181,11 @@ namespace Game
             });
         }
 
+        public void SetSelectIdForConversation(int id)
+        {
+            SelectIdForConversation = id;
+        }
+
         public Info.Animal GetAnimalInfo(int animalId)
         {
             return _animalHolder?.GetAnimalInfo(animalId);
@@ -230,7 +235,7 @@ namespace Game
         }
         #endregion
         
-        #region Friendship Point
+        #region Friendship
 
         public void AddFriendshipPoint(int id, int point)
         {
@@ -241,6 +246,14 @@ namespace Game
             {
                 Info.UserManager.Instance?.AddFriendshipPoint(id, point);
             }
+        }
+
+        public bool GetFriendshipReward(int id, int index)
+        {
+            if (_animalHolder == null)
+                return true;
+
+            return _animalHolder.GetFriendshipReward(id, index);
         }
         #endregion
 

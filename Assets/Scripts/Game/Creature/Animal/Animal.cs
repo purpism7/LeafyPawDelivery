@@ -5,6 +5,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 using Game;
+using GameSystem;
 
 namespace Game.Creature
 {
@@ -15,6 +16,8 @@ namespace Game.Creature
         Animator Animator { get; }
         SpriteRenderer SpriteRenderer { get; }
         Game.Type.EGameState EGameState { get; }
+
+        void Touch();
     }
 
     [ExecuteInEditMode]
@@ -208,6 +211,23 @@ namespace Game.Creature
 
                 return mainGameMgr.EGameState;
             }
+        }
+
+        void IAnimal.Touch()
+        {
+            // MainGameManager.Instance?.SetGameStateAsync(Game.Type.EGameState.Edit);
+            
+            SetState(new Element.State.Deactive().Initialize());
+            DeactivateChild().Forget();
+            
+            // DeactivateSpeechBubble();
+            
+            ActiveEdit(true);
+            edit?.ActivateTopAsync().Forget();
+            
+            MainGameManager.Get<AnimalManager>()?.SetSelectIdForConversation(Id);
+
+            // MainGameManager.Instance?.SetGameStateAsync(Type.EGameState.Conversation).Forget();
         }
         #endregion
 
