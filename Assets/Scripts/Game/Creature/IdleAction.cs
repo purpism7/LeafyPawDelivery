@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+// using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Game.Creature
@@ -23,7 +23,7 @@ namespace Game.Creature
 
             InProgressAction();
             
-            UpdateAsync().Forget();
+            // UpdateAsync().Forget();
         }
 
         protected override void EndAction()
@@ -33,17 +33,17 @@ namespace Game.Creature
 
         public override void ChainUpdate()
         {
-            // if ((System.DateTime.UtcNow - _time).TotalSeconds < _duration)
-            //     return;
-            //
-            // EndAction();
-        }
-        
-        private async UniTask UpdateAsync()
-        {
-            await UniTask.WaitForSeconds(_duration);
+            if ((System.DateTime.UtcNow - _time).TotalSeconds < _duration)
+                return;
             
             EndAction();
         }
+        
+        // private async UniTask UpdateAsync()
+        // {
+        //     await UniTask.WaitForSeconds(_duration);
+        //     
+        //     EndAction();
+        // }
     }
 }

@@ -222,7 +222,7 @@ namespace Game.Creature
             DeactivateSpeechBubble();
             
             // SetState(new Element.State.Deactive().Initialize());
-            // DeactivateChild().Forget();
+            DeactivateChild().Forget();
             
             edit?.ActivateTopAsync(
                 () =>
