@@ -38,7 +38,7 @@ namespace UI
 
                 if (string.IsNullOrEmpty(Speaker))
                 {
-                    Speaker = PlayerPrefs.GetString(Game.Data.PlayPrefsKeyNickName);
+                    Speaker = PlayerPrefs.GetString(Games.Data.PlayPrefsKeyNickName);
                     isPlayer = true;
                 }
 

@@ -39,15 +39,16 @@ namespace Game.Creature
             if (_iAnimal == null)
                 return;
 
-            if(_iAnimal.EGameState == Type.EGameState.Edit)
+            if(_iAnimal.EGameState == Type.EGameState.Edit ||
+               _iAnimal.EGameState == Type.EGameState.Conversation)
                 return;
 
-            int count = 0;
+            // int count = 0;
             _currentAnimalAction = RandomAnimalAction;
-            if (_currentAnimalAction is SignatureAction)
-            {
-                count = 2;
-            }
+            // if (_currentAnimalAction is SignatureAction)
+            // {
+            //     count = 2;
+            // }
 
             _currentAnimalAction?.StartAction();
         }

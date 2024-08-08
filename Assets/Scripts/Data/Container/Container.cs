@@ -50,7 +50,7 @@ public class Container : GameSystem.Processing
                 {
                     var container = System.Activator.CreateInstance(type);
                     var baseContainer = container as BaseContainer;
-                    var resText = result.text.Decrypt(Game.Data.SecretKey);
+                    var resText = result.text.Decrypt(Games.Data.SecretKey);
                     Debug.Log("resText = " + resText);
                     baseContainer?.Initialize(container, resText);
                 }

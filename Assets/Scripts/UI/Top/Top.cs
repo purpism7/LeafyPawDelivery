@@ -173,7 +173,7 @@ namespace UI
 
         private void SetDropAnimalCurrencyCntTMP()
         {
-            dropAnimalCurrencyCntTMP?.SetText(string.Format("{0}/{1}", DropAnimalCurrencyCnt, Game.Data.Const.MaxDropAnimalCurrencyCount));
+            dropAnimalCurrencyCntTMP?.SetText(string.Format("{0}/{1}", DropAnimalCurrencyCnt, Games.Data.Const.MaxDropAnimalCurrencyCount));
         }
 
         private int DropAnimalCurrencyCnt
@@ -211,7 +211,7 @@ namespace UI
 
         private void SetDropLetterCntTMP()
         {
-            dropLetterCntTMP?.SetText(string.Format("{0}/{1}", DropLetterCnt, Game.Data.Const.MaxDropLetterCount));
+            dropLetterCntTMP?.SetText(string.Format("{0}/{1}", DropLetterCnt, Games.Data.Const.MaxDropLetterCount));
         }
 
         private int DropLetterCnt
@@ -554,7 +554,7 @@ namespace UI
         {
             get
             {
-                return DropLetterCnt >= Game.Data.Const.MaxDropLetterCount;
+                return DropLetterCnt >= Games.Data.Const.MaxDropLetterCount;
             }
         }
 
@@ -562,7 +562,7 @@ namespace UI
         {
             get
             {
-                return DropAnimalCurrencyCnt >= Game.Data.Const.MaxDropAnimalCurrencyCount;
+                return DropAnimalCurrencyCnt >= Games.Data.Const.MaxDropAnimalCurrencyCount;
             }
         }
 
@@ -588,7 +588,7 @@ namespace UI
                 UIUtils.SetActive(objectCurrencyGuideLineImg?.gameObject, true);
                 objectCurrencyGuideLineImg?.StartBlink();
             }
-            else if (eCategory == Type.ECategory.ObjectCurrency)
+            else if (eCategory == Type.ECategory.Cash)
             {
                 UIUtils.SetActive(cashGuideLineImg?.gameObject, true);
                 cashGuideLineImg?.StartBlink();

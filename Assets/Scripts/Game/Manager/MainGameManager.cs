@@ -89,7 +89,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     {
         yield return StartCoroutine(base.CoInit(iProvider));
 
-        var activityPlaceId = PlayerPrefs.GetInt(Game.Data.PlayPrefsKeyLastPlaceKey, Game.Data.Const.StartPlaceId);//placeMgr.ActivityPlaceId; 
+        var activityPlaceId = PlayerPrefs.GetInt(Games.Data.PlayPrefsKeyLastPlaceKey, Games.Data.Const.StartPlaceId);//placeMgr.ActivityPlaceId; 
 
         var inputMgr = iProvider.Get<InputManager>();
         IGameCameraCtr = inputMgr?.GameCameraCtr;
@@ -471,7 +471,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         endMoveAction?.Invoke();
 
-        PlayerPrefs.SetInt(Game.Data.PlayPrefsKeyLastPlaceKey, placeId);
+        PlayerPrefs.SetInt(Games.Data.PlayPrefsKeyLastPlaceKey, placeId);
     }
 
     private async UniTask LoadAssetAsync(int placeId)

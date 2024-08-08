@@ -149,7 +149,7 @@ namespace Info
 
             _user = new Info.User();
 
-            var placeId = Game.Data.Const.StartPlaceId;
+            var placeId = Games.Data.Const.StartPlaceId;
             var currency = _user.GetCurrency(placeId);
 
             SaveCurrency(currency);

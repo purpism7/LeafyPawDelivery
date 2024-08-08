@@ -293,7 +293,7 @@ namespace UI
             UIUtils.SetActive(profileRootRectTm, _currETabType == Type.ETab.Profile);
             UIUtils.SetActive(friendshipRootRectTm, _currETabType == Type.ETab.Friendship);
             
-            int skinId = Game.Data.Const.AnimalBaseSkinId;
+            int skinId = Games.Data.Const.AnimalBaseSkinId;
             if (_currETabType == Type.ETab.Friendship)
             {
                 SetSelectSkinInfo(skinId);
@@ -354,7 +354,7 @@ namespace UI
             int currenctSkinId = animalMgr.GetCurrenctSkinId(_data.Id);
             if(currenctSkinId <= 0)
             {
-                currenctSkinId = Game.Data.Const.AnimalBaseSkinId;
+                currenctSkinId = Games.Data.Const.AnimalBaseSkinId;
             }
 
             foreach (var animalSkin in skinList)
@@ -483,13 +483,13 @@ namespace UI
             var data = new HeartCell.Data()
             {
                 Id = _data.Id,
-                SkinId = Game.Data.Const.AnimalBaseSkinId,
+                SkinId = Games.Data.Const.AnimalBaseSkinId,
                 
                 StartPos = startPos,
                 EndPos = endPos,
                 EndAction = () =>
                 {
-                    var animal = Game.RenderTextureElement.GetAnimal(_data.Id, Game.Data.Const.AnimalBaseSkinId);
+                    var animal = Game.RenderTextureElement.GetAnimal(_data.Id, Games.Data.Const.AnimalBaseSkinId);
                     animal?.StartSignatureAction();
                     
                     endAction?.Invoke();

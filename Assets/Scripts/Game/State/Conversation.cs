@@ -1,60 +1,132 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.Localization.Settings;
+
+using UI;
+using GameSystem;
 
 namespace Game.State
 {
-    public class Conversation : Base
+    public class Conversation : Base, UI.Conversation.IListener
     {
-        private Vector3 _initCameraPos = Vector3.zero;
+        // private Vector3 _initCameraPos = Vector3.zero;
+
+        public interface IListener
+        {
+            void Finish();
+        }
+        
+        private UI.Conversation _conversation = null;
+        private IListener _iListener = null;
         
         public override void Initialize(MainGameManager mainGameMgr)
         {
-            // MainGameManager.Instance?.IGameCameraCtr?.ZoomIn(transform.position);
-
-            IPlace iPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
-            if (iPlace == null ||
-                iPlace.AnimalList == null)
+            _iListener = null;
+            
+            var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
+            if (activityPlace == null)
                 return;
 
+            var animalList = (activityPlace as IPlace)?.AnimalList;
 
-            var id = MainGameManager.Get<AnimalManager>()?.SelectIdForConversation;
+            var conversationAnimal = MainGameManager.Get<AnimalManager>()?.Conversation;
+            if (conversationAnimal == null)
+                return;
+
+            _iListener = conversationAnimal;
             
-            foreach (var animal in iPlace.AnimalList)
+            var animalId = conversationAnimal.Id;
+            
+            foreach (var animal in animalList)
             {
                 if(animal == null)
                     continue;
 
-                if (animal.Id == id)
-                {
-                    
-                }
+                if (animal.Id == animalId)
+                    continue;
+                
+                
             }
             
+            var position = conversationAnimal.transform.position;
+            // position.y -= 100f;
             
-            
-            // MainGameManager.Get<PlaceManager>()?.Get.
-            // MainGameManager.Instance.IGameCameraCtr.ZoomIn(transform.position);
-
-            // _selectAnimalPos.y -= 70f;
-
-            // mainGameMgr.IGameCameraCtr?.ZoomIn(_selectAnimalPos);
+            UIManager.Instance?.DeactivateAnim();
+            MainGameManager.Instance?.IGameCameraCtr.ZoomIn(position,
+                () =>
+                {
+                    StartConversation(animalId);
+                });
+        
+            activityPlace.Bust();
         }
         
         public override void End()
         {
+            var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
+            if (activityPlace == null)
+                return;
             
+            MainGameManager.Instance?.IGameCameraCtr.ZoomOut(
+                () =>
+                {
+                    UIManager.Instance?.ActivateAnim(
+                        () =>
+                        {
+                            activityPlace.Boom();
+
+                            MainGameManager.Instance?.SetGameStateAsync(Type.EGameState.Game);
+                        });
+                });
         }
 
-        public Conversation SelectAnimalPos(Creature.Animal animal)
+        private void StartConversation(int animalId)
         {
-            if (animal == null)
-                return null;
+            if (_conversation == null)
+            {
+                _conversation = new PopupCreator<UI.Conversation, UI.Conversation.Data>()
+                    .SetShowBackground(false)
+                    .SetData(new UI.Conversation.Data()
+                    {
+                        IListener = this,
+                    })
+                    .Create();
+            }
+            
+            _conversation?.Activate();
+                    
+            var tables = LocalizationSettings.StringDatabase.GetTable("Conversation");
+            foreach (var pair in tables)
+            {
+                if(pair.Value == null)
+                    continue;
 
-            // _selectAnimalPos = animal.transform.position;
+                var key = $"{animalId}_1_";
+                        
+                if(!pair.Value.Key.Contains(key))
+                    continue;
+                        
+                _conversation?.Enqueue(
+                    new UI.Conversation.Constituent()
+                    {
+                        SpeakerSpriteName = "-",
+                        Speaker = GameUtils.GetName(Type.EElement.Animal, animalId, Games.Data.Const.AnimalBaseSkinId),
+                        Sentence =  pair.Value.GetLocalizedString(),
+                    });
+            }
+                    
+            _conversation?.StartTyping();
+        }
 
-            return this;
+        void UI.Conversation.IListener.FinishTyping(int remainCnt)
+        {
+            if (remainCnt > 0)
+                return;
+            
+            _conversation?.Deactivate();
+
+            End();
         }
     }
 }

@@ -62,7 +62,7 @@ namespace  UI.Component
                     int point = i * 30;
                     if (i >= friendshipGiftCells.Length)
                     {
-                        point = Game.Data.Const.MaxFriendshipPoint;
+                        point = Games.Data.Const.MaxFriendshipPoint;
                     }
 
                     friendshipGiftCells[i - 1]?.Activate(
@@ -85,7 +85,7 @@ namespace  UI.Component
             if (animalInfo == null)
                 return;
             
-            Debug.Log("progress = " + (animalInfo.FriendshipPoint / (float)Game.Data.Const.MaxFriendshipPoint));
+            Debug.Log("progress = " + (animalInfo.FriendshipPoint / (float)Games.Data.Const.MaxFriendshipPoint));
             SetPointTMP(animalInfo.FriendshipPoint);
             SetProgresss(animalInfo.FriendshipPoint);
         }
@@ -95,7 +95,7 @@ namespace  UI.Component
             if (pointTMP == null)
                 return;
             
-            pointTMP.SetText($"{point}" + "/" + $"{Game.Data.Const.MaxFriendshipPoint}");
+            pointTMP.SetText($"{point}" + "/" + $"{Games.Data.Const.MaxFriendshipPoint}");
         }
 
         private void SetProgresss(int point)
@@ -103,7 +103,7 @@ namespace  UI.Component
             if (progressImg == null)
                 return;
 
-            progressImg.fillAmount = point / (float)Game.Data.Const.MaxFriendshipPoint;
+            progressImg.fillAmount = point / (float)Games.Data.Const.MaxFriendshipPoint;
         }
 
         private void SetGiftItemList()

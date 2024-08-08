@@ -80,7 +80,7 @@ namespace Game
                 IListener = this,
             });
 
-            ActiveEdit(false);
+            edit?.DeactivateEdit();
         }
 
         public override void Activate()
@@ -112,7 +112,7 @@ namespace Game
                 SetState(new Game.Element.State.Edit()?.Initialize(gameCameraCtr, iGrid));
 
                 SetSortingOrder(SelectOrder);
-                ActiveEdit(true);
+                edit?.ActivateBottom();
 
                 State?.Touch(TouchPhase.Began, null);
 

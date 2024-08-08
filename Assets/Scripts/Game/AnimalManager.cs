@@ -18,7 +18,7 @@ namespace Game
         private Info.AnimalHolder _animalHolder = new();
         private Game.Event.Animal _animalEvent = new();
 
-        public int SelectIdForConversation { get; private set; } = 0;
+        public Creature.Animal Conversation { get; private set; } = null;
 
         public List<Info.Animal> AnimalInfoList => _animalHolder?.AnimalInfoList;
 
@@ -101,7 +101,7 @@ namespace Game
             get
             {
                 int placeId = GameUtils.ActivityPlaceId;
-                if (placeId != Game.Data.Const.StartPlaceId)
+                if (placeId != Games.Data.Const.StartPlaceId)
                     return true;
 
                 var animalDataList = AnimalContainer.Instance?.GetDataListByPlaceId(placeId);
@@ -135,7 +135,7 @@ namespace Game
             var animalInfo = new Info.Animal()
             {
                 Id = id,
-                SkinId = Game.Data.Const.AnimalBaseSkinId,
+                SkinId = Games.Data.Const.AnimalBaseSkinId,
             };
 
             if (_animalHolder.AddAnimalInfo(animalInfo))
@@ -181,9 +181,9 @@ namespace Game
             });
         }
 
-        public void SetSelectIdForConversation(int id)
+        public void SetConverationAnimal(Creature.Animal animal)
         {
-            SelectIdForConversation = id;
+            Conversation = animal;
         }
 
         public Info.Animal GetAnimalInfo(int animalId)

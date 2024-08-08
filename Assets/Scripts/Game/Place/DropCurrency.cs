@@ -121,7 +121,7 @@ namespace Game.PlaceEvent
             UI.ITop iTop = UIManager.Instance?.Top;
             if(iTop != null)
             {
-                if (dropCnt + 1 >= Game.Data.Const.MaxDropAnimalCurrencyCount)
+                if (dropCnt + 1 >= Games.Data.Const.MaxDropAnimalCurrencyCount)
                 {
                     StartDrop();
                 }

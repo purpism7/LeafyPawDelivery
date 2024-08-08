@@ -44,7 +44,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            var localName = GameUtils.GetName(_data.EElement, _data.Id, Game.Data.Const.AnimalBaseSkinId);
+            var localName = GameUtils.GetName(_data.EElement, _data.Id, Games.Data.Const.AnimalBaseSkinId);
 
             nameTMP?.SetText(localName);
         }

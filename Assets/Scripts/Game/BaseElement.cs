@@ -212,14 +212,9 @@ namespace Game
                 edit.transform.localPosition = Vector3.zero;
             }
 
-            ActiveEdit(false);
+            edit?.DeactivateEdit();
         }
-
-        protected void ActiveEdit(bool active)
-        {
-            UIUtils.SetActive(edit?.CanvasRectTm, active);
-        }
-
+        
         protected abstract void Return();
 
         protected virtual void Arrange()
@@ -229,7 +224,7 @@ namespace Game
             SetSortingOrder(-(int)LocalPos.y);
 
             SetSpwaned(false);
-            ActiveEdit(false);
+            edit?.DeactivateEdit();
             SetState(null);
         }
 
@@ -238,8 +233,13 @@ namespace Game
             Command.Remove.Execute(this, refresh);
 
             SetSpwaned(true);
-            ActiveEdit(false);
+            edit?.DeactivateEdit();
             SetState(null);
+        }
+
+        protected virtual void Conversation()
+        {
+            
         }
         #endregion
 
@@ -277,7 +277,7 @@ namespace Game
 
         void UI.Edit.IListener.Conversation()
         {
-            
+            Conversation();
         }
         #endregion
     }

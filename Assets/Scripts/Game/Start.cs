@@ -37,7 +37,7 @@ namespace GameSystem
                     if (result == null)
                         return;
 
-                    Game.Data.Const = result;
+                    Games.Data.Const = result;
 
                     endLoad = true;
                 }));

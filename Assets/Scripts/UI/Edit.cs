@@ -64,22 +64,42 @@ namespace UI
             arrangeBtn.interactable = interactable;
         }
 
-        private void ActivateEdit()
+        public void ActivateBottom()
         {
-            UIUtils.SetActive(editRootRectTm, true);   
+            UIUtils.SetActive(editRootRectTm, true);
+            DeactivateTop();
         }
 
-        private void DeactivateEdit()
+        private void DeactivateBotom()
         {
             UIUtils.SetActive(editRootRectTm, false);  
         }
 
-        public async UniTask ActivateTopAsync()
+        public void ActivateTop()
         {
-            DeactivateEdit();
+            UIUtils.SetActive(topRootRectTm, true);
+            DeactivateBotom();
+        }
+        
+        private void DeactivateTop()
+        {
+            UIUtils.SetActive(topRootRectTm, false);
+        }
+
+        public void DeactivateEdit()
+        {
+            DeactivateBotom();
+            DeactivateTop();
+        }
+
+        public async UniTask ActivateTopAsync(System.Action action)
+        {
+            DeactivateBotom();
             UIUtils.SetActive(topRootRectTm, true);
 
             await UniTask.WaitForSeconds(3f);
+            
+            action?.Invoke();
             
             UIUtils.SetActive(topRootRectTm, false);
         }
@@ -138,6 +158,8 @@ namespace UI
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
             
             _data?.IListener?.Conversation();
+            
+            DeactivateEdit();
         }
     }
 }

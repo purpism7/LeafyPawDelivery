@@ -12,7 +12,7 @@ using UI;
 
 namespace Game.Manager
 {
-    public class Cutscene : Game.Common, Sequencer.ITask, Conversation.IListener
+    public class Cutscene : Game.Common, Conversation.IListener
     {
         #region Static
         private static Cutscene _instance = null;

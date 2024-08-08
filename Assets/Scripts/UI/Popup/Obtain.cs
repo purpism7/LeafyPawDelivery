@@ -17,7 +17,7 @@ namespace UI
         {
             public Game.Type.EElement EElement = Game.Type.EElement.None;
             public int Id = 0;
-            public int skinId = Game.Data.Const.AnimalBaseSkinId;
+            public int skinId = Games.Data.Const.AnimalBaseSkinId;
             public Action ClickAction = null;
 
             public bool keepRenderTexture = false;

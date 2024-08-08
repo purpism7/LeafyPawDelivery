@@ -70,9 +70,6 @@ namespace Game.Element.State
             {
                 case TouchPhase.Began:
                     {
-                        //_gameBaseElement.ActiveEdit(true);
-                        //_gameCameraCtr?.SetStopUpdate(true);
-                        
                         break;
                     }
 
@@ -84,22 +81,17 @@ namespace Game.Element.State
 
                             SetSelectedLocalPosZ();
                         }
-                        //_gameBaseElement.ActiveEdit(false);
                         
                         break;
                     }
                 case TouchPhase.Stationary:
                     {
-                   
                         break;
                     }
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
-                        //_gameBaseElement.ActiveEdit(true);
-                        //_gameCameraCtr?.SetStopUpdate(false);
-
                         break;
                     }
             }
@@ -109,8 +101,7 @@ namespace Game.Element.State
 
         private void Drag(Touch? touch)
         {
-            if (touch == null ||
-                !touch.HasValue)
+            if (touch == null)
                 return;
 
             Vector3 touchPos = touch.Value.position;

@@ -54,7 +54,7 @@ namespace Info
                     animalInfo = new Animal()
                     {
                         Id = animal.id,
-                        SkinId = Game.Data.Const.AnimalBaseSkinId,
+                        SkinId = Games.Data.Const.AnimalBaseSkinId,
                         SkinIdList = animal.skinIdList,
                     };
                 }
@@ -103,7 +103,7 @@ namespace Info
             
             AnimalInfoList.Add(animalInfo);
 
-            AddSkin(animalInfo, Game.Data.Const.AnimalBaseSkinId);
+            AddSkin(animalInfo, Games.Data.Const.AnimalBaseSkinId);
             
             SaveInfo();
 
@@ -122,7 +122,7 @@ namespace Info
 
             animalInfo.Pos = Vector3.zero;
             animalInfo.Arrangement = false;
-            animalInfo.SkinId = Game.Data.Const.AnimalBaseSkinId;
+            animalInfo.SkinId = Games.Data.Const.AnimalBaseSkinId;
 
             SaveInfo();
         }

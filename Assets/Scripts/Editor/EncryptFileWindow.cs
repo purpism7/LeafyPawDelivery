@@ -62,7 +62,7 @@ public class EncryptFileWindow : EditorWindow
             return;
 
         var jsonStr = System.IO.File.ReadAllText(fullPath);
-        var encrytStr = jsonStr.Encrypt(Game.Data.SecretKey);
+        var encrytStr = jsonStr.Encrypt(Games.Data.SecretKey);
 
         var fileName = _fileName.Replace("json", "txt");
 

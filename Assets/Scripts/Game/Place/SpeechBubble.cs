@@ -39,7 +39,8 @@ namespace Game.PlaceEvent
             if (gameState == null)
                 yield break;
 
-            if (gameState.CheckState<Game.State.Edit>())
+            if (gameState.CheckState<Game.State.Edit>() ||
+                gameState.CheckState<Game.State.Conversation>())
                 yield break;
 
             var animalList = _iPlace?.AnimalList;
@@ -55,8 +56,7 @@ namespace Game.PlaceEvent
                 yield break;
 
             var activateAnimalList = animalList.FindAll(animal => animal != null ? animal.IsActivate : false);
-            if (activateAnimalList == null ||
-                activateAnimalList.Count <= 0)
+            if (activateAnimalList.Count <= 0)
                 yield break;
 
             var randomIndex = UnityEngine.Random.Range(0, activateAnimalList.Count);

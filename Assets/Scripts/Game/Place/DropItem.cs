@@ -127,7 +127,7 @@ namespace Game.PlaceEvent
             {
                 if(eItemSub == Type.EItemSub.Letter)
                 {
-                    if (dropCnt + 1 >= Game.Data.Const.MaxDropLetterCount)
+                    if (dropCnt + 1 >= Games.Data.Const.MaxDropLetterCount)
                     {
                         StartDrop();
                     }

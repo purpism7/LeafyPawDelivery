@@ -30,7 +30,8 @@ namespace GameSystem
 
         void SetPositionUICamera(bool origin, Vector3 pos);
 
-        void ZoomIn(Vector3 targetPos);
+        void ZoomIn(Vector3 targetPos, System.Action endAction);
+        void ZoomOut(System.Action endAction);
     }
 
     public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtr
@@ -346,24 +347,38 @@ namespace GameSystem
             }
         }
 
-        void IGameCameraCtr.ZoomIn(Vector3 targetPos)
+        void IGameCameraCtr.ZoomIn(Vector3 targetPos, System.Action endAction)
         {
             StopUpdate = true;
             
-            // GameCamera.transform.position = new Vector3(targetPos.x, targetPos.y, InitPosZ);
-
             var endPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
             float duration = 0.5f;
             
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .Append(DOTween.To(() => GameCamera.transform.position, pos => GameCamera.transform.position = pos, endPos, duration).SetEase(Ease.OutQuad))
-                .Join(DOTween.To(() => GameCamera.orthographicSize, size => GameCamera.orthographicSize = size, 900f, duration).SetEase(Ease.Linear))
+                .Join(DOTween.To(() => GameCamera.orthographicSize, size => GameCamera.orthographicSize = size, 600f, duration).SetEase(Ease.Linear))
                 .OnComplete(() =>
                 {
-                    // iGameCameraCtr.SetSize();
+                    endAction?.Invoke();
+                });
+            sequence.Restart();
+        }
+
+        void IGameCameraCtr.ZoomOut(System.Action endAction)
+        {
+            float duration = 0.5f;
             
-                    // _endAnim = true;
+            StopUpdate = false;
+            
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(DOTween.To(() => GameCamera.orthographicSize, size => GameCamera.orthographicSize = size, DefaultOrthographicSize, duration).SetEase(Ease.Linear))
+                .OnComplete(() =>
+                {
+                    endAction?.Invoke();
+                    
+                    SetSize();
                 });
             sequence.Restart();
         }

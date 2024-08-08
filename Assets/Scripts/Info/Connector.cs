@@ -22,7 +22,7 @@ namespace Info
 
         public Connector()
         {
-            var version = Game.Data.PlayerPrefsVersion;
+            var version = Games.Data.PlayerPrefsVersion;
 
             KeyOpenPlace = GetType().Name + "_OpenPlace_" + version;
 

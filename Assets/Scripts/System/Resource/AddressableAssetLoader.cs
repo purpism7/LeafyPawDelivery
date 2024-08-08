@@ -73,7 +73,7 @@ namespace GameSystem
                     case AssetLabelAnimal:
                         {
                             //yield return StartCoroutine(CoLoadAnimalAsset());
-                            int placeId = PlayerPrefs.GetInt(Game.Data.PlayPrefsKeyLastPlaceKey, Game.Data.Const.StartPlaceId);
+                            int placeId = PlayerPrefs.GetInt(Games.Data.PlayPrefsKeyLastPlaceKey, Games.Data.Const.StartPlaceId);
 
                             await LoadAnimalAssetAsync(placeId);
 
@@ -84,7 +84,7 @@ namespace GameSystem
                         {
                             if (typeKey.Equals(AssetLabelObject))
                             {
-                                typeKey += "_" + PlayerPrefs.GetInt(Game.Data.PlayPrefsKeyLastPlaceKey, Game.Data.Const.StartPlaceId);
+                                typeKey += "_" + PlayerPrefs.GetInt(Games.Data.PlayPrefsKeyLastPlaceKey, Games.Data.Const.StartPlaceId);
                             }
 
                             await LoaGameAssetByIdAsync(typeKey);

@@ -21,7 +21,7 @@ namespace Game.Creature
     }
 
     [ExecuteInEditMode]
-    public class Animal : BaseElement<Animal.Data>, IAnimal
+    public class Animal : BaseElement<Animal.Data>, IAnimal, State.Conversation.IListener
     {
         public class Data : BaseData
         {
@@ -120,7 +120,6 @@ namespace Game.Creature
                 return;
 
             var eGameState = mainGameMgr.EGameState;
-    
             if (eGameState == Type.EGameState.Edit)
             {
                 var editState = mainGameMgr?.GameState?.Get<Game.State.Edit>();
@@ -128,18 +127,16 @@ namespace Game.Creature
                     editState.CheckIsEditElement(this))
                     return;
 
-                SetState(new Element.State.Edit()?.Initialize(gameCameraCtr, iGrid));
+                SetState(new Element.State.Edit().Initialize(gameCameraCtr, iGrid));
                 SetSortingOrder(SelectOrder);
-                ActiveEdit(true);
+                edit?.ActivateBottom();
 
                 State?.Touch(TouchPhase.Began, null);
 
                 return;
             }
-            else
-            {
-                SetState(new Element.State.Play()?.Initialize(gameCameraCtr, iGrid));
-            }
+           
+            SetState(new Element.State.Play().Initialize(gameCameraCtr, iGrid));
 
             if (touch != null)
             {
@@ -172,6 +169,13 @@ namespace Game.Creature
             SetLocalPosZ(GameUtils.CalcPosZ(LocalPos.y));
 
             base.Arrange();
+        }
+
+        protected override void Conversation()
+        {
+            MainGameManager.Get<AnimalManager>()?.SetConverationAnimal(this);
+            
+            MainGameManager.Instance?.SetGameStateAsync(Type.EGameState.Conversation).Forget();
         }
 
         public void StartSignatureAction()
@@ -215,19 +219,16 @@ namespace Game.Creature
 
         void IAnimal.Touch()
         {
-            // MainGameManager.Instance?.SetGameStateAsync(Game.Type.EGameState.Edit);
+            DeactivateSpeechBubble();
             
-            SetState(new Element.State.Deactive().Initialize());
-            DeactivateChild().Forget();
+            // SetState(new Element.State.Deactive().Initialize());
+            // DeactivateChild().Forget();
             
-            // DeactivateSpeechBubble();
-            
-            ActiveEdit(true);
-            edit?.ActivateTopAsync().Forget();
-            
-            MainGameManager.Get<AnimalManager>()?.SetSelectIdForConversation(Id);
-
-            // MainGameManager.Instance?.SetGameStateAsync(Type.EGameState.Conversation).Forget();
+            edit?.ActivateTopAsync(
+                () =>
+                {
+                    
+                }).Forget();
         }
         #endregion
 
@@ -242,6 +243,14 @@ namespace Game.Creature
             _animalRoot?.DeactivateSpeechBubble();
         }
         #endregion
+        
+        #region State.Conversation.IListener
+
+        void State.Conversation.IListener.Finish()
+        {
+            
+        }
+        #endregion
 
         private void SetPlaceState(IPlaceState.EType state)
         {
@@ -254,7 +263,7 @@ namespace Game.Creature
             {
                 case IPlaceState.EType.Deactive:
                     {
-                        SetState(new Element.State.Deactive()?.Initialize());
+                        SetState(new Element.State.Deactive().Initialize());
 
                         DeactivateChild().Forget();
 

@@ -175,7 +175,7 @@ namespace UI.Component
             var openConditionData = new OpenCondition.Data()
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
-                Text = Game.Data.Const.AchievementRewardCount.ToString(),
+                Text = Games.Data.Const.AchievementRewardCount.ToString(),
             };
 
             openCondition.Initialize(openConditionData);
@@ -192,7 +192,7 @@ namespace UI.Component
             if (_progress < dataProgress)
                 return;
 
-            Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, Game.Data.Const.AchievementRewardCount);
+            Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, Games.Data.Const.AchievementRewardCount);
 
             if(IsLastStep)
             {

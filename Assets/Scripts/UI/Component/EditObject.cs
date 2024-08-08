@@ -101,7 +101,7 @@ namespace UI.Component
             {
                 case Game.Event.ArrangeObjectData arrangeObjectData:
                     {
-                        if (arrangeObjectData.id == Game.Data.Const.TutorialObjectId)
+                        if (arrangeObjectData.id == Games.Data.Const.TutorialObjectId)
                         {
                             _data.isTutorial = false;
 

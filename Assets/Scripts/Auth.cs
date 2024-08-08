@@ -59,7 +59,7 @@ namespace GameSystem
             await UnityServices.InitializeAsync();
             Debug.Log(UnityServices.State);
 
-            _nickName = PlayerPrefs.GetString(Game.Data.PlayPrefsKeyNickName, string.Empty);
+            _nickName = PlayerPrefs.GetString(Games.Data.PlayPrefsKeyNickName, string.Empty);
 
             _endAuth = false;
 #if UNITY_ANDROID
@@ -150,7 +150,7 @@ namespace GameSystem
         {
             _nickName = nickName;
 
-            PlayerPrefs.SetString(Game.Data.PlayPrefsKeyNickName, nickName);
+            PlayerPrefs.SetString(Games.Data.PlayPrefsKeyNickName, nickName);
         }
 
         public void SetGameType(EGameType eGameType)

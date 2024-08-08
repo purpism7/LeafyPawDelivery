@@ -304,8 +304,8 @@ namespace Game
             var mainGameMgr = MainGameManager.Instance;
             if (mainGameMgr != null)
             {
-                isAnimalStarter = !mainGameMgr.CheckExist(Type.EElement.Animal, Game.Data.Const.TutorialAnimalId);
-                isObjectStarter = !mainGameMgr.CheckExist(Type.EElement.Object, Game.Data.Const.TutorialObjectId);
+                isAnimalStarter = !mainGameMgr.CheckExist(Type.EElement.Animal, Games.Data.Const.TutorialAnimalId);
+                isObjectStarter = !mainGameMgr.CheckExist(Type.EElement.Object, Games.Data.Const.TutorialObjectId);
             }
 
             _popoConversation?.Deactivate();
@@ -517,7 +517,7 @@ namespace Game
                 var mainGameMgr = MainGameManager.Instance;
                 if (mainGameMgr != null)
                 {
-                    return mainGameMgr.CheckExist(Type.EElement.Animal, Game.Data.Const.TutorialAnimalId) || mainGameMgr.CheckExist(Type.EElement.Object, Game.Data.Const.TutorialObjectId);
+                    return mainGameMgr.CheckExist(Type.EElement.Animal, Games.Data.Const.TutorialAnimalId) || mainGameMgr.CheckExist(Type.EElement.Object, Games.Data.Const.TutorialObjectId);
                 }
 
                 return false;
@@ -560,7 +560,7 @@ namespace Game
             {
                 case Game.Event.ArrangeAnimalData arrangeAnimalData:
                     {
-                        if (arrangeAnimalData.id == Game.Data.Const.TutorialAnimalId)
+                        if (arrangeAnimalData.id == Games.Data.Const.TutorialAnimalId)
                         {
                             ProcessEditObject();
                         }
@@ -576,7 +576,7 @@ namespace Game
             {
                 case Game.Event.ArrangeObjectData arrangeObjectData:
                     {
-                        if (arrangeObjectData.id == Game.Data.Const.TutorialObjectId)
+                        if (arrangeObjectData.id == Games.Data.Const.TutorialObjectId)
                         {
                             ProcessDescStory().Forget();
                         }
