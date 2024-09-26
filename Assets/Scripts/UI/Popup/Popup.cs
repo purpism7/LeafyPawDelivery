@@ -116,7 +116,7 @@ namespace UI
             if (popup == null)
                 yield break;
                 
-            UIUtils.SetActive(basePopup.rootRectTm, false);
+            GameUtils.SetActive(basePopup.rootRectTm, false);
                 
             returnAction?.Invoke(popup);
 
@@ -163,7 +163,7 @@ namespace UI
 
             if (_popupStack.Count > 0)
             {
-                UIUtils.SetActive(_popupStack?.Peek()?.rootRectTm, false);
+                GameUtils.SetActive(_popupStack?.Peek()?.rootRectTm, false);
             }
             
             _popupStack?.Push(uiBase);
@@ -205,7 +205,7 @@ namespace UI
 
             if (_popupStack.Count > 0)
             {
-                UIUtils.SetActive(_popupStack?.Peek()?.rootRectTm, true);
+                GameUtils.SetActive(_popupStack?.Peek()?.rootRectTm, true);
             }
             else
             {
@@ -229,7 +229,7 @@ namespace UI
             if (backgroundImg.isActiveAndEnabled)
                 return;
             
-            UIUtils.SetActive(backgroundImg.gameObject, true);
+            backgroundImg?.SetActive(true);
 
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
@@ -247,7 +247,7 @@ namespace UI
             if (!backgroundImg)
                 return;
             
-            UIUtils.SetActive(backgroundImg?.gameObject, false);
+            backgroundImg?.SetActive(false);
         }
         
         public void OnClickBackground()

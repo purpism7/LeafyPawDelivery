@@ -35,8 +35,8 @@ namespace UI
 
             SetNameTMP();
 
-            UIUtils.SetActive(iconImg?.gameObject, false);
-            UIUtils.SetActive(renderTextureRootRectTm, false);
+            iconImg?.SetActive(false);
+            renderTextureRootRectTm?.SetActive(false);
 
             if (data == null)
                 yield break;
@@ -92,7 +92,7 @@ namespace UI
                     EElement = _data.EElement,
                 });
 
-            UIUtils.SetActive(renderTextureRootRectTm, true);
+            GameUtils.SetActive(renderTextureRootRectTm, true);
         }
 
         private void SetImg()
@@ -103,7 +103,7 @@ namespace UI
             var sprite = GameUtils.GetLargeIconSprite(_data.EElement, _data.Id);
             iconImg.sprite = sprite;
 
-            UIUtils.SetActive(iconImg?.gameObject, true);
+            iconImg?.SetActive(true);
         }
 
         private void SetNameTMP()

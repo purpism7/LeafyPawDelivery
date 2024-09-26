@@ -240,8 +240,8 @@ namespace UI
         
         private void ActiveContents()
         {
-            UIUtils.SetActive(animalScrollRect?.gameObject, CurrETabType == Type.ETab.Animal);
-            UIUtils.SetActive(objectScrollRect?.gameObject, CurrETabType == Type.ETab.Object);
+            animalScrollRect?.SetActive(CurrETabType == Type.ETab.Animal);
+            objectScrollRect?.SetActive(CurrETabType == Type.ETab.Object);
         }
 
         private void DeactviateAllAnimal()

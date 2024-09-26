@@ -95,12 +95,12 @@ namespace UI
         {
             speakerTMP?.SetText(string.Empty);
             typingTMP?.SetText(string.Empty);
-            UIUtils.SetActive(speakerImg?.rectTransform, false);
+            speakerImg?.SetActive(false);
         }
 
         private void SetSpeakerImg(string spriteName, bool isPlayer)
         {
-            UIUtils.SetActive(speakerImg?.rectTransform, false);
+            speakerImg?.SetActive(false);
 
             if (string.IsNullOrEmpty(spriteName))
                 return;
@@ -123,8 +123,7 @@ namespace UI
 
             speakerImg.sprite = speakerSprite;
             speakerImg.SetNativeSize();
-
-            UIUtils.SetActive(speakerImg?.rectTransform, true);
+            speakerImg.SetActive(true);
         }
 
         private async UniTask StartTypingAsync(Constituent constituent)

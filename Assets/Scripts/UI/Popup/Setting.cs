@@ -50,9 +50,9 @@ namespace UI
                 onBGM = setting.OnBGM;
                 onEffect = setting.OnEffect;
             }
-
-            UIUtils.SetActive(bgmCheckImg?.gameObject, onBGM);
-            UIUtils.SetActive(effectCheckImg?.gameObject, onEffect);
+            
+            bgmCheckImg?.SetActive(onBGM);
+            effectCheckImg?.SetActive(onEffect);
         }
 
         private void SetBGM()
@@ -62,8 +62,7 @@ namespace UI
                 return;
 
             bool on = !setting.OnBGM;
-
-            UIUtils.SetActive(bgmCheckImg?.gameObject, on);
+            bgmCheckImg?.SetActive(on);
 
             setting.SaveBGM(on);
         }
@@ -75,8 +74,7 @@ namespace UI
                 return;
 
             bool on = !setting.OnEffect;
-
-            UIUtils.SetActive(effectCheckImg?.gameObject, on);
+            effectCheckImg?.SetActive(on);
 
             setting.SaveEffect(on);
         }
@@ -117,7 +115,7 @@ namespace UI
 
             for (int i = 0; i < unselectedRootRectTms.Length; ++i)
             {
-                UIUtils.SetActive(unselectedRootRectTms[i], i != index);
+                GameUtils.SetActive(unselectedRootRectTms[i], i != index);
             }
         }
         public void OnClickLanguage(int index)

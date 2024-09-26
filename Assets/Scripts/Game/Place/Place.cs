@@ -17,6 +17,8 @@ namespace Game
 
         void CreateDropItem(DropItem.Data dropItemData);
         void AllPickUpDropItem(System.Func<Vector3, Vector3> func);
+        
+        Collider2D Collider { get; }
     }
 
     public interface IPlaceState
@@ -47,6 +49,8 @@ namespace Game
         private Transform itemRootTm = null;
         [SerializeField]
         private BGMPlayer bgmPlayer = null;
+        [SerializeField]
+        private Collider2D collider = null;
 
         public Transform animalRootTm;
 
@@ -59,13 +63,15 @@ namespace Game
         private IPlaceState.EType _state = IPlaceState.EType.None;
         private float _objectPosZ = GameUtils.GetPosZOrder(Type.EPosZOrder.Object);
 
-        public string KeyObjectPosZ
+        private string KeyObjectPosZ
         {
             get
             {
-                return string.Format("ObjectPosZ_{0}", Id);
+                return $"ObjectPosZ_{Id}";
             }
         }
+        
+        public Collider2D Collider { get { return collider; } } 
 
         public override void Initialize(Data data)
         {
@@ -110,7 +116,7 @@ namespace Game
                 Boom();
             }
 
-            _state = IPlaceState.EType.Active;
+            SetState(IPlaceState.EType.Active);
 
             if(_data != null &&
                _data.onBGM)
@@ -131,9 +137,9 @@ namespace Game
             GameUtils.SetActive(animalRootTm, false);
 
             Bust();
-
-            _state = IPlaceState.EType.Deactive;
-
+            
+            SetState(IPlaceState.EType.Deactive);
+            
             bgmPlayer?.Stop();
         }
 
@@ -497,8 +503,8 @@ namespace Game
 
         public void Boom()
         {
-            _state = IPlaceState.EType.Active;
-
+            SetState(IPlaceState.EType.Active);
+            
             if (_placeEventCtr == null)
             {
                 _placeEventCtr = new();
@@ -512,11 +518,16 @@ namespace Game
 
         public void Bust()
         {
-            _state = IPlaceState.EType.Edit;
-
+            SetState(IPlaceState.EType.Edit);
+            
             _placeEventCtr?.End();
 
             itemRootTm.SetActive(false);
+        }
+
+        private void SetState(IPlaceState.EType state)
+        {
+            _state = state;
         }
 
         #region IPlace

@@ -75,13 +75,6 @@ namespace GameSystem
             return this;
         }
 
-        //public AnimalCreator SetDropItemAction(System.Action<DropItem, Transform> dropItemAction)
-        //{
-        //    _dropItemAction = dropItemAction;
-
-        //    return this;
-        //}
-
         public override Game.Creature.Animal Create()
         {
             var rootTm = _rootTm;

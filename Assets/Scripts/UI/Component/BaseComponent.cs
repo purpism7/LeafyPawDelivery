@@ -17,12 +17,12 @@ namespace UI
             transform.SetParent(rootTm);
         }
 
-        public void SetActive(bool active)
-        {
-            if (!transform)
-                return;
-
-            transform.SetActive(active);
-        }
+        // public void SetActive(bool active)
+        // {
+        //     if (!transform)
+        //         return;
+        //
+        //     transform.SetActive(active);
+        // }
     }
 }

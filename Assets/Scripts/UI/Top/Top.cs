@@ -524,10 +524,10 @@ namespace UI
 
         private void AllDeactivateGuideLine()
         {
-            UIUtils.SetActive(animalCurrencyGuideLineImg?.gameObject, false);
-            UIUtils.SetActive(objectCurrencyGuideLineImg?.gameObject, false);
-            UIUtils.SetActive(cashGuideLineImg?.gameObject, false);
-            UIUtils.SetActive(letterGuideLineImg?.gameObject, false);
+            animalCurrencyGuideLineImg?.SetActive(false);
+            objectCurrencyGuideLineImg?.SetActive(false);
+            cashGuideLineImg?.SetActive(false);
+            letterGuideLineImg?.SetActive(false);
         }
 
         #region ITop
@@ -580,17 +580,17 @@ namespace UI
 
             if(eCategory == Type.ECategory.AnimalCurrency)
             {
-                UIUtils.SetActive(animalCurrencyGuideLineImg?.gameObject, true);
+                animalCurrencyGuideLineImg?.SetActive(true);
                 animalCurrencyGuideLineImg?.StartBlink();
             }
             else if(eCategory == Type.ECategory.ObjectCurrency)
             {
-                UIUtils.SetActive(objectCurrencyGuideLineImg?.gameObject, true);
+                objectCurrencyGuideLineImg?.SetActive(true);
                 objectCurrencyGuideLineImg?.StartBlink();
             }
             else if (eCategory == Type.ECategory.Cash)
             {
-                UIUtils.SetActive(cashGuideLineImg?.gameObject, true);
+                cashGuideLineImg?.SetActive(true);
                 cashGuideLineImg?.StartBlink();
             }
         }
@@ -599,7 +599,7 @@ namespace UI
         {
             AllDeactivateGuideLine();
 
-            UIUtils.SetActive(letterGuideLineImg?.gameObject, true);
+            letterGuideLineImg?.SetActive(true);
             letterGuideLineImg?.StartBlink();
         }
 

@@ -36,14 +36,14 @@ namespace UI.Component
         {
             base.Activate();
 
-            UIUtils.SetActive(gameObject, true);
+            GameUtils.SetActive(transform, true);
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
 
-            UIUtils.SetActive(gameObject, false);
+            GameUtils.SetActive(transform, false);
         }
 
         private void SetIconImg()
@@ -62,7 +62,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            UIUtils.SetActive(guideLineImg?.gameObject, _data.isTutorial);
+            guideLineImg?.SetActive(_data.isTutorial);
             if (_data.isTutorial)
             {
                 guideLineImg?.StartBlink();

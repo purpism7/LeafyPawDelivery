@@ -116,9 +116,7 @@ namespace Game
                     });
 
                 Info.UserManager.Instance?.AddObject(id);
-
                 Info.Connector.Get?.SetAddObject(id);
-
                 Notification.Get?.Notify(Notification.EType.OpenPlace);
             }
         }
@@ -173,7 +171,7 @@ namespace Game
 
             return _objectHolder.GetRemainCount(id);
         }
-
+        
         void IEvent.Starter(System.Action endAction)
         {
             if (_data == null)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,7 +18,6 @@ namespace GameSystem
         Vector3 Center { get; }
         float GameCameraWidth { get; }
 
-        void SetSize();
         void SetOrthographicSize(float orthographicSize);
         void MoveCenterGameCamera();
         void SetStopUpdate(bool stopUpdate);
@@ -32,6 +32,8 @@ namespace GameSystem
 
         void ZoomIn(Vector3 targetPos, System.Action endAction);
         void ZoomOut(System.Action endAction);
+
+        void SetConfinerBoundingShape(Collider2D collider);
     }
 
     public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtr
@@ -40,8 +42,10 @@ namespace GameSystem
 
         public Camera GameCamera = null;
         public Camera UICamera = null;
-        [SerializeField]
-        private AnimationCurve moveCurve = null;
+        // [SerializeField]
+        // private AnimationCurve moveCurve = null;
+        [SerializeField] 
+        private CinemachineVirtualCamera virtualCamera = null;
 
         private readonly Vector3 _originUICameraPos = new Vector3(3000f, 0, 0);
         private readonly Vector2 _center = Vector2.zero;
@@ -93,7 +97,7 @@ namespace GameSystem
                 _smoothTime = 0.01f;
             }
 
-            SetSize();
+            // SetSize();
         }
 
         #region IFixedUpdater
@@ -166,30 +170,33 @@ namespace GameSystem
             }
         }
 
-        private void SetSize()
-        {
-            if (GameCamera == null)
-                return;
-
-            _halfHeight = GameCamera.orthographicSize;
-            Height = _halfHeight * 2f;
-            _width = Height * GameCamera.aspect;
-
-            _dragWidth = _halfHeight * Screen.width / Screen.height;
-        }
+        // private void SetSize()
+        // {
+        //     if (GameCamera == null)
+        //         return;
+        //
+        //     _halfHeight = GameCamera.orthographicSize;
+        //     Height = _halfHeight * 2f;
+        //     _width = Height * GameCamera.aspect;
+        //
+        //     _dragWidth = _halfHeight * Screen.width / Screen.height;
+        // }
 
         private void SetOrthographicSize(float orthographicSize, float timeOffset = 1f, bool isLerp = true)
         {
             var resOrthographicSize = Mathf.Clamp(orthographicSize, MinOrthographicSize, MaxOrthographicSize);
+            //
+            // if(isLerp)
+            // {
+            //     GameCamera.orthographicSize = Mathf.Lerp(GameCamera.orthographicSize, resOrthographicSize, Time.deltaTime * timeOffset);
+            // }
+            // else
+            // {
+            //     GameCamera.orthographicSize = resOrthographicSize;
+            // }
 
-            if(isLerp)
-            {
-                GameCamera.orthographicSize = Mathf.Lerp(GameCamera.orthographicSize, resOrthographicSize, Time.deltaTime * timeOffset);
-            }
-            else
-            {
-                GameCamera.orthographicSize = resOrthographicSize;
-            }
+            virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(virtualCamera.m_Lens.OrthographicSize,
+                resOrthographicSize, Time.deltaTime);
         }
 
         private float GetClampX(float posX)
@@ -240,14 +247,14 @@ namespace GameSystem
             
             SetOrthographicSize(GameCamera.orthographicSize + deltaMagnitudeDiff, 12f);
 
-            SetSize();
-            
-            var cameraTm = GameCamera.transform;
-
-            float clampX = GetClampX(cameraTm.position.x);
-            float clampY = GetClampY(cameraTm.position.y);
-            var targetPos = new Vector3(clampX, clampY, InitPosZ);
-            cameraTm.position = targetPos;
+            // SetSize();
+            //
+            // var cameraTm = GameCamera.transform;
+            //
+            // float clampX = GetClampX(cameraTm.position.x);
+            // float clampY = GetClampY(cameraTm.position.y);
+            // var targetPos = new Vector3(clampX, clampY, InitPosZ);
+            // cameraTm.position = targetPos;
         }
 
         public void SetStopUpdate(bool stopUpdate)
@@ -256,11 +263,6 @@ namespace GameSystem
         }
 
         #region IGameCameraCtr
-        void IGameCameraCtr.SetSize()
-        {
-            SetSize();
-        }
-
         void IGameCameraCtr.SetOrthographicSize(float orthographicSize)
         {
             SetOrthographicSize(orthographicSize, 1f, false);
@@ -349,6 +351,9 @@ namespace GameSystem
 
         void IGameCameraCtr.ZoomIn(Vector3 targetPos, System.Action endAction)
         {
+            if (GameCamera == null)
+                return;
+            
             StopUpdate = true;
             
             var endPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
@@ -357,7 +362,7 @@ namespace GameSystem
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .Append(DOTween.To(() => GameCamera.transform.position, pos => GameCamera.transform.position = pos, endPos, duration).SetEase(Ease.OutQuad))
-                .Join(DOTween.To(() => GameCamera.orthographicSize, size => GameCamera.orthographicSize = size, 600f, duration).SetEase(Ease.Linear))
+                .Join(DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.Linear))
                 .OnComplete(() =>
                 {
                     endAction?.Invoke();
@@ -373,14 +378,23 @@ namespace GameSystem
             
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
-                .Append(DOTween.To(() => GameCamera.orthographicSize, size => GameCamera.orthographicSize = size, DefaultOrthographicSize, duration).SetEase(Ease.Linear))
+                .Append(DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, DefaultOrthographicSize, duration).SetEase(Ease.Linear))
                 .OnComplete(() =>
                 {
                     endAction?.Invoke();
                     
-                    SetSize();
+                    // SetSize();
                 });
             sequence.Restart();
+        }
+
+        void IGameCameraCtr.SetConfinerBoundingShape(Collider2D collider)
+        {
+            var confiner = virtualCamera?.GetComponent<CinemachineConfiner2D>();
+            if (confiner == null)
+                return;
+
+            confiner.m_BoundingShape2D = collider;
         }
         #endregion
     }

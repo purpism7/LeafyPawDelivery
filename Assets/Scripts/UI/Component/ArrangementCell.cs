@@ -56,6 +56,10 @@ namespace UI.Component
 
         [SerializeField]
         private Image guideLineImg = null;
+        
+        [Header("Special")]
+        [SerializeField]
+        private Image specialIconImg = null;
 
         [Header("Lock")]
         [SerializeField]
@@ -77,18 +81,17 @@ namespace UI.Component
         {
             base.Initialize(data);
 
-            UIUtils.SetActive(openRootRectTm, !_data.Owned);
-            UIUtils.SetActive(lockRootRectTm, IsLock);
-            UIUtils.SetActive(lockImg, IsLock);
-            UIUtils.SetActive(lockBgImg, IsLock);
+            GameUtils.SetActive(openRootRectTm, !_data.Owned);
+            GameUtils.SetActive(lockRootRectTm, IsLock);
+            GameUtils.SetActive(lockImg, IsLock);
+            GameUtils.SetActive(lockBgImg, IsLock);
             if(IsLock)
             {
                 lockBgImg.DOFade(1f, 0);
                 unLockImg.DOFade(1f, 0);
             }
 
-            UIUtils.SetActive(unLockImg, false);
-           
+            GameUtils.SetActive(unLockImg, false);
 
             SetDescTMP();
             SetElementIconImg();
@@ -182,14 +185,14 @@ namespace UI.Component
             var text = string.Empty;
             if(_data.EElement == Game.Type.EElement.Animal)
             {
-                text = String.Format("x{0}", 1);
+                text = "x1";
             }
             else if(_data.EElement == Game.Type.EElement.Object)
             {
                 var objectData = ObjectContainer.Instance.GetData(_data.Id);
                 if(objectData != null)
                 {
-                    text = String.Format("x{0}", objectData.Count);
+                    text = $"x{objectData.Count}";
                 }
             }
 
@@ -217,7 +220,8 @@ namespace UI.Component
         {
             DeactiveAllOpenConditionList();
 
-            UIUtils.SetActive(hiddenIconImg?.gameObject, false);
+            GameUtils.SetActive(hiddenIconImg, false);
+            GameUtils.SetActive(specialIconImg, false);
 
             openDescTMP?.SetText(string.Empty);
 
@@ -277,17 +281,29 @@ namespace UI.Component
             if (placeData == null)
                 return;
 
-            UIUtils.SetActive(openConditionRootRectTm, openCondition.eType != OpenConditionData.EType.Hidden);
-
-            if(openCondition.eType == OpenConditionData.EType.Hidden)
+            GameUtils.SetActive(openConditionRootRectTm, openCondition.eType != OpenConditionData.EType.Hidden);
+            
+            switch (openCondition.eType)
             {
-                UIUtils.SetActive(hiddenIconImg?.gameObject, true);
+                case OpenConditionData.EType.Hidden:
+                {
+                    GameUtils.SetActive(hiddenIconImg, true);
 
-                openNameTMP?.SetText(string.Empty);
+                    openNameTMP?.SetText(string.Empty);
 
-                SetHiddenOpenDescTMP();
+                    SetHiddenOpenDescTMP();
 
-                return;
+                    return;
+                }
+
+                case OpenConditionData.EType.Special:
+                {
+                    GameUtils.SetActive(specialIconImg, true);
+
+                    openDescTMP?.SetText("ㅇ아녕");
+                    
+                    return;
+                }
             }
 
             AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
@@ -363,7 +379,7 @@ namespace UI.Component
 
         private void SetStoryIcon()
         {
-            UIUtils.SetActive(storyIconImg?.gameObject, false);
+            GameUtils.SetActive(storyIconImg, false);
 
             if (_data == null)
                 return;
@@ -392,7 +408,7 @@ namespace UI.Component
 
                 if (storyOpenConditionContainer.CheckExistReqId(story.Id, placeId, _data.EElement, _data.Id))
                 {
-                    UIUtils.SetActive(storyIconImg?.gameObject, true);
+                    GameUtils.SetActive(storyIconImg, true);
 
                     break;
                 }
@@ -401,7 +417,7 @@ namespace UI.Component
 
         private void SetButtonState()
         {
-            UIUtils.SetActive(arrangementBtn?.gameObject, !IsLock);
+            arrangementBtn?.SetActive(!IsLock);
         }
 
         private void CreateObtainPopup()
@@ -493,8 +509,7 @@ namespace UI.Component
                 return;
 
             _data.isTutorial = isTutorial;
-
-            UIUtils.SetActive(guideLineImg?.gameObject, isTutorial);
+            guideLineImg?.SetActive(isTutorial);
         }
 
         private void SetTutorial()
@@ -502,7 +517,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            UIUtils.SetActive(guideLineImg?.gameObject, _data.isTutorial);
+            guideLineImg?.SetActive(_data.isTutorial);
             if (_data.isTutorial)
             {
                 guideLineImg?.StartBlink();
@@ -529,7 +544,7 @@ namespace UI.Component
             SetOpenConditionData();
             SetStoryIcon();
 
-            UIUtils.SetActive(openRootRectTm, !_data.Owned);
+            GameUtils.SetActive(openRootRectTm, !_data.Owned);
 
             return true;
         }
@@ -570,17 +585,17 @@ namespace UI.Component
                 () =>
                 {
                     Sequence sequence = DOTween.Sequence()
-                       .SetAutoKill(false)
-                       .OnStart(() => { _endTask = false; })
-                       .AppendInterval(0.5f)
-                       .AppendCallback(() => UIUtils.SetActive(lockImg?.gameObject, false))
-                       .AppendCallback(() => UIUtils.SetActive(unLockImg?.gameObject, true))
+                        .SetAutoKill(false)
+                        .OnStart(() => { _endTask = false; })
+                        .AppendInterval(0.5f)
+                        .AppendCallback(() => lockImg?.SetActive(false))
+                       .AppendCallback(() => unLockImg?.SetActive(true))
                        .AppendInterval(0.4f)
                        .Append(lockBgImg.DOFade(0, 0.3f))
                        .Join(unLockImg.DOFade(0, 0.3f))
                        .OnComplete(() =>
                        {
-                           UIUtils.SetActive(lockRootRectTm, IsLock);
+                           GameUtils.SetActive(lockRootRectTm, IsLock);
 
                            _endTask = true;
                        });

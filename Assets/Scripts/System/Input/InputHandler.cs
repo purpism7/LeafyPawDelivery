@@ -65,12 +65,8 @@ namespace GameSystem
                 return;
                 
             var ray = _gameCameraCtr.GameCamera.ScreenPointToRay(touchPosition);
-
-            //RaycastHit hitInfo;
-            //bool isHitInfo = Physics.Raycast(ray, out hitInfo, Mathf.Infinity, LayerMask.GetMask("Game", "Animal", "Object"));            
             var raycastHit2Ds = Physics2D.RaycastAll(ray.origin, ray.direction);
-            //var raycastHit2D = Physics2D.Raycast(ray.origin, ray.direction);
-
+            
             bool gameStateEdit = false;
             var gameState = _mainGameMgr?.GameState;
             if (gameState != null)
@@ -273,6 +269,9 @@ namespace GameSystem
                     if (gameBase == null)
                         continue;
 
+                    if(gameBase is Game.Place)
+                        continue;
+                    
                     if (gameBase is Game.DropItem)
                     {
                         return gameBase;

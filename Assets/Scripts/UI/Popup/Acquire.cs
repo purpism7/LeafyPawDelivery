@@ -244,8 +244,8 @@ namespace UI
                 ActivateChildComponent<Component.AchievementCell>();
             }
 
-            UIUtils.SetActive(dailyMissionRootRectTm, _currETabType == Game.Type.ETab.DailyMission);
-            UIUtils.SetActive(achievementsScrollRect?.gameObject, _currETabType == Game.Type.ETab.Achievement);
+            GameUtils.SetActive(dailyMissionRootRectTm, _currETabType == Game.Type.ETab.DailyMission);
+            GameUtils.SetActive(achievementsScrollRect, _currETabType == Game.Type.ETab.Achievement);
 
             dailyMissionScrollRect?.ResetScrollPos();
             achievementsScrollRect?.ResetScrollPos();
@@ -291,7 +291,7 @@ namespace UI
                 notification = _acquireMgr.CheckDailyMissionNotification;
             }
 
-            UIUtils.SetActive(tabRedDotRectTms.First(), notification);
+            GameUtils.SetActive(tabRedDotRectTms.First(), notification);
 
             if (!notification)
             {
@@ -310,7 +310,7 @@ namespace UI
                 notification = _acquireMgr.CheckAchievementNotification;
             }
 
-            UIUtils.SetActive(tabRedDotRectTms.Last(), notification);
+            GameUtils.SetActive(tabRedDotRectTms.Last(), notification);
 
             if(!notification)
             {

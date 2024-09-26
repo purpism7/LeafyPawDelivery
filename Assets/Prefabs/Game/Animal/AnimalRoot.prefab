@@ -83,6 +83,7 @@ MonoBehaviour:
   editRootRectTm: {fileID: 571418393071791409}
   speechBubbleRootRectTm: {fileID: 4511297312270683974}
   localDatas: []
+  friendshipPointRootRectTm: {fileID: 0}
 --- !u!1 &7908636004692718240
 GameObject:
   m_ObjectHideFlags: 0

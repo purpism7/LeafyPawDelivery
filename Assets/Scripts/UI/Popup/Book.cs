@@ -292,9 +292,9 @@ namespace UI
 
         private void ActiveContents()
         {
-            UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Type.ETab.Animal);
-            UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Type.ETab.Object);
-            UIUtils.SetActive(storyScrollRect?.gameObject, _currETabType == Type.ETab.Story);
+            GameUtils.SetActive(animalScrollRect, _currETabType == Type.ETab.Animal);
+            GameUtils.SetActive(objectScrollRect, _currETabType == Type.ETab.Object);
+            GameUtils.SetActive(storyScrollRect, _currETabType == Type.ETab.Story);
         }
 
         private void Unlock(Type.EElement EElement, int id)
@@ -317,7 +317,7 @@ namespace UI
             var redDotRectTm = tabRedDotRectTms[(int)Game.Type.ETab.Animal];
             if (redDotRectTm)
             {
-                UIUtils.SetActive(redDotRectTm, connector.AddAnimalId > 0);
+                GameUtils.SetActive(redDotRectTm, connector.AddAnimalId > 0);
             }
         }
 
@@ -330,7 +330,7 @@ namespace UI
             var redDotRectTm = tabRedDotRectTms[(int)Game.Type.ETab.Object];
             if (redDotRectTm)
             {
-                UIUtils.SetActive(redDotRectTm, connector.AddObjectId > 0);
+                GameUtils.SetActive(redDotRectTm, connector.AddObjectId > 0);
             }
         }
 
@@ -343,7 +343,7 @@ namespace UI
             var redDotRectTm = tabRedDotRectTms[(int)Game.Type.ETab.Story];
             if (redDotRectTm)
             {
-                UIUtils.SetActive(redDotRectTm, connector.AddStoryId > 0);
+                GameUtils.SetActive(redDotRectTm, connector.AddStoryId > 0);
             }
         }
 

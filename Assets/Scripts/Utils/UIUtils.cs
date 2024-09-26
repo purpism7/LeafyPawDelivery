@@ -9,36 +9,18 @@ using Cysharp.Threading.Tasks;
 
 public static class UIUtils
 {
-    public static void SetActive(this RectTransform rectTm, bool active)
-    {
-        if(!rectTm)
-            return;
-
-        SetActive(rectTm.gameObject, active);
-    }
-
-    public static void SetActive(this GameObject gameObj, bool active)
-    { 
-        if(!gameObj)
-            return;
-
-        gameObj.SetActive(active);
-    }
-
-    public static void SetActive(this Image img, bool active)
-    {
-        if (img == null)
-            return;
-
-        SetActive(img.gameObject, active);
-    }
+    // public static void SetActive(this Component component, bool active)
+    // {
+    //     if (!component)
+    //         return;
+    //
+    //     component.gameObject.SetActive(active);
+    // }
 
     public static void SetSpritie(this SpriteRenderer spriteRenderer, Sprite sprite)
     {
         if(spriteRenderer == null)
-        {
             return;
-        }
 
         spriteRenderer.sprite = sprite;
     }

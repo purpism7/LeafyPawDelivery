@@ -66,7 +66,7 @@ namespace UI.Component
             SetTitleTMP();
             SetProgress();
 
-            UIUtils.SetActive(completedRootRectTm, GetRewarded);
+            GameUtils.SetActive(completedRootRectTm, GetRewarded);
         }
 
         private void SetTitleTMP()
@@ -232,7 +232,7 @@ namespace UI.Component
 
             Game.UIManager.Instance?.Top?.CollectCashCurrency(openCondition.transform.position, Games.Data.Const.DailyMissionRewardCount);
 
-            UIUtils.SetActive(completedRootRectTm, true);
+            GameUtils.SetActive(completedRootRectTm, true);
 
             SetGetReward(true);
 

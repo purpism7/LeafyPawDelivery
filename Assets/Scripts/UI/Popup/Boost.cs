@@ -157,8 +157,8 @@ namespace UI
 
         private void SetBoostState(bool activate)
         {
-            UIUtils.SetActive(buyRootRectTm, !activate);
-            UIUtils.SetActive(activateRootRectTm, activate);
+            GameUtils.SetActive(buyRootRectTm, !activate);
+            GameUtils.SetActive(activateRootRectTm, activate);
         }
 
         private void EndBoost()
@@ -190,7 +190,7 @@ namespace UI
                 addSec = adData.coolTimeSec;
             }
 
-            UIUtils.SetActive(adIconImg, false);
+            adIconImg?.SetActive(false);
 
             Game.Timer.Get?.SetRootType($"{_data.boostData.eBoost}");
             Game.Timer.Get?.Add(
@@ -206,7 +206,7 @@ namespace UI
                     {
                         //remainPlayTimeTMP.GetComponent<UnityEngine.Localization.Components.LocalizeStringEvent>()?.RefreshString();
                         remainPlayTimeTMP?.SetText(string.Empty);
-                        UIUtils.SetActive(adIconImg, true);
+                        adIconImg?.SetActive(true);
                     }
                 });
         }

@@ -248,7 +248,7 @@ namespace Game
             }
         }
 
-        public bool GetFriendshipReward(int id, int index)
+        public bool CheckGetFriendshipReward(int id, int index)
         {
             if (_animalHolder == null)
                 return true;

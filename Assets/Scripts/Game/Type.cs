@@ -114,6 +114,8 @@ namespace Game
             Epic,
             Rare,
             Normal,
+            
+            Special,
         }
 
         public enum EAnimalSkin

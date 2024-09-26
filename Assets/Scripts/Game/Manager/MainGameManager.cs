@@ -224,10 +224,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                 var enterPlace = new PopupCreator<UI.EnterPlace, UI.EnterPlace.Data>()
                     .SetReInitialize(true)
                     .SetShowBackground(false)
-                    .SetData(new UI.EnterPlace.Data()
-                    {
-                        gameCameraOrthographicSize = gameCameraOrthographicSize
-                    })
+                    .SetData(
+                        new UI.EnterPlace.Data()
+                        {
+                            gameCameraOrthographicSize = gameCameraOrthographicSize
+                        })
                     .Create();
 
                 enterPlace?.PlayAnim(IGameCameraCtr,
@@ -238,6 +239,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
                 return enterPlace;
             });
+        
+        IGameCameraCtr?.SetConfinerBoundingShape(placeMgr?.ActivityIPlace?.Collider);
 
         await UniTask.WaitUntil(() => endEnterPlace);
 
@@ -258,7 +261,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     {
         TutorialMgr = gameObject.GetOrAddComponent<Game.TutorialManager>();
         TutorialMgr?.Initialize(tutorialRootTm);
-
         TutorialMgr?.AddListener(this);
         TutorialMgr?.AddListener(Get<Game.StoryManager>());
     }

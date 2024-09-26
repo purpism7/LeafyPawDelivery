@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
@@ -14,6 +15,7 @@ namespace Game.State
 
         public interface IListener
         {
+            void Start();
             void Finish();
         }
         
@@ -23,12 +25,6 @@ namespace Game.State
         public override void Initialize(MainGameManager mainGameMgr)
         {
             _iListener = null;
-            
-            var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
-            if (activityPlace == null)
-                return;
-
-            var animalList = (activityPlace as IPlace)?.AnimalList;
 
             var conversationAnimal = MainGameManager.Get<AnimalManager>()?.Conversation;
             if (conversationAnimal == null)
@@ -37,20 +33,11 @@ namespace Game.State
             _iListener = conversationAnimal;
             
             var animalId = conversationAnimal.Id;
-            
-            foreach (var animal in animalList)
-            {
-                if(animal == null)
-                    continue;
 
-                if (animal.Id == animalId)
-                    continue;
-                
-                
-            }
+            SetAlpha(0.2f, animalId);
             
             var position = conversationAnimal.transform.position;
-            // position.y -= 100f;
+            position.y -= 5f;
             
             UIManager.Instance?.DeactivateAnim();
             MainGameManager.Instance?.IGameCameraCtr.ZoomIn(position,
@@ -59,26 +46,44 @@ namespace Game.State
                     StartConversation(animalId);
                 });
         
-            activityPlace.Bust();
+            MainGameManager.Get<PlaceManager>()?.ActivityPlace?.Bust();
+            
+            _iListener?.Start();
         }
         
         public override void End()
         {
+            var mainGameMgr = MainGameManager.Instance;
+            if (mainGameMgr == null)
+                return;
+            
             var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
             if (activityPlace == null)
                 return;
             
-            MainGameManager.Instance?.IGameCameraCtr.ZoomOut(
+            _iListener?.Finish();
+            
+            SetAlpha(1f);
+            
+            mainGameMgr.IGameCameraCtr?.ZoomOut(
                 () =>
                 {
                     UIManager.Instance?.ActivateAnim(
                         () =>
                         {
                             activityPlace.Boom();
-
-                            MainGameManager.Instance?.SetGameStateAsync(Type.EGameState.Game);
                         });
                 });
+        }
+
+        private void SetAlpha(float alpha, int animalId = 0)
+        {
+            var placeMgr = MainGameManager.Get<PlaceManager>();
+            if (placeMgr == null)
+                return;
+            
+            placeMgr.SetAlphaActivityAnimal(alpha, animalId);
+            placeMgr.SetAlphaActivityObject(alpha);
         }
 
         private void StartConversation(int animalId)
@@ -113,6 +118,7 @@ namespace Game.State
                         SpeakerSpriteName = "-",
                         Speaker = GameUtils.GetName(Type.EElement.Animal, animalId, Games.Data.Const.AnimalBaseSkinId),
                         Sentence =  pair.Value.GetLocalizedString(),
+                        KeepDelay = 2f,
                     });
             }
                     
@@ -126,7 +132,7 @@ namespace Game.State
             
             _conversation?.Deactivate();
 
-            End();
+            MainGameManager.Instance?.SetGameStateAsync(Type.EGameState.Game).Forget();
         }
     }
 }

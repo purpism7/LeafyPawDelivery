@@ -58,6 +58,9 @@ public class Object : ElementData
 
                 case Game.Type.EObjectGrade.Normal:
                     return 23;
+                
+                case Game.Type.EObjectGrade.Special:
+                    return 50;
 
                 default:
                     return 0;

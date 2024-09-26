@@ -90,7 +90,7 @@ namespace UI.Component
             if (animalInfo.FriendshipPoint < _data.Point)
                 return;
             
-            bool getReward = MainGameManager.Get<AnimalManager>().GetFriendshipReward(_data.Id, _data.Index);
+            bool getReward = MainGameManager.Get<AnimalManager>().CheckGetFriendshipReward(_data.Id, _data.Index);
             
             EnableGiftImg();
             InteractableBtn(!getReward);

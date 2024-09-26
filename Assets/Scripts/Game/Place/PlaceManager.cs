@@ -34,6 +34,7 @@ namespace Game
         private List<Place> _placeList = new List<Place>();
 
         public Place ActivityPlace { get; private set; } = null;
+        public IPlace ActivityIPlace { get { return ActivityPlace; } }
         public int ActivityPlaceId 
         {
             get
@@ -90,6 +91,53 @@ namespace Game
             base.ChainUpdate();
 
             ActivityPlace?.ChainUpdate();
+        }
+
+        public void SetAlphaActivityAnimal(float a, int exceptAnimalId = 0)
+        {
+            IPlace iPlace = ActivityPlace;
+            if (iPlace == null)
+                return;
+
+            var animalList = iPlace.AnimalList;
+            if (animalList == null)
+                return;
+            
+            var color = Color.white;
+            color.a = a;
+            
+            foreach (var animal in animalList)
+            {
+                if(animal == null)
+                    continue;
+
+                if (animal.Id == exceptAnimalId)
+                    continue;
+                
+                animal.SetColor(color);
+            }
+        }
+
+        public void SetAlphaActivityObject(float a)
+        {
+            IPlace iPlace = ActivityPlace;
+            if (iPlace == null)
+                return;
+
+            var objectList = iPlace.ObjectList;
+            if (objectList == null)
+                return;
+            
+            var color = Color.white;
+            color.a = a;
+            
+            foreach (var obj in objectList)
+            {
+                if (obj == null)
+                    continue;
+                
+                obj.SetColor(color);
+            }
         }
 
         public GameData.Place.Data ActivityPlaceData

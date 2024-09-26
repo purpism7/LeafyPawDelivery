@@ -12,6 +12,7 @@ namespace Game.PlaceEvent
         public void Activate()
         {
             Deactivate();
+            
             _speechBubbleCoroutine = StartCoroutine(CoRandomSpeechBubble());
         }
 

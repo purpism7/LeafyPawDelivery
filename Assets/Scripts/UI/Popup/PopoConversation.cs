@@ -46,23 +46,23 @@ namespace UI
 
         public void AllDeactivate()
         {
-            UIUtils.SetActive(topRectTm, false);
-            UIUtils.SetActive(centerRectTm, false);
-            UIUtils.SetActive(bottomRectTm, false);
+            GameUtils.SetActive(topRectTm, false);
+            GameUtils.SetActive(centerRectTm, false);
+            GameUtils.SetActive(bottomRectTm, false);
         }
 
         public void ActivateTop(string sentence, bool autoDeactivate)
         {
             AllDeactivate();
 
-            UIUtils.SetActive(clickRectTm, true);
-            UIUtils.SetActive(topRectTm, true);
+            GameUtils.SetActive(clickRectTm, true);
+            GameUtils.SetActive(topRectTm, true);
 
             SetDescAsync(topDescTMP, sentence).Forget();
 
             if (autoDeactivate)
             {
-                UIUtils.SetActive(clickRectTm, false);
+                GameUtils.SetActive(clickRectTm, false);
 
                 DeactivateTopAsync().Forget();
             }
@@ -72,15 +72,15 @@ namespace UI
         {
             await UniTask.WaitForSeconds(3.5f);
 
-            UIUtils.SetActive(topRectTm, false);
+            GameUtils.SetActive(topRectTm, false);
         }
 
         public void ActivateCenter(string sentence)
         {
             AllDeactivate();
 
-            UIUtils.SetActive(clickRectTm, true);
-            UIUtils.SetActive(centerRectTm, true);
+            GameUtils.SetActive(clickRectTm, true);
+            GameUtils.SetActive(centerRectTm, true);
 
             SetDescAsync(centerDescTMP, sentence).Forget();
         }
@@ -89,8 +89,8 @@ namespace UI
         {
             AllDeactivate();
 
-            UIUtils.SetActive(clickRectTm, true);
-            UIUtils.SetActive(bottomRectTm, true);
+            GameUtils.SetActive(clickRectTm, true);
+            GameUtils.SetActive(bottomRectTm, true);
 
             SetDescAsync(bottomDescTMP, sentence).Forget();
         }

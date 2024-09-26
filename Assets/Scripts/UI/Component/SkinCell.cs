@@ -116,7 +116,7 @@ namespace UI.Component
 
         public void EnableBuyRoot(bool enable)
         {
-            UIUtils.SetActive(buyRootRectTm, enable);
+            GameUtils.SetActive(buyRootRectTm, enable);
         }
 
         public void OnValuChanged()

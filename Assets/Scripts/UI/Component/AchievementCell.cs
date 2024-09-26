@@ -52,7 +52,7 @@ namespace UI.Component
 
             Set();
 
-            UIUtils.SetActive(completedRootRectTm, GetRewarded);
+            GameUtils.SetActive(completedRootRectTm, GetRewarded);
         }
 
         private void Set()
@@ -198,7 +198,7 @@ namespace UI.Component
             {
                 SetGetReward(true);
 
-                UIUtils.SetActive(completedRootRectTm, GetRewarded);
+                GameUtils.SetActive(completedRootRectTm, GetRewarded);
             }
 
             if(_data != null)

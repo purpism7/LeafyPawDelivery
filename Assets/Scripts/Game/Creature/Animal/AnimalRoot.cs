@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameSystem;
 using UnityEngine;
 
 using UI.Component;
@@ -11,11 +12,15 @@ namespace Game.Creature
 {
     public class AnimalRoot : MonoBehaviour, SpeechBubble.IListener
     {
-        [SerializeField] private RectTransform editRootRectTm = null;
-        [SerializeField] private RectTransform speechBubbleRootRectTm = null;
-        [SerializeField] private BaseLocalData[] localDatas = null;
+        [SerializeField] 
+        private RectTransform editRootRectTm = null;
+        [SerializeField] 
+        private RectTransform speechBubbleRootRectTm = null;
+        [SerializeField] 
+        private BaseLocalData[] localDatas = null;
 
         private SpeechBubble _speechBubble = null;
+        private HeartCell _heartCell = null;
         private float _animalHeigh = 0;
 
         public RectTransform EditRootRectTm { get { return editRootRectTm; } }
@@ -42,7 +47,7 @@ namespace Game.Creature
             ChangeLayersRecursively(_speechBubble.transform, LayerMask.NameToLayer("Game"));
         }
 
-        public void ChangeLayersRecursively(Transform tm, int layer)
+        private void ChangeLayersRecursively(Transform tm, int layer)
         {
             if (!tm)
                 return;
@@ -99,6 +104,26 @@ namespace Game.Creature
             _speechBubble?.Deactivate();
         }
 
+        #endregion
+        
+        #region Friendship Point
+        public void AddFriendshipPoint(int id, int point, RectTransform rootRectTm)
+        {
+            var data = new HeartCell.Data
+            {
+                Id = id,
+                AddFriendShipPoint =  point,
+            };
+            
+            if (_heartCell == null)
+            {
+                _heartCell = new ComponentCreator<HeartCell, HeartCell.Data>()
+                    .SetRootRectTm(rootRectTm)
+                    .Create();
+            }
+            
+            _heartCell?.Activate(data);
+        }
         #endregion
 
         #region SpeechBubble.IListener

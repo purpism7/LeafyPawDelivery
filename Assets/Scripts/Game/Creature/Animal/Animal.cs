@@ -122,7 +122,7 @@ namespace Game.Creature
             var eGameState = mainGameMgr.EGameState;
             if (eGameState == Type.EGameState.Edit)
             {
-                var editState = mainGameMgr?.GameState?.Get<Game.State.Edit>();
+                var editState = mainGameMgr.GameState?.Get<Game.State.Edit>();
                 if (editState != null &&
                     editState.CheckIsEditElement(this))
                     return;
@@ -178,6 +178,11 @@ namespace Game.Creature
             MainGameManager.Instance?.SetGameStateAsync(Type.EGameState.Conversation).Forget();
         }
 
+        protected override void Special()
+        {
+            
+        }
+
         public void StartSignatureAction()
         {
             _actionCtr?.StartSignatureAction();
@@ -222,7 +227,8 @@ namespace Game.Creature
             DeactivateSpeechBubble();
             
             // SetState(new Element.State.Deactive().Initialize());
-            DeactivateChild().Forget();
+            // DeactivateChild().Forget();
+            _actionCtr?.Deactivate();
             
             edit?.ActivateTopAsync(
                 () =>
@@ -246,9 +252,16 @@ namespace Game.Creature
         
         #region State.Conversation.IListener
 
+        void State.Conversation.IListener.Start()
+        {
+            // SetSortingOrder(SelectOrder);
+        }
+        
         void State.Conversation.IListener.Finish()
         {
-            
+            // SetSortingOrder(-(int)LocalPos.y);
+            // MainGameManager.Get<AnimalManager>().AddFriendshipPoint(_data.Id, item.Value);
+            _animalRoot?.AddFriendshipPoint(Id, 1, edit?.FriendshipPointRootRectTm);
         }
         #endregion
 

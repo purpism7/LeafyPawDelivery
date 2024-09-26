@@ -272,8 +272,8 @@ namespace UI
         
         private async UniTask  ActiveContents()
         {
-            UIUtils.SetActive(currencyRootRectTm, _currETabType == Game.Type.ETab.Currency);
-            UIUtils.SetActive(itemRootRectTm, _currETabType == Game.Type.ETab.Item);
+            GameUtils.SetActive(currencyRootRectTm, _currETabType == Game.Type.ETab.Currency);
+            GameUtils.SetActive(itemRootRectTm, _currETabType == Game.Type.ETab.Item);
         }
         
         public void OnChanged(string tabType)

@@ -77,10 +77,8 @@ namespace UI.Component
                 }
             }
 
-            UIUtils.SetActive(lockRectRootTm, _isLock);
-            UIUtils.SetActive(placeIconImg?.gameObject, !_isLock);
-
-            //SetInteractableEnterBtn(!_isLock);
+            GameUtils.SetActive(lockRectRootTm, _isLock);
+            GameUtils.SetActive(placeIconImg, !_isLock);
         }
 
         private void OpenPlace()
@@ -105,14 +103,14 @@ namespace UI.Component
         {
             SetInteractableEnterBtn(false);
 
-            UIUtils.SetActive(placeIconImg?.gameObject, true);
-            placeIconImg.DOFade(0, 0);
+            placeIconImg?.SetActive(true);
+            placeIconImg?.DOFade(0, 0);
 
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .OnStart(() => { _endTask = false; })
                 .AppendInterval(0.5f)
-                .AppendCallback(() => UIUtils.SetActive(lockRectRootTm, false))
+                .AppendCallback(() => GameUtils.SetActive(lockRectRootTm, false))
                 .AppendInterval(0.3f)
                 .Append(placeIconImg.DOFade(1, 0.5f))
                 .OnComplete(() =>

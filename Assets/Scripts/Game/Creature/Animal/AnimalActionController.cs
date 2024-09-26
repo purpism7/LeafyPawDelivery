@@ -121,6 +121,11 @@ namespace Game.Creature
             StartAction<SignatureAction>();
         }
 
+        public void MoveToTarget(Vector3 pos)
+        {
+            
+        }
+
         #region Action.IListener
         void Action.IListener<AnimalAction>.StartAction(AnimalAction animalAction)
         {

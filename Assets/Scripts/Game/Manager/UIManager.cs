@@ -54,10 +54,10 @@ namespace Game
             return GameSystem.ResourceManager.Instance.InstantiateUI<T>(rootTm);
         }
 
-        public void EnalbeUIRoot(bool enable)
-        {
-            UIUtils.SetActive(uiRootRectTm, enable);
-        }
+        // public void EnalbeUIRoot(bool enable)
+        // {
+        //     GameUtils.SetActive(uiRootRectTm, enable);
+        // }
 
         public void ActivateAnim(System.Action completeAction)
         {
@@ -75,14 +75,14 @@ namespace Game
         {
             _eScreenSaverType = eScreenSaverType;
 
-            UIUtils.SetActive(screenSaverRectTm, true);
+            GameUtils.SetActive(screenSaverRectTm, true);
         }
 
         public void DeactivateScreenSaver()
         {
             _eScreenSaverType = Type.EScreenSaverType.None;
 
-            UIUtils.SetActive(screenSaverRectTm, false);
+            GameUtils.SetActive(screenSaverRectTm, false);
         }
 
         public void SetInteractable(bool interactable, Game.Type.EBottomType[] exceptBottomTypes = null)

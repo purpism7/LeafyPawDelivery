@@ -241,6 +241,11 @@ namespace Game
         {
             
         }
+        
+        protected virtual void Special()
+        {
+            
+        }
         #endregion
 
         #region Edit.IListener
@@ -278,6 +283,11 @@ namespace Game
         void UI.Edit.IListener.Conversation()
         {
             Conversation();
+        }
+
+        void UI.Edit.IListener.Special()
+        {
+            Special();
         }
         #endregion
     }

@@ -38,7 +38,7 @@ namespace UI
 
             RegisterNotification();
 
-            UIUtils.SetActive(redDotRectTm, false);
+            GameUtils.SetActive(redDotRectTm, false);
         }
 
         public override void Activate()
@@ -94,28 +94,28 @@ namespace UI
             {
                 case Game.Type.EBottomType.Map:
                     {
-                        UIUtils.SetActive(redDotRectTm, connector.OpenPlaceId > 0);
+                        GameUtils.SetActive(redDotRectTm, connector.OpenPlaceId > 0);
 
                         break;
                     }
 
                 case Game.Type.EBottomType.Arrangement:
                     {
-                        UIUtils.SetActive(redDotRectTm, connector.PossibleBuyAnimal > 0 || connector.PossibleBuyObject > 0);
+                        GameUtils.SetActive(redDotRectTm, connector.PossibleBuyAnimal > 0 || connector.PossibleBuyObject > 0);
 
                         break;
                     }
 
                 case Game.Type.EBottomType.Book:
                     {
-                        UIUtils.SetActive(redDotRectTm, connector.AddAnimalId > 0 || connector.AddObjectId > 0 || connector.AddStoryId > 0);
+                        GameUtils.SetActive(redDotRectTm, connector.AddAnimalId > 0 || connector.AddObjectId > 0 || connector.AddStoryId > 0);
 
                         break;
                     }
 
                 case Game.Type.EBottomType.Acquire:
                     {
-                        UIUtils.SetActive(redDotRectTm, connector.IsCompleteDailyMission || connector.IsCompleteAchievement);
+                        GameUtils.SetActive(redDotRectTm, connector.IsCompleteDailyMission || connector.IsCompleteAchievement);
 
                         break;
                     }
@@ -132,13 +132,12 @@ namespace UI
 
         public void DeactivateGuideLine()
         {
-            UIUtils.SetActive(guideLineImg?.gameObject, false);
+            guideLineImg?.SetActive(false);
         }
 
         public void ActivateGuideLine()
         {
-            UIUtils.SetActive(guideLineImg?.gameObject, true);
-
+            guideLineImg?.SetActive(true);
             guideLineImg?.StartBlink();
         }
 

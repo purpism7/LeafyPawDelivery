@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Game;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,14 +14,17 @@ namespace UI.Component
         {
             public int Id = 0;
             public int SkinId = 0;
+
+            public int AddFriendShipPoint = 0;
             
             public Vector3 StartPos = Vector3.zero;
             public Vector3 EndPos = Vector3.zero;
             public System.Action EndAction = null;
         }
 
-        // [SerializeField] private Image progressImg = null;
-
+        [SerializeField] 
+        private TextMeshProUGUI pointTMP = null;
+        
         public override void Initialize(Data data)
         {
             base.Initialize(data);
@@ -30,10 +34,45 @@ namespace UI.Component
         {
             base.Activate(data);
             
-            // SetProgress();
-            GiveGift();
+            pointTMP?.SetText(string.Empty);
+            
+            if (data.AddFriendShipPoint > 0)
+            {
+                AddFriendShipPoint();
+            }
+            else
+            {
+                GiveGift();
+            }
         }
 
+        private void AddFriendShipPoint()
+        {
+            if (_data == null)
+                return;
+            
+            var rectTm = GetComponent<RectTransform>();
+            if (!rectTm)
+                return;
+            
+            GameUtils.SetActive(rootRectTm, false);
+            
+            pointTMP?.SetText($"+{_data.AddFriendShipPoint}");
+           
+            rectTm.anchoredPosition = Vector2.zero;
+            
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .AppendCallback(() => { GameUtils.SetActive(rootRectTm, true); })
+                .Append(DOTween.To(() => rectTm.anchoredPosition, pos => rectTm.anchoredPosition = pos, new Vector2(rectTm.anchoredPosition.x, rectTm.anchoredPosition.y + 60f), 1f))
+                // .Append(rectTm.DOLocalMoveY(5f, 2f).SetEase(Ease.OutQuad))
+                .OnComplete(() =>
+                {
+                    Deactivate();
+                });
+            sequence.Restart();
+        }
+        
         private void GiveGift()
         {
             if (_data == null)

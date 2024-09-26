@@ -204,8 +204,8 @@ namespace Game.Manager
                .SetRooTm(uiRootRectTm)
                .Create();
 
-
-            UIUtils.SetActive(Conversation?.rootRectTm, false);
+            
+            GameUtils.SetActive(Conversation?.rootRectTm, false);
         }
 
         private void Finish(PlayableDirector playableDirector)

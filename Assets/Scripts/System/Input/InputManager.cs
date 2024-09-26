@@ -28,7 +28,7 @@ namespace GameSystem
         #region IUpdate
         void IUpdater.ChainUpdate()
         {
-#if UNITY_ANDROID
+#if !UNITY_EDITOR && UNITY_ANDROID
             if(Input.GetKey(KeyCode.Escape))
             {
                 var quitGame = new PopupCreator<UI.QuitGame, UI.BaseData>()

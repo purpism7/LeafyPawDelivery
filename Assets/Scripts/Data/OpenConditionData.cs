@@ -12,6 +12,8 @@ public class OpenConditionData : Data.Base
         Buy,
         Hidden,
         Bonus,
+        
+        Special,
     };
 
     [SerializeField]

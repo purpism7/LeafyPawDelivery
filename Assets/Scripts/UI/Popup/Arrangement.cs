@@ -5,9 +5,10 @@ using UnityEngine.UI;
 using System.Linq;
 
 using Cysharp.Threading.Tasks;
-
+using Game;
 using GameSystem;
 using UI.Component;
+using Unity.VisualScripting;
 
 namespace UI
 {
@@ -29,10 +30,18 @@ namespace UI
         private ScrollRect animalScrollRect = null;
         [SerializeField]
         private GridLayoutGroup animalGridLayoutGroup = null;
+        
+        [Header("Object")]
+        [SerializeField]
+        private RectTransform objectRootRectTm = null;
         [SerializeField]
         private ScrollRect objectScrollRect = null;
         [SerializeField]
         private GridLayoutGroup objectGridLayoutGroup = null;
+        [SerializeField] 
+        private ScrollRect specialObjectScrollRect = null;
+        [SerializeField]
+        private RectTransform[] unselectedRootRectTms = null;
 
         private Game.Type.ETab _currETabType = Game.Type.ETab.Animal;
 
@@ -96,6 +105,7 @@ namespace UI
             objectScrollRect?.ResetScrollPos();
 
             ActiveContents();
+            ActiveObjectList(0);
 
             // 튜토리얼 종료시, 활성화.
             if (_isTutorial != isTutorial)
@@ -312,6 +322,9 @@ namespace UI
                 }
 
                 int resIndex = GetIndex(objectMgr, data.Id, ref _objectIndex);
+
+                
+                // MainGameManager.Get<AnimalManager>().CheckGetFriendshipReward()
                 
                 AddArrangementCell(
                     new ArrangementCell.Data()
@@ -324,15 +337,20 @@ namespace UI
                         isTutorial = isTutorial,
 
                         index = resIndex,
-                    }, objectScrollRect.content);
+                    }, data.EGrade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content);
             }
+        }
+
+        private void SetSpecialObjectList()
+        {
+            
         }
 
         private void ActiveContents()
         {
-            UIUtils.SetActive(animalScrollRect?.gameObject, _currETabType == Game.Type.ETab.Animal);
-            UIUtils.SetActive(objectScrollRect?.gameObject, _currETabType == Game.Type.ETab.Object);
-
+            animalScrollRect?.SetActive(_currETabType == Game.Type.ETab.Animal);
+            objectRootRectTm?.SetActive(_currETabType == Game.Type.ETab.Object);
+            
             ActivateArrangementCellList();
 
             if (_initActivateTab != null &&
@@ -371,13 +389,9 @@ namespace UI
                 return -1;
 
             if(objectMgr.GetRemainCount(id) > 0)
-            {
                 return ++index;
-            }
             else
-            {
                 return -1;
-            }
         }
 
         private void Obtain(Game.Type.EElement eElement, int id)
@@ -480,6 +494,25 @@ namespace UI
                 }
             }
         }
+        
+        private void ActiveObjectList(int index)
+        {
+            if (unselectedRootRectTms == null)
+                return;
+
+            for (int i = 0; i < unselectedRootRectTms.Length; ++i)
+            {
+                GameUtils.SetActive(unselectedRootRectTms[i], i != index);
+            }
+            
+            GameUtils.SetActive(objectScrollRect, index == 0);
+            GameUtils.SetActive(specialObjectScrollRect, index == 1);
+        }
+        
+        public void OnClickObjectTab(int index)
+        {
+            ActiveObjectList(index);
+        }
 
         #region Notification
         private void SetNotificationPossibleBuyAnimal()
@@ -487,7 +520,7 @@ namespace UI
             var redDotRectTm = tabRedDotRectTms[(int)Game.Type.ETab.Animal];
             if (redDotRectTm)
             {
-                UIUtils.SetActive(redDotRectTm, PossibleBuyAnimal > 0);
+                GameUtils.SetActive(redDotRectTm, PossibleBuyAnimal > 0);
             }
         }
 
@@ -496,7 +529,7 @@ namespace UI
             var redDotRectTm = tabRedDotRectTms[(int)Game.Type.ETab.Object];
             if (redDotRectTm)
             {
-                UIUtils.SetActive(redDotRectTm, PossibleBuyObject > 0);
+                GameUtils.SetActive(redDotRectTm, PossibleBuyObject > 0);
             }
         }
 

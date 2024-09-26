@@ -67,7 +67,7 @@ public class ConversationBehaviour : PlayableBehaviour
         base.OnBehaviourPause(playable, info);
 
         // Deactivate 로 비활성화 시, 팝업 background 가 사라짐.
-        UIUtils.SetActive(Game.Manager.Cutscene.Instance?.Conversation?.rootRectTm, false);
+        GameUtils.SetActive(Game.Manager.Cutscene.Instance?.Conversation?.rootRectTm, false);
     }
 
     public override void OnGraphStop(Playable playable)

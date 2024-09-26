@@ -7,20 +7,12 @@ using Game;
 
 public static class GameUtils
 {
-    public static void SetActive(this Transform tm, bool active)
+    public static void SetActive(this Component component, bool active)
     {
-        if (!tm)
+        if (component == null)
             return;
-
-        SetActive(tm.gameObject, active);
-    }
-
-    public static void SetActive(this GameObject gameObj, bool active)
-    {
-        if (!gameObj)
-            return;
-
-        gameObj.SetActive(active);
+        
+        component.gameObject.SetActive(active);
     }
 
     public static bool IsActive(this GameObject gameObj)

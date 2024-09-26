@@ -83,7 +83,7 @@ namespace UI
                .Join(DOTween.To(() => iGameCameraCtr.MaxOrthographicSize, size => iGameCameraCtr.SetOrthographicSize(size), _data.gameCameraOrthographicSize, 2f).SetEase(Ease.OutCubic))
                .OnComplete(() =>
                {
-                   iGameCameraCtr.SetSize();
+                   // iGameCameraCtr.SetSize();
 
                    _endAnim = true;
                });

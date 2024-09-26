@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace UI
             void Arrange();
 
             void Conversation();
+            void Special();
         }
         
         #region Inspector
@@ -36,6 +38,7 @@ namespace UI
         [SerializeField] 
         private RectTransform topRootRectTm = null;
         
+        public RectTransform FriendshipPointRootRectTm = null;
         public RectTransform CanvasRectTm = null;
         #endregion
 
@@ -66,24 +69,24 @@ namespace UI
 
         public void ActivateBottom()
         {
-            UIUtils.SetActive(editRootRectTm, true);
+            GameUtils.SetActive(editRootRectTm, true);
             DeactivateTop();
         }
 
         private void DeactivateBotom()
         {
-            UIUtils.SetActive(editRootRectTm, false);  
+            GameUtils.SetActive(editRootRectTm, false);  
         }
 
         public void ActivateTop()
         {
-            UIUtils.SetActive(topRootRectTm, true);
+            GameUtils.SetActive(topRootRectTm, true);
             DeactivateBotom();
         }
         
         private void DeactivateTop()
         {
-            UIUtils.SetActive(topRootRectTm, false);
+            GameUtils.SetActive(topRootRectTm, false);
         }
 
         public void DeactivateEdit()
@@ -95,13 +98,13 @@ namespace UI
         public async UniTask ActivateTopAsync(System.Action action)
         {
             DeactivateBotom();
-            UIUtils.SetActive(topRootRectTm, true);
+            GameUtils.SetActive(topRootRectTm, true);
 
-            await UniTask.WaitForSeconds(3f);
+            await UniTask.Delay(TimeSpan.FromSeconds(3f));
             
             action?.Invoke();
             
-            UIUtils.SetActive(topRootRectTm, false);
+            GameUtils.SetActive(topRootRectTm, false);
         }
 
         public void OnPressDownMove()
@@ -112,7 +115,7 @@ namespace UI
 
                 MainGameManager.Instance?.IGameCameraCtr.SetStopUpdate(true);
 
-                UIUtils.SetActive(bottomBtnsRootRectTm, false);
+                GameUtils.SetActive(bottomBtnsRootRectTm, false);
 
                 _data?.IListener?.Move(true);
             }
@@ -122,14 +125,13 @@ namespace UI
 
         public void OnPressUpMove()
         {
-            UIUtils.SetActive(bottomBtnsRootRectTm, true);
+            GameUtils.SetActive(bottomBtnsRootRectTm, true);
 
             MainGameManager.Instance?.IGameCameraCtr.SetStopUpdate(false);
            
             _data?.IListener?.Move(false);
 
             _isMoving = false;
-
         }
 
         public void OnClickReturn()
@@ -158,6 +160,15 @@ namespace UI
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
             
             _data?.IListener?.Conversation();
+            
+            DeactivateEdit();
+        }
+
+        public void OnClickSpecial()
+        {
+            GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+            
+            _data?.IListener?.Special();
             
             DeactivateEdit();
         }

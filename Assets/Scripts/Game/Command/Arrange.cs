@@ -11,10 +11,10 @@ namespace Game.Command
 
         public static void Execute(Game.BaseElement gameBaseElement, Vector3 pos)
         {
-            new Arrange(gameBaseElement, pos)?.Execute();
+            new Arrange(gameBaseElement, pos).Execute();
         }
 
-        public Arrange(Game.BaseElement gameBaseElement, Vector3 pos)
+        private Arrange(Game.BaseElement gameBaseElement, Vector3 pos)
         {
             var elementData = gameBaseElement?.ElementData;
             if (elementData == null)

@@ -74,14 +74,14 @@ namespace UI
         {
             base.Initialize(data);
 
-            UIUtils.SetActive(iconImg?.gameObject, false);
-            UIUtils.SetActive(renderTextureRootRectTm, false);
+            GameUtils.SetActive(iconImg, false);
+            GameUtils.SetActive(renderTextureRootRectTm, false);
 
             if (_data == null)
                 return;
 
-            UIUtils.SetActive(animalRootRectTm, _data.EElement == Game.Type.EElement.Animal);
-            UIUtils.SetActive(objectRootRectTm, _data.EElement == Game.Type.EElement.Object);
+            GameUtils.SetActive(animalRootRectTm, _data.EElement == Game.Type.EElement.Animal);
+            GameUtils.SetActive(objectRootRectTm, _data.EElement == Game.Type.EElement.Object);
 
             SetDescTMP();
             SetGetCurrency();
@@ -203,7 +203,7 @@ namespace UI
                     EElement = _data.EElement,
                 });
 
-            UIUtils.SetActive(renderTextureRootRectTm, true);
+            GameUtils.SetActive(renderTextureRootRectTm, true);
         }
 
         private void SetIconImg()
@@ -213,8 +213,7 @@ namespace UI
 
             var sprite = GameUtils.GetLargeIconSprite(_data.EElement, _data.Id);
             iconImg.sprite = sprite;
-
-            UIUtils.SetActive(iconImg?.gameObject, true);
+            iconImg?.SetActive(true);
         }
 
         private void SetGetCurrency()
@@ -290,8 +289,8 @@ namespace UI
         
         private void ActiveContents()
         {
-            UIUtils.SetActive(profileRootRectTm, _currETabType == Type.ETab.Profile);
-            UIUtils.SetActive(friendshipRootRectTm, _currETabType == Type.ETab.Friendship);
+            GameUtils.SetActive(profileRootRectTm, _currETabType == Type.ETab.Profile);
+            GameUtils.SetActive(friendshipRootRectTm, _currETabType == Type.ETab.Friendship);
             
             int skinId = Games.Data.Const.AnimalBaseSkinId;
             if (_currETabType == Type.ETab.Friendship)

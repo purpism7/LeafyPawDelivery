@@ -49,9 +49,6 @@ namespace Game.PlaceEvent
 
         private void ArrangeHiddenObject(int placeId)
         {
-            //if (CheckExistHiddenObject)
-            //    return;
-
             var objMgr = MainGameManager.Get<ObjectManager>();
             if (objMgr == null)
                 return;
