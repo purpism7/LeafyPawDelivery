@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
@@ -37,6 +38,8 @@ namespace UI
 
         [SerializeField] 
         private RectTransform topRootRectTm = null;
+        [SerializeField] 
+        private RectTransform interactionRectTm = null;
         
         public RectTransform FriendshipPointRootRectTm = null;
         public RectTransform CanvasRectTm = null;
@@ -78,10 +81,9 @@ namespace UI
             GameUtils.SetActive(editRootRectTm, false);  
         }
 
-        public void ActivateTop()
+        private void ActivateTop()
         {
             GameUtils.SetActive(topRootRectTm, true);
-            DeactivateBotom();
         }
         
         private void DeactivateTop()
@@ -95,16 +97,17 @@ namespace UI
             DeactivateTop();
         }
 
-        public async UniTask ActivateTopAsync(System.Action action)
+        public async UniTask ActivateTopAsync(bool isInteraction, System.Action action)
         {
             DeactivateBotom();
-            GameUtils.SetActive(topRootRectTm, true);
+            GameUtils.SetActive(interactionRectTm, isInteraction);
+            ActivateTop();
 
             await UniTask.Delay(TimeSpan.FromSeconds(3f));
             
             action?.Invoke();
             
-            GameUtils.SetActive(topRootRectTm, false);
+            DeactivateTop();
         }
 
         public void OnPressDownMove()

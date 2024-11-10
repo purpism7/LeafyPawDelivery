@@ -20,7 +20,8 @@ namespace UI.Component
             void Select(int id);
         }
 
-        [SerializeField] private Image iconImg = null;
+        [SerializeField] 
+        private Image iconImg = null;
         [SerializeField]
         private Image guideLineImg = null;
 
@@ -64,7 +65,7 @@ namespace UI.Component
 
             guideLineImg?.SetActive(_data.isTutorial);
             if (_data.isTutorial)
-            {
+            { 
                 guideLineImg?.StartBlink();
             }
         }

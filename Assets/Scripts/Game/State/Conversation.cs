@@ -37,7 +37,7 @@ namespace Game.State
             SetAlpha(0.2f, animalId);
             
             var position = conversationAnimal.transform.position;
-            position.y -= 5f;
+            // position.y -= 5f;
             
             UIManager.Instance?.DeactivateAnim();
             MainGameManager.Instance?.IGameCameraCtr.ZoomIn(position,

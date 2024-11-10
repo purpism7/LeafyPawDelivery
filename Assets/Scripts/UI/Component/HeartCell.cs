@@ -65,7 +65,6 @@ namespace UI.Component
                 .SetAutoKill(false)
                 .AppendCallback(() => { GameUtils.SetActive(rootRectTm, true); })
                 .Append(DOTween.To(() => rectTm.anchoredPosition, pos => rectTm.anchoredPosition = pos, new Vector2(rectTm.anchoredPosition.x, rectTm.anchoredPosition.y + 60f), 1f))
-                // .Append(rectTm.DOLocalMoveY(5f, 2f).SetEase(Ease.OutQuad))
                 .OnComplete(() =>
                 {
                     Deactivate();

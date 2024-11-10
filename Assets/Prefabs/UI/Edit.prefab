@@ -219,6 +219,7 @@ MonoBehaviour:
   bottomBtnsRootRectTm: {fileID: 1620367124560549719}
   editRootRectTm: {fileID: 6596469753315330240}
   topRootRectTm: {fileID: 5701063390765680177}
+  interactionRectTm: {fileID: 2784984950148856218}
   FriendshipPointRootRectTm: {fileID: 5577607232798359601}
   CanvasRectTm: {fileID: 2967264676502494012}
 --- !u!1 &1550014165813058105
@@ -434,7 +435,7 @@ GameObject:
   - component: {fileID: 2971635586654159046}
   - component: {fileID: 178558173677639322}
   m_Layer: 0
-  m_Name: Star
+  m_Name: Interaction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

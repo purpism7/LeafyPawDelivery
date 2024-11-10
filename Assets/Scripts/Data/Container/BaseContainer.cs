@@ -52,10 +52,6 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
             return;
         }
         
-        // _datas = json.;
-        
-        
-        
         var wrapper = JsonHelper.WrapperFromJson<V>(jsonStr);
         if (wrapper != null)
         {

@@ -37,9 +37,10 @@ namespace Game.Creature
         private int skinId = 0;
         [SerializeField]
         private Animator animator = null;
-
+        
         private AnimalRoot _animalRoot = null;
         private AnimalActionController _actionCtr = null;
+        private int _interactionId = 0;
 
         public int SkinId { get { return skinId; } }
 
@@ -49,8 +50,13 @@ namespace Game.Creature
         {
             base.Initialize(data);
 
-            ElementData = AnimalContainer.Instance?.GetData(Id);
-
+            var animalData = AnimalContainer.Instance?.GetData(Id);
+            if (animalData != null)
+            {
+                _interactionId = animalData.InteractionId;
+                ElementData = animalData;
+            }
+            
             _animalRoot = GetComponentInChildren<AnimalRoot>();
 
             if(_collider2D != null)
@@ -230,7 +236,9 @@ namespace Game.Creature
             // DeactivateChild().Forget();
             _actionCtr?.Deactivate();
             
-            edit?.ActivateTopAsync(
+            bool isInteracition = MainGameManager.Get<ObjectManager>().CheckExist(_interactionId);
+            
+            edit?.ActivateTopAsync(isInteracition,
                 () =>
                 {
                     

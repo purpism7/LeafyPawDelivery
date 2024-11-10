@@ -356,12 +356,13 @@ namespace GameSystem
             
             StopUpdate = true;
             
-            var endPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
+            var resTargetPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
             float duration = 0.5f;
             
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
-                .Append(DOTween.To(() => GameCamera.transform.position, pos => GameCamera.transform.position = pos, endPos, duration).SetEase(Ease.OutQuad))
+                .Append(GameCamera.transform.DOMove(resTargetPos, duration).SetEase(Ease.OutQuad))
+                // .Append(DOTween.To(() => GameCamera.transform.position, pos => GameCamera.transform.position = pos, endPos, duration).SetEase(Ease.OutQuad))
                 .Join(DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.Linear))
                 .OnComplete(() =>
                 {
@@ -390,7 +391,7 @@ namespace GameSystem
 
         void IGameCameraCtr.SetConfinerBoundingShape(Collider2D collider)
         {
-            var confiner = virtualCamera?.GetComponent<CinemachineConfiner2D>();
+            var confiner = virtualCamera?.GetComponent<CinemachineConfiner>();
             if (confiner == null)
                 return;
 
