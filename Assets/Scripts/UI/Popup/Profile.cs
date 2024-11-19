@@ -6,11 +6,10 @@ using UnityEngine.UI;
 
 using TMPro;
 using UnityEngine.Localization.Settings;
+using Cysharp.Threading.Tasks;
 
 using UI.Component;
 using GameSystem;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Game;
 
 namespace UI
@@ -62,6 +61,8 @@ namespace UI
         [Header("Common")]
         [SerializeField]
         private Toggle[] tabToggles = null;
+        [SerializeField]
+        private RectTransform[] disableRectTms = null;
         
         private List<SkinCell> _skinCellList = new();
         private SkinCell _selectSkinCell = null;
@@ -117,6 +118,8 @@ namespace UI
             {
                 tabToggle.SetIsOnWithoutNotify(true);
             }
+
+            disableRectTms?.Last().SetActive(!MainGameManager.Get<ObjectManager>().CheckExist(InteractionObjectId));
             
             SetAnimalSkinList();
         }
@@ -284,6 +287,17 @@ namespace UI
             get
             {
                 return _selectSkinCell != null ? _selectSkinCell.SkinId : 0;
+            }
+        }
+
+        private int InteractionObjectId
+        {
+            get
+            {
+                if (_data == null)
+                    return 0;
+                
+                return AnimalContainer.Instance.GetInteractionObjectId(_data.Id);
             }
         }
         

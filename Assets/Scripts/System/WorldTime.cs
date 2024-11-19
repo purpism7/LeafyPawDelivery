@@ -84,7 +84,11 @@ namespace GameSystem
                 Sync = false;
 
                 //using ()
-                using (UnityWebRequest webRequest = UnityWebRequest.Get(Games.Data.Const.WorldTimeURI))   
+                var worldTimeURI = Games.Data.Const?.WorldTimeURI;
+                if (string.IsNullOrEmpty(worldTimeURI))
+                    return null;
+                
+                using (UnityWebRequest webRequest = UnityWebRequest.Get(worldTimeURI))   
                 {
                     if (webRequest == null)
                         return null;

@@ -69,7 +69,7 @@ namespace Game
                 _animalHolder?.SetPos(animal.Id, animal.LocalPos);
             }
 
-            _animalHolder.SaveInfo();
+            _animalHolder?.SaveInfo();
         }
 
         public bool CheckIsAll(int placeId)
@@ -170,7 +170,7 @@ namespace Game
 
             return GetAnimalInfo(id) != null;
         }
-
+        
         public void ArrangeAnimal(int id, Vector3 pos)
         {
             _animalHolder?.ArrangeAnimal(id, pos);

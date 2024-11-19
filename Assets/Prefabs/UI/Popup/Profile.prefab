@@ -373,6 +373,9 @@ MonoBehaviour:
   tabToggles:
   - {fileID: 5360860969286515461}
   - {fileID: 8593430458298933981}
+  disableRectTms:
+  - {fileID: 841533166002795143}
+  - {fileID: 3929914224854461279}
 --- !u!1 &2541029279216612459
 GameObject:
   m_ObjectHideFlags: 0
@@ -2488,6 +2491,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
+--- !u!224 &841533166002795143 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 535140691948881199, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
+  m_PrefabInstance: {fileID: 918886518065870760}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1800425907468642400 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1458303959644118984, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
@@ -2740,6 +2748,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3929914224854461279 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 535140691948881199, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}
+  m_PrefabInstance: {fileID: 3595261966342172272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8593430458298933981 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5090493428456885421, guid: 4aaf453a8f61f4ec4a54344c272aebb1, type: 3}

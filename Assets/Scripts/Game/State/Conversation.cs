@@ -102,12 +102,14 @@ namespace Game.State
             _conversation?.Activate();
                     
             var tables = LocalizationSettings.StringDatabase.GetTable("Conversation");
+            int randomIndex = Random.Range(1, 4);
+            
             foreach (var pair in tables)
             {
                 if(pair.Value == null)
                     continue;
 
-                var key = $"{animalId}_1_";
+                var key = $"{animalId}_{randomIndex}_";
                         
                 if(!pair.Value.Key.Contains(key))
                     continue;

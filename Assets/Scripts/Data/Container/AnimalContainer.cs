@@ -28,4 +28,23 @@ public class AnimalContainer : BaseContainer<AnimalContainer, Animal>
 
         return dataList;
     }
+
+    public int GetInteractionObjectId(int animalId)
+    {
+        if (_datas == null)
+            return 0;
+        
+        foreach (var data in _datas)
+        {
+            if (data == null)
+                continue;
+
+            if (data.Id != animalId)
+                continue;
+
+            return data.InteractionId;
+        }
+
+        return 0;
+    }
 }
