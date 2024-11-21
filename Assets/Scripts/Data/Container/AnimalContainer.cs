@@ -47,4 +47,21 @@ public class AnimalContainer : BaseContainer<AnimalContainer, Animal>
 
         return 0;
     }
+    
+    public bool CheckExistInteraction(int objectId)
+    {
+        if (_datas == null)
+            return false;
+        
+        foreach (var data in _datas)
+        {
+            if (data == null)
+                continue;
+
+            if (data.InteractionId == objectId)
+                return true;
+        }
+
+        return false;
+    }
 }

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using GameSystem;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 namespace UI.Component
@@ -16,6 +18,7 @@ namespace UI.Component
         public class Data : BaseData
         {
             public IListener IListener = null;
+            public int AnimalId = 0;
             public Item GiftItem = null;
         }
         
@@ -95,6 +98,20 @@ namespace UI.Component
 
         public void OnClick()
         {
+            if (_data == null)
+                return;
+            
+            var animalMgr = MainGameManager.Get<AnimalManager>();
+            if (animalMgr != null &&
+                animalMgr.CheckMaxFriendshipPoint(_data.AnimalId))
+            {
+                var localKey = "desc_max_friendship";
+                var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+                
+                Game.Toast.Get?.Show(local, localKey);
+                return;
+            }
+            
             var giftItem = _data?.GiftItem;
             if (giftItem == null)
                 return;

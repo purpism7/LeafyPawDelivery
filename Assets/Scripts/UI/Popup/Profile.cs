@@ -20,6 +20,7 @@ namespace UI
         {
             public int Id = 0;
             public Game.Type.EElement EElement = Game.Type.EElement.None;
+            public bool IsSpecialObject = false;
         }
 
         [Header("Animal")]
@@ -57,6 +58,8 @@ namespace UI
         private TextMeshProUGUI objectNameTMP = null;
         [SerializeField]
         private OpenCondition objectGetCurrency = null;
+        [SerializeField]
+        private RectTransform specialObjectRectTm = null;
 
         [Header("Common")]
         [SerializeField]
@@ -120,8 +123,11 @@ namespace UI
             }
 
             disableRectTms?.Last().SetActive(!MainGameManager.Get<ObjectManager>().CheckExist(InteractionObjectId));
-            
+
             SetAnimalSkinList();
+            
+            if(_data != null) 
+                GameUtils.SetActive(specialObjectRectTm, _data.IsSpecialObject);
         }
 
         public override void Deactivate()

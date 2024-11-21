@@ -122,6 +122,8 @@ namespace Game.Creature
                     .Create();
             }
             
+            MainGameManager.Get<AnimalManager>()?.AddFriendshipPoint(id, point);
+            
             _heartCell?.Activate(data);
         }
         #endregion

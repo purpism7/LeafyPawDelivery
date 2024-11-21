@@ -145,15 +145,16 @@ namespace UI
             }
         }
 
-        private void AddBookCell(int id, Game.Type.EElement eElement, bool isLock, RectTransform rootRectTm)
+        private void AddBookCell(int id, Game.Type.EElement eElement, bool isLock, RectTransform rootRectTm, bool isSpecialObject = false)
         {
             BookCell bookCell = DeactiveBookCell;
-            var cellData = new BookCell.Data()
+            var cellData = new BookCell.Data
             {
                 IListener = this,
                 Id = id,
                 EElement = eElement,
                 Lock = isLock,
+                IsSpecialObject = isSpecialObject,
             };
 
             if (bookCell != null)
@@ -211,8 +212,8 @@ namespace UI
                     if (data.EGrade == Type.EObjectGrade.None)
                         continue;
                 }
-
-                AddBookCell(data.Id, Game.Type.EElement.Object, objectInfo == null, objectScrollRect.content);
+                
+                AddBookCell(data.Id, Game.Type.EElement.Object, objectInfo == null, objectScrollRect.content, AnimalContainer.Instance.CheckExistInteraction(data.Id));
             }
         }
 
@@ -392,7 +393,7 @@ namespace UI
         }
 
         #region BookCell.IListener
-        void BookCell.IListener.Click(Game.Type.EElement eElement, int id)
+        void BookCell.IListener.Click(Game.Type.EElement eElement, int id, bool isSpecialObject)
         {
             //if (eElement == Type.EElement.Object)
             //    return;
@@ -406,6 +407,8 @@ namespace UI
                 {
                     EElement = eElement,
                     Id = id,
+                    IsSpecialObject = isSpecialObject,
+                    
                 })
                 .Create();
 

@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
-using Game;
-using GameSystem;
-using Info;
-using TMPro;
-using UnityEditor.Rendering;
+
 using UnityEngine;
 using UnityEngine.UI;
-using ResourceManager = System.Resources.ResourceManager;
+
+using TMPro;
+
+using Game;
+using GameSystem;
 
 namespace  UI.Component
 {
@@ -108,6 +108,9 @@ namespace  UI.Component
 
         private void SetGiftItemList()
         {
+            if (_data == null)
+                return;
+            
             var  giftItemList = ItemContainer.Instance?.GetDataList(Type.EItemSub.Gift);
             if (giftItemList == null)
                 return;
@@ -118,10 +121,11 @@ namespace  UI.Component
                 if(giftItem == null)
                     continue;
                 
-                var giftItemCell = new ComponentCreator<GiftItemCell, GiftItemCell.Data>()
+                new ComponentCreator<GiftItemCell, GiftItemCell.Data>()
                     .SetData(new GiftItemCell.Data()
                     {
                         IListener = this,
+                        AnimalId = _data.Id,
                         GiftItem = giftItem,
                     })
                     .SetRootRectTm(giftRootRectTm)

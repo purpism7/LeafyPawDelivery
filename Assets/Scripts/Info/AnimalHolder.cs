@@ -217,7 +217,7 @@ namespace Info
             var animalInfo = GetAnimalInfo(id);
             if (animalInfo == null)
                 return false;
-
+            
             animalInfo.AddFriendshipPoint(point);
 
             return true;

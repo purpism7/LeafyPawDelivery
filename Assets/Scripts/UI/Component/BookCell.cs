@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+using TMPro;
 
 namespace UI.Component
 {
@@ -15,21 +16,30 @@ namespace UI.Component
             public int Id = 0;
             public Game.Type.EElement EElement = Game.Type.EElement.None;
             public bool Lock = true;
+
+            public bool IsSpecialObject = false;
         }
 
         public interface IListener
         {
-            void Click(Game.Type.EElement eElment, int id);
+            void Click(Game.Type.EElement eElment, int id, bool isSpecialObject = false);
         }
 
-        [SerializeField] private TextMeshProUGUI nameTMP;
-        [SerializeField] private Image iconImg;
+        [SerializeField] 
+        private TextMeshProUGUI nameTMP;
+        [SerializeField] 
+        private Image iconImg;
+        [SerializeField] 
+        private RectTransform specialObjectRectTm = null;
         
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-
+            
             SetIconImg();
+            
+            if (data != null)
+                GameUtils.SetActive(specialObjectRectTm, data.IsSpecialObject);
         }
 
         public override void Activate()
@@ -60,13 +70,9 @@ namespace UI.Component
             iconImg.sprite = GameUtils.GetLargeIconSprite(_data.EElement, _data.Id);
             
             if (_data.Lock)
-            {
                 UIUtils.SetSilhouetteColorImg(iconImg);
-            }
             else
-            {
                 UIUtils.SetOriginColorImg(iconImg);
-            }
         }
         
         public void Unlock(Game.Type.EElement EElement, int id)
@@ -90,7 +96,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            _data.IListener?.Click(_data.EElement, _data.Id);
+            _data.IListener?.Click(_data.EElement, _data.Id, _data.IsSpecialObject);
         }
     }
 }

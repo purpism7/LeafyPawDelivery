@@ -24,6 +24,7 @@ namespace UI.Component
             public string Name = string.Empty;
             public bool Owned = false;
             public bool Lock = true;
+            public bool IsSpecialObject = false;
             public bool isTutorial = false;
 
             public int index = -1;
@@ -57,9 +58,8 @@ namespace UI.Component
         [SerializeField]
         private Image guideLineImg = null;
         
-        [Header("Special")]
         [SerializeField]
-        private Image specialIconImg = null;
+        private RectTransform specialObjectRectTm = null;
 
         [Header("Lock")]
         [SerializeField]
@@ -110,6 +110,9 @@ namespace UI.Component
             ActivateOpenConditionList();
 
             SetHiddenOpenDescTMP();
+            
+            if(_data != null)
+                GameUtils.SetActive(specialObjectRectTm, _data.IsSpecialObject);
         }
 
         public override void Deactivate()
@@ -221,7 +224,6 @@ namespace UI.Component
             DeactiveAllOpenConditionList();
 
             GameUtils.SetActive(hiddenIconImg, false);
-            GameUtils.SetActive(specialIconImg, false);
 
             openDescTMP?.SetText(string.Empty);
 
@@ -298,7 +300,7 @@ namespace UI.Component
 
                 case OpenConditionData.EType.Special:
                 {
-                    GameUtils.SetActive(specialIconImg, true);
+                    // GameUtils.SetActive(specialIconImg, true);
 
                     openDescTMP?.SetText("ㅇ아녕");
                     

@@ -276,13 +276,15 @@ namespace UI
                 bool isLock = !animalOpenConditionContainer.CheckReq(data.Id);
                 
                 AddArrangementCell(
-                    new ArrangementCell.Data()
+                    new ArrangementCell.Data
                     {
                         IListener = this,
                         Id = data.Id,
                         EElement = Game.Type.EElement.Animal,
                         Owned = animalInfo != null,
                         Lock = isLock,
+                        
+                        IsSpecialObject = AnimalContainer.Instance.CheckExistInteraction(data.Id),
                         isTutorial = isTutorial,
                     }, animalScrollRect.content);
             }

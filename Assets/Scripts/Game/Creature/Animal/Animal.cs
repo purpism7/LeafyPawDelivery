@@ -233,8 +233,6 @@ namespace Game.Creature
         {
             DeactivateSpeechBubble();
             
-            // SetState(new Element.State.Deactive().Initialize());
-            // DeactivateChild().Forget();
             _actionCtr?.Deactivate();
             
             bool isInteracition = MainGameManager.Get<ObjectManager>().CheckExist(_interactionId);
@@ -249,9 +247,7 @@ namespace Game.Creature
                     }).Forget();
             }
             else
-            {
                 StartSignatureAction();
-            }
         }
         #endregion
 
@@ -276,9 +272,14 @@ namespace Game.Creature
         
         void State.Conversation.IListener.Finish()
         {
-            // SetSortingOrder(-(int)LocalPos.y);
-            // MainGameManager.Get<AnimalManager>().AddFriendshipPoint(_data.Id, item.Value);
-            _animalRoot?.AddFriendshipPoint(Id, 1, edit?.FriendshipPointRootRectTm);
+            var animalMgr = MainGameManager.Get<AnimalManager>();
+            if (animalMgr != null &&
+                !animalMgr.CheckMaxFriendshipPoint(Id))
+            {
+                int addFriendPoint = 1;
+
+                _animalRoot?.AddFriendshipPoint(Id, addFriendPoint, edit?.FriendshipPointRootRectTm);
+            }
 
             StartSignatureAction();
         }

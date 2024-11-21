@@ -305,6 +305,10 @@ MonoBehaviour:
     m_Key: friendship
     m_Metadata:
       m_Items: []
+  - m_Id: 170420406093602816
+    m_Key: desc_max_friendship
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
