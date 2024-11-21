@@ -219,6 +219,7 @@ MonoBehaviour:
   bottomBtnsRootRectTm: {fileID: 1620367124560549719}
   editRootRectTm: {fileID: 6596469753315330240}
   topRootRectTm: {fileID: 5701063390765680177}
+  speechBubbleRectTm: {fileID: 8479831621050592719}
   interactionRectTm: {fileID: 2784984950148856218}
   FriendshipPointRootRectTm: {fileID: 5577607232798359601}
   CanvasRectTm: {fileID: 2967264676502494012}

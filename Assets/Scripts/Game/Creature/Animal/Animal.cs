@@ -43,6 +43,7 @@ namespace Game.Creature
         private int _interactionId = 0;
 
         public int SkinId { get { return skinId; } }
+        public bool ReadyToInteraction { get; private set; } = false;
 
         private IPlaceState.EType _iPlaceState = IPlaceState.EType.None;
 
@@ -237,12 +238,20 @@ namespace Game.Creature
             _actionCtr?.Deactivate();
             
             bool isInteracition = MainGameManager.Get<ObjectManager>().CheckExist(_interactionId);
-            
-            edit?.ActivateTopAsync(isInteracition,
-                () =>
-                {
-                    
-                }).Forget();
+            if (isInteracition)
+            {
+                ReadyToInteraction = true;
+                
+                edit?.ActivateTopAsync(isInteracition,
+                    () =>
+                    {
+                        ReadyToInteraction = false;
+                    }).Forget();
+            }
+            else
+            {
+                StartSignatureAction();
+            }
         }
         #endregion
 
@@ -270,6 +279,8 @@ namespace Game.Creature
             // SetSortingOrder(-(int)LocalPos.y);
             // MainGameManager.Get<AnimalManager>().AddFriendshipPoint(_data.Id, item.Value);
             _animalRoot?.AddFriendshipPoint(Id, 1, edit?.FriendshipPointRootRectTm);
+
+            StartSignatureAction();
         }
         #endregion
 

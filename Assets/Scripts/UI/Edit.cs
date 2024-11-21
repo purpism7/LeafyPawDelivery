@@ -27,6 +27,7 @@ namespace UI
         }
         
         #region Inspector
+        [Header("Edit")]
         [SerializeField]
         private UnityEngine.UI.Button returnBtn = null;
         [SerializeField]
@@ -36,13 +37,15 @@ namespace UI
         [SerializeField]
         private RectTransform editRootRectTm = null;
 
+        [Header("Interaction")]
         [SerializeField] 
         private RectTransform topRootRectTm = null;
+        [SerializeField] 
+        private RectTransform speechBubbleRectTm = null;
         [SerializeField] 
         private RectTransform interactionRectTm = null;
         
         public RectTransform FriendshipPointRootRectTm = null;
-        public RectTransform CanvasRectTm = null;
         #endregion
 
         private bool _isMoving = false;
@@ -100,6 +103,7 @@ namespace UI
         public async UniTask ActivateTopAsync(bool isInteraction, System.Action action)
         {
             DeactivateBotom();
+            GameUtils.SetActive(speechBubbleRectTm, isInteraction);
             GameUtils.SetActive(interactionRectTm, isInteraction);
             ActivateTop();
 

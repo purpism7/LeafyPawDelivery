@@ -64,7 +64,7 @@ namespace UI.Component
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .AppendCallback(() => { GameUtils.SetActive(rootRectTm, true); })
-                .Append(DOTween.To(() => rectTm.anchoredPosition, pos => rectTm.anchoredPosition = pos, new Vector2(rectTm.anchoredPosition.x, rectTm.anchoredPosition.y + 60f), 1f))
+                .Append(DOTween.To(() => rectTm.anchoredPosition, pos => rectTm.anchoredPosition = pos, new Vector2(rectTm.anchoredPosition.x, rectTm.anchoredPosition.y + 60f), 1.5f))
                 .OnComplete(() =>
                 {
                     Deactivate();
@@ -91,14 +91,14 @@ namespace UI.Component
             var wayPoints = new[] { startPos, wayPoint, endPos };
             var duration = 0.5f;
             
-            var animal = Game.RenderTextureElement.GetAnimal(_data.Id, _data.SkinId);
+            // var animal = Game.RenderTextureElement.GetAnimal(_data.Id, _data.SkinId);
             
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .Append(transform.DOMove(_data.StartPos, 0))
                 .AppendCallback(() => { Activate(); })
                 .Append(transform.DOPath(wayPoints, duration, PathType.CatmullRom).SetEase(Ease.Linear))
-                // .Join(transform.DOLocalRotate(new Vector3(0, 0, UnityEngine.Random.Range(-180f, 180f)), duration))
+                .AppendInterval(0.3f)
                 .OnComplete(() =>
                 {
                     Deactivate();

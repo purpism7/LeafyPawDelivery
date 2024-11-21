@@ -56,7 +56,7 @@ namespace Game.PlaceEvent
             if (_speechBubbleCoroutine == null)
                 yield break;
 
-            var activateAnimalList = animalList.FindAll(animal => animal != null ? animal.IsActivate : false);
+            var activateAnimalList = animalList.FindAll(animal => animal != null ? animal.IsActivate && !animal.ReadyToInteraction : false);
             if (activateAnimalList.Count <= 0)
                 yield break;
 
