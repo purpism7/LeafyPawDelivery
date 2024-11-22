@@ -27,6 +27,9 @@ namespace UI.Component
 
         [SerializeField]
         private Image iconImg = null;
+        
+        [SerializeField]
+        private RectTransform specialObjectRectTm = null;
         [SerializeField]
         private TextMeshProUGUI countTMP = null;
         [SerializeField]
@@ -45,6 +48,9 @@ namespace UI.Component
         {
             base.Activate();
 
+            if (_data != null)
+                GameUtils.SetActive(specialObjectRectTm, AnimalContainer.Instance.CheckExistInteraction(_data.ObjectId));
+            
             GameUtils.SetActive(transform, true);
         }
 
