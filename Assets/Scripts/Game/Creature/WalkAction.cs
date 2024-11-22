@@ -3,22 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using GameSystem;
 
 namespace Game.Creature
 {
     public class WalkAction : AnimalAction
     {
+        public new class Data : ActionData
+        {
+            public Vector3? TargetPos = null;
+            public System.Action EndAction = null;
+        }
+        
         protected override string ActionName => "Walk";
-
         private Vector3 _targetPos = Vector3.zero;
-
+        
         private Queue<Vector3> _posQueue = new();
+        private Data _actionData = null;
 
+        public override void SetActionData(ActionData data)
+        {
+            _actionData = data as Data;
+        }
+        
         public override void StartAction()
         {
             base.StartAction();
 
-            MoveAsync().Forget();
+            Vector3? targetPos = null; 
+            if (_data != null &&
+                _data.Tm)
+                targetPos = _data.Tm.localPosition;
+
+            if (_actionData != null &&
+                _actionData.TargetPos != null)
+                targetPos = _actionData.TargetPos;
+            
+            if (targetPos != null)
+                MoveAsync(targetPos.Value).Forget();
+            else
+                EndAction();
         }
 
         protected override void InProgressAction()
@@ -29,23 +53,24 @@ namespace Game.Creature
         protected override void EndAction()
         {
             base.EndAction();
+
+            _actionData?.EndAction?.Invoke();
+            _actionData = null;
         }
 
-        private async UniTask MoveAsync()
+        private async UniTaskVoid MoveAsync(Vector3 targetPos)
         {
             if (_data == null ||
                !_data.Tm)
             {
                 EndAction();
-
                 return;
             }
 
-            List<Vector3> pathPosList = await Carrier.MoveAsync(_data.Tm.localPosition);
+            List<Vector3> pathPosList = await Carrier.MoveAsync(targetPos);
             if (pathPosList == null)
             {
                 EndAction();
-
                 return;
             }
 
@@ -62,13 +87,10 @@ namespace Game.Creature
             if (_posQueue.Count > 0)
             {
                 InProgressAction();
-
                 MoveToTarget();
             }
             else
-            {
                 EndAction();
-            }
         }
 
         private bool MoveToTarget()

@@ -4,14 +4,21 @@ using UnityEngine;
 
 namespace Game.Creature
 {
+    
+    
     public abstract class AnimalAction : Action
     {
         public class Data : Action.Data<AnimalAction>
         {
-            public int id = 0;
+            public int Id = 0;
             public SpriteRenderer SprRenderer = null;
         }
-
+        
+        public class ActionData
+        {
+        
+        }
+        
         protected Data _data = null;
         protected float _randomSeed = 0;
 
@@ -24,6 +31,11 @@ namespace Game.Creature
             _data = data;
 
             return this;
+        }
+
+        public virtual void SetActionData(ActionData data)
+        { 
+            
         }
 
         public abstract void ChainUpdate();

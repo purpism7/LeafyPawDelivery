@@ -55,7 +55,7 @@ namespace Game
             if (_aStar == null)
                 return pathPosList;
 
-            _aStar.Path.Clear();
+            _aStar.Path?.Clear();
 
             var cell = _iGridCell.GetCell(targetPos);
             if (cell == null)
@@ -73,11 +73,12 @@ namespace Game
             pathPosList = new();
             pathPosList.Clear();
 
-            foreach (var path in _aStar.Path)
+            for (int i = 0; i < _aStar.Path?.Count; ++i)
             {
-                if (path == null)
+                var path = _aStar.Path[i];
+                if(path == null)
                     continue;
-
+                
                 var pathCell = _iGridCell?.GetCell(path.Id);
                 if (pathCell == null)
                     continue;
@@ -86,7 +87,6 @@ namespace Game
             }
 
             return pathPosList;
-
         }
 
         private Vector3 GetRandomPos(float z)

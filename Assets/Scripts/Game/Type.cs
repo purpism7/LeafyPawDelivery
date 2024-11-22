@@ -20,6 +20,7 @@ namespace Game
 
             Play,
             Edit,
+            Interaction,
         }
 
         public enum ETab

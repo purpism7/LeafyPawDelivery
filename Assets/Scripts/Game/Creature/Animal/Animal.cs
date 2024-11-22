@@ -5,6 +5,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 using Game;
+using Game.Element.State;
 using GameSystem;
 
 namespace Game.Creature
@@ -39,24 +40,20 @@ namespace Game.Creature
         private Animator animator = null;
         
         private AnimalRoot _animalRoot = null;
-        private AnimalActionController _actionCtr = null;
-        private int _interactionId = 0;
-
+        private IPlaceState.EType _iPlaceState = IPlaceState.EType.None;
+        
+        public AnimalActionController ActionCtr { get; private set; } = null;
+        
         public int SkinId { get { return skinId; } }
         public bool ReadyToInteraction { get; private set; } = false;
-
-        private IPlaceState.EType _iPlaceState = IPlaceState.EType.None;
-
+        
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
             var animalData = AnimalContainer.Instance?.GetData(Id);
             if (animalData != null)
-            {
-                _interactionId = animalData.InteractionId;
                 ElementData = animalData;
-            }
             
             _animalRoot = GetComponentInChildren<AnimalRoot>();
 
@@ -90,13 +87,13 @@ namespace Game.Creature
         {
             await UniTask.Yield();
 
-            _actionCtr?.Deactivate();
+            ActionCtr?.Deactivate();
         }
 
         private void InitActionController()
         {
-            _actionCtr = gameObject.GetOrAddComponent<AnimalActionController>();
-            _actionCtr?.Initialize(Id, this, !_data.IsEdit);
+            ActionCtr = gameObject.GetOrAddComponent<AnimalActionController>();
+            ActionCtr?.Initialize(Id, this, !_data.IsEdit);
         }
 
         public override void ChainUpdate()
@@ -115,7 +112,7 @@ namespace Game.Creature
             if (!IsActivate)
                 return;
 
-            _actionCtr?.ChainUpdate();
+            ActionCtr?.ChainUpdate();
         }
 
         public override void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
@@ -187,12 +184,12 @@ namespace Game.Creature
 
         protected override void Special()
         {
-            
+            SetState(new Interaction().Initialize());
         }
 
         public void StartSignatureAction()
         {
-            _actionCtr?.StartSignatureAction();
+            ActionCtr?.StartSignatureAction();
         }
 
         #region IAnimal
@@ -233,9 +230,13 @@ namespace Game.Creature
         {
             DeactivateSpeechBubble();
             
-            _actionCtr?.Deactivate();
+            ActionCtr?.Deactivate();
+
+            bool isInteracition = false;
+            var animalData = AnimalContainer.Instance?.GetData(Id);
+            if (animalData != null)
+                isInteracition = MainGameManager.Get<ObjectManager>().CheckExist(animalData.InteractionId);
             
-            bool isInteracition = MainGameManager.Get<ObjectManager>().CheckExist(_interactionId);
             if (isInteracition)
             {
                 ReadyToInteraction = true;

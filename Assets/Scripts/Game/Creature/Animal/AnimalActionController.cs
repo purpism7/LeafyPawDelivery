@@ -70,7 +70,7 @@ namespace Game.Creature
                 Tm = transform,
                 Animator = _iAnimal.Animator,
 
-                id = id,
+                Id = id,
                 SprRenderer = _iAnimal.SpriteRenderer,
             };
 
@@ -91,7 +91,7 @@ namespace Game.Creature
             }
         }
 
-        private void StartAction<T>(int count = 1) where T : AnimalAction
+        private void StartAction<T>(AnimalAction.ActionData actionData = null) where T : AnimalAction
         {
             if (AnimalActionList == null)
                 return;
@@ -101,6 +101,8 @@ namespace Game.Creature
                 if (action is T)
                 {
                     _currentAnimalAction = action;
+                    
+                    action.SetActionData(actionData);
                     action.StartAction();
 
                     break;
@@ -121,9 +123,9 @@ namespace Game.Creature
             StartAction<SignatureAction>();
         }
 
-        public void MoveToTarget(Vector3 pos)
+        public void MoveToTarget(WalkAction.Data data)
         {
-            
+            StartAction<WalkAction>(data);
         }
 
         #region Action.IListener

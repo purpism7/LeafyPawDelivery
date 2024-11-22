@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
-using Game.Creature;
 using UnityEngine;
+
+using Game.Creature;
 
 namespace Game.Element.State
 {
