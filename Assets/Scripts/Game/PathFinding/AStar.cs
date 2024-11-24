@@ -57,29 +57,34 @@ namespace Game.PathFinding
                 }
 
                 var neighbourNodeList = findNeighbourNodeFunc?.Invoke(currentNode.Id);
-                foreach (var neighbourNode in neighbourNodeList)
+                if (neighbourNodeList != null)
                 {
-                    if (!neighbourNode.IsWalkAble ||
-                        closedSet.Contains(neighbourNode))
-                        continue;
-
-                    int cost = currentNode.GCost + GetDistanceCost(currentNode, neighbourNode);
-                    bool contain = openList.Contains(neighbourNode);
-                    if (cost < neighbourNode.GCost ||
-                       !contain)
+                    for (int i = 0; i < neighbourNodeList.Count; ++i)
                     {
-                        neighbourNode.GCost = cost;
-                        neighbourNode.HCost = GetDistanceCost(neighbourNode, targetNode);
-                        neighbourNode.ParentNode = currentNode;
-
-                        if (!contain)
+                        var neighbourNode = neighbourNodeList[i];
+                        
+                        if (!neighbourNode.IsWalkAble ||
+                            closedSet.Contains(neighbourNode))
+                            continue;
+                        
+                        int cost = currentNode.GCost + GetDistanceCost(currentNode, neighbourNode);
+                        bool contain = openList.Contains(neighbourNode);
+                        if (cost < neighbourNode.GCost ||
+                            !contain)
                         {
-                            openList.Add(neighbourNode);
+                            neighbourNode.GCost = cost;
+                            neighbourNode.HCost = GetDistanceCost(neighbourNode, targetNode);
+                            neighbourNode.ParentNode = currentNode;
+
+                            if (!contain)
+                            {
+                                openList.Add(neighbourNode);
+                            }
                         }
                     }
+                    
+                    ++loopCnt;
                 }
-
-                ++loopCnt;
             }
         }
 

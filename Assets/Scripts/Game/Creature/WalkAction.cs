@@ -31,9 +31,9 @@ namespace Game.Creature
             base.StartAction();
 
             Vector3? targetPos = null; 
-            if (_data != null &&
-                _data.Tm)
-                targetPos = _data.Tm.localPosition;
+            // if (_data != null &&
+            //     _data.Tm)
+            //     targetPos = _data.Tm.localPosition;
 
             if (_actionData != null &&
                 _actionData.TargetPos != null)
@@ -52,10 +52,10 @@ namespace Game.Creature
 
         protected override void EndAction()
         {
-            base.EndAction();
-
             _actionData?.EndAction?.Invoke();
             _actionData = null;
+            
+            base.EndAction();
         }
 
         private async UniTaskVoid MoveAsync(Vector3 targetPos)
@@ -67,7 +67,12 @@ namespace Game.Creature
                 return;
             }
 
-            List<Vector3> pathPosList = await Carrier.MoveAsync(targetPos);
+            List<Vector3> pathPosList = await Carrier.MoveAsync(_data.Tm.localPosition, targetPos);
+            
+            if (_actionData != null &&
+                _actionData.TargetPos != null)
+                pathPosList?.Add(targetPos);
+            
             if (pathPosList == null)
             {
                 EndAction();
@@ -151,17 +156,13 @@ namespace Game.Creature
 #endif
 
             if(_data.SprRenderer != null)
-            {
                 _data.SprRenderer.sortingOrder = -(int)animalTm.localPosition.y;
-            }
 
             var distance = Vector2.Distance(animalTm.localPosition, _targetPos);
             if (distance <= 0)
             {
-                if(!MoveToTarget())
-                {
+                if (!MoveToTarget())
                     EndAction();
-                }
             }
         }
     }

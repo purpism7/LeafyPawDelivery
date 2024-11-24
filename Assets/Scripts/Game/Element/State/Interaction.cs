@@ -33,17 +33,21 @@ namespace Game.Element.State
             if (iPlace == null)
                 return;
             
-            IObject iObject = iPlace.ObjectList.Find(obj => obj.Id == interactionObjectId);
+            var obj = iPlace.ObjectList.Find(obj => obj.Id == interactionObjectId);
+            var iObject = obj as IObject;
             if (iObject != null)
             {
-                animal.ActionCtr?.MoveToTarget(
-                    new WalkAction.Data
+                animal.ActionCtr?.MoveToTarget(iObject.LocalPos,
+                    () =>
                     {
-                        TargetPos = iObject.LocalPos,
-                        EndAction = () =>
-                        {
-                            animal.Deactivate();
-                        },
+                        // animal.Deactivate();
+                        // End();
+                        obj?.ObjectActCtr?.PlaySpecial(
+                            () =>
+                            {
+                                
+                            }
+                        );
                     });
             }
         }
@@ -51,6 +55,8 @@ namespace Game.Element.State
         public override void End()
         {
             base.End();
+            
+            
         }
     }
 }

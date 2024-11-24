@@ -38,8 +38,6 @@ namespace Game
 
         #region Inspector
         [SerializeField]
-        private Animator animator = null;
-        [SerializeField]
         private int sortingOrderOffset = 0;
         [SerializeField]
         private Transform hiddenRootTm = null;
@@ -48,6 +46,8 @@ namespace Game
         #endregion
 
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
+
+        public ObjectActController ObjectActCtr { get; private set; } = null;
 
         public override void Initialize(Data data)
         {
@@ -63,22 +63,18 @@ namespace Game
 
                 int sortingOrder = -(int)LocalPos.y;
                 if(data.isHiddenObj)
-                {
                     sortingOrder = data.sortingOrder;
-                }
                 else
-                {
                     CreateEdit(rootTm);
-                }
 
                 SetSortingOrder(sortingOrder);
             }
 
             if (isWind)
-            {
                 SetMaterial(Game.Type.EMaterial.WindEffect);
-            }
 
+            ObjectActCtr = gameObject.GetOrAddComponent<ObjectActController>()?.Initialize(animator);
+            
             edit?.Initialize(new Edit.Data()
             {
                 IListener = this,

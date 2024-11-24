@@ -13,6 +13,8 @@ namespace Game
         [SerializeField]
         protected SpriteRenderer spriteRenderer = null;
         [SerializeField]
+        protected Animator animator = null;
+        [SerializeField]
         protected UI.Edit edit = null;
 
         [Tooltip("배치 중 다른 주민 / 꾸미기 요소와 겹쳐서 배치 가능한지 여부. (체크 시, 겹쳐서 배치 불가.)")]
@@ -46,7 +48,7 @@ namespace Game
             spriteRenderer.sortingOrder = order;
         }
 
-        public void SetLocalPos(float x, float y, float z)
+        private void SetLocalPos(float x, float y, float z)
         {
             if (!transform)
                 return;

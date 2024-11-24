@@ -6,7 +6,6 @@ using Cysharp.Threading.Tasks;
 
 using Game;
 using Game.Element.State;
-using GameSystem;
 
 namespace Game.Creature
 {
@@ -19,6 +18,7 @@ namespace Game.Creature
         Game.Type.EGameState EGameState { get; }
 
         void Touch();
+        Vector3 LocalPos { get; }
     }
 
     [ExecuteInEditMode]
@@ -36,8 +36,6 @@ namespace Game.Creature
         [Header("Skin")]
         [SerializeField]
         private int skinId = 0;
-        [SerializeField]
-        private Animator animator = null;
         
         private AnimalRoot _animalRoot = null;
         private IPlaceState.EType _iPlaceState = IPlaceState.EType.None;
@@ -117,6 +115,9 @@ namespace Game.Creature
 
         public override void OnTouchBegan(Touch? touch, GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
+            if (State is Interaction)
+                return;
+            
             base.OnTouchBegan(touch, gameCameraCtr, iGrid);
 
             var mainGameMgr = MainGameManager.Instance;

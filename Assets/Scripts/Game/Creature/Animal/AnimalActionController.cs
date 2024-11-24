@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Game.Creature
@@ -42,14 +43,12 @@ namespace Game.Creature
             if(_iAnimal.EGameState == Type.EGameState.Edit ||
                _iAnimal.EGameState == Type.EGameState.Conversation)
                 return;
-
-            // int count = 0;
-            _currentAnimalAction = RandomAnimalAction;
-            // if (_currentAnimalAction is SignatureAction)
-            // {
-            //     count = 2;
-            // }
-
+            
+            var randomAnimalAction = RandomAnimalAction;
+            if (randomAnimalAction is WalkAction)
+                randomAnimalAction.SetActionData(GetWalkActionData(GetRandomPos(_iAnimal.LocalPos.z)));
+            
+            _currentAnimalAction = randomAnimalAction;
             _currentAnimalAction?.StartAction();
         }
 
@@ -123,9 +122,30 @@ namespace Game.Creature
             StartAction<SignatureAction>();
         }
 
-        public void MoveToTarget(WalkAction.Data data)
+        public void MoveToTarget(Vector3 targetPos, System.Action endAction)
         {
-            StartAction<WalkAction>(data);
+            StartAction<WalkAction>(GetWalkActionData(targetPos, endAction));
+        }
+
+        private WalkAction.Data GetWalkActionData(Vector3 targetPos, System.Action endAction = null)
+        {
+            return new WalkAction.Data
+            {
+                TargetPos = targetPos,
+                EndAction = endAction,
+            };
+        }
+        
+        private Vector3 GetRandomPos(float z)
+        {
+            var iGameCameraCtr = MainGameManager.Instance?.IGameCameraCtr;
+            if (iGameCameraCtr == null)
+                return Vector3.zero;
+
+            var randomX = iGameCameraCtr.RandPosXInScreenRagne;
+            var randomY = iGameCameraCtr.RandPosYInScreenRagne;
+
+            return new Vector3(randomX, randomY, z);
         }
 
         #region Action.IListener

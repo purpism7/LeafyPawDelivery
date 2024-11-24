@@ -26,12 +26,12 @@ namespace Game
             _instance?.Initialize(iGridCell);
         }
 
-        public static async UniTask<List<Vector3>> MoveAsync(Vector3 targetPos)
+        public static async UniTask<List<Vector3>> MoveAsync(Vector3 startPos, Vector3 targetPos)
         {
             if (_instance == null)
                 return null;
 
-            return await _instance.MoveByAStarAsync(targetPos);
+            return await _instance.MoveByAStarAsync(startPos, targetPos);
         }
 
         private IGridCell _iGridCell = null;
@@ -44,7 +44,7 @@ namespace Game
             _aStar = new();
         }
 
-        private async UniTask<List<Vector3>> MoveByAStarAsync(Vector3 targetPos)
+        private async UniTask<List<Vector3>> MoveByAStarAsync(Vector3 startPos, Vector3 targetPos)
         {
             List<Vector3> pathPosList = null;
 
@@ -57,11 +57,11 @@ namespace Game
 
             _aStar.Path?.Clear();
 
-            var cell = _iGridCell.GetCell(targetPos);
+            var cell = _iGridCell.GetCell(startPos);
             if (cell == null)
                 return pathPosList;
 
-            var targetCell = _iGridCell.GetCell(GetRandomPos(targetPos.z));
+            var targetCell = _iGridCell.GetCell(targetPos);
             if (targetCell.IsOverlap)
                 return pathPosList;
 
