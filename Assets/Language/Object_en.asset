@@ -566,6 +566,26 @@ MonoBehaviour:
     m_Localized: Letter
     m_Metadata:
       m_Items: []
+  - m_Id: 172842010178215936
+    m_Localized: Flower bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 172842371572031488
+    m_Localized: Lea's Bench
+    m_Metadata:
+      m_Items: []
+  - m_Id: 172842541411983360
+    m_Localized: Sprout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 172842691249299456
+    m_Localized: Butterfly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 172842856114806784
+    m_Localized: Sleeping Hale
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
