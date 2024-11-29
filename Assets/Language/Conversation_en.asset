@@ -194,6 +194,95 @@ MonoBehaviour:
     m_Localized: "Not yet? I\u2019ll make it shine for you!"
     m_Metadata:
       m_Items: []
+  - m_Id: 44330516025958400
+    m_Localized: Ah, today was such a tough day.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44330645504122880
+    m_Localized: Why does nothing ever go the way I want?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44330683655512064
+    m_Localized: Well, there's nothing we can do about it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44330724944240640
+    m_Localized: Living just going with the flow isn't so bad.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44330761002672128
+    m_Localized: For some reason, I heard things I didn't want to hear today.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44330800328466432
+    m_Localized: I feel like it doesn't really matter what I do.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44330880926212096
+    m_Localized: "I\u2019m just going to do my own thing, not worrying about anything!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44330916892368896
+    m_Localized: "Let\u2019s just eat something delicious!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44330956717285376
+    m_Localized: We can definitely get through this.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44331088733003776
+    m_Localized: Don't struggle alone, you can always lean on me!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44331124330061824
+    m_Localized: "I\u2019ll always be by your side."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332525240180736
+    m_Localized: Why are you making such a big deal out of something like that?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332623340756992
+    m_Localized: Shake it off and get up already.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332647118266368
+    m_Localized: You're too good to be knocked down by something like that.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332663950008320
+    m_Localized: Is that really what you call a problem?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332702696988672
+    m_Localized: I think you're overthinking it.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332732141002752
+    m_Localized: How about just quitting everything and taking a break?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332762772004864
+    m_Localized: Maybe you'll feel better after that.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332792203436032
+    m_Localized: Sorry, but I'm about to pass out from sleepiness.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332824822538240
+    m_Localized: "It doesn\u2019t seem like a big deal, so try to think of it lightly."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332860855803904
+    m_Localized: "Honestly, it\u2019s probably nothing."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44332893625901056
+    m_Localized: "After some time, you probably won\u2019t even remember what it
+      was."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
