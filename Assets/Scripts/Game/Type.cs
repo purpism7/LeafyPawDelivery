@@ -197,6 +197,7 @@ namespace Game
 
             InappPurchase,
             ShowAD,
+            InteractionAnimal,
         }
 
         public enum EPosZOrder

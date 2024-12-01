@@ -413,6 +413,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             gameState.Initialize(this);
             await gameState.InitializeAsync(this);
         }
+        
+        Debug.Log(gameState?.GetType());
     }
     #endregion
 
@@ -616,6 +618,24 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             return;
 
         _startEditAction?.Invoke(obj);
+    }
+
+    public void SpawnSpecialObjectToPlace(int id)
+    {
+        SetGameStateAsync(Game.Type.EGameState.Edit).Forget();
+
+        Game.UIManager.Instance?.Bottom?.DeactivateAnim(
+            () =>
+            {       
+                SpwanObjectToPlace(id);
+                // SetState(new Element.State.Edit().Initialize(gameCameraCtr, iGrid));
+                // SetSortingOrder(SelectOrder);
+                // edit?.ActivateBottom();
+                //
+                // State?.Touch(TouchPhase.Began, null);
+
+                        
+            });
     }
 
     private void ResetNotificationPossibleBuy(int placeId)

@@ -304,11 +304,11 @@ MonoBehaviour:
   Id: 137
   UId: 0
   spriteRenderer: {fileID: 8198808596251828485}
+  animator: {fileID: 8612667344606031241}
   edit: {fileID: 0}
   IsOverlap: 0
   goPass: 1
-  isWind: 0
-  animator: {fileID: 8612667344606031241}
+  isWind: 1
   sortingOrderOffset: 0
   hiddenRootTm: {fileID: 0}
   arrivalPointTm: {fileID: 5346664245655429080}

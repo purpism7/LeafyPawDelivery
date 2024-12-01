@@ -109,7 +109,7 @@ namespace Game
                     editState.CheckIsEditElement(this))
                     return;
 
-                SetState(new Game.Element.State.Edit()?.Initialize(gameCameraCtr, iGrid));
+                SetState<Game.Element.State.Edit>(gameCameraCtr, iGrid);
 
                 SetSortingOrder(SelectOrder);
                 edit?.ActivateBottom();
@@ -127,7 +127,7 @@ namespace Game
                     return;
                 }
 
-                SetState(new Game.Element.State.Play()?.Initialize(gameCameraCtr, iGrid));
+                SetState<Game.Element.State.Play>(gameCameraCtr, iGrid);
             }
 
             if(touch != null)

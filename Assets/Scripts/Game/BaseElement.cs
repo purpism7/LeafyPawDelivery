@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Element.State;
 using UnityEngine;
 
 namespace Game
@@ -28,10 +29,11 @@ namespace Game
         protected Collider2D _collider2D = null;
         protected Game.Type.EMaterial _eMaterial = Type.EMaterial.None;
         protected bool _spwaned = false;
+        protected List<Element.State.Base> _cachedStateList = null;
 
         public ElementCollision ElementCollision { get; protected set; } = null;
         public ElementData ElementData { get; protected set; } = null;
-        public Game.Element.State.BaseState State { get; protected set; } = null;
+        public Game.Element.State.Base State { get; protected set; } = null;
         public bool IsMoving { get; private set; } = false;
         public bool GoPass { get { return goPass; } }
 
@@ -125,17 +127,34 @@ namespace Game
             _eMaterial = eMaterial;
         }
 
-        protected void SetState(Game.Element.State.BaseState state)
+        protected void SetState<T>(GameSystem.GameCameraController gameCameraCtr = null, GameSystem.IGrid iGrid = null) where T : Element.State.Base, new()
         {
-            if (State != null &&
-                state != null)
+            if (State != null)
             {
-                if (State.CheckState(state.Type))
+                if (State.CheckState(typeof(T)))
                     return;
             }
 
+            if (_cachedStateList == null)
+            {
+                _cachedStateList = new();
+                _cachedStateList.Clear();
+            }
+            
+            Game.Element.State.Base state = null;
+            Game.Element.State.Base findState = _cachedStateList.Find(cachedState => cachedState.GetType() == typeof(T));
+            if (findState != null)
+                state = findState;
+            else
+            {
+                state = new T();
+                state.Initialize(gameCameraCtr, iGrid);
+                
+                _cachedStateList?.Add(state);
+            }
+            
             State?.End();
-
+            
             if (state is Game.Element.State.Edit)
             {
                 SetMaterial(Game.Type.EMaterial.Outline);
@@ -151,7 +170,7 @@ namespace Game
                 }
             }
 
-            state?.Apply(this);
+            state.Apply(this);
 
             State = state;
         }
@@ -227,7 +246,7 @@ namespace Game
 
             SetSpwaned(false);
             edit?.DeactivateEdit();
-            SetState(null);
+            SetState<DeActive>();
         }
 
         protected virtual void Remove(bool refresh)
@@ -236,7 +255,7 @@ namespace Game
 
             SetSpwaned(true);
             edit?.DeactivateEdit();
-            SetState(null);
+            SetState<DeActive>();
         }
 
         protected virtual void Conversation()

@@ -179,7 +179,7 @@ namespace UI
 
             if(initialiae)
             {
-                await UniTask.Yield();
+                await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             }
 
             ActivateAnim(EditListRootRectTm, null);

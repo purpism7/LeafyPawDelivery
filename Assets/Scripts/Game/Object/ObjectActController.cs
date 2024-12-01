@@ -35,10 +35,11 @@ namespace Game
             PlayAnimation("Special");
 
             float length = _animator.GetCurrentAnimatorStateInfo(0).length;
-            await UniTask.Delay(TimeSpan.FromSeconds(length * 2f));
+            await UniTask.Delay(TimeSpan.FromSeconds(length * 3f));
             
             PlayAnimation("Idle");
-            
+
+            await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
             endAction?.Invoke();
         }
     }

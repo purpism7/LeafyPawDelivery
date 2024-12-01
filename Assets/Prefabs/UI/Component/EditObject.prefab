@@ -126,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootRectTm: {fileID: 5165180990436983666}
   iconImg: {fileID: 6082806331686416354}
+  specialObjectRectTm: {fileID: 3951889149887278814}
   countTMP: {fileID: 7230760478398441707}
   guideLineImg: {fileID: 5535086821205528185}
 --- !u!1 &5349917826473786083

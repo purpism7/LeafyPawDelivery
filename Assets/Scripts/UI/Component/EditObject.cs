@@ -42,14 +42,13 @@ namespace UI.Component
             SetIconImg();
             SetCount();
             SetTutorial();
+            
+            GameUtils.SetActive(specialObjectRectTm, _data != null && AnimalContainer.Instance.CheckExistInteraction(_data.ObjectId));
         }
 
         public override void Activate()
         {
             base.Activate();
-
-            if (_data != null)
-                GameUtils.SetActive(specialObjectRectTm, AnimalContainer.Instance.CheckExistInteraction(_data.ObjectId));
             
             GameUtils.SetActive(transform, true);
         }

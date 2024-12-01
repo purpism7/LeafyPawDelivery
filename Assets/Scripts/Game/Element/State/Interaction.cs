@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using Game.Creature;
-using GameSystem;
 using UnityEngine;
 
 namespace Game.Element.State
 {
-    public class Interaction : BaseState
+    public class Interaction : Base
     {
-        public override BaseState Initialize()
+        public interface IListener
         {
-            base.Initialize();
+            void Finish();
+        }
+
+        private IListener _iListener = null;
+        
+        public override Base Initialize(GameSystem.GameCameraController gameCameraCtr = null, GameSystem.IGrid iGrid = null)
+        {
+            base.Initialize(gameCameraCtr, iGrid);
             
             Type = Game.Type.EElementState.Interaction;
             
@@ -33,19 +38,23 @@ namespace Game.Element.State
             if (iPlace == null)
                 return;
             
-            var obj = iPlace.ObjectList.Find(obj => obj.Id == interactionObjectId);
+            var obj = iPlace.ObjectList?.Find(obj => obj.Id == interactionObjectId);
             var iObject = obj as IObject;
             if (iObject != null)
             {
                 animal.ActionCtr?.MoveToTarget(iObject.LocalPos,
                     () =>
                     {
-                        // animal.Deactivate();
-                        // End();
+                        UIManager.Instance.ActivateSreenSaver(Game.Type.EScreenSaverType.InteractionAnimal);
+                        animal.Deactivate();
+                        _iListener = animal;
+                        
                         obj?.ObjectActCtr?.PlaySpecial(
                             () =>
                             {
+                                _iListener?.Finish();
                                 
+                                UIManager.Instance?.DeactivateScreenSaver();
                             }
                         );
                     });
@@ -55,8 +64,6 @@ namespace Game.Element.State
         public override void End()
         {
             base.End();
-            
-            
         }
     }
 }

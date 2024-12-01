@@ -2,24 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Cysharp.Threading.Tasks;
 
 namespace Game.Element.State
 {
-    public class BaseState
+    public class Base
     {
-        private static BaseState _instance = null;
+        private static Base _instance = null;
 
-        public static BaseState Create()
+        public static Base Create()
         {
-            _instance = new BaseState();
+            _instance = new Base();
             
             return _instance?.Initialize();
         }
 
-        public static BaseState Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
+        public static Base Create(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
-            _instance = new BaseState();
+            _instance = new Base();
             
             return _instance?.Initialize(gameCameraCtr, iGrid);
         }
@@ -28,20 +27,20 @@ namespace Game.Element.State
 
         public Game.Type.EElementState Type { get; protected set; } = Game.Type.EElementState.None;
 
-        public bool CheckState(Type.EElementState type)
+        public bool CheckState(System.Type type)
         {
-            return Type == type;
+            return GetType() == type;
         }
 
-        public virtual BaseState Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
+        public virtual Base Initialize(GameSystem.GameCameraController gameCameraCtr = null, GameSystem.IGrid iGrid = null)
         {
             return this;
         }
 
-        public virtual BaseState Initialize()
-        { 
-            return this;
-        }
+        // public virtual BaseState Initialize()
+        // { 
+        //     return this;
+        // }
 
         public virtual void Touch(TouchPhase touchPhase, Touch? touch)
         {

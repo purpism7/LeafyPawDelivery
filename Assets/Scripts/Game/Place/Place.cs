@@ -500,7 +500,7 @@ namespace Game
                 }
             }
         }
-
+        
         public void Boom()
         {
             SetState(IPlaceState.EType.Active);

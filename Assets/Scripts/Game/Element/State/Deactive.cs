@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Game.Element.State
 {
-    public class Deactive : BaseState
+    public class DeActive : Base
     {
-        public override BaseState Initialize()
+        public override Base Initialize(GameSystem.GameCameraController gameCameraCtr = null, GameSystem.IGrid iGrid = null)
         {
-            base.Initialize();
+            base.Initialize(gameCameraCtr, iGrid);
 
             return this;
         }

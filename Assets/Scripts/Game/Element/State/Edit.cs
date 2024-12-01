@@ -7,12 +7,12 @@ using Cysharp.Threading.Tasks;
 
 namespace Game.Element.State
 {
-    public class Edit : BaseState
+    public class Edit : Base
     {
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private GameSystem.IGrid _iGrid = null;
         
-        public override BaseState Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
+        public override Base Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             base.Initialize(gameCameraCtr, iGrid);
 

@@ -22,7 +22,7 @@ namespace Game.Creature
     }
 
     [ExecuteInEditMode]
-    public class Animal : BaseElement<Animal.Data>, IAnimal, State.Conversation.IListener
+    public class Animal : BaseElement<Animal.Data>, IAnimal, State.Conversation.IListener, Game.Element.State.Interaction.IListener
     {
         public class Data : BaseData
         {
@@ -132,7 +132,7 @@ namespace Game.Creature
                     editState.CheckIsEditElement(this))
                     return;
 
-                SetState(new Element.State.Edit().Initialize(gameCameraCtr, iGrid));
+                SetState<Element.State.Edit>(gameCameraCtr, iGrid);
                 SetSortingOrder(SelectOrder);
                 edit?.ActivateBottom();
 
@@ -141,7 +141,7 @@ namespace Game.Creature
                 return;
             }
            
-            SetState(new Element.State.Play().Initialize(gameCameraCtr, iGrid));
+            SetState<Play>(gameCameraCtr, iGrid);
 
             if (touch != null)
             {
@@ -179,13 +179,24 @@ namespace Game.Creature
         protected override void Conversation()
         {
             MainGameManager.Get<AnimalManager>()?.SetConverationAnimal(this);
-            
             MainGameManager.Instance?.SetGameStateAsync(Type.EGameState.Conversation).Forget();
         }
 
         protected override void Special()
         {
-            SetState(new Interaction().Initialize());
+            IPlace iPlace = MainGameManager.Get<PlaceManager>().ActivityPlace;
+            if (iPlace == null)
+                return;
+            
+            var animalData = AnimalContainer.Instance?.GetData(Id);
+            if (animalData == null)
+                return;
+
+            var specialObject = iPlace.ObjectList?.Find(obj => obj.IsActivate && obj.Id == animalData.InteractionId);
+            if (specialObject != null)
+                SetState<Interaction>();
+            else
+                MainGameManager.Instance?.SpawnSpecialObjectToPlace(animalData.InteractionId);
         }
 
         public void StartSignatureAction()
@@ -286,6 +297,15 @@ namespace Game.Creature
             StartSignatureAction();
         }
         #endregion
+        
+        #region Interaction.IListener
+
+        void Interaction.IListener.Finish()
+        {
+            Activate();
+            SetState<Play>();
+        }
+        #endregion
 
         private void SetPlaceState(IPlaceState.EType state)
         {
@@ -298,7 +318,7 @@ namespace Game.Creature
             {
                 case IPlaceState.EType.Deactive:
                     {
-                        SetState(new Element.State.Deactive().Initialize());
+                        SetState<DeActive>();
 
                         DeactivateChild().Forget();
 
@@ -308,6 +328,13 @@ namespace Game.Creature
                     {
                         _data.Pos = LocalPos;
 
+                        if (State is Interaction)
+                        {
+                            ReadyToInteraction = false;
+                            SetState<DeActive>();
+                        }
+                        
+                        
                         DeactivateChild().Forget();
 
                         break;

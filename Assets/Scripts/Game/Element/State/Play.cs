@@ -6,14 +6,14 @@ using Game.Creature;
 
 namespace Game.Element.State
 {
-    public class Play : BaseState
+    public class Play : Base
     {
         readonly private float TouchInterval = 0.15f;
 
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private DateTime _touchDateTime;
 
-        public override BaseState Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
+        public override Base Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             Type = Game.Type.EElementState.Play;
 

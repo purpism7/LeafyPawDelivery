@@ -223,7 +223,6 @@ namespace GameSystem
                 _longPress = true;
 
                 MainGameManager.Instance?.SetGameStateAsync(Game.Type.EGameState.Edit);
-
                 Game.UIManager.Instance?.Bottom?.DeactivateAnim(
                     () =>
                     {       
