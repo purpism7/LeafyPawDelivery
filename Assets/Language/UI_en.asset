@@ -335,6 +335,14 @@ MonoBehaviour:
     m_Localized: Friendship
     m_Metadata:
       m_Items: []
+  - m_Id: 174345196894412800
+    m_Localized: Try to get closer to {0}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 170420406093602816
+    m_Localized: We're already so close!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
