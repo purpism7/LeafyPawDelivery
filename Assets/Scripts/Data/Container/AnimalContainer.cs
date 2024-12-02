@@ -64,4 +64,21 @@ public class AnimalContainer : BaseContainer<AnimalContainer, Animal>
 
         return false;
     }
+    
+    public Animal GetDataByInteractionId(int objectId)
+    {
+        if (_datas == null)
+            return null;
+        
+        foreach (var data in _datas)
+        {
+            if (data == null)
+                continue;
+
+            if (data.InteractionId == objectId)
+                return data;
+        }
+
+        return null;
+    }
 }

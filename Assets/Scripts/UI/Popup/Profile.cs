@@ -121,8 +121,8 @@ namespace UI
             {
                 tabToggle.SetIsOnWithoutNotify(true);
             }
-
-            disableRectTms?.Last().SetActive(!MainGameManager.Get<ObjectManager>().CheckExist(InteractionObjectId));
+            
+            disableRectTms?.Last().SetActive(ObjectContainer.Instance?.GetData(InteractionObjectId) != null);
 
             SetAnimalSkinList();
             
@@ -544,7 +544,7 @@ namespace UI
             if (userMgr == null)
                 return;
 
-            userMgr?.User?.SetCash(-animalSkinData.Cash);
+            userMgr.User?.SetCash(-animalSkinData.Cash);
 
             ITop iTop = Game.UIManager.Instance?.Top;
             iTop?.SetCurrency();

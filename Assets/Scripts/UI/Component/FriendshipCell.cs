@@ -9,6 +9,7 @@ using TMPro;
 
 using Game;
 using GameSystem;
+using UnityEngine.Localization.Settings;
 
 namespace  UI.Component
 {
@@ -150,6 +151,22 @@ namespace  UI.Component
         {
             if (item == null)
                 return;
+
+            // if (item.EPayment == Type.EPayment.Cash)
+            // {
+            //     var user = Info.UserManager.Instance?.User;
+            //     long userCash = 0;
+            //     if (user != null)
+            //         userCash = user.Cash;
+            //
+            //     if (userCash < item.Price)
+            //     {
+            //         var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
+            //         Game.Toast.Get?.Show(localDesc);
+            //         
+            //         return;
+            //     }
+            // }
             
             _data?.IListener?.GiveGift(item, startPos,
                 () =>
@@ -157,7 +174,7 @@ namespace  UI.Component
                     if (_data == null)
                         return;
                     
-                    MainGameManager.Get<AnimalManager>().AddFriendshipPoint(_data.Id, item.Value);
+                    MainGameManager.Get<AnimalManager>()?.AddFriendshipPoint(_data.Id, item.Value, -item.Price);
 
                     SetPointInfo();
                     RefreshGiftItemCell();

@@ -313,9 +313,6 @@ namespace UI
 
             foreach (var data in datas)
             {
-                if (data == null)
-                    continue;
-
                 var objectInfo = objectMgr.GetObjectInfoById(data.Id);
                 if (objectInfo == null)
                 {
@@ -325,9 +322,6 @@ namespace UI
 
                 int resIndex = GetIndex(objectMgr, data.Id, ref _objectIndex);
 
-                
-                // MainGameManager.Get<AnimalManager>().CheckGetFriendshipReward()
-                
                 AddArrangementCell(
                     new ArrangementCell.Data()
                     {

@@ -7,10 +7,10 @@ using UnityEngine.Localization.Settings;
 
 using TMPro;
 using DG.Tweening;
-using UnityEngine.Localization.Components;
 
 using GameSystem;
 using Game;
+using Type = Game.Type;
 
 namespace UI.Component
 {
@@ -106,9 +106,7 @@ namespace UI.Component
             base.Activate();
 
             SetNameTMP();
-
             ActivateOpenConditionList();
-
             SetHiddenOpenDescTMP();
             
             if(_data != null)
@@ -170,10 +168,9 @@ namespace UI.Component
                 var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
                 if (openCondition != null)
                 {
-                    if(openCondition.eType == OpenConditionData.EType.Hidden)
-                    {
+                    if(openCondition.eType == OpenConditionData.EType.Hidden ||
+                       openCondition.eType == OpenConditionData.EType.Special)
                         localName = string.Empty;
-                    }
                 }
             }
 
@@ -256,6 +253,23 @@ namespace UI.Component
 
             openDescTMP?.SetText(string.Format(desc, localName));
         }
+        
+        private void SetSpecialObjectDescTMP()
+        {
+            if (_data.EElement != Game.Type.EElement.Object)
+                return;
+         
+            openNameTMP?.SetText(string.Empty);
+            
+            var animalData = AnimalContainer.Instance?.GetDataByInteractionId(_data.Id);
+            if (animalData == null)
+                return;
+                    
+            var localName = GameUtils.GetName(Type.EElement.Animal, animalData.Id, Games.Data.Const.AnimalBaseSkinId);
+            var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_try_to_get_closer", LocalizationSettings.SelectedLocale);
+
+            openDescTMP?.SetText(string.Format(localDesc, localName));
+        }
 
         private void SetAnimalOpenCondition()
         {
@@ -300,9 +314,7 @@ namespace UI.Component
 
                 case OpenConditionData.EType.Special:
                 {
-                    // GameUtils.SetActive(specialIconImg, true);
-
-                    openDescTMP?.SetText("ㅇ아녕");
+                    SetSpecialObjectDescTMP();
                     
                     return;
                 }

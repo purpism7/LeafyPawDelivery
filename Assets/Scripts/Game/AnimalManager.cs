@@ -237,15 +237,13 @@ namespace Game
         
         #region Friendship
 
-        public void AddFriendshipPoint(int id, int point)
+        public void AddFriendshipPoint(int id, int point, int cash = 0)
         {
             if (_animalHolder == null)
                 return;
 
             if (_animalHolder.AddFriendshipPoint(id, point))
-            {
-                Info.UserManager.Instance?.AddFriendshipPoint(id, point);
-            }
+                Info.UserManager.Instance?.AddFriendshipPoint(id, point, cash);
         }
 
         public bool CheckGetFriendshipReward(int id, int index)

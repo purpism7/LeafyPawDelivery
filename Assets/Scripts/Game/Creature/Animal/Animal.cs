@@ -251,7 +251,7 @@ namespace Game.Creature
             
             if (isInteracition)
             {
-                ReadyToInteraction = true;
+                ReadyToInteraction = true; 
                 
                 edit?.ActivateTopAsync(isInteracition,
                     () =>
@@ -333,7 +333,6 @@ namespace Game.Creature
                             ReadyToInteraction = false;
                             SetState<DeActive>();
                         }
-                        
                         
                         DeactivateChild().Forget();
 
