@@ -176,6 +176,9 @@ namespace  UI.Component
                     
                     MainGameManager.Get<AnimalManager>()?.AddFriendshipPoint(_data.Id, item.Value, -item.Price);
 
+                    ITop iTop = Game.UIManager.Instance?.Top;
+                    iTop?.SetCurrency();
+                    
                     SetPointInfo();
                     RefreshGiftItemCell();
                 });

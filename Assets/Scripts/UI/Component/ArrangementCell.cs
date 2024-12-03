@@ -671,6 +671,8 @@ namespace UI.Component
             if (_data.isTutorial)
                 return;
 
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+            
             if(_data.EElement == Game.Type.EElement.Object)
             {
                 var openCondition = ObjectOpenConditionData;
@@ -679,10 +681,28 @@ namespace UI.Component
 
                 if (openCondition.eType == OpenConditionData.EType.Hidden)
                     return;
+
+                if (openCondition.eType == OpenConditionData.EType.Special)
+                {
+                    var animalData = AnimalContainer.Instance?.GetDataByInteractionId(_data.Id);
+                    if (animalData == null)
+                        return;
+                    
+                    var popup = new PopupCreator<Profile, Profile.Data>()
+                        .SetReInitialize(true)
+                        .SetData(
+                            new Profile.Data()
+                            {
+                                EElement = Type.EElement.Animal,
+                                Id = animalData.Id,
+                        
+                            })
+                        .Create();
+                    
+                    return;
+                }
             }
-
-            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
-
+            
             CreateObtainPopup();
         }
 

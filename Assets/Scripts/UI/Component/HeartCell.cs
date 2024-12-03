@@ -98,7 +98,7 @@ namespace UI.Component
                 .Append(transform.DOMove(_data.StartPos, 0))
                 .AppendCallback(() => { Activate(); })
                 .Append(transform.DOPath(wayPoints, duration, PathType.CatmullRom).SetEase(Ease.Linear))
-                .AppendInterval(0.3f)
+                .AppendInterval(0.1f)
                 .OnComplete(() =>
                 {
                     Deactivate();
