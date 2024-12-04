@@ -695,7 +695,11 @@ namespace UI.Component
                             {
                                 EElement = Type.EElement.Animal,
                                 Id = animalData.Id,
-                        
+                                RefreshAction = () =>
+                                {
+                                    
+                                },
+
                             })
                         .Create();
                     

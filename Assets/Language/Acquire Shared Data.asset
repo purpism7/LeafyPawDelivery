@@ -75,6 +75,10 @@ MonoBehaviour:
     m_Key: dailymission_total
     m_Metadata:
       m_Items: []
+  - m_Id: 149944900281950208
+    m_Key: achievement_10
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
