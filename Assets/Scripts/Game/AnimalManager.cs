@@ -243,7 +243,11 @@ namespace Game
                 return;
 
             if (_animalHolder.AddFriendshipPoint(id, point))
+            {
                 Info.UserManager.Instance?.AddFriendshipPoint(id, point, cash);
+
+                MainGameManager.Instance?.AddAcquire(Type.EAcquire.AnimalFriendship, Type.EAcquireAction.Obtain, point);
+            }
         }
 
         public bool CheckGetFriendshipReward(int id, int index)

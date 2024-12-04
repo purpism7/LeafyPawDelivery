@@ -204,11 +204,6 @@ namespace UI
                 return;
 
             iDailyMission.Reset();
-            //var iDailyMission = cell as Component.IDailyMission;
-            //if (iDailyMission == null)
-            //    return;
-
-            //iDailyMission.Reset();
         }
 
         private void SetAchievementList()
@@ -217,6 +212,9 @@ namespace UI
             if (achievementListDic == null)
                 return;
 
+            // var dic = new Dictionary<int, List<Achievement>>();
+            // dic.Clear();
+            
             foreach (var pair in achievementListDic)
             {
                 var cell = new GameSystem.ComponentCreator<Component.AchievementCell, Component.AchievementCell.Data>()

@@ -154,6 +154,7 @@ namespace Game
             Story,
             //Stamp,
             Letter,
+            AnimalFriendship,
         }
 
         public enum EAcquireAction

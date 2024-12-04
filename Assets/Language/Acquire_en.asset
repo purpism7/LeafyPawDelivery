@@ -78,6 +78,10 @@ MonoBehaviour:
     m_Localized: Complete all daily missions
     m_Metadata:
       m_Items: []
+  - m_Id: 149944900281950208
+    m_Localized: Raise animals' affection
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

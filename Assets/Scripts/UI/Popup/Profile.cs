@@ -21,6 +21,7 @@ namespace UI
             public int Id = 0;
             public Game.Type.EElement EElement = Game.Type.EElement.None;
             public bool IsSpecialObject = false;
+            public System.Action RefreshAction = null;
         }
 
         [Header("Animal")]
