@@ -203,6 +203,7 @@ namespace UI
                 return;
 
             var datas = dataList.OrderBy(obj => obj.Order);
+            datas = datas.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special);
 
             foreach (var data in datas)
             {
