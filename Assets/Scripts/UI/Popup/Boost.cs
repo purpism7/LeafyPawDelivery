@@ -295,7 +295,8 @@ namespace UI
                         .SetData(new BuyCash.Data()
                         {
                             IListener = this,
-                            Cash = boostData.reqCash,
+                            EPayment = Type.EPayment.Cash,
+                            Price = boostData.reqCash,
                             targetSprite = boostData.iconSprite,
                         })
                         .Create();

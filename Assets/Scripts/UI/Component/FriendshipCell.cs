@@ -9,6 +9,7 @@ using TMPro;
 
 using Game;
 using GameSystem;
+using Info;
 using UnityEngine.Localization.Settings;
 
 namespace  UI.Component
@@ -174,10 +175,35 @@ namespace  UI.Component
                     if (_data == null)
                         return;
                     
-                    MainGameManager.Get<AnimalManager>()?.AddFriendshipPoint(_data.Id, item.Value, -item.Price);
+                    switch (item.EPayment)
+                    {
+                        case Type.EPayment.Cash:
+                        {
+                            var user = Info.UserManager.Instance.User;
+                            if (user == null)
+                                return;
 
+                            user.SetCash(-item.Price);
+
+                            break;
+                        }
+
+                        case Type.EPayment.ObjectCurrency:
+                        {
+                            var user = Info.UserManager.Instance.User;
+                            if (user == null)
+                                return;
+
+                            user.SetCurrency(Type.EElement.Object, -item.Price);
+
+                            break;
+                        }
+                    }
+                    
                     ITop iTop = Game.UIManager.Instance?.Top;
                     iTop?.SetCurrency();
+                    
+                    MainGameManager.Get<AnimalManager>()?.AddFriendshipPoint(_data.Id, item.Value);
                     
                     SetPointInfo();
                     RefreshGiftItemCell();

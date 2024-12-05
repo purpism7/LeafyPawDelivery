@@ -313,6 +313,10 @@ MonoBehaviour:
     m_Key: desc_try_to_get_closer
     m_Metadata:
       m_Items: []
+  - m_Id: 175402413756243968
+    m_Key: not_enough_objectcurrency
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

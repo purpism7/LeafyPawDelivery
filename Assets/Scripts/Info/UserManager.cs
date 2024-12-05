@@ -322,9 +322,8 @@ namespace Info
 
         }
 
-        public void AddFriendshipPoint(int id, int point, int cash)
+        public void AddFriendshipPoint(int id, int point)
         {
-            User?.SetCash(cash);
             User?.AddFriendshipPoint(id, point);
             
             Save();

@@ -169,6 +169,8 @@ namespace Game
         {
             None,
 
+            ObjectCurrency,
+            
             Money,
             Cash,
             Advertising,

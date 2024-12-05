@@ -58,9 +58,7 @@ namespace UI.Component
             var user = Info.UserManager.Instance?.User;
             long userCash = 0;
             if(user != null)
-            {
                 userCash = user.Cash;
-            }
 
             var openConditionData = new OpenCondition.Data()
             {
@@ -124,7 +122,8 @@ namespace UI.Component
                         .SetData(new BuyCash.Data()
                         {
                             IListener = this,
-                            Cash = giftItem.Price,
+                            EPayment = giftItem.EPayment,
+                            Price = giftItem.Price,
                             targetSprite = GiftItemSprite,
                         })
                         .Create();

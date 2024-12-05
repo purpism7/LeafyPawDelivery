@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +15,9 @@ namespace UI
         public class Data : BaseData
         {
             public IListener IListener = null;
-            public int Cash = 0;
             public Sprite targetSprite = null;
+            public Type.EPayment EPayment = Type.EPayment.None;
+            public int Price = 0;
             public float scale = 1f;
         }
 
@@ -79,23 +81,75 @@ namespace UI
             if (openCondition == null)
                 return;
 
-            var user = Info.UserManager.Instance?.User;
-            long userCash = 0;
-            if (user != null)
-            {
-                userCash = user.Cash;
-            }
-
-            _possibleBuy = userCash >= _data.Cash;
-
+            _possibleBuy = CheckPossibleBuy;
+            
             var openConditionData = new OpenCondition.Data()
             {
-                ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
-                Text = _data.Cash.ToString(),
+                ImgSprite = CurrencySprite,
+                Text = _data.Price.ToString(),
                 PossibleFunc = () => _possibleBuy,
             };
 
             openCondition.Initialize(openConditionData);
+        }
+        
+        private Sprite CurrencySprite
+        {
+            get
+            {
+                switch (_data.EPayment)
+                {
+                    case Type.EPayment.Cash:
+                        return ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite;
+                    
+                    case Type.EPayment.ObjectCurrency:
+                    {
+                        var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
+                        if (placeData == null)
+                            return null;
+                        
+                        return ResourceManager.Instance?.AtalsLoader.GetCurrencySprite(placeData.ObjectSpriteName);
+                    }
+                    
+                    default:
+                        return null;
+                }
+            }   
+        }
+
+        private bool CheckPossibleBuy
+        {
+            get
+            {
+                switch (_data.EPayment)
+                {
+                    case Type.EPayment.Cash:
+                    {
+                        var user = Info.UserManager.Instance?.User;
+                        long userCash = 0;
+                        if (user != null)
+                            userCash = user.Cash;
+
+                        return userCash >= _data.Price;
+                    }
+                    
+                    case Type.EPayment.ObjectCurrency:
+                    {
+                        var user = Info.UserManager.Instance.User;
+                        if (user == null)
+                            return false;
+
+                        var currency = user.CurrenctCurrency;
+                        if (currency == null)
+                            return false;
+
+                        return currency.Object >= _data.Price;
+                    }
+                    
+                    default:
+                        return false;
+                }
+            }
         }
 
         public void OnClickCancel()
@@ -111,10 +165,17 @@ namespace UI
             
             if (!_possibleBuy)
             {
-                var text = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
-
-                Game.Toast.Get?.Show(text);
-
+                if (_data.EPayment == Type.EPayment.Cash)
+                {
+                    var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
+                    Game.Toast.Get?.Show(localDesc);
+                }
+                else if (_data.EPayment == Type.EPayment.ObjectCurrency)
+                {
+                    var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_objectcurrency", LocalizationSettings.SelectedLocale);
+                    Game.Toast.Get?.Show(localDesc);
+                }
+                
                 return;
             }
             

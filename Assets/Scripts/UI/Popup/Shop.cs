@@ -151,7 +151,8 @@ namespace UI
                 .SetData(new BuyCash.Data()
                 {
                     IListener = this,
-                    Cash = shopData.PaymentValue,
+                    EPayment = shopData.EPayment,
+                    Price = shopData.PaymentValue,
                     targetSprite = ResourceManager.Instance?.AtalsLoader?.GetShopItemSprite(shopData.ECategory, shopData.IconImg),
                 })
                 .Create();

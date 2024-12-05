@@ -19,6 +19,5 @@ public class Item : Data.Base
     
     [JsonProperty("payment")] 
     public Type.EPayment EPayment { get; private set; } = Type.EPayment.None;
-
 }
 

@@ -465,7 +465,8 @@ namespace UI
                         .SetData(new BuyCash.Data()
                         {
                             IListener = this,
-                            Cash = animalSkinData.Cash,
+                            EPayment = Type.EPayment.Cash,
+                            Price = animalSkinData.Cash,
                             targetSprite = ResourceManager.Instance?.AtalsLoader?.GetAnimalSkinSprite(animalSkinData.ImgName),
 
                             scale = 1.5f,

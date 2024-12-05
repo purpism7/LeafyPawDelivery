@@ -343,6 +343,10 @@ MonoBehaviour:
     m_Localized: We're already so close!
     m_Metadata:
       m_Items: []
+  - m_Id: 175402413756243968
+    m_Localized: Not enough Object Currency!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
