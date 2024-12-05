@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,7 +12,7 @@ namespace Game.Creature
 
         private AnimalAction _currentAnimalAction = null;
         private IAnimal _iAnimal = null;
-
+        
         public void Initialize(int id, IAnimal iAnimal, bool onlyIdle)
         {
             if (iAnimal == null)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Resources;
 
 using UnityEngine;
@@ -38,6 +39,8 @@ namespace  UI.Component
         [Header("Gift")]
         [SerializeField] 
         private RectTransform giftRootRectTm = null;
+        [SerializeField] 
+        private AD giveGiftAD = null;
         
         public override void Initialize(Data data)
         {
@@ -129,6 +132,7 @@ namespace  UI.Component
                         IListener = this,
                         AnimalId = _data.Id,
                         GiftItem = giftItem,
+                        ADData =  giftItem.EPayment == Type.EPayment.Advertising ? giveGiftAD?.Datas?.FirstOrDefault() : null,
                     })
                     .SetRootRectTm(giftRootRectTm)
                     .Create();
@@ -145,30 +149,9 @@ namespace  UI.Component
                 cell?.Refresh();
             }
         }
-        
-        #region GiftCell.IListener
 
-        void GiftItemCell.IListener.GiveGift(Item item, Vector3 startPos)
+        private void GiveGift(Item item, Vector3 startPos)
         {
-            if (item == null)
-                return;
-
-            // if (item.EPayment == Type.EPayment.Cash)
-            // {
-            //     var user = Info.UserManager.Instance?.User;
-            //     long userCash = 0;
-            //     if (user != null)
-            //         userCash = user.Cash;
-            //
-            //     if (userCash < item.Price)
-            //     {
-            //         var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
-            //         Game.Toast.Get?.Show(localDesc);
-            //         
-            //         return;
-            //     }
-            // }
-            
             _data?.IListener?.GiveGift(item, startPos,
                 () =>
                 {
@@ -208,6 +191,40 @@ namespace  UI.Component
                     SetPointInfo();
                     RefreshGiftItemCell();
                 });
+        }
+        
+        #region GiftCell.IListener
+
+        void GiftItemCell.IListener.GiveGift(Item item, Vector3 startPos)
+        {
+            if (item == null)
+                return;
+
+            if (item.EPayment == Type.EPayment.Advertising)
+            {
+                var adData = giveGiftAD?.Datas?.FirstOrDefault();
+                if (adData == null)
+                    return;
+
+                AdProvider.Get?.ShowAd(adData,
+                    (rewardValue) =>
+                    {
+                        if(rewardValue > 0)
+                            GiveGift(item, startPos);
+                        // if(rewardValue > 0)
+                        // {
+                        //     SuccessActivateBoost(true);
+                        // }
+                        // else
+                        // {
+                        //     SetPlayTimer(false);
+                        // }
+                    });
+
+                return;
+            }
+
+            GiveGift(item, startPos);
         }
         #endregion
     }

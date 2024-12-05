@@ -225,7 +225,7 @@ namespace Game
             AddAsync(data).Forget();
         }
 
-        public bool CheckExist(string key)
+        private bool CheckExist(string key)
         {
             if (_dataList == null)
                 return false;

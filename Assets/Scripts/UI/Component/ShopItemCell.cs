@@ -57,14 +57,6 @@ namespace UI.Component
 
             SetItemType();
             SetPlayTimer(true);
-
-            //if (data != null)
-            //{
-            //    if (data.empty)
-            //    {
-            //        Deactivate();
-            //    }
-            //}
         }
 
         public override void Activate()
@@ -202,7 +194,7 @@ namespace UI.Component
             if (adData == null)
                 return;
 
-            var rootType = GetType().Name;
+            // var rootType = GetType().Name;
             Game.Timer.Get?.Add(
                 new Game.Timer.Data()
                 {

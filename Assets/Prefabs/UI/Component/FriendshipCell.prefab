@@ -307,6 +307,7 @@ MonoBehaviour:
   - {fileID: 698142824508476922}
   - {fileID: 764498202609023734}
   giftRootRectTm: {fileID: 3710621081190614772}
+  giveGiftAD: {fileID: 11400000, guid: 357c3f78a6276454594acd94a3b33a62, type: 2}
 --- !u!1 &3879254476560880500
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ namespace UI.Component
             public IListener IListener = null;
             public int AnimalId = 0;
             public Item GiftItem = null;
+            public AD.Data ADData = null;
         }
         
         public interface IListener
@@ -125,6 +126,8 @@ namespace UI.Component
                             EPayment = giftItem.EPayment,
                             Price = giftItem.Price,
                             targetSprite = GiftItemSprite,
+                            
+                            ADData = _data.ADData,
                         })
                         .Create();
 
