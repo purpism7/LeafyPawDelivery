@@ -157,12 +157,13 @@ namespace UI
             int placeId = GameUtils.ActivityPlaceId;
             var objectDataList = ObjectContainer.Instance?.GetDataListByPlaceId(placeId);
 
-            var objectDatas = objectDataList?.OrderBy(data => data.Order);
+            var datas = objectDataList?.OrderBy(obj => obj.Order);
+            datas = datas?.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special);
 
             bool isTutorial = CheckIsTutorial;
             EnableScrollRect(objectScrollRect, !isTutorial);
 
-            foreach(var objectData in objectDatas)
+            foreach(var objectData in datas)
             {
                 if (objectData == null)
                     continue;

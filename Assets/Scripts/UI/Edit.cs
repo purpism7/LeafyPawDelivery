@@ -100,11 +100,11 @@ namespace UI
             DeactivateTop();
         }
 
-        public async UniTask ActivateTopAsync(bool isInteraction, System.Action action)
+        public async UniTask ActivateTopAsync(int specialObjectId, System.Action action)
         {
             DeactivateBotom();
-            GameUtils.SetActive(speechBubbleRectTm, isInteraction);
-            GameUtils.SetActive(interactionRectTm, isInteraction);
+            GameUtils.SetActive(speechBubbleRectTm, ObjectContainer.Instance?.GetData(specialObjectId) != null);
+            GameUtils.SetActive(interactionRectTm, MainGameManager.Get<Game.ObjectManager>().CheckExist(specialObjectId));
             ActivateTop();
 
             await UniTask.Delay(TimeSpan.FromSeconds(3f));

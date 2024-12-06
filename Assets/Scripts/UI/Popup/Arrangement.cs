@@ -92,9 +92,7 @@ namespace UI
                 if(tutorialMgr != null)
                 {
                     if(tutorialMgr.ETutorialStep == Game.Type.ETutorialStep.EditObject)
-                    {
                         _currETabType = Game.Type.ETab.Object;
-                    }
                 }
             }
 

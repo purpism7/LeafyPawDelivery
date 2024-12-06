@@ -21,6 +21,7 @@ namespace UI
             public int Id = 0;
             public Game.Type.EElement EElement = Game.Type.EElement.None;
             public bool IsSpecialObject = false;
+            public Type.ETab ETab = Type.ETab.Profile;
             public System.Action RefreshAction = null;
         }
 
@@ -114,14 +115,12 @@ namespace UI
         {
             base.Activate();
             
-            _currETabType = Type.ETab.Profile;
+            _currETabType = _data != null ? _data.ETab : Type.ETab.Profile;
             ActiveContents();
             
-            var tabToggle = tabToggles?.First();
+            var tabToggle = _currETabType == Type.ETab.Profile ? tabToggles?.First() : tabToggles?.Last();
             if (tabToggle != null)
-            {
                 tabToggle.SetIsOnWithoutNotify(true);
-            }
             
             disableRectTms?.Last().SetActive(ObjectContainer.Instance?.GetData(InteractionObjectId) == null);
 

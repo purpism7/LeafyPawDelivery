@@ -206,7 +206,7 @@ namespace UI
             Game.Timer.Get?.Add(
                 new Game.Timer.Data()
                 {
-                    initialize = initialize,
+                    // initialize = initialize,
                     key = adData.adId,
                     ShowRootType = rootType,
                     timeTMP = remainPlayTimeTMP,

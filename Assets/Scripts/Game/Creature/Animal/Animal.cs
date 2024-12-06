@@ -244,16 +244,18 @@ namespace Game.Creature
             
             ActionCtr?.Deactivate();
 
-            bool isInteracition = false;
+            // bool isInteracition = false;
             var animalData = AnimalContainer.Instance?.GetData(Id);
-            if (animalData != null)
-                isInteracition = MainGameManager.Get<ObjectManager>().CheckExist(animalData.InteractionId);
+            if (animalData == null)
+                return;
+                // isInteracition = MainGameManager.Get<ObjectManager>().CheckExist(animalData.InteractionId);
+                // isInteracition = ObjectContainer.Instance?.GetData(animalData.InteractionId) != null;
             
-            if (isInteracition)
+            if (animalData.InteractionId > 0)
             {
                 ReadyToInteraction = true; 
                 
-                edit?.ActivateTopAsync(isInteracition,
+                edit?.ActivateTopAsync(animalData.InteractionId,
                     () =>
                     {
                         ReadyToInteraction = false;

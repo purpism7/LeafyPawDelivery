@@ -695,6 +695,7 @@ namespace UI.Component
                             {
                                 EElement = Type.EElement.Animal,
                                 Id = animalData.Id,
+                                ETab = Type.ETab.Friendship,
                                 RefreshAction = () =>
                                 {
                                     
