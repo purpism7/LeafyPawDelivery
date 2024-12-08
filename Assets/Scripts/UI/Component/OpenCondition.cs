@@ -41,12 +41,16 @@ namespace UI.Component
             base.Activate();
 
             SetColor();
+
+            if (textContentSizeFitter != null)
+            {
+                textContentSizeFitter.enabled = false;
+                textContentSizeFitter.enabled = true;
+            }
             
             if (_data != null &&
                _data.refreshLayout)
-            {
                 LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());
-            }
         }
 
         private void SetImg()

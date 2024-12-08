@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +11,7 @@ using DG.Tweening;
 using Game;
 using GameSystem;
 using UI.Component;
+using Type = Game.Type;
 
 namespace UI
 {
@@ -369,7 +372,7 @@ namespace UI
             var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return;
-
+            
             var currencyName = placeData.Animal.ToString();
             if(eElement == Type.EElement.Object)
             {
@@ -404,6 +407,20 @@ namespace UI
             // save currency value.
             Info.UserManager.Instance?.User?.SetCurrency(eElement, currency);
             MainGameManager.Instance?.AddAcquireCurrency(eElement, Game.Type.EAcquireAction.Obtain, 1);
+        }
+        
+        public async UniTask CollectCurrencyAsync(Vector3 startPos, Type.EElement eElement, int currency, bool applyBoost, float delay = 0)
+        {
+            if (_collectCurrencyList == null)
+                return;
+
+            var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
+            if (placeData == null)
+                return;
+
+            await UniTask.Delay(TimeSpan.FromSeconds(delay));
+            
+            CollectCurrency(startPos, eElement, currency, applyBoost);
         }
 
         private void CollectCurrency(CollectCurrency.Data data)

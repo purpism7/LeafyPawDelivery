@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
-
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +15,7 @@ using UnityEngine.Localization.Settings;
 
 namespace  UI.Component
 {
-    public class FriendshipCell : BaseComponent<FriendshipCell.Data>, GiftItemCell.IListener
+    public class FriendshipCell : BaseComponent<FriendshipCell.Data>, GiftItemCell.IListener, FriendshipGiftCell.IListener
     {
         public class Data : BaseData
         {
@@ -73,6 +73,7 @@ namespace  UI.Component
                     friendshipGiftCells[i - 1]?.Activate(
                         new FriendshipGiftCell.Data()
                         {
+                            IListener = this,
                             Id = _data.Id,
                             Point =  point,
                             Index = i - 1,
@@ -225,6 +226,102 @@ namespace  UI.Component
             }
 
             GiveGift(item, startPos);
+        }
+        #endregion
+        
+        #region FriendshipGiftCell.IListener
+
+        void FriendshipGiftCell.IListener.GetGift(int index)
+        {
+            if (_data == null)
+                return;
+
+            switch (index)
+            {
+                case 0:
+                {
+                    var list = new List<OpenCondition.Data>();
+                    list.Clear();
+
+                    var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
+                    if (placeData == null)
+                        return;
+
+                    int rewardAnimalCurrency = 500;
+                    int rewardObjectCurrency = 10000;
+                    
+                    list.Add(
+                        new OpenCondition.Data
+                        {
+                            ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(placeData.AnimalSpriteName),
+                            Text = string.Format("{0}", rewardAnimalCurrency),
+                            // refreshLayout = true,
+                        });
+                    
+                    list.Add(
+                        new OpenCondition.Data
+                        {
+                            ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(placeData.ObjectSpriteName),
+                            Text = string.Format("{0}", rewardObjectCurrency),
+                            // PossibleFunc = possibleFunc,
+                            // refreshLayout = true,
+                        });
+
+                    new PopupCreator<GetReward, GetReward.Data>()
+                        .SetReInitialize(true)
+                        .SetData(new GetReward.Data
+                        {
+                            RewardDataList = list,
+                            EndAction = () =>
+                            {
+                                UIManager.Instance?.Top?.CollectCurrencyAsync(transform.position, Type.EElement.Animal, rewardAnimalCurrency, false).Forget();
+                                UIManager.Instance?.Top?.CollectCurrencyAsync(transform.position, Type.EElement.Object, rewardObjectCurrency, false, 0.1f).Forget();
+                            },
+                        }).Create();
+                    
+                    break;
+                }
+
+                case 1:
+                {
+                    var list = new List<OpenCondition.Data>();
+                    list.Clear();
+
+                    var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
+                    if (placeData == null)
+                        return;
+
+                    int rewardCash = 200;
+                    
+                    list.Add(
+                        new OpenCondition.Data
+                        {
+                            ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.CurrencyCashSprite,
+                            Text = string.Format("{0}", rewardCash),
+                            // refreshLayout = true,
+                        });
+
+                    new PopupCreator<GetReward, GetReward.Data>()
+                        .SetReInitialize(true)
+                        .SetData(new GetReward.Data
+                        {
+                            RewardDataList = list,
+                            EndAction = () =>
+                            {
+                                UIManager.Instance?.Top?.CollectCurrencyAsync(transform.position, Type.EElement.Animal, rewardCash, false).Forget();
+                            },
+                        }).Create();
+
+                    break;
+                }
+
+                case 2:
+                {
+                    break;
+                }
+            }
+            
+            UserManager.Instance?.User?.GetFriendshipGift(_data.Id, index);
         }
         #endregion
     }

@@ -20,11 +20,11 @@ namespace Game.PathFinding
 
             var closedSet = new HashSet<Node>();
 
-            float limitLoopCnt = 1000f;
+            int limitLoopCnt = 9999;
             var gameCameraCtr = MainGameManager.Instance?.IGameCameraCtr as GameSystem.GameCameraController;
             if(gameCameraCtr != null)
             {
-                limitLoopCnt = gameCameraCtr.GameCamera.orthographicSize;
+                // limitLoopCnt = gameCameraCtr.GameCamera.orthographicSize;
             }
 
             int loopCnt = 0;
@@ -102,13 +102,13 @@ namespace Game.PathFinding
         private async UniTask RetracePathAsync(Node startNode, Node targetNode)
         {
             var path = new List<Node>();
-            path?.Clear();
+            path.Clear();
 
             var currentNode = targetNode;
 
             while (currentNode.Id != startNode.Id)
             {
-                path?.Add(currentNode);
+                path.Add(currentNode);
 
                 currentNode = currentNode.ParentNode;
 
@@ -116,8 +116,7 @@ namespace Game.PathFinding
                     break;
             }
 
-            path?.Reverse();
-
+            path.Reverse();
             Path = path;
 
             await UniTask.Yield();

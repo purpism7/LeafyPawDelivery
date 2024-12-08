@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5082999346628738462}
   - component: {fileID: 8198808596251828485}
   - component: {fileID: 8612667344606031241}
-  - component: {fileID: 2182388042674625333}
+  - component: {fileID: 4647186749948694261}
   m_Layer: 7
   m_Name: Img
   m_TagString: Untagged
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 1980918761
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 20d1f7696b4df439f8b40801bdb930ff, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 72b7601b776774fbfb392620b27a2435, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 3858688592560586698}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f4e2fa27323f7466aa4a5ec88b930da4, type: 2}
+  m_Controller: {fileID: 9100000, guid: c3fd803fc3fa24af89df43264f3b00ed, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -107,8 +107,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!70 &2182388042674625333
-CapsuleCollider2D:
+--- !u!60 &4647186749948694261
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -139,9 +139,61 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -76.6, y: 36}
-  m_Size: {x: 76.6, y: 67.2}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 201, y: 182}
+    newSize: {x: 500, y: 500}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -22.5, y: 21}
+      - {x: -3.5, y: 20}
+      - {x: -3.5, y: 22}
+      - {x: 20.5, y: 20}
+      - {x: 45.5, y: 19}
+      - {x: 47.5, y: 7}
+      - {x: 50.5, y: 1}
+      - {x: 64.5, y: 0}
+      - {x: 68.5, y: 6}
+      - {x: 73.5, y: 14}
+      - {x: 83.5, y: 16}
+      - {x: 89.5, y: 22}
+      - {x: 89.5, y: 39}
+      - {x: 87.5, y: 45}
+      - {x: 83.5, y: 56}
+      - {x: 83.5, y: 85}
+      - {x: 79.5, y: 107}
+      - {x: 72.5, y: 114}
+      - {x: 67.5, y: 115}
+      - {x: 54.5, y: 113}
+      - {x: 34.5, y: 113}
+      - {x: -19.5, y: 114}
+      - {x: -43.5, y: 115}
+      - {x: -66.5, y: 114}
+      - {x: -69.5, y: 117}
+      - {x: -72.5, y: 118}
+      - {x: -75.5, y: 118}
+      - {x: -84.5, y: 114}
+      - {x: -86.5, y: 107}
+      - {x: -88.5, y: 71}
+      - {x: -87.5, y: 65}
+      - {x: -95.5, y: 45}
+      - {x: -95.5, y: 31}
+      - {x: -93.5, y: 23}
+      - {x: -85.5, y: 18}
+      - {x: -80.5, y: 16}
+      - {x: -76.5, y: 6}
+      - {x: -70.5, y: 0}
+      - {x: -58.5, y: 0}
+      - {x: -54.5, y: 10}
+      - {x: -52.5, y: 21}
+      - {x: -38.5, y: 20}
+  m_UseDelaunayMesh: 0
 --- !u!1 &8059279621757282250
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,8 +278,8 @@ MonoBehaviour:
   animator: {fileID: 8612667344606031241}
   edit: {fileID: 0}
   IsOverlap: 0
-  goPass: 1
-  isWind: 1
+  goPass: 0
+  isWind: 0
   sortingOrderOffset: 0
   hiddenRootTm: {fileID: 0}
   arrivalPointTm: {fileID: 0}

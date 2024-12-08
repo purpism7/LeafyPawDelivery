@@ -88,10 +88,9 @@ namespace Info
                 return;
         
             animal.fp += point;
-            Debug.Log(animal.fp);
         }
 
-        public bool GetFriendshipReward(int id, int index)
+        public bool GetFriendshipGift(int id, int index)
         {
             var animal = GetAnimal(id);
             if (animal == null)

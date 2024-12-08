@@ -328,6 +328,15 @@ namespace Info
             
             Save();
         }
+        
+        public void GetFriendshipGift(int id, int index)
+        {
+            if (User == null)
+                return;
+            
+            if (User.GetFriendshipGift(id, index))
+                Save();
+        }
     }
 }
 

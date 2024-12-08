@@ -101,6 +101,7 @@ namespace UI
 
             animalScrollRect?.ResetScrollPos();
             objectScrollRect?.ResetScrollPos();
+            specialObjectScrollRect?.ResetScrollPos();
 
             ActiveContents();
             ActiveObjectList(0);
@@ -111,6 +112,7 @@ namespace UI
                 EnableToggle(true);
                 EnableScrollRect(animalScrollRect, true);
                 EnableScrollRect(objectScrollRect, true);
+                EnableScrollRect(specialObjectScrollRect, true);
 
                 _isTutorial = isTutorial;
             }
@@ -161,9 +163,7 @@ namespace UI
                     continue;
 
                 if (_isTutorial != isTutorial)
-                {
                     cell.SetIsTutorial(isTutorial);
-                }
 
                 if (cell.EElement == Game.Type.EElement.Animal)
                 {
@@ -225,7 +225,7 @@ namespace UI
             }
         }
 
-        private void AddArrangementCell(ArrangementCell.Data cellData, RectTransform rootRectTm)
+        private void AddArrangementCell(ArrangementCell.Data cellData, RectTransform rootRectTm, int order = 0)
         {
             ArrangementCell arrangementCell = DeactiveArrangementCell;
 
@@ -234,10 +234,18 @@ namespace UI
                 arrangementCell.Initialize(cellData);
                 arrangementCell.SetParent(rootRectTm);
                 arrangementCell.SetActive(true);
+
+                // if (cellData?.EElement == Type.EElement.Object)
+                {
+                    // if (cellData.IsSpecialObject)
+                    {
+                        arrangementCell.transform.SetSiblingIndex(order);
+                    }
+                }
             }
             else
             {
-                arrangementCell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
+                 arrangementCell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
                     .SetData(cellData)
                     .SetRootRectTm(rootRectTm)
                     .Create();
@@ -284,7 +292,7 @@ namespace UI
                         
                         IsSpecialObject = AnimalContainer.Instance.CheckExistInteraction(data.Id),
                         isTutorial = isTutorial,
-                    }, animalScrollRect.content);
+                    }, animalScrollRect.content, data.Id);
             }
         }
 
@@ -306,6 +314,7 @@ namespace UI
             bool isTutorial = CheckIsTutorial;
 
             EnableScrollRect(objectScrollRect, !isTutorial);
+            EnableScrollRect(specialObjectScrollRect, !isTutorial);
 
             var datas = dataList.OrderBy(obj => obj.Order);
 
@@ -318,7 +327,9 @@ namespace UI
                         continue;
                 }
 
-                int resIndex = GetIndex(objectMgr, data.Id, ref _objectIndex);
+                int resIndex = -1;
+                if(data.EGrade != Type.EObjectGrade.Special)
+                    resIndex = GetIndex(objectMgr, data.Id, ref _objectIndex);
 
                 AddArrangementCell(
                     new ArrangementCell.Data()
@@ -331,15 +342,10 @@ namespace UI
                         isTutorial = isTutorial,
 
                         index = resIndex,
-                    }, data.EGrade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content);
+                    }, data.EGrade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, data.Order);
             }
         }
-
-        private void SetSpecialObjectList()
-        {
-            
-        }
-
+        
         private void ActiveContents()
         {
             animalScrollRect?.SetActive(_currETabType == Game.Type.ETab.Animal);

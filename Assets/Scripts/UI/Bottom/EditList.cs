@@ -205,9 +205,9 @@ namespace UI
             }
 
             var addEditAnimal = new GameSystem.UICreator<UI.Component.EditAnimal, UI.Component.EditAnimal.Data>()
-                      .SetData(data)
-                      .SetRooTm(animalScrollRect.content)
-                      .Create();
+                    .SetData(data)
+                    .SetRooTm(animalScrollRect.content)
+                    .Create();
 
             _editAnimalList.Add(addEditAnimal);
         }

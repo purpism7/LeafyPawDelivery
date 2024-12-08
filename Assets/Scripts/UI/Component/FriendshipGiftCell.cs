@@ -13,9 +13,15 @@ namespace UI.Component
     {
         public class Data : BaseData
         {
+            public IListener IListener = null;
             public int Id = 0;
             public int Point = 0;
             public int Index = 0;
+        }
+
+        public interface IListener
+        {
+            void GetGift(int index);
         }
 
         [SerializeField] 
@@ -24,7 +30,7 @@ namespace UI.Component
         private TextMeshProUGUI pointTMP = null;
         [SerializeField] 
         private Button btn = null;
-
+        
         private Sequence _sequence = null;
 
         public override void Initialize(Data data)
@@ -99,19 +105,30 @@ namespace UI.Component
             {
                 _sequence = DOTween.Sequence()
                     .SetAutoKill(false)
-                    .Append(giftImg.transform.DOShakeScale(1f, 0.3f, 5));
-                _sequence.SetLoops(-1);
+                    .Append(giftImg?.transform.DOShakeScale(1f, 0.3f, 5));
+                _sequence?.SetLoops(-1);
             }
         }
 
         public void Onclick()
         {
+            if (_data == null)
+                return;
+            
             if (giftImg == null)
+                return;
+            
+            var animalInfo = MainGameManager.Get<AnimalManager>()?.GetAnimalInfo(_data.Id);
+            if (animalInfo == null)
+                return;
+
+            if (animalInfo.FriendshipPoint < _data.Point)
                 return;
 
             InteractableBtn(false);
-
             ResetGiftImg();
+            
+            _data.IListener?.GetGift(_data.Index);
         }
     }
 }

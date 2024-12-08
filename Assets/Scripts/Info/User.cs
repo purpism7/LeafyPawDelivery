@@ -124,7 +124,7 @@ namespace Info
             }
         }
 
-        public void SetObjectCurrency(int placeId, int value)
+        private void SetObjectCurrency(int placeId, int value)
         {
             if(CurrencyList == null)
             {
