@@ -469,8 +469,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         _iGrid?.Overlap();
 
-        EndLoadAsync(false).Forget();
-
+        await EndLoadAsync(false);
         await UniTask.Yield();
 
         endMoveAction?.Invoke();

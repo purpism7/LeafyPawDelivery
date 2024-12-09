@@ -159,7 +159,7 @@ namespace Game.Creature
                 _data.SprRenderer.sortingOrder = -(int)animalTm.localPosition.y;
 
             var distance = Vector2.Distance(animalTm.localPosition, _targetPos);
-            if (distance <= 0)
+            if (distance <= 0.1f)
             {
                 if (!MoveToTarget())
                     EndAction();

@@ -24,7 +24,7 @@ namespace Game.PathFinding
             var gameCameraCtr = MainGameManager.Instance?.IGameCameraCtr as GameSystem.GameCameraController;
             if(gameCameraCtr != null)
             {
-                // limitLoopCnt = gameCameraCtr.GameCamera.orthographicSize;
+                // limitLoopCnt = gameCameraCtr.GameCamera.orthographicSize; 
             }
 
             int loopCnt = 0;
