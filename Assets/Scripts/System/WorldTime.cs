@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System;
+using System.Net;
 
 using Cysharp.Threading.Tasks;
 
@@ -63,6 +64,7 @@ namespace GameSystem
             //RequestAsync().Forget();
 
             //LocalTime = DateTime.UtcNow.ToLocalTime();
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
         private void OnApplicationPause(bool pause)
@@ -79,26 +81,23 @@ namespace GameSystem
 
         public async UniTask<DateTime?> RequestAsync()
         {
-            try
-            {
-                Sync = false;
+            Sync = false;
 
-                //using ()
-                var worldTimeURI = Games.Data.Const?.WorldTimeURI;
-                if (string.IsNullOrEmpty(worldTimeURI))
-                    return null;
+            var worldTimeUri = Games.Data.Const?.WorldTimeURI;
+            if (string.IsNullOrEmpty(worldTimeUri))
+                return null;
                 
-                using (UnityWebRequest webRequest = UnityWebRequest.Get(worldTimeURI))   
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(worldTimeUri))   
+            {
+                if (webRequest == null)
+                    return null;
+
+                try
                 {
-                    if (webRequest == null)
-                        return null;
-
-                    await webRequest.SendWebRequest();
-
+                    await webRequest.SendWebRequest().ToUniTask();
                     if (webRequest.result == UnityWebRequest.Result.Success)
                     {
                         var timeData = JsonUtility.FromJson<TimeData>(webRequest.downloadHandler.text);
-
                         if (string.IsNullOrEmpty(timeData.datetime))
                             return null;
 
@@ -117,10 +116,14 @@ namespace GameSystem
 
                     }
                 }
-            }
-            catch(Exception e)
-            {
-                Debug.LogError(e);
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                   
+
+                    
             }
 
             return null;

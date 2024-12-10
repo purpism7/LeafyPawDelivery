@@ -226,7 +226,7 @@ MonoBehaviour:
   animator: {fileID: 8612667344606031241}
   edit: {fileID: 0}
   IsOverlap: 0
-  goPass: 0
+  goPass: 1
   isWind: 0
   sortingOrderOffset: 0
   hiddenRootTm: {fileID: 0}

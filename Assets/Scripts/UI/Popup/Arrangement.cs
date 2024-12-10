@@ -47,7 +47,7 @@ namespace UI
 
         private List<ArrangementCell> _arrangementCellList = new();
         private int _placeId = 0;
-        private int _objectIndex = -1;
+        // private int _objectIndex = -1;
         private bool _isTutorial = false;
         private bool[] _initActivateTab = { false, false };
 
@@ -174,10 +174,8 @@ namespace UI
                 {
                     if (_currETabType != Game.Type.ETab.Object)
                         continue;
-
-                    int resIndex = GetIndex(objectMgr, cell.Id, ref index);
-
-                    cell.SetIndex(resIndex);
+                    
+                    cell.SetIndex(GetIndex(objectMgr, cell.Id));
                 }
 
                 cell.Activate();
@@ -310,7 +308,7 @@ namespace UI
             if (objectOpenConditionContainer == null)
                 return;
 
-            _objectIndex = -1;
+            // _objectIndex = -1;
             bool isTutorial = CheckIsTutorial;
 
             EnableScrollRect(objectScrollRect, !isTutorial);
@@ -318,6 +316,20 @@ namespace UI
 
             var datas = dataList.OrderBy(obj => obj.Order);
 
+            var orderDataList = dataList.OrderBy(obj => obj.Order).ToList();
+            orderDataList = orderDataList.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special).ToList();
+            
+            for(int i = orderDataList.Count - 1; 0 <= i; --i)
+            {
+                if(orderDataList[i] == null)
+                    continue;
+                
+                if(objectMgr.GetRemainCount(orderDataList[i].Id) > 0)
+                    continue;
+
+                orderDataList.Remove(orderDataList[i]);
+            }
+            
             foreach (var data in datas)
             {
                 var objectInfo = objectMgr.GetObjectInfoById(data.Id);
@@ -327,10 +339,12 @@ namespace UI
                         continue;
                 }
 
-                int resIndex = -1;
-                if(data.EGrade != Type.EObjectGrade.Special)
-                    resIndex = GetIndex(objectMgr, data.Id, ref _objectIndex);
+                // int resIndex = -1;
+                // // if(data.EGrade != Type.EObjectGrade.Special)
+                //     resIndex = GetIndex(objectMgr, data.Id, ref _objectIndex);
 
+                int index = orderDataList.FindIndex(obj => obj.Id == data.Id);
+                    
                 AddArrangementCell(
                     new ArrangementCell.Data()
                     {
@@ -341,7 +355,7 @@ namespace UI
                         Lock = !objectOpenConditionContainer.CheckReq(data.Id),
                         isTutorial = isTutorial,
 
-                        index = resIndex,
+                        index = index,
                     }, data.EGrade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, data.Order);
             }
         }
@@ -383,15 +397,27 @@ namespace UI
             scrollRect.enabled = enable;
         }
 
-        private int GetIndex(Game.ObjectManager objectMgr, int id, ref int index)
+        private int GetIndex(Game.ObjectManager objectMgr, int id)
         {
-            if (objectMgr == null)
+            var dataList = ObjectContainer.Instance?.GetDataListByPlaceId(_placeId);
+            if (dataList == null)
                 return -1;
+            
+            var orderDataList = dataList.OrderBy(obj => obj.Order).ToList();
+            orderDataList = orderDataList.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special).ToList();
+            
+            for(int i = orderDataList.Count - 1; 0 <= i; --i)
+            {
+                if(orderDataList[i] == null)
+                    continue;
+                
+                if(objectMgr.GetRemainCount(orderDataList[i].Id) > 0)
+                    continue;
 
-            if(objectMgr.GetRemainCount(id) > 0)
-                return ++index;
-            else
-                return -1;
+                orderDataList.Remove(orderDataList[i]);
+            }
+            
+            return orderDataList.FindIndex(obj => obj.Id == id);
         }
 
         private void Obtain(Game.Type.EElement eElement, int id)
@@ -413,7 +439,7 @@ namespace UI
                     Info.Connector.Get?.ResetPossibleBuyAnimal();
                     Info.Connector.Get?.ResetPossibleBuyObject();
 
-                    cell.SetIndex(GetIndex(objectMgr, cell.Id, ref _objectIndex));
+                    cell.SetIndex(GetIndex(objectMgr, cell.Id));
                 }
             }
         }

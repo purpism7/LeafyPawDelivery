@@ -42,9 +42,12 @@ namespace UI.Component
             SetOpenCondition();
         }
 
-        public override void Activate()
+        public override void Activate(Data data)
         {
-            
+            base.Activate();
+
+            if (data != null)
+                _data.AnimalId = data.AnimalId;
         }
 
         private void SetOpenCondition()
@@ -100,16 +103,16 @@ namespace UI.Component
             if (_data == null)
                 return;
             
-            var animalMgr = MainGameManager.Get<AnimalManager>();
-            if (animalMgr != null &&
-                animalMgr.CheckMaxFriendshipPoint(_data.AnimalId))
-            {
-                var localKey = "desc_max_friendship";
-                var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
-                
-                Game.Toast.Get?.Show(local, localKey);
-                return;
-            }
+            // var animalMgr = MainGameManager.Get<AnimalManager>();
+            // if (animalMgr != null &&
+            //     animalMgr.CheckMaxFriendshipPoint(_data.AnimalId))
+            // {
+            //     var localKey = "desc_max_friendship";
+            //     var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+            //     
+            //     Game.Toast.Get?.Show(local, localKey);
+            //     return;
+            // }
             
             var giftItem = _data?.GiftItem;
             if (giftItem == null)

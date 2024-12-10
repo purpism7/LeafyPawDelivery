@@ -12,6 +12,7 @@ namespace Game.Creature
         public new class Data : ActionData
         {
             public Vector3? TargetPos = null;
+            public bool InteractionSpecialObject = false;
             public System.Action EndAction = null;
         }
         
@@ -31,10 +32,7 @@ namespace Game.Creature
             base.StartAction();
 
             Vector3? targetPos = null; 
-            // if (_data != null &&
-            //     _data.Tm)
-            //     targetPos = _data.Tm.localPosition;
-
+            
             if (_actionData != null &&
                 _actionData.TargetPos != null)
                 targetPos = _actionData.TargetPos;

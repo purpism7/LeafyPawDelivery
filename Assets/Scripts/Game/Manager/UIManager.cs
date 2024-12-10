@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Creature;
+using Game.Element.State;
 using UnityEngine;
 
 using UnityEngine.Localization.Settings;
@@ -126,6 +128,21 @@ namespace Game
 
                         break;
                     }
+                
+                case Type.EScreenSaverType.InteractionAnimal:
+                {
+                    IPlace iPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
+                    var findAnimal = iPlace?.AnimalList?.Find(animal => animal.State.CheckState(typeof(Interaction)));
+                    if (findAnimal == null)
+                        return;
+                    
+                    var localKey = "desc_interaction_animal";
+                    var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
+
+                    Game.Toast.Get?.Show(string.Format(local, GameUtils.GetName(Type.EElement.Animal, findAnimal.Id, findAnimal.SkinId)), localKey);
+
+                    break;
+                }
             }
         }
 

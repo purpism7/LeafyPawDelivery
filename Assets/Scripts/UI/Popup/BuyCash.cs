@@ -58,6 +58,9 @@ namespace UI
             SetImg();
             SetOpenCondition();
             
+            // if (_data.EPayment == Type.EPayment.Advertising)
+            //     SetPlayTimer(true);
+            
             if (_data.EPayment == Type.EPayment.Advertising)
                 SetPlayTimer(true);
         }
@@ -73,8 +76,7 @@ namespace UI
             
             openCondition?.Activate();
             
-            if (_data.EPayment == Type.EPayment.Advertising)
-                SetPlayTimer(false);
+           
         }
 
         public override void Deactivate()
@@ -194,24 +196,23 @@ namespace UI
             if (adData == null)
                 return;
 
-            float addSec = 0;
-            if (!initialize)
-                addSec = adData.coolTimeSec;
+            // float addSec = 0;
+            // if (!initialize)
+            //     addSec = adData.coolTimeSec;
 
+            var rootType = adData.eCategory.ToString();
+            
             adIconImg?.SetActive(false);
             
-            var rootType = adData.adId;
-            
-            Game.Timer.Get?.SetRootType(rootType);
-            Game.Timer.Get?.Add(
-                new Game.Timer.Data()
+            Game.Timer.Get?.SetRootType(rootType)?.Add(
+                new Game.Timer.Data
                 {
-                    // initialize = initialize,
+                    initialize = initialize,
                     key = adData.adId,
                     ShowRootType = rootType,
                     timeTMP = remainPlayTimeTMP,
                     btn = buyADBtn,
-                    addSec = addSec,
+                    addSec = adData.coolTimeSec,
                     endAction = () =>
                     {
                         //remainPlayTimeTMP.GetComponent<UnityEngine.Localization.Components.LocalizeStringEvent>()?.RefreshString();
@@ -242,7 +243,7 @@ namespace UI
                 }
                 else if (_data.EPayment == Type.EPayment.ObjectCurrency)
                 {
-                    var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_objectcurrency", LocalizationSettings.SelectedLocale);
+                    var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_object_currency", LocalizationSettings.SelectedLocale);
                     Game.Toast.Get?.Show(localDesc);
                 }
                 

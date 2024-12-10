@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GiveGift
   m_EditorClassIdentifier: 
   datas:
-  - eCategory: 0
+  - eCategory: 4
     ios: ca-app-pub-4768455296560255/6590650073
     and: ca-app-pub-4768455296560255/2702713246
     placement: 

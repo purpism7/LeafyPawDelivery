@@ -347,6 +347,14 @@ MonoBehaviour:
     m_Localized: Not enough Object Currency!
     m_Metadata:
       m_Items: []
+  - m_Id: 177054971574870016
+    m_Localized: '{0}''s Gift'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 177242298569973760
+    m_Localized: Right now, {0} is playing!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

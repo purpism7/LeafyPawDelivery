@@ -88,19 +88,7 @@ namespace Game
 
             return pathPosList;
         }
-
-        private Vector3 GetRandomPos(float z)
-        {
-            var iGameCameraCtr = MainGameManager.Instance?.IGameCameraCtr;
-            if (iGameCameraCtr == null)
-                return Vector3.zero;
-
-            var randomX = iGameCameraCtr.RandPosXInScreenRagne;
-            var randomY = iGameCameraCtr.RandPosYInScreenRagne;
-
-            return new Vector3(randomX, randomY, z);
-        }
-
+        
         private List<PathFinding.Node> GetNeighbourNodeList(int id)
         {
             List<PathFinding.Node> neighbourNodeList = new();

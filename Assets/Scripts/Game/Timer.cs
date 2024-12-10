@@ -117,11 +117,7 @@ namespace Game
                 {
                     if(!sync)
                     {
-                        if (data != null)
-                        {
-                            data.timeTMP?.SetText("-");
-                            //data.endDateTime = null;
-                        }
+                        data.timeTMP?.SetText("-");
              
                         return;
                     }
@@ -157,7 +153,6 @@ namespace Game
                         }
                         else
                         {
-
                             if (CheckExist(data.key))
                                 return;
                             
@@ -212,9 +207,11 @@ namespace Game
             }
         }
 
-        public void SetRootType(string rootType)
+        public Timer SetRootType(string rootType)
         {
             _currRootType = rootType;
+
+            return this;
         }
         
         public void Add(Data data)

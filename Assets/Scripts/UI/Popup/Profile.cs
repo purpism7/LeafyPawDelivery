@@ -122,7 +122,7 @@ namespace UI
             if (tabToggle != null)
                 tabToggle.SetIsOnWithoutNotify(true);
             
-            disableRectTms?.Last().SetActive(ObjectContainer.Instance?.GetData(InteractionObjectId) == null);
+            disableRectTms?.Last().SetActive(InteractionObjectId <= 0);
 
             SetAnimalSkinList();
             

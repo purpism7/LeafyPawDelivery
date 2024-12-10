@@ -210,13 +210,6 @@ namespace GameSystem
                 {
                     if (error != null || ad == null)
                     {
-                        // if (_adData != null)
-                        // {
-                        //     IronSource.Agent?.showRewardedVideo(_adData.Placement);
-                        //
-                        //     return;
-                        // }
-                        
                         _callback?.Invoke(0);
 
                         ShowToastTryLater();
@@ -282,7 +275,7 @@ namespace GameSystem
             if (rewardedInterstitialAd == null)
             {
                 LoadRewardedInterstitialAd(adId,
-                    () => { ShowAd(adData, callback); });
+                    () => { ShowAd(adData, callback); }); 
 
                 return;
             }
@@ -290,7 +283,12 @@ namespace GameSystem
             if (rewardedInterstitialAd.CanShowAd())
             {
                 rewardedInterstitialAd.Show(
-                    (reward) => { _reward = reward; });
+                    (reward) =>
+                    {
+                        _reward = reward;
+                        
+                        _callback?.Invoke(reward != null ? reward.Amount : 0);
+                    });
 
                 Game.UIManager.Instance?.DeactivateScreenSaver();
             }
@@ -325,7 +323,7 @@ namespace GameSystem
 
             _adData = null;
             _reward = null;
-            _callback = null;
+            // _callback = null;
         }
     }
 }

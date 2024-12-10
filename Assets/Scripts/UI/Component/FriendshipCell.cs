@@ -41,6 +41,8 @@ namespace  UI.Component
         private RectTransform giftRootRectTm = null;
         [SerializeField] 
         private AD giveGiftAD = null;
+
+        private List<GiftItemCell> _giftItemCell = null;
         
         public override void Initialize(Data data)
         {
@@ -80,6 +82,18 @@ namespace  UI.Component
                         });
                 }
             }
+
+            if (_giftItemCell != null)
+            {
+                for (int i = 0; i < _giftItemCell.Count; ++i)
+                {
+                    _giftItemCell[i]?.Activate(
+                        new GiftItemCell.Data
+                        {
+                            AnimalId = _data.Id
+                        });
+                }
+            }
         }
 
         private void SetPointInfo()
@@ -91,7 +105,6 @@ namespace  UI.Component
             if (animalInfo == null)
                 return;
             
-            Debug.Log("progress = " + (animalInfo.FriendshipPoint / (float)Games.Data.Const.MaxFriendshipPoint));
             SetPointTMP(animalInfo.FriendshipPoint);
             SetProgresss(animalInfo.FriendshipPoint);
         }
@@ -101,7 +114,12 @@ namespace  UI.Component
             if (pointTMP == null)
                 return;
             
-            pointTMP.SetText($"{point}" + "/" + $"{Games.Data.Const.MaxFriendshipPoint}");
+            var maxFriendshipPoint = Games.Data.Const.MaxFriendshipPoint;
+
+            if (point > maxFriendshipPoint)
+                point = maxFriendshipPoint;
+            
+            pointTMP.SetText($"{point}" + "/" + $"{maxFriendshipPoint}");
         }
 
         private void SetProgresss(int point)
@@ -121,13 +139,19 @@ namespace  UI.Component
             if (giftItemList == null)
                 return;
 
+            if (_giftItemCell == null)
+            {
+                _giftItemCell = new();
+                _giftItemCell.Clear();
+            }
+
             for (int i = 0; i < giftItemList.Count; ++i)
             {
                 var giftItem = giftItemList[i];
                 if(giftItem == null)
                     continue;
                 
-                new ComponentCreator<GiftItemCell, GiftItemCell.Data>()
+                var cell = new ComponentCreator<GiftItemCell, GiftItemCell.Data>()
                     .SetData(new GiftItemCell.Data()
                     {
                         IListener = this,
@@ -137,6 +161,8 @@ namespace  UI.Component
                     })
                     .SetRootRectTm(giftRootRectTm)
                     .Create();
+                
+                _giftItemCell?.Add(cell);
             }
         }
 
@@ -151,6 +177,7 @@ namespace  UI.Component
             }
         }
 
+        // startPos 에서 주민에게 선물 주고, 친밀도 올리기.
         private void GiveGift(Item item, Vector3 startPos)
         {
             _data?.IListener?.GiveGift(item, startPos,
@@ -210,16 +237,31 @@ namespace  UI.Component
                 AdProvider.Get?.ShowAd(adData,
                     (rewardValue) =>
                     {
-                        if(rewardValue > 0)
+                        if (rewardValue > 0)
+                        {
                             GiveGift(item, startPos);
-                        // if(rewardValue > 0)
-                        // {
-                        //     SuccessActivateBoost(true);
-                        // }
-                        // else
-                        // {
-                        //     SetPlayTimer(false);
-                        // }
+
+                            
+                        }
+                        
+                        var rootType = adData.eCategory.ToString();
+                        
+                        Game.Timer.Get?.SetRootType(rootType)?.Add(
+                            new Game.Timer.Data
+                            {
+                                initialize = false,
+                                key = adData.adId,
+                                ShowRootType = rootType,
+                                // timeTMP = remainPlayTimeTMP,
+                                // btn = buyADBtn,
+                                addSec = adData.coolTimeSec,
+                                endAction = () =>
+                                {
+                                    //remainPlayTimeTMP.GetComponent<UnityEngine.Localization.Components.LocalizeStringEvent>()?.RefreshString();
+               
+                                }
+                            });
+                            
                     });
 
                 return;
@@ -238,6 +280,7 @@ namespace  UI.Component
 
             switch (index)
             {
+                // Reward AnimalCurrency = 500 / ObjectCurrency = 10000 
                 case 0:
                 {
                     var list = new List<OpenCondition.Data>();
@@ -255,7 +298,6 @@ namespace  UI.Component
                         {
                             ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(placeData.AnimalSpriteName),
                             Text = string.Format("{0}", rewardAnimalCurrency),
-                            // refreshLayout = true,
                         });
                     
                     list.Add(
@@ -263,15 +305,16 @@ namespace  UI.Component
                         {
                             ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(placeData.ObjectSpriteName),
                             Text = string.Format("{0}", rewardObjectCurrency),
-                            // PossibleFunc = possibleFunc,
-                            // refreshLayout = true,
                         });
 
+                    var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_animal_give_gift", LocalizationSettings.SelectedLocale);
+                    
                     new PopupCreator<GetReward, GetReward.Data>()
                         .SetReInitialize(true)
                         .SetData(new GetReward.Data
                         {
                             RewardDataList = list,
+                            Desc = string.Format(localDesc, GameUtils.GetName(Type.EElement.Animal, _data.Id)),
                             EndAction = () =>
                             {
                                 UIManager.Instance?.Top?.CollectCurrencyAsync(transform.position, Type.EElement.Animal, rewardAnimalCurrency, false).Forget();
@@ -282,6 +325,7 @@ namespace  UI.Component
                     break;
                 }
 
+                // Reward Jewel = 500
                 case 1:
                 {
                     var list = new List<OpenCondition.Data>();
@@ -300,23 +344,56 @@ namespace  UI.Component
                             Text = string.Format("{0}", rewardCash),
                             // refreshLayout = true,
                         });
+                    
+                    var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_animal_give_gift", LocalizationSettings.SelectedLocale);
 
                     new PopupCreator<GetReward, GetReward.Data>()
                         .SetReInitialize(true)
                         .SetData(new GetReward.Data
                         {
                             RewardDataList = list,
+                            Desc = string.Format(localDesc, GameUtils.GetName(Type.EElement.Animal, _data.Id, Games.Data.Const.AnimalBaseSkinId)),
                             EndAction = () =>
                             {
-                                UIManager.Instance?.Top?.CollectCurrencyAsync(transform.position, Type.EElement.Animal, rewardCash, false).Forget();
+                                UIManager.Instance?.Top?.CollectCashCurrency(transform.position, rewardCash);
                             },
                         }).Create();
 
                     break;
                 }
 
+                // Reward = SpecialObject
                 case 2:
                 {
+                    if (_data == null)
+                        return;
+                    
+                    var animalData = AnimalContainer.Instance?.GetDataByInteractionId(_data.Id);
+                    if (animalData == null)
+                        return;
+                    
+                    Sequencer.EnqueueTask(
+                        () =>
+                        {
+                            var popup = new GameSystem.PopupCreator<UI.Obtain, UI.Obtain.Data>()
+                                .SetData(new UI.Obtain.Data()
+                                {
+                                    EElement = Type.EElement.Object,
+                                    Id = animalData.Id,
+                                    ClickAction = () =>
+                                    {
+                                        
+                                    },
+                                })
+                                .SetCoInit(true)
+                                .SetReInitialize(true)
+                                .Create();
+
+                            return popup;
+                        });
+                    
+                    MainGameManager.Instance?.Add(Type.EElement.Object, animalData.InteractionId);
+                    
                     break;
                 }
             }

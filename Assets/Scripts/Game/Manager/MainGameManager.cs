@@ -212,9 +212,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         float gameCameraOrthographicSize = IGameCameraCtr.DefaultOrthographicSize;
         if(IsTutorial)
-        {
             gameCameraOrthographicSize = IGameCameraCtr.OrthographicSizeForTutorial;
-        }
 
         IGameCameraCtr?.SetStopUpdate(true);
 
@@ -468,9 +466,9 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.2f, 0.4f)));
 
         _iGrid?.Overlap();
-
-        await EndLoadAsync(false);
-        await UniTask.Yield();
+        
+        EndLoadAsync(false).Forget();
+        await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
         endMoveAction?.Invoke();
 

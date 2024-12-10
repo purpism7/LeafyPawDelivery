@@ -52,7 +52,7 @@ namespace GameSystem
         private readonly Vector2 _mapSize = new Vector2(2000f, 2000f);
 
         private float _halfHeight = 0;
-        private float _dragWidth = 0;
+        // private float _dragWidth = 0;
         private Vector3 _velocity = Vector3.zero;
         private float _smoothTime = 0.045f;
         //private float _smoothTime = 1f;
@@ -179,10 +179,10 @@ namespace GameSystem
             Height = _halfHeight * 2f;
             _width = Height * GameCamera.aspect;
         
-            _dragWidth = _halfHeight * Screen.width / Screen.height;
+            // _dragWidth = _halfHeight * Screen.width / Screen.height;
         }
 
-        private void SetOrthographicSize(float orthographicSize, float timeOffset = 1f, bool isLerp = true)
+        private void SetOrthographicSize(float orthographicSize)
         {
             var resOrthographicSize = Mathf.Clamp(orthographicSize, MinOrthographicSize, MaxOrthographicSize);
             //
@@ -195,34 +195,37 @@ namespace GameSystem
             //     GameCamera.orthographicSize = resOrthographicSize;
             // }
 
-            virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(virtualCamera.m_Lens.OrthographicSize,
-                resOrthographicSize, Time.deltaTime);
+            virtualCamera.m_Lens.OrthographicSize = resOrthographicSize;
+            // virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(virtualCamera.m_Lens.OrthographicSize,
+            //     resOrthographicSize, Time.deltaTime);
         }
 
-        private float GetClampX(float posX)
-        {
-            float x = _mapSize.x - _dragWidth;
-
-            return Mathf.Clamp(posX, -x + _center.x, x + _center.x);
-        }
-
-        private float GetClampY(float posY)
-        {
-            float y = _mapSize.y - _halfHeight;
-
-            return Mathf.Clamp(posY, -y + _center.y, y + _center.y);
-        }
+        // private float GetClampX(float posX)
+        // {
+        //     float x = _mapSize.x - _dragWidth;
+        //
+        //     return Mathf.Clamp(posX, -x + _center.x, x + _center.x);
+        // }
+        //
+        // private float GetClampY(float posY)
+        // {
+        //     float y = _mapSize.y - _halfHeight;
+        //
+        //     return Mathf.Clamp(posY, -y + _center.y, y + _center.y);
+        // }
 
         private void Move(Touch touch)
         {
             var pos = new Vector3(touch.deltaPosition.x, touch.deltaPosition.y, 0);
             var cameraTm = GameCamera.transform;
-            var movePos = cameraTm.position - pos;
+            var targetPos = cameraTm.position - pos;
+            targetPos.z = InitPosZ;
+            
+            
+            // float clampX = GetClampX(movePos.x);
+            // float clampY = GetClampY(movePos.y);
 
-            float clampX = GetClampX(movePos.x);
-            float clampY = GetClampY(movePos.y);
-
-            var targetPos = new Vector3(clampX, clampY, InitPosZ);
+            // var targetPos = new Vector3(clampX, clampY, InitPosZ);
 
             cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, _smoothTime);
         }
@@ -245,7 +248,7 @@ namespace GameSystem
 
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
             
-            SetOrthographicSize(GameCamera.orthographicSize + deltaMagnitudeDiff, 12f);
+            SetOrthographicSize(GameCamera.orthographicSize + deltaMagnitudeDiff);
 
             SetSize();
             //
@@ -265,7 +268,7 @@ namespace GameSystem
         #region IGameCameraCtr
         void IGameCameraCtr.SetOrthographicSize(float orthographicSize)
         {
-            SetOrthographicSize(orthographicSize, 1f, false);
+            SetOrthographicSize(orthographicSize);
         }
 
         void IGameCameraCtr.MoveCenterGameCamera()
@@ -286,10 +289,12 @@ namespace GameSystem
             get
             {
                 var center = Center;
-                var halfWidth = (_width - 300f) / 2f;
-
+                // var halfWidth = (_width - 300f) / 2f;
+                
+                float height = GameCamera.orthographicSize * 2f;
+                float width = height * GameCamera.aspect - 300f;
+                var halfWidth = width * 0.5f;
                 var randomX = Random.Range(center.x - halfWidth, center.x + halfWidth);
-                // Random.InitState((int)randomX);
 
                 return randomX;
             }
@@ -300,10 +305,12 @@ namespace GameSystem
             get
             {
                 var center = Center;
-                var halfHeight = (Height - 850f) / 2f;
-
+                // var halfHeight = (Height - 850f) / 2f;
+                
+                float height = GameCamera.orthographicSize * 2f - 850f;
+                // float width = height * GameCamera.aspect;
+                var halfHeight = height * 0.5f;
                 var randomY = Random.Range(center.y - halfHeight, center.y + halfHeight);
-                Random.InitState((int)randomY);
 
                 return IGrid.LimitPosY(randomY);
             }
