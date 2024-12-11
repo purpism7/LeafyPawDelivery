@@ -75,8 +75,6 @@ namespace UI
             GameUtils.SetActive(buyBtn, _data.EPayment != Type.EPayment.Advertising);
             
             openCondition?.Activate();
-            
-           
         }
 
         public override void Deactivate()
@@ -247,6 +245,24 @@ namespace UI
                     Game.Toast.Get?.Show(localDesc);
                 }
                 
+                return;
+            }
+            
+            if (_data.EPayment == Type.EPayment.Advertising)
+            {
+                var adData = _data.ADData;
+                if (adData == null)
+                    return;
+
+                AdProvider.Get?.ShowAd(adData,
+                    (rewardValue) =>
+                    {
+                        if (rewardValue > 0)
+                            _data?.IListener?.Buy();
+                        
+                        SetPlayTimer(false);
+                    });
+
                 return;
             }
             

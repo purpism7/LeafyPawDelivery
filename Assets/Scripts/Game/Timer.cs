@@ -184,10 +184,9 @@ namespace Game
                     }
                     
                     DateTime endDateTime = worldUtcDateTime.AddSeconds(data.addSec);
-                    
                     data.SetDateTime(worldUtcDateTime, endDateTime, Time.realtimeSinceStartup);
 
-                    PlayerPrefs.SetString(data.key, endDateTime.ToString());
+                    PlayerPrefs.SetString(data.key, $"{endDateTime}");
                 }    
             }
 

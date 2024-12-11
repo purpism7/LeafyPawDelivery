@@ -228,44 +228,7 @@ namespace  UI.Component
             if (item == null)
                 return;
 
-            if (item.EPayment == Type.EPayment.Advertising)
-            {
-                var adData = giveGiftAD?.Datas?.FirstOrDefault();
-                if (adData == null)
-                    return;
-
-                AdProvider.Get?.ShowAd(adData,
-                    (rewardValue) =>
-                    {
-                        if (rewardValue > 0)
-                        {
-                            GiveGift(item, startPos);
-
-                            
-                        }
-                        
-                        var rootType = adData.eCategory.ToString();
-                        
-                        Game.Timer.Get?.SetRootType(rootType)?.Add(
-                            new Game.Timer.Data
-                            {
-                                initialize = false,
-                                key = adData.adId,
-                                ShowRootType = rootType,
-                                // timeTMP = remainPlayTimeTMP,
-                                // btn = buyADBtn,
-                                addSec = adData.coolTimeSec,
-                                endAction = () =>
-                                {
-                                    //remainPlayTimeTMP.GetComponent<UnityEngine.Localization.Components.LocalizeStringEvent>()?.RefreshString();
-               
-                                }
-                            });
-                            
-                    });
-
-                return;
-            }
+            
 
             GiveGift(item, startPos);
         }
