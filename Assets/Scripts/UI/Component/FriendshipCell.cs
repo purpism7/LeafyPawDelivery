@@ -68,12 +68,10 @@ namespace  UI.Component
                 {
                     int point = i * 30;
                     if (i >= friendshipGiftCells.Length)
-                    {
                         point = Games.Data.Const.MaxFriendshipPoint;
-                    }
 
                     friendshipGiftCells[i - 1]?.Activate(
-                        new FriendshipGiftCell.Data()
+                        new FriendshipGiftCell.Data
                         {
                             IListener = this,
                             Id = _data.Id,
@@ -275,7 +273,7 @@ namespace  UI.Component
                         .SetData(new GetReward.Data
                         {
                             RewardDataList = list,
-                            Desc = string.Format(localDesc, GameUtils.GetName(Type.EElement.Animal, _data.Id)),
+                            Desc = string.Format(localDesc, GameUtils.GetName(Type.EElement.Animal, _data.Id, Games.Data.Const.AnimalBaseSkinId)),
                             EndAction = () =>
                             {
                                 UIManager.Instance?.Top?.CollectCurrencyAsync(transform.position, Type.EElement.Animal, rewardAnimalCurrency, false).Forget();
@@ -329,8 +327,11 @@ namespace  UI.Component
                     if (_data == null)
                         return;
                     
-                    var animalData = AnimalContainer.Instance?.GetDataByInteractionId(_data.Id);
+                    var animalData = AnimalContainer.Instance?.GetData(_data.Id);
                     if (animalData == null)
+                        return;
+
+                    if (animalData.InteractionId <= 0)
                         return;
                     
                     Sequencer.EnqueueTask(
@@ -340,7 +341,7 @@ namespace  UI.Component
                                 .SetData(new UI.Obtain.Data()
                                 {
                                     EElement = Type.EElement.Object,
-                                    Id = animalData.Id,
+                                    Id = animalData.InteractionId,
                                     ClickAction = () =>
                                     {
                                         
@@ -359,7 +360,7 @@ namespace  UI.Component
                 }
             }
             
-            UserManager.Instance?.User?.GetFriendshipGift(_data.Id, index);
+            UserManager.Instance?.GetFriendshipGift(_data.Id, index);
         }
         #endregion
     }

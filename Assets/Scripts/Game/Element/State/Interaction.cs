@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 namespace Game.Element.State
@@ -42,7 +43,10 @@ namespace Game.Element.State
             var iObject = obj as IObject;
             if (iObject != null)
             {
-                animal.ActionCtr?.MoveToTarget(iObject.LocalPos,
+                var targetPos = iObject.LocalPos;
+                targetPos.y -= 40f;
+                
+                animal.ActionCtr?.MoveToTarget(targetPos,
                     () =>
                     {
                         UIManager.Instance.ActivateSreenSaver(Game.Type.EScreenSaverType.InteractionAnimal);
