@@ -159,7 +159,7 @@ public static class GameUtils
                 return 5000f;
 
             case Type.EPosZOrder.HiddenObject:
-                return -3000f;
+                return 500f;
 
             case Type.EPosZOrder.DropItem:
                 return -5000f;

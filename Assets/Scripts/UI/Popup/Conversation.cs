@@ -86,9 +86,15 @@ namespace UI
         public override void Activate()
         {
             base.Activate();
-
-            SetEmpty();
+           
             cntTMP?.SetText(string.Empty);
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            
+            SetEmpty();
         }
 
         private void SetEmpty()

@@ -6,6 +6,7 @@ using UnityEngine.Localization.Settings;
 
 using UI;
 using GameSystem;
+using UnityEditor.Rendering;
 
 namespace Game.State
 {
@@ -37,13 +38,12 @@ namespace Game.State
             SetAlpha(0.2f, animalId);
             
             var position = conversationAnimal.transform.position;
-            // position.y -= 5f;
             
             UIManager.Instance?.DeactivateAnim();
             MainGameManager.Instance?.IGameCameraCtr.ZoomIn(position,
                 () =>
                 {
-                    StartConversation(animalId);
+                    StartConversationAsync(animalId).Forget();
                 });
         
             MainGameManager.Get<PlaceManager>()?.ActivityPlace?.Bust();
@@ -86,21 +86,24 @@ namespace Game.State
             placeMgr.SetAlphaActivityObject(alpha);
         }
 
-        private void StartConversation(int animalId)
+        private async UniTaskVoid StartConversationAsync(int animalId)
         {
             if (_conversation == null)
             {
                 _conversation = new PopupCreator<UI.Conversation, UI.Conversation.Data>()
                     .SetShowBackground(false)
-                    .SetData(new UI.Conversation.Data()
-                    {
-                        IListener = this,
-                    })
+                    .SetData(
+                        new UI.Conversation.Data
+                        {
+                            IListener = this,
+                        })
                     .Create();
             }
             
             _conversation?.Activate();
-                    
+
+            await UniTask.Yield();
+            
             var tables = LocalizationSettings.StringDatabase.GetTable("Conversation");
             int randomIndex = Random.Range(1, 4);
             

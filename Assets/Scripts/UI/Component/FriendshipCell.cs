@@ -227,9 +227,7 @@ namespace  UI.Component
         {
             if (item == null)
                 return;
-
             
-
             GiveGift(item, startPos);
         }
         #endregion

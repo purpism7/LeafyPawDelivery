@@ -213,7 +213,6 @@ namespace UI
                     addSec = adData.coolTimeSec,
                     endAction = () =>
                     {
-                        //remainPlayTimeTMP.GetComponent<UnityEngine.Localization.Components.LocalizeStringEvent>()?.RefreshString();
                         remainPlayTimeTMP?.SetText(string.Empty);
                         _possibleBuy = true;
                         adIconImg?.SetActive(true);
