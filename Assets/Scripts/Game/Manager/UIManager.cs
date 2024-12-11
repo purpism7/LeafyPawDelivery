@@ -132,7 +132,7 @@ namespace Game
                 case Type.EScreenSaverType.InteractionAnimal:
                 {
                     IPlace iPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
-                    var findAnimal = iPlace?.AnimalList?.Find(animal => animal.State.CheckState(typeof(Interaction)));
+                    var findAnimal = iPlace?.AnimalList?.Find(animal => animal?.State != null && animal.State.CheckState(typeof(Interaction)));
                     if (findAnimal == null)
                         return;
                     
