@@ -13,7 +13,7 @@ namespace GameSystem
     {
         #region Static
         private static WorldTime _instance = null;
-        public static WorldTime Create()
+        private static WorldTime Create()
         {
             if (_instance == null)
             {
@@ -42,9 +42,7 @@ namespace GameSystem
             get
             {
                 if(_instance == null)
-                {
                     Create();
-                }
 
                 return _instance;
             }
@@ -58,14 +56,6 @@ namespace GameSystem
 
         public DateTime? DateTime { get; private set; } = null;
         public bool Sync { get; private set; } = false;
-
-        private void Start()
-        {
-            //RequestAsync().Forget();
-
-            //LocalTime = DateTime.UtcNow.ToLocalTime();
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-        }
 
         private void OnApplicationPause(bool pause)
         {
@@ -91,10 +81,12 @@ namespace GameSystem
             {
                 if (webRequest == null)
                     return null;
-
+                
                 try
                 {
-                    await webRequest.SendWebRequest().ToUniTask();
+                    // webRequest.certificateHandler = new CustomCertificateHandler();
+                    await webRequest.SendWebRequest();
+                    
                     if (webRequest.result == UnityWebRequest.Result.Success)
                     {
                         var timeData = JsonUtility.FromJson<TimeData>(webRequest.downloadHandler.text);
@@ -113,17 +105,19 @@ namespace GameSystem
                     }
                     else
                     {
-
+                        Debug.Log("Fail");
+                        DateTime = System.DateTime.Now;
+                    
+                        Sync = true;
                     }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    throw;
-                }
-                   
-
+                    DateTime = System.DateTime.Now;
                     
+                    Sync = true;
+                }
             }
 
             return null;
