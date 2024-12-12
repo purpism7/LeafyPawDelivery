@@ -269,6 +269,16 @@ namespace Game
 
             return animalInfo.FriendshipPoint >= Games.Data.Const.MaxFriendshipPoint;
         }
+
+        public void SetFriendshipGift(int id, int index)
+        {
+            if (_animalHolder == null)
+                return;
+            
+            if(_animalHolder.CheckSetFriendshipGift(id, index))
+                Info.UserManager.Instance?.SetFriendshipGift(id, index);
+            
+        }
         #endregion
 
         private void OnChangedObject(Game.Event.ObjectData objectData)

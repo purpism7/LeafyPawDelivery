@@ -63,7 +63,7 @@ namespace Info
             }
         }
 
-        public Animal GetAnimal(int id)
+        private Animal GetAnimal(int id)
         {
             if (animalList == null)
                 return null;
@@ -90,7 +90,7 @@ namespace Info
             animal.fp += point;
         }
 
-        public bool GetFriendshipGift(int id, int index)
+        public bool CheckSetFriendshipGift(int id, int index)
         {
             var animal = GetAnimal(id);
             if (animal == null)

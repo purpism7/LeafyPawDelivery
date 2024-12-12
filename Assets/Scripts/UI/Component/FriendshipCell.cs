@@ -360,7 +360,7 @@ namespace  UI.Component
                 }
             }
             
-            UserManager.Instance?.GetFriendshipGift(_data.Id, index);
+            MainGameManager.Get<AnimalManager>()?.SetFriendshipGift(_data.Id, index);
         }
         #endregion
     }

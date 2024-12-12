@@ -329,12 +329,12 @@ namespace Info
             Save();
         }
         
-        public void GetFriendshipGift(int id, int index)
+        public void SetFriendshipGift(int id, int index)
         {
-            if (User == null)
+            if (_user == null)
                 return;
             
-            if (User.GetFriendshipGift(id, index))
+            if (_user.CheckSetFriendshipGift(id, index))
                 Save();
         }
     }

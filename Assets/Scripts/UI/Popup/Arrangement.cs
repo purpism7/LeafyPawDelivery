@@ -462,8 +462,8 @@ namespace UI
         {
             if (id <= 0)
                 return -1;
-
-            var sortArrangementCellList = _arrangementCellList?.OrderBy(cell => cell.Id)?.ToList();
+            
+            var sortArrangementCellList = _arrangementCellList?.OrderBy(cell => cell.Id).ToList();
             if (sortArrangementCellList == null)
                 return -1;
 
@@ -479,9 +479,7 @@ namespace UI
                     continue;
 
                 if (cell.Id == id)
-                {
                     return index;
-                }
 
                 ++index;
             }

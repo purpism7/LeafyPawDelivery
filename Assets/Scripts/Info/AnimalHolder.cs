@@ -231,6 +231,16 @@ namespace Info
 
             return animalInfo.GetFriendshipReward(index);
         }
+        
+        public bool CheckSetFriendshipGift(int id, int index)
+        {
+            var animalInfo = GetAnimalInfo(id);
+            if (animalInfo == null)
+                return false;
+            
+           return animalInfo.CheckSetFriendshipGift(index);
+        }
+        
         #endregion
 
         public Info.Animal GetAnimalInfo(int id)

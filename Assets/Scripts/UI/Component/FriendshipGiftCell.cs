@@ -4,6 +4,7 @@ using System.Numerics;
 using DG.Tweening;
 using Game;
 using TMPro;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -89,14 +90,18 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            var animalInfo = MainGameManager.Get<AnimalManager>()?.GetAnimalInfo(_data.Id);
+            var animalMgr = MainGameManager.Get<AnimalManager>();
+            if (animalMgr == null)
+                return;
+            
+            var animalInfo = animalMgr.GetAnimalInfo(_data.Id);
             if (animalInfo == null)
                 return;
 
             if (animalInfo.FriendshipPoint < _data.Point)
                 return;
             
-            bool getReward = MainGameManager.Get<AnimalManager>().CheckGetFriendshipReward(_data.Id, _data.Index);
+            bool getReward = animalMgr.CheckGetFriendshipReward(_data.Id, _data.Index);
             
             EnableGiftImg();
             InteractableBtn(!getReward);

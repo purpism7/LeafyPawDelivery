@@ -51,5 +51,18 @@ namespace Info
                 _getFpRewards[i] = getFpRewards[i];
             }
         }
+
+        public bool CheckSetFriendshipGift(int index)
+        {
+            if (_getFpRewards == null)
+                return false;
+
+            if (_getFpRewards.Length <= index)
+                return false;
+
+            _getFpRewards[index] = true;
+
+            return true;
+        }
     }
 }

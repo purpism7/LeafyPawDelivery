@@ -64,6 +64,9 @@ public class ObjectOpenConditionContainer : OpenConditionContainer<ObjectOpenCon
         if (data == null)
             return false;
 
+        if (data.eType == OpenConditionData.EType.Special)
+            return false;
+
         if (mainGameMgr.CheckExist(Game.Type.EElement.Object, data.Id))
             return false;
 
