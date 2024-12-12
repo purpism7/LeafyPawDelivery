@@ -316,8 +316,8 @@ namespace UI
 
             var datas = dataList.OrderBy(obj => obj.Order);
 
-            var orderDataList = dataList.OrderBy(obj => obj.Order).ToList();
-            orderDataList = orderDataList.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special).ToList();
+            // var orderDataList = dataList.OrderBy(obj => obj.Order).ToList();
+            var orderDataList = datas.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special).ToList();
             
             for(int i = orderDataList.Count - 1; 0 <= i; --i)
             {
@@ -513,7 +513,7 @@ namespace UI
                 if(objectGridLayoutGroup != null)
                 {
                     await UniTask.Yield();
-
+                    
                     objectScrollRect?.MoveVerticalScrollToIndex(objectGridLayoutGroup.cellSize.y, index, true);
                 }
             }

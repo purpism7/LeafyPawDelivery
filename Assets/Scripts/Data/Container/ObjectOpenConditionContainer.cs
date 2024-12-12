@@ -75,9 +75,7 @@ public class ObjectOpenConditionContainer : OpenConditionContainer<ObjectOpenCon
         {
             if (CheckAnimalCurrency(data.Id) &&
                CheckObjectCurrency(data.Id))
-            {
                 return true;
-            }
         }
 
         return false;
