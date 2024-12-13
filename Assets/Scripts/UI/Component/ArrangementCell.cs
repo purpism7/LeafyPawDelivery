@@ -297,7 +297,7 @@ namespace UI.Component
             if (placeData == null)
                 return;
 
-            GameUtils.SetActive(openConditionRootRectTm, openCondition.eType != OpenConditionData.EType.Hidden);
+            GameUtils.SetActive(openConditionRootRectTm, openCondition.eType != OpenConditionData.EType.Hidden || openCondition.eType != OpenConditionData.EType.Special);
             
             switch (openCondition.eType)
             {
