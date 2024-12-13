@@ -8,6 +8,8 @@ namespace Game.State
     {
         public override void Initialize(MainGameManager mainGameMgr)
         {
+            mainGameMgr?.IGameCameraCtr?.MoveCenterGameCamera();
+            
             // 진입 연출 전 Deactivate Top, Bottom 
             UIManager.Instance?.DeactivateAnim();
         }

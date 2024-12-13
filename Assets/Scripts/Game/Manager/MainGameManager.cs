@@ -194,14 +194,10 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         await UniTask.Yield();
 
         if(!IsTutorial)
-        {
             Starter();
-        }
-
+        
         if (initialize)
-        {
             CheckOpenLastPlace();
-        }
         
         Game.Notification.Get?.AllNotify();
     }
