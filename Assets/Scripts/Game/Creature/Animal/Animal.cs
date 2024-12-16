@@ -330,6 +330,8 @@ namespace Game.Creature
                     {
                         _data.Pos = LocalPos;
 
+                        edit?.DeactivateTop();
+                        
                         if (State is Interaction)
                         {
                             ReadyToInteraction = false;

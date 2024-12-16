@@ -89,7 +89,7 @@ namespace UI
             GameUtils.SetActive(topRootRectTm, true);
         }
         
-        private void DeactivateTop()
+        public void DeactivateTop()
         {
             GameUtils.SetActive(topRootRectTm, false);
         }

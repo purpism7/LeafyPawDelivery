@@ -560,7 +560,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         if (!spwaned && 
             !activate)
         {
-            animal?.SetSpwaned(true);
+            animal.SetSpwaned(true);
         }
 
         _startEditAction?.Invoke(animal);

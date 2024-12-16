@@ -146,16 +146,11 @@ namespace UI
             Application.OpenURL("http://www.instagram.com/leafyparcels/");
         }
 
-        public void OnClickSpecialThanks()
+        public void OnClickGameTip()
         {
-            Sequencer.EnqueueTask(
-                () =>
-                {
-                    var specialThanks = new PopupCreator<SpecialThanks, BaseData>()
-                        .Create();
-
-                    return specialThanks;
-                });
+            var gameTip = new PopupCreator<GameTip, GameTip.Data>()
+                .Create();
+            gameTip?.Activate();
         }
 
         public void OnclickPrivacyPolish()

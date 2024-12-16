@@ -2395,7 +2395,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Special Thanks To
+  m_text: Game Tip
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8441f0fc9ae15ab43b2285b3d61e76f9, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 57b10edb38a144f4cacfea3bcc8783e4, type: 2}
@@ -3463,7 +3463,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2643374075985843820}
         m_TargetAssemblyTypeName: UI.Setting, Assembly-CSharp
-        m_MethodName: OnClickSpecialThanks
+        m_MethodName: OnClickGameTip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
