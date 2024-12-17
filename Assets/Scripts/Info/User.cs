@@ -110,7 +110,7 @@ namespace Info
             Cash += value;
         }
 
-        public void SetAnimalCurrency(int placeId, int value)
+        private void SetAnimalCurrency(int placeId, int value)
         {
             if (CurrencyList == null)
             {
@@ -184,7 +184,7 @@ namespace Info
         #endregion
 
         #region Story
-        public Story GetStory(int placeId)
+        private Story GetStory(int placeId)
         {
             if (StoryList == null)
             {

@@ -108,9 +108,12 @@ namespace UI.Component
             SetNameTMP();
             ActivateOpenConditionList();
             SetHiddenOpenDescTMP();
-            
-            if(_data != null)
-                GameUtils.SetActive(specialObjectRectTm, _data.IsSpecialObject);
+
+            if (_data != null)
+            {
+                // GameUtils.SetActive(specialObjectRectTm, _data.IsSpecialObject);
+                GameUtils.SetActive(openConditionRootRectTm, !_data.IsSpecialObject);
+            }
         }
 
         public override void Deactivate()

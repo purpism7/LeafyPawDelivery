@@ -42,6 +42,9 @@ namespace UI
         private ScrollRect specialObjectScrollRect = null;
         [SerializeField]
         private RectTransform[] unselectedRootRectTms = null;
+        
+        [SerializeField]
+        private RectTransform getReadyTMPRectTm = null;
 
         private Game.Type.ETab _currETabType = Game.Type.ETab.Animal;
 
@@ -315,8 +318,6 @@ namespace UI
             EnableScrollRect(specialObjectScrollRect, !isTutorial);
 
             var datas = dataList.OrderBy(obj => obj.Order);
-
-            // var orderDataList = dataList.OrderBy(obj => obj.Order).ToList();
             var orderDataList = datas.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special).ToList();
             
             for(int i = orderDataList.Count - 1; 0 <= i; --i)
@@ -354,10 +355,13 @@ namespace UI
                         Owned = objectInfo != null,
                         Lock = !objectOpenConditionContainer.CheckReq(data.Id),
                         isTutorial = isTutorial,
+                        IsSpecialObject = data.EGrade == Type.EObjectGrade.Special,
 
                         index = index,
                     }, data.EGrade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, data.Order);
             }
+            
+            GameUtils.SetActive(getReadyTMPRectTm, specialObjectScrollRect?.content?.childCount <= 0);
         }
         
         private void ActiveContents()
@@ -531,6 +535,19 @@ namespace UI
             
             GameUtils.SetActive(objectScrollRect, index == 0);
             GameUtils.SetActive(specialObjectScrollRect, index == 1);
+
+            // if (index == 1)
+            // {
+            //     if (_arrangementCellList != null)
+            //     {
+            //         for (int i = 0; i < _arrangementCellList.Count; ++i)
+            //         {
+            //             var cell = _arrangementCellList[i];
+            //             if (cell?.EElement == Type.EElement.Object)
+            //                 cell.Activate();
+            //         }
+            //     }
+            // }
         }
         
         public void OnClickObjectTab(int index)

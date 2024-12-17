@@ -222,6 +222,13 @@ namespace Game
             WindEffect,
         }
 
+        public enum EContent
+        {
+            None, 
+            
+            Friendship,
+        }
+
         public enum ETutorialStep
         {
             None,

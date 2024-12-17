@@ -191,7 +191,7 @@ namespace Game.Creature
             var animalData = AnimalContainer.Instance?.GetData(Id);
             if (animalData == null)
                 return;
-
+            
             var specialObject = iPlace.ObjectList?.Find(obj => obj.IsActivate && obj.Id == animalData.InteractionId);
             if (specialObject != null)
                 SetState<Interaction>();

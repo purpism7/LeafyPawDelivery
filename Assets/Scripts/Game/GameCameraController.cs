@@ -227,7 +227,7 @@ namespace GameSystem
 
             // var targetPos = new Vector3(clampX, clampY, InitPosZ);
 
-            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, _smoothTime);
+            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, _smoothTime * 2f);
         }
 
         private void ZoomInOut()

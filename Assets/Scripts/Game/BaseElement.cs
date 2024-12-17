@@ -223,6 +223,7 @@ namespace Game
             edit = new GameSystem.UICreator<UI.Edit, UI.Edit.Data>()
                 .SetData(new UI.Edit.Data()
                 {
+                    Id = Id,
                     IListener = this,
                 })
                 .SetRooTm(rootTm)

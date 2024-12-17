@@ -355,6 +355,10 @@ MonoBehaviour:
     m_Localized: Right now, {0} is playing!
     m_Metadata:
       m_Items: []
+  - m_Id: 179765574475177984
+    m_Localized: "I\u2019m putting in a lot of effort to get ready."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -9,6 +9,7 @@ using System;
 using Cysharp.Threading.Tasks;
 
 using GameSystem;
+using Type = Game.Type;
 
 namespace Info
 {
@@ -322,6 +323,7 @@ namespace Info
 
         }
 
+        #region Friendship
         public void AddFriendshipPoint(int id, int point)
         {
             User?.AddFriendshipPoint(id, point);
@@ -336,6 +338,26 @@ namespace Info
             
             if (_user.CheckSetFriendshipGift(id, index))
                 Save();
+        }
+        #endregion
+        
+        public void SetOpenContent(Type.EContent eContent)
+        {
+            if (_user == null)
+                return;
+            
+            _user.SetOpen(eContent);
+            
+            if(_user.CheckOpen(eContent))
+                Save();
+        }
+
+        public bool CheckOpenContent(Type.EContent eContent)
+        {
+            if (_user == null)
+                return true;
+            
+            return _user.CheckOpen(eContent);
         }
     }
 }

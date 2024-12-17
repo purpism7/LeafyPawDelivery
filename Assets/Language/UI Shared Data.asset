@@ -325,6 +325,10 @@ MonoBehaviour:
     m_Key: desc_interaction_animal
     m_Metadata:
       m_Items: []
+  - m_Id: 179765574475177984
+    m_Key: desc_get_ready_so
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

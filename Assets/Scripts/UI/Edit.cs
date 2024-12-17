@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using Game;
+using GameSystem;
+using Type = Game.Type;
 
 namespace UI
 {
@@ -12,6 +14,7 @@ namespace UI
     {
         public class Data : BaseData
         {
+            public int Id = 0;
             public IListener IListener = null;
         }
 
@@ -102,9 +105,11 @@ namespace UI
 
         public async UniTask ActivateTopAsync(int specialObjectId, System.Action action)
         {
+            bool isExist = ObjectContainer.Instance?.GetData(specialObjectId) != null;
+            
             DeactivateBotom();
-            GameUtils.SetActive(speechBubbleRectTm, ObjectContainer.Instance?.GetData(specialObjectId) != null);
-            GameUtils.SetActive(interactionRectTm, MainGameManager.Get<Game.ObjectManager>().CheckExist(specialObjectId));
+            GameUtils.SetActive(speechBubbleRectTm, isExist);
+            GameUtils.SetActive(interactionRectTm, isExist);
             ActivateTop();
 
             await UniTask.Delay(TimeSpan.FromSeconds(3f));
@@ -174,6 +179,38 @@ namespace UI
         public void OnClickSpecial()
         {
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
+
+            if (_data != null)
+            {
+                IPlace iPlace = MainGameManager.Get<PlaceManager>().ActivityPlace;
+                if (iPlace == null)
+                    return;
+            
+                var animalData = AnimalContainer.Instance?.GetData(_data.Id);
+                if (animalData == null)
+                    return;
+            
+                var objMgr = MainGameManager.Get<ObjectManager>();
+                if (objMgr != null && 
+                    !objMgr.CheckExist(animalData.InteractionId))
+                {
+                    var popup = new PopupCreator<Profile, Profile.Data>()
+                        .SetReInitialize(true)
+                        .SetData(
+                            new Profile.Data()
+                            {
+                                EElement = Type.EElement.Animal,
+                                Id = animalData.Id,
+                                ETab = Type.ETab.Friendship,
+
+                            })
+                        .Create();
+                    
+                    DeactivateEdit();
+                    
+                    return;
+                }
+            }
             
             _data?.IListener?.Special();
             

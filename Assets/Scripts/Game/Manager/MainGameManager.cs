@@ -127,6 +127,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         {
             Info.Connector.Get?.SetPossibleBuyAnimal();
             Info.Connector.Get?.SetPossibleBuyObject();
+
+            if (!UserManager.Instance.CheckOpenContent(Game.Type.EContent.Friendship))
+            {
+                
+            }
         }
 
         _endInitialize = true;
