@@ -231,13 +231,9 @@ namespace UI.Component
                 return;
 
             if (_data.EElement == Game.Type.EElement.Animal)
-            {
                 SetAnimalOpenCondition();
-            }
             else
-            {
                 SetObjectOpenCondition();
-            }
         }
 
         private void SetHiddenOpenDescTMP()
