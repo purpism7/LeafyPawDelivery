@@ -46,6 +46,15 @@ namespace Info
             int findIndex = openContentList.FindIndex(openContent => openContent?.eContent == eContent);
             if (findIndex >= 0)
                 return openContentList[findIndex].isOpen;
+            else
+            {
+                openContentList.Add(
+                    new OpenContent
+                    {
+                        eContent = eContent,
+                        isOpen = false,
+                    });
+            }
 
             return false;
         }

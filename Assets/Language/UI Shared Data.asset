@@ -329,6 +329,10 @@ MonoBehaviour:
     m_Key: desc_get_ready_so
     m_Metadata:
       m_Items: []
+  - m_Id: 180529226400653312
+    m_Key: desc_open_content_friendship
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

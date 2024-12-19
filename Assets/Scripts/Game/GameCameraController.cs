@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+
 using Game;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
+using UnityEditor.Rendering;
 
 namespace GameSystem
 {
@@ -69,7 +70,7 @@ namespace GameSystem
         public bool StopUpdate { get; private set; } = false;
 
         public float MaxOrthographicSize { get { return 2000f; } }
-        public float MinOrthographicSize { get { return 1100f; } }
+        public float MinOrthographicSize { get { return 1200f; } }
 
         public float OrthographicSizeForTutorial { get { return 1200; } }
         public float DefaultOrthographicSize { get { return 1500f; } }
@@ -229,7 +230,8 @@ namespace GameSystem
 
             // var targetPos = new Vector3(clampX, clampY, InitPosZ);
 
-            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, _smoothTime * 2f);
+            cameraTm.position = Vector3.SmoothDamp(cameraTm.position, targetPos, ref _velocity, _smoothTime * 0.7f);
+            // cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, Time.deltaTime * 2f);
         }
 
         private void ZoomInOut()
@@ -364,29 +366,31 @@ namespace GameSystem
                 return;
             
             StopUpdate = true;
-            
-            // var resTargetPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
-            // float duration = 0.5f;
-            //
-            // Sequence sequence = DOTween.Sequence()
-            //     .SetAutoKill(false)
-            //     .Append(GameCamera.transform.DOMove(resTargetPos, duration).SetEase(Ease.OutQuad))
-            //     // .Append(DOTween.To(() => GameCamera.transform.position, pos => GameCamera.transform.position = pos, endPos, duration).SetEase(Ease.OutQuad))
-            //     // .Join(
-            //     .OnComplete(() =>
-            //     {
-            //         endAction?.Invoke();
-            //     });
-            // sequence.Restart();
 
-            ZoomInAsync(targetPos, endAction).Forget();
+            // var resTargetPos = GameCamera.transform.TransformPoint(targetPos);//GameCamera.WorldToScreenPoint(targetPos); 
+            var resTargetPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
+            
+            float duration = 1f;
+           
+            Sequence sequence = DOTween.Sequence()
+                .SetAutoKill(false)
+                .Append(GameCamera.transform.DOLocalMove(resTargetPos, duration).SetEase(Ease.OutQuad))
+                // .Append(DOTween.To(() => GameCamera.transform.position, pos => GameCamera.transform.position = pos, endPos, duration).SetEase(Ease.OutQuad))
+                .Join(DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.OutQuad))
+                .OnComplete(() =>
+                {
+                    endAction?.Invoke();
+                });
+            sequence.Restart();
+
+            // ZoomInAsync(targetPos, endAction).Forget();
         }
 
         private async UniTask ZoomInAsync(Vector3 targetPos, System.Action endAction)
         {
             float duration = 1f;
             
-            DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.OutQuad);
+            DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.Linear);
 
             float timeElapsed = 0;
             var resTargetPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);

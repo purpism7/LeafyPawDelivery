@@ -175,7 +175,7 @@ MonoBehaviour:
   unselectedRootRectTms:
   - {fileID: 4491893825841525795}
   - {fileID: 8422148135226149092}
-  getReadyTMPRectTm: {fileID: 4389696023454529842}
+  getReadyTMP: {fileID: 3548500854768457024}
 --- !u!222 &4538592769003199826
 CanvasRenderer:
   m_ObjectHideFlags: 0

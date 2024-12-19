@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ namespace UI
     {
         public class Data : BaseData
         {
-            
+            public Type.EContent EContent = Type.EContent.None;
         }
 
         [SerializeField] 

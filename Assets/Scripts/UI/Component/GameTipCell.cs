@@ -19,6 +19,8 @@ namespace UI.Component
         {
             base.Activate();
 
+            _selectIndex = 0;
+            
             AllDeactive();
             SetChildByLocale();
             ActivateChild();

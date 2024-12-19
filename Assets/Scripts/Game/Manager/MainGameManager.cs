@@ -8,6 +8,7 @@ using Game;
 using Game.Event;
 using GameSystem;
 using Info;
+using UI;
 using Base = Game.State.Base;
 using Type = System.Type;
 
@@ -127,11 +128,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         {
             Info.Connector.Get?.SetPossibleBuyAnimal();
             Info.Connector.Get?.SetPossibleBuyObject();
-
-            if (!UserManager.Instance.CheckOpenContent(Game.Type.EContent.Friendship))
-            {
-                
-            }
         }
 
         _endInitialize = true;
@@ -254,6 +250,22 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         GameState?.End();
 
         IGameCameraCtr?.SetStopUpdate(false);
+
+        if (!IsTutorial)
+        {
+            if (!UserManager.Instance.CheckOpenContent(Game.Type.EContent.Friendship))
+            {
+                var openContentData = new OpenContent.Data
+                {
+                    EContent = Game.Type.EContent.Friendship,
+                };
+                
+                var openContent = new PopupCreator<OpenContent, OpenContent.Data>()
+                    .SetData(openContentData)
+                    .Create();
+                openContent?.Activate(openContentData);
+            }
+        }
     }
 
     private void InitializeTutorialManager()
@@ -626,13 +638,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             () =>
             {       
                 SpwanObjectToPlace(id);
-                // SetState(new Element.State.Edit().Initialize(gameCameraCtr, iGrid));
-                // SetSortingOrder(SelectOrder);
-                // edit?.ActivateBottom();
-                //
-                // State?.Touch(TouchPhase.Began, null);
-
-                        
             });
     }
 

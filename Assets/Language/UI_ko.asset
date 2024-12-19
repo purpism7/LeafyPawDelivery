@@ -357,7 +357,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 179765574475177984
-    m_Localized: "\uC5F4\uC2EC\uD788 \uC900\uBE44 \uC911\uC774\uB78D\uB2C8\uB2E4."
+    m_Localized: "\uC5F4\uC2EC\uD788 \uC900\uBE44 \uC911\uC785\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180529226400653312
+    m_Localized: "\"\uCE5C\uBC00\uB3C4\" \n\uCEE8\uD150\uCE20\uAC00 \uC624\uD508\uB410\uC5B4\uC694!"
     m_Metadata:
       m_Items: []
   references:

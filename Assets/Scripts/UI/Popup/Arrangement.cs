@@ -7,8 +7,10 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using Game;
 using GameSystem;
+using TMPro;
 using UI.Component;
 using Unity.VisualScripting;
+using UnityEngine.Localization.Settings;
 
 namespace UI
 {
@@ -44,7 +46,7 @@ namespace UI
         private RectTransform[] unselectedRootRectTms = null;
         
         [SerializeField]
-        private RectTransform getReadyTMPRectTm = null;
+        private TextMeshProUGUI getReadyTMP = null;
 
         private Game.Type.ETab _currETabType = Game.Type.ETab.Animal;
 
@@ -311,7 +313,6 @@ namespace UI
             if (objectOpenConditionContainer == null)
                 return;
 
-            // _objectIndex = -1;
             bool isTutorial = CheckIsTutorial;
 
             EnableScrollRect(objectScrollRect, !isTutorial);
@@ -360,8 +361,6 @@ namespace UI
                         index = index,
                     }, data.EGrade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, data.Order);
             }
-            
-            GameUtils.SetActive(getReadyTMPRectTm, specialObjectScrollRect?.content?.childCount <= 0);
         }
         
         private void ActiveContents()
@@ -378,6 +377,8 @@ namespace UI
 
                 MoveScrollPossibleBuy().Forget();
             }
+            
+            getReadyTMP?.SetText(string.Empty);
         }
 
         private void EnableToggle(bool enable)
@@ -535,19 +536,17 @@ namespace UI
             
             GameUtils.SetActive(objectScrollRect, index == 0);
             GameUtils.SetActive(specialObjectScrollRect, index == 1);
-
-            // if (index == 1)
-            // {
-            //     if (_arrangementCellList != null)
-            //     {
-            //         for (int i = 0; i < _arrangementCellList.Count; ++i)
-            //         {
-            //             var cell = _arrangementCellList[i];
-            //             if (cell?.EElement == Type.EElement.Object)
-            //                 cell.Activate();
-            //         }
-            //     }
-            // }
+            
+            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_get_ready_so", LocalizationSettings.SelectedLocale);
+            var dataList = ObjectContainer.Instance?.GetDataListByPlaceId(_placeId);
+            if (dataList != null)
+            {
+                var findObj = dataList.Find(obj => obj?.EGrade == Type.EObjectGrade.Special);
+                if(findObj != null)
+                    local = string.Empty;
+            }
+            
+            getReadyTMP?.SetText(local);
         }
         
         public void OnClickObjectTab(int index)
