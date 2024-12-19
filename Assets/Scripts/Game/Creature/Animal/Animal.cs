@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 
 using Game;
 using Game.Element.State;
+using Game.State;
 
 namespace Game.Creature
 {
@@ -178,8 +179,12 @@ namespace Game.Creature
 
         protected override void Conversation()
         {
+            var mainGameMgr = MainGameManager.Instance;
+            if(mainGameMgr?.GameState == null)
+                return;
+            
             MainGameManager.Get<AnimalManager>()?.SetConverationAnimal(this);
-            MainGameManager.Instance?.SetGameStateAsync(Type.EGameState.Conversation).Forget();
+            mainGameMgr.SetGameStateAsync(Type.EGameState.Conversation).Forget();
         }
 
         protected override void Special()
@@ -242,14 +247,19 @@ namespace Game.Creature
         {
             DeactivateSpeechBubble();
             
+            var mainGameMgr = MainGameManager.Instance;
+            if(mainGameMgr?.GameState == null)
+                return;
+
+            if (mainGameMgr.GameState.CheckState<Conversation>())
+                return;
+            
             ActionCtr?.Deactivate();
 
             // bool isInteracition = false;
             var animalData = AnimalContainer.Instance?.GetData(Id);
             if (animalData == null)
                 return;
-                // isInteracition = MainGameManager.Get<ObjectManager>().CheckExist(animalData.InteractionId);
-                // isInteracition = ObjectContainer.Instance?.GetData(animalData.InteractionId) != null;
             
             if (animalData.InteractionId > 0)
             {

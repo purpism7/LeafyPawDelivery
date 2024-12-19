@@ -475,7 +475,7 @@ MonoBehaviour:
   m_text: "\"\uCE5C\uBC00\uB3C4\" \n\uCEE8\uD150\uCE20\uAC00 \uC624\uD508\uB410\uC5B4\uC694!\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8441f0fc9ae15ab43b2285b3d61e76f9, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 57b10edb38a144f4cacfea3bcc8783e4, type: 2}
+  m_sharedMaterial: {fileID: 2150698418341348605, guid: 8441f0fc9ae15ab43b2285b3d61e76f9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

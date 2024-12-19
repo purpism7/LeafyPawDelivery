@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Game;
 using Game.Event;
 using GameSystem;
@@ -212,7 +213,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             gameCameraOrthographicSize = IGameCameraCtr.OrthographicSizeForTutorial;
 
         IGameCameraCtr?.SetStopUpdate(true);
-
+        
         Sequencer.EnqueueTask(
             () =>
             {
@@ -476,8 +477,9 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         ResetNotificationPossibleBuy(placeId);
         
-        await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.2f, 0.4f)));
-
+        await IGameCameraCtr.MoveCenterGameCameraAsync();
+        // await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.2f, 0.4f)));
+        
         _iGrid?.Overlap();
         
         EndLoadAsync(false).Forget();

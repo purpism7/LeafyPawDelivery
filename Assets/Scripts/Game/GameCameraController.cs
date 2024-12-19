@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -9,6 +10,7 @@ using DG.Tweening;
 
 using Game;
 using UnityEditor.Rendering;
+using Random = UnityEngine.Random;
 
 namespace GameSystem
 {
@@ -23,6 +25,7 @@ namespace GameSystem
 
         void SetOrthographicSize(float orthographicSize);
         void MoveCenterGameCamera();
+        UniTask MoveCenterGameCameraAsync();
         void SetStopUpdate(bool stopUpdate);
 
         float RandPosXInScreenRagne { get; }
@@ -61,8 +64,12 @@ namespace GameSystem
         //private float _smoothTime = 1f;
 
         private float _width = 0;
-        //private float _moveDeltaTime = 0;
-        //private float _moveLerpTime = 10f;
+        private bool _zoomIn = false;
+        private Vector3 _zoomInTargetPos = Vector3.zero;
+        private System.Action _zoomInEndAction = null; 
+        private float _timeElapsed = 0;
+
+        private bool _isMoveCenter = false;
         
         public float Height { get; private set; } = 0;
        
@@ -93,8 +100,11 @@ namespace GameSystem
 
         public void Initialize(IGrid iGrid)
         {
+            _isMoveCenter = false;
+            _zoomIn = false;
+            
             IGrid = iGrid;
-
+            
             if(Application.isEditor)
             {
                 _smoothTime = 0.01f;
@@ -143,7 +153,43 @@ namespace GameSystem
             Gizmos.DrawWireCube(Center, new Vector3(width - 300f, height - 850f));
         }
 #endif
-        
+
+        private void LateUpdate()
+        {
+            if (_isMoveCenter)
+            {
+                var centerPos = new Vector3(0, 0, InitPosZ);
+                GameCamera.transform.position = centerPos;
+
+                var distance = Vector3.Distance(GameCamera.transform.position, centerPos);
+                Debug.Log(distance);
+                if (distance <= 0.1f)
+                    _isMoveCenter = false;
+
+                return;
+            }
+            
+            if (_zoomIn)
+            {
+                float duration = 1.5f;
+            
+                _timeElapsed += Time.deltaTime;
+                var t = _timeElapsed / duration;
+                
+                GameCamera.transform.position =
+                    Vector3.Lerp(GameCamera.transform.position, _zoomInTargetPos, t);
+                
+                if (t >= duration)
+                {
+                    _zoomIn = false;
+                    _zoomInEndAction?.Invoke();
+                    _zoomInEndAction = null;
+                }
+
+                return;
+            }
+        }
+
         private void Drag()
         {
             int touchCnt = Input.touchCount;
@@ -277,7 +323,18 @@ namespace GameSystem
 
         void IGameCameraCtr.MoveCenterGameCamera()
         {
-            GameCamera.transform.position = new Vector3(0, 0, InitPosZ);
+            // _isMoveCenter = true;
+            // Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, GameCamera.nearClipPlane);
+            // Vector3 worldCenter = GameCamera.ScreenToWorldPoint(screenCenter);
+            // worldCenter.z = InitPosZ;
+
+            // GameCamera.transform.position = new Vector3(0, 0, InitPosZ);
+            GameCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 1f);
+        }
+        
+        public async UniTask MoveCenterGameCameraAsync()
+        {
+            await GameCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 1f);
         }
 
         float IGameCameraCtr.GameCameraWidth
@@ -367,50 +424,62 @@ namespace GameSystem
             
             StopUpdate = true;
 
-            // var resTargetPos = GameCamera.transform.TransformPoint(targetPos);//GameCamera.WorldToScreenPoint(targetPos); 
-            var resTargetPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
+            _timeElapsed = 0;
+            _zoomInTargetPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
+            _zoomInEndAction = endAction;
+            _zoomIn = true;
+
+            var distance = virtualCamera.m_Lens.OrthographicSize - 500f;
+            Debug.Log(distance);
+            float duration = distance * 0.001f;
+            Debug.Log(duration);
             
-            float duration = 1f;
-           
-            Sequence sequence = DOTween.Sequence()
-                .SetAutoKill(false)
-                .Append(GameCamera.transform.DOLocalMove(resTargetPos, duration).SetEase(Ease.OutQuad))
-                // .Append(DOTween.To(() => GameCamera.transform.position, pos => GameCamera.transform.position = pos, endPos, duration).SetEase(Ease.OutQuad))
-                .Join(DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.OutQuad))
-                .OnComplete(() =>
-                {
-                    endAction?.Invoke();
-                });
-            sequence.Restart();
+            DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.Linear);
+
+            // var resTargetPos = GameCamera.transform.TransformPoint(targetPos);//GameCamera.WorldToScreenPoint(targetPos); 
+            // var resTargetPos = 
+            
+            // float duration = 2f;
+            //
+            // Sequence sequence = DOTween.Sequence()
+            //     .SetAutoKill(false)
+            //     .Append(virtualCamera.transform.DOMove(resTargetPos, duration).SetEase(Ease.OutQuad))
+            //     // .Append(DOTween.To(() => GameCamera.transform.position, pos => GameCamera.transform.position = pos, endPos, duration).SetEase(Ease.OutQuad))
+            //     .Join(DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.OutQuad))
+            //     .OnComplete(() =>
+            //     {
+            //         endAction?.Invoke();
+            //     });
+            // sequence.Restart();
 
             // ZoomInAsync(targetPos, endAction).Forget();
         }
 
-        private async UniTask ZoomInAsync(Vector3 targetPos, System.Action endAction)
-        {
-            float duration = 1f;
-            
-            DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.Linear);
-
-            float timeElapsed = 0;
-            var resTargetPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
-            
-            while (Vector3.Distance(resTargetPos, GameCamera.transform.position) >= 0.1f)
-            {
-                timeElapsed += Time.deltaTime;
-                var t = timeElapsed / duration;
-                
-                GameCamera.transform.position =
-                    Vector3.Lerp(GameCamera.transform.position, resTargetPos, t);
-                // Vector3.MoveTowards(GameCamera.transform.position, resTargetPos, Time.deltaTime);
-                
-                await UniTask.Yield();
-            }
-
-            await UniTask.Yield();
-            
-            endAction?.Invoke();
-        }
+        // private async UniTask ZoomInAsync(Vector3 targetPos, System.Action endAction)
+        // {
+        //     float duration = 1f;
+        //     
+        //     
+        //
+        //     float timeElapsed = 0;
+        //     var resTargetPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
+        //     
+        //     while (Vector3.Distance(resTargetPos, GameCamera.transform.position) >= 0.1f)
+        //     {
+        //         timeElapsed += Time.deltaTime;
+        //         var t = timeElapsed / duration;
+        //         
+        //         GameCamera.transform.position =
+        //             Vector3.Lerp(GameCamera.transform.position, resTargetPos, t);
+        //         // Vector3.MoveTowards(GameCamera.transform.position, resTargetPos, Time.deltaTime);
+        //         
+        //         await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+        //     }
+        //
+        //     await UniTask.Yield();
+        //     
+        //     endAction?.Invoke();
+        // }
 
         void IGameCameraCtr.ZoomOut(System.Action endAction)
         {

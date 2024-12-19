@@ -13,4 +13,9 @@ namespace GameSystem
     {
         void ChainFixedUpdate();
     }
+    
+    // public interface ILateUpdater
+    // {
+    //     void Chain();
+    // }
 }
