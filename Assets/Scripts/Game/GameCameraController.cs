@@ -328,13 +328,19 @@ namespace GameSystem
             // Vector3 worldCenter = GameCamera.ScreenToWorldPoint(screenCenter);
             // worldCenter.z = InitPosZ;
 
-            // GameCamera.transform.position = new Vector3(0, 0, InitPosZ);
-            GameCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 1f);
+            GameUtils.SetActive(virtualCamera, false);
+            GameCamera.transform.position = new Vector3(0, 0, InitPosZ);
+            GameUtils.SetActive(virtualCamera, true);
+            // GameCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 1f);
         }
         
         public async UniTask MoveCenterGameCameraAsync()
         {
-            await GameCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 1f);
+            GameUtils.SetActive(virtualCamera, false);
+            
+            await GameCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 0.5f);
+            
+            GameUtils.SetActive(virtualCamera, true);
         }
 
         float IGameCameraCtr.GameCameraWidth
