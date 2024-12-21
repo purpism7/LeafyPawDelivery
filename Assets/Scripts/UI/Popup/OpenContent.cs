@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Game;
 using GameSystem;
+using Info;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
@@ -35,6 +36,8 @@ namespace UI
             base.Activate(data);
             
             SetDescTMP();
+            
+            UserManager.Instance?.SetOpenContent(data.EContent);
         }
 
         private void SetDescTMP()

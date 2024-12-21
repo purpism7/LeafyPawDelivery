@@ -82,6 +82,10 @@ MonoBehaviour:
     m_Localized: Raise animals' affection
     m_Metadata:
       m_Items: []
+  - m_Id: 152601739893137408
+    m_Localized: Raise animals' affection {0}
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

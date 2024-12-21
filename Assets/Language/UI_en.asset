@@ -359,6 +359,18 @@ MonoBehaviour:
     m_Localized: "I\u2019m putting in a lot of effort to get ready."
     m_Metadata:
       m_Items: []
+  - m_Id: 181025193109479424
+    m_Localized: Rare Deco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180529226400653312
+    m_Localized: The 'Friendship' content is now available!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 181411541041537024
+    m_Localized: Game Tip
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

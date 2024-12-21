@@ -378,7 +378,8 @@ namespace UI
                 MoveScrollPossibleBuy().Forget();
             }
             
-            getReadyTMP?.SetText(string.Empty);
+            // getReadyTMP?.SetText(string.Empty);
+            GameUtils.SetActive(getReadyTMP, false);
         }
 
         private void EnableToggle(bool enable)
@@ -547,6 +548,7 @@ namespace UI
             }
             
             getReadyTMP?.SetText(local);
+            GameUtils.SetActive(getReadyTMP, !string.IsNullOrEmpty(local));
         }
         
         public void OnClickObjectTab(int index)
@@ -655,10 +657,9 @@ namespace UI
         {
             Deactivate();
 
+            var mainGameMgr = MainGameManager.Instance;
             if (EElement == Game.Type.EElement.Animal)
             {
-                var mainGameMgr = MainGameManager.Instance;
-
                 mainGameMgr?.SetGameStateAsync(Game.Type.EGameState.Edit);
 
                 Game.UIManager.Instance?.Bottom?.DeactivateAnim(

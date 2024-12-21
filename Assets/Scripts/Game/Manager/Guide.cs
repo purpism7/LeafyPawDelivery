@@ -129,7 +129,8 @@ namespace Game.Manager
                         //    return;
                         //}
 
-                        if (addObjectData.eOpenConditionType == OpenConditionData.EType.Hidden)
+                        if (addObjectData.eOpenConditionType == OpenConditionData.EType.Hidden ||
+                            addObjectData.eOpenConditionType == OpenConditionData.EType.Special)
                             return;
 
                         CheckOpenPlace();

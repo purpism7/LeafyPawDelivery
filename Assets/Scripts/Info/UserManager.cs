@@ -343,6 +343,9 @@ namespace Info
         
         public void SetOpenContent(Type.EContent eContent)
         {
+            if (eContent == Type.EContent.None)
+                return;
+            
             if (_user == null)
                 return;
             

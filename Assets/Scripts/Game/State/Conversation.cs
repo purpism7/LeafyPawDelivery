@@ -92,6 +92,7 @@ namespace Game.State
             {
                 _conversation = new PopupCreator<UI.Conversation, UI.Conversation.Data>()
                     .SetShowBackground(false)
+                    .SetAnimActivate(false)
                     .SetData(
                         new UI.Conversation.Data
                         {

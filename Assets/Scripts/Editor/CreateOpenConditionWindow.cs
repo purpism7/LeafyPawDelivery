@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+
 using Data;
 using GameData;
-using Unity.VisualScripting;
 
 public class CreateOpenConditionWindow : EditorWindow
 {

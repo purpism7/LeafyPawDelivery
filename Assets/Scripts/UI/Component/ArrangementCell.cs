@@ -672,7 +672,7 @@ namespace UI.Component
 
             EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
             
-            if(_data.EElement == Game.Type.EElement.Object)
+                if(_data.EElement == Game.Type.EElement.Object)
             {
                 var openCondition = ObjectOpenConditionData;
                 if (openCondition == null)

@@ -333,6 +333,14 @@ MonoBehaviour:
     m_Key: desc_open_content_friendship
     m_Metadata:
       m_Items: []
+  - m_Id: 181025193109479424
+    m_Key: rare_object
+    m_Metadata:
+      m_Items: []
+  - m_Id: 181411541041537024
+    m_Key: game_tip
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
