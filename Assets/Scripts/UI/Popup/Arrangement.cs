@@ -537,18 +537,18 @@ namespace UI
             
             GameUtils.SetActive(objectScrollRect, index == 0);
             GameUtils.SetActive(specialObjectScrollRect, index == 1);
-            
-            var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_get_ready_so", LocalizationSettings.SelectedLocale);
+
+            var local = string.Empty;
             var dataList = ObjectContainer.Instance?.GetDataListByPlaceId(_placeId);
             if (dataList != null)
             {
                 var findObj = dataList.Find(obj => obj?.EGrade == Type.EObjectGrade.Special);
-                if(findObj != null)
-                    local = string.Empty;
+                if(findObj == null && index == 1)
+                    local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_get_ready_so", LocalizationSettings.SelectedLocale);
             }
             
             getReadyTMP?.SetText(local);
-            GameUtils.SetActive(getReadyTMP, !string.IsNullOrEmpty(local));
+            GameUtils.SetActive(getReadyTMP, string.IsNullOrEmpty(local) == false);
         }
         
         public void OnClickObjectTab(int index)

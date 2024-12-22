@@ -87,6 +87,7 @@ namespace UI
         {
             base.Activate();
            
+            speakerImg?.SetActive(false);
             cntTMP?.SetText(string.Empty);
         }
 
