@@ -230,17 +230,29 @@ namespace UI
             EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
             
             Deactivate();
+
+            if (_data.EPayment == Type.EPayment.ObjectCurrency)
+            {
+                var currency = new Info.User.Currency
+                {
+                    PlaceId = GameUtils.ActivityPlaceId,
+                    Object = -_data.Price,
+                };
+
+                if (!Info.UserManager.Instance.CheckCurrency(currency))
+                {
+                    var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_object_currency", LocalizationSettings.SelectedLocale);
+                    Game.Toast.Get?.Show(localDesc);
+
+                    return;
+                }
+            }
             
             if (!_possibleBuy)
             {
                 if (_data.EPayment == Type.EPayment.Cash)
                 {
                     var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_jewel", LocalizationSettings.SelectedLocale);
-                    Game.Toast.Get?.Show(localDesc);
-                }
-                else if (_data.EPayment == Type.EPayment.ObjectCurrency)
-                {
-                    var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_object_currency", LocalizationSettings.SelectedLocale);
                     Game.Toast.Get?.Show(localDesc);
                 }
                 

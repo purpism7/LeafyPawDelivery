@@ -193,17 +193,18 @@ namespace  UI.Component
                                 return;
 
                             user.SetCash(-item.Price);
-
+                            
                             break;
                         }
 
                         case Type.EPayment.ObjectCurrency:
                         {
-                            var user = Info.UserManager.Instance.User;
-                            if (user == null)
-                                return;
-
-                            user.SetCurrency(Type.EElement.Object, -item.Price);
+                            UserManager.Instance?.SetCurrency(Type.EElement.Object, -item.Price);
+                            // var user = Info.UserManager.Instance.User;
+                            // if (user == null)
+                            //     return;
+                            //
+                            // user.SetCurrency(Type.EElement.Object, -item.Price);
 
                             break;
                         }

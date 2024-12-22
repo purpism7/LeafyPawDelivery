@@ -10,6 +10,7 @@ using DG.Tweening;
 
 using GameSystem;
 using Game;
+using Info;
 using Type = Game.Type;
 
 namespace UI.Component
@@ -467,6 +468,19 @@ namespace UI.Component
                 return;
 
             var mainGameMgr = MainGameManager.Instance;
+            
+            int animalCurrency = openConditionData.AnimalCurrency;
+            int objectCurrency = openConditionData.ObjectCurrency;
+
+            var currency = new Info.User.Currency
+            {
+                PlaceId = GameUtils.ActivityPlaceId,
+                Animal = -animalCurrency,
+                Object = -objectCurrency,
+            };
+
+            if (!UserManager.Instance.CheckCurrency(currency))
+                return;
 
             Sequencer.EnqueueTask(
                 () =>
@@ -485,16 +499,7 @@ namespace UI.Component
                         .SetReInitialize(true)
                         .Create();
 
-                    int animalCurrency = openConditionData.AnimalCurrency;
-                    int objectCurrency = openConditionData.ObjectCurrency;
-
-                    Info.UserManager.Instance?.SetCurrency(
-                        new Info.User.Currency()
-                        {
-                            PlaceId = GameUtils.ActivityPlaceId,
-                            Animal = -animalCurrency,
-                            Object = -objectCurrency,
-                        });
+                    Info.UserManager.Instance?.SetCurrency(currency);
 
                     ITop iTop = Game.UIManager.Instance?.Top;
                     iTop?.SetCurrency();

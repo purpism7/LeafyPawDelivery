@@ -258,6 +258,24 @@ namespace Info
         //    firebaseMgr?.Database?.Save(userId, jsonString);
         //}
 
+        public bool CheckCurrency(User.Currency currency)
+        {
+            if (currency == null)
+                return false;
+            
+            var userCurrency = _user.GetCurrency(currency.PlaceId);
+            if (userCurrency == null)
+                return false;
+            
+            if (userCurrency.Animal + currency.Animal < 0)
+                return false;
+             
+            if(userCurrency.Object + currency.Object < 0)
+                return false;
+
+            return true;
+        }
+
         public void SetCurrency(Game.Type.EElement eElement, int currency)
         {
             _user?.SetCurrency(eElement, currency);
@@ -268,7 +286,7 @@ namespace Info
             _user?.SetCurrency(currency);
         }
 
-        public void SaveCurrency(User.Currency currency)
+        private void SaveCurrency(User.Currency currency)
         {
             _user?.SetCurrency(currency);
 
