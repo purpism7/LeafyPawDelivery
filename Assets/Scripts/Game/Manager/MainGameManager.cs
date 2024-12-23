@@ -252,21 +252,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         IGameCameraCtr?.SetStopUpdate(false);
 
-        if (!IsTutorial)
-        {
-            if (!UserManager.Instance.CheckOpenContent(Game.Type.EContent.Friendship))
-            {
-                var openContentData = new OpenContent.Data
-                {
-                    EContent = Game.Type.EContent.Friendship,
-                };
-                
-                var openContent = new PopupCreator<OpenContent, OpenContent.Data>()
-                    .SetData(openContentData)
-                    .Create();
-                openContent?.Activate(openContentData);
-            }
-        }
+        OpenContent();
     }
 
     private void InitializeTutorialManager()
@@ -460,6 +446,25 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
 
         return false;
+    }
+
+    private void OpenContent()
+    {
+        if (IsTutorial)
+            return;
+        
+        if (!UserManager.Instance.CheckOpenContent(Game.Type.EContent.Friendship))
+        {
+            var openContentData = new OpenContent.Data
+            {
+                EContent = Game.Type.EContent.Friendship,
+            };
+                
+            var openContent = new PopupCreator<OpenContent, OpenContent.Data>()
+                .SetData(openContentData)
+                .Create();
+            openContent?.Activate(openContentData);
+        }
     }
 
     #region Place
@@ -805,6 +810,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                     Info.Connector.Get?.SetPossibleBuyAnimal();
                     Info.Connector.Get?.SetPossibleBuyObject();
 
+                    OpenContent();
+                    
                     break;
                 }
         }

@@ -75,7 +75,6 @@ namespace Info
         public override IEnumerator CoInit()
         {
             yield return StartCoroutine(base.CoInit());
-
             yield return StartCoroutine(CoLoadLocalUserInfo());
             //yield return StartCoroutine(CoLoadUserInfo());
         }

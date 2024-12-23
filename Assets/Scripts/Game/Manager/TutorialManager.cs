@@ -218,7 +218,7 @@ namespace Game
                 new Popo.Data()
                 {
                     iListener = this,
-                    startPos = new Vector3(-iGameCameraCtr.GameCameraWidth + 500f, PopoPosY, PopoPosZ),
+                    startPos = new Vector3(-iGameCameraCtr.GameCameraWidth + 200f, PopoPosY, PopoPosZ),
                 });
 
             _popo?.MoveToTarget(new Vector3(0, PopoPosY, PopoPosZ));

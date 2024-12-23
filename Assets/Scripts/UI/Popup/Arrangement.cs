@@ -466,6 +466,9 @@ namespace UI
 
         private int GetArrangementCellIndex(Game.Type.EElement eElement, int id)
         {
+            if (_isTutorial)
+                return 0;
+            
             if (id <= 0)
                 return -1;
             

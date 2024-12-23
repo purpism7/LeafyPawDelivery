@@ -43,6 +43,9 @@ namespace Info
 
         public bool CheckOpen(Type.EContent eContent)
         {
+            if (openContentList == null)
+                return false;
+            
             int findIndex = openContentList.FindIndex(openContent => openContent?.eContent == eContent);
             if (findIndex >= 0)
                 return openContentList[findIndex].isOpen;
