@@ -58,13 +58,13 @@ namespace UI.Component
             GameUtils.SetActive(rootRectTm, false);
             
             pointTMP?.SetText($"+{_data.AddFriendShipPoint}");
-           
-            rectTm.anchoredPosition = Vector2.zero;
+
+            rectTm.anchoredPosition = new Vector2(0, -5f);
             
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .AppendCallback(() => { GameUtils.SetActive(rootRectTm, true); })
-                .Append(DOTween.To(() => rectTm.anchoredPosition, pos => rectTm.anchoredPosition = pos, new Vector2(rectTm.anchoredPosition.x, rectTm.anchoredPosition.y + 60f), 1.5f))
+                .Append(DOTween.To(() => rectTm.anchoredPosition, pos => rectTm.anchoredPosition = pos, new Vector2(rectTm.anchoredPosition.x, rectTm.anchoredPosition.y + 70f), 1.5f))
                 .OnComplete(() =>
                 {
                     Deactivate();
