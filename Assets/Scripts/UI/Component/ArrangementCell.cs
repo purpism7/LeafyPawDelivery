@@ -109,6 +109,7 @@ namespace UI.Component
             SetNameTMP();
             ActivateOpenConditionList();
             SetHiddenOpenDescTMP();
+            SetSpecialObjectDescTMP();
 
             if (_data != null)
             {
@@ -258,12 +259,12 @@ namespace UI.Component
         {
             if (_data.EElement != Game.Type.EElement.Object)
                 return;
-         
-            openNameTMP?.SetText(string.Empty);
             
             var animalData = AnimalContainer.Instance?.GetDataByInteractionId(_data.Id);
             if (animalData == null)
                 return;
+            
+            openNameTMP?.SetText(string.Empty);
                     
             var localName = GameUtils.GetName(Type.EElement.Animal, animalData.Id, Games.Data.Const.AnimalBaseSkinId);
             var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_try_to_get_closer", LocalizationSettings.SelectedLocale);
