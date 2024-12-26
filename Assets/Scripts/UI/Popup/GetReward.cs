@@ -49,6 +49,8 @@ namespace UI
                     _rewardList[i]?.Deactivate();
                 }
             }
+            
+            _data?.EndAction?.Invoke();
         }
 
         private void SetRewardList()
@@ -97,8 +99,6 @@ namespace UI
         public void OnClick()
         {
             Deactivate();
-            
-            _data?.EndAction?.Invoke();
         }
     }
 }
