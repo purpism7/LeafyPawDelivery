@@ -29,15 +29,12 @@ namespace GooglePlayGames
     {
         internal PlayGamesPlatform mPlatform;
 
-        private string emailAddress;
-
         private PlayerStats mStats;
 
         internal PlayGamesLocalUser(PlayGamesPlatform plaf)
             : base("localUser", string.Empty, string.Empty)
         {
             mPlatform = plaf;
-            emailAddress = null;
             mStats = null;
         }
 
@@ -47,7 +44,7 @@ namespace GooglePlayGames
         /// </summary>
         public void Authenticate(Action<bool> callback)
         {
-            mPlatform.Authenticate(callback);
+            mPlatform.Authenticate(status => callback(status == SignInStatus.Success));
         }
 
         /// <summary>
@@ -56,25 +53,7 @@ namespace GooglePlayGames
         /// </summary>
         public void Authenticate(Action<bool, string> callback)
         {
-            mPlatform.Authenticate(callback);
-        }
-
-        /// <summary>
-        /// Authenticates the local user. Equivalent to calling
-        /// <see cref="PlayGamesPlatform.Authenticate" />.
-        /// </summary>
-        public void Authenticate(Action<bool> callback, bool silent)
-        {
-            mPlatform.Authenticate(callback, silent);
-        }
-
-        /// <summary>
-        /// Authenticates the local user. Equivalent to calling
-        /// <see cref="PlayGamesPlatform.Authenticate" />.
-        /// </summary>
-        public void Authenticate(Action<bool, string> callback, bool silent)
-        {
-            mPlatform.Authenticate(callback, silent);
+            mPlatform.Authenticate(status => callback(status == SignInStatus.Success, status.ToString()));
         }
 
         /// <summary>
@@ -91,14 +70,6 @@ namespace GooglePlayGames
         public IUserProfile[] friends
         {
             get { return mPlatform.GetFriends(); }
-        }
-
-        /// <summary>
-        /// Gets an id token for the user.
-        /// </summary>
-        public string GetIdToken()
-        {
-            return mPlatform.GetIdToken();
         }
 
         /// <summary>
@@ -208,32 +179,6 @@ namespace GooglePlayGames
                 }
 
                 return retval;
-            }
-        }
-
-        /// <summary>Gets the email of the signed in player.</summary>
-        /// <remarks>If your game requires a persistent, unique id for the
-        /// player, the use of PlayerId is recommendend since it does not
-        /// require extra permission consent from the user.
-        /// This is only available if the Requires Google Plus option
-        /// is added to the setup (which enables additional
-        /// permissions for the application).
-        /// NOTE: This property can only be accessed using the main Unity thread.
-        /// </remarks>
-        /// <value>The email.</value>
-        public string Email
-        {
-            get
-            {
-                // treat null as unitialized, empty as no email.  This can
-                // happen when the web client is not initialized.
-                if (authenticated && string.IsNullOrEmpty(emailAddress))
-                {
-                    emailAddress = mPlatform.GetUserEmail();
-                    emailAddress = emailAddress ?? string.Empty;
-                }
-
-                return authenticated ? emailAddress : string.Empty;
             }
         }
 

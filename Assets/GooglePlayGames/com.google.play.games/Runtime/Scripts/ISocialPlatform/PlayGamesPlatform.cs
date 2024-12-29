@@ -24,7 +24,6 @@ namespace GooglePlayGames
     using GooglePlayGames.BasicApi.Events;
     using GooglePlayGames.BasicApi.Nearby;
     using GooglePlayGames.BasicApi.SavedGame;
-    using GooglePlayGames.BasicApi.Video;
     using GooglePlayGames.OurUtils;
     using UnityEngine;
     using UnityEngine.SocialPlatforms;
@@ -50,9 +49,6 @@ namespace GooglePlayGames
         /// <remarks>This is static since it can be used without using play game services.</remarks>
         private static volatile INearbyConnectionClient sNearbyConnectionClient;
 
-        /// <summary>Configuration used to create this instance.</summary>
-        private readonly PlayGamesClientConfiguration mConfiguration;
-
         /// <summary>The local user.</summary>
         private PlayGamesLocalUser mLocalUser = null;
 
@@ -73,18 +69,15 @@ namespace GooglePlayGames
         {
             this.mClient = Misc.CheckNotNull(client);
             this.mLocalUser = new PlayGamesLocalUser(this);
-            this.mConfiguration = PlayGamesClientConfiguration.DefaultConfiguration;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GooglePlayGames.PlayGamesPlatform"/> class.
         /// </summary>
-        /// <param name="configuration">Configuration object to use.</param>
-        private PlayGamesPlatform(PlayGamesClientConfiguration configuration)
+        private PlayGamesPlatform()
         {
             GooglePlayGames.OurUtils.Logger.d("Creating new PlayGamesPlatform");
             this.mLocalUser = new PlayGamesLocalUser(this);
-            this.mConfiguration = configuration;
         }
 
         /// <summary>
@@ -113,9 +106,9 @@ namespace GooglePlayGames
             {
                 if (sInstance == null)
                 {
-                    GooglePlayGames.OurUtils.Logger.d(
-                        "Instance was not initialized, using default configuration.");
-                    InitializeInstance(PlayGamesClientConfiguration.DefaultConfiguration);
+                  OurUtils.Logger.d("Initializing the PlayGamesPlatform instance.");
+                  sInstance =
+                      new PlayGamesPlatform(PlayGamesClientFactory.GetPlatformPlayGamesClient());
                 }
 
                 return sInstance;
@@ -156,13 +149,6 @@ namespace GooglePlayGames
             get { return mClient.GetEventsClient(); }
         }
 
-        /// <summary>Gets the video client object.</summary>
-        /// <value>The video client.</value>
-        public IVideoClient Video
-        {
-            get { return mClient.GetVideoClient(); }
-        }
-
         /// <summary>
         /// Gets the local user.
         /// </summary>
@@ -175,25 +161,6 @@ namespace GooglePlayGames
         }
 
         /// <summary>
-        /// Initializes the instance of Play Game Services platform.
-        /// </summary>
-        /// <remarks>This creates the singleton instance of the platform.
-        /// Multiple calls to this method are ignored.
-        /// </remarks>
-        /// <param name="configuration">Configuration to use when initializing.</param>
-        public static void InitializeInstance(PlayGamesClientConfiguration configuration)
-        {
-            if (sInstance == null || sInstance.mConfiguration != configuration)
-            {
-                sInstance = new PlayGamesPlatform(configuration);
-                return;
-            }
-
-            GooglePlayGames.OurUtils.Logger.w(
-                "PlayGamesPlatform already initialized. Ignoring this call.");
-        }
-
-        /// <summary>
         /// Initializes the nearby connection platform.
         /// </summary>
         /// <remarks>This call initializes the nearby connection platform.  This
@@ -203,18 +170,18 @@ namespace GooglePlayGames
         /// <param name="callback">Callback invoked when  complete.</param>
         public static void InitializeNearby(Action<INearbyConnectionClient> callback)
         {
-            Debug.Log("Calling InitializeNearby!");
+            OurUtils.Logger.d("Calling InitializeNearby!");
             if (sNearbyConnectionClient == null)
             {
 #if UNITY_ANDROID && !UNITY_EDITOR
                 NearbyConnectionClientFactory.Create(client => {
-                    Debug.Log("Nearby Client Created!!");
+                    OurUtils.Logger.d("Nearby Client Created!!");
                     sNearbyConnectionClient = client;
                     if (callback != null) {
                         callback.Invoke(client);
                     }
                     else {
-                        Debug.Log("Initialize Nearby callback is null");
+                        OurUtils.Logger.d("Initialize Nearby callback is null");
                     }
                 });
 #else
@@ -228,12 +195,12 @@ namespace GooglePlayGames
             }
             else if (callback != null)
             {
-                Debug.Log("Nearby Already initialized: calling callback directly");
+                OurUtils.Logger.d("Nearby Already initialized: calling callback directly");
                 callback.Invoke(sNearbyConnectionClient);
             }
             else
             {
-                Debug.Log("Nearby Already initialized");
+                OurUtils.Logger.d("Nearby Already initialized");
             }
         }
 
@@ -246,21 +213,11 @@ namespace GooglePlayGames
         public static PlayGamesPlatform Activate()
         {
             GooglePlayGames.OurUtils.Logger.d("Activating PlayGamesPlatform.");
+
             Social.Active = PlayGamesPlatform.Instance;
             GooglePlayGames.OurUtils.Logger.d(
                 "PlayGamesPlatform activated: " + Social.Active);
             return PlayGamesPlatform.Instance;
-        }
-
-        /// <summary>
-        /// Sets the gravity for popups (Android only).
-        /// </summary>
-        /// <remarks>This can only be called after authentication.  It affects
-        /// popups for achievements and other game services elements.</remarks>
-        /// <param name="gravity">Gravity for the popup.</param>
-        public void SetGravityForPopups(Gravity gravity)
-        {
-            mClient.SetGravityForPopups(gravity);
         }
 
         /// <summary>
@@ -291,199 +248,16 @@ namespace GooglePlayGames
         }
 
         /// <summary>
-        /// Authenticate the local user with the Google Play Games service.
-        /// </summary>
-        /// <param name='callback'>
-        /// The callback to call when authentication finishes. It will be called
-        /// with <c>true</c> if authentication was successful, <c>false</c>
-        /// otherwise.
-        /// </param>
-        public void Authenticate(Action<bool> callback)
-        {
-            Authenticate(callback, false);
-        }
-
-        /// <summary>
-        /// Authenticate the local user with the Google Play Games service.
-        /// </summary>
-        /// <param name='callback'>
-        /// The callback to call when authentication finishes. It will be called
-        /// with <c>true</c> if authentication was successful, <c>false</c>
-        /// otherwise.
-        /// </param>
-        public void Authenticate(Action<bool, string> callback)
-        {
-            Authenticate(callback, false);
-        }
-
-        /// <summary>
-        /// Authenticate the local user with the Google Play Games service.
-        /// </summary>
-        /// <param name='callback'>
-        /// The callback to call when authentication finishes. It will be called
-        /// with <c>true</c> if authentication was successful, <c>false</c>
-        /// otherwise.
-        /// </param>
-        /// <param name='silent'>
-        /// Indicates whether authentication should be silent. If <c>false</c>,
-        /// authentication may show popups and interact with the user to obtain
-        /// authorization. If <c>true</c>, there will be no popups or interaction with
-        /// the user, and the authentication will fail instead if such interaction
-        /// is required. A typical pattern is to try silent authentication on startup
-        /// and, if that fails, present the user with a "Sign in" button that then
-        /// triggers normal (not silent) authentication.
-        /// </param>
-        public void Authenticate(Action<bool> callback, bool silent)
-        {
-            Authenticate((bool success, string msg) => callback(success), silent);
-        }
-
-        /// <summary>
-        /// Authenticate the local user with the Google Play Games service.
-        /// </summary>
-        /// <param name='callback'>
-        /// The callback to call when authentication finishes. It will be called
-        /// with <c>true</c> if authentication was successful, <c>false</c>
-        /// otherwise.
-        /// </param>
-        /// <param name='silent'>
-        /// Indicates whether authentication should be silent. If <c>false</c>,
-        /// authentication may show popups and interact with the user to obtain
-        /// authorization. If <c>true</c>, there will be no popups or interaction with
-        /// the user, and the authentication will fail instead if such interaction
-        /// is required. A typical pattern is to try silent authentication on startup
-        /// and, if that fails, present the user with a "Sign in" button that then
-        /// triggers normal (not silent) authentication.
-        /// </param>
-        public void Authenticate(Action<bool, string> callback, bool silent)
-        {
-            Authenticate(silent ? SignInInteractivity.NoPrompt : SignInInteractivity.CanPromptAlways, status =>
-            {
-                if (status == SignInStatus.Success)
-                {
-                    callback(true, "Authentication succeeded");
-                }
-                else if (status == SignInStatus.Canceled)
-                {
-                    callback(false, "Authentication canceled");
-                    GooglePlayGames.OurUtils.Logger.d("Authentication canceled");
-                }
-                else if (status == SignInStatus.DeveloperError)
-                {
-                    callback(false, "Authentication failed - developer error");
-                    GooglePlayGames.OurUtils.Logger.d("Authentication failed - developer error");
-                }
-                else
-                {
-                    callback(false, "Authentication failed");
-                    GooglePlayGames.OurUtils.Logger.d("Authentication failed");
-                }
-            });
-        }
-
-        /// <summary>
-        /// Authenticate the local user with the Google Play Games service.
+        /// Returns the result of the automatic sign-in attempt. Play Games SDK automatically
+        /// prompts users to sign in when the game is started. This API is useful for understanding
+        /// if your game has access to Play Games Services and should be used when your game is
+        /// started in order to conditionally enable or disable your Play Games Services
+        /// integration.
         /// </summary>
         /// <param name="callback">The callback to call when authentication finishes.</param>
-        /// <param name="signInInteractivity"><see cref="SignInInteractivity"/></param>
-        public void Authenticate(SignInInteractivity signInInteractivity, Action<SignInStatus> callback)
+        public void Authenticate(Action<SignInStatus> callback)
         {
-            // make a platform-specific Play Games client
-            if (mClient == null)
-            {
-                GooglePlayGames.OurUtils.Logger.d(
-                    "Creating platform-specific Play Games client.");
-                mClient = PlayGamesClientFactory.GetPlatformPlayGamesClient(mConfiguration);
-            }
-
-            if (callback == null)
-            {
-                callback = status => { };
-            }
-
-            switch (signInInteractivity)
-            {
-                case SignInInteractivity.NoPrompt:
-                    mClient.Authenticate( /* silent= */ true, code =>
-                    {
-                        // SignInStatus.UiSignInRequired is returned when silent sign in fails or when there is no
-                        // internet connection.
-                        if (code == SignInStatus.UiSignInRequired &&
-                            Application.internetReachability == NetworkReachability.NotReachable)
-                        {
-                            callback(SignInStatus.NetworkError);
-                        }
-                        else
-                        {
-                            callback(code);
-                        }
-                    });
-                    break;
-
-                case SignInInteractivity.CanPromptAlways:
-                    mClient.Authenticate( /* silent= */ false, code =>
-                    {
-                        // SignInStatus.Canceled is returned when interactive sign in fails or when there is no internet connection.
-                        if (code == SignInStatus.Canceled &&
-                            Application.internetReachability == NetworkReachability.NotReachable)
-                        {
-                            callback(SignInStatus.NetworkError);
-                        }
-                        else
-                        {
-                            callback(code);
-                        }
-                    });
-                    break;
-
-                case SignInInteractivity.CanPromptOnce:
-
-                    // 1. Silent sign in first
-                    mClient.Authenticate( /* silent= */ true, silentSignInResultCode =>
-                    {
-                        if (silentSignInResultCode == SignInStatus.Success)
-                        {
-                            OurUtils.Logger.d("Successful, triggering callback");
-                            callback(silentSignInResultCode);
-                            return;
-                        }
-
-                        // 2. Check the shared pref and bail out if it's true.
-                        if (!SignInHelper.ShouldPromptUiSignIn())
-                        {
-                            OurUtils.Logger.d(
-                                "User cancelled sign in attempt in the previous attempt. Triggering callback with silentSignInResultCode");
-                            callback(silentSignInResultCode);
-                            return;
-                        }
-
-                        // 3. Check internet connection
-                        if (Application.internetReachability == NetworkReachability.NotReachable)
-                        {
-                            OurUtils.Logger.d("No internet connection");
-                            callback(SignInStatus.NetworkError);
-                            return;
-                        }
-
-                        // 4. Interactive sign in
-                        mClient.Authenticate( /* silent= */ false, interactiveSignInResultCode =>
-                        {
-                            // 5. Save that the user has cancelled the interactive sign in.
-                            if (interactiveSignInResultCode == SignInStatus.Canceled)
-                            {
-                                OurUtils.Logger.d("Cancelled, saving this to a shared pref");
-                                SignInHelper.SetPromptUiSignIn(false);
-                            }
-
-                            callback(interactiveSignInResultCode);
-                        });
-                    });
-                    break;
-
-                default:
-                    PlayGamesHelperObject.RunOnGameThread(() => callback(SignInStatus.Failed));
-                    break;
-            }
+            mClient.Authenticate(callback);
         }
 
         /// <summary>
@@ -494,7 +268,7 @@ namespace GooglePlayGames
         /// <param name="callback">Callback invoked when complete.</param>
         public void Authenticate(ILocalUser unused, Action<bool> callback)
         {
-            Authenticate(callback, false);
+            Authenticate(status => callback(status == SignInStatus.Success));
         }
 
         /// <summary>
@@ -505,7 +279,21 @@ namespace GooglePlayGames
         /// <param name="callback">Callback invoked when complete.</param>
         public void Authenticate(ILocalUser unused, Action<bool, string> callback)
         {
-            Authenticate(callback, false);
+            Authenticate(status => callback(status == SignInStatus.Success, status.ToString()));
+        }
+
+        /// <summary>
+        /// Manually requests that your game performs sign in with Play Games Services.
+        /// </summary>
+        /// <remarks>
+        /// Note that a sign-in attempt will be made automatically when your game's application
+        /// started. For this reason most games will not need to manually request to perform sign-in
+        /// unless the automatic sign-in attempt failed and your game requires access to Play Games
+        /// Services.
+        /// </remarks>
+        /// <param name="callback"></param>
+        public void ManuallyAuthenticate(Action<SignInStatus> callback) {
+          mClient.ManuallyAuthenticate(callback);
         }
 
         /// <summary>
@@ -519,17 +307,44 @@ namespace GooglePlayGames
             return mClient != null && mClient.IsAuthenticated();
         }
 
-        /// <summary>Sign out. After signing out,
-        /// Authenticate must be called again to sign back in.
+        /// <summary>
+        /// Requests server-side access to Player Games Services for the currently signed in player.
         /// </summary>
-        public void SignOut()
+        /// When requested an authorization code is returned that can be used by your game-server to
+        /// exchange for an access token and conditionally a refresh token (when {@code
+        /// forceRefreshToken} is true). The access token may then be used by your game-server to
+        /// access the Play Games Services web APIs. This is commonly used to complete a sign-in flow
+        /// by verifying the Play Games Services player id.
+        ///
+        /// <p>If {@code forceRefreshToken} is true, when exchanging the authorization code a refresh
+        /// token will be returned in addition to the access token. The refresh token allows the
+        /// game-server to request additional access tokens, allowing your game-server to continue
+        /// accesses Play Games Services while the user is not actively playing your app. <remarks>
+        ///
+        /// </remarks>
+        /// <param name="forceRefreshToken">If {@code true} when the returned authorization code is
+        /// exchanged a refresh token will be included in addition to an access token.</param> <param
+        /// name="callback"></param>
+        public void RequestServerSideAccess(bool forceRefreshToken, Action<string> callback)
         {
-            if (mClient != null)
+            Misc.CheckNotNull(callback);
+
+            if (!IsAuthenticated())
             {
-                mClient.SignOut();
+                OurUtils.Logger.e("RequestServerSideAccess() can only be called after authentication.");
+                InvokeCallbackOnGameThread(callback, null);
+                return;
             }
 
-            mLocalUser = new PlayGamesLocalUser(this);
+            mClient.RequestServerSideAccess(forceRefreshToken, callback);
+        }
+
+
+        public void RequestRecallAccess(Action<RecallAccess> callback)
+        {
+            Misc.CheckNotNull(callback);
+
+            mClient.RequestRecallAccessToken(callback);
         }
 
         /// <summary>
@@ -568,88 +383,6 @@ namespace GooglePlayGames
             }
 
             return mClient.GetUserId();
-        }
-
-        /// <summary>
-        /// Get an id token for the user.
-        /// </summary>
-        public string GetIdToken()
-        {
-            if (mClient != null)
-            {
-                return mClient.GetIdToken();
-            }
-
-            OurUtils.Logger.e("No client available, returning null.");
-            return null;
-        }
-
-        /// <summary>
-        /// Gets the server auth code.
-        /// </summary>
-        /// <remarks>This code is used by the server application in order to get
-        /// an oauth token.  For how to use this acccess token please see:
-        /// https://developers.google.com/drive/v2/web/auth/web-server.
-        /// To get another server auth code after the initial one returned, call
-        /// GetAnotherServerAuthCode().
-        /// </remarks>
-        public string GetServerAuthCode()
-        {
-            if (mClient != null && mClient.IsAuthenticated())
-            {
-                return mClient.GetServerAuthCode();
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Gets another server auth code.
-        /// </summary>
-        /// <remarks>This method should be called after authenticating, and exchanging
-        /// the initial server auth code for a token.  This is implemented by signing in
-        /// silently, which if successful returns almost immediately and with a new
-        /// server auth code.
-        /// </remarks>
-        /// <param name="reAuthenticateIfNeeded">Calls Authenticate if needed when
-        /// retrieving another auth code. </param>
-        /// <param name="callback">Callback returning the auth code or null
-        /// if there was an error.  NOTE: This callback can return immediately.</param>
-        public void GetAnotherServerAuthCode(bool reAuthenticateIfNeeded,
-            Action<string> callback)
-        {
-            if (mClient != null && mClient.IsAuthenticated())
-            {
-                mClient.GetAnotherServerAuthCode(reAuthenticateIfNeeded, callback);
-            }
-            else if (mClient != null && reAuthenticateIfNeeded)
-            {
-                mClient.Authenticate(false, (status) =>
-                {
-                    if (status == SignInStatus.Success)
-                    {
-                        callback(mClient.GetServerAuthCode());
-                    }
-                    else
-                    {
-                        OurUtils.Logger.e("Re-authentication failed: " + status);
-                        callback(null);
-                    }
-                });
-            }
-            else
-            {
-                OurUtils.Logger.e("Cannot call GetAnotherServerAuthCode: not authenticated");
-                callback(null);
-            }
-        }
-
-        /// <summary>
-        /// Gets the user's email.
-        /// </summary>
-        public string GetUserEmail()
-        {
-            return mClient.GetUserEmail();
         }
 
         /// <summary>
@@ -779,6 +512,7 @@ namespace GooglePlayGames
                                     "Progress " + progress +
                                     " is less than or equal to 1. You might be trying to use values in the range of [0,1], while values are expected to be within the range [0,100]. If you are using the latter, you can safely ignore this message.");
                             }
+
                             mClient.SetStepsAtLeast(achievementID, progressToSteps(progress, ach[i].TotalSteps), callback);
                         }
                         else
@@ -1388,53 +1122,6 @@ namespace GooglePlayGames
                 timeSpan,
                 (scoreData) => HandleLoadingScores(
                     (PlayGamesLeaderboard) board, scoreData, callback));
-        }
-
-        /// <summary>Asks user to give permissions for the given scopes.</summary>
-        /// <param name="scopes">Scope to ask permission for</param>
-        /// <param name="callback">Callback used to indicate the outcome of the operation.</param>
-        public void RequestPermission(string scope, Action<SignInStatus> callback)
-        {
-            RequestPermissions(new string[] {scope}, callback);
-        }
-
-        /// <summary>Asks user to give permissions for the given scopes.</summary>
-        /// <param name="scopes">List of scopes to ask permission for</param>
-        /// <param name="callback">Callback used to indicate the outcome of the operation.</param>
-        public void RequestPermissions(string[] scopes, Action<SignInStatus> callback)
-        {
-            if (!IsAuthenticated())
-            {
-                GooglePlayGames.OurUtils.Logger.e(
-                    "HasPermissions can only be called after authentication.");
-                callback(SignInStatus.NotAuthenticated);
-                return;
-            }
-
-            mClient.RequestPermissions(scopes, callback);
-        }
-
-        /// <summary>Returns whether or not user has given permissions for given scopes.</summary>
-        /// <param name="scope">scope</param>
-        /// <returns><c>true</c>, if given, <c>false</c> otherwise.</returns>
-        public bool HasPermission(string scope)
-        {
-            return HasPermissions(new string[] {scope});
-        }
-
-        /// <summary>Returns whether or not user has given permissions for given scopes.</summary>
-        /// <param name="scopes">array of scopes</param>
-        /// <returns><c>true</c>, if given, <c>false</c> otherwise.</returns>
-        public bool HasPermissions(string[] scopes)
-        {
-            if (!IsAuthenticated())
-            {
-                GooglePlayGames.OurUtils.Logger.e(
-                    "HasPermissions can only be called after authentication.");
-                return false;
-            }
-
-            return mClient.HasPermissions(scopes);
         }
 
         /// <summary>

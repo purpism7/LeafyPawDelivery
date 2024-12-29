@@ -65,16 +65,28 @@ namespace GameSystem
 #if UNITY_ANDROID
             _eType = EType.GooglePlayGames;
 
-            PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-                .EnableSavedGames()
-                //.RequestServerAuthCode(false)
-                .Build();
+            
+            
+            // PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+            //     .EnableSavedGames()
+            //     //.RequestServerAuthCode(false)
+            //     .Build();
 
-            PlayGamesPlatform.InitializeInstance(config);
+            // PlayGamesPlatform.InitializeInstance(config);
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();
 
-            PlayGamesPlatform.Instance.Authenticate(SocialAuthenticateCallback);
+            // PlayGamesPlatform.Instance.Authenticate(SocialAuthenticateCallback);
+            PlayGamesPlatform.Instance.Authenticate(
+                (SignInStatus status) =>
+                {
+                    if (status == SignInStatus.Success)
+                    {
+                        SetId(Social.localUser.id);
+                    }
+
+                    _endAuth = true;
+                });
 #else
             _eType = EType.GameCenter;
 
