@@ -222,7 +222,6 @@ MonoBehaviour:
   speechBubbleRectTm: {fileID: 8479831621050592719}
   interactionRectTm: {fileID: 2784984950148856218}
   FriendshipPointRootRectTm: {fileID: 5577607232798359601}
-  CanvasRectTm: {fileID: 2967264676502494012}
 --- !u!1 &1550014165813058105
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -120, y: -40}
+  m_AnchoredPosition: {x: -110, y: -40}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &2436289230826624605
@@ -489,7 +488,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c170e064811fb48cfafbe2439846a9fb, type: 3}
+  m_Sprite: {fileID: -4625093891488433656, guid: e493892583c8947eb8202925c34b36c1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

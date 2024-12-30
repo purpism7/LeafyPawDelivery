@@ -43,7 +43,7 @@ MonoBehaviour:
     width: 1512
     height: 916
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Addressables Report
   m_RootView: {fileID: 5}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_MinSize: {x: 640, y: 601}
   m_MaxSize: {x: 4000, y: 4021}
   vertical: 0
-  controlID: 16
+  controlID: 3907
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 208
+  controlID: 146
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 118
+  controlID: 147
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 119
+  controlID: 116
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -274,7 +274,7 @@ MonoBehaviour:
   - {fileID: 23}
   - {fileID: 24}
   m_Selected: 5
-  m_LastSelected: 0
+  m_LastSelected: 3
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -325,7 +325,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 383
+  controlID: 148
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -353,7 +353,7 @@ MonoBehaviour:
   - {fileID: 27}
   - {fileID: 28}
   m_Selected: 2
-  m_LastSelected: 0
+  m_LastSelected: 1
 --- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -504,7 +504,7 @@ MonoBehaviour:
     m_ContainerData: []
     m_OverlaysVisible: 1
   m_SearchFilter:
-    m_NameFilter: Top
+    m_NameFilter: 
     m_ClassNames: []
     m_AssetLabels: []
     m_AssetBundleNames: []
@@ -514,26 +514,26 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Plugin
+    - Assets/Language
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
-    m_OriginalText: Top
+    m_OriginalText: 
     m_ImportLogFlags: 0
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts/Plugin
+  - Assets/Language
   m_LastFoldersGridSize: 16
   m_LastProjectPath: /Users/sj/Project/Animals
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 98.5}
-    m_SelectedIDs: f8670100
-    m_LastClickedID: 92152
-    m_ExpandedIDs: 0000000076ea0000
+    m_SelectedIDs: 02ed0000
+    m_LastClickedID: 60674
+    m_ExpandedIDs: 0000000074ea0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -562,7 +562,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000076ea0000
+    m_ExpandedIDs: 0000000074ea0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -616,7 +616,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 365.5}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 228
@@ -1376,7 +1376,7 @@ MonoBehaviour:
           m_Text: Group Name \ Addressable Name
           m_Image: {fileID: 0}
           m_Tooltip: Address used to load asset at runtime
-          m_TextWithWhitespace: 
+          m_TextWithWhitespace: "Group Name \\ Addressable Name\u200B"
         contextMenuText: 
         headerTextAlignment: 0
         sortingArrowAlignment: 1
@@ -1408,7 +1408,7 @@ MonoBehaviour:
           m_Text: Path
           m_Image: {fileID: 0}
           m_Tooltip: Current Path of asset
-          m_TextWithWhitespace: 
+          m_TextWithWhitespace: "Path\u200B"
         contextMenuText: 
         headerTextAlignment: 0
         sortingArrowAlignment: 1
@@ -1424,7 +1424,7 @@ MonoBehaviour:
           m_Text: Labels
           m_Image: {fileID: 0}
           m_Tooltip: Assets can have multiple labels
-          m_TextWithWhitespace: 
+          m_TextWithWhitespace: "Labels\u200B"
         contextMenuText: 
         headerTextAlignment: 0
         sortingArrowAlignment: 1
@@ -1602,7 +1602,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: bce7feff6ce8feffb8ecfeff48effeff4ceffeff52f1feffacf1feffb0f3feffb4f3fefffcf5feff08f6feff10f6feff60f8feff14f9feff1af9feff1ef9feff22fbfeffccecffffd0ecffffd6eeffff2eefffff3cf1ffff48f1ffff7af3ffff88f3ffff96f5ffffa6f9ffff
+      m_ExpandedIDs: de76feff8e77feffda7bfeff4e82feff5282feff5884feffb084feffb486feffb886feffda88feffde88feffe28afeff1095feff1495feff1a97feff7297feff7699feff7a99feff9c9bfeffa29bfeffa69bfeffaa9dfeff04adfeffb4adfeff00b2feff72b8feff76b8feff7cbafeffd4bafeffd8bcfeffdcbcfeff8cbffeff92bffeff96bffeff9ac1feff2cd0feff30d0feff36d2feff8ed2feff92d4feff96d4feff48d7feff4cd7feff50d9feffd815ffff8816ffffd41affff4821ffff4c21ffff5223ffffaa23ffffae25ffffb225ffffd427ffffd827ffffdc29fffff233fffff633fffffc35ffff5436ffff5838ffff5c38ffff163bffff1c3bffff203bffff243dffffdc4bffffe04bffffe64dffff3e4effff4250ffff4650fffff652fffffa52fffffe54ffff3060ffff3460ffff3a62ffff9462ffff9864ffff9c64ffffc666ffffca66ffffce68ffff7675ffff2676ffff727affffe480ffffe880ffffee82ffff4683ffff4a85ffff4e85fffffe87ffff0488ffff0888ffff0c8affff9698ffff9a98ffffa09afffff89afffffc9cffff009dffffb29fffffb69fffffbaa1ffff7aabffff7eabffff84adffffdcadffffe0afffffe4afffff06b2ffff0ab2ffff0eb4ffff44bffffff4bfffff40c4ffffb4caffffb8caffffbeccffff16cdffff1acfffff1ecfffff8ed3ffff24d4ffff2ad4ffff2ed4ffff32d6ffff0ce5ffff10e5ffff16e7ffff6ee7ffff7ce9ffff88e9ffff06eeffffa2eeffffb0eeffffbef0ffffacf9ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1689,7 +1689,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 539.5
-    width: 594
+    width: 591
     height: 401.5
   m_SerializedDataModeController:
     m_DataMode: 0
