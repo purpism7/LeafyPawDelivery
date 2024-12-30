@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game;
+using GameSystem;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
@@ -63,6 +64,8 @@ namespace UI
         
         private void OnClickLeft()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+            
             GameUtils.SetActive(leftBtn, false);
             
             _currGameTipCell?.SelectLeft();
@@ -74,6 +77,8 @@ namespace UI
 
         private void OnClickRight()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+            
             GameUtils.SetActive(rightBtn, false);
             
             _currGameTipCell?.SelectRight();

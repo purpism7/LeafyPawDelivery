@@ -143,11 +143,15 @@ namespace UI
 
         public void OnClickSNS()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+            
             Application.OpenURL("http://www.instagram.com/leafyparcels/");
         }
 
         public void OnClickGameTip()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+            
             var gameTip = new PopupCreator<GameTip, GameTip.Data>()
                 .Create();
             gameTip?.Activate();
@@ -155,6 +159,8 @@ namespace UI
 
         public void OnclickPrivacyPolish()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+            
             //Application.OpenURL("https://leafypawdelivery.blogspot.com/2024/02/blogger-30.html");
             Application.OpenURL("https://sites.google.com/view/leafy-parcels-privacy-policy/%ED%99%88");
         }

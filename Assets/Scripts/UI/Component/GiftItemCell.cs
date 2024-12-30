@@ -100,20 +100,11 @@ namespace UI.Component
 
         public void OnClick()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+            
             if (_data == null)
                 return;
-            
-            // var animalMgr = MainGameManager.Get<AnimalManager>();
-            // if (animalMgr != null &&
-            //     animalMgr.CheckMaxFriendshipPoint(_data.AnimalId))
-            // {
-            //     var localKey = "desc_max_friendship";
-            //     var local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", localKey, LocalizationSettings.SelectedLocale);
-            //     
-            //     Game.Toast.Get?.Show(local, localKey);
-            //     return;
-            // }
-            
+
             var giftItem = _data?.GiftItem;
             if (giftItem == null)
                 return;

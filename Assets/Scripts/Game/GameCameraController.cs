@@ -154,42 +154,6 @@ namespace GameSystem
         }
 #endif
 
-        // private void LateUpdate()
-        // {
-        //     if (_isMoveCenter)
-        //     {
-        //         var centerPos = new Vector3(0, 0, InitPosZ);
-        //         GameCamera.transform.position = centerPos;
-        //
-        //         var distance = Vector3.Distance(GameCamera.transform.position, centerPos);
-        //         Debug.Log(distance);
-        //         if (distance <= 0.1f)
-        //             _isMoveCenter = false;
-        //
-        //         return;
-        //     }
-        //     
-        //     if (_zoomIn)
-        //     {
-        //         float duration = 1.5f;
-        //     
-        //         _timeElapsed += Time.deltaTime;
-        //         var t = _timeElapsed / duration;
-        //         
-        //         GameCamera.transform.position =
-        //             Vector3.Lerp(GameCamera.transform.position, _zoomInTargetPos, t);
-        //         
-        //         if (t >= duration)
-        //         {
-        //             _zoomIn = false;
-        //             _zoomInEndAction?.Invoke();
-        //             _zoomInEndAction = null;
-        //         }
-        //
-        //         return;
-        //     }
-        // }
-
         private void Drag()
         {
             int touchCnt = Input.touchCount;

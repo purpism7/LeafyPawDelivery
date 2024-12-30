@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
-using DG.Tweening;
-using Game;
-using TMPro;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.UI;
+
+using DG.Tweening;
+using TMPro;
+
+using Game;
+using GameSystem;
 
 namespace UI.Component
 {
@@ -117,6 +118,8 @@ namespace UI.Component
 
         public void Onclick()
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+            
             if (_data == null)
                 return;
             

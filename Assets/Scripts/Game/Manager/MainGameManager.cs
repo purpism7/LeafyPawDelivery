@@ -483,7 +483,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         ResetNotificationPossibleBuy(placeId);
         
         await IGameCameraCtr.MoveCenterGameCameraAsync();
-        // await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0.2f, 0.4f)));
+        await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
         
         _iGrid?.Overlap();
         

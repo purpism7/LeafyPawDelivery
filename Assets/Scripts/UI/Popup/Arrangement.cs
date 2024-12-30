@@ -556,6 +556,8 @@ namespace UI
         
         public void OnClickObjectTab(int index)
         {
+            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
+            
             ActiveObjectList(index);
         }
 
