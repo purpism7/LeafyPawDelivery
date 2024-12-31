@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Children:
   - {fileID: 3}
-  - {fileID: 21}
+  - {fileID: 22}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 5918
+  controlID: 1927
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -34,16 +34,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 13974, guid: 0000000000000000e000000000000000, type: 0}
+  m_Script: {fileID: 11500000, guid: ac9b4e439aace6446a0642ca97e8f43b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MinSize: {x: 200, y: 200}
+  m_MinSize: {x: 50, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
-    m_Text: Simulator
-    m_Image: {fileID: 3038311277492192215, guid: 0000000000000000d000000000000000, type: 0}
+    m_Text: Android Logcat
+    m_Image: {fileID: 0}
     m_Tooltip: 
-    m_TextWithWhitespace: "Simulator\u200B"
+    m_TextWithWhitespace: "Android Logcat\u200B"
   m_Pos:
     serializedVersion: 2
     x: 0
@@ -61,47 +61,6 @@ MonoBehaviour:
     m_SaveData: []
     m_ContainerData: []
     m_OverlaysVisible: 1
-  m_SerializedViewNames:
-  - UnityEditor.GameView
-  m_SerializedViewValues:
-  - /Users/sj/Project/Animals/Library/PlayModeViewStates/ed331f473524a4cb68ef33de6ae210a5
-  m_PlayModeViewName: Device Simulator
-  m_ShowGizmos: 0
-  m_TargetDisplay: 0
-  m_ClearColor: {r: 0, g: 0, b: 0, a: 1}
-  m_TargetSize: {x: 1536, y: 2048}
-  m_TextureFilterMode: 0
-  m_TextureHideFlags: 61
-  m_RenderIMGUI: 1
-  m_EnterPlayModeBehavior: 0
-  m_UseMipMap: 0
-  m_SimulatorState:
-    controlPanelVisible: 0
-    controlPanelWidth: 0
-    controlPanelFoldoutKeys:
-    - UnityEditor.AdaptivePerformance.Editor.AdaptivePerformanceUIExtension
-    - UnityEditor.AdaptivePerformance.Samsung.Android.Editor.AdaptivePerformanceVRRUIExtension
-    - UnityEditor.DeviceSimulation.ApplicationSettingsPlugin
-    - UnityEditor.Localization.DeviceSimulator.LocalizationDeviceSimulatorPlugin
-    controlPanelFoldoutValues: 00000000
-    pluginNames:
-    - UnityEditor.AdaptivePerformance.Editor.AdaptivePerformanceUIExtension
-    - UnityEditor.AdaptivePerformance.Samsung.Android.Editor.AdaptivePerformanceVRRUIExtension
-    - UnityEditor.DeviceSimulation.ApplicationSettingsPlugin
-    - UnityEditor.Localization.DeviceSimulator.LocalizationDeviceSimulatorPlugin
-    pluginStates:
-    - '{"m_SerializationStates":{"thermalFoldout":false,"performanceFoldout":false,"developerFoldout":false,"indexerFoldout":false,"scalersFoldout":false,"deviceSettingsFoldout":false}}'
-    - '{"m_SerializationStates":{"settingsFoldout":false,"vrrFoldout":false,"androidSystemFoldout":false}}'
-    - '{}'
-    - '{}'
-    scale: 14
-    fitToScreenEnabled: 1
-    rotationDegree: 0
-    highlightSafeAreaEnabled: 0
-    friendlyName: Apple iPad Mini 4
-    screenIndex: 0
-    networkReachability: 1
-    systemLanguage: 10
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -126,7 +85,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 5919
+  controlID: 1928
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -151,7 +110,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 5882
+  controlID: 1978
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -162,7 +121,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SceneView
+  m_Name: BuildReportWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -171,9 +130,9 @@ MonoBehaviour:
     y: 0
     width: 746
     height: 443.5
-  m_MinSize: {x: 201, y: 221}
+  m_MinSize: {x: 281, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 6}
+  m_ActualView: {fileID: 11}
   m_Panes:
   - {fileID: 6}
   - {fileID: 7}
@@ -181,8 +140,8 @@ MonoBehaviour:
   - {fileID: 9}
   - {fileID: 10}
   - {fileID: 11}
-  m_Selected: 0
-  m_LastSelected: 5
+  m_Selected: 5
+  m_LastSelected: 0
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -843,7 +802,7 @@ MonoBehaviour:
     x: 0
     y: 96
     width: 745
-    height: 442.5
+    height: 422.5
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1191,7 +1150,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 96defeff9cdefeffa4defeffacdefeffb2defeffc0defeffc8defeffd0e4feffeae4fefff2e4feff3820ffff3c20ffff4620ffff4c20ffff5420ffff5c20ffff6220ffff7020ffff7820ffff8026ffff9a26ffffa226ffff7c61ffff2c62ffff7866ffffec6cfffff06cfffff66effff4e6fffff5271ffff5671ffff7873ffff7c73ffff8075ffffca80ffff7a81ffffc685ffff3a8cffff3e8cffff448effff9c8effffa090ffffa490ffffc692ffffca92ffffce94ffffb8a0ffff68a1ffffb4a5ffff28acffff2cacffff32aeffff8aaeffff8eb0ffff92b0ffffb4b2ffffb8b2ffffbcb4ffff48c0fffff8c0ffff44c5ffffb8cbffffbccbffffc2cdffff1aceffff1ed0ffff22d0ffff44d2ffff48d2ffff4cd4ffffe6dfffff98e0ffffe4e4ffff5eebffff62ebffff68edffff5ceeffff6af0ffff76f0ffffa8f2ffffb6f2ffff12f5ffffacf9ffff98a10100e2a101007ea201008aa20100
+      m_ExpandedIDs: 36a8fefff6a8feff42adfeffb6b3feffbab3feffc0b5feff28b6feff36b8feff42b8feff76bafeff88bafeff9abafefff4bcfeff3abdfeff46bdfeff52bdfeff5ebffeff6abffeff54c2feff3ccafeff5cd4feff60d4feff66d6feffbad6feffbed8feffc2d8feffe4dafeffe8dafeffecdcfeff82fafeff86fafeff8cfcfeffd0fcfeffd4fefeffd8fefefffc00ffff0001ffff0403ffff320fffff360fffff3c11ffff9411ffff9813ffff9c13ffffbe15ffffc215ffffc617ffffce21ffffd221ffffd823ffff3224ffff3626ffff3a26ffffaa2affff442bffff482bffff4c2dfffff0bbfffff4bbfffffabdffff40beffff44c0ffff48c0ffff6ac2ffff6ec2ffff72c4fffff6c4fffffac4ffff00c7ffff44c7ffff48c9ffff4cc9ffff70cbffff74cbffffe6ccffffeaccffff78cdfffff0ceffff36cfffff3ad1ffff3ed1ffff60d3ffff64d3ffff68d5ffffb2d6ffffb6d6ffffbcd8ffff00d9ffff04dbffff08dbffff2cddffff30ddffff34dfffff96e1ffffe4e1ffff30e6ffffc6e8ffffcae8ffffe4e9ffffe8e9ffffd0eaffff18ebffffeeebffff32ecffff1cedffff20edffff40eeffff4ceeffff42efffff46efffff80f0ffff8ef0ffff4af1ffff9cf2ffffacf9ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1208,7 +1167,7 @@ MonoBehaviour:
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
-        m_ClientGUIView: {fileID: 0}
+        m_ClientGUIView: {fileID: 12}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -1230,7 +1189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Children:
   - {fileID: 15}
-  - {fileID: 18}
+  - {fileID: 19}
   m_Position:
     serializedVersion: 2
     x: 0
@@ -1240,7 +1199,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 5920
+  controlID: 1929
 --- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1251,7 +1210,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SimulatorWindow
+  m_Name: AndroidLogcatConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -1260,15 +1219,16 @@ MonoBehaviour:
     y: 0
     width: 592
     height: 422.5
-  m_MinSize: {x: 200, y: 200}
+  m_MinSize: {x: 50, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 16}
   - {fileID: 17}
+  - {fileID: 18}
   - {fileID: 2}
-  m_Selected: 2
-  m_LastSelected: 1
+  m_Selected: 3
+  m_LastSelected: 2
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1830,6 +1790,83 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 13974, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Simulator
+    m_Image: {fileID: 3038311277492192215, guid: 0000000000000000d000000000000000, type: 0}
+    m_Tooltip: 
+    m_TextWithWhitespace: "Simulator\u200B"
+  m_Pos:
+    serializedVersion: 2
+    x: 0
+    y: 539.5
+    width: 591
+    height: 401.5
+  m_SerializedDataModeController:
+    m_DataMode: 0
+    m_PreferredDataMode: 0
+    m_SupportedDataModes: 
+    isAutomatic: 1
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+    m_ContainerData: []
+    m_OverlaysVisible: 1
+  m_SerializedViewNames:
+  - UnityEditor.GameView
+  m_SerializedViewValues:
+  - /Users/sj/Project/Animals/Library/PlayModeViewStates/ed331f473524a4cb68ef33de6ae210a5
+  m_PlayModeViewName: Device Simulator
+  m_ShowGizmos: 0
+  m_TargetDisplay: 0
+  m_ClearColor: {r: 0, g: 0, b: 0, a: 1}
+  m_TargetSize: {x: 1536, y: 2048}
+  m_TextureFilterMode: 0
+  m_TextureHideFlags: 61
+  m_RenderIMGUI: 1
+  m_EnterPlayModeBehavior: 0
+  m_UseMipMap: 0
+  m_SimulatorState:
+    controlPanelVisible: 0
+    controlPanelWidth: NaN
+    controlPanelFoldoutKeys:
+    - UnityEditor.AdaptivePerformance.Editor.AdaptivePerformanceUIExtension
+    - UnityEditor.AdaptivePerformance.Samsung.Android.Editor.AdaptivePerformanceVRRUIExtension
+    - UnityEditor.DeviceSimulation.ApplicationSettingsPlugin
+    - UnityEditor.Localization.DeviceSimulator.LocalizationDeviceSimulatorPlugin
+    controlPanelFoldoutValues: 00000000
+    pluginNames:
+    - UnityEditor.AdaptivePerformance.Editor.AdaptivePerformanceUIExtension
+    - UnityEditor.AdaptivePerformance.Samsung.Android.Editor.AdaptivePerformanceVRRUIExtension
+    - UnityEditor.DeviceSimulation.ApplicationSettingsPlugin
+    - UnityEditor.Localization.DeviceSimulator.LocalizationDeviceSimulatorPlugin
+    pluginStates:
+    - '{"m_SerializationStates":{"thermalFoldout":false,"performanceFoldout":false,"developerFoldout":false,"indexerFoldout":false,"scalersFoldout":false,"deviceSettingsFoldout":false}}'
+    - '{"m_SerializationStates":{"settingsFoldout":false,"vrrFoldout":false,"androidSystemFoldout":false}}'
+    - '{}'
+    - '{}'
+    scale: 10
+    fitToScreenEnabled: 1
+    rotationDegree: 0
+    highlightSafeAreaEnabled: 0
+    friendlyName: Apple iPad Mini 4
+    screenIndex: 0
+    networkReachability: 1
+    systemLanguage: 10
+--- !u!114 &19
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: ProjectBrowser
@@ -1843,13 +1880,13 @@ MonoBehaviour:
     height: 422.5
   m_MinSize: {x: 232, y: 271}
   m_MaxSize: {x: 10002, y: 10021}
-  m_ActualView: {fileID: 19}
+  m_ActualView: {fileID: 20}
   m_Panes:
-  - {fileID: 19}
   - {fileID: 20}
+  - {fileID: 21}
   m_Selected: 0
   m_LastSelected: 1
---- !u!114 &19
+--- !u!114 &20
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1886,7 +1923,7 @@ MonoBehaviour:
     m_ContainerData: []
     m_OverlaysVisible: 1
   m_SearchFilter:
-    m_NameFilter: edit
+    m_NameFilter: game
     m_ClassNames: []
     m_AssetLabels: []
     m_AssetBundleNames: []
@@ -1900,7 +1937,7 @@ MonoBehaviour:
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
-    m_OriginalText: edit
+    m_OriginalText: game
     m_ImportLogFlags: 0
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
@@ -1913,9 +1950,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 146.5}
-    m_SelectedIDs: e0a80100
-    m_LastClickedID: 108768
-    m_ExpandedIDs: 0000000074ea0000a4ec0000e2a8010000ca9a3bffffff7f
+    m_SelectedIDs: 06ed0000
+    m_LastClickedID: 60678
+    m_ExpandedIDs: 000000009ae60000f0ec000008ed000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1944,7 +1981,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000074ea000000ca9a3bffffff7f
+    m_ExpandedIDs: 000000009ae6000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1972,7 +2009,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000c2a1ffffde700000ea7000000e340000000000008c6e00009c7100005e9b0000d89e0000d49b000012700000389b00004674000018780000288100009c75000022860000a27500007677000026000100d0780000aa800000468d00001eaf0000dcaa0000e0aa0000e4aa0000d8db0000ecaa0000f0aa000094df0000f4aa0000f8aa0000fcaa00009899000000ab000004ab000008ab00000cab0000608f0000e2860000f289000088890000d0790000907d000098890000d4c7fffff06cfefff6b0000006ac0000b6ab0000aa91000080900000ce900000349200004095000072b20000249d0000569d00002aaf0000ee93000090b50000d84200004a8800004e8c0000708c0000369d00007e3a01000ea90100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1990,7 +2027,7 @@ MonoBehaviour:
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
-      m_ClientGUIView: {fileID: 18}
+      m_ClientGUIView: {fileID: 19}
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
       m_InstanceID: 0
@@ -1998,11 +2035,11 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 441.99463}
     m_GridSize: 16
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 228
---- !u!114 &20
+--- !u!114 &21
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2038,7 +2075,7 @@ MonoBehaviour:
     m_SaveData: []
     m_ContainerData: []
     m_OverlaysVisible: 1
---- !u!114 &21
+--- !u!114 &22
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2059,13 +2096,13 @@ MonoBehaviour:
     height: 866
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 22}
+  m_ActualView: {fileID: 23}
   m_Panes:
-  - {fileID: 22}
   - {fileID: 23}
+  - {fileID: 24}
   m_Selected: 0
   m_LastSelected: 1
---- !u!114 &22
+--- !u!114 &23
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2114,7 +2151,7 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_PreviewWindow: {fileID: 0}
---- !u!114 &23
+--- !u!114 &24
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}

@@ -37,6 +37,18 @@
             "name": "com.sec.android.app.myfiles",
             "processId": 32040,
             "exited": false
+        },
+        {
+            "deviceId": "R3CR60CXFTB",
+            "name": "com.popo.leafyparcels",
+            "processId": 31739,
+            "exited": true
+        },
+        {
+            "deviceId": "R3CR60CXFTB",
+            "name": "com.popo.leafyparcels",
+            "processId": 18172,
+            "exited": true
         }
     ],
     "m_Tags": {

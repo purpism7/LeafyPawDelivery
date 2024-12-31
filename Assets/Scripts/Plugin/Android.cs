@@ -100,9 +100,11 @@ namespace Plugin
         public override void GetString(string key, System.Action<bool, string> endAction)
         {
 #if UNITY_ANDROID
-
-            ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-            savedGameClient.OpenWithAutomaticConflictResolution(key, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLastKnownGood,
+            if(!PlayGamesPlatform.Instance.IsAuthenticated())
+                endAction?.Invoke(false, string.Empty);
+            
+            ISavedGameClient savedGameClient = PlayGamesPlatform.Instance?.SavedGame;
+            savedGameClient?.OpenWithAutomaticConflictResolution(key, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLastKnownGood,
                 (SavedGameRequestStatus status, ISavedGameMetadata game) =>
                 {
                     if (status == SavedGameRequestStatus.Success)
