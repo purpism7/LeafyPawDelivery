@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Localization-Locales
   m_EditorClassIdentifier: 
   m_GroupName: Localization-Locales
-  m_Data:
-    m_SerializedData: []
   m_GUID: 7dfbede4253d142ac95a2424bfdedbbb
   m_SerializeEntries:
+  - m_GUID: 2f058d5b9b12e4589a704342e23dc1c7
+    m_Address: Japanese (ja)
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 499d646dc27e74dc3859816bc6237d33
     m_Address: English (en)
     m_ReadOnly: 1
@@ -25,12 +29,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b967184327fc548af8f03cac13166d4e
     m_Address: Korean (ko)
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2f058d5b9b12e4589a704342e23dc1c7
-    m_Address: Japanese (ja)
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale

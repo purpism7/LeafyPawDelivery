@@ -30,6 +30,7 @@ public class AD : ScriptableObject
 #elif UNITY_ANDROID
                 return and;
 #endif
+                return string.Empty;
             }
         }
 

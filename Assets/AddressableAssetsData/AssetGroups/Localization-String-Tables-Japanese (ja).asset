@@ -13,36 +13,8 @@ MonoBehaviour:
   m_Name: Localization-String-Tables-Japanese (ja)
   m_EditorClassIdentifier: 
   m_GroupName: Localization-String-Tables-Japanese (ja)
-  m_Data:
-    m_SerializedData: []
   m_GUID: a5408480447784961b196bebc84125e9
   m_SerializeEntries:
-  - m_GUID: bf0fb7119e2a345c29bb634922aff639
-    m_Address: App_ja
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ja
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 77ae9718072ed4b0c830a9dfd8ce9b7d
-    m_Address: Acquire_ja
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ja
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 38cfc8764e23a47838dca397949ecaed
-    m_Address: Animal_ja
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ja
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8cd7a1bdc8bd848ddbcf459acc774477
-    m_Address: Object_ja
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ja
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34474938b1f1846edab3e44dcbf07a03
     m_Address: SpeechBubble_ja
     m_ReadOnly: 1
@@ -50,8 +22,8 @@ MonoBehaviour:
     - Locale-ja
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b2d37880c73b04cc69916bec7bac040b
-    m_Address: Story_ja
+  - m_GUID: 38cfc8764e23a47838dca397949ecaed
+    m_Address: Animal_ja
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja
@@ -66,6 +38,32 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 73e6d44c11c4649eb9a70b002323defa
     m_Address: Conversation_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77ae9718072ed4b0c830a9dfd8ce9b7d
+    m_Address: Acquire_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8cd7a1bdc8bd848ddbcf459acc774477
+    m_Address: Object_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b2d37880c73b04cc69916bec7bac040b
+    m_Address: Story_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf0fb7119e2a345c29bb634922aff639
+    m_Address: App_ja
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja

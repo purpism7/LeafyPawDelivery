@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,7 +9,6 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
 using Game;
-using UnityEditor.Rendering;
 using Random = UnityEngine.Random;
 
 namespace GameSystem

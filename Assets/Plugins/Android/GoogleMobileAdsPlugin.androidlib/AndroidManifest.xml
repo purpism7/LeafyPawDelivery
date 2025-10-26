@@ -5,6 +5,6 @@
     <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-4768455296560255~7168286809" />
     <meta-data android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION" android:value="true" />
     <meta-data android:name="com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING" android:value="true" />
-    <meta-data android:name="com.google.unity.ads.UNITY_VERSION" android:value="2023.2.20f1" />
+    <meta-data android:name="com.google.unity.ads.UNITY_VERSION" android:value="6000.0.59f2" />
   </application>
 </manifest>

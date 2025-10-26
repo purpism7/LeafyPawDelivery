@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: Localization-String-Tables-Korean (ko)
   m_EditorClassIdentifier: 
   m_GroupName: Localization-String-Tables-Korean (ko)
-  m_Data:
-    m_SerializedData: []
   m_GUID: 002882b8faaf44959bdc6b71b28d812d
   m_SerializeEntries:
+  - m_GUID: 05869453968684ebd8450a89733cec4a
+    m_Address: SpeechBubble_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 144d8ca14df1046e9bdae1efa0508f37
     m_Address: Object_ko
     m_ReadOnly: 1
@@ -24,15 +29,33 @@ MonoBehaviour:
     - Locale-ko
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8ee18e8295b474d4a8e61613739b712d
-    m_Address: Animal_ko
+  - m_GUID: 3e5a18b9aaaee49f48b33919d8628b31
+    m_Address: App_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 510a2ea9576fd437f9dc751bf9301c0e
+    m_Address: Story_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 510a2ea9576fd437f9dc751bf9301c0e
-    m_Address: Story_ko
+  - m_GUID: 5a891789bfd9d443ab4434e3bd4190f3
+    m_Address: Conversation_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f8755551c5bf4d768415b87ac4cad95
+    m_Address: Acquire_ko
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ko
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ee18e8295b474d4a8e61613739b712d
+    m_Address: Animal_ko
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko
@@ -44,31 +67,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ko
     - Preload
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 05869453968684ebd8450a89733cec4a
-    m_Address: SpeechBubble_ko
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ko
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6f8755551c5bf4d768415b87ac4cad95
-    m_Address: Acquire_ko
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ko
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3e5a18b9aaaee49f48b33919d8628b31
-    m_Address: App_ko
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ko
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5a891789bfd9d443ab4434e3bd4190f3
-    m_Address: Conversation_ko
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-ko
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: e7d7ed8f5841242acbc2f114c52db5f7, type: 2}

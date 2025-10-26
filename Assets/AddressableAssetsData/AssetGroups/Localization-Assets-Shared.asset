@@ -13,32 +13,10 @@ MonoBehaviour:
   m_Name: Localization-Assets-Shared
   m_EditorClassIdentifier: 
   m_GroupName: Localization-Assets-Shared
-  m_Data:
-    m_SerializedData: []
   m_GUID: 79cb8416da90e4fdbb5435a7e4b847c3
   m_SerializeEntries:
-  - m_GUID: e16e66eb164994bb5a18f3ca8466053c
-    m_Address: Assets/Language/Object Shared Data.asset
-    m_ReadOnly: 1
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 19cf67d94abc54609aa2c5bb84f6339b
     m_Address: Assets/Language/Animal Shared Data.asset
-    m_ReadOnly: 1
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2ef5ff1d93e2444ceb2b71041913ef3d
-    m_Address: Assets/Language/Story Shared Data.asset
-    m_ReadOnly: 1
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4f0dd266c499d49e28037280b74facf3
-    m_Address: Assets/Language/UI Shared Data.asset
-    m_ReadOnly: 1
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3dc31a86f8fef48be96204c21cf08a06
-    m_Address: Assets/Language/SpeechBubble Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -47,8 +25,28 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ef5ff1d93e2444ceb2b71041913ef3d
+    m_Address: Assets/Language/Story Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3dc31a86f8fef48be96204c21cf08a06
+    m_Address: Assets/Language/SpeechBubble Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f0dd266c499d49e28037280b74facf3
+    m_Address: Assets/Language/UI Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d85530bd78ca3439bb4c2fdbb884105a
     m_Address: Assets/Language/App Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e16e66eb164994bb5a18f3ca8466053c
+    m_Address: Assets/Language/Object Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

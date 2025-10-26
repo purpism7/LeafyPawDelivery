@@ -6,7 +6,6 @@ using UnityEngine.Localization.Settings;
 
 using UI;
 using GameSystem;
-using UnityEditor.Rendering;
 
 namespace Game.State
 {

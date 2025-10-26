@@ -13,12 +13,42 @@ MonoBehaviour:
   m_Name: Localization-String-Tables-English (en)
   m_EditorClassIdentifier: 
   m_GroupName: Localization-String-Tables-English (en)
-  m_Data:
-    m_SerializedData: []
   m_GUID: 066fe6f0ebe4c46d1881adf51b356bfa
   m_SerializeEntries:
+  - m_GUID: 0ece5972f4eec40988bff46acbfb8dfb
+    m_Address: Story_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a37675578dae4cb5a7d6385123fa032
     m_Address: Object_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a59f4d586af4408e9b4fddb31cb3e33
+    m_Address: Acquire_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59bdec506adc94acf9130256914f9651
+    m_Address: Conversation_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8186d1034eaf745f68fbce7832d8cfc8
+    m_Address: SpeechBubble_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 963255076e35e42da8748e8cca3215f9
+    m_Address: UI_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
@@ -31,40 +61,8 @@ MonoBehaviour:
     - Locale-en
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0ece5972f4eec40988bff46acbfb8dfb
-    m_Address: Story_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 963255076e35e42da8748e8cca3215f9
-    m_Address: UI_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    - Preload
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4a59f4d586af4408e9b4fddb31cb3e33
-    m_Address: Acquire_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: da39db3f58415425f97db016a9d378c9
     m_Address: App_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8186d1034eaf745f68fbce7832d8cfc8
-    m_Address: SpeechBubble_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 59bdec506adc94acf9130256914f9651
-    m_Address: Conversation_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

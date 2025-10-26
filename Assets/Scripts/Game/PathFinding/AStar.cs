@@ -21,12 +21,6 @@ namespace Game.PathFinding
             var closedSet = new HashSet<Node>();
 
             int limitLoopCnt = 9999;
-            var gameCameraCtr = MainGameManager.Instance?.IGameCameraCtr as GameSystem.GameCameraController;
-            if(gameCameraCtr != null)
-            {
-                // limitLoopCnt = gameCameraCtr.GameCamera.orthographicSize; 
-            }
-
             int loopCnt = 0;
             while (openList.Count > 0)
             {
