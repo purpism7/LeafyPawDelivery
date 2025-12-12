@@ -1,0 +1,8 @@
+<linker>
+	<assembly fullname="Apple.Core">
+		<type fullname="Apple.Core.Runtime.NSData" preserve="all"/>
+	</assembly>
+	<assembly fullname="Apple.GameKit">
+		<type fullname="Apple.GameKit.GKLocalPlayer" preserve="all"/>
+	</assembly>
+</linker>
