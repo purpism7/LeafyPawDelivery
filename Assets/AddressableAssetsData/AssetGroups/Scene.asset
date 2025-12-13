@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Scene
   m_EditorClassIdentifier: 
   m_GroupName: Scene
-  m_Data:
-    m_SerializedData: []
   m_GUID: fcae89ddb5c0a44e08e815e2a719d04d
   m_SerializeEntries:
   - m_GUID: 6dfd85869103c8947a115d1e79dd5d19

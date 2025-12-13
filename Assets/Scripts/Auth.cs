@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,6 +9,7 @@ using Unity.Services.Core;
 using Cysharp.Threading.Tasks;
 
 #if UNITY_IOS
+using Apple.GameKit;
 using UnityEngine.SocialPlatforms.GameCenter;
 #endif
 
@@ -58,7 +60,7 @@ namespace GameSystem
         public async UniTask AsyncInitialize()
         {
             await UnityServices.InitializeAsync();
-            // Debug.Log("UnityServices.State = " + UnityServices.State);
+            Debug.Log("UnityServices.State = " + UnityServices.State);
 
             _nickName = PlayerPrefs.GetString(Games.Data.PlayPrefsKeyNickName, string.Empty);
 
@@ -85,11 +87,58 @@ namespace GameSystem
             //
             // Social.localUser?.Authenticate(SocialAuthenticateCallback);
             // PlayGamesPlatform.Instance?.Authenticate(null, ProcessAuthentication);
-#else
+#elif UNITY_IOS
             _eType = EType.GameCenter;
+            
+            try
+            {
+                if (!GKLocalPlayer.Local.IsAuthenticated)
+                {
+                    // Perform the authentication.
+                    var player = await GKLocalPlayer.Authenticate();
+                    Debug.Log($"GameKit Authentication: player {player}");
+                }
+
+                if (GKLocalPlayer.Local.IsAuthenticated)
+                {
+                    // Grab the display name.
+                    var localPlayer = GKLocalPlayer.Local;
+                    Debug.Log($"Local Player: {localPlayer.DisplayName}");
+
+                    // Fetch the items.
+                    var fetchItemsResponse =  await GKLocalPlayer.Local.FetchItems();
+
+                    var signature = Convert.ToBase64String(fetchItemsResponse.GetSignature());
+                    var teamPlayerID = localPlayer.TeamPlayerId;
+                    Debug.Log($"Team Player ID: {teamPlayerID}");
+
+                    var salt = Convert.ToBase64String(fetchItemsResponse.GetSalt());
+                    var publicKeyUrl = fetchItemsResponse.PublicKeyUrl;
+                    ulong timestamp = fetchItemsResponse.Timestamp;
+
+                    Debug.Log($"GameKit Authentication: signature => {signature}");
+                    Debug.Log($"GameKit Authentication: publickeyurl => {publicKeyUrl}");
+                    Debug.Log($"GameKit Authentication: salt => {salt}");
+                    Debug.Log($"GameKit Authentication: Timestamp => {timestamp}");
+                
+                    await AuthenticationService.Instance.SignInWithAppleGameCenterAsync(signature, teamPlayerID, publicKeyUrl, salt, timestamp);
+                    Debug.Log("SignIn is successful.");
+                    _endAuth = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+            finally
+            {
+                _endAuth = true;
+            }
+#else
+            _endAuth = true;
 #endif
 
-            Social.localUser.Authenticate(SocialAuthenticateCallback);
+            // Social.localUser.Authenticate(SocialAuthenticateCallback);
             
             await UniTask.WaitUntil(() => _endAuth);
         }

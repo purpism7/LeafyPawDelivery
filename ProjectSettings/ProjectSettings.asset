@@ -144,8 +144,6 @@ PlayerSettings:
   bundleVersion: 3.0.1
   preloadedAssets:
   - {fileID: 11400000, guid: b725200179d5f4e1bb784d1ed461c4d6, type: 2}
-  - {fileID: 8421263368358385619, guid: 61065a90afb814f21a510bef56ba9408, type: 2}
-  - {fileID: 11400000, guid: 6c53165d38e394f4683ddf58a46b309f, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -248,7 +246,7 @@ PlayerSettings:
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: 5M5Q4Z8A77
-  iOSManualSigningProvisioningProfileID: cef838ff-9145-4520-964f-2b41976077cb
+  iOSManualSigningProvisioningProfileID: b608ee5f-da7e-4306-b88b-5806cf541850
   tvOSManualSigningProvisioningProfileID: 
   VisionOSManualSigningProvisioningProfileID: 
   iOSManualSigningProvisioningProfileType: 2
