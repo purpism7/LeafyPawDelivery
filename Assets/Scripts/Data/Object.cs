@@ -1,34 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
+
+using Newtonsoft;
+using Newtonsoft.Json;
 
 [System.Serializable]
 public class Object : ElementData
 {
-    [SerializeField]
-    private int Grade = 0;
-    public int Count = 0;
-    [SerializeField]
-    private int order = 0;
+    // [SerializeField]
+    // private int Grade = 0;
+    // public int Count = 0;
 
-    public Game.Type.EObjectGrade EGrade = Game.Type.EObjectGrade.None;
+    [JsonProperty("Count")] public int Count { get; private set; } = 0;
+    [JsonProperty("object_grade")] public Type.EObjectGrade Grade { get; private set; } = Type.EObjectGrade.None;
+    [JsonProperty("order")]  public int Order { get; private set; } = 0;
+    // [SerializeField]
+    // private int order = 0;
+    
+    
+
+    // public Game.Type.EObjectGrade EGrade = Game.Type.EObjectGrade.None;
     public string ShortIconImgName = string.Empty;
     public string LargeIconImgName = string.Empty;
 
     public override Game.Type.EElement EElement => Game.Type.EElement.Object;
 
-    public int Order { get { return order; } }
+    // public int Order { get { return order; } }
 
     public override void Initialize()
     {
         base.Initialize();
 
-        System.Enum.TryParse(Grade.ToString(), out EGrade);
+        // System.Enum.TryParse(Grade.ToString(), out EGrade);
 
         if(Count <= 0)
         {
-            Count = Grade;
-            if (EGrade == Game.Type.EObjectGrade.None)
+            Count = int.Parse(Grade.ToString());
+            if (Grade == Game.Type.EObjectGrade.None)
             {
                 Count = 1;
             }
@@ -45,7 +55,7 @@ public class Object : ElementData
     {
         get
         {
-            switch(EGrade)
+            switch(Grade)
             {
                 case Game.Type.EObjectGrade.Unique:
                     return 50;

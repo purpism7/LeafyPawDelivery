@@ -203,18 +203,18 @@ namespace UI
                 return;
 
             var datas = dataList.OrderBy(obj => obj.Order);
-            datas = datas.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special);
+            datas = datas.OrderByDescending(obj => obj.Grade == Type.EObjectGrade.Special);
 
-            foreach (var data in datas)
+            foreach (var objectData in datas)
             {
-                var objectInfo = objectMgr.GetObjectInfoById(data.Id);
+                var objectInfo = objectMgr.GetObjectInfoById(objectData.Id);
                 if (objectInfo == null)
                 {
-                    if (data.EGrade == Type.EObjectGrade.None)
+                    if (objectData.Grade == Type.EObjectGrade.None)
                         continue;
                 }
                 
-                AddBookCell(data.Id, Game.Type.EElement.Object, objectInfo == null, objectScrollRect.content, AnimalContainer.Instance.CheckExistInteraction(data.Id));
+                AddBookCell(objectData.Id, Game.Type.EElement.Object, objectInfo == null, objectScrollRect.content, AnimalContainer.Instance.CheckExistInteraction(objectData.Id));
             }
         }
 

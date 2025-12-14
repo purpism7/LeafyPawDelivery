@@ -158,7 +158,7 @@ namespace UI
             var objectDataList = ObjectContainer.Instance?.GetDataListByPlaceId(placeId);
 
             var datas = objectDataList?.OrderBy(obj => obj.Order);
-            datas = datas?.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special);
+            datas = datas?.OrderByDescending(obj => obj.Grade == Type.EObjectGrade.Special);
 
             bool isTutorial = CheckIsTutorial;
             EnableScrollRect(objectScrollRect, !isTutorial);

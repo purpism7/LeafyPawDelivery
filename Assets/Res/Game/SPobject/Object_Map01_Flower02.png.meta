@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 55c0fe0a63b8e4880860c3b2d57a9783
+guid: 7f2d217aae0cb43108da050e9b9cf445
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5190876725545441883
-    second: Object_Map01_Flower01_0
+      213: -4272821686775640214
+    second: Object_Map01_Flower02_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,9 +49,9 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 7
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Object_Map01_Flower01_0
+      name: Object_Map01_Flower02_0
       rect:
         serializedVersion: 2
         x: 2
         y: 4
         width: 149
-        height: 158
+        height: 207
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5a5650dde1d46f7b0800000000000000
-      internalID: -5190876725545441883
+      spriteID: a6f07237053e3b4c0800000000000000
+      internalID: -4272821686775640214
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Object_Map01_Flower01_0: -5190876725545441883
+      Object_Map01_Flower02_0: -4272821686775640214
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

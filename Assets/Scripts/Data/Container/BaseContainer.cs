@@ -40,7 +40,7 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
 
         if (typeof(T) == typeof(ItemContainer))
         {
-            var settings = new JsonSerializerSettings()
+            var settings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
             };
@@ -48,8 +48,30 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
             var datas = JsonConvert.DeserializeObject<V[]>(jsonStr, settings);
             _datas = datas;
             
-            InternalInitialize();
+            InternalInitialize(); 
 
+            return;
+        }
+        
+        if(typeof(T) == typeof(ObjectContainer))
+        {
+            try 
+            {
+                // Debug.Log($"Parsing JSON: {jsonStr.Substring(0, 50)}..."); // 앞부분 50자 출력
+                var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+                var datas = JsonConvert.DeserializeObject<V[]>(jsonStr, settings);
+                if (datas == null)
+                    return;
+                
+                _datas = datas;
+                InternalInitialize();
+            }
+            catch (JsonSerializationException e) 
+            {
+                Debug.LogError($"구조 불일치! 현재 T 타입: {typeof(T).Name}");
+                throw e;
+            }
+            
             return;
         }
         

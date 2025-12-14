@@ -319,7 +319,7 @@ namespace UI
             EnableScrollRect(specialObjectScrollRect, !isTutorial);
 
             var datas = dataList.OrderBy(obj => obj.Order);
-            var orderDataList = datas.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special).ToList();
+            var orderDataList = datas.OrderByDescending(obj => obj.Grade == Type.EObjectGrade.Special).ToList();
             
             for(int i = orderDataList.Count - 1; 0 <= i; --i)
             {
@@ -332,12 +332,12 @@ namespace UI
                 orderDataList.Remove(orderDataList[i]);
             }
             
-            foreach (var data in datas)
+            foreach (var objectData in datas)
             {
-                var objectInfo = objectMgr.GetObjectInfoById(data.Id);
+                var objectInfo = objectMgr.GetObjectInfoById(objectData.Id);
                 if (objectInfo == null)
                 {
-                    if (data.EGrade == Game.Type.EObjectGrade.None)
+                    if (objectData.Grade == Game.Type.EObjectGrade.None)
                         continue;
                 }
 
@@ -345,21 +345,21 @@ namespace UI
                 // // if(data.EGrade != Type.EObjectGrade.Special)
                 //     resIndex = GetIndex(objectMgr, data.Id, ref _objectIndex);
 
-                int index = orderDataList.FindIndex(obj => obj.Id == data.Id);
+                int index = orderDataList.FindIndex(obj => obj.Id == objectData.Id);
                     
                 AddArrangementCell(
                     new ArrangementCell.Data()
                     {
                         IListener = this,
-                        Id = data.Id,
+                        Id = objectData.Id,
                         EElement = Game.Type.EElement.Object,
                         Owned = objectInfo != null,
-                        Lock = !objectOpenConditionContainer.CheckReq(data.Id),
+                        Lock = !objectOpenConditionContainer.CheckReq(objectData.Id),
                         isTutorial = isTutorial,
-                        IsSpecialObject = data.EGrade == Type.EObjectGrade.Special,
+                        IsSpecialObject = objectData.Grade == Type.EObjectGrade.Special,
 
                         index = index,
-                    }, data.EGrade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, data.Order);
+                    }, objectData.Grade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, objectData.Order);
             }
         }
         
@@ -410,7 +410,7 @@ namespace UI
                 return -1;
             
             var orderDataList = dataList.OrderBy(obj => obj.Order).ToList();
-            orderDataList = orderDataList.OrderByDescending(obj => obj.EGrade == Type.EObjectGrade.Special).ToList();
+            orderDataList = orderDataList.OrderByDescending(obj => obj.Grade == Type.EObjectGrade.Special).ToList();
             
             for(int i = orderDataList.Count - 1; 0 <= i; --i)
             {
@@ -545,7 +545,7 @@ namespace UI
             var dataList = ObjectContainer.Instance?.GetDataListByPlaceId(_placeId);
             if (dataList != null)
             {
-                var findObj = dataList.Find(obj => obj?.EGrade == Type.EObjectGrade.Special);
+                var findObj = dataList.Find(obj => obj?.Grade == Type.EObjectGrade.Special);
                 if(findObj == null && index == 1)
                     local = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_get_ready_so", LocalizationSettings.SelectedLocale);
             }
