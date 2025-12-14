@@ -37,7 +37,7 @@ public class Object : ElementData
 
         if(Count <= 0)
         {
-            Count = int.Parse(Grade.ToString());
+            Count = (int)Grade;
             if (Grade == Game.Type.EObjectGrade.None)
             {
                 Count = 1;

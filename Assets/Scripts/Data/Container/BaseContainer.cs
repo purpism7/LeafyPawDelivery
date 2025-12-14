@@ -63,6 +63,11 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
                 if (datas == null)
                     return;
                 
+                foreach(Data.Base dataBase in datas)
+                {
+                    dataBase?.Initialize();
+                }
+                
                 _datas = datas;
                 InternalInitialize();
             }
