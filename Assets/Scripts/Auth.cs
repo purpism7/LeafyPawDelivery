@@ -10,11 +10,11 @@ using Cysharp.Threading.Tasks;
 
 #if UNITY_IOS
 using Apple.GameKit;
-using UnityEngine.SocialPlatforms.GameCenter;
 #endif
 
+using UnityEngine.SocialPlatforms.GameCenter;
+
 #if UNITY_ANDROID
-using Game.Element.State;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 #endif
@@ -78,13 +78,17 @@ namespace GameSystem
             
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();
-            
-            // PlayGamesPlatform.Instance?.Authenticate(
-            //     (status =>
-            //     {
-            //         Debug.Log(status);
-            //     }));
-            //
+
+             PlayGamesPlatform.Instance?.Authenticate(
+                 (status =>
+                 {
+                     Debug.Log(status);
+                     if(status == SignInStatus.Success)
+                     {
+                         _endAuth = true;
+                     }
+                 }));
+
             // Social.localUser?.Authenticate(SocialAuthenticateCallback);
             // PlayGamesPlatform.Instance?.Authenticate(null, ProcessAuthentication);
 #elif UNITY_IOS
@@ -138,8 +142,8 @@ namespace GameSystem
             _endAuth = true;
 #endif
 
-            // Social.localUser.Authenticate(SocialAuthenticateCallback);
-            
+            //Social.localUser.Authenticate(SocialAuthenticateCallback);
+
             await UniTask.WaitUntil(() => _endAuth);
         }
 
