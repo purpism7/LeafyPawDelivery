@@ -79,18 +79,7 @@ namespace GameSystem
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();
 
-             PlayGamesPlatform.Instance?.Authenticate(
-                 (status =>
-                 {
-                     Debug.Log(status);
-                     if(status == SignInStatus.Success)
-                     {
-                         _endAuth = true;
-                     }
-                 }));
-
-            // Social.localUser?.Authenticate(SocialAuthenticateCallback);
-            // PlayGamesPlatform.Instance?.Authenticate(null, ProcessAuthentication);
+            LoginGooglePlayGames();
 #elif UNITY_IOS
             _eType = EType.GameCenter;
             
@@ -148,6 +137,27 @@ namespace GameSystem
         }
 
 #if UNITY_ANDROID
+        private void LoginGooglePlayGames()
+        {
+            PlayGamesPlatform.Instance?.Authenticate(
+                (status =>
+                {
+                    Debug.Log(status);
+                    if(status == SignInStatus.Success)
+                    {
+                        PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
+                        {
+                            Debug.Log("Authorization code: " + code);
+                            SignInWithGooglePlayGamesAsync(code).Forget();
+                             
+                            // This token serves as an example to be used for SignInWithGooglePlayGames
+                        });
+                         
+                        // _endAuth = true;
+                    }
+                }));
+        }
+        
         // private void ProcessAuthentication(SignInStatus status)
         // {
         //     Debug.Log("SignStatus = " + status);
@@ -170,6 +180,29 @@ namespace GameSystem
         //
         //     _endAuth = true;
         // }
+        
+        async UniTask SignInWithGooglePlayGamesAsync(string authCode)
+        {
+            try
+            {
+                await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(authCode);
+                
+                _endAuth = true;
+                Debug.Log("SignIn is successful.");
+            }
+            catch (AuthenticationException ex)
+            {
+                // Compare error code to AuthenticationErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Compare error code to CommonErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+            }
+        }
 #endif
 
         private void SocialAuthenticateCallback(bool success, string error)
