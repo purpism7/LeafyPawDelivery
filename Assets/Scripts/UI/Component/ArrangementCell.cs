@@ -62,6 +62,8 @@ namespace UI.Component
         [SerializeField]
         private RectTransform specialObjectRectTm = null;
 
+        [SerializeField] private Button buyBtn = null;
+        
         [Header("Lock")]
         [SerializeField]
         private RectTransform lockRootRectTm = null;
@@ -82,10 +84,21 @@ namespace UI.Component
         {
             base.Initialize(data);
 
+            if (data.Id == 142)
+            {
+                buyBtn?.SetActive(true);
+                
+                buyBtn?.onClick?.RemoveAllListeners();
+                buyBtn?.onClick?.AddListener(OnClickBuy);
+            }
+            else
+                buyBtn?.SetActive(false);
+            
             GameUtils.SetActive(openRootRectTm, !_data.Owned);
             GameUtils.SetActive(lockRootRectTm, IsLock);
             GameUtils.SetActive(lockImg, IsLock);
             GameUtils.SetActive(lockBgImg, IsLock);
+            
             if(IsLock)
             {
                 lockBgImg.DOFade(1f, 0);
@@ -725,6 +738,11 @@ namespace UI.Component
             EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
 
             _data.IListener?.Edit(_data.EElement, _data.Id, _data.index);
+        }
+
+        private void OnClickBuy()
+        {
+            
         }
     }
 }
