@@ -83,21 +83,22 @@ namespace UI.Component
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-
+            
+            GameUtils.SetActive(openRootRectTm, !_data.Owned);
+            GameUtils.SetActive(lockRootRectTm, IsLock);
+            GameUtils.SetActive(lockImg, IsLock);
+            GameUtils.SetActive(lockBgImg, IsLock);
+            
             if (data.Id == 142)
             {
                 buyBtn?.SetActive(true);
+                // GameUtils.SetActive(openRootRectTm, false);
                 
                 buyBtn?.onClick?.RemoveAllListeners();
                 buyBtn?.onClick?.AddListener(OnClickBuy);
             }
             else
                 buyBtn?.SetActive(false);
-            
-            GameUtils.SetActive(openRootRectTm, !_data.Owned);
-            GameUtils.SetActive(lockRootRectTm, IsLock);
-            GameUtils.SetActive(lockImg, IsLock);
-            GameUtils.SetActive(lockBgImg, IsLock);
             
             if(IsLock)
             {
