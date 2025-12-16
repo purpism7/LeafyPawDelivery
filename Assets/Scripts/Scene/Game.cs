@@ -23,7 +23,7 @@ namespace Scene
                 if (Enum.TryParse(SceneManager.GetActiveScene().name.Replace("Scene", ""), out Type.EScene eSceneType))
                 {
                     var auth = new Auth();
-                    await auth.AsyncInitialize();
+                    await auth.AsyncInitializeAsync();
 
                     if (eSceneType == Type.EScene.Game)
                     {

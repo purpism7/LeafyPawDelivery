@@ -10,9 +10,8 @@ using Cysharp.Threading.Tasks;
 
 #if UNITY_IOS
 using Apple.GameKit;
-#endif
-
 using UnityEngine.SocialPlatforms.GameCenter;
+#endif
 
 #if UNITY_ANDROID
 using GooglePlayGames;
@@ -57,7 +56,7 @@ namespace GameSystem
             _instance = this;
         }
 
-        public async UniTask AsyncInitialize()
+        public async UniTask AsyncInitializeAsync()
         {
             await UnityServices.InitializeAsync();
             Debug.Log("UnityServices.State = " + UnityServices.State);
@@ -65,7 +64,11 @@ namespace GameSystem
             _nickName = PlayerPrefs.GetString(Games.Data.PlayPrefsKeyNickName, string.Empty);
 
             _endAuth = false;
-#if UNITY_ANDROID
+
+
+#if UNITY_EDITOR
+            _endAuth = true;
+#elif UNITY_ANDROID
             _eType = EType.GooglePlayGames;
             
             // PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
@@ -83,50 +86,7 @@ namespace GameSystem
 #elif UNITY_IOS
             _eType = EType.GameCenter;
             
-            try
-            {
-                if (!GKLocalPlayer.Local.IsAuthenticated)
-                {
-                    // Perform the authentication.
-                    var player = await GKLocalPlayer.Authenticate();
-                    Debug.Log($"GameKit Authentication: player {player}");
-                }
-
-                if (GKLocalPlayer.Local.IsAuthenticated)
-                {
-                    // Grab the display name.
-                    var localPlayer = GKLocalPlayer.Local;
-                    Debug.Log($"Local Player: {localPlayer.DisplayName}");
-
-                    // Fetch the items.
-                    var fetchItemsResponse =  await GKLocalPlayer.Local.FetchItems();
-
-                    var signature = Convert.ToBase64String(fetchItemsResponse.GetSignature());
-                    var teamPlayerID = localPlayer.TeamPlayerId;
-                    Debug.Log($"Team Player ID: {teamPlayerID}");
-
-                    var salt = Convert.ToBase64String(fetchItemsResponse.GetSalt());
-                    var publicKeyUrl = fetchItemsResponse.PublicKeyUrl;
-                    ulong timestamp = fetchItemsResponse.Timestamp;
-
-                    Debug.Log($"GameKit Authentication: signature => {signature}");
-                    Debug.Log($"GameKit Authentication: publickeyurl => {publicKeyUrl}");
-                    Debug.Log($"GameKit Authentication: salt => {salt}");
-                    Debug.Log($"GameKit Authentication: Timestamp => {timestamp}");
-                
-                    await AuthenticationService.Instance.SignInWithAppleGameCenterAsync(signature, teamPlayerID, publicKeyUrl, salt, timestamp);
-                    Debug.Log("SignIn is successful.");
-                    _endAuth = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-            }
-            finally
-            {
-                _endAuth = true;
-            }
+            await LoginGameCenterAsync();
 #else
             _endAuth = true;
 #endif
@@ -139,47 +99,24 @@ namespace GameSystem
 #if UNITY_ANDROID
         private void LoginGooglePlayGames()
         {
-            PlayGamesPlatform.Instance?.Authenticate(
-                (status =>
+            PlayGamesPlatform.Instance.Authenticate(
+                (status) =>
                 {
                     Debug.Log(status);
-                    if(status == SignInStatus.Success)
+                    if (status == SignInStatus.Success)
                     {
                         PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
                         {
                             Debug.Log("Authorization code: " + code);
                             SignInWithGooglePlayGamesAsync(code).Forget();
-                             
-                            // This token serves as an example to be used for SignInWithGooglePlayGames
                         });
-                         
-                        // _endAuth = true;
                     }
-                }));
+                    else
+                    {
+                        Debug.Log("로그인 실패");
+                    }
+                });
         }
-        
-        // private void ProcessAuthentication(SignInStatus status)
-        // {
-        //     Debug.Log("SignStatus = " + status);
-        //     if (status == SignInStatus.Success)
-        //     {
-        //         var userId = PlayGamesPlatform.Instance?.GetUserId();
-        //         Debug.Log("UserId = " + userId);
-        //
-        //         SetId(userId);
-        //     }
-        //     else
-        //     {
-        //         PlayGamesPlatform.Instance?.RequestRecallAccess(
-        //             (recallAccess) =>
-        //             {
-        //                 
-        //             }
-        //         );
-        //     }
-        //
-        //     _endAuth = true;
-        // }
         
         async UniTask SignInWithGooglePlayGamesAsync(string authCode)
         {
@@ -205,24 +142,74 @@ namespace GameSystem
         }
 #endif
 
-        private void SocialAuthenticateCallback(bool success, string error)
+#if UNITY_IOS
+        private async UniTask LoginGameCenterAsync()
         {
-            if (success)
+            try
             {
-                Debug.Log("Success Social Authenticate");
-                Debug.Log("UserName = " + Social.localUser.userName);
+                if (!GKLocalPlayer.Local.IsAuthenticated)
+                {
+                    // Perform the authentication.
+                    var player = await GKLocalPlayer.Authenticate();
+                    Debug.Log($"GameKit Authentication: player {player}");
+                }
 
-                SetId(Social.localUser.id);
+                if (GKLocalPlayer.Local.IsAuthenticated)
+                {
+                    // Grab the display name.
+                    var localPlayer = GKLocalPlayer.Local;
+                    Debug.Log($"Local Player: {localPlayer.DisplayName}");
 
-                // Debug.Log("SocialAuthenticateCallback = " + _id);
+                    // Fetch the items.
+                    var fetchItemsResponse = await GKLocalPlayer.Local.FetchItems();
+
+                    var signature = Convert.ToBase64String(fetchItemsResponse.GetSignature());
+                    var teamPlayerID = localPlayer.TeamPlayerId;
+                    Debug.Log($"Team Player ID: {teamPlayerID}");
+
+                    var salt = Convert.ToBase64String(fetchItemsResponse.GetSalt());
+                    var publicKeyUrl = fetchItemsResponse.PublicKeyUrl;
+                    ulong timestamp = fetchItemsResponse.Timestamp;
+
+                    Debug.Log($"GameKit Authentication: signature => {signature}");
+                    Debug.Log($"GameKit Authentication: publickeyurl => {publicKeyUrl}");
+                    Debug.Log($"GameKit Authentication: salt => {salt}");
+                    Debug.Log($"GameKit Authentication: Timestamp => {timestamp}");
+
+                    await AuthenticationService.Instance.SignInWithAppleGameCenterAsync(signature, teamPlayerID, publicKeyUrl, salt, timestamp);
+                    Debug.Log("SignIn is successful.");
+                    _endAuth = true;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Debug.Log("error = " + error);
+                Debug.LogException(ex);
             }
-
-            _endAuth = true;
+            finally
+            {
+                _endAuth = true;
+            }
         }
+#endif
+
+        //private void SocialAuthenticateCallback(bool success, string error)
+        //{
+        //    if (success)
+        //    {
+        //        Debug.Log("Success Social Authenticate");
+        //        Debug.Log("UserName = " + Social.localUser.userName);
+
+        //        SetId(Social.localUser.id);
+
+        //        // Debug.Log("SocialAuthenticateCallback = " + _id);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("error = " + error);
+        //    }
+
+        //    _endAuth = true;
+        //}
 
         // 익명으로 로그인.
         //private async UniTask SignInAnonymouslyAsync()

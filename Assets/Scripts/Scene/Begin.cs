@@ -37,7 +37,7 @@ namespace Scene
             Info.Setting.Get?.InitializeLocale();
 
             _auth = new Auth();
-            await _auth.AsyncInitialize();
+            await _auth.AsyncInitializeAsync();
             await Plugin.Native.Instance.CoInit();
 
             string saveValue = string.Empty;
