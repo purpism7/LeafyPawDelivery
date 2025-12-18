@@ -113,6 +113,9 @@ namespace UI.Component
             SetOpenConditionData();
             SetStoryIcon();
             SetTutorial();
+
+            arrangementBtn?.onClick?.RemoveAllListeners();
+            arrangementBtn?.onClick?.AddListener(OnClick);  
         }
 
         public override void Activate()
