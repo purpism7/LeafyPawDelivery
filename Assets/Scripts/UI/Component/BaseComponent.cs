@@ -4,8 +4,13 @@ using UnityEngine;
 
 namespace UI
 {
-    public abstract class BaseComponent<T> : Base<T> where T : BaseData
+    public abstract class BaseComponent<TData> : Base<TData> where TData : BaseData
     {
+        public override void Initialize(TData data)
+        {
+            base.Initialize(data);
+        }
+
         public void SetParent(Transform rootTm)
         {
             if (!rootTm)

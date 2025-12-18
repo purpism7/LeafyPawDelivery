@@ -15,13 +15,33 @@ using Type = Game.Type;
 
 namespace UI.Component
 {
-    public class ArrangementCell : UI.BaseComponent<ArrangementCell.Data>
+    public interface IArrangementCell 
+    {
+        int Id { get; }
+        Game.Type.EElement ElementType { get; }
+
+        GameObject GameObj { get; }
+        Transform Transform { get; }
+
+        void Activate();
+        void Deactivate();
+
+        void SetAcitve(bool isActive);
+
+        void SetIndex(int index);
+        void SetIsTutorial(bool isTutorial);
+
+        bool Obtain(Game.Type.EElement eElement, int id);
+    }
+
+    public abstract class ArrangementCell<TData> : UI.BaseComponent<TData>, IArrangementCell where TData : ArrangementCell<TData>.Data
+        
     {
         public class Data : BaseData
         {
             public IListener IListener = null;
             public int Id = 0;
-            public Game.Type.EElement EElement = Game.Type.EElement.None; 
+            public Game.Type.EElement EElement = Game.Type.EElement.None;
             public string Name = string.Empty;
             public bool Owned = false;
             public bool Lock = true;
@@ -30,40 +50,31 @@ namespace UI.Component
 
             public int index = -1;
         }
-        
+
         public interface IListener
         {
-            void Edit(Game.Type.EElement EElement, int id, int index);
+            void Edit(int id, int index);
         }
 
         #region Inspector
         [SerializeField] private TextMeshProUGUI nameTMP = null;
-        [SerializeField] private TextMeshProUGUI descTMP = null;
+        [SerializeField] protected TextMeshProUGUI descTMP = null;
         [SerializeField] private Button arrangementBtn = null;
         [SerializeField] private Image iconImg = null;
 
         [SerializeField]
         private RectTransform openRootRectTm = null;
-        [SerializeField]
-        private RectTransform openConditionRootRectTm = null;
-        [SerializeField]
-        private TextMeshProUGUI openNameTMP = null;
-        [SerializeField]
-        private TextMeshProUGUI openDescTMP = null;
+        [SerializeField] protected RectTransform openConditionRootRectTm = null;
+        [SerializeField] protected TextMeshProUGUI openNameTMP = null;
+        [SerializeField] protected TextMeshProUGUI openDescTMP = null;
 
-        [SerializeField]
-        private Image hiddenIconImg = null;
+        [SerializeField] protected Image hiddenIconImg = null;
         [SerializeField]
         private Image storyIconImg = null;
 
         [SerializeField]
         private Image guideLineImg = null;
-        
-        [SerializeField]
-        private RectTransform specialObjectRectTm = null;
 
-        [SerializeField] private Button buyBtn = null;
-        
         [Header("Lock")]
         [SerializeField]
         private RectTransform lockRootRectTm = null;
@@ -77,30 +88,18 @@ namespace UI.Component
 
         private List<OpenCondition> _openConditionList = new();
 
-        public int Id { get { return _data != null ? _data.Id : 0; } }
-        public Game.Type.EElement EElement { get { return _data != null ? _data.EElement : Game.Type.EElement.None; } }
+        public Transform Transform => transform;
 
-        public override void Initialize(Data data)
+        public override void Initialize(TData data)
         {
             base.Initialize(data);
-            
+
             GameUtils.SetActive(openRootRectTm, !_data.Owned);
             GameUtils.SetActive(lockRootRectTm, IsLock);
             GameUtils.SetActive(lockImg, IsLock);
             GameUtils.SetActive(lockBgImg, IsLock);
-            
-            if (data.Id == 142)
-            {
-                buyBtn?.SetActive(true);
-                // GameUtils.SetActive(openRootRectTm, false);
-                
-                buyBtn?.onClick?.RemoveAllListeners();
-                buyBtn?.onClick?.AddListener(OnClickBuy);
-            }
-            else
-                buyBtn?.SetActive(false);
-            
-            if(IsLock)
+
+            if (IsLock)
             {
                 lockBgImg.DOFade(1f, 0);
                 unLockImg.DOFade(1f, 0);
@@ -120,10 +119,10 @@ namespace UI.Component
         {
             base.Activate();
 
-            SetNameTMP();
+            var localName = GameUtils.GetName(_data.EElement, _data.Id, Games.Data.Const.AnimalBaseSkinId);
+            SetNameTMP(localName);
+
             ActivateOpenConditionList();
-            SetHiddenOpenDescTMP();
-            SetSpecialObjectDescTMP();
 
             if (_data != null)
             {
@@ -139,83 +138,47 @@ namespace UI.Component
             base.Deactivate();
         }
 
-        private void DeactiveAllOpenConditionList()
-        {
-            foreach(var openCondition in _openConditionList)
-            {
-                if (openCondition == null)
-                    continue;
-
-                openCondition.gameObject.SetActive(false);
-            }
-        }
-
-        private void ActivateOpenConditionList()
-        {
-            if (_openConditionList == null)
-                return;
-
-            foreach(var openCondition in _openConditionList)
-            {
-                openCondition?.Activate();
-            }
-        }
-
-        private void DeactivateOpenConditionList()
-        {
-            if (_openConditionList == null)
-                return;
-
-            foreach (var openCondition in _openConditionList)
-            {
-                openCondition?.Deactivate();
-            }
-        }
-
-        private void SetNameTMP()
+        public void SetIndex(int index)
         {
             if (_data == null)
                 return;
 
-            var localName = GameUtils.GetName(_data.EElement, _data.Id, Games.Data.Const.AnimalBaseSkinId);
-
-            nameTMP?.SetText(localName);
-
-            if (_data.EElement == Game.Type.EElement.Object)
-            {
-                var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
-                var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
-                if (openCondition != null)
-                {
-                    if(openCondition.eType == OpenConditionData.EType.Hidden ||
-                       openCondition.eType == OpenConditionData.EType.Special)
-                        localName = string.Empty;
-                }
-            }
-
-            openNameTMP?.SetText(localName);
+            _data.index = index;
         }
 
-        private void SetDescTMP()
+        protected virtual void SetNameTMP(string name)
         {
             if (_data == null)
                 return;
 
-            var text = string.Empty;
-            if(_data.EElement == Game.Type.EElement.Animal)
-            {
-                text = "x1";
-            }
-            else if(_data.EElement == Game.Type.EElement.Object)
-            {
-                var objectData = ObjectContainer.Instance.GetData(_data.Id);
-                if(objectData != null)
-                {
-                    text = $"x{objectData.Count}";
-                }
-            }
+            nameTMP?.SetText(name);
+        }
 
-            descTMP?.SetText(text);
+        protected abstract void SetDescTMP();
+
+        public bool Obtain(Game.Type.EElement eElement, int id)
+        {
+            if (_data == null)
+                return false;
+
+            Unlock();
+
+            if (_data.EElement != eElement)
+                return false;
+
+            if (_data.Id != id)
+                return false;
+
+            _data.Owned = true;
+
+            SetElementIconImg();
+            SetButtonState();
+            SetOpenConditionData();
+            SetStoryIcon();
+
+            GameUtils.SetActive(openRootRectTm, !_data.Owned);
+
+            return true;
         }
 
         private void SetElementIconImg()
@@ -235,13 +198,14 @@ namespace UI.Component
             }
         }
 
-        private void SetOpenConditionData()
+        private void SetButtonState()
         {
-            DeactiveAllOpenConditionList();
+            arrangementBtn?.SetActive(!IsLock);
+        }
 
-            GameUtils.SetActive(hiddenIconImg, false);
-
-            openDescTMP?.SetText(string.Empty);
+        private void SetStoryIcon()
+        {
+            GameUtils.SetActive(storyIconImg, false);
 
             if (_data == null)
                 return;
@@ -249,123 +213,95 @@ namespace UI.Component
             if (_data.Owned)
                 return;
 
-            if (_data.EElement == Game.Type.EElement.Animal)
-                SetAnimalOpenCondition();
-            else
-                SetObjectOpenCondition();
-        }
+            int placeId = GameUtils.ActivityPlaceId;
 
-        private void SetHiddenOpenDescTMP()
-        {
-            if (_data.EElement != Game.Type.EElement.Object)
+            var storyList = StoryContainer.Instance?.GetStoryList(placeId);
+            if (storyList == null)
                 return;
 
-            if (!CheckHiddenObject)
+            var storyOpenConditionContainer = StoryOpenConditionContainer.Instance;
+            if (storyOpenConditionContainer == null)
                 return;
 
-            var localName = GameUtils.GetName(_data.EElement, _data.Id);
-            var desc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_hidden_object", LocalizationSettings.SelectedLocale);
-
-            openDescTMP?.SetText(string.Format(desc, localName));
-        }
-        
-        private void SetSpecialObjectDescTMP()
-        {
-            if (_data.EElement != Game.Type.EElement.Object)
-                return;
-            
-            var animalData = AnimalContainer.Instance?.GetDataByInteractionId(_data.Id);
-            if (animalData == null)
-                return;
-            
-            openNameTMP?.SetText(string.Empty);
-                    
-            var localName = GameUtils.GetName(Type.EElement.Animal, animalData.Id, Games.Data.Const.AnimalBaseSkinId);
-            var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "desc_try_to_get_closer", LocalizationSettings.SelectedLocale);
-
-            openDescTMP?.SetText(string.Format(localDesc, localName));
-        }
-
-        private void SetAnimalOpenCondition()
-        {
-            var animalOpenConditionContainer = AnimalOpenConditionContainer.Instance;
-            var openCondition = animalOpenConditionContainer?.GetData(_data.Id);
-            if (openCondition == null)
-                return;
-
-            var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
-            if (placeData == null)
-                return;
-
-            AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => animalOpenConditionContainer.CheckAnimalCurrency(_data.Id));
-            AddOpenCondition(placeData.ObjectSpriteName, openCondition.ObjectCurrency, () => animalOpenConditionContainer.CheckObjectCurrency(_data.Id));
-        }
-
-        private void SetObjectOpenCondition()
-        {
-            var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
-            var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
-            if (openCondition == null)
-                return;
-
-            var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
-            if (placeData == null)
-                return;
-
-            GameUtils.SetActive(openConditionRootRectTm, openCondition.eType != OpenConditionData.EType.Hidden || openCondition.eType != OpenConditionData.EType.Special);
-            
-            switch (openCondition.eType)
+            foreach (var story in storyList)
             {
-                case OpenConditionData.EType.Hidden:
+                if (story == null)
+                    continue;
+
+                var storyOpenCondition = storyOpenConditionContainer.GetData(story.Id);
+                if (storyOpenCondition == null)
+                    continue;
+
+                if (storyOpenConditionContainer.CheckExistReqId(story.Id, placeId, _data.EElement, _data.Id))
                 {
-                    GameUtils.SetActive(hiddenIconImg, true);
+                    GameUtils.SetActive(storyIconImg, true);
 
-                    openNameTMP?.SetText(string.Empty);
-
-                    SetHiddenOpenDescTMP();
-
-                    return;
-                }
-
-                case OpenConditionData.EType.Special:
-                {
-                    SetSpecialObjectDescTMP();
-                    
-                    return;
+                    break;
                 }
             }
-
-            AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
-            AddOpenCondition(placeData.ObjectSpriteName, openCondition.ObjectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
         }
 
-        private bool CheckHiddenObject
+        private void SetTutorial()
         {
-            get
-            {
-                if (_data == null)
-                    return false;
+            if (_data == null)
+                return;
 
-                var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
-                var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
+            guideLineImg?.SetActive(_data.isTutorial);
+            if (_data.isTutorial)
+            {
+                guideLineImg?.StartBlink();
+            }
+        }
+
+        #region Open Condition
+        private void ActivateOpenConditionList()
+        {
+            if (_openConditionList == null)
+                return;
+
+            foreach (var openCondition in _openConditionList)
+            {
+                openCondition?.Activate();
+            }
+        }
+
+        private void DeactivateOpenConditionList()
+        {
+            if (_openConditionList == null)
+                return;
+
+            foreach (var openCondition in _openConditionList)
+            {
+                openCondition?.Deactivate();
+            }
+        }
+
+        protected virtual void SetOpenConditionData()
+        {
+            DeactiveAllOpenConditionList();
+
+            GameUtils.SetActive(hiddenIconImg, false);
+
+            openDescTMP?.SetText(string.Empty);
+        }
+
+        private void DeactiveAllOpenConditionList()
+        {
+            foreach (var openCondition in _openConditionList)
+            {
                 if (openCondition == null)
-                    return false;
+                    continue;
 
-                return openCondition.eType == OpenConditionData.EType.Hidden;
+                openCondition.gameObject.SetActive(false);
             }
         }
 
-        private string GetRequireCurrency(long currency)
-        {
-            return string.Format("{0}", currency);
-        }
-
-        private void AddOpenCondition(string spriteName, int currency, Func<bool> possibleFunc)
+        protected void AddOpenCondition(string spriteName, int currency, Func<bool> possibleFunc)
         {
             var openConditionData = new OpenCondition.Data()
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(spriteName),
-                Text = GetRequireCurrency(currency),
+                Text = string.Format("{0}", currency),
                 PossibleFunc = possibleFunc,
             };
 
@@ -388,7 +324,7 @@ namespace UI.Component
                 openCondition = component;
             }
 
-            if(openCondition != null)
+            if (openCondition != null)
             {
                 openCondition.Initialize(openConditionData);
                 openCondition.gameObject.SetActive(true);
@@ -405,51 +341,65 @@ namespace UI.Component
 
             return openCondition;
         }
+        #endregion
 
-        private void SetStoryIcon()
+        #region Lock
+
+        protected abstract void Unlock();
+
+        protected void ProcessUnlock()
         {
-            GameUtils.SetActive(storyIconImg, false);
-
-            if (_data == null)
+            if (IsLock)
                 return;
 
-            if (_data.Owned)
-                return;
-
-            int placeId = GameUtils.ActivityPlaceId;
-
-            var storyList = StoryContainer.Instance?.GetStoryList(placeId);
-            if (storyList == null)
-                return;
-
-            var storyOpenConditionContainer = StoryOpenConditionContainer.Instance;
-            if (storyOpenConditionContainer == null)
-                return;
-            
-            foreach (var story in storyList)
-            {
-                if (story == null)
-                    continue;
-
-                var storyOpenCondition = storyOpenConditionContainer.GetData(story.Id);
-                if (storyOpenCondition == null)
-                    continue;
-
-                if (storyOpenConditionContainer.CheckExistReqId(story.Id, placeId, _data.EElement, _data.Id))
+            _openConditionList?.ForEach(
+                openCondition =>
                 {
-                    GameUtils.SetActive(storyIconImg, true);
+                    openCondition?.Activate();
+                });
 
-                    break;
-                }
+            AnimUnlock();
+        }
+
+        protected bool IsLock
+        {
+            get
+            {
+                if (_data == null)
+                    return true;
+
+                return _data.Lock;
             }
         }
 
-        private void SetButtonState()
+        private void AnimUnlock()
         {
-            arrangementBtn?.SetActive(!IsLock);
-        }
+            Sequencer.EnqueueTask(
+                () =>
+                {
+                    Sequence sequence = DOTween.Sequence()
+                        .SetAutoKill(false)
+                        .OnStart(() => { _endTask = false; })
+                        .AppendInterval(0.5f)
+                        .AppendCallback(() => lockImg?.SetActive(false))
+                        .AppendCallback(() => unLockImg?.SetActive(true))
+                        .AppendInterval(0.4f)
+                        .Append(lockBgImg.DOFade(0, 0.3f))
+                        .Join(unLockImg.DOFade(0, 0.3f))
+                        .OnComplete(() =>
+                        {
+                            GameUtils.SetActive(lockRootRectTm, IsLock);
 
-        private void CreateObtainPopup()
+                            _endTask = true;
+                        });
+                    sequence.Restart();
+
+                    return this;
+                });
+        }
+        #endregion
+
+        protected void CreateObtainPopup()
         {
             if (_data == null)
                 return;
@@ -457,7 +407,7 @@ namespace UI.Component
             bool isPossibleObtain = false;
             OpenConditionData openConditionData = null;
 
-            switch(_data.EElement)
+            switch (_data.EElement)
             {
                 case Game.Type.EElement.Animal:
                     {
@@ -483,7 +433,7 @@ namespace UI.Component
                 return;
 
             var mainGameMgr = MainGameManager.Instance;
-            
+
             int animalCurrency = openConditionData.AnimalCurrency;
             int objectCurrency = openConditionData.ObjectCurrency;
 
@@ -528,12 +478,15 @@ namespace UI.Component
             mainGameMgr?.Add(_data.EElement, _data.Id);
         }
 
-        public void SetIndex(int index)
-        {
-            if (_data == null)
-                return;
+        #region IArrangementCell
+        int IArrangementCell.Id => _data?.Id ?? 0;
+        Type.EElement IArrangementCell.ElementType => _data?.EElement ?? Type.EElement.None;
 
-            _data.index = index;
+        GameObject IArrangementCell.GameObj => gameObject;
+
+        void IArrangementCell.SetAcitve(bool isActive)
+        {
+            
         }
 
         public void SetIsTutorial(bool isTutorial)
@@ -544,193 +497,10 @@ namespace UI.Component
             _data.isTutorial = isTutorial;
             guideLineImg?.SetActive(isTutorial);
         }
+        #endregion
 
-        private void SetTutorial()
-        {
-            if (_data == null)
-                return;
+        protected abstract void OnClickObtain();
 
-            guideLineImg?.SetActive(_data.isTutorial);
-            if (_data.isTutorial)
-            {
-                guideLineImg?.StartBlink();
-            }
-        }
-
-        public bool Obtain(Game.Type.EElement eElement, int id)
-        {
-            if (_data == null)
-                return false;
-
-            Unlock();
-
-            if (_data.EElement != eElement)
-                return false;
-
-            if (_data.Id != id)
-                return false;
-
-            _data.Owned = true;
-
-            SetElementIconImg();
-            SetButtonState();
-            SetOpenConditionData();
-            SetStoryIcon();
-
-            GameUtils.SetActive(openRootRectTm, !_data.Owned);
-
-            return true;
-        }
-
-        private void Unlock()
-        {
-            if (!IsLock)
-                return;
-
-            if (_data.EElement == Game.Type.EElement.Object)
-            {
-                _data.Lock = !ObjectOpenConditionContainer.Instance.CheckReq(_data.Id);
-
-                SetNotificationPossibleBuyObject();
-            }
-            else if(_data.EElement == Game.Type.EElement.Animal)
-            {
-                _data.Lock = !AnimalOpenConditionContainer.Instance.CheckReq(_data.Id);
-
-                SetNotificationPossibleBuyAnimal();
-            }
-            
-            if (IsLock)
-                return;
-
-            _openConditionList?.ForEach(
-                openCondition =>
-                {
-                    openCondition?.Activate();
-                });
-
-            AnimUnlock();
-        }
-
-        private void AnimUnlock()
-        {
-            Sequencer.EnqueueTask(
-                () =>
-                {
-                    Sequence sequence = DOTween.Sequence()
-                        .SetAutoKill(false)
-                        .OnStart(() => { _endTask = false; })
-                        .AppendInterval(0.5f)
-                        .AppendCallback(() => lockImg?.SetActive(false))
-                       .AppendCallback(() => unLockImg?.SetActive(true))
-                       .AppendInterval(0.4f)
-                       .Append(lockBgImg.DOFade(0, 0.3f))
-                       .Join(unLockImg.DOFade(0, 0.3f))
-                       .OnComplete(() =>
-                       {
-                           GameUtils.SetActive(lockRootRectTm, IsLock);
-
-                           _endTask = true;
-                       });
-                     sequence.Restart();
-
-                    return this;
-                });
-        }
-
-        private bool IsLock
-        {
-            get
-            {
-                if (_data == null)
-                    return true;
-
-                return _data.Lock;
-            }
-        }
-
-        private OpenConditionData ObjectOpenConditionData
-        {
-            get
-            {
-                var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
-                var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
-
-                return openCondition;
-            }
-        }
-
-        private void SetNotificationPossibleBuyAnimal()
-        {
-            var connector = Info.Connector.Get;
-            if (!_data.Lock &&
-                connector != null &&
-                connector.PossibleBuyAnimal <= 0)
-            {
-                connector.SetPossibleBuyAnimal(_data.Id);
-            }
-        }
-
-        private void SetNotificationPossibleBuyObject()
-        {
-            var connector = Info.Connector.Get;
-            if (!_data.Lock &&
-                connector != null &&
-                connector.PossibleBuyObject <= 0)
-            {
-                connector.SetPossibleBuyObject(_data.Id);
-            }
-        }
-        
-        public void OnClickObtain()
-        {
-            if (_data == null)
-                return;
-
-            if (_data.isTutorial)
-                return;
-
-            EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
-            
-                if(_data.EElement == Game.Type.EElement.Object)
-            {
-                var openCondition = ObjectOpenConditionData;
-                if (openCondition == null)
-                    return;
-
-                if (openCondition.eType == OpenConditionData.EType.Hidden)
-                    return;
-
-                if (openCondition.eType == OpenConditionData.EType.Special)
-                {
-                    var animalData = AnimalContainer.Instance?.GetDataByInteractionId(_data.Id);
-                    if (animalData == null)
-                        return;
-                    
-                    var popup = new PopupCreator<Profile, Profile.Data>()
-                        .SetReInitialize(true)
-                        .SetData(
-                            new Profile.Data()
-                            {
-                                EElement = Type.EElement.Animal,
-                                Id = animalData.Id,
-                                ETab = Type.ETab.Friendship,
-                                RefreshAction = () =>
-                                {
-                                    
-                                },
-
-                            })
-                        .Create();
-                    
-                    return;
-                }
-            }
-            
-            CreateObtainPopup();
-        }
-
-        // 배치 버튼 클릭 시,
         public void OnClick()
         {
             if (_data == null)
@@ -738,12 +508,7 @@ namespace UI.Component
 
             EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
 
-            _data.IListener?.Edit(_data.EElement, _data.Id, _data.index);
-        }
-
-        private void OnClickBuy()
-        {
-            
+            _data.IListener?.Edit(_data.Id, _data.index);
         }
     }
 }
