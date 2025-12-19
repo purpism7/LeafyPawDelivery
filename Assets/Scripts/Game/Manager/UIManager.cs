@@ -17,6 +17,8 @@ namespace Game
     {
         [SerializeField]
         private RectTransform uiRootRectTm = null;
+        [SerializeField] private RectTransform worldUIRootRectTr = null;
+
         public UI.Top Top;
         public UI.Bottom Bottom = null;
         public UI.Popup Popup;
@@ -25,6 +27,8 @@ namespace Game
         private RectTransform screenSaverRectTm = null;
 
         private Type.EScreenSaverType _eScreenSaverType = Type.EScreenSaverType.None;
+
+        public RectTransform WorldUIRootRectTr => worldUIRootRectTr;
 
         public RectTransform UIRootRectTm
         {
