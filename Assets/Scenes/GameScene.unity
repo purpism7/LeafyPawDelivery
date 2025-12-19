@@ -3174,6 +3174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiRootRectTm: {fileID: 311464501}
+  worldUIRootRectTr: {fileID: 1049473163}
   Top: {fileID: 923999650}
   Bottom: {fileID: 229178124}
   Popup: {fileID: 1822766494}
