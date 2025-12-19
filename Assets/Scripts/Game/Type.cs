@@ -107,6 +107,7 @@ namespace Game
             Ice,
         }
 
+        #region Object
         public enum EObjectGrade
         {
             None,
@@ -118,6 +119,14 @@ namespace Game
             
             Special,
         }
+
+        public enum ObjectType
+        {
+            None,
+
+            Garden,
+        }
+        #endregion
 
         public enum EAnimalSkin
         {

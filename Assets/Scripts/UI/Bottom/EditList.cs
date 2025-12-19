@@ -168,18 +168,27 @@ namespace UI
                 if (objectData == null)
                     continue;
 
-                int reaminCount = objectMgr.GetRemainCount(objectData.Id);
+                var objectId = objectData.Id;
+
+                int reaminCount = objectMgr.GetRemainCount(objectId);
                 if (reaminCount <= 0)
                     continue;
+
+                int count = objectData.Count;
+                if(objectData.ObjectType == Type.ObjectType.Garden)
+                {
+                    var objectInfo = objectMgr.GetObjectInfoById(objectId);
+                    count = objectInfo?.Count ?? 0;
+                }
 
                 var data = new Component.EditObject.Data()
                 {
                     iListener = this,
-                    ObjectId = objectData.Id,
-                    Count = objectData.Count,
+                    ObjectId = objectId,
+                    Count = count,
                     RemainCount = reaminCount,
                     isTutorial = isTutorial,
-                };
+                }.WithObjectType(objectData.ObjectType);
 
                 CreateEditObject(data);
             }

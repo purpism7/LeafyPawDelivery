@@ -1,13 +1,15 @@
-using Game;
-using Game.Event;
-using GameSystem;
-using NUnit.Framework.Constraints;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+
+using Game;
+using Game.Event;
+using GameSystem;
+
+using static Game.Type;
 
 namespace UI.Component
 
@@ -16,10 +18,25 @@ namespace UI.Component
     {
         public new class Data : ArrangementCell<ObjectArrangementCell.Data>.Data
         {
+            public ObjectType ObjectType { get; private set; } = ObjectType.None;
             public int Count { get; private set; } = 0;
+            public int RemainCount { get; private set; } = 0;
+
+            public Data WithObjectType(ObjectType type)
+            {
+                ObjectType = type;
+                return this;
+            }
+
             public Data WithCount(int count)
             {
                 Count = count;
+                return this;
+            }
+
+            public Data WithRemainCount(int count)
+            {
+                RemainCount = count;
                 return this;
             }
 
@@ -34,7 +51,7 @@ namespace UI.Component
         {
             base.Initialize(data);
 
-            if (data.Id == 142)
+            if (data.ObjectType == ObjectType.Garden)
             {
                 animalCurrencyCost?.Activate();
                 objectCurrencyCost?.Activate();
@@ -65,10 +82,8 @@ namespace UI.Component
             SetHiddenOpenDescTMP();
             SetSpecialObjectDescTMP();
 
-            if (_data.Id == 142)
+            if (_data.ObjectType == ObjectType.Garden)
             {
-                descTMP?.SetText($"{_data.Count}");
-
                 SetPurchaseCost();
             }
         }
@@ -93,15 +108,8 @@ namespace UI.Component
         {
             if (_data == null)
                 return;
-
-            var text = string.Empty;
-            var objectData = ObjectContainer.Instance.GetData(_data.Id);
-            if (objectData != null)
-            {
-                text = $"x{objectData.Count}";
-            }
             
-            descTMP?.SetText(text);
+            descTMP?.SetText($"{_data.RemainCount}/{_data.Count}");
         }
 
         private void SetHiddenOpenDescTMP()
@@ -170,7 +178,6 @@ namespace UI.Component
                 return;
 
             GameUtils.SetActive(openConditionRootRectTm, openCondition.eType != OpenConditionData.EType.Hidden || openCondition.eType != OpenConditionData.EType.Special);
-            //GameUtils.SetActive(openConditionRootRectTm, _data.Id == 142);
 
             switch (openCondition.eType)
             {

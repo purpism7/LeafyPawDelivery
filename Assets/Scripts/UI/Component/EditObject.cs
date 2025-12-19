@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using TMPro;
 using Game;
 
+using static Game.Type;
+
 namespace UI.Component
 {
     public class EditObject : UI.Base<EditObject.Data>
@@ -15,9 +17,16 @@ namespace UI.Component
         {
             public IListener iListener = null;
             public int ObjectId = 0;
+            public ObjectType ObjectType { get; private set; } = ObjectType.None;
             public int Count = 0;
             public int RemainCount = 0;
             public bool isTutorial = false;
+
+            public Data WithObjectType(ObjectType type)
+            {
+                ObjectType = type;
+                return this;
+            }
         }
 
         public interface IListener
@@ -73,6 +82,8 @@ namespace UI.Component
             if (_data == null)
                 return;
 
+
+            //if(_data.ObjectType == gar)
             countTMP?.SetText(_data.RemainCount + "/" + _data.Count);
         }
 

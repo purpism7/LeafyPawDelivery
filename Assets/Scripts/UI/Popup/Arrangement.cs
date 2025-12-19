@@ -370,20 +370,26 @@ namespace UI
                 // // if(data.EGrade != Type.EObjectGrade.Special)
                 //     resIndex = GetIndex(objectMgr, data.Id, ref _objectIndex);
 
-                int index = orderDataList.FindIndex(obj => obj.Id == objectData.Id);
+                var objectId = objectData.Id;
+                int index = orderDataList.FindIndex(obj => obj.Id == objectId);
+                int count = objectData.Count;
+                if (objectData.ObjectType == Type.ObjectType.Garden)
+                    count = objectInfo?.Count ?? 0;
 
                 var data = new ObjectArrangementCell.Data
                 {
                     IListener = this,
-                    Id = objectData.Id,
+                    Id = objectId,
                     EElement = Game.Type.EElement.Object,
                     Owned = objectInfo != null,
-                    Lock = !objectOpenConditionContainer.CheckReq(objectData.Id),
+                    Lock = !objectOpenConditionContainer.CheckReq(objectId),
                     isTutorial = isTutorial,
                     IsSpecialObject = objectData.Grade == Type.EObjectGrade.Special,
 
                     index = index,
-                }.WithCount(objectInfo?.Count ?? 1);
+                }.WithObjectType(objectData.ObjectType)
+                .WithCount(count)
+                .WithRemainCount(objectMgr.GetRemainCount(objectId));
 
                 AddObjectArrangementCell(data, objectData.Grade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, objectData.Order);
             }

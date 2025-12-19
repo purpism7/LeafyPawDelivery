@@ -9,16 +9,10 @@ using Newtonsoft.Json;
 [System.Serializable]
 public class Object : ElementData
 {
-    // [SerializeField]
-    // private int Grade = 0;
-    // public int Count = 0;
-
+    [JsonProperty("type")] public Type.ObjectType ObjectType { get; private set; } = Type.ObjectType.None;
     [JsonProperty("Count")] public int Count { get; private set; } = 0;
     [JsonProperty("object_grade")] public Type.EObjectGrade Grade { get; private set; } = Type.EObjectGrade.None;
-    [JsonProperty("order")]  public int Order { get; private set; } = 0;
-    // [SerializeField]
-    // private int order = 0;
-    
+    [JsonProperty("order")]  public int Order { get; private set; } = 0;    
     
 
     // public Game.Type.EObjectGrade EGrade = Game.Type.EObjectGrade.None;

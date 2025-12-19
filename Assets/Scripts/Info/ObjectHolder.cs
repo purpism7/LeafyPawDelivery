@@ -316,7 +316,11 @@ namespace Info
                 ++count;
             }
 
-            return objectData.Count - count;
+            int limitCount = objectData.Count;
+            if (objectData.ObjectType == Type.ObjectType.Garden)
+                limitCount = objectInfo.Count;
+
+            return limitCount - count;
         }
 
         #region Firebase
