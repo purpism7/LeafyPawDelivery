@@ -108,7 +108,7 @@ namespace Info
 
         public bool AddObjectInfo(int id)
         {
-            var objectData = ObjectContainer.Instance.GetData(id);
+            var objectData = ObjectContainer.Instance?.GetData(id);
             if (objectData == null)
                 return false;
 
@@ -138,6 +138,10 @@ namespace Info
                 if(findObjectInfo == null)
                 {
                     objectInfoList.Add(objectInfo);
+                }
+                else
+                {
+                    findObjectInfo.Count += 1;
                 }
             }
             else

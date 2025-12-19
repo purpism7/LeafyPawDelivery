@@ -1,16 +1,16 @@
-﻿using System;
+﻿using DG.Tweening;
+using Game;
+using GameSystem;
+using Info;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Localization.Settings;
-
 using TMPro;
-using DG.Tweening;
-
-using GameSystem;
-using Game;
-using Info;
+using UnityEngine;
+using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
+using static Info.User;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using Type = Game.Type;
 
 namespace UI.Component
@@ -59,11 +59,10 @@ namespace UI.Component
         #region Inspector
         [SerializeField] private TextMeshProUGUI nameTMP = null;
         [SerializeField] protected TextMeshProUGUI descTMP = null;
-        [SerializeField] private Button arrangementBtn = null;
+        
         [SerializeField] private Image iconImg = null;
 
-        [SerializeField]
-        private RectTransform openRootRectTm = null;
+        [SerializeField] protected RectTransform openRootRectTm = null;
         [SerializeField] protected RectTransform openConditionRootRectTm = null;
         [SerializeField] protected TextMeshProUGUI openNameTMP = null;
         [SerializeField] protected TextMeshProUGUI openDescTMP = null;
@@ -84,6 +83,11 @@ namespace UI.Component
         private Image unLockImg = null;
         [SerializeField]
         private Image lockBgImg = null;
+
+        [Header("Buttons")]
+        [SerializeField] private Button arrangementBtn = null;
+        [SerializeField] private Button obtainBtn = null;
+
         #endregion
 
         private List<OpenCondition> _openConditionList = new();
@@ -116,6 +120,9 @@ namespace UI.Component
 
             arrangementBtn?.onClick?.RemoveAllListeners();
             arrangementBtn?.onClick?.AddListener(OnClick);  
+
+            obtainBtn?.onClick?.RemoveAllListeners();
+            obtainBtn?.onClick?.AddListener(OnClickObtain);
         }
 
         public override void Activate()
@@ -130,7 +137,7 @@ namespace UI.Component
             if (_data != null)
             {
                 // GameUtils.SetActive(specialObjectRectTm, _data.IsSpecialObject);
-                GameUtils.SetActive(openConditionRootRectTm, !_data.IsSpecialObject);
+                //GameUtils.SetActive(openConditionRootRectTm, !_data.IsSpecialObject);
             }
         }
 
@@ -299,14 +306,19 @@ namespace UI.Component
             }
         }
 
-        protected void AddOpenCondition(string spriteName, int currency, Func<bool> possibleFunc)
+        protected OpenCondition.Data CreateOpenConditionData(string spriteName, int currency, Func<bool> possibleFunc)
         {
-            var openConditionData = new OpenCondition.Data()
+            return new OpenCondition.Data()
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(spriteName),
                 Text = string.Format("{0}", currency),
                 PossibleFunc = possibleFunc,
             };
+        }
+
+        protected void AddOpenCondition(string spriteName, int currency, Func<bool> possibleFunc)
+        {
+            var openConditionData = CreateOpenConditionData(spriteName, currency, possibleFunc);
 
             CreateOpenCondition(openConditionData);
         }

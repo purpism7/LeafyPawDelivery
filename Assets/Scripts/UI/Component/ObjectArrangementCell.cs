@@ -1,11 +1,13 @@
+using Game;
+using Game.Event;
+using GameSystem;
+using NUnit.Framework.Constraints;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
-
-using Game;
-using GameSystem;
 
 namespace UI.Component
 
@@ -14,12 +16,19 @@ namespace UI.Component
     {
         public new class Data : ArrangementCell<ObjectArrangementCell.Data>.Data
         {
+            public int Count { get; private set; } = 0;
+            public Data WithCount(int count)
+            {
+                Count = count;
+                return this;
+            }
 
         }
 
-        //[SerializeField] private RectTransform specialObjectRectTm = null;
         [Header("")]
         [SerializeField] private Button buyBtn = null;
+        [SerializeField] private OpenCondition animalCurrencyCost = null;
+        [SerializeField] private OpenCondition objectCurrencyCost = null;
 
         public override void Initialize(Data data)
         {
@@ -27,14 +36,27 @@ namespace UI.Component
 
             if (data.Id == 142)
             {
-                buyBtn?.SetActive(true);
+                animalCurrencyCost?.Activate();
+                objectCurrencyCost?.Activate();
                 // GameUtils.SetActive(openRootRectTm, false);
+
+                buyBtn?.SetActive(true);
+
+                //GameUtils.SetActive(openRootRectTm, false);
 
                 buyBtn?.onClick?.RemoveAllListeners();
                 //buyBtn?.onClick?.AddListener(OnClickBuy);
             }
             else
+            {
+                animalCurrencyCost?.Deactivate();
+                objectCurrencyCost?.Deactivate();
+
                 buyBtn?.SetActive(false);
+
+                //GameUtils.SetActive(openRootRectTm, true);
+            }
+                
         }
         public override void Activate()
         {
@@ -42,6 +64,13 @@ namespace UI.Component
 
             SetHiddenOpenDescTMP();
             SetSpecialObjectDescTMP();
+
+            if (_data.Id == 142)
+            {
+                descTMP?.SetText($"{_data.Count}");
+
+                SetPurchaseCost();
+            }
         }
 
         protected override void SetNameTMP(string name)
@@ -77,9 +106,6 @@ namespace UI.Component
 
         private void SetHiddenOpenDescTMP()
         {
-            if (_data.EElement != Game.Type.EElement.Object)
-                return;
-
             if (!CheckHiddenObject)
                 return;
 
@@ -91,9 +117,6 @@ namespace UI.Component
 
         private void SetSpecialObjectDescTMP()
         {
-            if (_data.EElement != Game.Type.EElement.Object)
-                return;
-
             var animalData = AnimalContainer.Instance?.GetDataByInteractionId(_data.Id);
             if (animalData == null)
                 return;
@@ -147,6 +170,7 @@ namespace UI.Component
                 return;
 
             GameUtils.SetActive(openConditionRootRectTm, openCondition.eType != OpenConditionData.EType.Hidden || openCondition.eType != OpenConditionData.EType.Special);
+            //GameUtils.SetActive(openConditionRootRectTm, _data.Id == 142);
 
             switch (openCondition.eType)
             {
@@ -171,6 +195,33 @@ namespace UI.Component
 
             AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
             AddOpenCondition(placeData.ObjectSpriteName, openCondition.ObjectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
+        }
+
+        private void SetPurchaseCost()
+        {
+            if (_data == null)
+                return;
+
+            var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
+            var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
+            if (openCondition == null)
+                return;
+
+            var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
+            if (placeData == null)
+                return;
+
+            var animalCurrency = Mathf.CeilToInt(openCondition.AnimalCurrency * _data.Count * 1.25f);
+            var openConditionData = CreateOpenConditionData(placeData.AnimalSpriteName, animalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
+
+            animalCurrencyCost?.Initialize(openConditionData);
+            animalCurrencyCost?.Activate();
+
+            var objectCurrency = Mathf.CeilToInt(openCondition.ObjectCurrency * _data.Count * 1.5f);
+            openConditionData = CreateOpenConditionData(placeData.ObjectSpriteName, objectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
+
+            objectCurrencyCost?.Initialize(openConditionData);
+            objectCurrencyCost?.Activate();
         }
 
         #region Lock

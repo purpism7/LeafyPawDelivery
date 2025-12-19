@@ -1173,7 +1173,6 @@ MonoBehaviour:
   rootRectTm: {fileID: 5165180990436983666}
   nameTMP: {fileID: 4064934003033523665}
   descTMP: {fileID: 7668882524513657014}
-  arrangementBtn: {fileID: 2205301942068251714}
   iconImg: {fileID: 104543042166436535}
   openRootRectTm: {fileID: 3808354688377789990}
   openConditionRootRectTm: {fileID: 6867072602995950525}
@@ -1182,11 +1181,12 @@ MonoBehaviour:
   hiddenIconImg: {fileID: 8260451404237079853}
   storyIconImg: {fileID: 3456751320416318454}
   guideLineImg: {fileID: 3183619968908268226}
-  specialObjectRectTm: {fileID: 0}
   lockRootRectTm: {fileID: 3593754196786068619}
   lockImg: {fileID: 862676397602567778}
   unLockImg: {fileID: 3143357900109666595}
   lockBgImg: {fileID: 6594001298296482341}
+  arrangementBtn: {fileID: 2205301942068251714}
+  obtainBtn: {fileID: 4778838570515214870}
 --- !u!1 &4446704986165729909
 GameObject:
   m_ObjectHideFlags: 0

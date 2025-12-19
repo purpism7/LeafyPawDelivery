@@ -13,21 +13,13 @@ MonoBehaviour:
   m_Name: Game_Object
   m_EditorClassIdentifier: 
   m_GroupName: Game_Object
-  m_Data:
-    m_SerializedData: []
   m_GUID: 900d2fe9b965046fcbb377d89ae0ba45
   m_SerializeEntries:
-  - m_GUID: 92b99c244ec0748edbd8a5fe827d5941
-    m_Address: Assets/Prefabs/Game/Object/1
+  - m_GUID: 24dcea072a61246b6b2ded2f850ac3e6
+    m_Address: Assets/Prefabs/Game/Object/4
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Object_1
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 630ad046b80b24cd183f1a51ae36dc0c
-    m_Address: Assets/Prefabs/Game/Object/2
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Object_2
+    - Object_4
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34a4fd79c6e6249ddae8c7ee835138ee
     m_Address: Assets/Prefabs/Game/Object/3
@@ -35,11 +27,17 @@ MonoBehaviour:
     m_SerializedLabels:
     - Object_3
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 24dcea072a61246b6b2ded2f850ac3e6
-    m_Address: Assets/Prefabs/Game/Object/4
+  - m_GUID: 630ad046b80b24cd183f1a51ae36dc0c
+    m_Address: Assets/Prefabs/Game/Object/2
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Object_4
+    - Object_2
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 92b99c244ec0748edbd8a5fe827d5941
+    m_Address: Assets/Prefabs/Game/Object/1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Object_1
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e7d7ed8f5841242acbc2f114c52db5f7, type: 2}

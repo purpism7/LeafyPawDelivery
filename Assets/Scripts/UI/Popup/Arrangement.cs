@@ -226,35 +226,6 @@ namespace UI
             return null;
         }
 
-        //private void AddArrangementCell(ArrangementCell.Data cellData, RectTransform rootRectTm, int order = 0)
-        //{
-        //    var arrangementCell = DeactiveArrangementCell;
-
-        //    if (arrangementCell != null)
-        //    {
-        //        arrangementCell.Initialize(cellData);
-        //        arrangementCell.SetParent(rootRectTm);
-        //        arrangementCell.SetActive(true);
-
-        //        // if (cellData?.EElement == Type.EElement.Object)
-        //        {
-        //            // if (cellData.IsSpecialObject)
-        //            {
-        //                arrangementCell.transform.SetSiblingIndex(order);
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //         arrangementCell = new ComponentCreator<ArrangementCell, ArrangementCell.Data>()
-        //            .SetData(cellData)
-        //            .SetRootRectTm(rootRectTm)
-        //            .Create();
-
-        //        _arrangementCellList.Add(arrangementCell);
-        //    }
-        //}
-
         private void AddAnimalArrangementCell(AnimalArrangementCell.Data cellData, RectTransform rootRectTm, int order = 0)
         {
             AnimalArrangementCell arrangementCell = GetDeactiveArrangementCell<AnimalArrangementCell>();
@@ -401,19 +372,20 @@ namespace UI
 
                 int index = orderDataList.FindIndex(obj => obj.Id == objectData.Id);
 
-                AddObjectArrangementCell(
-                    new ObjectArrangementCell.Data()
-                    {
-                        IListener = this,
-                        Id = objectData.Id,
-                        EElement = Game.Type.EElement.Object,
-                        Owned = objectInfo != null,
-                        Lock = !objectOpenConditionContainer.CheckReq(objectData.Id),
-                        isTutorial = isTutorial,
-                        IsSpecialObject = objectData.Grade == Type.EObjectGrade.Special,
+                var data = new ObjectArrangementCell.Data
+                {
+                    IListener = this,
+                    Id = objectData.Id,
+                    EElement = Game.Type.EElement.Object,
+                    Owned = objectInfo != null,
+                    Lock = !objectOpenConditionContainer.CheckReq(objectData.Id),
+                    isTutorial = isTutorial,
+                    IsSpecialObject = objectData.Grade == Type.EObjectGrade.Special,
 
-                        index = index,
-                    }, objectData.Grade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, objectData.Order);
+                    index = index,
+                }.WithCount(objectInfo?.Count ?? 1);
+
+                AddObjectArrangementCell(data, objectData.Grade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, objectData.Order);
             }
         }
         

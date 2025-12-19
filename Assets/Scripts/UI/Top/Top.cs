@@ -155,7 +155,11 @@ namespace UI
             if (atlasLoader == null)
                 return;
 
-            img.sprite = atlasLoader.GetCurrencySprite(currency);
+            var currencySprite = atlasLoader.GetCurrencySprite(currency);
+            if (currencySprite == null)
+                return;
+
+            img.sprite = currencySprite;
         }
 
         #region Animal Currency Count
