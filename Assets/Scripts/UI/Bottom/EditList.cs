@@ -352,14 +352,20 @@ namespace UI
                 int remainCount = objectMgr.GetRemainCount(objectInfo.Id);
                 if (remainCount <= 0)
                     continue;
+                
+                int count = objectData.Count;
+                if(objectData.ObjectType == Type.ObjectType.Garden)
+                {
+                    count = objectInfo?.Count ?? 0;
+                }
 
                 var data = new Component.EditObject.Data()
                 {
                     iListener = this,
                     ObjectId = objectInfo.Id,
-                    Count = objectData.Count,
+                    Count = count,
                     RemainCount = remainCount,
-                };
+                }.WithObjectType(objectData.ObjectType);
 
                 if(_editObjectList?.Count > i)
                 {

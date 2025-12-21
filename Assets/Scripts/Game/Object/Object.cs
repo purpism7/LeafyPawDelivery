@@ -5,6 +5,7 @@ using UnityEngine;
 
 using UI;
 using System;
+using UI.WorldUI;
 
 namespace Game
 {
@@ -45,6 +46,8 @@ namespace Game
         private Transform arrivalPointTm = null;
         #endregion
 
+        private BloomTimerWorldUI _bloomTimerWorldUI = null;
+        
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
 
         public ObjectActController ObjectActCtr { get; private set; } = null;
@@ -87,6 +90,19 @@ namespace Game
         {
             base.Activate();
 
+
+            // var data = new UI.WorldUI.BloomTimerWorldUI.Data
+            // {
+            //
+            // };
+            //
+            // data.WithTargetTm(transform);
+            //
+            // var bloomTimerWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.BloomTimerWorldUI, UI.WorldUI.BloomTimerWorldUI.Data>()
+            //     // .SetRootRectTm(data.boostRootRectTm)
+            //     .SetData(data)
+            //     .Create();
+            
             SetPos();
         }
 
@@ -115,6 +131,22 @@ namespace Game
                 edit?.ActivateBottom();
 
                 State?.Touch(TouchPhase.Began, null);
+                
+                if(_bloomTimerWorldUI == null)
+                {
+                    var data = new UI.WorldUI.BloomTimerWorldUI.Data
+                    {
+                
+                    };
+                
+                    data.WithTargetTm(transform);
+                
+                    _bloomTimerWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.BloomTimerWorldUI, UI.WorldUI.BloomTimerWorldUI.Data>()
+                        // .SetRootRectTm(data.boostRootRectTm)
+                        .SetData(data)
+                        .Create();
+                }
+                
 
                 return;
             }

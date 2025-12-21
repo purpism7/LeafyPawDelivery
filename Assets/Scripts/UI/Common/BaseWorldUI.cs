@@ -32,17 +32,19 @@ namespace UI.Common
         }
 
         [SerializeField] protected RectTransform rootRectTr = null;
-
-        private UIManager _uiManager = null;
+        
         private Camera _mainCamera = null;
+        private Camera _uiCamera = null;
+        private RectTransform _worldUIRootRectTr = null;
         //private IWorldUIManager _worldUIManager => UIManager.Instance;
 
         public override void Initialize(T data)
         {
             base.Initialize(data);
 
-            _uiManager = UIManager.Instance;
-            
+            _mainCamera = MainGameManager.Instance?.IGameCameraCtr?.MainCamera;
+            _uiCamera = MainGameManager.Instance?.IGameCameraCtr?.UICamera;
+            _worldUIRootRectTr = UIManager.Instance?.WorldUIRootRectTr;
             //_mainCamera = CameraManager.Instance.MainCamera;//Camera.main;
         }
 
@@ -65,12 +67,10 @@ namespace UI.Common
             if (camera == null)
                 return null;
 
-            var worldUIRootRectTr = _uiManager?.WorldUIRootRectTr;
-            if (!worldUIRootRectTr)
+            if (!_worldUIRootRectTr)
                 return null;
 
-            Camera uiCamera = null;// _uiManager?.UICamera;
-            if (uiCamera == null)
+            if (_uiCamera == null)
                 return null;
 
             //targetPos.x += _param.Offset.x;
@@ -79,7 +79,7 @@ namespace UI.Common
             var screenPos = camera.WorldToScreenPoint(targetPos);
 
             Vector2 localPos = Vector2.zero;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(worldUIRootRectTr, screenPos, uiCamera, out localPos);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(_worldUIRootRectTr, screenPos, _uiCamera, out localPos);
             //localPos.y += _data.Height;
 
             localPos.x += _data.Offset.x;

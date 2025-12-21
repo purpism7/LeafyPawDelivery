@@ -35,7 +35,6 @@ namespace UI.Component
     }
 
     public abstract class ArrangementCell<TData> : UI.BaseComponent<TData>, IArrangementCell where TData : ArrangementCell<TData>.Data
-        
     {
         public class Data : BaseData
         {

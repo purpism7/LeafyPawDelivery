@@ -372,6 +372,7 @@ namespace UI
 
                 var objectId = objectData.Id;
                 int index = orderDataList.FindIndex(obj => obj.Id == objectId);
+                
                 int count = objectData.Count;
                 if (objectData.ObjectType == Type.ObjectType.Garden)
                     count = objectInfo?.Count ?? 0;

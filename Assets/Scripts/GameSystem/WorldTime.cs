@@ -69,112 +69,112 @@ namespace GameSystem
             }
         }
 
-        //public async UniTask<DateTime?> RequestAsync()
-        //{
-        //    Sync = false;
-
-        //    var worldTimeUri = Games.Data.Const?.WorldTimeURI;
-        //    if (string.IsNullOrEmpty(worldTimeUri))
-        //        return null;
-
-        //    using (UnityWebRequest webRequest = UnityWebRequest.Get(worldTimeUri))   
-        //    {
-        //        if (webRequest == null)
-        //            return null;
-
-        //        try
-        //        {
-        //            // webRequest.certificateHandler = new CustomCertificateHandler();
-        //            await webRequest.SendWebRequest();
-
-        //            if (webRequest.result == UnityWebRequest.Result.Success)
-        //            {
-        //                var timeData = JsonUtility.FromJson<TimeData>(webRequest.downloadHandler.text);
-        //                if (string.IsNullOrEmpty(timeData.datetime))
-        //                    return null;
-
-        //                if (System.DateTime.TryParse(timeData.datetime, out DateTime dateTime))
-        //                {
-        //                    DateTime = dateTime;
-
-        //                    //Debug.Log("RequestAsync = " + dateTime);
-        //                    Sync = true;
-
-        //                    return dateTime;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                Debug.Log("Fail");
-        //                DateTime = System.DateTime.Now;
-
-        //                Sync = true;
-        //            }
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            Console.WriteLine(e);
-        //            DateTime = System.DateTime.Now;
-
-        //            Sync = true;
-        //        }
-        //    }
-
-        //    return null;
-        //}
-
         public async UniTask<DateTime?> RequestAsync()
         {
             Sync = false;
 
             var worldTimeUri = Games.Data.Const?.WorldTimeURI;
             if (string.IsNullOrEmpty(worldTimeUri))
-            {
-                Debug.LogError("WorldTime URI is empty.");
                 return null;
-            }
 
-            using (UnityWebRequest webRequest = UnityWebRequest.Get(worldTimeUri))
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(worldTimeUri))   
             {
+                if (webRequest == null)
+                    return null;
+
                 try
                 {
+                    // webRequest.certificateHandler = new CustomCertificateHandler();
                     await webRequest.SendWebRequest();
 
                     if (webRequest.result == UnityWebRequest.Result.Success)
                     {
                         var timeData = JsonUtility.FromJson<TimeData>(webRequest.downloadHandler.text);
+                        if (string.IsNullOrEmpty(timeData.datetime))
+                            return null;
 
-                        // µ¥ÀÌÅÍ À¯È¿¼º °Ë»ç
-                        if (!string.IsNullOrEmpty(timeData.datetime) &&
-                            System.DateTime.TryParse(timeData.datetime, out DateTime dateTime))
+                        if (System.DateTime.TryParse(timeData.datetime, out DateTime dateTime))
                         {
                             DateTime = dateTime;
+
+                            //Debug.Log("RequestAsync = " + dateTime);
                             Sync = true;
-                            // Debug.Log($"Server Time Synced: {dateTime}");
-                            return dateTime; // ¼º°ø ½Ã ¼­¹ö ½Ã°£ ¹ÝÈ¯
+
+                            return dateTime;
                         }
                     }
+                    else
+                    {
+                        Debug.Log("Fail");
+                        DateTime = System.DateTime.Now;
 
-                    // Åë½ÅÀº ¼º°øÇßÀ¸³ª µ¥ÀÌÅÍ°¡ ÀÌ»óÇÏ°Å³ª, Åë½Å ½ÇÆÐÀÎ °æ¿ì
-                    Debug.LogWarning($"Time Sync Failed: {webRequest.error}");
+                        Sync = true;
+                    }
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"Time Sync Exception: {e.Message}");
+                    Console.WriteLine(e);
+                    DateTime = System.DateTime.Now;
+
+                    Sync = true;
                 }
             }
 
-            // --- ½ÇÆÐ ½Ã Ã³¸® (Fallback) ---
-            // Á¤Ã¥¿¡ µû¶ó ¼±ÅÃÇÏ¼¼¿ä.
-
-            // ¹æ¹ý 1: ½ÇÆÐÇØµµ ·ÎÄÃ ½Ã°£À» ¾²°í, ¸®ÅÏµµ ·ÎÄÃ ½Ã°£À» ÁØ´Ù. (À¯¿¬ÇÔ)
-            DateTime = System.DateTime.Now;
-            Sync = true;
-            return DateTime;
-
-            // ¹æ¹ý 2: ½ÇÆÐÇÏ¸é nullÀ» ¸®ÅÏÇØ¼­ È£ÃâÇÑ °÷¿¡¼­ Àç½Ãµµ ÆË¾÷À» ¶ç¿ì°Ô ÇÑ´Ù. (¾ö°ÝÇÔ)
-            // return null; 
+            return null;
         }
+
+        // public async UniTask<DateTime?> RequestAsync()
+        // {
+        //     Sync = false;
+        //
+        //     var worldTimeUri = Games.Data.Const?.WorldTimeURI;
+        //     if (string.IsNullOrEmpty(worldTimeUri))
+        //     {
+        //         Debug.LogError("WorldTime URI is empty.");
+        //         return null;
+        //     }
+        //
+        //     using (UnityWebRequest webRequest = UnityWebRequest.Get(worldTimeUri))
+        //     {
+        //         try
+        //         {
+        //             await webRequest.SendWebRequest();
+        //
+        //             if (webRequest.result == UnityWebRequest.Result.Success)
+        //             {
+        //                 var timeData = JsonUtility.FromJson<TimeData>(webRequest.downloadHandler.text);
+        //
+        //                 // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½
+        //                 if (!string.IsNullOrEmpty(timeData.datetime) &&
+        //                     System.DateTime.TryParse(timeData.datetime, out DateTime dateTime))
+        //                 {
+        //                     DateTime = dateTime;
+        //                     Sync = true;
+        //                     // Debug.Log($"Server Time Synced: {dateTime}");
+        //                     return dateTime; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½È¯
+        //                 }
+        //             }
+        //
+        //             // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Ì»ï¿½ï¿½Ï°Å³ï¿½, ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        //             Debug.LogWarning($"Time Sync Failed: {webRequest.error}");
+        //         }
+        //         catch (Exception e)
+        //         {
+        //             Debug.LogError($"Time Sync Exception: {e.Message}");
+        //         }
+        //     }
+        //
+        //     // --- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã³ï¿½ï¿½ (Fallback) ---
+        //     // ï¿½ï¿½Ã¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.
+        //
+        //     // ï¿½ï¿½ï¿½ 1: ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½. (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+        //     DateTime = System.DateTime.Now;
+        //     Sync = true;
+        //     return DateTime;
+        //
+        //     // ï¿½ï¿½ï¿½ 2: ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ nullï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ãµï¿½ ï¿½Ë¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+        //     // return null; 
+        // }
     }
 }
 
