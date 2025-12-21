@@ -74,7 +74,7 @@ namespace GameSystem
         private bool _isMoveCenter = false;
 
         public Camera MainCamera => GameCamera;
-        public Camera UICamera => UICamera;
+        public Camera UICamera => uiCamera;
 
         public float Height { get; private set; } = 0;
        

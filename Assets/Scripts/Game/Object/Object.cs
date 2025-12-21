@@ -136,13 +136,14 @@ namespace Game
                 {
                     var data = new UI.WorldUI.BloomTimerWorldUI.Data
                     {
-                
+                    
                     };
                 
-                    data.WithTargetTm(transform);
+                    data.WithTargetTm(transform)
+                        .WithOffset(new Vector2(0, 120f));
                 
                     _bloomTimerWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.BloomTimerWorldUI, UI.WorldUI.BloomTimerWorldUI.Data>()
-                        // .SetRootRectTm(data.boostRootRectTm)
+                        .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
                         .SetData(data)
                         .Create();
                 }
@@ -155,7 +156,6 @@ namespace Game
                 if (_data.isHiddenObj)
                 {
                     Command.ObtainHiddenObject.Execute(this);
-
                     return;
                 }
 

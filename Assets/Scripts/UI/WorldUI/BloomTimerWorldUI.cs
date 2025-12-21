@@ -14,7 +14,7 @@ namespace UI.WorldUI
 
         private void LateUpdate()
         {
-            // ChainLateUpdate();
+            ChainLateUpdate();
         }
 
         public override void Initialize(Data data)

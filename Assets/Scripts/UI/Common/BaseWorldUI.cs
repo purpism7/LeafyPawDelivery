@@ -42,8 +42,10 @@ namespace UI.Common
         {
             base.Initialize(data);
 
-            _mainCamera = MainGameManager.Instance?.IGameCameraCtr?.MainCamera;
-            _uiCamera = MainGameManager.Instance?.IGameCameraCtr?.UICamera;
+            var gameCameraCtr = MainGameManager.Instance?.IGameCameraCtr;
+            
+            _mainCamera = gameCameraCtr?.MainCamera;
+            _uiCamera = gameCameraCtr?.UICamera;
             _worldUIRootRectTr = UIManager.Instance?.WorldUIRootRectTr;
             //_mainCamera = CameraManager.Instance.MainCamera;//Camera.main;
         }
