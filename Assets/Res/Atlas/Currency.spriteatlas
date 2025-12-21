@@ -74,7 +74,7 @@ SpriteAtlas:
   - moon
   - jewel
   - snow
-  - Acorn
+  - acorn
   - ice
   m_RenderDataMap: {}
   m_Tag: Currency

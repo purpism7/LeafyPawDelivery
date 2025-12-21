@@ -63,8 +63,7 @@ namespace UI.Common
 
         protected Vector3? GetScreenPos(Vector3 targetPos)
         {
-            var camera = _mainCamera;
-            if (camera == null)
+            if (_mainCamera == null)
                 return null;
 
             if (!_worldUIRootRectTr)
@@ -76,7 +75,7 @@ namespace UI.Common
             //targetPos.x += _param.Offset.x;
             //targetPos.y += _param.Offset.y;
 
-            var screenPos = camera.WorldToScreenPoint(targetPos);
+            var screenPos = _mainCamera.WorldToScreenPoint(targetPos);
 
             Vector2 localPos = Vector2.zero;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(_worldUIRootRectTr, screenPos, _uiCamera, out localPos);
