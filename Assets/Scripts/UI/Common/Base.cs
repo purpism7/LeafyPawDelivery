@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using GameSystem;
 using UnityEngine;
 
 namespace UI
@@ -12,7 +13,7 @@ namespace UI
         protected bool ReInitalize = false;
     }
 
-    public class Base : MonoBehaviour, Sequencer.ITask
+    public class Base : MonoBehaviour, Sequencer.ITask, IPoolable
     {
         [SerializeField]
         public RectTransform rootRectTm = null; 
@@ -75,6 +76,12 @@ namespace UI
                 return _endTask;
             }
         }
+
+        #region IPoolable Implementation
+        GameObject IPoolable.PrefabKey => gameObject;
+        Transform IPoolable.Transform => transform;
+        bool IPoolable.IsActivate => gameObject.activeSelf;
+        #endregion
     }
 
     public abstract class Common<T> : Base where T : BaseData

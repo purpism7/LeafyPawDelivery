@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using GameSystem;
+using static Game.Type;
 
 namespace Game
 {
@@ -246,6 +247,12 @@ namespace Game
             if (_objectList == null)
                 return null;
 
+
+            var objectType = ObjectType.None;
+            var objectData = ObjectContainer.Instance?.GetData(id);
+            if (objectData != null)
+                objectType = objectData.ObjectType;
+
             foreach (var obj in _objectList)
             {
                 if (obj == null)
@@ -269,7 +276,7 @@ namespace Game
                 ObjectId = id,
                 ObjectUId = uId,
                 Pos = pos,
-            };
+            }.WithObjectType(objectType);
 
             var addObj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
                 .SetData(objData)
@@ -465,7 +472,7 @@ namespace Game
                         ObjectId = objectInfo.Id,
                         ObjectUId = editObject.UId,
                         Pos = editObject.Pos,
-                    };
+                    }.WithObjectType(data.ObjectType);
 
                     Game.Object resObj = null;
                     foreach (var obj in _objectList)

@@ -6,6 +6,7 @@ using UnityEngine;
 using UI;
 using System;
 using UI.WorldUI;
+using static Game.Type;
 
 namespace Game
 {
@@ -32,9 +33,16 @@ namespace Game
             public int ObjectId = 0;
             public int ObjectUId = 0;
             public Vector3 Pos = Vector3.zero;
+            public ObjectType ObjectType { get; private set; } = ObjectType.None;
 
             public bool isHiddenObj = false;
             public int sortingOrder = 0;
+
+            public Data WithObjectType(ObjectType objectType)
+            {
+                ObjectType = objectType;
+                return this;
+            }
         }
 
         #region Inspector
@@ -46,8 +54,8 @@ namespace Game
         private Transform arrivalPointTm = null;
         #endregion
 
-        private BloomTimerWorldUI _bloomTimerWorldUI = null;
-        
+        private WaterWorldUI _waterWorldUI = null;
+
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
 
         public ObjectActController ObjectActCtr { get; private set; } = null;
@@ -90,19 +98,26 @@ namespace Game
         {
             base.Activate();
 
+            if (_data.ObjectType == ObjectType.Garden)
+            {
+                if(_waterWorldUI == null)
+                {
+                    var data = new UI.WorldUI.WaterWorldUI.Data
+                    {
 
-            // var data = new UI.WorldUI.BloomTimerWorldUI.Data
-            // {
-            //
-            // };
-            //
-            // data.WithTargetTm(transform);
-            //
-            // var bloomTimerWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.BloomTimerWorldUI, UI.WorldUI.BloomTimerWorldUI.Data>()
-            //     // .SetRootRectTm(data.boostRootRectTm)
-            //     .SetData(data)
-            //     .Create();
-            
+                    };
+
+                    data.WithTargetTm(transform)
+                        .WithOffset(new Vector2(0, 120f));
+
+                    _waterWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.WaterWorldUI, UI.WorldUI.WaterWorldUI.Data>()
+                        .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
+                        .SetData(data)
+                        .Create();
+                }
+            }
+           
+
             SetPos();
         }
 
@@ -131,24 +146,24 @@ namespace Game
                 edit?.ActivateBottom();
 
                 State?.Touch(TouchPhase.Began, null);
-                
-                if(_bloomTimerWorldUI == null)
-                {
-                    var data = new UI.WorldUI.BloomTimerWorldUI.Data
-                    {
-                    
-                    };
-                
-                    data.WithTargetTm(transform)
-                        .WithOffset(new Vector2(0, 120f));
-                
-                    _bloomTimerWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.BloomTimerWorldUI, UI.WorldUI.BloomTimerWorldUI.Data>()
-                        .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
-                        .SetData(data)
-                        .Create();
-                }
-                
 
+                //if(_bloomTimerWorldUI == null)
+                //{
+                //var data = new UI.WorldUI.BloomTimerWorldUI.Data
+                //{
+
+                //};
+
+                //data.WithTargetTm(transform)
+                //    .WithOffset(new Vector2(0, 120f));
+
+                //_bloomTimerWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.BloomTimerWorldUI, UI.WorldUI.BloomTimerWorldUI.Data>()
+                //    .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
+                //    .SetData(data)
+                //    .Create();
+                //}
+
+                _waterWorldUI?.Deactivate();
                 return;
             }
             else

@@ -57,7 +57,14 @@ namespace Game
 
         public T Instantiate<T>(Transform rootTm)
         {
-            return GameSystem.ResourceManager.Instance.InstantiateUI<T>(rootTm);
+            var poolable = ObjectPooler.Instance.Get<T>();
+            if(poolable != null)
+                return poolable;
+
+            var t = GameSystem.ResourceManager.Instance.InstantiateUI<T>(rootTm);
+            ObjectPooler.Instance.Add(t as IPoolable);
+
+            return t;
         }
 
         // public void EnalbeUIRoot(bool enable)
