@@ -12,6 +12,8 @@ namespace Game
 {
     public interface IObject
     {
+        bool IsActivate { get; }
+
         void Remove(bool refresh);
 
         Transform HiddenObjectRootTm { get; }
@@ -23,7 +25,7 @@ namespace Game
         int SortingOrder { get; }
         Vector3 LocalPos { get; }
 
-        bool IsActivate { get; }
+        void SetWaterUIActivate(bool activate);
     }
 
     public class Object : Game.BaseElement<Object.Data>, IObject
@@ -98,26 +100,6 @@ namespace Game
         {
             base.Activate();
 
-            if (_data.ObjectType == ObjectType.Garden)
-            {
-                if(_waterWorldUI == null)
-                {
-                    var data = new UI.WorldUI.WaterWorldUI.Data
-                    {
-
-                    };
-
-                    data.WithTargetTm(transform)
-                        .WithOffset(new Vector2(0, 120f));
-
-                    _waterWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.WaterWorldUI, UI.WorldUI.WaterWorldUI.Data>()
-                        .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
-                        .SetData(data)
-                        .Create();
-                }
-            }
-           
-
             SetPos();
         }
 
@@ -163,7 +145,8 @@ namespace Game
                 //    .Create();
                 //}
 
-                _waterWorldUI?.Deactivate();
+                //_waterWorldUI?.Deactivate();
+
                 return;
             }
             else
@@ -339,6 +322,33 @@ namespace Game
             {
                 return LocalPos;
             }
+        }
+
+        void IObject.SetWaterUIActivate(bool activate)
+        {
+            if (_data.ObjectType != ObjectType.Garden)
+                return;
+
+            if (_waterWorldUI == null)
+            {
+                var data = new UI.WorldUI.WaterWorldUI.Data
+                {
+
+                };
+
+                data.WithTargetTm(transform)
+                    .WithOffset(new Vector2(0, 120f));
+
+                _waterWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.WaterWorldUI, UI.WorldUI.WaterWorldUI.Data>()
+                    .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
+                    .SetData(data)
+                    .Create();
+            }
+
+            if (activate)
+                _waterWorldUI?.Activate();
+            else
+                _waterWorldUI?.Deactivate();
         }
         #endregion
     }

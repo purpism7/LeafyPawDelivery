@@ -13,15 +13,19 @@ MonoBehaviour:
   m_Name: Game_Animal
   m_EditorClassIdentifier: 
   m_GroupName: Game_Animal
-  m_Data:
-    m_SerializedData: []
   m_GUID: 5f76b806991d543758b2dd4bb20f9302
   m_SerializeEntries:
-  - m_GUID: d53ab7acecb594c8794d315fbad4be1f
-    m_Address: Assets/Prefabs/Game/Animal/1
+  - m_GUID: 0d13e8731ce8f4d92917b48e9a11c7d6
+    m_Address: Assets/Prefabs/Game/Animal/4
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Animal_1
+    - Animal_4
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90d821590191744029d9c968930c7bc4
+    m_Address: Assets/Prefabs/Game/Animal/3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Animal_3
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9de7ac0f783c84edf97eb0a1e6372bd8
     m_Address: Assets/Prefabs/Game/Animal/2
@@ -35,17 +39,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - Animal
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 90d821590191744029d9c968930c7bc4
-    m_Address: Assets/Prefabs/Game/Animal/3
+  - m_GUID: d53ab7acecb594c8794d315fbad4be1f
+    m_Address: Assets/Prefabs/Game/Animal/1
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Animal_3
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0d13e8731ce8f4d92917b48e9a11c7d6
-    m_Address: Assets/Prefabs/Game/Animal/4
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Animal_4
+    - Animal_1
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: e7d7ed8f5841242acbc2f114c52db5f7, type: 2}

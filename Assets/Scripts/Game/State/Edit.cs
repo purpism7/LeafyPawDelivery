@@ -18,6 +18,16 @@ namespace Game.State
             if (activityPlace == null)
                 return;
 
+            IPlace place = activityPlace;
+            var objectList = place?.ObjectList;
+            if(objectList != null)
+            {
+                foreach (IObject obj in objectList)
+                {
+                    obj?.SetWaterUIActivate(false);
+                }
+            }
+
             activityPlace.Bust();
         }
 

@@ -34,7 +34,7 @@ namespace Game.State
         public abstract void Initialize(MainGameManager mainGameMgr);
         public virtual async UniTask InitializeAsync(MainGameManager mainGameMgr)
         {
-            await UniTask.Yield();
+            await UniTask.CompletedTask;
         }
 
         public abstract void End();

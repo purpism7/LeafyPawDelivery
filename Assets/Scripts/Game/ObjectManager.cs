@@ -17,7 +17,7 @@ namespace Game
         private Data _data = null;
         private Info.ObjectHolder _objectHolder = new();
             
-        public List<Info.Object> ObjectInfoList
+        public IReadOnlyList<Info.Object> ObjectInfoList
         {
             get
             {

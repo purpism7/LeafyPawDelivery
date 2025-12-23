@@ -447,30 +447,48 @@ namespace GameSystem
 
         private async UniTask ZoomInAsync(Vector3 targetPos, System.Action endAction)
         {
-            float timeElapsed = 0;
-            var resTargetPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
+            // 1. 시네머신의 자동 추적을 일시 중단 (매우 중요)
+            var originalFollow = cinemachineCamera.Follow;
+            cinemachineCamera.Follow = null;
 
-            var distance = cinemachineCamera.Lens.OrthographicSize - 500f;
-            float duration = distance * 0.004f;
-            
-            while (Vector3.Distance(resTargetPos, GameCamera.transform.position) >= 0.1f)
+            // 2. 가상 카메라의 현재 위치와 렌즈 크기 저장
+            Vector3 startPos = cinemachineCamera.transform.position;
+            // 시네머신 가상 카메라의 Z값은 보통 메인 카메라와 다르므로 현재 Z값을 유지하는 게 안전함
+            float currentZ = cinemachineCamera.transform.position.z;
+            Vector3 resTargetPos = new Vector3(targetPos.x, targetPos.y, currentZ);
+
+            float startSize = cinemachineCamera.Lens.OrthographicSize;
+            float targetSize = 500f;
+
+            float distance = Mathf.Abs(startSize - targetSize);
+            float duration = Mathf.Max(distance * 0.002f, 0.1f);
+            float timeElapsed = 0f;
+
+            // 3. 부드러운 이동 루프
+            while (timeElapsed < duration)
             {
                 timeElapsed += Time.deltaTime;
                 float t = Mathf.Clamp01(timeElapsed / duration);
-
-                // Ease In-Out 방식으로 FOV와 카메라 거리 변화
                 float curveT = Mathf.SmoothStep(0f, 1f, t);
-                
-                cinemachineCamera.Lens.OrthographicSize = Mathf.Lerp(cinemachineCamera.Lens.OrthographicSize, 500f, curveT);
-                
-                GameCamera.transform.position =
-                    Vector3.Lerp(GameCamera.transform.position, resTargetPos, curveT);
-                
-                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+
+                // 메인 카메라가 아니라 '가상 카메라'를 직접 조작
+                cinemachineCamera.Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, curveT);
+                cinemachineCamera.transform.position = Vector3.Lerp(startPos, resTargetPos, curveT);
+
+                await UniTask.Yield(PlayerLoopTiming.Update);
             }
-        
+
+            // 4. 최종 위치 강제 고정
+            cinemachineCamera.Lens.OrthographicSize = targetSize;
+            cinemachineCamera.transform.position = resTargetPos;
+
+            // 5. [중요] 이동이 끝난 후 시네머신이 다시 튀지 않게 설정
+            // 만약 다시 원래 대상을 따라가야 한다면, 대상의 위치를 resTargetPos로 옮겨두거나
+            // 아래와 같이 Follow를 다시 연결하기 전에 가상 카메라의 내부 상태를 강제로 업데이트해야 합니다.
+
+            // cinemachineCamera.Follow = originalFollow; // 다시 추적이 필요할 때만 주석 해제
+
             await UniTask.Yield();
-            
             endAction?.Invoke();
         }
 
