@@ -448,8 +448,8 @@ namespace GameSystem
         private async UniTask ZoomInAsync(Vector3 targetPos, System.Action endAction)
         {
             // 1. 시네머신의 자동 추적을 일시 중단 (매우 중요)
-            var originalFollow = cinemachineCamera.Follow;
-            cinemachineCamera.Follow = null;
+            // var originalFollow = cinemachineCamera.Follow;
+            // cinemachineCamera.Follow = null;
 
             // 2. 가상 카메라의 현재 위치와 렌즈 크기 저장
             Vector3 startPos = cinemachineCamera.transform.position;
