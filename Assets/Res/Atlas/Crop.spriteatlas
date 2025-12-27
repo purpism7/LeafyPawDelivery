@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Crop
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 693fd9d6a80a5409e9a13e8f1e2368a4, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 0d897d69be2fd405b9641a8b9940a47d: 21300000
+    - 55c0fe0a63b8e4880860c3b2d57a9783: 21300000
+    - 7f2d217aae0cb43108da050e9b9cf445: 21300000
+    - cc3dbbee6deee448ea0da9454f3b88d5: 21300000
+    - 4099596f96cdf415bbbacef08343f211: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 0d897d69be2fd405b9641a8b9940a47d, type: 3}
+  - {fileID: 21300000, guid: 55c0fe0a63b8e4880860c3b2d57a9783, type: 3}
+  - {fileID: 21300000, guid: 7f2d217aae0cb43108da050e9b9cf445, type: 3}
+  - {fileID: 21300000, guid: cc3dbbee6deee448ea0da9454f3b88d5, type: 3}
+  - {fileID: 21300000, guid: 4099596f96cdf415bbbacef08343f211, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Object_Map01_Flower05
+  - Object_Map01_Flower01
+  - Object_Map01_Flower02
+  - Object_Map01_Flower03
+  - Object_Map01_Flower04
+  m_RenderDataMap: {}
+  m_Tag: Crop
+  m_IsVariant: 0

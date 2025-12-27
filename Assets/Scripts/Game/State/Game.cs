@@ -16,12 +16,7 @@ namespace Game.State
             //    return;
 
             //activityPlace.Boom();
-
-            var objectList = MainGameManager.Get<PlaceManager>()?.ActivityIPlace?.ObjectList;
-            foreach (IObject obj in objectList)
-            {
-                obj?.SetWaterUIActivate(true);
-            }
+            SetWaterUIActivate(MainGameManager.Get<PlaceManager>()?.ActivityIPlace);
         }
 
         public override async UniTask InitializeAsync(MainGameManager mainGameMgr)
@@ -56,6 +51,27 @@ namespace Game.State
 
                 activityPlace.Boom();
             });
+        }
+        
+        private void SetWaterUIActivate(IPlace place)
+        {
+            var objectList = place?.ObjectList;
+            if (objectList == null)
+                return;
+            
+            foreach (var obj in objectList)
+            {
+                if(obj == null)
+                    continue;
+                
+                if(!obj.IsActivate)
+                    continue;
+
+                if (obj is IGardenPlot gardenPlot)
+                {
+                    gardenPlot.SetWaterUIActivate(true);
+                }
+            }
         }
     }
 }

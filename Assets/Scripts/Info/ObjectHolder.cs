@@ -182,10 +182,22 @@ namespace Info
                 objectInfo.EditObjectList.Clear();
             }
 
-            var addEditObject = new EditObject()
+            var addEditObject = new EditObject
             {
                 UId = objectInfo.EditObjectList.Count + 1,
             };
+
+            var objectData = ObjectContainer.Instance?.GetData(id);
+            if (objectData != null &&
+                objectData.ObjectType != Type.ObjectType.None)
+            {
+                if (string.IsNullOrEmpty(addEditObject.uniqueID))
+                {
+                    addEditObject.uniqueID = GameUtils.GenerateUniqueID("O");
+                    Debug.Log(addEditObject.uniqueID);
+                }
+            }
+
             //Debug.Log("ObjectHolder GetAddEditObject = " + addEditObject.UId);
             objectInfo.EditObjectList.Add(addEditObject);
 

@@ -38,13 +38,20 @@ namespace GameSystem
 
             return this;
         }
+        
+        // public ObjectCreator<T, V> SetPlotData(PlotData )
+        // {
+        //     
+        //
+        //     return this;
+        // }
 
         public override T Create()
         {
             var obj = ResourceManager.Instance.Instantiate<T>(_id, _rootTm);
             if (obj == null)
             {
-                return default(T);
+                return default;
             }
 
             obj.Id = _id;

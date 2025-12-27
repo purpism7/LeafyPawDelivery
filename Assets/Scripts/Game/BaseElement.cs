@@ -212,7 +212,7 @@ namespace Game
             }
         }
 
-        public void SetSpwaned(bool spwaned)
+        public void SetSpawned(bool spwaned)
         {
             _spwaned = spwaned;
         }
@@ -245,7 +245,7 @@ namespace Game
 
             SetSortingOrder(-(int)LocalPos.y);
 
-            SetSpwaned(false);
+            SetSpawned(false);
             edit?.DeactivateEdit();
             SetState<DeActive>();
         }
@@ -254,7 +254,7 @@ namespace Game
         {
             Command.Remove.Execute(this, refresh);
 
-            SetSpwaned(true);
+            SetSpawned(true);
             edit?.DeactivateEdit();
             SetState<DeActive>();
         }

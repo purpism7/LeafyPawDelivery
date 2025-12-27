@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 using Cysharp.Threading.Tasks;
+using Game;
 
 namespace GameSystem
 {
@@ -488,9 +489,11 @@ namespace GameSystem
             if(_gameObjByIdDic == null)
                 return null;
 
-            if(typeKey.Contains(AssetLabelObject))
+            if(typeKey.Contains(AssetLabelObject) ||
+               typeKey.Contains(nameof(GardenPlot)))
             {
-                typeKey += "_" + GameUtils.ActivityPlaceId;
+                // typeKey += "_" + GameUtils.ActivityPlaceId;
+                typeKey = $"{AssetLabelObject}_{GameUtils.ActivityPlaceId}";
             }
 
             if(_gameObjByIdDic.TryGetValue(typeKey, out Dictionary<int, GameObject> dic))

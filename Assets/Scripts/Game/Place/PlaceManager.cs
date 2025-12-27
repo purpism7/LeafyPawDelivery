@@ -32,6 +32,7 @@ namespace Game
         private GameData.Place placeData = null;
 
         private List<Place> _placeList = new List<Place>();
+        private IPlotCreator _plotCreator = null;
 
         public Place ActivityPlace { get; private set; } = null;
         public IPlace ActivityIPlace { get { return ActivityPlace; } }
@@ -45,6 +46,13 @@ namespace Game
 
         public override MonoBehaviour Initialize()
         {
+            return this;
+        }
+
+        public PlaceManager Initialize(IPlotCreator plotCreator)
+        {
+            _plotCreator = plotCreator;
+            
             Event = new();
             Event?.RemoveAllListeners();
 
@@ -73,11 +81,12 @@ namespace Game
             {
                 ActivityPlace = new GameSystem.PlaceCreator()
                   .SetRoot(RootTm)
-                  .SetData(new Place.Data()
-                  {
-                      Id = data.placeId,
-                      onBGM = Info.Setting.Get.OnBGM,
-                  })
+                  .SetData(
+                      new Place.Data
+                      {
+                          Id = data.placeId,
+                          onBGM = Info.Setting.Get.OnBGM,
+                      }.WithPlotCreator(_plotCreator))
                   .Create();
 
                 _placeList?.Add(ActivityPlace);

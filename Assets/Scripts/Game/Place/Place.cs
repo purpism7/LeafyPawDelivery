@@ -42,6 +42,13 @@ namespace Game
         {
             public int Id = 0;
             public bool onBGM = true;
+            public IPlotCreator PlotCreator { get; private set; } = null;
+
+            public Data WithPlotCreator(IPlotCreator plotCreator)
+            {
+                PlotCreator = plotCreator;
+                return this;
+            }
         }
 
         [SerializeField]
@@ -145,7 +152,7 @@ namespace Game
         }
 
         #region Animal
-        public Creature.Animal SpwanAnimal(int id, int skinId, Vector3 pos, bool spwaned, out bool activate)
+        public Creature.Animal SpawnAnimal(int id, int skinId, Vector3 pos, bool spwaned, out bool activate)
         {
             activate = false;
             
@@ -167,7 +174,7 @@ namespace Game
 
                 activate = animal.IsActivate;
       
-                animal.SetSpwaned(spwaned);
+                animal.SetSpawned(spwaned);
                 animal.SetLocalPos(pos);
                 animal.Activate();
                 
@@ -181,7 +188,7 @@ namespace Game
                  .SetIPlaceState(this)
                  .Create();
 
-            addAnimal?.SetSpwaned(spwaned);
+            addAnimal?.SetSpawned(spwaned);
 
             _animalList.Add(addAnimal);
 
@@ -234,7 +241,7 @@ namespace Game
 
             if(existAnimal)
             {
-                SpwanAnimal(id, skinId, pos, false, out bool activate);
+                SpawnAnimal(id, skinId, pos, false, out bool activate);
             }
 
             return existAnimal;
@@ -242,12 +249,11 @@ namespace Game
         #endregion
 
         #region Object
-        public Game.Object SpwanObject(int id, Vector3 pos, int uId)
+        public Game.Object SpawnObject(int id, Vector3 pos, int uId, string uniqueID)
         {
             if (_objectList == null)
                 return null;
-
-
+            
             var objectType = ObjectType.None;
             var objectData = ObjectContainer.Instance?.GetData(id);
             if (objectData != null)
@@ -264,31 +270,57 @@ namespace Game
                 if (obj.Id != id)
                     continue;
 
-                obj.SetSpwaned(true);
+                obj.SetSpawned(true);
                 obj.Reset(uId, pos);
                 obj.Activate();
 
                 return obj;
             }
 
-            var objData = new Game.Object.Data()
+            var objData = new Game.Object.Data
             {
                 ObjectId = id,
                 ObjectUId = uId,
                 Pos = pos,
-            }.WithObjectType(objectType);
+            }.WithObjectUniqueID(uniqueID)
+                .WithObjectType(objectType);
+            
+            var addObject = CreateObject(objData, objectType);
+            addObject?.SetSpawned(true);
 
-            var addObj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
-                .SetData(objData)
-                .SetId(id)
+            _objectList.Add(addObject);
+
+            return addObject;
+        }
+
+        private Object CreateObject(Game.Object.Data objectData, ObjectType objectType)
+        {
+            Object obj = null;
+            if (objectType == ObjectType.Garden)
+            {
+                var gardenPlot = CreateObject<Game.GardenPlot>(objectData);
+                _data?.PlotCreator?.CreatePlot(objectData.ObjectUniqueID);
+                
+                obj = gardenPlot;
+            }
+            else
+            {
+                obj = CreateObject<Game.Object>(objectData);
+            }
+
+            return obj;
+        }
+
+        private T CreateObject<T>(Game.Object.Data objectData) where T : Game.Object
+        {
+            if (objectData == null)
+                return null;
+            
+            return new GameSystem.ObjectCreator<T, Game.Object.Data>()
+                .SetData(objectData)
+                .SetId(objectData.ObjectId)
                 .SetRootTm(objectRootTm)
                 .Create();
-
-            addObj?.SetSpwaned(true);
-
-            _objectList.Add(addObj);
-
-            return addObj;
         }
 
         private void RemoveObject(int id, int objectUId)
@@ -310,14 +342,7 @@ namespace Game
                 obj.Deactivate();
             }
         }
-
-        //private float GetObjectPosZ(int id, int uId)
-        //{
-        //    float posZ = (id * 10 + uId) * GetPosZOffset(id);
-
-        //    return -posZ;
-        //}
-
+        
         public float ObjectPosZ()
         {
             _objectPosZ -= ObjectPosZOffset;
@@ -334,37 +359,8 @@ namespace Game
                 return GameUtils.PosZOffset * 0.1f;
             }
         }
-
-        //private int GetCalcPos(float value, out int offset)
-        //{
-        //    int floorInt = Mathf.FloorToInt(value);
-        //    int len = Mathf.FloorToInt(Mathf.Log10(floorInt)) + 1;
-        //    offset = 10000 / (int)Mathf.Pow(10, len);
-        //    Debug.Log("resOffset = " + offset);
-        //    //if(floorY < 100)
-        //    //{
-        //    //    offset = 
-        //    //}
-        //    //else if(floorY)
-            
-        //    return floorInt * offset;
-            
-        //}
         #endregion
-
-        //private float GetPosZOffset(int id)
-        //{
-        //    float offset = 0.1f;
-        //    int length = (int)(Mathf.Log10(id) + 1);
-
-        //    for (int i = 0; i < length; ++i)
-        //    {
-        //        offset *= 0.1f;
-        //    }
-
-        //    return offset;
-        //}
-
+        
         private void SetAnimalList()
         {
             _animalList.Clear();
@@ -450,11 +446,11 @@ namespace Game
                 if (editObjectList == null)
                     continue;
 
-                var data = ObjectContainer.Instance?.GetData(objectInfo.Id);
-                if(data == null)
+                var objectData = ObjectContainer.Instance?.GetData(objectInfo.Id);
+                if(objectData == null)
                     continue;
                 
-                if (data.PlaceId != Id)
+                if (objectData.PlaceId != Id)
                     continue;
 
                 foreach(var editObject in editObjectList)
@@ -467,14 +463,15 @@ namespace Game
 
                     editObject.Pos.z += GameUtils.PosZOffset;
 
-                    var objectData = new Game.Object.Data()
+                    var objData = new Game.Object.Data()
                     {
                         ObjectId = objectInfo.Id,
                         ObjectUId = editObject.UId,
                         Pos = editObject.Pos,
-                    }.WithObjectType(data.ObjectType);
+                    }.WithObjectUniqueID(editObject.uniqueID)
+                        .WithObjectType(objectData.ObjectType);
 
-                    Game.Object resObj = null;
+                    Game.Object resObject = null;
                     foreach (var obj in _objectList)
                     {
                         if (obj == null)
@@ -486,24 +483,19 @@ namespace Game
                         if (objectInfo.Id != obj.Id)
                             continue;
 
-                        resObj = obj;
-                        resObj?.Initialize(objectData);
+                        resObject = obj;
+                        resObject.Initialize(objData);
 
                         break;
                     }
 
-                    if (resObj == null)
+                    if (resObject == null)
                     {
-                        resObj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
-                            .SetData(objectData)
-                            .SetId(objectInfo.Id)
-                            .SetRootTm(objectRootTm)
-                            .Create();
-
-                        _objectList.Add(resObj);
+                        resObject  = CreateObject(objData, objectData.ObjectType);
+                        _objectList.Add(resObject);
                     }
 
-                    resObj?.Activate();
+                    resObject?.Activate();
                 }
             }
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,13 @@ namespace Info
     public class EditObject
     {
         public int UId = 0;
+        public string uniqueID = string.Empty; 
         public Vector3 Pos = Vector3.zero;
         public bool Arrangement = false;
+
+        public EditObject()
+        {
+            
+        }
     }
 }

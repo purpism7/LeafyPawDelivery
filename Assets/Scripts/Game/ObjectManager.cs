@@ -16,6 +16,7 @@ namespace Game
 
         private Data _data = null;
         private Info.ObjectHolder _objectHolder = new();
+        private IGardenManager _gardenManager = null;
             
         public IReadOnlyList<Info.Object> ObjectInfoList
         {
@@ -27,6 +28,15 @@ namespace Game
 
         public override MonoBehaviour Initialize()
         {
+            // Event?.RemoveAllListeners();
+
+            return this;
+        }
+
+        public ObjectManager Initialize(IGardenManager gardenManager)
+        {
+            _gardenManager = gardenManager;
+            
             Event?.RemoveAllListeners();
 
             return this;

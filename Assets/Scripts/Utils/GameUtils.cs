@@ -1,12 +1,29 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 
-using Game;
+using Random = UnityEngine.Random;
+using Type = Game.Type;
 
 public static class GameUtils
 {
+    public static string GenerateUniqueID(string prefix = "", int length = 8)
+    {
+        string base64 = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+        string cleanBase64 = base64.Replace("/", "").Replace("+", "").Replace("=", "");
+        var uniqueID = cleanBase64.Substring(0, Math.Min(length, cleanBase64.Length));
+
+        var resUniqueID = string.Empty;
+        if(!string.IsNullOrEmpty(prefix))
+            resUniqueID = $"{prefix}_";
+
+        resUniqueID += uniqueID;
+
+        return resUniqueID;
+    }
+    
     public static void SetActive(this Component component, bool active)
     {
         if (component == null)

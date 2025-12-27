@@ -34,7 +34,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     private System.Action<Game.Base> _startEditAction = null;
     
     private IGrid _iGrid = null;
-    private bool _endInitialize = false;
+    private bool _initialized = false;
 
     private List<IUpdater> _iUpdaterList = new();
     private List<IFixedUpdater> _iFixedUpdaterList = new();
@@ -42,6 +42,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
     private Dictionary<Game.Type.EGameState, Game.State.Base> _gameStateDic = new();
 
     private static Dictionary<Type, MonoBehaviour> _managerDic = new();
+    private IGardenManager _gardenManager = null;
 
     public float GamePlayTimeSec { get; private set; } = 0;
     public Game.State.Base GameState { get; private set; } = null;
@@ -68,7 +69,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
     protected override void Initialize()
     {
-        _endInitialize = false;
+        _initialized = false;
 
         _managerDic.Clear();
 
@@ -76,8 +77,14 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         Game.Notification.Create(transform);
 
         AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>()?.Initialize());
-        AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<Game.ObjectManager>()?.Initialize());
-        AddManager(typeof(Game.PlaceManager), placeMgr?.Initialize());
+        
+        var gardenManager = CreateGardenManager();
+        
+        var objectManager = gameObject.GetOrAddComponent<ObjectManager>()?.Initialize(gardenManager);
+        AddManager(typeof(Game.ObjectManager), objectManager);
+
+        AddManager(typeof(Game.PlaceManager), placeMgr?.Initialize(gardenManager));
+        
         AddManager(typeof(Game.StoryManager), gameObject.GetOrAddComponent<Game.StoryManager>()?.Initialize());
         AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>()?.Initialize());
         AddManager(typeof(Game.Manager.Acquire), gameObject.GetOrAddComponent<Game.Manager.Acquire>()?.Initialize());
@@ -85,6 +92,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         AddManager(typeof(Game.BoostManager), boostMgr?.Initialize());
 
         _gameStateDic.Clear();
+        
+        Debug.Log("MainGameManager initialized");
     }
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
@@ -131,7 +140,12 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             Info.Connector.Get?.SetPossibleBuyObject();
         }
 
-        _endInitialize = true;
+        _initialized = true;
+    }
+
+    private GardenManager CreateGardenManager()
+    {
+        return new GardenManager().Initialize();
     }
 
     private void InitializeIUpdateList(InputManager inputMgr)
@@ -354,7 +368,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             }
         }
 
-        if(_endInitialize)
+        if(_initialized)
         {
             GamePlayTimeSec += Time.deltaTime;
 #if UNITY_EDITOR
@@ -577,14 +591,14 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
 
         bool activate = false;
-        var animal = placeMgr?.ActivityPlace?.SpwanAnimal(id, animalInfo.SkinId, pos, spwaned, out activate);
+        var animal = placeMgr?.ActivityPlace?.SpawnAnimal(id, animalInfo.SkinId, pos, spwaned, out activate);
         if (animal == null)
             return;
 
         if (!spwaned && 
             !activate)
         {
-            animal.SetSpwaned(true);
+            animal.SetSpawned(true);
         }
 
         _startEditAction?.Invoke(animal);
@@ -630,7 +644,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             pos = IGameCameraCtr.Center;
         }
 
-        var obj = activityPlace.SpwanObject(id, pos, editObject.UId);
+        var obj = activityPlace.SpawnObject(id, pos, editObject.UId, editObject.uniqueID);
         if (obj == null)
             return;
 

@@ -11,9 +11,20 @@ namespace UI.WorldUI
     {
         public class Data : BaseWorldUI<WaterWorldUI.Data>.Data
         {
-            
+            public IListener Listener { get; private set; } = null;
+
+            public Data WithListener(IListener listener)
+            {
+                Listener = listener;
+                return this;
+            }
         }
 
+        public interface IListener
+        {
+            void OnClick();
+        }
+        
         [SerializeField] private Button btn = null;
 
         private void LateUpdate()
@@ -31,22 +42,10 @@ namespace UI.WorldUI
 
         private void OnClick()
         {
-            var data = new UI.WorldUI.SowSeeds.Data
-            {
-
-            };
-
-            data.WithTargetTm(_data?.TargetTm)
-                .WithOffset(new Vector2(0, 100f));
-
-            var sowSeeds = new GameSystem.ComponentCreator<UI.WorldUI.SowSeeds, UI.WorldUI.SowSeeds.Data>()
-                .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
-                .SetData(data)
-                .Create();
-            sowSeeds?.Activate();
-
             Deactivate();
             ObjectPooler.Instance?.Return(this);
+            
+            _data?.Listener?.OnClick();
         }
     }
 }

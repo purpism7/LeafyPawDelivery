@@ -18,15 +18,7 @@ namespace Game.State
             if (activityPlace == null)
                 return;
 
-            IPlace place = activityPlace;
-            var objectList = place?.ObjectList;
-            if(objectList != null)
-            {
-                foreach (IObject obj in objectList)
-                {
-                    obj?.SetWaterUIActivate(false);
-                }
-            }
+            SetWaterUIDeactivate(activityPlace);
 
             activityPlace.Bust();
         }
@@ -34,6 +26,27 @@ namespace Game.State
         public override void End()
         {
             _gameBaseElement = null;
+        }
+
+        private void SetWaterUIDeactivate(IPlace place)
+        {
+            var objectList = place?.ObjectList;
+            if (objectList == null)
+                return;
+            
+            foreach (var obj in objectList)
+            {
+                if(obj == null)
+                    continue;
+                
+                if(!obj.IsActivate)
+                    continue;
+
+                if (obj is IGardenPlot gardenPlot)
+                {
+                    gardenPlot.SetWaterUIActivate(false);
+                }
+            }
         }
 
         public void SetEditElement(BaseElement gameBaseElement)

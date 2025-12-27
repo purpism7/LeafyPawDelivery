@@ -24,8 +24,6 @@ namespace Game
 
         int SortingOrder { get; }
         Vector3 LocalPos { get; }
-
-        void SetWaterUIActivate(bool activate);
     }
 
     public class Object : Game.BaseElement<Object.Data>, IObject
@@ -34,11 +32,19 @@ namespace Game
         {
             public int ObjectId = 0;
             public int ObjectUId = 0;
+            public string ObjectUniqueID { get; private set; } = string.Empty;
+            
             public Vector3 Pos = Vector3.zero;
             public ObjectType ObjectType { get; private set; } = ObjectType.None;
 
             public bool isHiddenObj = false;
             public int sortingOrder = 0;
+
+            public Data WithObjectUniqueID(string uniqueID)
+            {
+                ObjectUniqueID = uniqueID;
+                return this;
+            }
 
             public Data WithObjectType(ObjectType objectType)
             {
@@ -56,7 +62,7 @@ namespace Game
         private Transform arrivalPointTm = null;
         #endregion
 
-        private WaterWorldUI _waterWorldUI = null;
+        
 
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
 
@@ -322,33 +328,6 @@ namespace Game
             {
                 return LocalPos;
             }
-        }
-
-        void IObject.SetWaterUIActivate(bool activate)
-        {
-            if (_data.ObjectType != ObjectType.Garden)
-                return;
-
-            if (_waterWorldUI == null)
-            {
-                var data = new UI.WorldUI.WaterWorldUI.Data
-                {
-
-                };
-
-                data.WithTargetTm(transform)
-                    .WithOffset(new Vector2(0, 120f));
-
-                _waterWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.WaterWorldUI, UI.WorldUI.WaterWorldUI.Data>()
-                    .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
-                    .SetData(data)
-                    .Create();
-            }
-
-            if (activate)
-                _waterWorldUI?.Activate();
-            else
-                _waterWorldUI?.Deactivate();
         }
         #endregion
     }

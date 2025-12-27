@@ -416,32 +416,6 @@ namespace GameSystem
             
             StopUpdate = true;
 
-            // _timeElapsed = 0;
-            // _zoomInTargetPos = new Vector3(targetPos.x, targetPos.y, InitPosZ);
-            // _zoomInEndAction = endAction;
-            // _zoomIn = true;
-
-            // var distance = virtualCamera.m_Lens.OrthographicSize - 500f;
-            // float duration = distance * 0.001f;
-            //
-            // DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.Linear);
-
-            // var resTargetPos = GameCamera.transform.TransformPoint(targetPos);//GameCamera.WorldToScreenPoint(targetPos); 
-            // var resTargetPos = 
-            
-            // float duration = 2f;
-            //
-            // Sequence sequence = DOTween.Sequence()
-            //     .SetAutoKill(false)
-            //     .Append(virtualCamera.transform.DOMove(resTargetPos, duration).SetEase(Ease.OutQuad))
-            //     // .Append(DOTween.To(() => GameCamera.transform.position, pos => GameCamera.transform.position = pos, endPos, duration).SetEase(Ease.OutQuad))
-            //     .Join(DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, 500f, duration).SetEase(Ease.OutQuad))
-            //     .OnComplete(() =>
-            //     {
-            //         endAction?.Invoke();
-            //     });
-            // sequence.Restart();
-
             ZoomInAsync(targetPos, endAction).Forget();
         }
 

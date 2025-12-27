@@ -121,7 +121,7 @@ namespace GameSystem
         public T Instantiate<T>(int id, Transform rootTm) where T : Game.Base
         {
             if (AddressableAssetLoader == null)
-                return default(T);
+                return default;
 
             var gameObj = AddressableAssetLoader.Instantiate(typeof(T).Name, id, rootTm);
             if (gameObj)
@@ -129,7 +129,7 @@ namespace GameSystem
                 return gameObj.GetComponent<T>();
             }
 
-            return default(T);
+            return default;
         }
 
         public Material GetMaterial(Game.Type.EMaterial eMaterial)
