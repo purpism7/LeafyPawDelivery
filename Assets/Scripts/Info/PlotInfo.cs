@@ -7,17 +7,20 @@ namespace Info
     [Serializable]
     public class PlotInfo : BaseInfo
     {
-        [ReadOnly]
-        public string uniqueID = string.Empty;
+        public string objectUniqueID = string.Empty;
+        // [ReadOnly]
+        // public string uniqueID = string.Empty;
         public DateTime? growthEndTime = null;
+        public int cropID = 0;
 
-        public PlotInfo()
-        {
-            if (string.IsNullOrEmpty(uniqueID))
-            {
-                uniqueID = GameUtils.GenerateUniqueID("P");
-            }
-        }
+
+        // public PlotInfo()
+        // {
+        //     if (string.IsNullOrEmpty(uniqueID))
+        //     {
+        //         uniqueID = GameUtils.GenerateUniqueID("P");
+        //     }
+        // }
     }
 }
 

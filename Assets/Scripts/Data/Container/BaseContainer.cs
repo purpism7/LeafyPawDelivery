@@ -53,7 +53,8 @@ public class BaseContainer<T, V> : BaseContainer where T : new() where V : Data.
             return;
         }
         
-        if(typeof(T) == typeof(ObjectContainer))
+        if(typeof(T) == typeof(ObjectContainer) || 
+           typeof(T) == typeof(CropDataContainer))
         {
             try 
             {

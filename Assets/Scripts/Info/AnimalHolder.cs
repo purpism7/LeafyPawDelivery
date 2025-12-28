@@ -9,10 +9,10 @@ namespace Info
 {
     public class AnimalHolder : Holder.Base
     {
-        protected override string JsonFilePath => Path.Combine(RootJsonFilePath, JsonFileName);
-        private string JsonFileName = "Animal.txt";
+        protected override string JsonFilePath => Path.Combine(RootJsonFilePath, _jsonFileName);
+        private string _jsonFileName = "Animal.txt";
 
-        private const string _secretKey = "hAnkyUlAnimAl";
+        private const string SecretKey = "hAnkyUlAnimAl";
 
         public List<Info.Animal> AnimalInfoList { get; private set; } = new();
 
@@ -27,7 +27,7 @@ namespace Info
             if (System.IO.File.Exists(JsonFilePath))
             {
                 var decodeStr = System.IO.File.ReadAllText(JsonFilePath);
-                var jsonStr = decodeStr.Decrypt(_secretKey);
+                var jsonStr = decodeStr.Decrypt(SecretKey);
 
                 animalInfoList = JsonHelper.FromJson<Info.Animal>(jsonStr).ToList();
             }
@@ -76,7 +76,7 @@ namespace Info
                 return;
 
             var jsonStr = JsonHelper.ToJson(AnimalInfoList.ToArray());
-            var encodeStr = jsonStr.Encrypt(_secretKey);
+            var encodeStr = jsonStr.Encrypt(SecretKey);
 
             System.IO.File.WriteAllText(JsonFilePath, encodeStr);
         }

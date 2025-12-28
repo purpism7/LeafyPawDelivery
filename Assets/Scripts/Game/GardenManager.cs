@@ -29,7 +29,7 @@ namespace Game
         
         void IPlotCreator.CreatePlot(string objectUniqueID)
         {
-            var plotInfo = new PlotInfo();
+            _gardenHolder?.CreatePlotInfo(objectUniqueID);
         }
     }
 }

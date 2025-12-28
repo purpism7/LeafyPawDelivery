@@ -28,13 +28,8 @@ namespace Game
         {
             base.Deactivate();
             
-            _waterWorldUI?.Deactivate();
-            ObjectPooler.Instance?.Return(_waterWorldUI);
-            _waterWorldUI = null;
-            
-            _sowSeeds?.Deactivate();
-            ObjectPooler.Instance?.Return(_sowSeeds);
-            _sowSeeds = null;
+            WaterWorldUIDeactivate();
+            SowSeedsDeactivate();
         }
 
         protected override void SetSortingOrder(int order)
@@ -45,6 +40,26 @@ namespace Game
             {
                 corpSpriteRenderer.sortingOrder = order;
             }
+        }
+
+        private void WaterWorldUIDeactivate()
+        {
+            if (_waterWorldUI == null)
+                return;
+            
+            _waterWorldUI.Deactivate();
+            ObjectPooler.Instance?.Return(_waterWorldUI);
+            _waterWorldUI = null;
+        }
+        
+        private void SowSeedsDeactivate()
+        {
+            if (_sowSeeds == null)
+                return;
+            
+            _sowSeeds.Deactivate();
+            ObjectPooler.Instance?.Return(_sowSeeds);
+            _sowSeeds = null;
         }
         
         #region IGardenPlot

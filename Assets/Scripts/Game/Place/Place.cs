@@ -299,8 +299,6 @@ namespace Game
             if (objectType == ObjectType.Garden)
             {
                 var gardenPlot = CreateObject<Game.GardenPlot>(objectData);
-                _data?.PlotCreator?.CreatePlot(objectData.ObjectUniqueID);
-                
                 obj = gardenPlot;
             }
             else
