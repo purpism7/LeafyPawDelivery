@@ -90,7 +90,7 @@ namespace Game
             }
 
             if (isWind)
-                SetMaterial(Game.Type.EMaterial.WindEffect);
+                SetMaterial(Game.Type.EMaterial.WindEffect, spriteRenderer);
 
             ObjectActCtr = gameObject.GetOrAddComponent<ObjectActController>()?.Initialize(animator);
             

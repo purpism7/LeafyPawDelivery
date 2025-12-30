@@ -102,12 +102,12 @@ GameObject:
   - component: {fileID: 478104564084339854}
   - component: {fileID: 3786601101065460629}
   m_Layer: 7
-  m_Name: crop_img
+  m_Name: crop_spriterenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &478104564084339854
 Transform:
   m_ObjectHideFlags: 0
@@ -351,3 +351,4 @@ MonoBehaviour:
   sortingOrderOffset: -1000
   hiddenRootTm: {fileID: 0}
   arrivalPointTm: {fileID: 0}
+  cropSpriteRenderer: {fileID: 3786601101065460629}

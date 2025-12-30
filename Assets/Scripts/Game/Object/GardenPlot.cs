@@ -19,7 +19,7 @@ namespace Game
     public class GardenPlot : Object, IGardenPlot,
         WaterWorldUI.IListener
     {
-        [SerializeField] private SpriteRenderer corpSpriteRenderer = null;
+        [SerializeField] private SpriteRenderer cropSpriteRenderer = null;
         
         private WaterWorldUI _waterWorldUI = null;
         private ISowSeeds _sowSeeds = null;
@@ -38,7 +38,13 @@ namespace Game
         {
             base.Activate();
 
-            if (_plotDataProvider.IsGrowing(_data?.ObjectUniqueID))
+            cropSpriteRenderer?.SetActive(false);
+
+            if (IsBloomed)
+            {
+                BloomCrop();
+            }
+            else if (IsGrowing)
             {
                 EnsureSowSeeds();
                 UpdateRemainingGrowthTimeAsync(this.GetCancellationTokenOnDestroy()).Forget();
@@ -64,9 +70,9 @@ namespace Game
         {
             base.SetSortingOrder(order);
 
-            if (corpSpriteRenderer != null)
+            if (cropSpriteRenderer != null)
             {
-                corpSpriteRenderer.sortingOrder = order;
+                cropSpriteRenderer.sortingOrder = order;
             }
         }
 
@@ -90,12 +96,35 @@ namespace Game
             _sowSeeds = null;
         }
 
-        private void EnsureWaterWorldUI()
+        private void BloomCrop()
         {
-            if (_plotDataProvider == null)
+            if (cropSpriteRenderer == null)
+                return;
+            
+            int cropId = _plotDataProvider?.GetCropID(_data?.ObjectUniqueID) ?? 0;
+            if (cropId <= 0)
                 return;
 
-            if (_plotDataProvider.IsGrowing(_data?.ObjectUniqueID))
+            var cropData = CropDataContainer.Instance?.GetData(cropId);
+            if (cropData == null)
+                return;
+
+            var sprite = ResourceManager.Instance?.AtalsLoader?.GetCropSprite(cropData.ImgName);
+            if (sprite == null)
+                return;
+
+            cropSpriteRenderer.sprite = sprite;
+            cropSpriteRenderer?.SetActive(true);
+
+            isWind = true;
+        }
+
+        private void EnsureWaterWorldUI()
+        {
+            if (IsGrowing)
+                return;
+
+            if (IsBloomed)
                 return;
 
             if (_waterWorldUI != null)
@@ -115,11 +144,13 @@ namespace Game
 
         private void EnsureSowSeeds()
         {
+            if (IsBloomed)
+                return;
+
             if (_sowSeeds != null)
                 return;
 
-            var data = new UI.WorldUI.SowSeeds.Data()
-                    .WithBloomTimeSeconds(0);
+            var data = new UI.WorldUI.SowSeeds.Data();
 
             data.WithTargetTm(transform)
                 .WithOffset(new Vector2(0, 90f));
@@ -146,10 +177,35 @@ namespace Game
 
                 _sowSeeds?.UpdateTimerText((float)remaining.TotalSeconds);
 
-                if (remaining.TotalSeconds <= 0) 
+                if (remaining.TotalSeconds <= 0)
+                {
+                    BloomCrop();
                     break;
-
+                }
+               
                 await UniTask.Delay(500, cancellationToken: ct);
+            }
+        }
+
+        private bool IsBloomed
+        {
+            get
+            {
+                if (_plotDataProvider == null)
+                    return false;
+
+                return _plotDataProvider.IsBloomed(_data?.ObjectUniqueID);
+            }
+        }
+
+        private bool IsGrowing
+        {
+            get
+            {
+                if (_plotDataProvider == null)
+                    return false;
+
+                return _plotDataProvider.IsGrowing(_data?.ObjectUniqueID);
             }
         }
 
@@ -180,7 +236,6 @@ namespace Game
         #endregion
 
         #region WaterWorldUI.IListener
-
         void WaterWorldUI.IListener.OnClick()
         {
             if (_plotListener == null)

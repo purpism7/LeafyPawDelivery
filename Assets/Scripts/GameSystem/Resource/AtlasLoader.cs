@@ -96,6 +96,11 @@ namespace GameSystem
         {
             return GetSprite("Item", name);
         }
+
+        public Sprite GetCropSprite(string name)
+        {
+            return GetSprite("Crop", name);
+        }
     }
 }
 

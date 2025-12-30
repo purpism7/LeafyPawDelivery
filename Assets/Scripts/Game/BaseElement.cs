@@ -103,7 +103,7 @@ namespace Game
             spriteRenderer?.material?.SetFloat("_Thickness", width);
         }
 
-        protected void SetMaterial(Game.Type.EMaterial eMaterial)
+        protected void SetMaterial(Game.Type.EMaterial eMaterial, SpriteRenderer sprRenderer)
         {
             if (_eMaterial == eMaterial)
                 return;
@@ -112,9 +112,8 @@ namespace Game
             if (material == null)
                 return;
 
-            if (spriteRenderer?.material == null)
+            if (sprRenderer?.material == null)
                 return;
-
 
             if(eMaterial == Type.EMaterial.WindEffect)
             {
@@ -122,7 +121,7 @@ namespace Game
                 material.SetFloat("_WindSpeed", 1f);
             }
 
-            spriteRenderer.material = material;
+            sprRenderer.material = material;
 
             _eMaterial = eMaterial;
         }
@@ -157,7 +156,7 @@ namespace Game
             
             if (state is Game.Element.State.Edit)
             {
-                SetMaterial(Game.Type.EMaterial.Outline);
+                SetMaterial(Game.Type.EMaterial.Outline, spriteRenderer);
                 SetOutline(6f);
             }
             else
@@ -166,7 +165,7 @@ namespace Game
 
                 if (isWind)
                 {
-                    SetMaterial(Game.Type.EMaterial.WindEffect);
+                    SetMaterial(Game.Type.EMaterial.WindEffect, spriteRenderer);
                 }
             }
 

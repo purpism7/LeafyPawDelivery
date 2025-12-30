@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 
 using Info;
 using System;
+using Unity.VisualScripting;
 
 namespace Game
 {
@@ -22,6 +23,9 @@ namespace Game
     public interface IPlotDataProvider
     {
         DateTime? GetGrowthEndTime(string objectUniqueID);
+        int GetCropID(string objectUniqueID);
+
+        bool IsBloomed(string objectUniqueID);
         bool IsGrowing(string objectUniqueID);
     }
 
@@ -95,6 +99,11 @@ namespace Game
         #endregion
 
         #region IPlotDataProvider
+        int IPlotDataProvider.GetCropID(string objectUniqueID)
+        {
+            return _gardenHolder?.GetPlotInfo(objectUniqueID)?.cropID ?? 0;
+        }
+
         DateTime? IPlotDataProvider.GetGrowthEndTime(string objectUniqueID)
         {
             var plotInfo = _gardenHolder.GetPlotInfo(objectUniqueID);
