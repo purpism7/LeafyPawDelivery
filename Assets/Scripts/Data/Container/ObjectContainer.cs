@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectContainer : BaseContainer<ObjectContainer, Object>
+public class ObjectContainer : BaseContainer<ObjectContainer, Data.Object>
 {
-    public List<Object> GetDataListByPlaceId(int placeId)
+    public List<Data.Object> GetDataListByPlaceId(int placeId)
     {
         if (_datas == null)
             return null;
 
-        var dataList = new List<Object>();
+        var dataList = new List<Data.Object>();
         dataList?.Clear();
 
         foreach(var data in _datas)

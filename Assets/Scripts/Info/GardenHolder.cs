@@ -42,28 +42,44 @@ namespace Info
                 return;
 
             var jsonString = JsonConvert.SerializeObject(_plotInfos);
-            // var jsonStr = JsonHelper.ToJson(_plotInfos.ToArray());
+            Debug.Log(jsonString);
             var encodeStr = jsonString.Encrypt(SecretKey);
 
             System.IO.File.WriteAllText(JsonFilePath, encodeStr);
         }
 
-        public void CreatePlotInfo(string objectUniqueID)
+        public bool TryAddPlotInfo(string objectUniqueID, int cropID, int growthTimeSeconds)
         {
-            if (_plotInfos == null)
-                return;
+            var plotInfo = GetPlotInfo(objectUniqueID);
+            if (plotInfo != null)
+                return false;
 
-            if (_plotInfos.Find(info => info.objectUniqueID == objectUniqueID) != null)
-                return;
-            
-            var plotInfo = new PlotInfo
+            plotInfo = new PlotInfo
             {
                 objectUniqueID = objectUniqueID,
+                cropID = cropID,
+                growthEndTime = System.DateTime.UtcNow.AddSeconds(growthTimeSeconds)
             };
             
             _plotInfos?.Add(plotInfo);
 
             SaveInfo();
+
+            return true;
+        }
+
+        public bool TryRemovePlotInfo(string objectUniqueID)
+        {
+            var plotInfo = GetPlotInfo(objectUniqueID);
+            if (plotInfo == null)
+                return false;
+
+            return _plotInfos.Remove(plotInfo);
+        }
+
+        public PlotInfo GetPlotInfo(string objectUniqueID)
+        {
+            return _plotInfos?.Find(info => info.objectUniqueID == objectUniqueID);
         }
     }
 }

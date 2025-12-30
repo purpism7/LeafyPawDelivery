@@ -5,6 +5,7 @@ using System.Linq;
 using System.IO;
 
 using Game;
+using System.ComponentModel;
 
 namespace Info
 {
@@ -162,6 +163,8 @@ namespace Info
             if (objectInfo == null)
                 return null;
 
+            var objectData = ObjectContainer.Instance?.GetData(id);
+
             var editObjectList = objectInfo.EditObjectList;
             if (editObjectList != null)
             {
@@ -172,6 +175,8 @@ namespace Info
 
                     if (editObject.Arrangement)
                         continue;
+
+                    GenerateObjectUniqueID(editObject, objectData);
 
                     return editObject;
                 }
@@ -187,21 +192,29 @@ namespace Info
                 UId = objectInfo.EditObjectList.Count + 1,
             };
 
-            var objectData = ObjectContainer.Instance?.GetData(id);
-            if (objectData != null &&
-                objectData.ObjectType != Type.ObjectType.None)
-            {
-                if (string.IsNullOrEmpty(addEditObject.uniqueID))
-                {
-                    addEditObject.uniqueID = GameUtils.GenerateUniqueID("O");
-                    Debug.Log(addEditObject.uniqueID);
-                }
-            }
-
+            GenerateObjectUniqueID(addEditObject, objectData);
+ 
             //Debug.Log("ObjectHolder GetAddEditObject = " + addEditObject.UId);
             objectInfo.EditObjectList.Add(addEditObject);
 
             return addEditObject;
+        }
+
+        private void GenerateObjectUniqueID(EditObject editObject, Data.Object objectData)
+        {
+            if (editObject == null)
+                return;
+
+            if (objectData == null)
+                return;
+
+            if (objectData.ObjectType == Type.ObjectType.None)
+                return;
+
+            if (string.IsNullOrEmpty(editObject.uniqueID))
+            {
+                editObject.uniqueID = GameUtils.GenerateUniqueID("O");
+            }
         }
 
         public void Remove(int id, int objectUId)

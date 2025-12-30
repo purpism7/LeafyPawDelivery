@@ -1,23 +1,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using Info;
+using System;
 
 namespace Game
 {
     public interface IGardenManager
     {
-    
+        
     }
 
-    public interface IPlotCreator
+    public interface IPlotListener
     {
-        void CreatePlot(string objectUniqueID);
+        bool OnPlotCreated(string objectUniqueID);
+        bool OnPlotRemoved(string objectUniqueID);
     }
-    
-    public class GardenManager : IGardenManager, IPlotCreator
+
+    public interface IPlotDataProvider
     {
-        // private Dictionary<int, List<PlotInfo>> _plotInfos = new Dictionary<int, List<PlotInfo>>();
+        DateTime? GetGrowthEndTime(string objectUniqueID);
+        bool IsGrowing(string objectUniqueID);
+    }
+
+    public class GardenManager : IGardenManager, IPlotListener, IPlotDataProvider
+    {
         private GardenHolder _gardenHolder = new();
         
         public GardenManager Initialize()
@@ -26,11 +35,75 @@ namespace Game
             
             return this;
         }
-        
-        void IPlotCreator.CreatePlot(string objectUniqueID)
+
+        public bool IsBloomed(string objectUniqueID)
         {
-            _gardenHolder?.CreatePlotInfo(objectUniqueID);
+            var plotInfo = _gardenHolder.GetPlotInfo(objectUniqueID);
+            if (plotInfo == null)
+                return false;
+
+            return plotInfo.growthEndTime.HasValue && DateTime.UtcNow >= plotInfo.growthEndTime.Value;
         }
+
+        public bool IsGrowing(string objectUniqueID)
+        {
+            var plotInfo = _gardenHolder.GetPlotInfo(objectUniqueID);
+            if (plotInfo == null)
+                return false;
+
+            return plotInfo.growthEndTime.HasValue && DateTime.UtcNow < plotInfo.growthEndTime.Value;
+        }
+
+        public bool IsEmpty(string objectUniqueID)
+        {
+            var plotInfo = _gardenHolder.GetPlotInfo(objectUniqueID);
+            if (plotInfo == null)
+                return false;
+
+            return plotInfo.cropID <= 0 || !plotInfo.growthEndTime.HasValue;
+        }
+
+
+        #region IPlotListener
+
+        bool IPlotListener.OnPlotCreated(string objectUniqueID)
+        {
+            if (_gardenHolder == null)
+                return false;
+
+            var cropDataContaeiner = CropDataContainer.Instance;
+            if (cropDataContaeiner == null ||
+                cropDataContaeiner.Datas == null)
+                return false;
+
+            var randomCropID = UnityEngine.Random.Range(1, cropDataContaeiner.Datas.Length + 1);
+            var cropData = cropDataContaeiner.GetData(randomCropID);
+            if (cropData == null)
+                return false;
+
+            return _gardenHolder.TryAddPlotInfo(objectUniqueID, cropData.Id, cropData.GrowthTimeSeconds);
+        }
+
+        bool IPlotListener.OnPlotRemoved(string objectUniqueID)
+        {
+            if (_gardenHolder == null)
+                return false;
+
+            return _gardenHolder.TryRemovePlotInfo(objectUniqueID);
+        }
+
+        #endregion
+
+        #region IPlotDataProvider
+        DateTime? IPlotDataProvider.GetGrowthEndTime(string objectUniqueID)
+        {
+            var plotInfo = _gardenHolder.GetPlotInfo(objectUniqueID);
+            if (plotInfo == null)
+                return null;
+
+            return plotInfo.growthEndTime;
+        }
+        #endregion
     }
 }
 

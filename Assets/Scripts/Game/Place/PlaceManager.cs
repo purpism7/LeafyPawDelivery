@@ -32,7 +32,7 @@ namespace Game
         private GameData.Place placeData = null;
 
         private List<Place> _placeList = new List<Place>();
-        private IPlotCreator _plotCreator = null;
+        private GardenManager _gardenManager = null;
 
         public Place ActivityPlace { get; private set; } = null;
         public IPlace ActivityIPlace { get { return ActivityPlace; } }
@@ -49,9 +49,9 @@ namespace Game
             return this;
         }
 
-        public PlaceManager Initialize(IPlotCreator plotCreator)
+        public PlaceManager Initialize(GardenManager gardenManger)
         {
-            _plotCreator = plotCreator;
+            _gardenManager = gardenManger;
             
             Event = new();
             Event?.RemoveAllListeners();
@@ -86,7 +86,7 @@ namespace Game
                       {
                           Id = data.placeId,
                           onBGM = Info.Setting.Get.OnBGM,
-                      }.WithPlotCreator(_plotCreator))
+                      }.WithGardenManager(_gardenManager))
                   .Create();
 
                 _placeList?.Add(ActivityPlace);

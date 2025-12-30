@@ -42,11 +42,11 @@ namespace Game
         {
             public int Id = 0;
             public bool onBGM = true;
-            public IPlotCreator PlotCreator { get; private set; } = null;
+            public GardenManager GardenManager { get; private set; } = null;
 
-            public Data WithPlotCreator(IPlotCreator plotCreator)
+            public Data WithGardenManager(GardenManager gardenManager)
             {
-                PlotCreator = plotCreator;
+                GardenManager = gardenManager;
                 return this;
             }
         }
@@ -283,7 +283,7 @@ namespace Game
                 ObjectUId = uId,
                 Pos = pos,
             }.WithObjectUniqueID(uniqueID)
-                .WithObjectType(objectType);
+             .WithObjectType(objectType);
             
             var addObject = CreateObject(objData, objectType);
             addObject?.SetSpawned(true);
@@ -299,6 +299,9 @@ namespace Game
             if (objectType == ObjectType.Garden)
             {
                 var gardenPlot = CreateObject<Game.GardenPlot>(objectData);
+                gardenPlot?.SetPlotListener(_data.GardenManager);
+                gardenPlot?.SetPlotDataProvider(_data.GardenManager);
+
                 obj = gardenPlot;
             }
             else
@@ -467,7 +470,7 @@ namespace Game
                         ObjectUId = editObject.UId,
                         Pos = editObject.Pos,
                     }.WithObjectUniqueID(editObject.uniqueID)
-                        .WithObjectType(objectData.ObjectType);
+                     .WithObjectType(objectData.ObjectType);
 
                     Game.Object resObject = null;
                     foreach (var obj in _objectList)
