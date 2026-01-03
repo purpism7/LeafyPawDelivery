@@ -110,7 +110,7 @@ namespace UI.Component
 
             GameUtils.SetActive(unLockImg, false);
 
-            SetDescTMP();
+            SetCount();
             SetElementIconImg();
             SetButtonState();
             SetOpenConditionData();
@@ -131,13 +131,9 @@ namespace UI.Component
             var localName = GameUtils.GetName(_data.EElement, _data.Id, Games.Data.Const.AnimalBaseSkinId);
             SetNameTMP(localName);
 
-            ActivateOpenConditionList();
+            SetCount();
 
-            if (_data != null)
-            {
-                // GameUtils.SetActive(specialObjectRectTm, _data.IsSpecialObject);
-                //GameUtils.SetActive(openConditionRootRectTm, !_data.IsSpecialObject);
-            }
+            ActivateOpenConditionList();
         }
 
         public override void Deactivate()
@@ -163,7 +159,7 @@ namespace UI.Component
             nameTMP?.SetText(name);
         }
 
-        protected abstract void SetDescTMP();
+        protected abstract void SetCount();
 
         public bool Obtain(Game.Type.EElement eElement, int id)
         {
@@ -371,7 +367,7 @@ namespace UI.Component
                 {
                     openCondition?.Activate();
                 });
-
+            
             AnimUnlock();
         }
 

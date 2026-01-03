@@ -18,6 +18,7 @@ namespace Game
 
         void CreateDropItem(DropItem.Data dropItemData);
         void AllPickUpDropItem(System.Func<Vector3, Vector3> func);
+        // void SetWorldUIActive(bool isActive);
         
         Collider2D Collider { get; }
     }
@@ -86,9 +87,8 @@ namespace Game
             base.Initialize(data);
 
             _initialize = true;
-
             _dropItemList?.Clear();
-
+            
             Info.Setting.Event?.AddListener(OnChangedSetting);
 
             Deactivate();
@@ -122,6 +122,11 @@ namespace Game
             if(!_initialize)
             {
                 Boom();
+            }
+            else
+            {
+                // Debug.Log("here");
+                SetWorldUIActive(false);
             }
 
             SetState(IPlaceState.EType.Active);
@@ -514,6 +519,7 @@ namespace Game
             _placeEventCtr?.Start();
 
             itemRootTm.SetActive(true);
+            SetWorldUIActive(true);
         }
 
         public void Bust()
@@ -523,11 +529,33 @@ namespace Game
             _placeEventCtr?.End();
 
             itemRootTm.SetActive(false);
+            SetWorldUIActive(false);
         }
 
         private void SetState(IPlaceState.EType state)
         {
             _state = state;
+        }
+        
+        private void SetWorldUIActive(bool isActive)
+        {
+            var objectList = _objectList;
+            if (objectList == null)
+                return;
+            
+            foreach (var obj in objectList)
+            {
+                if(obj == null)
+                    continue;
+                
+                if(!obj.IsActivate)
+                    continue;
+
+                if (obj is IGardenPlot gardenPlot)
+                {
+                    gardenPlot.SetWorldUIActive(isActive);
+                }
+            }
         }
 
         #region IPlace

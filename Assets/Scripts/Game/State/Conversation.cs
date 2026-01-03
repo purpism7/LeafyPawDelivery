@@ -35,11 +35,12 @@ namespace Game.State
             var animalId = conversationAnimal.Id;
 
             SetAlpha(0.2f, animalId);
-            
-            var position = conversationAnimal.transform.position;
+
+            var targetTr = conversationAnimal.transform;
+            // var position = conversationAnimal.transform.position;
             
             UIManager.Instance?.DeactivateAnim();
-            MainGameManager.Instance?.IGameCameraCtr.ZoomIn(position,
+            MainGameManager.Instance?.IGameCameraCtr.ZoomIn(targetTr,
                 () =>
                 {
                     StartConversationAsync(animalId).Forget();

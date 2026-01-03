@@ -11,9 +11,12 @@ namespace Game
 {
     public interface IGardenPlot
     {
-        void SetWaterUIActivate(bool activate);
         void SetPlotListener(IPlotListener plotListener);
         void SetPlotDataProvider(IPlotDataProvider plotDataProvider);
+
+        bool IsBloomed { get; }
+
+        void SetWorldUIActive(bool isActive);
     }
     
     public class GardenPlot : Object, IGardenPlot,
@@ -22,7 +25,7 @@ namespace Game
         [SerializeField] private SpriteRenderer cropSpriteRenderer = null;
         
         private WaterWorldUI _waterWorldUI = null;
-        private ISowSeeds _sowSeeds = null;
+        private SowSeeds _sowSeeds = null;
 
         private IPlotListener _plotListener = null;
         private IPlotDataProvider _plotDataProvider = null;
@@ -72,6 +75,7 @@ namespace Game
 
             if (cropSpriteRenderer != null)
             {
+                order -= 50;
                 cropSpriteRenderer.sortingOrder = order;
             }
         }
@@ -128,13 +132,16 @@ namespace Game
                 return;
 
             if (_waterWorldUI != null)
+            {
+                _waterWorldUI?.SetZOrder(ZOrder);
                 return;
+            }
 
             var data = new UI.WorldUI.WaterWorldUI.Data();
-
             data.WithListener(this)
                 .WithTargetTm(transform)
-                .WithOffset(new Vector2(0, 120f));
+                .WithOffset(new Vector2(0, 120f))
+                .WithZOrder(ZOrder);
 
             _waterWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.WaterWorldUI, UI.WorldUI.WaterWorldUI.Data>()
                 .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
@@ -148,18 +155,31 @@ namespace Game
                 return;
 
             if (_sowSeeds != null)
+            {
+                _sowSeeds?.SetZOrder(ZOrder);
                 return;
+            }
 
             var data = new UI.WorldUI.SowSeeds.Data();
-
             data.WithTargetTm(transform)
-                .WithOffset(new Vector2(0, 90f));
+                .WithOffset(new Vector2(0, 90f))
+                .WithZOrder(ZOrder);
 
             _sowSeeds = new GameSystem.ComponentCreator<UI.WorldUI.SowSeeds, UI.WorldUI.SowSeeds.Data>()
                 .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
                 .SetData(data)
                 .Create();
             _sowSeeds?.Activate();
+            
+            
+        }
+
+        private float ZOrder
+        {
+            get
+            {
+                return transform.position.z;
+            }
         }
 
         private async UniTask UpdateRemainingGrowthTimeAsync(CancellationToken ct)
@@ -186,18 +206,7 @@ namespace Game
                 await UniTask.Delay(500, cancellationToken: ct);
             }
         }
-
-        private bool IsBloomed
-        {
-            get
-            {
-                if (_plotDataProvider == null)
-                    return false;
-
-                return _plotDataProvider.IsBloomed(_data?.ObjectUniqueID);
-            }
-        }
-
+        
         private bool IsGrowing
         {
             get
@@ -210,19 +219,6 @@ namespace Game
         }
 
         #region IGardenPlot
-        void IGardenPlot.SetWaterUIActivate(bool activate)
-        {
-            if (_data.ObjectType != Type.ObjectType.Garden)
-                return;
-
-            EnsureWaterWorldUI();
-
-            if (activate)
-                _waterWorldUI?.Activate();
-            else
-                _waterWorldUI?.Deactivate();
-        }
-
         public void SetPlotListener(IPlotListener plotListener)
         {
             _plotListener = plotListener;
@@ -232,7 +228,36 @@ namespace Game
         {
             _plotDataProvider = plotDataProvider;
         }
+        
+        public bool IsBloomed
+        {
+            get
+            {
+                if (_plotDataProvider == null)
+                    return false;
 
+                return _plotDataProvider.IsBloomed(_data?.ObjectUniqueID);
+            }
+        }
+        
+        void IGardenPlot.SetWorldUIActive(bool activate)
+        {
+            if (_data.ObjectType != Type.ObjectType.Garden)
+                return;
+
+            EnsureWaterWorldUI();
+
+            if (activate)
+            {
+                _waterWorldUI?.Activate();
+                _sowSeeds?.Activate();
+            }
+            else
+            {
+                _waterWorldUI?.Deactivate();
+                _sowSeeds?.Deactivate();
+            }
+        }
         #endregion
 
         #region WaterWorldUI.IListener

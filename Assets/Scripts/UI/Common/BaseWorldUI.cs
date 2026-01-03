@@ -8,7 +8,7 @@ namespace UI.Common
 {
     public interface IWorldUI
     {
-
+        void SetZOrder(float zOrder);
     }
 
     public abstract class BaseWorldUI<T> : Base<T>, IWorldUI where T : BaseWorldUI<T>.Data
@@ -17,6 +17,7 @@ namespace UI.Common
         {
             public Transform TargetTm { get; private set; } = null;
             public Vector2 Offset { get; private set; } = Vector2.zero;
+            public float ZOrder { get; private set; } = 0;
 
             public Data WithTargetTm(Transform targetTm)
             {
@@ -27,6 +28,12 @@ namespace UI.Common
             public Data WithOffset(Vector2 offset)
             {
                 Offset = offset;
+                return this;
+            }
+
+            public Data WithZOrder(float zOrder)
+            {
+                ZOrder = zOrder;
                 return this;
             }
         }
@@ -48,6 +55,8 @@ namespace UI.Common
             _uiCamera = gameCameraCtr?.UICamera;
             _worldUIRootRectTr = UIManager.Instance?.WorldUIRootRectTr;
             //_mainCamera = CameraManager.Instance.MainCamera;//Camera.main;
+
+            // transform.position.z = _data.ZOrder;
         }
 
         protected void ChainLateUpdate()
@@ -60,7 +69,10 @@ namespace UI.Common
                 pos = GetScreenPos(_data.TargetTm.position);
 
             if (pos != null)
+            {
                 rootRectTr.anchoredPosition = pos.Value;
+                rootRectTr.anchoredPosition3D = new Vector3(pos.Value.x, pos.Value.y, _data.ZOrder);
+            }
         }
 
         protected Vector3? GetScreenPos(Vector3 targetPos)
@@ -89,6 +101,11 @@ namespace UI.Common
             //localPos.y += _param.Offset.y;
 
             return localPos;
+        }
+
+        public void SetZOrder(float zOrder)
+        {
+            _data?.WithZOrder(zOrder);
         }
     }
 }

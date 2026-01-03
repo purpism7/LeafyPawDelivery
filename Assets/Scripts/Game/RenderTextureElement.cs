@@ -114,7 +114,7 @@ namespace Game
                 var obj = new GameSystem.ObjectCreator<Game.Object, Game.Object.Data>()
                     .SetId(_data.Id)
                     .SetRootTm(targetRootTm)
-                    .SetIsEdit(false)
+                    // .SetIsEdit(false)
                     .Create();
 
                 _cachedElementDic.TryAdd(_data, obj);

@@ -378,19 +378,18 @@ namespace UI
                     count = objectInfo?.Count ?? 0;
 
                 var data = new ObjectArrangementCell.Data
-                {
-                    IListener = this,
-                    Id = objectId,
-                    EElement = Game.Type.EElement.Object,
-                    Owned = objectInfo != null,
-                    Lock = !objectOpenConditionContainer.CheckReq(objectId),
-                    isTutorial = isTutorial,
-                    IsSpecialObject = objectData.Grade == Type.EObjectGrade.Special,
+                    {
+                        IListener = this,
+                        Id = objectId,
+                        EElement = Game.Type.EElement.Object,
+                        Owned = objectInfo != null,
+                        Lock = !objectOpenConditionContainer.CheckReq(objectId),
+                        isTutorial = isTutorial,
+                        IsSpecialObject = objectData.Grade == Type.EObjectGrade.Special,
 
-                    index = index,
-                }.WithObjectType(objectData.ObjectType)
-                .WithCount(count)
-                .WithRemainCount(objectMgr.GetRemainCount(objectId));
+                        index = index,
+                    }.WithObjectType(objectData.ObjectType)
+                    .WithCount(count);
 
                 AddObjectArrangementCell(data, objectData.Grade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, objectData.Order);
             }

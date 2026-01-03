@@ -24,6 +24,8 @@ namespace UI.Component
         public override void Activate()
         {
             base.Activate();
+            
+            SetCount();
         }
 
         protected override void SetNameTMP(string name)
@@ -33,7 +35,7 @@ namespace UI.Component
             openNameTMP?.SetText(name);
         }
 
-        protected override void SetDescTMP()
+        protected override void SetCount()
         {
             if (_data == null)
                 return;

@@ -20,7 +20,6 @@ namespace UI.Component
         {
             public ObjectType ObjectType { get; private set; } = ObjectType.None;
             public int Count { get; private set; } = 0;
-            public int RemainCount { get; private set; } = 0;
 
             public Data WithObjectType(ObjectType type)
             {
@@ -33,13 +32,6 @@ namespace UI.Component
                 Count = count;
                 return this;
             }
-
-            public Data WithRemainCount(int count)
-            {
-                RemainCount = count;
-                return this;
-            }
-
         }
 
         [Header("")]
@@ -104,12 +96,18 @@ namespace UI.Component
             openNameTMP?.SetText(name);
         }
 
-        protected override void SetDescTMP()
+        protected override void SetCount()
         {
             if (_data == null)
                 return;
             
-            descTMP?.SetText($"{_data.RemainCount}/{_data.Count}");
+            var objectMgr = MainGameManager.Get<Game.ObjectManager>();
+            if (objectMgr == null)
+                return;
+            
+            int remainCount = objectMgr.GetRemainCount(_data.Id);
+            
+            descTMP?.SetText($"{remainCount}/{_data.Count}");
         }
 
         private void SetHiddenOpenDescTMP()

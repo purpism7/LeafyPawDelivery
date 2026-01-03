@@ -73,6 +73,12 @@ namespace Game.Element.State
             if (elementData.EElement != Game.Type.EElement.Object)
                 return;
 
+            if (_gameBaseElement is IGardenPlot gardenPlot)
+            {
+                if (!gardenPlot.IsBloomed)
+                    return;
+            }
+
             var touchPosition = touch.position;
             if ((DateTime.UtcNow - _touchDateTime).TotalSeconds < TouchInterval)
                 return;

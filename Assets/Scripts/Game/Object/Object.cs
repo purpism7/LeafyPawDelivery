@@ -55,14 +55,12 @@ namespace Game
 
         #region Inspector
         [SerializeField]
-        private int sortingOrderOffset = 0;
+        protected int sortingOrderOffset = 0;
         [SerializeField]
         private Transform hiddenRootTm = null;
         [SerializeField] 
         private Transform arrivalPointTm = null;
         #endregion
-
-        
 
         public int ObjectUId { get { return _data != null ? _data.ObjectUId : 0; } }
 

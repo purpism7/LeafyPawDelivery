@@ -38,7 +38,7 @@ namespace GameSystem
 
         void SetPositionUICamera(bool origin, Vector3 pos);
 
-        void ZoomIn(Vector3 targetPos, System.Action endAction);
+        void ZoomIn(Transform targetTr, System.Action endAction);
         void ZoomOut(System.Action endAction);
 
         void SetConfinerBoundingShape(Collider2D collider);
@@ -50,6 +50,7 @@ namespace GameSystem
 
         [SerializeField] private Camera uiCamera = null;
         [SerializeField] private CinemachineCamera cinemachineCamera = null;
+        [SerializeField] private CinemachineCamera follwCamera = null;
         // [SerializeField] private Transform targetTr = null;
         
         public Camera GameCamera = null;
@@ -115,6 +116,8 @@ namespace GameSystem
                 _smoothTime = 0.01f;
             }
 
+            follwCamera?.SetActive(false);
+            
             SetSize();
         }
 
@@ -409,33 +412,40 @@ namespace GameSystem
             }
         }
 
-        void IGameCameraCtr.ZoomIn(Vector3 targetPos, System.Action endAction)
+        void IGameCameraCtr.ZoomIn(Transform targetTr, System.Action endAction)
         {
             if (GameCamera == null)
+                return;
+
+            if (!targetTr)
                 return;
             
             StopUpdate = true;
 
-            ZoomInAsync(targetPos, endAction).Forget();
+            ZoomInAsync(targetTr, endAction).Forget();
         }
 
-        private async UniTask ZoomInAsync(Vector3 targetPos, System.Action endAction)
+        private async UniTask ZoomInAsync(Transform targetTr, System.Action endAction)
         {
+            if (follwCamera == null)
+                return;
+            
+            cinemachineCamera?.SetActive(false);
+            follwCamera.SetActive(true);
+            
+            follwCamera.Follow = targetTr;
+            
             // 1. 시네머신의 자동 추적을 일시 중단 (매우 중요)
             // var originalFollow = cinemachineCamera.Follow;
-            // cinemachineCamera.Follow = null;
+            // cinemachineCamera.Follow = targetTr;
+    
+            // 2. 초기값 설정
+            float startSize = follwCamera.Lens.OrthographicSize;
+            float targetSize = 500f; // 매우 큰 값인데, 2D라면 보통 5 전후를 사용하니 확인 필요!
 
-            // 2. 가상 카메라의 현재 위치와 렌즈 크기 저장
-            Vector3 startPos = cinemachineCamera.transform.position;
-            // 시네머신 가상 카메라의 Z값은 보통 메인 카메라와 다르므로 현재 Z값을 유지하는 게 안전함
-            float currentZ = cinemachineCamera.transform.position.z;
-            Vector3 resTargetPos = new Vector3(targetPos.x, targetPos.y, currentZ);
-
-            float startSize = cinemachineCamera.Lens.OrthographicSize;
-            float targetSize = 500f;
-
+            // 이동 거리에 따른 동적 시간 계산
             float distance = Mathf.Abs(startSize - targetSize);
-            float duration = Mathf.Max(distance * 0.002f, 0.1f);
+            float duration = Mathf.Max(distance * 0.002f, 0.5f); // 너무 빠르지 않게 최소값 조정
             float timeElapsed = 0f;
 
             // 3. 부드러운 이동 루프
@@ -445,22 +455,22 @@ namespace GameSystem
                 float t = Mathf.Clamp01(timeElapsed / duration);
                 float curveT = Mathf.SmoothStep(0f, 1f, t);
 
-                // 메인 카메라가 아니라 '가상 카메라'를 직접 조작
-                cinemachineCamera.Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, curveT);
-                cinemachineCamera.transform.position = Vector3.Lerp(startPos, resTargetPos, curveT);
+                // [중요] Lens 크기 변경
+                follwCamera.Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, curveT);
 
+                // [핵심] transform.position을 직접 수정하는 대신, 
+                // 시네머신이 Target을 즉시 따라가도록 유도하거나 
+                // Body의 Binding Mode가 가로막는 경우 내부 처리를 거쳐야 함.
+                // 만약 '부드러운 추적'이 켜져 있다면(Damping), 이 코드만으로도 targetTr로 빨려 들어갑니다.
+        
                 await UniTask.Yield(PlayerLoopTiming.Update);
             }
 
-            // 4. 최종 위치 강제 고정
-            cinemachineCamera.Lens.OrthographicSize = targetSize;
-            cinemachineCamera.transform.position = resTargetPos;
-
-            // 5. [중요] 이동이 끝난 후 시네머신이 다시 튀지 않게 설정
-            // 만약 다시 원래 대상을 따라가야 한다면, 대상의 위치를 resTargetPos로 옮겨두거나
-            // 아래와 같이 Follow를 다시 연결하기 전에 가상 카메라의 내부 상태를 강제로 업데이트해야 합니다.
-
-            // cinemachineCamera.Follow = originalFollow; // 다시 추적이 필요할 때만 주석 해제
+            // 4. 최종 수치 고정
+            follwCamera.Lens.OrthographicSize = targetSize;
+            // 5. 시네머신 내부 데이터 강제 업데이트 (끊김/튐 방지)
+            // 이 메서드를 호출해야 스크립트로 바꾼 값이 시네머신 시스템에 즉시 반영됩니다.
+            // cinemachineCamera.InternalUpdate();
 
             await UniTask.Yield();
             endAction?.Invoke();
@@ -470,16 +480,19 @@ namespace GameSystem
         {
             float duration = 0.5f;
             
-            StopUpdate = false;
-            
             Sequence sequence = DOTween.Sequence()
                 .SetAutoKill(false)
                 .Append(DOTween.To(() => cinemachineCamera.Lens.OrthographicSize, size => cinemachineCamera.Lens.OrthographicSize = size, DefaultOrthographicSize, duration).SetEase(Ease.Linear))
                 .OnComplete(() =>
                 {
+                    follwCamera.SetActive(false);
+                    cinemachineCamera?.SetActive(true);
+                    
                     endAction?.Invoke();
                     
                     SetSize();
+                    
+                    StopUpdate = false;
                 });
             sequence.Restart();
         }

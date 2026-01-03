@@ -211,7 +211,7 @@ namespace Info
             if (objectData.ObjectType == Type.ObjectType.None)
                 return;
 
-            if (string.IsNullOrEmpty(editObject.uniqueID))
+            // if (string.IsNullOrEmpty(editObject.uniqueID))
             {
                 editObject.uniqueID = GameUtils.GenerateUniqueID("O");
             }

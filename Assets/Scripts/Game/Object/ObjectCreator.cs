@@ -9,7 +9,7 @@ namespace GameSystem
         private V _data = null;
         private int _id = 0;
         private Transform _rootTm = null;
-        private bool _isEdit = true;
+        // private bool _isEdit = true;
 
         public ObjectCreator<T, V> SetData(V vData)
         {
@@ -32,12 +32,12 @@ namespace GameSystem
             return this;
         }
 
-        public ObjectCreator<T, V> SetIsEdit(bool isEdit)
-        {
-            _isEdit = isEdit;
-
-            return this;
-        }
+        // public ObjectCreator<T, V> SetIsEdit(bool isEdit)
+        // {
+        //     _isEdit = isEdit;
+        //
+        //     return this;
+        // }
         
         // public ObjectCreator<T, V> SetPlotData(PlotData )
         // {

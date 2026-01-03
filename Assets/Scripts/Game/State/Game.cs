@@ -16,21 +16,11 @@ namespace Game.State
             //    return;
 
             //activityPlace.Boom();
-            SetWaterUIActivate(MainGameManager.Get<PlaceManager>()?.ActivityIPlace);
         }
 
         public override async UniTask InitializeAsync(MainGameManager mainGameMgr)
         {
-            //bool endActivateAnim = false;
-            //UIManager.Instance?.ActivateAnim(() =>
-            //{
-            //    endActivateAnim = true;
-            //});
-
-            //await UniTask.WaitUntil(() => endActivateAnim);
-            
-           
-
+          
             await UniTask.CompletedTask;
         }
 
@@ -51,27 +41,6 @@ namespace Game.State
 
                 activityPlace.Boom();
             });
-        }
-        
-        private void SetWaterUIActivate(IPlace place)
-        {
-            var objectList = place?.ObjectList;
-            if (objectList == null)
-                return;
-            
-            foreach (var obj in objectList)
-            {
-                if(obj == null)
-                    continue;
-                
-                if(!obj.IsActivate)
-                    continue;
-
-                if (obj is IGardenPlot gardenPlot)
-                {
-                    gardenPlot.SetWaterUIActivate(true);
-                }
-            }
         }
     }
 }

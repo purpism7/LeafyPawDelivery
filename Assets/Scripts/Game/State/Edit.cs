@@ -17,36 +17,13 @@ namespace Game.State
             var activityPlace = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
             if (activityPlace == null)
                 return;
-
-            SetWaterUIDeactivate(activityPlace);
-
+            
             activityPlace.Bust();
         }
 
         public override void End()
         {
             _gameBaseElement = null;
-        }
-
-        private void SetWaterUIDeactivate(IPlace place)
-        {
-            var objectList = place?.ObjectList;
-            if (objectList == null)
-                return;
-            
-            foreach (var obj in objectList)
-            {
-                if(obj == null)
-                    continue;
-                
-                if(!obj.IsActivate)
-                    continue;
-
-                if (obj is IGardenPlot gardenPlot)
-                {
-                    gardenPlot.SetWaterUIActivate(false);
-                }
-            }
         }
 
         public void SetEditElement(BaseElement gameBaseElement)

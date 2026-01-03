@@ -67,6 +67,7 @@ namespace Data
 
                     case Game.Type.EObjectGrade.Special:
                         return 50;
+                            
 
                     default:
                         return 0;
