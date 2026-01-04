@@ -119,6 +119,7 @@ namespace GameSystem
             follwCamera?.SetActive(false);
             
             SetSize();
+            SetStopUpdate(true);
         }
 
         #region IFixedUpdater
@@ -420,8 +421,7 @@ namespace GameSystem
             if (!targetTr)
                 return;
             
-            StopUpdate = true;
-
+            SetStopUpdate(true);
             ZoomInAsync(targetTr, endAction).Forget();
         }
 
@@ -429,20 +429,20 @@ namespace GameSystem
         {
             if (follwCamera == null)
                 return;
+
+            if (cinemachineCamera == null)
+                return;
             
-            cinemachineCamera?.SetActive(false);
+            cinemachineCamera.SetActive(false);
             follwCamera.SetActive(true);
-            
+
+            follwCamera.Lens.OrthographicSize = DefaultOrthographicSize;
             follwCamera.Follow = targetTr;
-            
-            // 1. 시네머신의 자동 추적을 일시 중단 (매우 중요)
-            // var originalFollow = cinemachineCamera.Follow;
-            // cinemachineCamera.Follow = targetTr;
-    
+  
             // 2. 초기값 설정
             float startSize = follwCamera.Lens.OrthographicSize;
             float targetSize = 500f; // 매우 큰 값인데, 2D라면 보통 5 전후를 사용하니 확인 필요!
-
+            
             // 이동 거리에 따른 동적 시간 계산
             float distance = Mathf.Abs(startSize - targetSize);
             float duration = Mathf.Max(distance * 0.002f, 0.5f); // 너무 빠르지 않게 최소값 조정
@@ -458,19 +458,12 @@ namespace GameSystem
                 // [중요] Lens 크기 변경
                 follwCamera.Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, curveT);
 
-                // [핵심] transform.position을 직접 수정하는 대신, 
-                // 시네머신이 Target을 즉시 따라가도록 유도하거나 
-                // Body의 Binding Mode가 가로막는 경우 내부 처리를 거쳐야 함.
-                // 만약 '부드러운 추적'이 켜져 있다면(Damping), 이 코드만으로도 targetTr로 빨려 들어갑니다.
-        
                 await UniTask.Yield(PlayerLoopTiming.Update);
             }
 
             // 4. 최종 수치 고정
             follwCamera.Lens.OrthographicSize = targetSize;
-            // 5. 시네머신 내부 데이터 강제 업데이트 (끊김/튐 방지)
-            // 이 메서드를 호출해야 스크립트로 바꾼 값이 시네머신 시스템에 즉시 반영됩니다.
-            // cinemachineCamera.InternalUpdate();
+            cinemachineCamera.Lens.OrthographicSize = targetSize;
 
             await UniTask.Yield();
             endAction?.Invoke();
@@ -478,23 +471,48 @@ namespace GameSystem
 
         void IGameCameraCtr.ZoomOut(System.Action endAction)
         {
-            float duration = 0.5f;
+            if (cinemachineCamera == null)
+                return;
+
+            ZoomOutAsync(endAction).Forget();
+            // float duration = 1f;
+            // DOTween.To(() => cinemachineCamera.Lens.OrthographicSize,
+            //         size => cinemachineCamera.Lens.OrthographicSize = size, DefaultOrthographicSize, duration)
+            //     .SetEase(Ease.Linear);
+            //
+            // await UniTask.Delay(TimeSpan.FromSeconds(duration));
             
-            Sequence sequence = DOTween.Sequence()
-                .SetAutoKill(false)
-                .Append(DOTween.To(() => cinemachineCamera.Lens.OrthographicSize, size => cinemachineCamera.Lens.OrthographicSize = size, DefaultOrthographicSize, duration).SetEase(Ease.Linear))
-                .OnComplete(() =>
-                {
-                    follwCamera.SetActive(false);
-                    cinemachineCamera?.SetActive(true);
+            // Sequence sequence = DOTween.Sequence()
+            //     .SetAutoKill(false)
+            //     .Append()
+            //     .OnComplete(() =>
+            //     {
+            //         
+            //     });
+            // sequence.Restart();
+        }
+
+        private async UniTask ZoomOutAsync(System.Action endAction)
+        {
+            if (cinemachineCamera == null)
+                return;
+            
+            follwCamera.SetActive(false);
+            cinemachineCamera?.SetActive(true);
+            
+            follwCamera.Follow = null;
+            
+            float duration = 1f;
+            
+            await DOTween.To(() => cinemachineCamera.Lens.OrthographicSize,
+                    size => cinemachineCamera.Lens.OrthographicSize = size, DefaultOrthographicSize, duration)
+                .SetEase(Ease.Linear);
+            await UniTask.Delay(TimeSpan.FromSeconds(duration));
+            
+            endAction?.Invoke();
                     
-                    endAction?.Invoke();
-                    
-                    SetSize();
-                    
-                    StopUpdate = false;
-                });
-            sequence.Restart();
+            SetSize();
+            SetStopUpdate(false);
         }
 
         void IGameCameraCtr.SetConfinerBoundingShape(Collider2D collider)
