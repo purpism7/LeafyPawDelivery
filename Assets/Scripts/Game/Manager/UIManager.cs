@@ -18,6 +18,8 @@ namespace Game
         [SerializeField]
         private RectTransform uiRootRectTm = null;
         [SerializeField] private RectTransform worldUIRootRectTr = null;
+        [SerializeField] private RectTransform worldUIGameRootRectTr = null;
+        [SerializeField] private RectTransform worldUISpeechBubbleRootRectTr = null;
 
         public UI.Top Top;
         public UI.Bottom Bottom = null;
@@ -29,6 +31,8 @@ namespace Game
         private Type.EScreenSaverType _eScreenSaverType = Type.EScreenSaverType.None;
 
         public RectTransform WorldUIRootRectTr => worldUIRootRectTr;
+        public RectTransform WorldUIGameRootRectTr => worldUIGameRootRectTr;
+        public RectTransform WorldUISpeechBubbleRootRectTr => worldUISpeechBubbleRootRectTr;
 
         public RectTransform UIRootRectTm
         {

@@ -35,13 +35,17 @@ namespace Game.Creature
             if (_speechBubble != null)
                 return;
 
+            var data = new UI.Component.SpeechBubble.Data
+            {
+                IListener = this,
+                PosY = _animalHeigh,
+            };
+            data.WithTargetTm(speechBubbleRootRectTm)
+                .WithOffset(new Vector2(0, 20f));
+            
             _speechBubble = new GameSystem.ComponentCreator<UI.Component.SpeechBubble, UI.Component.SpeechBubble.Data>()
-                .SetData(new UI.Component.SpeechBubble.Data()
-                {
-                    IListener = this,
-                    PosY = _animalHeigh,
-                })
-                .SetRootRectTm(speechBubbleRootRectTm)
+                .SetData(data)
+                .SetRootRectTm(UIManager.Instance?.WorldUISpeechBubbleRootRectTr)
                 .Create();
 
             ChangeLayersRecursively(_speechBubble.transform, LayerMask.NameToLayer("Game"));
@@ -101,7 +105,12 @@ namespace Game.Creature
 
         public void DeactivateSpeechBubble()
         {
+            if (_speechBubble == null)
+                return;
+            
             _speechBubble?.Deactivate();
+            ObjectPooler.Instance?.Return(_speechBubble?.Poolable);
+            _speechBubble = null;
         }
 
         #endregion

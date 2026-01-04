@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
@@ -144,9 +145,12 @@ namespace Game
                 .WithZOrder(ZOrder);
 
             _waterWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.WaterWorldUI, UI.WorldUI.WaterWorldUI.Data>()
-                .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
+                .SetRootRectTm(UIManager.Instance?.WorldUIGameRootRectTr)
                 .SetData(data)
                 .Create();
+            _waterWorldUI?.Activate();
+
+            Sort();
         }
 
         private void EnsureSowSeeds()
@@ -165,28 +169,46 @@ namespace Game
                 .WithOffset(new Vector2(0, 90f))
                 .WithZOrder(ZOrder);
 
+            var rootRectTr = UIManager.Instance?.WorldUIGameRootRectTr;
+            
             _sowSeeds = new GameSystem.ComponentCreator<UI.WorldUI.SowSeeds, UI.WorldUI.SowSeeds.Data>()
-                .SetRootRectTm(UIManager.Instance?.WorldUIRootRectTr)
+                .SetRootRectTm(rootRectTr)
                 .SetData(data)
                 .Create();
             _sowSeeds?.Activate();
             
+            Sort();
+        }
+
+        private void Sort()
+        {
+            var rootRectTr = UIManager.Instance?.WorldUIGameRootRectTr;
             
+            // spriteRenderer
+            var sortedChildren = rootRectTr.Cast<RectTransform>()
+                .OrderByDescending(rectTr => rectTr.anchoredPosition3D.z)
+                .ToList();
+
+            // 정렬된 순서대로 하이어라키 인덱스 재설정
+            for (int i = 0; i < sortedChildren.Count; i++)
+            {
+                sortedChildren[i]?.transform.SetSiblingIndex(i);
+            }
         }
 
         private float ZOrder
         {
             get
             {
-                return transform.position.z;
+                // float y = transform.position.y;
+                // float zOrder = y > 0 ? -y : Mathf.Abs(y);
+                
+                return SortingOrder;
             }
         }
 
         private async UniTask UpdateRemainingGrowthTimeAsync(CancellationToken ct)
         {
-            if (ct == null)
-                return;
-
             var growthEndTime = _plotDataProvider?.GetGrowthEndTime(_data?.ObjectUniqueID);
             if (growthEndTime == null)
                 return;
@@ -199,6 +221,7 @@ namespace Game
 
                 if (remaining.TotalSeconds <= 0)
                 {
+                    SowSeedsDeactivate();
                     BloomCrop();
                     break;
                 }

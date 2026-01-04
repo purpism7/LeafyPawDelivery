@@ -71,6 +71,9 @@ namespace UI.Common
             if (pos != null)
             {
                 rootRectTr.anchoredPosition = pos.Value;
+                
+                // float y = pos.Value.y;
+                // float z = 5000f - y;
                 rootRectTr.anchoredPosition3D = new Vector3(pos.Value.x, pos.Value.y, _data.ZOrder);
             }
         }

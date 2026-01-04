@@ -4,14 +4,16 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 
 using TMPro;
-
 using Cysharp.Threading.Tasks;
+
+using GameSystem;
+using UI.Common;
 
 namespace UI.Component
 {
-    public class SpeechBubble : Base<SpeechBubble.Data>
+    public class SpeechBubble : BaseWorldUI<SpeechBubble.Data>
     {
-        public class Data : BaseData
+        public class Data : BaseWorldUI<SpeechBubble.Data>.Data
         {
             //public string Sentence = string.Empty;
             public IListener IListener = null;
@@ -36,7 +38,14 @@ namespace UI.Component
 
         private bool _isPlaying = false;
         private Queue<Constituent> _constituentQueue = new Queue<Constituent>();
+        
+        public IPoolable Poolable => this;
 
+        private void LateUpdate()
+        {
+            ChainLateUpdate();
+        }
+        
         public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(base.CoInitialize(data));

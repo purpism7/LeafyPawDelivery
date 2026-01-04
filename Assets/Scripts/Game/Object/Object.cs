@@ -309,7 +309,7 @@ namespace Game
             }
         }
 
-        int IObject.SortingOrder
+        public int SortingOrder
         {
             get
             {
