@@ -8,10 +8,11 @@ namespace UI.Common
 {
     public interface IWorldUI
     {
-        bool IsActivate { get; }
+        // bool IsActivate { get; }
         Transform Transform { get; }
-
-        void SetZOrder(float zOrder);
+        float Order { get; }
+        
+        void SetOrder(float order);
     }
 
     public abstract class BaseWorldUI<T> : Base<T>, IWorldUI where T : BaseWorldUI<T>.Data
@@ -20,7 +21,7 @@ namespace UI.Common
         {
             public Transform TargetTm { get; private set; } = null;
             public Vector2 Offset { get; private set; } = Vector2.zero;
-            public float ZOrder { get; private set; } = 0;
+            public float Order { get; private set; } = 0;
 
             public Data WithTargetTm(Transform targetTm)
             {
@@ -34,9 +35,9 @@ namespace UI.Common
                 return this;
             }
 
-            public Data WithZOrder(float zOrder)
+            public Data WithOrder(float order)
             {
-                ZOrder = zOrder;
+                Order = order;
                 return this;
             }
         }
@@ -49,6 +50,8 @@ namespace UI.Common
         private RectTransform _worldUIRootRectTr = null;
 
         public Transform Transform => transform;
+
+        public float Order { get; private set; } = 0;
 
         public override void Initialize(T data)
         {
@@ -63,7 +66,7 @@ namespace UI.Common
             _worldUIRootRectTr = UIManager.Instance?.WorldUIRootRectTr;
             //_mainCamera = CameraManager.Instance.MainCamera;//Camera.main;
 
-            SetZPosition();
+            SetOrder(data?.Order ?? 0);
         }
 
         protected void ChainLateUpdate()
@@ -83,8 +86,6 @@ namespace UI.Common
                 // float z = 5000f - y;
                 //rootRectTr.anchoredPosition3D = new Vector3(pos.Value.x, pos.Value.y);
             }
-
-            SetZPosition();
         }
 
         protected Vector3? GetScreenPos(Vector3 targetPos)
@@ -114,24 +115,11 @@ namespace UI.Common
 
             return localPos;
         }
-
-        private void SetZPosition()
+        
+        public void SetOrder(float order)
         {
-            if (_data == null)
-                return;
-
-            if (_rectTr)
-            {
-                var anchoredPosition = _rectTr.anchoredPosition3D;
-                anchoredPosition.z = _data.ZOrder;
-
-                _rectTr.anchoredPosition3D = anchoredPosition;
-            }
-        }
-
-        public void SetZOrder(float zOrder)
-        {
-            _data?.WithZOrder(zOrder);
+            Order = order;
+            // _data?.WithZOrder(zOrder);
         }
     }
 }

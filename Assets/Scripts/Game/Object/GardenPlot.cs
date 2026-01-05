@@ -143,8 +143,8 @@ namespace Game
             var data = new UI.WorldUI.WaterWorldUI.Data();
             data.WithListener(this)
                 .WithTargetTm(transform)
-                .WithOffset(new Vector2(0, 120f))
-                .WithZOrder(ZOrder);
+                .WithOffset(new Vector2(0, 80f))
+                .WithOrder(SortingOrder);
 
             _waterWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.WaterWorldUI, UI.WorldUI.WaterWorldUI.Data>()
                 .SetRootRectTm(UIManager.Instance?.WorldUIGameRootRectTr)
@@ -163,8 +163,8 @@ namespace Game
 
             var data = new UI.WorldUI.SowSeeds.Data();
             data.WithTargetTm(transform)
-                .WithOffset(new Vector2(0, 90f))
-                .WithZOrder(ZOrder);
+                .WithOffset(new Vector2(0, 80f))
+                .WithOrder(SortingOrder);
 
             var rootRectTr = UIManager.Instance?.WorldUIGameRootRectTr;
             
@@ -174,19 +174,7 @@ namespace Game
                 .Create();
             _sowSeeds?.Activate();
         }
-
-
-        private float ZOrder
-        {
-            get
-            {
-                // float y = transform.position.y;
-                // float zOrder = y > 0 ? -y : Mathf.Abs(y);
-                
-                return SortingOrder;
-            }
-        }
-
+        
         private async UniTask UpdateRemainingGrowthTimeAsync(CancellationToken ct)
         {
             var growthEndTime = _plotDataProvider?.GetGrowthEndTime(_data?.ObjectUniqueID);
@@ -252,10 +240,10 @@ namespace Game
 
             if (activate)
             {
-                _waterWorldUI?.SetZOrder(ZOrder);
+                _waterWorldUI?.SetOrder(SortingOrder);
                 _waterWorldUI?.Activate();
 
-                _sowSeeds?.SetZOrder(ZOrder);
+                _sowSeeds?.SetOrder(SortingOrder);
                 _sowSeeds?.Activate();
             }
             else

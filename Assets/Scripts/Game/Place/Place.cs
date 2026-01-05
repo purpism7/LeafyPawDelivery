@@ -68,6 +68,7 @@ namespace Game
         private List<Game.Creature.Animal> _animalList = new();
         private List<Game.DropItem> _dropItemList = new();
         private bool _initialize = false;
+        private List<IWorldUI> _sortList = new List<IWorldUI>();
 
         private PlaceEventController _placeEventCtr = null;
         private IPlaceState.EType _state = IPlaceState.EType.None;
@@ -559,29 +560,35 @@ namespace Game
             }
 
             if (isActive)
-                SortWorldUI();
+                SortDepth();
         }
 
-        private void SortWorldUI()
+        private void SortDepth()
         {
             var rootRectTr = UIManager.Instance?.WorldUIGameRootRectTr;
-
-            // spriteRenderer
-            var sortedChildren = rootRectTr.Cast<RectTransform>()
-                .OrderBy(rectTr => rectTr.anchoredPosition3D.z)
-                .ToList();
-
-            // ���ĵ� ������� ���̾��Ű �ε��� �缳��
-            for (int i = 0; i < sortedChildren?.Count; i++)
+            if (!rootRectTr)
+                return;
+            
+            _sortList.Clear();
+    
+            // 1. 대상 수집
+            for (int i = 0; i < rootRectTr.childCount; i++)
             {
-                IWorldUI worldUI = sortedChildren[i]?.GetComponent<IWorldUI>();
-                if (worldUI == null)
-                    continue;
+                var worldUI = rootRectTr.GetChild(i).GetComponent<IWorldUI>();
+                if (worldUI != null)
+                {
+                    _sortList.Add(worldUI);
+                }
+            }
 
-                if (!worldUI.IsActivate)
-                    continue;
+            // 2. Z값 기준으로 정렬 (멀리 있는 것을 먼저 그리려면 OrderByDescending)
+            // 일반적으로 Z가 클수록 멀다면 -> OrderByDescending 사용 시 먼 것이 앞 인덱스(뒤쪽 렌더링)
+            _sortList.Sort((a, b) => b.Order.CompareTo(a.Order));
 
-                worldUI.Transform.SetSiblingIndex(i);
+            // 3. 인덱스 적용
+            for (int i = 0; i < _sortList.Count; i++)
+            {
+                _sortList[i].Transform.SetSiblingIndex(i);
             }
         }
 
