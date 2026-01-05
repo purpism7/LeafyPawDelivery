@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using GameSystem;
 using Info;
 using UI.WorldUI;
+using UI.Common;
 
 namespace Game
 {
@@ -43,10 +44,12 @@ namespace Game
             base.Activate();
 
             cropSpriteRenderer?.SetActive(false);
+            spriteRenderer?.SetActive(true);
 
             if (IsBloomed)
             {
-                BloomCrop();
+                if(BloomCrop())
+                    spriteRenderer?.SetActive(false);
             }
             else if (IsGrowing)
             {
@@ -101,27 +104,29 @@ namespace Game
             _sowSeeds = null;
         }
 
-        private void BloomCrop()
+        private bool BloomCrop()
         {
             if (cropSpriteRenderer == null)
-                return;
+                return false;
             
             int cropId = _plotDataProvider?.GetCropID(_data?.ObjectUniqueID) ?? 0;
             if (cropId <= 0)
-                return;
+                return false;
 
             var cropData = CropDataContainer.Instance?.GetData(cropId);
             if (cropData == null)
-                return;
+                return false;
 
             var sprite = ResourceManager.Instance?.AtalsLoader?.GetCropSprite(cropData.ImgName);
             if (sprite == null)
-                return;
+                return false;
 
             cropSpriteRenderer.sprite = sprite;
             cropSpriteRenderer?.SetActive(true);
 
             isWind = true;
+
+            return true;
         }
 
         private void EnsureWaterWorldUI()
@@ -133,10 +138,7 @@ namespace Game
                 return;
 
             if (_waterWorldUI != null)
-            {
-                _waterWorldUI?.SetZOrder(ZOrder);
                 return;
-            }
 
             var data = new UI.WorldUI.WaterWorldUI.Data();
             data.WithListener(this)
@@ -149,8 +151,6 @@ namespace Game
                 .SetData(data)
                 .Create();
             _waterWorldUI?.Activate();
-
-            Sort();
         }
 
         private void EnsureSowSeeds()
@@ -159,10 +159,7 @@ namespace Game
                 return;
 
             if (_sowSeeds != null)
-            {
-                _sowSeeds?.SetZOrder(ZOrder);
                 return;
-            }
 
             var data = new UI.WorldUI.SowSeeds.Data();
             data.WithTargetTm(transform)
@@ -176,25 +173,8 @@ namespace Game
                 .SetData(data)
                 .Create();
             _sowSeeds?.Activate();
-            
-            Sort();
         }
 
-        private void Sort()
-        {
-            var rootRectTr = UIManager.Instance?.WorldUIGameRootRectTr;
-            
-            // spriteRenderer
-            var sortedChildren = rootRectTr.Cast<RectTransform>()
-                .OrderByDescending(rectTr => rectTr.anchoredPosition3D.z)
-                .ToList();
-
-            // 정렬된 순서대로 하이어라키 인덱스 재설정
-            for (int i = 0; i < sortedChildren.Count; i++)
-            {
-                sortedChildren[i]?.transform.SetSiblingIndex(i);
-            }
-        }
 
         private float ZOrder
         {
@@ -272,7 +252,10 @@ namespace Game
 
             if (activate)
             {
+                _waterWorldUI?.SetZOrder(ZOrder);
                 _waterWorldUI?.Activate();
+
+                _sowSeeds?.SetZOrder(ZOrder);
                 _sowSeeds?.Activate();
             }
             else

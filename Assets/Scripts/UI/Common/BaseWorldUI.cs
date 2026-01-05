@@ -8,6 +8,9 @@ namespace UI.Common
 {
     public interface IWorldUI
     {
+        bool IsActivate { get; }
+        Transform Transform { get; }
+
         void SetZOrder(float zOrder);
     }
 
@@ -39,15 +42,19 @@ namespace UI.Common
         }
 
         [SerializeField] protected RectTransform rootRectTr = null;
-        
+
+        private RectTransform _rectTr = null;
         private Camera _mainCamera = null;
         private Camera _uiCamera = null;
         private RectTransform _worldUIRootRectTr = null;
-        //private IWorldUIManager _worldUIManager => UIManager.Instance;
+
+        public Transform Transform => transform;
 
         public override void Initialize(T data)
         {
             base.Initialize(data);
+
+            _rectTr = GetComponent<RectTransform>();
 
             var gameCameraCtr = MainGameManager.Instance?.IGameCameraCtr;
             
@@ -56,7 +63,7 @@ namespace UI.Common
             _worldUIRootRectTr = UIManager.Instance?.WorldUIRootRectTr;
             //_mainCamera = CameraManager.Instance.MainCamera;//Camera.main;
 
-            // transform.position.z = _data.ZOrder;
+            SetZPosition();
         }
 
         protected void ChainLateUpdate()
@@ -74,8 +81,10 @@ namespace UI.Common
                 
                 // float y = pos.Value.y;
                 // float z = 5000f - y;
-                rootRectTr.anchoredPosition3D = new Vector3(pos.Value.x, pos.Value.y, _data.ZOrder);
+                //rootRectTr.anchoredPosition3D = new Vector3(pos.Value.x, pos.Value.y);
             }
+
+            SetZPosition();
         }
 
         protected Vector3? GetScreenPos(Vector3 targetPos)
@@ -104,6 +113,20 @@ namespace UI.Common
             //localPos.y += _param.Offset.y;
 
             return localPos;
+        }
+
+        private void SetZPosition()
+        {
+            if (_data == null)
+                return;
+
+            if (_rectTr)
+            {
+                var anchoredPosition = _rectTr.anchoredPosition3D;
+                anchoredPosition.z = _data.ZOrder;
+
+                _rectTr.anchoredPosition3D = anchoredPosition;
+            }
         }
 
         public void SetZOrder(float zOrder)

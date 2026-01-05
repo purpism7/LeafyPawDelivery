@@ -1,9 +1,10 @@
+using Cysharp.Threading.Tasks;
+using GameSystem;
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+using System.Linq;
+using UI.Common;
 using UnityEngine;
-
-using GameSystem;
 using static Game.Type;
 
 namespace Game
@@ -555,6 +556,32 @@ namespace Game
                 {
                     gardenPlot.SetWorldUIActive(isActive);
                 }
+            }
+
+            if (isActive)
+                SortWorldUI();
+        }
+
+        private void SortWorldUI()
+        {
+            var rootRectTr = UIManager.Instance?.WorldUIGameRootRectTr;
+
+            // spriteRenderer
+            var sortedChildren = rootRectTr.Cast<RectTransform>()
+                .OrderBy(rectTr => rectTr.anchoredPosition3D.z)
+                .ToList();
+
+            // 정렬된 순서대로 하이어라키 인덱스 재설정
+            for (int i = 0; i < sortedChildren?.Count; i++)
+            {
+                IWorldUI worldUI = sortedChildren[i]?.GetComponent<IWorldUI>();
+                if (worldUI == null)
+                    continue;
+
+                if (!worldUI.IsActivate)
+                    continue;
+
+                worldUI.Transform.SetSiblingIndex(i);
             }
         }
 
