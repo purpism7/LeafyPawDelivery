@@ -51,6 +51,17 @@ namespace UI.Component
             SetAnimalOpenCondition();
         }
 
+        private OpenConditionData AnimalOpenConditionData
+        {
+            get
+            {
+                var openConditionContainer = AnimalOpenConditionContainer.Instance;
+                var openCondition = openConditionContainer?.GetData(_data.Id);
+
+                return openCondition;
+            }
+        }
+
         private void SetAnimalOpenCondition()
         {
             if (_data == null)
@@ -59,14 +70,15 @@ namespace UI.Component
             if (_data.Owned)
                 return;
 
-            var animalOpenConditionContainer = AnimalOpenConditionContainer.Instance;
-            var openCondition = animalOpenConditionContainer?.GetData(_data.Id);
+            var openCondition = AnimalOpenConditionData;
             if (openCondition == null)
                 return;
 
             var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return;
+
+            var animalOpenConditionContainer = AnimalOpenConditionContainer.Instance;
 
             AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => animalOpenConditionContainer.CheckAnimalCurrency(_data.Id));
             AddOpenCondition(placeData.ObjectSpriteName, openCondition.ObjectCurrency, () => animalOpenConditionContainer.CheckObjectCurrency(_data.Id));
@@ -100,6 +112,21 @@ namespace UI.Component
         }
         #endregion
 
+        protected override bool CreateObtainPopup(int animalCurrency, int objectCurrency)
+        {
+            bool isPossibleObtain = isPossibleObtain = AnimalOpenConditionContainer.Instance.Check(_data.Id);
+            if (!isPossibleObtain)
+                return false;
+
+            if(base.CreateObtainPopup(animalCurrency, objectCurrency))
+            {
+                MainGameManager.Get<Game.AnimalManager>()?.Add(_data.Id);
+                return true;
+            }
+
+            return false;
+        }
+
         protected override void OnClickObtain()
         {
             if (_data == null)
@@ -110,7 +137,9 @@ namespace UI.Component
 
             EffectPlayer.Get?.Play(EffectPlayer.AudioClipData.EType.TouchButton);
 
-            CreateObtainPopup();
+            var openCondition = AnimalOpenConditionData;
+            if (openCondition != null)
+                CreateObtainPopup(openCondition.AnimalCurrency, openCondition.ObjectCurrency);           
         }
     }
 }

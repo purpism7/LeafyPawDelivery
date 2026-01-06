@@ -127,7 +127,7 @@ namespace Game
         }
 
         // Add 되는 Animal 의 Skin Id Base 인 1 일 것.
-        public override void Add(int id)
+        public void Add(int id)
         {
             if (_animalHolder == null)
                 return;

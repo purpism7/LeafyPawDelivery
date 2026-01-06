@@ -9,7 +9,7 @@ namespace Info
     public class Object
     {
         public int Id = 0;
-        public int Count = 0;
+        //public int Count = 0;
 
         public List<EditObject> EditObjectList = new();
     }

@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using Game.Creature;
 using Game.Element.State;
-using UnityEngine;
-
-using UnityEngine.Localization.Settings;
-
-using GameSystem;
 using GameData;
+using GameSystem;
+using System.Collections;
+using System.Collections.Generic;
 using UI;
+using UI.Common;
+using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace Game
 {
@@ -29,6 +28,7 @@ namespace Game
         private RectTransform screenSaverRectTm = null;
 
         private Type.EScreenSaverType _eScreenSaverType = Type.EScreenSaverType.None;
+        private List<IWorldUI> _sortedWorldUIList = new List<IWorldUI>();
 
         public RectTransform WorldUIRootRectTr => worldUIRootRectTr;
         public RectTransform WorldUIGameRootRectTr => worldUIGameRootRectTr;
@@ -158,6 +158,37 @@ namespace Game
 
                     break;
                 }
+            }
+        }
+
+        public void SortWorldUIDepth()
+        {
+            if (!worldUIGameRootRectTr)
+                return;
+
+            if (_sortedWorldUIList == null)
+                return;
+
+            _sortedWorldUIList.Clear();
+
+            // 1. 대상 수집
+            for (int i = 0; i < worldUIGameRootRectTr.childCount; i++)
+            {
+                var worldUI = worldUIGameRootRectTr.GetChild(i).GetComponent<IWorldUI>();
+                if (worldUI != null)
+                {
+                    _sortedWorldUIList.Add(worldUI);
+                }
+            }
+
+            // 2. Z값 기준으로 정렬 (멀리 있는 것을 먼저 그리려면 OrderByDescending)
+            // 일반적으로 Z가 클수록 멀다면 -> OrderByDescending 사용 시 먼 것이 앞 인덱스(뒤쪽 렌더링)
+            _sortedWorldUIList.Sort((a, b) => a.Order.CompareTo(b.Order));
+
+            // 3. 인덱스 적용
+            for (int i = 0; i < _sortedWorldUIList.Count; i++)
+            {
+                _sortedWorldUIList[i].Transform.SetSiblingIndex(i);
             }
         }
 

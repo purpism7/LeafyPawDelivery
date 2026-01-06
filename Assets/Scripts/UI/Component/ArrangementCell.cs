@@ -409,43 +409,19 @@ namespace UI.Component
         }
         #endregion
 
-        protected void CreateObtainPopup()
+        protected virtual bool CreateObtainPopup(int animalCurrency, int objectCurrency)
         {
             if (_data == null)
-                return;
+                return false;
 
-            bool isPossibleObtain = false;
-            OpenConditionData openConditionData = null;
-
-            switch (_data.EElement)
-            {
-                case Game.Type.EElement.Animal:
-                    {
-                        isPossibleObtain = AnimalOpenConditionContainer.Instance.Check(_data.Id);
-                        openConditionData = AnimalOpenConditionContainer.Instance.GetData(_data.Id);
-
-                        break;
-                    }
-
-                case Game.Type.EElement.Object:
-                    {
-                        isPossibleObtain = ObjectOpenConditionContainer.Instance.Check(_data.Id);
-                        openConditionData = ObjectOpenConditionContainer.Instance.GetData(_data.Id);
-
-                        break;
-                    }
-            }
-
-            if (openConditionData == null)
-                return;
-
-            if (!isPossibleObtain)
-                return;
+            //if (openConditionData == null)
+            //    return;
 
             var mainGameMgr = MainGameManager.Instance;
+            var userManager = UserManager.Instance;
 
-            int animalCurrency = openConditionData.AnimalCurrency;
-            int objectCurrency = openConditionData.ObjectCurrency;
+            //int animalCurrency = openConditionData.AnimalCurrency;
+            //int objectCurrency = openConditionData.ObjectCurrency;
 
             var currency = new Info.User.Currency
             {
@@ -454,8 +430,8 @@ namespace UI.Component
                 Object = -objectCurrency,
             };
 
-            if (!UserManager.Instance.CheckCurrency(currency))
-                return;
+            if (!userManager.CheckCurrency(currency))
+                return false;
 
             Sequencer.EnqueueTask(
                 () =>
@@ -474,7 +450,7 @@ namespace UI.Component
                         .SetReInitialize(true)
                         .Create();
 
-                    Info.UserManager.Instance?.SetCurrency(currency);
+                    userManager?.SetCurrency(currency);
 
                     ITop iTop = Game.UIManager.Instance?.Top;
                     iTop?.SetCurrency();
@@ -485,7 +461,7 @@ namespace UI.Component
                     return obtain;
                 });
 
-            mainGameMgr?.Add(_data.EElement, _data.Id);
+            return true;
         }
 
         #region IArrangementCell

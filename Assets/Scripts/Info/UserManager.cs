@@ -176,6 +176,14 @@ namespace Info
             Save();
         }
 
+        public void SetGardenPlotInfos(List<PlotInfo> plotInfos)
+        {
+            if (_user == null)
+                return;
+
+            _user.PlotInfos = plotInfos?.ToArray();
+        }
+
         private void Save()
         {
             if (_user == null)
@@ -378,6 +386,25 @@ namespace Info
                 return true;
             
             return _user.CheckOpen(eContent);
+        }
+
+        public int GardenPlotCount
+        {
+            get
+            {
+                if (_user == null)
+                    return 0;
+
+                return _user.GardenPlotCount;
+            }
+        }
+
+        public void AddGardenPlot()
+        {
+            if (_user == null)
+                return;
+
+            ++_user.GardenPlotCount;
         }
     }
 }

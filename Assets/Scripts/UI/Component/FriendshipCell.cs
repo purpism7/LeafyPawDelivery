@@ -1,17 +1,16 @@
+using Cysharp.Threading.Tasks;
+using Game;
+using GameSystem;
+using Info;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
-using Cysharp.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.UI;
-
+using System.Security.Cryptography;
 using TMPro;
-
-using Game;
-using GameSystem;
-using Info;
+using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
 
 namespace  UI.Component
 {
@@ -354,8 +353,8 @@ namespace  UI.Component
 
                             return popup;
                         });
-                    
-                    MainGameManager.Instance?.Add(Type.EElement.Object, animalData.InteractionId);
+
+                        MainGameManager.Get<Game.ObjectManager>()?.Add(animalData.InteractionId);
                     
                     break;
                 }

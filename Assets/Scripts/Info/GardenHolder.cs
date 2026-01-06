@@ -34,6 +34,12 @@ namespace Info
 
                 _plotInfos = JsonConvert.DeserializeObject<List<PlotInfo>>(jsonStr);
             }
+
+            var user = Info.UserManager.Instance?.User;
+            if (user != null)
+            {
+                _plotInfos = user.PlotInfos?.ToList();
+            }
         }
         
         private void SaveInfo()
@@ -64,6 +70,8 @@ namespace Info
             _plotInfos?.Add(plotInfo);
 
             SaveInfo();
+
+            UserManager.Instance?.SetGardenPlotInfos(_plotInfos);
 
             return true;
         }

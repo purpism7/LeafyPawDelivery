@@ -87,7 +87,7 @@ namespace Game
             rigidbody2D.useFullKinematicContacts = true;
         }
 
-        public void SetColor(Color color)
+        public virtual void SetColor(Color color)
         {
             if (spriteRenderer == null)
                 return;
@@ -95,12 +95,12 @@ namespace Game
             spriteRenderer.color = color;
         }
 
-        private void SetOutline(float width)
+        protected virtual void SetOutline(float width)
         {
             if (spriteRenderer == null)
                 return;
 
-            spriteRenderer?.material?.SetFloat("_Thickness", width);
+            spriteRenderer.material?.SetFloat("_Thickness", width);
         }
 
         protected void SetMaterial(Game.Type.EMaterial eMaterial, SpriteRenderer sprRenderer)

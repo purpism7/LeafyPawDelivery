@@ -435,19 +435,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         _startEditAction = action;
     }
 
-    // 동물 / 꾸미기 획득.
-    public void Add(Game.Type.EElement EElement, int id)
-    {
-        if (EElement == Game.Type.EElement.Animal)
-        {
-            Get<Game.AnimalManager>()?.Add(id);            
-        }
-        else if (EElement == Game.Type.EElement.Object)
-        {
-            Get<Game.ObjectManager>()?.Add(id);
-        }
-    }
-
     public bool CheckExist(Game.Type.EElement EElement, int id)
     {
         if (EElement == Game.Type.EElement.Animal)

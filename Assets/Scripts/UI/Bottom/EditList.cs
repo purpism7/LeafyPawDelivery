@@ -8,10 +8,11 @@ using Cysharp.Threading.Tasks;
 
 using Game;
 using UI.Component;
+using Info;
 
 namespace UI
 {
-    public class EditList : Base<EditList.Data>, EditAnimal.IListener, EditObject.IListener, ResetArrange.IListener
+    public class EditList : Base<EditList.Data>, EditAnimal.IListener, UI.Component.EditObject.IListener, ResetArrange.IListener
     {
         public class Data : BaseData
         {
@@ -177,8 +178,9 @@ namespace UI
                 int count = objectData.Count;
                 if(objectData.ObjectType == Type.ObjectType.Garden)
                 {
-                    var objectInfo = objectMgr.GetObjectInfoById(objectId);
-                    count = objectInfo?.Count ?? 0;
+                    //var objectInfo = objectMgr.GetObjectInfoById(objectId);
+                    //count = objectInfo?.Count ?? 0;
+                    count = UserManager.Instance.User.GardenPlotCount;
                 }
 
                 var data = new Component.EditObject.Data()
@@ -356,7 +358,7 @@ namespace UI
                 int count = objectData.Count;
                 if(objectData.ObjectType == Type.ObjectType.Garden)
                 {
-                    count = objectInfo?.Count ?? 0;
+                    count = UserManager.Instance.User.GardenPlotCount;
                 }
 
                 var data = new Component.EditObject.Data()
@@ -450,7 +452,7 @@ namespace UI
         #endregion
 
         #region EditObject.IListener
-        void EditObject.IListener.Select(int id)
+        void UI.Component.EditObject.IListener.Select(int id)
         {
             if (_editing)
                 return;

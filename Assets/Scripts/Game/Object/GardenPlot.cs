@@ -84,6 +84,24 @@ namespace Game
             }
         }
 
+        public override void SetColor(Color color)
+        {
+            base.SetColor(color);
+
+            if (cropSpriteRenderer == null)
+                return;
+
+            cropSpriteRenderer.color = color;
+        }
+
+        protected override void SetOutline(float width)
+        {
+            if (cropSpriteRenderer == null)
+                return;
+
+            cropSpriteRenderer.material?.SetFloat("_Thickness", width);
+        }
+
         private void WaterWorldUIDeactivate()
         {
             if (_waterWorldUI == null)
@@ -140,17 +158,21 @@ namespace Game
             if (_waterWorldUI != null)
                 return;
 
+            var uiManager = UIManager.Instance;
+
             var data = new UI.WorldUI.WaterWorldUI.Data();
             data.WithListener(this)
                 .WithTargetTm(transform)
-                .WithOffset(new Vector2(0, 80f))
+                .WithOffset(new Vector2(0, 90f))
                 .WithOrder(SortingOrder);
 
             _waterWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.WaterWorldUI, UI.WorldUI.WaterWorldUI.Data>()
-                .SetRootRectTm(UIManager.Instance?.WorldUIGameRootRectTr)
+                .SetRootRectTm(uiManager?.WorldUIGameRootRectTr)
                 .SetData(data)
                 .Create();
             _waterWorldUI?.Activate();
+
+            uiManager?.SortWorldUIDepth();
         }
 
         private void EnsureSowSeeds()
@@ -161,18 +183,20 @@ namespace Game
             if (_sowSeeds != null)
                 return;
 
+            var uiManager = UIManager.Instance;
+
             var data = new UI.WorldUI.SowSeeds.Data();
             data.WithTargetTm(transform)
-                .WithOffset(new Vector2(0, 80f))
+                .WithOffset(new Vector2(0, 75f))
                 .WithOrder(SortingOrder);
 
-            var rootRectTr = UIManager.Instance?.WorldUIGameRootRectTr;
-            
             _sowSeeds = new GameSystem.ComponentCreator<UI.WorldUI.SowSeeds, UI.WorldUI.SowSeeds.Data>()
-                .SetRootRectTm(rootRectTr)
+                .SetRootRectTm(uiManager?.WorldUIGameRootRectTr)
                 .SetData(data)
                 .Create();
             _sowSeeds?.Activate();
+
+            uiManager?.SortWorldUIDepth();
         }
         
         private async UniTask UpdateRemainingGrowthTimeAsync(CancellationToken ct)

@@ -371,6 +371,10 @@ MonoBehaviour:
     m_Localized: Game Tip
     m_Metadata:
       m_Items: []
+  - m_Id: 319335010192826368
+    m_Localized: Not enough Currency!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

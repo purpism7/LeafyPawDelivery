@@ -341,6 +341,10 @@ MonoBehaviour:
     m_Key: game_tip
     m_Metadata:
       m_Items: []
+  - m_Id: 319335010192826368
+    m_Key: not_enough_currency
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

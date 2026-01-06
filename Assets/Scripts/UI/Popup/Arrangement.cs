@@ -1,16 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using System.Linq;
-
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Game;
 using GameSystem;
+using Info;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UI.Component;
 using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -366,16 +366,14 @@ namespace UI
                         continue;
                 }
 
-                // int resIndex = -1;
-                // // if(data.EGrade != Type.EObjectGrade.Special)
-                //     resIndex = GetIndex(objectMgr, data.Id, ref _objectIndex);
-
                 var objectId = objectData.Id;
                 int index = orderDataList.FindIndex(obj => obj.Id == objectId);
                 
                 int count = objectData.Count;
                 if (objectData.ObjectType == Type.ObjectType.Garden)
-                    count = objectInfo?.Count ?? 0;
+                {
+                    count = UserManager.Instance.GardenPlotCount;
+                }
 
                 var data = new ObjectArrangementCell.Data
                     {

@@ -40,6 +40,8 @@ namespace Info
                 totalPlaceCount = iPlaceData.TotalPlaceCount;
             }
 
+            var user = UserManager.Instance?.User;
+
             for (int i = 1; i <= totalPlaceCount; ++i)
             {
                 List<Info.Object> objectInfoList = null;
@@ -53,7 +55,7 @@ namespace Info
                     objectInfoList = JsonHelper.FromJson<Info.Object>(jsonStr)?.ToList();
                 }
 
-                var objectIdList = Info.UserManager.Instance?.User?.ObjectIdList;
+                var objectIdList = user?.ObjectIdList;
                 if (objectIdList == null)
                     continue;
 
@@ -113,12 +115,12 @@ namespace Info
             if (objectData == null)
                 return false;
 
-            //int objectUId = PlayerPrefs.GetInt(ObjectUIdKey, 0);
-            //editObject.UId = ++objectUId;
-
             AddObject(objectData.PlaceId, id);
 
-            //PlayerPrefs.SetInt(ObjectUIdKey, objectUId);
+            if(objectData.ObjectType == Type.ObjectType.Garden)
+            {
+                UserManager.Instance.AddGardenPlot();
+            }
 
             SaveInfo(objectData.PlaceId);
 
@@ -140,10 +142,10 @@ namespace Info
                 {
                     objectInfoList.Add(objectInfo);
                 }
-                else
-                {
-                    findObjectInfo.Count += 1;
-                }
+                //else
+                //{
+                //    findObjectInfo.Count += 1; 
+                //}
             }
             else
             {
@@ -343,7 +345,9 @@ namespace Info
 
             int limitCount = objectData.Count;
             if (objectData.ObjectType == Type.ObjectType.Garden)
-                limitCount = objectInfo.Count;
+            {
+                limitCount = UserManager.Instance.GardenPlotCount;
+            }
 
             return limitCount - count;
         }

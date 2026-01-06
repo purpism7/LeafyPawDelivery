@@ -104,7 +104,7 @@ namespace Game
             }
         }
 
-        public override void Add(int id)
+        public void Add(int id)
         {
             if (_objectHolder == null)
                 return;

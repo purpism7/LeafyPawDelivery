@@ -1,15 +1,15 @@
+using Game;
+using Game.Event;
+using GameSystem;
+using Info;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
-
-using Game;
-using Game.Event;
-using GameSystem;
-
 using static Game.Type;
+using static UnityEditor.AddressableAssets.Build.Layout.BuildLayout;
 
 namespace UI.Component
 
@@ -47,14 +47,11 @@ namespace UI.Component
             {
                 animalCurrencyCost?.Activate();
                 objectCurrencyCost?.Activate();
-                // GameUtils.SetActive(openRootRectTm, false);
 
                 buyBtn?.SetActive(true);
 
-                //GameUtils.SetActive(openRootRectTm, false);
-
                 buyBtn?.onClick?.RemoveAllListeners();
-                //buyBtn?.onClick?.AddListener(OnClickBuy);
+                buyBtn?.onClick?.AddListener(OnClickBuy);
             }
             else
             {
@@ -62,8 +59,6 @@ namespace UI.Component
                 objectCurrencyCost?.Deactivate();
 
                 buyBtn?.SetActive(false);
-
-                //GameUtils.SetActive(openRootRectTm, true);
             }
                 
         }
@@ -84,8 +79,7 @@ namespace UI.Component
         {
             base.SetNameTMP(name);
 
-            var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
-            var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
+            var openCondition = ObjectOpenConditionData;
             if (openCondition != null)
             {
                 if (openCondition.eType == OpenConditionData.EType.Hidden ||
@@ -104,10 +98,17 @@ namespace UI.Component
             var objectMgr = MainGameManager.Get<Game.ObjectManager>();
             if (objectMgr == null)
                 return;
-            
+
+            int count = _data.Count;
             int remainCount = objectMgr.GetRemainCount(_data.Id);
-            
-            descTMP?.SetText($"{remainCount}/{_data.Count}");
+
+            var objectInfo = objectMgr.GetObjectInfoById(_data.Id);
+            if (_data.ObjectType == ObjectType.Garden)
+            {
+                count = UserManager.Instance.GardenPlotCount;
+            }
+
+            descTMP?.SetText($"{remainCount}/{count}");
         }
 
         private void SetHiddenOpenDescTMP()
@@ -166,8 +167,7 @@ namespace UI.Component
             if (_data.Owned)
                 return;
 
-            var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
-            var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
+            var openCondition = ObjectOpenConditionData;
             if (openCondition == null)
                 return;
 
@@ -197,6 +197,7 @@ namespace UI.Component
                         return;
                     }
             }
+            var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
 
             AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
             AddOpenCondition(placeData.ObjectSpriteName, openCondition.ObjectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
@@ -207,8 +208,7 @@ namespace UI.Component
             if (_data == null)
                 return;
 
-            var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
-            var openCondition = objectOpenConditionContainer?.GetData(_data.Id);
+            var openCondition = ObjectOpenConditionData;
             if (openCondition == null)
                 return;
 
@@ -216,17 +216,49 @@ namespace UI.Component
             if (placeData == null)
                 return;
 
-            var animalCurrency = Mathf.CeilToInt(openCondition.AnimalCurrency * _data.Count * 1.25f);
+            var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
+
+            var animalCurrency = RequiredAnimalCurrency;
             var openConditionData = CreateOpenConditionData(placeData.AnimalSpriteName, animalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
 
             animalCurrencyCost?.Initialize(openConditionData);
             animalCurrencyCost?.Activate();
 
-            var objectCurrency = Mathf.CeilToInt(openCondition.ObjectCurrency * _data.Count * 1.5f);
+            var objectCurrency = RequiredObjectCurrency;
             openConditionData = CreateOpenConditionData(placeData.ObjectSpriteName, objectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
 
             objectCurrencyCost?.Initialize(openConditionData);
             objectCurrencyCost?.Activate();
+        }
+
+        private int RequiredAnimalCurrency
+        {
+            get
+            {
+                if (_data == null)
+                    return 0;
+
+                var openCondition = ObjectOpenConditionData;
+                if (openCondition == null)
+                    return 0;
+
+                return Mathf.CeilToInt(openCondition.AnimalCurrency * _data.Count * 1.25f);
+            }
+        }
+
+        private int RequiredObjectCurrency
+        {
+            get
+            {
+                if (_data == null)
+                    return 0;
+
+                var openCondition = ObjectOpenConditionData;
+                if (openCondition == null)
+                    return 0;
+
+                return Mathf.CeilToInt(openCondition.ObjectCurrency * _data.Count * 1.5f);
+            }
         }
 
         #region Lock
@@ -265,6 +297,23 @@ namespace UI.Component
 
                 return openCondition;
             }
+        }
+
+        protected override bool CreateObtainPopup(int animalCurrency, int objectCurrency)
+        {
+            bool isPossibleObtain = ObjectOpenConditionContainer.Instance.Check(_data.Id);
+            if (!isPossibleObtain)
+                return false;
+
+            if(base.CreateObtainPopup(animalCurrency, objectCurrency))
+            {
+                MainGameManager.Get<Game.ObjectManager>()?.Add(_data.Id);
+                SetCount();
+
+                return true;
+            }
+
+            return false;
         }
 
         protected override void OnClickObtain()
@@ -309,7 +358,34 @@ namespace UI.Component
                 return;
             }
 
-            CreateObtainPopup();
+            var openConditionData = ObjectOpenConditionData;
+            if(openConditionData != null)
+                CreateObtainPopup(openConditionData.AnimalCurrency, openConditionData.ObjectCurrency);
+        }
+
+        private void OnClickBuy()
+        {
+            var mainGameMgr = MainGameManager.Instance;
+            var userManager = UserManager.Instance;
+
+            var currency = new Info.User.Currency
+            {
+                PlaceId = GameUtils.ActivityPlaceId,
+                Animal = -RequiredAnimalCurrency,
+                Object = -RequiredObjectCurrency,
+            };
+
+            if (!userManager.CheckCurrency(currency))
+            {
+                var localDesc = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "not_enough_currency", LocalizationSettings.SelectedLocale);
+                Game.Toast.Get?.Show(localDesc);
+
+                return;
+            }
+
+            var openConditionData = ObjectOpenConditionData;
+            if (openConditionData != null)
+                CreateObtainPopup(openConditionData.AnimalCurrency, openConditionData.ObjectCurrency);
         }
     }
 }

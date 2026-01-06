@@ -68,7 +68,6 @@ namespace Game
         private List<Game.Creature.Animal> _animalList = new();
         private List<Game.DropItem> _dropItemList = new();
         private bool _initialize = false;
-        private List<IWorldUI> _sortList = new List<IWorldUI>();
 
         private PlaceEventController _placeEventCtr = null;
         private IPlaceState.EType _state = IPlaceState.EType.None;
@@ -560,36 +559,7 @@ namespace Game
             }
 
             if (isActive)
-                SortDepth();
-        }
-
-        private void SortDepth()
-        {
-            var rootRectTr = UIManager.Instance?.WorldUIGameRootRectTr;
-            if (!rootRectTr)
-                return;
-            
-            _sortList.Clear();
-    
-            // 1. 대상 수집
-            for (int i = 0; i < rootRectTr.childCount; i++)
-            {
-                var worldUI = rootRectTr.GetChild(i).GetComponent<IWorldUI>();
-                if (worldUI != null)
-                {
-                    _sortList.Add(worldUI);
-                }
-            }
-
-            // 2. Z값 기준으로 정렬 (멀리 있는 것을 먼저 그리려면 OrderByDescending)
-            // 일반적으로 Z가 클수록 멀다면 -> OrderByDescending 사용 시 먼 것이 앞 인덱스(뒤쪽 렌더링)
-            _sortList.Sort((a, b) => b.Order.CompareTo(a.Order));
-
-            // 3. 인덱스 적용
-            for (int i = 0; i < _sortList.Count; i++)
-            {
-                _sortList[i].Transform.SetSiblingIndex(i);
-            }
+                UIManager.Instance?.SortWorldUIDepth();
         }
 
         #region IPlace

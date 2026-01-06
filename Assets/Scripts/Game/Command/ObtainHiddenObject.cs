@@ -56,7 +56,7 @@ namespace Game.Command
                     return obtain;
                 });
 
-            MainGameManager.Instance?.Add(_eElement, _id);
+            MainGameManager.Get<Game.ObjectManager>()?.Add(_id);
         }
     }
 }
