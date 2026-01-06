@@ -96,6 +96,8 @@ namespace Game
 
         protected override void SetOutline(float width)
         {
+            base.SetOutline(width);
+
             if (cropSpriteRenderer == null)
                 return;
 
