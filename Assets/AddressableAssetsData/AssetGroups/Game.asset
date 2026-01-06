@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Game
   m_EditorClassIdentifier: 
   m_GroupName: Game
-  m_Data:
-    m_SerializedData: []
   m_GUID: df6f93402dad44680aeeb14c3ed4d579
   m_SerializeEntries:
   - m_GUID: 33d2f15eb4a044e1c815df063661ce4a
-    m_Address: Assets/Prefabs/Game/Etc
+    m_Address: A3ssets/Prefabs/Game/Etc
     m_ReadOnly: 0
     m_SerializedLabels:
     - Game

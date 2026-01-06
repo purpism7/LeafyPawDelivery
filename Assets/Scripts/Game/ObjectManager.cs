@@ -53,7 +53,7 @@ namespace Game
 
         public bool CheckIsAll(int placeId)
         {
-            var objectDataList = ObjectContainer.Instance.GetDataListByPlaceId(placeId);
+            var objectDataList = ObjectContainer.Instance?.GetDataListByPlaceId(placeId);
             if (objectDataList == null)
                 return false;
 

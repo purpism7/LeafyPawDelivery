@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game;
 using UnityEngine;
 
 public class ObjectContainer : BaseContainer<ObjectContainer, Data.Object>
@@ -20,8 +21,11 @@ public class ObjectContainer : BaseContainer<ObjectContainer, Data.Object>
             if (data.Id <= 0)
                 continue;
 
-            if (data.PlaceId != placeId)
-                continue;
+            if (data.ObjectType != Type.ObjectType.Garden)
+            {
+                if (data.PlaceId != placeId)
+                    continue;
+            }
 
             dataList?.Add(data);
         }
