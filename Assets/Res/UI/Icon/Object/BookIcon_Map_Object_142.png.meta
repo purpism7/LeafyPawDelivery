@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1ea392d10216f4a2ba3fd1d600affb56
+guid: 9b530a09d57a74bb8a2ab2e98688ec91
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2833229551835366071
-    second: EditIcon_Map01_Soil_0
+      213: -3072909700208135976
+    second: BookIcon_Map01_Soil_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,17 +122,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EditIcon_Map01_Soil_0
+      name: BookIcon_Map01_Soil_0
       rect:
         serializedVersion: 2
-        x: 13
-        y: 21
-        width: 75
-        height: 58
+        x: 40
+        y: 88
+        width: 149
+        height: 114
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7b2494c2447a15720800000000000000
-      internalID: 2833229551835366071
+      spriteID: 8d0fd3c98e4da55d0800000000000000
+      internalID: -3072909700208135976
       vertices: []
       indices: 
       edges: []
@@ -161,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      EditIcon_Map01_Soil_0: 2833229551835366071
+      BookIcon_Map01_Soil_0: -3072909700208135976
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

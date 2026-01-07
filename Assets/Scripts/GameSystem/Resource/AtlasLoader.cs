@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -39,11 +40,16 @@ namespace GameSystem
             return GetSprite(KeyAnimalIcon + "_" + placeId, name);
         }
 
-        public Sprite GetObjectIconSprite(string name)
+        public Sprite GetObjectIconSpriteByPlace(string name)
         {
             int placeId = GameUtils.ActivityPlaceId;
 
             return GetSprite(KeyObjectIcon + "_" + placeId, name);
+        }
+
+        public Sprite GetObjectIconSprite(string name)
+        {
+            return GetSprite(KeyObjectIcon, name);
         }
 
         public Sprite GetCurrencySprite(string name)

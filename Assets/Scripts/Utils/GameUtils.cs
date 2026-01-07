@@ -93,7 +93,10 @@ public static class GameUtils
             if (data == null)
                 return null;
 
-            return atlasLoader?.GetObjectIconSprite(data.ShortIconImgName);
+            if (data.ObjectType == Type.ObjectType.Garden)
+                return atlasLoader?.GetObjectIconSprite(data.ShortIconImgName);
+
+            return atlasLoader?.GetObjectIconSpriteByPlace(data.ShortIconImgName);
         }
 
         return null;
@@ -118,8 +121,11 @@ public static class GameUtils
             var data = ObjectContainer.Instance?.GetData(id);
             if (data == null)
                 return null;
-    
-            return atlasLoader.GetObjectIconSprite(data.LargeIconImgName);
+
+            if (data.ObjectType == Type.ObjectType.Garden)
+                return atlasLoader?.GetObjectIconSprite(data.LargeIconImgName);
+
+            return atlasLoader.GetObjectIconSpriteByPlace(data.LargeIconImgName);
         }
     
         return null;

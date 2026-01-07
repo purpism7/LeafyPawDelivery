@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Atlas
   m_EditorClassIdentifier: 
   m_GroupName: Atlas
-  m_Data:
-    m_SerializedData: []
   m_GUID: 3c2930ffcb9c94dbab537742019f44c9
   m_SerializeEntries:
   - m_GUID: 36869ee1161964882bb3de6f3ec34917

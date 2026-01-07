@@ -1,15 +1,17 @@
-using Game;
-using Game.Event;
-using GameSystem;
-using Info;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+
+using Game;
+using Game.Event;
+using GameSystem;
+using Info;
+
 using static Game.Type;
-using static UnityEditor.AddressableAssets.Build.Layout.BuildLayout;
+
 
 namespace UI.Component
 
