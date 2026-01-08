@@ -314,7 +314,7 @@ namespace UI.Component
 
             if(base.CreateObtainPopup(animalCurrency, objectCurrency))
             {
-                MainGameManager.Get<Game.ObjectManager>()?.Add(_data.Id);
+                MainGameManager.Get<Game.ObjectManager>()?.Add(_data.Id, _data.ObjectType);
                 SetCount();
 
                 return true;

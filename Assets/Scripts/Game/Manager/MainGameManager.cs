@@ -77,13 +77,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         Game.Notification.Create(transform);
 
         AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>()?.Initialize());
-        
-        var gardenManager = CreateGardenManager();
-        
-        var objectManager = gameObject.GetOrAddComponent<ObjectManager>()?.Initialize(gardenManager);
+ 
+        var objectManager = gameObject.GetOrAddComponent<ObjectManager>()?.Initialize();
         AddManager(typeof(Game.ObjectManager), objectManager);
 
-        AddManager(typeof(Game.PlaceManager), placeMgr?.Initialize(gardenManager));
+        AddManager(typeof(Game.PlaceManager), placeMgr?.Initialize());
         
         AddManager(typeof(Game.StoryManager), gameObject.GetOrAddComponent<Game.StoryManager>()?.Initialize());
         AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>()?.Initialize());

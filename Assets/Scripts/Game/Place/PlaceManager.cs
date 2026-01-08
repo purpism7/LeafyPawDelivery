@@ -23,6 +23,13 @@ namespace Game
         public class Data : Manager.BaseData
         {
             public int placeId = 0;
+            public GardenManager GardenManger { get; private set; } = null;
+
+            public Data WithGardenManager(GardenManager manager)
+            {
+                GardenManger = manager;
+                return this;
+            }
         }
 
         public static UnityEvent<Game.Event.PlaceData> Event { get; private set; } = null;
@@ -46,18 +53,11 @@ namespace Game
 
         public override MonoBehaviour Initialize()
         {
-            return this;
-        }
-
-        public PlaceManager Initialize(GardenManager gardenManger)
-        {
-            _gardenManager = gardenManger;
-            
             Event = new();
             Event?.RemoveAllListeners();
 
             PlaceEventController.Event?.RemoveAllListeners();
-
+            
             return this;
         }
 

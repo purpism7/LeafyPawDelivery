@@ -42,7 +42,7 @@ namespace Game
 
         public bool IsBloomed(string objectUniqueID)
         {
-            var plotInfo = _gardenHolder.GetPlotInfo(objectUniqueID);
+            var plotInfo = _gardenHolder?.GetPlotInfo(objectUniqueID);
             if (plotInfo == null)
                 return false;
 
@@ -51,7 +51,7 @@ namespace Game
 
         public bool IsGrowing(string objectUniqueID)
         {
-            var plotInfo = _gardenHolder.GetPlotInfo(objectUniqueID);
+            var plotInfo = _gardenHolder?.GetPlotInfo(objectUniqueID);
             if (plotInfo == null)
                 return false;
 

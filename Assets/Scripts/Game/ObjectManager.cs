@@ -16,7 +16,6 @@ namespace Game
 
         private Data _data = null;
         private Info.ObjectHolder _objectHolder = new();
-        private IGardenManager _gardenManager = null;
             
         public IReadOnlyList<Info.Object> ObjectInfoList
         {
@@ -28,15 +27,6 @@ namespace Game
 
         public override MonoBehaviour Initialize()
         {
-            // Event?.RemoveAllListeners();
-
-            return this;
-        }
-
-        public ObjectManager Initialize(IGardenManager gardenManager)
-        {
-            _gardenManager = gardenManager;
-            
             Event?.RemoveAllListeners();
 
             return this;
@@ -104,7 +94,7 @@ namespace Game
             }
         }
 
-        public void Add(int id)
+        public void Add(int id, Type.ObjectType objectType = Type.ObjectType.None)
         {
             if (_objectHolder == null)
                 return;
@@ -123,7 +113,7 @@ namespace Game
                     {
                         id = id,
                         eOpenConditionType = eOpenConditionType,
-                    });
+                    }.WithObjectType(objectType));
 
                 Info.UserManager.Instance?.AddObject(id);
                 Info.Connector.Get?.SetAddObject(id);
@@ -232,7 +222,7 @@ namespace Game
                             return popup;
                         });
 
-                    Add(data.Id);
+                    Add(data.Id, objectData.ObjectType);
                 }
             }
         }
