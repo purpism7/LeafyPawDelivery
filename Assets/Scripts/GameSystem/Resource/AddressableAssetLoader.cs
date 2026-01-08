@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 using Cysharp.Threading.Tasks;
+
 using Game;
 
 namespace GameSystem
@@ -85,11 +86,12 @@ namespace GameSystem
                         {
                             if (typeKey.Equals(AssetLabelObject))
                             {
+                                await LoaGameAssetByIdAsync(typeKey);
+
                                 typeKey += "_" + PlayerPrefs.GetInt(Games.Data.PlayPrefsKeyLastPlaceKey, Games.Data.Const.StartPlaceId);
                             }
-
+                 
                             await LoaGameAssetByIdAsync(typeKey);
-                            //yield return StartCoroutine(CoLoadGameAssetById(typeKey));
 
                             break;
                         }
@@ -489,16 +491,18 @@ namespace GameSystem
             if(_gameObjByIdDic == null)
                 return null;
 
-            if(typeKey.Contains(AssetLabelObject) ||
-               typeKey.Contains(nameof(GardenPlot)))
+            if(typeKey.Contains(AssetLabelObject))
             {
-                // typeKey += "_" + GameUtils.ActivityPlaceId;
                 typeKey = $"{AssetLabelObject}_{GameUtils.ActivityPlaceId}";
             }
-
-            if(_gameObjByIdDic.TryGetValue(typeKey, out Dictionary<int, GameObject> dic))
+            else if(typeKey.Contains(Type.ObjectType.Garden.ToString()))
             {
-                if(dic.TryGetValue(id, out GameObject gameObj))
+                typeKey = AssetLabelObject;
+            }
+
+            if (_gameObjByIdDic.TryGetValue(typeKey, out Dictionary<int, GameObject> dic))
+            {
+                if (dic.TryGetValue(id, out GameObject gameObj))
                 {
                     return GameObject.Instantiate(gameObj, rootTm);
                 }

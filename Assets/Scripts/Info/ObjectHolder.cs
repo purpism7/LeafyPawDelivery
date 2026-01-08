@@ -142,10 +142,6 @@ namespace Info
                 {
                     objectInfoList.Add(objectInfo);
                 }
-                //else
-                //{
-                //    findObjectInfo.Count += 1; 
-                //}
             }
             else
             {
@@ -312,6 +308,10 @@ namespace Info
 
             if (_objectInfoDic.TryGetValue(placeId, out List<Object> objectInfoList))
             {
+                // 0 is common
+                if(_objectInfoDic.TryGetValue(0, out var list))
+                    objectInfoList?.AddRange(list);
+
                 return objectInfoList;
             }
 

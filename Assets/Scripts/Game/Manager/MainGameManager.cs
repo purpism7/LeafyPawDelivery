@@ -565,11 +565,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         return objectMgr.CheckIsAll(placeId);
     }
 
-    public void SpwanAnimalToPlace(int id, bool spwaned)
+    public bool SpwanAnimalToPlace(int id, bool spwaned)
     {
         var animalInfo = Get<Game.AnimalManager>()?.GetAnimalInfo(id);
         if (animalInfo == null)
-            return;
+            return false;
         
         Vector3 pos = Vector3.zero;
         if (IGameCameraCtr != null)
@@ -580,7 +580,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         bool activate = false;
         var animal = placeMgr?.ActivityPlace?.SpawnAnimal(id, animalInfo.SkinId, pos, spwaned, out activate);
         if (animal == null)
-            return;
+            return false;
 
         if (!spwaned && 
             !activate)
@@ -589,6 +589,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
 
         _startEditAction?.Invoke(animal);
+
+        return true;
     }
 
     public void ChangeAnimalSkinToPlace(int id, int skinId)
@@ -615,15 +617,15 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
     }
 
-    public void SpwanObjectToPlace(int id)
+    public bool SpwanObjectToPlace(int id)
     {
         var activityPlace = placeMgr?.ActivityPlace;
         if (activityPlace == null)
-            return;
+            return false;
 
         var editObject = Get<Game.ObjectManager>()?.GetAddEditObject(id);
         if (editObject == null)
-            return;
+            return false;
 
         Vector3 pos = Vector3.zero;
         if (IGameCameraCtr != null)
@@ -633,9 +635,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         var obj = activityPlace.SpawnObject(id, pos, editObject.UId, editObject.uniqueID);
         if (obj == null)
-            return;
+            return false;
 
         _startEditAction?.Invoke(obj);
+
+        return true;
     }
 
     public void SpawnSpecialObjectToPlace(int id)

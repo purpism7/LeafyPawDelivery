@@ -132,8 +132,8 @@ namespace UI.Component
             SetNameTMP(localName);
 
             SetCount();
-
-            ActivateOpenConditionList();
+            SetOpenConditionData();
+            //ActivateOpenConditionList();
         }
 
         public override void Deactivate()
@@ -259,7 +259,7 @@ namespace UI.Component
         }
 
         #region Open Condition
-        private void ActivateOpenConditionList()
+        protected void ActivateOpenConditionList()
         {
             if (_openConditionList == null)
                 return;
@@ -270,7 +270,7 @@ namespace UI.Component
             }
         }
 
-        private void DeactivateOpenConditionList()
+        protected void DeactivateOpenConditionList()
         {
             if (_openConditionList == null)
                 return;

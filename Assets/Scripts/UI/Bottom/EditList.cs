@@ -442,9 +442,10 @@ namespace UI
             if (mainGameMgr == null)
                 return;
 
-            mainGameMgr.SpwanAnimalToPlace(id, true);
-
-            _editing = true;
+            if(mainGameMgr.SpwanAnimalToPlace(id, true))
+            {
+                _editing = true;
+            }
 
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
 
@@ -461,9 +462,10 @@ namespace UI
             if (mainGameMgr == null)
                 return;
 
-            mainGameMgr.SpwanObjectToPlace(id);
-
-            _editing = true;
+            if(mainGameMgr.SpwanObjectToPlace(id))
+            {
+                _editing = true;
+            }
 
             GameSystem.EffectPlayer.Get?.Play(GameSystem.EffectPlayer.AudioClipData.EType.TouchButton);
         }

@@ -177,6 +177,8 @@ namespace UI.Component
             if (placeData == null)
                 return;
 
+            //DeactivateOpenConditionList();
+
             GameUtils.SetActive(openConditionRootRectTm, openCondition.eType != OpenConditionData.EType.Hidden || openCondition.eType != OpenConditionData.EType.Special);
 
             switch (openCondition.eType)
@@ -199,10 +201,13 @@ namespace UI.Component
                         return;
                     }
             }
+
             var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
 
             AddOpenCondition(placeData.AnimalSpriteName, openCondition.AnimalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
             AddOpenCondition(placeData.ObjectSpriteName, openCondition.ObjectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
+
+            ActivateOpenConditionList();
         }
 
         private void SetPurchaseCost()

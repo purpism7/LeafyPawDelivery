@@ -375,19 +375,21 @@ namespace UI
                     count = UserManager.Instance.GardenPlotCount;
                 }
 
-                var data = new ObjectArrangementCell.Data
-                    {
-                        IListener = this,
-                        Id = objectId,
-                        EElement = Game.Type.EElement.Object,
-                        Owned = objectInfo != null,
-                        Lock = !objectOpenConditionContainer.CheckReq(objectId),
-                        isTutorial = isTutorial,
-                        IsSpecialObject = objectData.Grade == Type.EObjectGrade.Special,
+                bool isOwned = objectInfo != null;
 
-                        index = index,
-                    }.WithObjectType(objectData.ObjectType)
-                    .WithCount(count);
+                var data = new ObjectArrangementCell.Data
+                {
+                    IListener = this,
+                    Id = objectId,
+                    EElement = Game.Type.EElement.Object,
+                    Owned = isOwned,
+                    Lock = !objectOpenConditionContainer.CheckReq(objectId),
+                    isTutorial = isTutorial,
+                    IsSpecialObject = objectData.Grade == Type.EObjectGrade.Special,
+
+                    index = index,
+                }.WithObjectType(objectData.ObjectType)
+                .WithCount(count);
 
                 AddObjectArrangementCell(data, objectData.Grade == Type.EObjectGrade.Special ? specialObjectScrollRect.content : objectScrollRect.content, objectData.Order);
             }
