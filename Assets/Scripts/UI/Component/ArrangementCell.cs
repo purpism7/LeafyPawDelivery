@@ -270,7 +270,7 @@ namespace UI.Component
             }
         }
 
-        protected void DeactivateOpenConditionList()
+        private void DeactivateOpenConditionList()
         {
             if (_openConditionList == null)
                 return;

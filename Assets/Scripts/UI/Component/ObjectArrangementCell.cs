@@ -104,7 +104,6 @@ namespace UI.Component
             int count = _data.Count;
             int remainCount = objectMgr.GetRemainCount(_data.Id);
 
-            var objectInfo = objectMgr.GetObjectInfoById(_data.Id);
             if (_data.ObjectType == ObjectType.Garden)
             {
                 count = UserManager.Instance.GardenPlotCount;
@@ -176,9 +175,7 @@ namespace UI.Component
             var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return;
-
-            //DeactivateOpenConditionList();
-
+            
             GameUtils.SetActive(openConditionRootRectTm, openCondition.eType != OpenConditionData.EType.Hidden || openCondition.eType != OpenConditionData.EType.Special);
 
             switch (openCondition.eType)
@@ -249,7 +246,11 @@ namespace UI.Component
                 if (openCondition == null)
                     return 0;
 
-                return Mathf.CeilToInt(openCondition.AnimalCurrency * _data.Count * 1.25f);
+                int count = _data.Count;
+                if (_data.ObjectType == ObjectType.Garden)
+                    count = UserManager.Instance.GardenPlotCount;
+
+                return Mathf.CeilToInt(openCondition.AnimalCurrency * count * 1.25f);
             }
         }
 
@@ -263,8 +264,12 @@ namespace UI.Component
                 var openCondition = ObjectOpenConditionData;
                 if (openCondition == null)
                     return 0;
+                
+                int count = _data.Count;
+                if (_data.ObjectType == ObjectType.Garden)
+                    count = UserManager.Instance.GardenPlotCount;
 
-                return Mathf.CeilToInt(openCondition.ObjectCurrency * _data.Count * 1.5f);
+                return Mathf.CeilToInt(openCondition.ObjectCurrency * count * 1.5f);
             }
         }
 
@@ -372,7 +377,6 @@ namespace UI.Component
 
         private void OnClickBuy()
         {
-            var mainGameMgr = MainGameManager.Instance;
             var userManager = UserManager.Instance;
 
             var currency = new Info.User.Currency
@@ -393,6 +397,8 @@ namespace UI.Component
             var openConditionData = ObjectOpenConditionData;
             if (openConditionData != null)
                 CreateObtainPopup(openConditionData.AnimalCurrency, openConditionData.ObjectCurrency);
+            
+            SetPurchaseCost();
         }
     }
 }
