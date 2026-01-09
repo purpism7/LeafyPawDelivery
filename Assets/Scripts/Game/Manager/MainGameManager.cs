@@ -77,13 +77,8 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         Game.Notification.Create(transform);
 
         AddManager(typeof(Game.AnimalManager), gameObject.GetOrAddComponent<Game.AnimalManager>()?.Initialize());
-        
-        var gardenManager = CreateGardenManager();
-        
-        var objectManager = gameObject.GetOrAddComponent<ObjectManager>()?.Initialize(gardenManager);
-        AddManager(typeof(Game.ObjectManager), objectManager);
-
-        AddManager(typeof(Game.PlaceManager), placeMgr?.Initialize(gardenManager));
+        AddManager(typeof(Game.ObjectManager), gameObject.GetOrAddComponent<ObjectManager>());
+        AddManager(typeof(Game.PlaceManager), placeMgr);
         
         AddManager(typeof(Game.StoryManager), gameObject.GetOrAddComponent<Game.StoryManager>()?.Initialize());
         AddManager(typeof(Game.Manager.Guide), gameObject.GetOrAddComponent<Game.Manager.Guide>()?.Initialize());
@@ -116,6 +111,10 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         yield return StartCoroutine(acquireMgr?.CoInitialize(null));
 
         SetGameStateAsync(Game.Type.EGameState.Enter).Forget();
+
+        var gardenManager = CreateGardenManager();
+        Get<ObjectManager>()?.Initialize(gardenManager);
+        placeMgr?.Initialize(gardenManager);
 
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
         yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
