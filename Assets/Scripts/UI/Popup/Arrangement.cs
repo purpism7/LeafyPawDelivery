@@ -368,14 +368,15 @@ namespace UI
 
                 var objectId = objectData.Id;
                 int index = orderDataList.FindIndex(obj => obj.Id == objectId);
-                
+
+                bool isOwned = objectInfo != null;
+
                 int count = objectData.Count;
                 if (objectData.ObjectType == Type.ObjectType.Garden)
                 {
                     count = UserManager.Instance.GardenPlotCount;
+                    isOwned = count > 0;
                 }
-
-                bool isOwned = objectInfo != null;
 
                 var data = new ObjectArrangementCell.Data
                 {

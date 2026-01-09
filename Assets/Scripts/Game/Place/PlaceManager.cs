@@ -46,13 +46,18 @@ namespace Game
 
         public override MonoBehaviour Initialize()
         {
+            //Event = new();
+            //Event?.RemoveAllListeners();
+
+            //PlaceEventController.Event?.RemoveAllListeners();
+            
             return this;
         }
 
         public PlaceManager Initialize(GardenManager gardenManger)
         {
             _gardenManager = gardenManger;
-            
+
             Event = new();
             Event?.RemoveAllListeners();
 

@@ -12,6 +12,10 @@ namespace Game.State
             
             // 진입 연출 전 Deactivate Top, Bottom 
             UIManager.Instance?.DeactivateAnim();
+
+            IPlace place = MainGameManager.Get<PlaceManager>()?.ActivityPlace;
+            if (place != null)
+                place?.SetWorldUIActive(false);
         }
         
         public override void End()

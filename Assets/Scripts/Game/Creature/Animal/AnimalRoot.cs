@@ -93,12 +93,13 @@ namespace Game.Creature
 
             var sentence = LocalizationSettings.StringDatabase.GetLocalizedString(localData.TableName, localData.Key, LocalizationSettings.SelectedLocale);
 
-            _speechBubble.Enqueue(new SpeechBubble.Constituent()
-            {
-                Sentence = sentence,
-                KeepDelay = UnityEngine.Random.Range(4f, 5f),
-                EndAction = endAction,
-            }) ;
+            _speechBubble.Enqueue(
+                new SpeechBubble.Constituent()
+                {
+                    Sentence = sentence,
+                    KeepDelay = UnityEngine.Random.Range(4f, 5f),
+                    EndAction = endAction,
+                });
 
             _speechBubble.Begin();
         }

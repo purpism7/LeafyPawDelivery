@@ -28,7 +28,7 @@ namespace Game
 
         public override MonoBehaviour Initialize()
         {
-            // Event?.RemoveAllListeners();
+            //Event?.RemoveAllListeners();
 
             return this;
         }
@@ -36,10 +36,11 @@ namespace Game
         public ObjectManager Initialize(IGardenManager gardenManager)
         {
             _gardenManager = gardenManager;
-            
+
             Event?.RemoveAllListeners();
 
             return this;
+
         }
 
         public override IEnumerator CoInitialize(Data data)
@@ -118,12 +119,14 @@ namespace Game
                     eOpenConditionType = openConditionData.eType;
                 }
 
+                var objectData = ObjectContainer.Instance?.GetData(id);
+
                 Event?.Invoke(
                     new Event.AddObjectData()
                     {
                         id = id,
                         eOpenConditionType = eOpenConditionType,
-                    });
+                    }.WithObjectType(objectData?.ObjectType ?? Type.ObjectType.None));
 
                 Info.UserManager.Instance?.AddObject(id);
                 Info.Connector.Get?.SetAddObject(id);

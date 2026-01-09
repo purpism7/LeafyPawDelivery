@@ -1,11 +1,10 @@
+using Game;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using System.IO;
-
-using Game;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using UnityEngine;
 
 namespace Info
 {
@@ -72,11 +71,15 @@ namespace Info
                         objectInfo = objectInfoList.Find(findObjectInfo => findObjectInfo != null && findObjectInfo.Id == objectId);
                     }
 
-                    AddObject(objectData.PlaceId, objectId);
+                    int placeID = objectData.PlaceId;
+                    if (placeID <= 0)
+                        placeID = i;
+
+                    AddObject(placeID, objectId);
 
                     if (objectInfo != null)
                     {
-                        if (_objectInfoDic.TryGetValue(objectData.PlaceId, out List<Info.Object> infoList))
+                        if (_objectInfoDic.TryGetValue(placeID, out List<Info.Object> infoList))
                         {
                             var findObjectInfo = infoList.Find(info => info != null ? info.Id == objectInfo.Id : false);
                             if (findObjectInfo != null)
@@ -115,19 +118,22 @@ namespace Info
             if (objectData == null)
                 return false;
 
-            AddObject(objectData.PlaceId, id);
-
             if(objectData.ObjectType == Type.ObjectType.Garden)
             {
                 UserManager.Instance.AddGardenPlot();
             }
+            else
+            {
+                int placeID = objectData.PlaceId;
 
-            SaveInfo(objectData.PlaceId);
+                AddObject(placeID, id);
+                SaveInfo(placeID);
+            }
 
             return true;
         }
 
-        private void AddObject(int placeId, int id)
+        private Info.Object AddObject(int placeId, int id)
         {
             var objectInfo = new Object()
             {
@@ -153,15 +159,29 @@ namespace Info
             }
 
             _objectIdList.Add(id);
+
+            return objectInfo;
         }
 
         public EditObject GetAddEditObject(int id)
         {
-            var objectInfo = GetObjectInfoById(id, GameUtils.ActivityPlaceId);
-            if (objectInfo == null)
+            var objectData = ObjectContainer.Instance?.GetData(id);
+            if (objectData == null)
                 return null;
 
-            var objectData = ObjectContainer.Instance?.GetData(id);
+            int placeID = GameUtils.ActivityPlaceId;
+
+            var objectInfo = GetObjectInfoById(id, placeID);
+            if (objectInfo == null)
+            {
+                if(objectData.ObjectType == Type.ObjectType.Garden)
+                {
+                    objectInfo = AddObject(placeID, id);
+                }
+            }
+
+            if (objectInfo == null)
+                return null;
 
             var editObjectList = objectInfo.EditObjectList;
             if (editObjectList != null)
@@ -309,8 +329,8 @@ namespace Info
             if (_objectInfoDic.TryGetValue(placeId, out List<Object> objectInfoList))
             {
                 // 0 is common
-                if(_objectInfoDic.TryGetValue(0, out var list))
-                    objectInfoList?.AddRange(list);
+                //if(_objectInfoDic.TryGetValue(0, out var list))
+                //    objectInfoList?.AddRange(list);
 
                 return objectInfoList;
             }
@@ -320,36 +340,65 @@ namespace Info
 
         public int GetRemainCount(int id)
         {
-            var objectInfo = GetObjectInfoById(id, GameUtils.ActivityPlaceId);
-            if (objectInfo == null)
-                return 0;
-
-            if (objectInfo.EditObjectList == null)
-                return 0;
-
             var objectData = ObjectContainer.Instance?.GetData(id);
             if (objectData == null)
                 return 0;
 
+            int limitCount = objectData.Count;
+            int arrangementCount = 0;
+
+            Info.Object objectInfo = null;
+     
+            if (objectData.ObjectType == Type.ObjectType.Garden)
+            {
+                limitCount = UserManager.Instance.GardenPlotCount;
+
+                foreach (var objectInfos in _objectInfoDic.Values)
+                {
+                    for(int i = 0; i < objectInfos.Count; ++i)
+                    {
+                        objectInfo = objectInfos[i];
+                        if (objectInfo == null)
+                            continue;
+
+                        if(objectInfo.Id == id)
+                        {
+                            arrangementCount += GetArrangementCount(objectInfo.EditObjectList);
+
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                objectInfo = GetObjectInfoById(id, GameUtils.ActivityPlaceId);
+                if (objectInfo != null)
+                {
+                    arrangementCount = GetArrangementCount(objectInfo.EditObjectList);
+                }
+            }
+
+            return limitCount - arrangementCount;
+        }
+
+        private int GetArrangementCount(List<EditObject> editObjectList)
+        {
             int count = 0;
-            foreach(var editObject in objectInfo.EditObjectList)
+
+            if (editObjectList == null)
+                return count;
+
+            foreach (var editObject in editObjectList)
             {
                 if (editObject == null)
                     continue;
 
-                if (!editObject.Arrangement)
-                    continue;
-
-                ++count;
+                if (editObject.Arrangement)
+                    ++count;
             }
 
-            int limitCount = objectData.Count;
-            if (objectData.ObjectType == Type.ObjectType.Garden)
-            {
-                limitCount = UserManager.Instance.GardenPlotCount;
-            }
-
-            return limitCount - count;
+            return count;
         }
 
         #region Firebase

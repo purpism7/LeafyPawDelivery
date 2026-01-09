@@ -19,8 +19,8 @@ namespace Game
 
         void CreateDropItem(DropItem.Data dropItemData);
         void AllPickUpDropItem(System.Func<Vector3, Vector3> func);
-        // void SetWorldUIActive(bool isActive);
-        
+        void SetWorldUIActive(bool isActive);
+
         Collider2D Collider { get; }
     }
 
@@ -70,8 +70,9 @@ namespace Game
         private bool _initialize = false;
 
         private PlaceEventController _placeEventCtr = null;
-        private IPlaceState.EType _state = IPlaceState.EType.None;
         private float _objectPosZ = GameUtils.GetPosZOrder(Type.EPosZOrder.Object);
+
+        public IPlaceState.EType State { get; private set; } = IPlaceState.EType.None;
 
         private string KeyObjectPosZ
         {
@@ -456,11 +457,11 @@ namespace Game
                 var objectData = ObjectContainer.Instance?.GetData(objectInfo.Id);
                 if(objectData == null)
                     continue;
-                
-                if (objectData.PlaceId != Id)
+
+                if (objectData.PlaceId != Id && objectData.PlaceId > 0)
                     continue;
 
-                foreach(var editObject in editObjectList)
+                foreach (var editObject in editObjectList)
                 {
                     if (editObject == null)
                         continue;
@@ -535,10 +536,10 @@ namespace Game
 
         private void SetState(IPlaceState.EType state)
         {
-            _state = state;
+            State = state;
         }
         
-        private void SetWorldUIActive(bool isActive)
+        public void SetWorldUIActive(bool isActive)
         {
             var objectList = _objectList;
             if (objectList == null)
@@ -687,17 +688,7 @@ namespace Game
             
             iGameCameraCtr.SetPositionUICamera(true, Vector3.zero);
         }
-        #endregion
-
-        #region IPlaceState
-        IPlaceState.EType IPlaceState.State
-        {
-            get
-            {
-                return _state;
-            }
-        }
-        #endregion       
+        #endregion  
 
         #region Setting.Event
         private void OnChangedSetting(Game.Event.SettingData settingData)

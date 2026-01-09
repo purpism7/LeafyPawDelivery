@@ -14,21 +14,21 @@ namespace Game
         private PlaceEvent.DropItem _dropItem = null;
         private PlaceEvent.HiddenObject _hiddenObject = null;
 
-        public void Initialize(IPlace iPlace, int id)
+        public void Initialize(Place place, int id)
         {
-            _dropCurrency = GetOrAdd<PlaceEvent.DropCurrency>(iPlace, id);
-            _speechBubble = GetOrAdd<PlaceEvent.SpeechBubble>(iPlace, id);
-            _dropItem = GetOrAdd<PlaceEvent.DropItem>(iPlace, id);
-            _hiddenObject = GetOrAdd<PlaceEvent.HiddenObject>(iPlace, id);
+            _dropCurrency = GetOrAdd<PlaceEvent.DropCurrency>(place, id);
+            _speechBubble = GetOrAdd<PlaceEvent.SpeechBubble>(place, id);
+            _dropItem = GetOrAdd<PlaceEvent.DropItem>(place, id);
+            _hiddenObject = GetOrAdd<PlaceEvent.HiddenObject>(place, id);
         }
 
-        private T GetOrAdd<T>(IPlace iPlace, int id) where T : PlaceEvent.Base
+        private T GetOrAdd<T>(Place place, int id) where T : PlaceEvent.Base
         {
-            var placeGameObj = (iPlace as Place)?.gameObject;
+            var placeGameObj = place?.gameObject;
             if (!placeGameObj)
                 return default(T);
 
-            return placeGameObj.GetOrAddComponent<T>()?.Initialize(iPlace, this, id) as T;
+            return placeGameObj.GetOrAddComponent<T>()?.Initialize(place, this, id) as T;
         }
 
         public void Start()

@@ -720,12 +720,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         var element = gameBaseElement.ElementData.EElement;
 
-        int placeId = 0;
-        if (placeMgr != null)
-        {
-            placeId = placeMgr.ActivityPlace.Id;
-        }
-
         switch (element)
         {
             case Game.Type.EElement.Animal:
@@ -742,6 +736,14 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                     var obj = gameBaseElement as Game.Object;
                     if (obj == null)
                         return;
+
+                    int placeId = 0;
+
+                    var objectData = ObjectContainer.Instance?.GetData(obj.Id);
+                    if (placeMgr != null)
+                    {
+                        placeId = placeMgr.ActivityPlace.Id;
+                    }
 
                     Get<Game.ObjectManager>()?.ArrangeObject(obj, placeId);
 

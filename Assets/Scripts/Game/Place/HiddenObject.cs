@@ -8,9 +8,9 @@ namespace Game.PlaceEvent
     {
         private List<int> _idList = null;
 
-        public override Base Initialize(IPlace iPlace, IListener iListener, int placeId)
+        public override Base Initialize(Place place, IListener iListener, int placeId)
         {
-            base.Initialize(iPlace, iListener, placeId);
+            base.Initialize(place, iListener, placeId);
 
             StoryManager.Event?.AddListener(OnChangedStory);
              

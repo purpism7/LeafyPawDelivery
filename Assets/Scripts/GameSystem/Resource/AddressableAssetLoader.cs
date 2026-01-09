@@ -334,7 +334,7 @@ namespace GameSystem
 
         public async UniTask LoadAnimalAssetAsync(int placeId)
         {
-            string typeKey = string.Format("{0}_{1}", AssetLabelAnimal, placeId);
+            string typeKey = $"{AssetLabelAnimal}_{placeId}";
             
             await LoadAssetAsync<GameObject>(typeKey,
                 (resourceLocation) =>
@@ -495,7 +495,7 @@ namespace GameSystem
             {
                 typeKey = $"{AssetLabelObject}_{GameUtils.ActivityPlaceId}";
             }
-            else if(typeKey.Contains(Type.ObjectType.Garden.ToString()))
+            else if(typeKey.Contains(nameof(Type.ObjectType.Garden)))
             {
                 typeKey = AssetLabelObject;
             }

@@ -44,6 +44,9 @@ namespace Game.PlaceEvent
                 gameState.CheckState<Game.State.Conversation>())
                 yield break;
 
+            if(_placeState?.State != IPlaceState.EType.Active)
+                yield break;
+
             var animalList = _iPlace?.AnimalList;
             if (animalList == null)
                 yield break;

@@ -15,9 +15,9 @@ namespace Game.PlaceEvent
 
         private Game.Type.EItemSub _eItemSub = Type.EItemSub.None;
 
-        public override Base Initialize(IPlace iPlace, IListener iListener, int placeId)
+        public override Base Initialize(Place place, IListener iListener, int placeId)
         {
-            base.Initialize(iPlace, iListener, placeId);
+            base.Initialize(place, iListener, placeId);
 
             float randWaitSec = UnityEngine.Random.Range(60f, 70f);
 
