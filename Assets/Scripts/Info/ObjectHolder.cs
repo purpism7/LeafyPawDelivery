@@ -235,13 +235,13 @@ namespace Info
             }
         }
 
-        public void Remove(int id, int objectUId)
+        public void Remove(int id, int objectUId, int placeID)
         {
             var objectData = ObjectContainer.Instance.GetData(id);
             if (objectData == null)
                 return;
 
-            var editObject = GetEditObject(id, objectUId, objectData.PlaceId);
+            var editObject = GetEditObject(id, objectUId, placeID);
             if (editObject == null)
                 return;
 
@@ -340,7 +340,7 @@ namespace Info
 
         public int GetRemainCount(int id)
         {
-            var objectData = ObjectContainer.Instance?.GetData(id);
+            var objectData = ObjectContainer.Instance?.GetData(id); 
             if (objectData == null)
                 return 0;
 
@@ -364,7 +364,6 @@ namespace Info
                         if(objectInfo.Id == id)
                         {
                             arrangementCount += GetArrangementCount(objectInfo.EditObjectList);
-
                             break;
                         }
                     }
@@ -375,8 +374,13 @@ namespace Info
                 objectInfo = GetObjectInfoById(id, GameUtils.ActivityPlaceId);
                 if (objectInfo != null)
                 {
+                    if (objectInfo.EditObjectList == null)
+                        return 0;
+
                     arrangementCount = GetArrangementCount(objectInfo.EditObjectList);
                 }
+                else
+                    return 0;
             }
 
             return limitCount - arrangementCount;

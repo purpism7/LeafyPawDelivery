@@ -134,9 +134,9 @@ namespace Game
             }
         }
 
-        public override void Remove(int id, int uId)
+        public override void Remove(int id, int placeID, int uId)
         {
-            _objectHolder?.Remove(id, uId);
+            _objectHolder?.Remove(id, uId, placeID);
         }
 
         public override bool CheckExist(int objectId)

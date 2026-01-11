@@ -7,7 +7,7 @@ namespace Info
     [Serializable]
     public partial class User
     {
-        public PlotInfo[] PlotInfos = null;
+        public string[] PlotUniqueIDs = null;
         public int GardenPlotCount = 0; 
     }
 }

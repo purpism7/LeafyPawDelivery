@@ -158,7 +158,7 @@ namespace Game
             }
         }
 
-        public override void Remove(int id, int uId = 0)
+        public override void Remove(int id, int placeID, int uId = 0)
         {
             _animalHolder?.RemoveAnimal(id);
         }

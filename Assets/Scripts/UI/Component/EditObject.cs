@@ -81,10 +81,8 @@ namespace UI.Component
         {
             if (_data == null)
                 return;
-
-
-            //if(_data.ObjectType == gar)
-            countTMP?.SetText(_data.RemainCount + "/" + _data.Count);
+            
+            countTMP?.SetText(_data.RemainCount+ "/" + _data.Count);
         }
 
         private void SetTutorial()

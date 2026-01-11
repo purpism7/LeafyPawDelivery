@@ -176,12 +176,12 @@ namespace Info
             Save();
         }
 
-        public void SetGardenPlotInfos(List<PlotInfo> plotInfos)
+        public void SetGardenPlotInfos(List<string> plotUniqueIDs)
         {
             if (_user == null)
                 return;
 
-            _user.PlotInfos = plotInfos?.ToArray();
+            _user.PlotUniqueIDs = plotUniqueIDs?.ToArray();
         }
 
         private void Save()

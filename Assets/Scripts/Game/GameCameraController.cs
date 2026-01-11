@@ -122,6 +122,26 @@ namespace GameSystem
             SetStopUpdate(true);
         }
 
+        private void LateUpdate()
+        {
+            if (GameCamera is null)
+                return;
+
+            if (StopUpdate)
+                return;
+
+            int touchCnt = Input.touchCount;
+            if (touchCnt <= 0)
+                return;
+
+            var touch = Input.GetTouch(0);
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                return;
+
+            // ZoomInOut();
+            Drag();
+        }
+
         #region IFixedUpdater
         void IFixedUpdater.ChainFixedUpdate()
         {
@@ -140,7 +160,7 @@ namespace GameSystem
                 return;
 
             ZoomInOut();
-            Drag();
+            // Drag();
         }
         #endregion
 

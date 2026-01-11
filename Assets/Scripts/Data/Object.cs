@@ -28,7 +28,7 @@ namespace Data
             if (Count <= 0)
             {
                 Count = (int)Grade;
-                if (Grade == Game.Type.EObjectGrade.None)
+                if (Grade == Game.Type.EObjectGrade.None) 
                 {
                     Count = 1;
                 }

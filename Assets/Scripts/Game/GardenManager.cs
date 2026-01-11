@@ -46,8 +46,8 @@ namespace Game
             if (plotInfo == null)
                 return false;
 
-            return plotInfo.cropID > 0;
-            // return plotInfo.growthEndTime.HasValue && DateTime.UtcNow >= plotInfo.growthEndTime.Value;
+            // return plotInfo.cropID > 0;
+            return plotInfo.growthEndTime.HasValue && DateTime.UtcNow >= plotInfo.growthEndTime.Value;
         }
 
         public bool IsGrowing(string objectUniqueID)

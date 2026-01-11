@@ -678,9 +678,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         switch (EElement)
         {
             case Game.Type.EElement.Animal:
-                {
-                    placeMgr?.ActivityPlace?.RemoveAnimal(id);
-                    Get<Game.AnimalManager>()?.Remove(id);
+            {
+                var place = placeMgr?.ActivityPlace;
+                    
+                place?.RemoveAnimal(id);
+                Get<Game.AnimalManager>()?.Remove(id, place.Id);
 
                     if(refresh)
                     {
@@ -688,16 +690,16 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
                     }
 
                     break;
-                }
+            }
 
             case Game.Type.EElement.Object:
                 {
                     var placeMgr = Get<Game.PlaceManager>();
 
-                    Game.IPlace iPlace = placeMgr?.ActivityPlace;
-                    iPlace?.RemoveObject(id, uId);
+                    var place = placeMgr?.ActivityPlace;
+                    place?.RemoveObject(id, uId);
 
-                    Get<Game.ObjectManager>()?.Remove(id, uId);
+                    Get<Game.ObjectManager>()?.Remove(id, place.Id, uId);
 
                     if(refresh)
                     {

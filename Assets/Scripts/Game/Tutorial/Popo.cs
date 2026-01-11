@@ -32,7 +32,7 @@ namespace Game
         [SerializeField]
         private SpriteRenderer spriteRenderer = null;
         [SerializeField]
-        private UI.Component.SpeechBubble speechBubble = null;
+        private Transform speechbubbleRootTr = null;
 
         private EState _eState = EState.None;
         private Vector3 _targetPos = Vector3.zero;
@@ -46,12 +46,12 @@ namespace Game
                 transform.localPosition = data.startPos;
             }
 
-            speechBubble?.Initialize(
-                new UI.Component.SpeechBubble.Data()
-                {
-                    PosY = 130f,
-                });
-            speechBubble?.Deactivate();
+            // speechBubble?.Initialize(
+            //     new UI.Component.SpeechBubble.Data()
+            //     {
+            //         PosY = 130f,
+            //     });
+            // speechBubble?.Deactivate();
         }
 
         public override void ChainUpdate()
@@ -120,12 +120,26 @@ namespace Game
 
         public void StartSpeechBubble(string sentence, float keepDelay)
         {
-            speechBubble?.Enqueue(new UI.Component.SpeechBubble.Constituent()
+            var data = new UI.Component.SpeechBubble.Data
             {
-                Sentence = sentence,
-                KeepDelay = keepDelay,
-                EndAction = EndSpeechBubble,
-            });
+                // IListener = this,
+                PosY = 120f,
+            };
+            data.WithTargetTm(speechbubbleRootTr)
+                .WithOffset(new Vector2(0, 20f));
+            
+            var speechBubble = new GameSystem.ComponentCreator<UI.Component.SpeechBubble, UI.Component.SpeechBubble.Data>()
+                .SetData(data)
+                .SetRootRectTm(UIManager.Instance?.WorldUISpeechBubbleRootRectTr)
+                .Create();
+            
+            speechBubble?.Enqueue(
+                new UI.Component.SpeechBubble.Constituent()
+                {
+                    Sentence = sentence,
+                    KeepDelay = keepDelay,
+                    EndAction = EndSpeechBubble,
+                });
 
             speechBubble?.Begin();
         }

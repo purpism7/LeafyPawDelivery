@@ -331,7 +331,7 @@ namespace Game
                 .Create();
         }
 
-        private void RemoveObject(int id, int objectUId)
+        public void RemoveObject(int id, int objectUId)
         {
             if(_objectList == null)
                 return;
@@ -578,11 +578,6 @@ namespace Game
             {
                 return _objectList;
             }
-        }
-
-        void IPlace.RemoveObject(int id, int uId)
-        {
-            RemoveObject(id, uId);
         }
 
         void IPlace.RemoveAll(System.Action endAction)

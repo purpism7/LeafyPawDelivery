@@ -24,7 +24,7 @@ namespace Game.Manager
         public abstract MonoBehaviour Initialize();
         public abstract IEnumerator CoInitialize(T data);
 
-        public abstract void Remove(int id, int uId);
+        public abstract void Remove(int id, int placeID, int uId);
         public abstract bool CheckExist(int id);
     }
 }

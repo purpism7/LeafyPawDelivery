@@ -164,7 +164,7 @@ namespace UI
             bool isTutorial = CheckIsTutorial;
             EnableScrollRect(objectScrollRect, !isTutorial);
 
-            foreach(var objectData in datas)
+            foreach(var objectData in datas) 
             {
                 if (objectData == null)
                     continue;

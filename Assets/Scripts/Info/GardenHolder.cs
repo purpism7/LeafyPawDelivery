@@ -35,10 +35,20 @@ namespace Info
                 _plotInfos = JsonConvert.DeserializeObject<List<PlotInfo>>(jsonStr);
             }
 
-            var user = Info.UserManager.Instance?.User;
-            if (user != null)
+            var userPlotInfos = UserManager.Instance?.User?.PlotUniqueIDs?.ToList();
+            if (userPlotInfos != null)
             {
-                _plotInfos = user.PlotInfos?.ToList();
+                List<PlotInfo > plotInfos = new();
+                
+                for (int i = userPlotInfos.Count - 1; i >= 0; --i)
+                {
+                    var plotUniqueID = userPlotInfos[i];
+                    if (string.IsNullOrEmpty(plotUniqueID))
+                        continue;
+
+                    if (_plotInfos?.Find(info => info.uniqueID == plotUniqueID) == null)
+                        _plotInfos?.RemoveAt(i);
+                }
             }
         }
         
@@ -70,8 +80,20 @@ namespace Info
             _plotInfos?.Add(plotInfo);
 
             SaveInfo();
-
-            UserManager.Instance?.SetGardenPlotInfos(_plotInfos);
+            
+            List<string> plotUniqueIDs = new();
+            if (_plotInfos != null)
+            {
+                for (int i = 0; i < _plotInfos.Count; ++i)
+                {
+                    if(_plotInfos[i] == null)
+                        continue;
+                    
+                    plotUniqueIDs.Add(_plotInfos[i].uniqueID);
+                }
+            }
+            
+            UserManager.Instance?.SetGardenPlotInfos(plotUniqueIDs);
 
             return true;
         }

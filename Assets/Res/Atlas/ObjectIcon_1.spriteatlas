@@ -61,7 +61,6 @@ SpriteAtlas:
     - 91a68571a5aa1cd42bdbf597a2b77946: 21300000
     - f026ca716371c484197c12d9efb6277b: 21300000
     - 5f7e08c16a0c045399271e5df58f4404: 21300000
-    - 1ea392d10216f4a2ba3fd1d600affb56: 21300000
     - 50e4a03235eff430e92fe816b0500031: 21300000
     - 8f107232d20704ddcad82eaec21cf8b9: 21300000
     - 6c955f32473a2496a92d4005d6ed24c5: 21300000
@@ -100,7 +99,6 @@ SpriteAtlas:
     - 8fe6e538882ba447b9d8203e461b0ec6: 21300000
     - 6112994860a244582bdfbd139ecefa54: 21300000
     - 7e447c884ee534a69ac9ad3c582662ac: 21300000
-    - 9b530a09d57a74bb8a2ab2e98688ec91: 21300000
     - 17e98a199cd7a487ebf73aa0beb2d12a: 21300000
     - 795e09498799a3c409bdd45e451f537a: 21300000
     - 444025a9011af42b282faef14ed24eb1: 21300000
@@ -141,7 +139,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 91a68571a5aa1cd42bdbf597a2b77946, type: 3}
   - {fileID: 21300000, guid: f026ca716371c484197c12d9efb6277b, type: 3}
   - {fileID: 21300000, guid: 5f7e08c16a0c045399271e5df58f4404, type: 3}
-  - {fileID: 21300000, guid: 1ea392d10216f4a2ba3fd1d600affb56, type: 3}
   - {fileID: 21300000, guid: 50e4a03235eff430e92fe816b0500031, type: 3}
   - {fileID: 21300000, guid: 8f107232d20704ddcad82eaec21cf8b9, type: 3}
   - {fileID: 21300000, guid: 6c955f32473a2496a92d4005d6ed24c5, type: 3}
@@ -180,7 +177,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8fe6e538882ba447b9d8203e461b0ec6, type: 3}
   - {fileID: 21300000, guid: 6112994860a244582bdfbd139ecefa54, type: 3}
   - {fileID: 21300000, guid: 7e447c884ee534a69ac9ad3c582662ac, type: 3}
-  - {fileID: 21300000, guid: 9b530a09d57a74bb8a2ab2e98688ec91, type: 3}
   - {fileID: 21300000, guid: 17e98a199cd7a487ebf73aa0beb2d12a, type: 3}
   - {fileID: 21300000, guid: 795e09498799a3c409bdd45e451f537a, type: 3}
   - {fileID: 21300000, guid: 444025a9011af42b282faef14ed24eb1, type: 3}
@@ -220,7 +216,6 @@ SpriteAtlas:
   - EditIcon_Map01_Object_19
   - BookIcon_Map01_Object_25
   - EditIcon_Map01_Object_32
-  - EditIcon_Map01_Object_142
   - BookIcon_Map01_Object_32
   - BookIcon_Map01_Object_28
   - BookIcon_Map01_Object_01
@@ -259,7 +254,6 @@ SpriteAtlas:
   - BookIcon_Map01_Object_21
   - EditIcon_Map01_Object_138
   - BookIcon_Map01_Object_137
-  - BookIcon_Map01_Object_142
   - BookIcon_Map01_Object_10
   - EditIcon_Map01_Object_10
   - BookIcon_Map01_Object_08
