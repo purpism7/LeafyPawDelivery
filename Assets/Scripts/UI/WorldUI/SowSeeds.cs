@@ -33,10 +33,10 @@ namespace UI.WorldUI
 
         public IPoolable Poolable => this;
 
-        private void LateUpdate()
-        {
-            ChainLateUpdate();
-        }
+        //private void LateUpdate()
+        //{
+        //    ChainLateUpdate();
+        //}
 
         public override void Initialize(Data data)
         {

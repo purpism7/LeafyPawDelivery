@@ -40,13 +40,16 @@ namespace Game.Creature
                 IListener = this,
                 PosY = _animalHeigh,
             };
-            data.WithTargetTm(speechBubbleRootRectTm)
-                .WithOffset(new Vector2(0, 20f));
+            //data.WithTargetTm(speechBubbleRootRectTm)
+            //    .WithOffset(new Vector2(0, 20f));
             
             _speechBubble = new GameSystem.ComponentCreator<UI.Component.SpeechBubble, UI.Component.SpeechBubble.Data>()
                 .SetData(data)
-                .SetRootRectTm(UIManager.Instance?.WorldUISpeechBubbleRootRectTr)
+                .SetRootRectTm(speechBubbleRootRectTm)
+                //.SetRootRectTm(UIManager.Instance?.WorldUISpeechBubbleRootRectTr)
                 .Create();
+
+            _speechBubble?.transform.SetParent(speechBubbleRootRectTm, false);
 
             ChangeLayersRecursively(_speechBubble.transform, LayerMask.NameToLayer("Game"));
         }

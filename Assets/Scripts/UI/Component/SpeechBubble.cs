@@ -34,6 +34,7 @@ namespace UI.Component
 
         #region Inspector
         [SerializeField] private TextMeshProUGUI sentenceTMP = null;
+        [SerializeField] private Canvas canvas = null;
         #endregion
 
         private bool _isPlaying = false;
@@ -41,14 +42,16 @@ namespace UI.Component
         
         public IPoolable Poolable => this;
 
-        private void LateUpdate()
-        {
-            ChainLateUpdate();
-        }
+        //private void LateUpdate()
+        //{
+        //    ChainLateUpdate();
+        //}
         
         public override IEnumerator CoInitialize(Data data)
         {
             yield return StartCoroutine(base.CoInitialize(data));
+
+           
 
             InitializePos();
 
@@ -58,6 +61,9 @@ namespace UI.Component
         public override void Activate()
         {
             base.Activate();
+
+            if (canvas != null)
+                canvas.sortingLayerName = "Game";
 
             SetEmptyTMP();
         }
