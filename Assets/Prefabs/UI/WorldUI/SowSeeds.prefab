@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5056065064747249483}
   - component: {fileID: 332417152604978216}
-  m_Layer: 5
+  - component: {fileID: 5119929724176971043}
+  m_Layer: 8
   m_Name: SowSeeds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,9 +52,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UI.WorldUI.SowSeeds
   rootRectTm: {fileID: 5593891547852781239}
   rootRectTr: {fileID: 5593891547852781239}
+  canvas: {fileID: 5119929724176971043}
   remainingTimeText: {fileID: 6964839638408041835}
   sowSeedsAnimator: {fileID: 4460420062379300211}
   waterAnimator: {fileID: 2243773654219716450}
+--- !u!223 &5119929724176971043
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124459957135537424}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 9999
+  m_TargetDisplay: 0
 --- !u!1 &1578112957293893917
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,7 +91,7 @@ GameObject:
   - component: {fileID: 4460420062379300211}
   - component: {fileID: 8408438945900880100}
   - component: {fileID: 146196659878940718}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Obj_Seeds_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +110,7 @@ RectTransform:
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 7150446584141813035}
+  m_Father: {fileID: 5593891547852781239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -161,7 +186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5593891547852781239}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +205,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7150446584141813035}
+  - {fileID: 3123778771198974471}
+  - {fileID: 838538228821035511}
+  - {fileID: 1209645562892293679}
   m_Father: {fileID: 5056065064747249483}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -188,68 +215,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &7246608376463782073
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7150446584141813035}
-  - component: {fileID: 6808905507054343372}
-  m_Layer: 5
-  m_Name: Canvas
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &7150446584141813035
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7246608376463782073}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3123778771198974471}
-  - {fileID: 838538228821035511}
-  - {fileID: 1209645562892293679}
-  m_Father: {fileID: 5593891547852781239}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!223 &6808905507054343372
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7246608376463782073}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1 &7499707495413526620
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +226,7 @@ GameObject:
   - component: {fileID: 1209645562892293679}
   - component: {fileID: 5372103410047558987}
   - component: {fileID: 6964839638408041835}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: remain_time
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +245,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7150446584141813035}
+  m_Father: {fileID: 5593891547852781239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -399,7 +364,7 @@ GameObject:
   - component: {fileID: 2243773654219716450}
   - component: {fileID: 2193993007724786626}
   - component: {fileID: 6254227895593292455}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Obj_Water_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +383,7 @@ RectTransform:
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 7150446584141813035}
+  m_Father: {fileID: 5593891547852781239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

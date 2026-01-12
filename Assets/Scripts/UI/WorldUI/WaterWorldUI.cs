@@ -27,10 +27,10 @@ namespace UI.WorldUI
         
         [SerializeField] private Button btn = null;
 
-        private void LateUpdate()
-        {
-            ChainLateUpdate();
-        }
+        // private void LateUpdate()
+        // {
+        //     ChainLateUpdate();
+        // }
 
         public override void Initialize(Data data)
         {
@@ -39,7 +39,7 @@ namespace UI.WorldUI
             btn?.onClick?.RemoveAllListeners();
             btn?.onClick?.AddListener(OnClick);
         }
-
+        
         private void OnClick()
         {
             Deactivate();

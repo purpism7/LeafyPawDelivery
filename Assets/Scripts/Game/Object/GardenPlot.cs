@@ -25,6 +25,7 @@ namespace Game
         WaterWorldUI.IListener
     {
         [SerializeField] private SpriteRenderer cropSpriteRenderer = null;
+        [SerializeField] private Transform worldUIRootTr = null;
         
         private WaterWorldUI _waterWorldUI = null;
         private SowSeeds _sowSeeds = null;
@@ -169,10 +170,11 @@ namespace Game
                 .WithOrder(SortingOrder);
 
             _waterWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.WaterWorldUI, UI.WorldUI.WaterWorldUI.Data>()
-                .SetRootRectTm(uiManager?.WorldUIGameRootRectTr)
+                // .SetRootRectTm(worldUIRootTr)
                 .SetData(data)
                 .Create();
             _waterWorldUI?.Activate();
+            _waterWorldUI?.transform.SetParent(worldUIRootTr, false);
 
             uiManager?.SortWorldUIDepth();
         }
@@ -193,11 +195,12 @@ namespace Game
                 .WithOrder(SortingOrder);
 
             _sowSeeds = new GameSystem.ComponentCreator<UI.WorldUI.SowSeeds, UI.WorldUI.SowSeeds.Data>()
-                .SetRootRectTm(uiManager?.WorldUIGameRootRectTr)
+                // .SetRootRectTm(uiManager?.WorldUIGameRootRectTr)
                 .SetData(data)
                 .Create();
             _sowSeeds?.Activate();
-
+            _sowSeeds?.transform.SetParent(worldUIRootTr, false);
+            
             uiManager?.SortWorldUIDepth();
         }
         

@@ -43,6 +43,7 @@ namespace UI.Common
         }
 
         [SerializeField] protected RectTransform rootRectTr = null;
+        [SerializeField] private Canvas canvas = null;
 
         private RectTransform _rectTr = null;
         private Camera _mainCamera = null;
@@ -67,6 +68,13 @@ namespace UI.Common
             //_mainCamera = CameraManager.Instance.MainCamera;//Camera.main;
 
             SetOrder(data?.Order ?? 0);
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            SetCanvasSortingLayer();
         }
 
         protected void ChainLateUpdate()
@@ -114,6 +122,12 @@ namespace UI.Common
             //localPos.y += _param.Offset.y;
 
             return localPos;
+        }
+
+        protected void SetCanvasSortingLayer()
+        {
+            if (canvas != null)
+                canvas.sortingLayerName = "Game";
         }
         
         public void SetOrder(float order)
