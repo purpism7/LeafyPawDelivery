@@ -132,8 +132,10 @@ namespace UI.Common
         
         public void SetOrder(float order)
         {
+            if (canvas != null)
+                canvas.sortingOrder = (int)order;
+
             Order = order;
-            // _data?.WithZOrder(zOrder);
         }
     }
 }

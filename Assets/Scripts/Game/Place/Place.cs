@@ -559,8 +559,8 @@ namespace Game
                 }
             }
 
-            if (isActive)
-                UIManager.Instance?.SortWorldUIDepth();
+            //if (isActive)
+            //    UIManager.Instance?.SortWorldUIDepth();
         }
 
         #region IPlace

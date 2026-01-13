@@ -1,16 +1,17 @@
-﻿using Cysharp.Threading.Tasks;
-using Game;
-using GameSystem;
-using Info;
+﻿using UnityEngine;
+using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
+using Game;
+using GameSystem;
+using Info;
 using TMPro;
 using UI.Component;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.Localization.Settings;
-using UnityEngine.UI;
+
 
 namespace UI
 {
@@ -497,17 +498,17 @@ namespace UI
             }
         }
 
-        private int GetArrangementCellIndex(Game.Type.EElement eElement, int id)
+        private IArrangementCell GetArrangementCell(Game.Type.EElement eElement, int id)
         {
             if (_isTutorial)
-                return 0;
+                return null;
             
             if (id <= 0)
-                return -1;
+                return null;
             
             var sortArrangementCellList = _arrangementCellList?.OrderBy(cell => cell.Id).ToList();
             if (sortArrangementCellList == null)
-                return -1;
+                return null;
 
             int index = 0;
 
@@ -521,42 +522,42 @@ namespace UI
                     continue;
 
                 if (cell.Id == id)
-                    return index;
+                    return cell;
 
                 ++index;
             }
 
-            return index;
+            return null;
         }
 
         private async UniTask MoveScrollPossibleBuy()
         {
             if(_currETabType == Game.Type.ETab.Animal)
             {
-                int index = GetArrangementCellIndex(Game.Type.EElement.Animal, PossibleBuyAnimal);
-                if (index < 0)
+                var cell = GetArrangementCell(Game.Type.EElement.Animal, PossibleBuyAnimal);
+                if (cell == null)
                     return;
 
                 if (animalGridLayoutGroup != null)
                 {
                     await UniTask.Yield();
 
-                    animalScrollRect?.MoveVerticalScrollToIndex(animalGridLayoutGroup.cellSize.y, index, false);
+                    animalScrollRect?.MoveVerticalScrollToIndex(cell.Transform.GetComponent<RectTransform>(), false);
                 }
 
                 //Debug.Log("index = " + index);
             }
             else if(_currETabType == Game.Type.ETab.Object)
             {
-                int index = GetArrangementCellIndex(Game.Type.EElement.Object, PossibleBuyObject);
-                if (index < 0)
+                var cell = GetArrangementCell(Game.Type.EElement.Object, PossibleBuyObject);
+                if (cell == null)
                     return;
 
                 if(objectGridLayoutGroup != null)
                 {
                     await UniTask.Yield();
                     
-                    objectScrollRect?.MoveVerticalScrollToIndex(objectGridLayoutGroup.cellSize.y, index, true);
+                    objectScrollRect?.MoveVerticalScrollToIndex(cell.Transform.GetComponent<RectTransform>(), true);
                 }
             }
         }

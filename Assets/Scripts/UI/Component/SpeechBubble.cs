@@ -58,7 +58,8 @@ namespace UI.Component
         public override void Activate()
         {
             base.Activate();
-            
+
+            SetOrder(9999);
             SetEmptyTMP();
         }
 

@@ -1,13 +1,13 @@
-using UnityEngine;
+using Cysharp.Threading.Tasks;
+using GameSystem;
+using Info;
 using System;
 using System.Linq;
 using System.Threading;
-using Cysharp.Threading.Tasks;
-
-using GameSystem;
-using Info;
-using UI.WorldUI;
 using UI.Common;
+using UI.WorldUI;
+using UnityEngine;
+using UnityEngine.Purchasing;
 
 namespace Game
 {
@@ -83,6 +83,9 @@ namespace Game
                 order -= 50;
                 cropSpriteRenderer.sortingOrder = order;
             }
+
+            SetWaterWorldUIOrder();
+            SetSowSeedsOrder();
         }
 
         public override void SetColor(Color color)
@@ -103,6 +106,16 @@ namespace Game
                 return;
 
             cropSpriteRenderer.material?.SetFloat("_Thickness", width);
+        }
+
+        private void SetWaterWorldUIOrder()
+        {
+            _waterWorldUI?.SetOrder(SortingOrder + 1000);
+        }
+
+        private void SetSowSeedsOrder()
+        {
+            _sowSeeds?.SetOrder(SortingOrder + 1000);
         }
 
         private void WaterWorldUIDeactivate()
@@ -164,10 +177,10 @@ namespace Game
             var uiManager = UIManager.Instance;
 
             var data = new UI.WorldUI.WaterWorldUI.Data();
-            data.WithListener(this)
-                .WithTargetTm(transform)
-                .WithOffset(new Vector2(0, 90f))
-                .WithOrder(SortingOrder);
+            data.WithListener(this);
+                //.WithTargetTm(transform);
+                //.WithOffset(new Vector2(0, 90f))
+                //.WithOrder(SortingOrder + 1000);
 
             _waterWorldUI = new GameSystem.ComponentCreator<UI.WorldUI.WaterWorldUI, UI.WorldUI.WaterWorldUI.Data>()
                 // .SetRootRectTm(worldUIRootTr)
@@ -176,7 +189,9 @@ namespace Game
             _waterWorldUI?.Activate();
             _waterWorldUI?.transform.SetParent(worldUIRootTr, false);
 
-            uiManager?.SortWorldUIDepth();
+            //_waterWorldUI?.SEt
+            //uiManager?.SortWorldUIDepth();
+            SetWaterWorldUIOrder();
         }
 
         private void EnsureSowSeeds()
@@ -190,9 +205,9 @@ namespace Game
             var uiManager = UIManager.Instance;
 
             var data = new UI.WorldUI.SowSeeds.Data();
-            data.WithTargetTm(transform)
-                .WithOffset(new Vector2(0, 75f))
-                .WithOrder(SortingOrder);
+            //data.WithTargetTm(transform)
+            //    .WithOffset(new Vector2(0, 75f))
+            //    .WithOrder(SortingOrder + 1000);
 
             _sowSeeds = new GameSystem.ComponentCreator<UI.WorldUI.SowSeeds, UI.WorldUI.SowSeeds.Data>()
                 // .SetRootRectTm(uiManager?.WorldUIGameRootRectTr)
@@ -200,8 +215,9 @@ namespace Game
                 .Create();
             _sowSeeds?.Activate();
             _sowSeeds?.transform.SetParent(worldUIRootTr, false);
-            
-            uiManager?.SortWorldUIDepth();
+
+            SetSowSeedsOrder();
+            //uiManager?.SortWorldUIDepth();
         }
         
         private async UniTask UpdateRemainingGrowthTimeAsync(CancellationToken ct)
@@ -269,10 +285,10 @@ namespace Game
 
             if (activate)
             {
-                _waterWorldUI?.SetOrder(SortingOrder);
+                //_waterWorldUI?.SetOrder(SortingOrder);
                 _waterWorldUI?.Activate();
 
-                _sowSeeds?.SetOrder(SortingOrder);
+                //_sowSeeds?.SetOrder(SortingOrder);
                 _sowSeeds?.Activate();
             }
             else
@@ -291,6 +307,8 @@ namespace Game
 
             if (_plotListener.OnPlotCreated(_data?.ObjectUniqueID))
             {
+                _waterWorldUI?.Deactivate();
+
                 EnsureSowSeeds();
                 UpdateRemainingGrowthTimeAsync(this.GetCancellationTokenOnDestroy()).Forget();
             }
