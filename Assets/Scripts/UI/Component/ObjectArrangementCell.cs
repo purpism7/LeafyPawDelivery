@@ -250,6 +250,9 @@ namespace UI.Component
                 if (_data.ObjectType == ObjectType.Garden)
                     count = UserManager.Instance.GardenPlotCount;
 
+                if (count <= 0)
+                    count = 1;
+                
                 return Mathf.CeilToInt(openCondition.AnimalCurrency * count * 1.25f);
             }
         }
@@ -268,6 +271,9 @@ namespace UI.Component
                 int count = _data.Count;
                 if (_data.ObjectType == ObjectType.Garden)
                     count = UserManager.Instance.GardenPlotCount;
+                
+                if (count <= 0)
+                    count = 1;
 
                 return Mathf.CeilToInt(openCondition.ObjectCurrency * count * 1.5f);
             }

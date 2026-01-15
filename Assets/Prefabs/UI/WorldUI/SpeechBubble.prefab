@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7702542423675110615}
   - component: {fileID: 5408607573927087921}
   - component: {fileID: 4123705467204313491}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 2171730044878117490}
   - component: {fileID: 3852119426018845866}
   - component: {fileID: 5260541295853213280}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 8890135315764139295}
   - component: {fileID: 2918845233454928180}
   - component: {fileID: 8719521748465133948}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: SpeechBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 2454384942344751693}
   - component: {fileID: 4444056203723254606}
   - component: {fileID: 525528336480303930}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +403,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5165180990436983666}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8736719591997337026}
   - component: {fileID: 1539495136983883093}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +457,7 @@ RectTransform:
   m_GameObject: {fileID: 7060482158416606941}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8332575606234368427}

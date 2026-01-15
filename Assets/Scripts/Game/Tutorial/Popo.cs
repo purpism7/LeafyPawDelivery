@@ -123,15 +123,17 @@ namespace Game
             var data = new UI.Component.SpeechBubble.Data
             {
                 // IListener = this,
-                PosY = 120f,
+                PosY = 200f,
             };
-            data.WithTargetTm(speechbubbleRootTr)
-                .WithOffset(new Vector2(0, 20f));
+            // data.WithTargetTm(speechbubbleRootTr)
+            //     .WithOffset(new Vector2(0, 50f));
             
             var speechBubble = new GameSystem.ComponentCreator<UI.Component.SpeechBubble, UI.Component.SpeechBubble.Data>()
                 .SetData(data)
-                .SetRootRectTm(UIManager.Instance?.WorldUISpeechBubbleRootRectTr)
+                // .SetRootRectTm(UIManager.Instance?.WorldUISpeechBubbleRootRectTr)
                 .Create();
+            
+            speechBubble?.transform.SetParent(speechbubbleRootTr, false);
             
             speechBubble?.Enqueue(
                 new UI.Component.SpeechBubble.Constituent()

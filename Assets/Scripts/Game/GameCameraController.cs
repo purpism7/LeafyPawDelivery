@@ -138,7 +138,7 @@ namespace GameSystem
             if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                 return;
 
-            // ZoomInOut();
+            ZoomInOut();
             Drag();
         }
 
@@ -159,7 +159,7 @@ namespace GameSystem
             if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                 return;
 
-            ZoomInOut();
+            // ZoomInOut();
             // Drag();
         }
         #endregion
@@ -219,12 +219,12 @@ namespace GameSystem
 
         private void SetSize()
         {
-            if (GameCamera == null)
+            if (cinemachineCamera == null)
                 return;
         
-            _halfHeight = GameCamera.orthographicSize;
+            _halfHeight = cinemachineCamera.Lens.OrthographicSize;
             Height = _halfHeight * 2f;
-            _width = Height * GameCamera.aspect;
+            _width = Height * cinemachineCamera.Lens.Aspect;
         
             // _dragWidth = _halfHeight * Screen.width / Screen.height;
         }

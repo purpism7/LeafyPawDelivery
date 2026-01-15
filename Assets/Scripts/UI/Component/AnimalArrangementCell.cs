@@ -116,7 +116,7 @@ namespace UI.Component
 
         protected override bool CreateObtainPopup(int animalCurrency, int objectCurrency)
         {
-            bool isPossibleObtain = isPossibleObtain = AnimalOpenConditionContainer.Instance.Check(_data.Id);
+            bool isPossibleObtain = AnimalOpenConditionContainer.Instance.Check(_data.Id);
             if (!isPossibleObtain)
                 return false;
 

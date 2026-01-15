@@ -239,14 +239,18 @@ namespace UI
                 var objectData = ObjectContainer.Instance.GetData(_data.Id);
                 if (objectData == null)
                     return;
-
+                
                 objectGetCurrency?.Initialize(new OpenCondition.Data()
                 {
                     ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(placeData.ObjectSpriteName),
                     Text = objectData.Currency.ToString(),
                     PossibleFunc = () => true,
                 });
-                objectGetCurrency?.Activate();
+                
+                if (objectData.ObjectType == Type.ObjectType.Garden)
+                    objectGetCurrency?.Deactivate();
+                else
+                    objectGetCurrency?.Activate();
             }
         }
 

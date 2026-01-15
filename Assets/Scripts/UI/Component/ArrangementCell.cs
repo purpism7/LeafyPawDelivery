@@ -419,10 +419,7 @@ namespace UI.Component
 
             var mainGameMgr = MainGameManager.Instance;
             var userManager = UserManager.Instance;
-
-            //int animalCurrency = openConditionData.AnimalCurrency;
-            //int objectCurrency = openConditionData.ObjectCurrency;
-
+            
             var currency = new Info.User.Currency
             {
                 PlaceId = GameUtils.ActivityPlaceId,
