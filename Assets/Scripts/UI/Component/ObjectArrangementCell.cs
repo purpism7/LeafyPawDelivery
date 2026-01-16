@@ -233,6 +233,8 @@ namespace UI.Component
 
             objectCurrencyCost?.Initialize(openConditionData);
             objectCurrencyCost?.Activate();
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rootRectTm);
         }
 
         private int RequiredAnimalCurrency
