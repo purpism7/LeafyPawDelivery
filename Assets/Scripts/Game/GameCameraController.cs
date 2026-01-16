@@ -92,9 +92,9 @@ namespace GameSystem
         {
             get
             {
-                if(GameCamera != null)
+                if(cinemachineCamera != null)
                 {
-                    var pos = GameCamera.transform.position + GameCamera.transform.forward;
+                    var pos = cinemachineCamera.transform.position + cinemachineCamera.transform.forward;
                     pos.y = IGrid != null ? IGrid.LimitPosY(pos.y) : pos.y;
 
                     return pos;
@@ -176,8 +176,8 @@ namespace GameSystem
 
             Gizmos.color = Color.yellow;
 
-            float height = GameCamera.orthographicSize * 2f;
-            float width = height * GameCamera.aspect;
+            float height = cinemachineCamera.Lens.OrthographicSize * 2f;
+            float width = height * cinemachineCamera.Lens.Aspect;
 
             Gizmos.DrawWireCube(Center, new Vector3(width - 300f, height - 850f));
         }
@@ -194,10 +194,10 @@ namespace GameSystem
             {
                 case TouchPhase.Began:
                     {
-                        var screenPosition = Input.mousePosition;
-                        screenPosition.z = 10f;
+                        //var screenPosition = Input.mousePosition;
+                        //screenPosition.z = 10f;
             
-                        _lastWorldPosition = GameCamera.ScreenToWorldPoint(screenPosition);
+                        //_lastWorldPosition = GameCamera.ScreenToWorldPoint(screenPosition);
                         
                         break;
                     }
@@ -308,7 +308,7 @@ namespace GameSystem
 
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
             
-            SetOrthographicSize(GameCamera.orthographicSize + deltaMagnitudeDiff);
+            SetOrthographicSize(cinemachineCamera.Lens.OrthographicSize + deltaMagnitudeDiff);
 
             SetSize();
             //
@@ -368,8 +368,8 @@ namespace GameSystem
                 var center = Center;
                 // var halfWidth = (_width - 300f) / 2f;
                 
-                float height = GameCamera.orthographicSize * 2f;
-                float width = height * GameCamera.aspect - 300f;
+                float height = cinemachineCamera.Lens.OrthographicSize * 2f;
+                float width = height * cinemachineCamera.Lens.Aspect - 300f;
                 var halfWidth = width * 0.5f;
                 var randomX = Random.Range(center.x - halfWidth, center.x + halfWidth);
 
@@ -384,7 +384,7 @@ namespace GameSystem
                 var center = Center;
                 // var halfHeight = (Height - 850f) / 2f;
                 
-                float height = GameCamera.orthographicSize * 2f - 850f;
+                float height = cinemachineCamera.Lens.OrthographicSize * 2f - 850f;
                 // float width = height * GameCamera.aspect;
                 var halfHeight = height * 0.5f;
                 var randomY = Random.Range(center.y - halfHeight, center.y + halfHeight);
