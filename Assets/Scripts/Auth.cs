@@ -58,8 +58,23 @@ namespace GameSystem
 
         public async UniTask AsyncInitializeAsync()
         {
-            await UnityServices.InitializeAsync();
-            Debug.Log("UnityServices.State = " + UnityServices.State);
+            try
+            {
+                await UnityServices.InitializeAsync();
+                Debug.Log("UnityServices.State = " + UnityServices.State);
+            }
+            catch (DllNotFoundException ex)
+            {
+                // 에디터에서 GameKitWrapper DLL을 찾을 수 없는 경우 무시
+                if (ex.Message.Contains("GameKitWrapper"))
+                {
+                    Debug.LogWarning("GameKitWrapper DLL not found in editor. This is expected and will work on iOS builds.");
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             _nickName = PlayerPrefs.GetString(Games.Data.PlayPrefsKeyNickName, string.Empty);
 

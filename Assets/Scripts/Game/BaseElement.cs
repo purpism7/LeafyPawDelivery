@@ -40,6 +40,9 @@ namespace Game
         public override void ChainUpdate()
         {
             base.ChainUpdate();
+            
+            // State의 ChainUpdate 호출
+            State?.ChainUpdate();
         }
 
         protected virtual void SetSortingOrder(int order)

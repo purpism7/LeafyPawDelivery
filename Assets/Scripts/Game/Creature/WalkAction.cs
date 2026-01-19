@@ -82,9 +82,18 @@ namespace Game.Creature
 
             _posQueue.Clear();
 
+            const float minDistance = 0.1f;
+            Vector3 currentPos = _data.Tm.localPosition;
+            
+            // 현재 위치와 너무 가까운 경로 지점들을 필터링
             foreach (Vector3 pos in pathPosList)
             {
-                _posQueue.Enqueue(pos);
+                var distance = Vector2.Distance(currentPos, pos);
+                if (distance > minDistance)
+                {
+                    _posQueue.Enqueue(pos);
+                    currentPos = pos; // 다음 지점과의 거리 계산을 위해 업데이트
+                }
             }
 
             if (_posQueue.Count > 0)
@@ -111,11 +120,22 @@ namespace Game.Creature
             if (!animalTm)
                 return false;
 
-            _targetPos = _posQueue.Dequeue();
+            const float minDistance = 0.1f;
+            
+            // 현재 위치와 너무 가까운 목표 위치는 건너뛰기
+            while (_posQueue.Count > 0)
+            {
+                _targetPos = _posQueue.Dequeue();
+                
+                var distance = Vector2.Distance(animalTm.localPosition, _targetPos);
+                if (distance > minDistance)
+                {
+                    _data.SprRenderer.flipX = animalTm.localPosition.x - _targetPos.x < 0;
+                    return true;
+                }
+            }
 
-            _data.SprRenderer.flipX = animalTm.localPosition.x - _targetPos.x < 0;
-
-            return true;
+            return false;
         }
 
         public override void ChainUpdate()

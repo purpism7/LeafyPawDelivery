@@ -12,6 +12,12 @@ namespace Game.Element.State
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private GameSystem.IGrid _iGrid = null;
         
+        private Vector3 _targetPosition = Vector3.zero;
+        private Vector3 _currentVelocity = Vector3.zero;
+        private bool _isDragging = false;
+        private const float _smoothTime = 0.01f; // 매우 빠른 반응
+        private const float _maxSpeed = 500f; // 최대 속도 매우 높게 설정
+        
         public override Base Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             base.Initialize(gameCameraCtr, iGrid);
@@ -34,6 +40,14 @@ namespace Game.Element.State
             Game.UIManager.Instance?.Bottom?.DeactivateEditList();
             MainGameManager.Instance?.GameState?.Get<Game.State.Edit>()?.SetEditElement(gameBaseElement);
 
+            // 초기 목표 위치를 현재 위치로 설정
+            if (gameBaseElement != null)
+            {
+                _targetPosition = gameBaseElement.transform.position;
+                _currentVelocity = Vector3.zero;
+                _isDragging = false;
+            }
+
             OverlapAsync().Forget();
         }
 
@@ -48,6 +62,9 @@ namespace Game.Element.State
             {
                 eTab = elementData.EElement == Game.Type.EElement.Animal ? Game.Type.ETab.Animal : Game.Type.ETab.Object;
             }
+
+            _isDragging = false;
+            _currentVelocity = Vector3.zero;
 
             Game.UIManager.Instance?.Bottom?.ActivateEditList(eTab);
             MainGameManager.Instance?.GameState?.Get<Game.State.Edit>()?.SetEditElement(null);
@@ -70,6 +87,7 @@ namespace Game.Element.State
             {
                 case TouchPhase.Began:
                     {
+                        _isDragging = false;
                         break;
                     }
 
@@ -78,7 +96,7 @@ namespace Game.Element.State
                         if (_gameBaseElement.IsMoving)
                         {
                             Drag(touch);
-
+                            _isDragging = true;
                             SetSelectedLocalPosZ();
                         }
                         
@@ -92,6 +110,7 @@ namespace Game.Element.State
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
+                        _isDragging = false;
                         break;
                     }
             }
@@ -122,8 +141,34 @@ namespace Game.Element.State
             pos.y += 160f;
             pos.y = _iGrid.LimitPosY(pos.y);
 
-            //_gameBaseElement?.SetLocalPos(pos);
-            gameBaseTm.position = pos;
+            // 목표 위치만 설정하고, 실제 이동은 ChainUpdate에서 부드럽게 처리
+            _targetPosition = pos;
+        }
+        
+        public override void ChainUpdate()
+        {
+            base.ChainUpdate();
+            
+            if (_gameBaseElement == null || !_isDragging)
+                return;
+            
+            // 매우 빠른 반응을 위한 부드러운 이동
+            var gameBaseTm = _gameBaseElement.transform;
+            Vector3 currentPos = gameBaseTm.position;
+            
+            // 거리가 매우 가까우면 즉시 이동
+            float distance = Vector3.Distance(currentPos, _targetPosition);
+            if (distance < 0.01f)
+            {
+                gameBaseTm.position = _targetPosition;
+            }
+            else
+            {
+                // Lerp를 사용하여 더 빠르고 부드럽게 이동 (t 값을 크게 하여 빠른 반응)
+                float lerpSpeed = 20f; // Lerp 속도 (높을수록 빠름)
+                Vector3 newPos = Vector3.Lerp(currentPos, _targetPosition, lerpSpeed * Time.deltaTime);
+                gameBaseTm.position = newPos;
+            }
         }
 
         #region Overlap

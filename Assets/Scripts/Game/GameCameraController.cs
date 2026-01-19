@@ -60,6 +60,8 @@ namespace GameSystem
         private readonly Vector2 _mapSize = new Vector2(2000f, 2000f);
 
         private Vector3 _lastWorldPosition;
+        private Vector2 _lastTouchPosition;
+        private bool _isDragging = false;
         private float _halfHeight = 0;
         // private float _dragWidth = 0;
         private Vector3 _velocity = Vector3.zero;
@@ -130,16 +132,41 @@ namespace GameSystem
             if (StopUpdate)
                 return;
 
+            // 에디터 시뮬레이터에서는 터치 입력도 처리
             int touchCnt = Input.touchCount;
-            if (touchCnt <= 0)
-                return;
+            if (touchCnt > 0)
+            {
+                var touch = Input.GetTouch(0);
+                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                    return;
 
-            var touch = Input.GetTouch(0);
-            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-                return;
+                ZoomInOut();
+                Drag();
+            }
+#if UNITY_EDITOR
+            // 에디터에서 터치가 없을 때만 마우스 입력 처리
+            else
+            {
+                // 마우스 드래그 처리
+                if (Input.GetMouseButton(0))
+                {
+                    if (EventSystem.current.IsPointerOverGameObject())
+                        return;
 
-            ZoomInOut();
-            Drag();
+                    DragEditor();
+                }
+                
+                // 마우스 휠 줌인/줌아웃 처리
+                float scroll = Input.GetAxis("Mouse ScrollWheel");
+                if (Mathf.Abs(scroll) > 0.01f)
+                {
+                    if (EventSystem.current.IsPointerOverGameObject())
+                        return;
+
+                    ZoomInOutEditor(scroll);
+                }
+            }
+#endif
         }
 
         #region IFixedUpdater
@@ -194,24 +221,34 @@ namespace GameSystem
             {
                 case TouchPhase.Began:
                     {
-                        //var screenPosition = Input.mousePosition;
-                        //screenPosition.z = 10f;
-            
-                        //_lastWorldPosition = GameCamera.ScreenToWorldPoint(screenPosition);
+                        // 드래그 시작 시 Cinemachine 비활성화
+                        if (cinemachineCamera != null && !_isDragging)
+                        {
+                            cinemachineCamera.SetActive(false);
+                            _isDragging = true;
+                        }
                         
+                        _lastTouchPosition = touch.position;
+                        var screenPosition = new Vector3(touch.position.x, touch.position.y, 0);
+                        _lastWorldPosition = GameCamera.ScreenToWorldPoint(screenPosition);
                         break;
                     }
 
                 case TouchPhase.Moved:
                     {
                         Move(touch);
-
                         break;
                     }
 
                 case TouchPhase.Ended:
                 case TouchPhase.Canceled:
                     {
+                        // 드래그 종료 시에도 Cinemachine은 활성화하지 않음
+                        // (다음 드래그 시작 시 다시 비활성화하므로 상태 유지)
+                        if (_isDragging)
+                        {
+                            _isDragging = false;
+                        }
                         break;
                     }
             }
@@ -263,32 +300,162 @@ namespace GameSystem
 
         private void Move(Touch touch)
         {
-            var targetTr = cinemachineCamera.transform;
-            // var screenPosition = Input.mousePosition;
-            // screenPosition.z = 10f;
-            //
-            // var currentWorldPosition = GameCamera.ScreenToWorldPoint(screenPosition);
-            // Vector3 delta = _lastWorldPosition - currentWorldPosition;
-            //
-            // targetTr.position += delta * 1f;
-            //
-            // _lastWorldPosition = currentWorldPosition;
-            // Camera.main.ScreenToWorldPoint(screenPos);
-
-            var pos = new Vector3(touch.deltaPosition.x, touch.deltaPosition.y, 0);
-            // var cameraTm = cinemachineCamera.Target.TrackingTarget.transform;
-            var targetPos = targetTr.position - pos;
+            // Cinemachine이 비활성화된 상태에서만 직접 제어
+            if (!_isDragging || cinemachineCamera == null)
+                return;
+            
+            // GameCamera를 직접 이동 (Cinemachine이 비활성화되어 있으므로)
+            var cameraTransform = GameCamera.transform;
+            
+            // 이전 터치 위치와 현재 터치 위치의 차이 계산
+            Vector2 deltaScreen = _lastTouchPosition - touch.position;
+            
+            // orthographic 카메라에서 스크린 픽셀을 월드 단위로 변환
+            float orthographicSize = cinemachineCamera.Lens.OrthographicSize;
+            float worldUnitsPerPixel = (orthographicSize * 2f) / Screen.height;
+            
+            // 월드 좌표 델타 계산 (X, Y 모두 같은 비율 사용)
+            Vector3 deltaWorld = new Vector3(
+                deltaScreen.x * worldUnitsPerPixel,
+                deltaScreen.y * worldUnitsPerPixel,
+                0f
+            );
+            
+            // 카메라 위치 업데이트
+            var targetPos = cameraTransform.position + deltaWorld;
             targetPos.z = InitPosZ;
-            //
-            //
-            // // float clampX = GetClampX(movePos.x);
-            // float clampY = GetClampY(movePos.y);
 
-            // var targetPos = new Vector3(clampX, clampY, InitPosZ);
+            // Confiner 영역 내로 제한
+            targetPos = ClampToConfinerBounds(targetPos, orthographicSize);
 
-            targetTr.position = Vector3.SmoothDamp(targetTr.position, targetPos, ref _velocity, _smoothTime * 0.7f);
-            // cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, Time.deltaTime * 2f);
+            cameraTransform.position = Vector3.SmoothDamp(cameraTransform.position, targetPos, ref _velocity, _smoothTime * 0.7f);
+            
+            // 현재 터치 위치 저장
+            _lastTouchPosition = touch.position;
         }
+
+        private Vector3 ClampToConfinerBounds(Vector3 position, float orthographicSize)
+        {
+            var confiner = cinemachineCamera?.GetComponent<CinemachineConfiner2D>();
+            if (confiner == null || confiner.BoundingShape2D == null)
+                return position;
+
+            var bounds = confiner.BoundingShape2D.bounds;
+            
+            // 카메라의 뷰포트 크기 계산
+            float cameraHeight = orthographicSize * 2f;
+            float cameraWidth = cameraHeight * GameCamera.aspect;
+            
+            // 카메라가 bounds 내에 있도록 제한
+            float minX = bounds.min.x + cameraWidth * 0.5f;
+            float maxX = bounds.max.x - cameraWidth * 0.5f;
+            float minY = bounds.min.y + cameraHeight * 0.5f;
+            float maxY = bounds.max.y - cameraHeight * 0.5f;
+            
+            // bounds가 카메라보다 작은 경우 중앙에 고정
+            if (minX > maxX)
+            {
+                minX = maxX = bounds.center.x;
+            }
+            if (minY > maxY)
+            {
+                minY = maxY = bounds.center.y;
+            }
+            
+            return new Vector3(
+                Mathf.Clamp(position.x, minX, maxX),
+                Mathf.Clamp(position.y, minY, maxY),
+                position.z
+            );
+        }
+
+        private void SyncCinemachinePosition()
+        {
+            if (cinemachineCamera == null || GameCamera == null)
+                return;
+
+            // GameCamera의 현재 위치를 Cinemachine Transform에 동기화
+            var cameraPos = GameCamera.transform.position;
+            var cinemachineTransform = cinemachineCamera.transform;
+            
+            // Center 속성: cinemachineCamera.transform.position + cinemachineCamera.transform.forward
+            // 따라서 GameCamera 위치에서 forward를 빼면 Cinemachine 위치가 됨
+            var targetPos = cameraPos - cinemachineTransform.forward;
+            targetPos.z = InitPosZ;
+            
+            // Cinemachine을 비활성화한 상태에서 위치 설정
+            cinemachineTransform.position = targetPos;
+            
+            // 한 프레임 대기 후 활성화하여 위치가 적용되도록 함
+            // (이미 호출하는 곳에서 활성화하므로 여기서는 위치만 설정)
+        }
+
+#if UNITY_EDITOR
+        private void DragEditor()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                // 드래그 시작 시 Cinemachine 비활성화
+                if (cinemachineCamera != null && !_isDragging)
+                {
+                    cinemachineCamera.SetActive(false);
+                    _isDragging = true;
+                }
+                
+                var screenPosition = Input.mousePosition;
+                screenPosition.z = GameCamera.nearClipPlane;
+                _lastWorldPosition = GameCamera.ScreenToWorldPoint(screenPosition);
+                return;
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                var screenPosition = Input.mousePosition;
+                screenPosition.z = GameCamera.nearClipPlane;
+                var currentWorldPosition = GameCamera.ScreenToWorldPoint(screenPosition);
+                Vector3 delta = _lastWorldPosition - currentWorldPosition;
+
+                // GameCamera를 직접 이동 (Cinemachine이 비활성화되어 있으므로)
+                var cameraTransform = GameCamera.transform;
+                var targetPos = cameraTransform.position + delta;
+                targetPos.z = InitPosZ;
+
+                // Confiner 영역 내로 제한
+                float orthographicSize = cinemachineCamera != null ? cinemachineCamera.Lens.OrthographicSize : DefaultOrthographicSize;
+                targetPos = ClampToConfinerBounds(targetPos, orthographicSize);
+
+                cameraTransform.position = Vector3.SmoothDamp(cameraTransform.position, targetPos, ref _velocity, _smoothTime * 0.7f);
+                _lastWorldPosition = currentWorldPosition;
+            }
+            
+            if (Input.GetMouseButtonUp(0))
+            {
+                // 드래그 종료 시에도 Cinemachine은 활성화하지 않음
+                // (다음 드래그 시작 시 다시 비활성화하므로 상태 유지)
+                if (_isDragging)
+                {
+                    _isDragging = false;
+                }
+            }
+        }
+
+        private void ZoomInOutEditor(float scrollDelta)
+        {
+            if (cinemachineCamera == null)
+                return;
+
+            // 마우스 휠 스크롤 값을 줌인/줌아웃으로 변환
+            // 스크롤 값이 클수록 더 빠르게 줌인/줌아웃
+            float zoomSpeed = 100f; // 줌 속도 조절
+            float deltaSize = -scrollDelta * zoomSpeed; // 스크롤 업(양수) = 줌인(크기 감소), 스크롤 다운(음수) = 줌아웃(크기 증가)
+            
+            float currentSize = cinemachineCamera.Lens.OrthographicSize;
+            float newSize = currentSize + deltaSize;
+            
+            SetOrthographicSize(newSize);
+            SetSize();
+        }
+#endif
 
         private void ZoomInOut()
         {
