@@ -353,7 +353,7 @@ namespace GameSystem
         {
             GameUtils.SetActive(cinemachineCamera, false);
             
-            await GameCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 0.5f);
+            await cinemachineCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 0.5f);
             
             GameUtils.SetActive(cinemachineCamera, true);
         }

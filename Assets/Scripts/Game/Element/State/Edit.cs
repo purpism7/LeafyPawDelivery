@@ -12,8 +12,8 @@ namespace Game.Element.State
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private GameSystem.IGrid _iGrid = null;
 
-        private Vector3 _currentVelocity = Vector3.zero; // ÇöÀç ¼Óµµ¸¦ ÀúÀåÇÒ º¯¼ö
-        public float smoothTime = 0.01f; // µµ´ÞÇÏ´Â µ¥ °É¸®´Â ½Ã°£ (ÀÛÀ»¼ö·Ï ºü¸§, Å¬¼ö·Ï ºÎµå·¯¿ò)
+        private Vector3 _currentVelocity = Vector3.zero;
+        public float smoothTime = 0.005f; 
 
         public override Base Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
@@ -145,22 +145,22 @@ namespace Game.Element.State
 
             var gameBaseTm = _gameBaseElement.transform;
 
-            // 1. ¸ñÇ¥ À§Ä¡ °è»ê (±âÁ¸ ·ÎÁ÷ À¯Áö)
+            // 1. ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
             float distance = gameCamera.WorldToScreenPoint(gameBaseTm.position).z;
             Vector3 movePos = new Vector3(touchPos.x, touchPos.y, distance);
-            Vector3 targetPos = gameCamera.ScreenToWorldPoint(movePos); // º¯¼ö¸í pos -> targetPos·Î º¯°æ (¸íÈ®¼ºÀ» À§ÇØ)
+            Vector3 targetPos = gameCamera.ScreenToWorldPoint(movePos); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ pos -> targetPosï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
             targetPos.y += 160f;
             targetPos.y = _iGrid.LimitPosY(targetPos.y);
 
-            // 2. ºÎµå·´°Ô ÀÌµ¿ Àû¿ë (¼öÁ¤µÈ ºÎºÐ)
-            // gameBaseTm.position = targetPos; // <-- ±âÁ¸ÀÇ µüµüÇÑ ÀÌµ¿
+            // 2. ï¿½Îµå·´ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½)
+            // gameBaseTm.position = targetPos; // <-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 
             gameBaseTm.position = Vector3.SmoothDamp(
-                gameBaseTm.position, // ÇöÀç À§Ä¡
-                targetPos,           // ¸ñÇ¥ À§Ä¡
-                ref _currentVelocity,// ÇöÀç ¼Óµµ (ÇÔ¼ö°¡ ½ÇÇàµÇ¸é¼­ °è¼Ó °»½ÅµÊ)
-                smoothTime           // Áö¿¬ ½Ã°£ (º¸Åë 0.1f ~ 0.3f ÃßÃµ)
+                gameBaseTm.position, // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+                targetPos,           // ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡
+                ref _currentVelocity,// ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½ (ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¸é¼­ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Åµï¿½)
+                smoothTime           // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ (ï¿½ï¿½ï¿½ï¿½ 0.1f ~ 0.3f ï¿½ï¿½Ãµ)
             );
         }
 

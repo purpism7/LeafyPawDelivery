@@ -82,9 +82,18 @@ namespace Game.Creature
 
             _posQueue.Clear();
 
+            const float minDistance = 0.1f;
+            Vector3 currentPos = _data.Tm.localPosition;
+            
+            // 현재 위치와 너무 가까운 경로 지점들을 필터링
             foreach (Vector3 pos in pathPosList)
             {
-                _posQueue.Enqueue(pos);
+                var distance = Vector2.Distance(currentPos, pos);
+                if (distance > minDistance)
+                {
+                    _posQueue.Enqueue(pos);
+                    currentPos = pos; // 다음 지점과의 거리 계산을 위해 업데이트
+                }
             }
 
             if (_posQueue.Count > 0)
