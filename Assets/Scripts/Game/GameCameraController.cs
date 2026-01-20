@@ -42,6 +42,7 @@ namespace GameSystem
         void ZoomOut(System.Action endAction);
 
         void SetConfinerBoundingShape(Collider2D collider);
+        void SetCinemachineCameraPosition(float x, float y);
     }
 
     public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtr
@@ -116,8 +117,12 @@ namespace GameSystem
                 _smoothTime = 0.01f;
             }
 
-            follwCamera?.SetActive(false);
-            
+            if(follwCamera != null)
+            {
+                follwCamera.Follow = null;
+                follwCamera.SetActive(false);
+            }
+
             SetSize();
             SetStopUpdate(true);
         }
@@ -542,6 +547,15 @@ namespace GameSystem
                 return;
 
             confiner.BoundingShape2D = collider;
+        }
+
+        void IGameCameraCtr.SetCinemachineCameraPosition(float x, float y)
+        {
+            if (cinemachineCamera == null)
+                return;
+
+            var position = new Vector3(x, y, InitPosZ);
+            cinemachineCamera.transform.position = position;
         }
         #endregion
     }

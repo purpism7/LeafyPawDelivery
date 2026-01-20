@@ -117,7 +117,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         placeMgr?.Initialize(gardenManager);
 
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
-        yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(null));
+        yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(
+            new Game.StoryManager.Data
+            {
+                PlaceId = activityPlaceId,
+            }));
         yield return StartCoroutine(boostMgr?.CoInitialize(
             new Game.BoostManager.Data
             {
@@ -252,8 +256,9 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         IGameCameraCtr?.SetConfinerBoundingShape(placeMgr?.ActivityIPlace?.Collider);
 
         await UniTask.WaitUntil(() => endEnterPlace);
+        IGameCameraCtr?.SetCinemachineCameraPosition(0, 0);
 
-        if(IsTutorial)
+        if (IsTutorial)
         {
             InitializeTutorialManager();
 

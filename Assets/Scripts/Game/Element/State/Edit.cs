@@ -11,7 +11,10 @@ namespace Game.Element.State
     {
         private GameSystem.GameCameraController _gameCameraCtr = null;
         private GameSystem.IGrid _iGrid = null;
-        
+
+        private Vector3 _currentVelocity = Vector3.zero; // 현재 속도를 저장할 변수
+        public float smoothTime = 0.01f; // 도달하는 데 걸리는 시간 (작을수록 빠름, 클수록 부드러움)
+
         public override Base Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
             base.Initialize(gameCameraCtr, iGrid);
@@ -99,6 +102,33 @@ namespace Game.Element.State
             OverlapAsync().Forget();
         }
 
+        //private void Drag(Touch? touch)
+        //{
+        //    if (touch == null)
+        //        return;
+
+        //    Vector3 touchPos = touch.Value.position;
+
+        //    if (_gameBaseElement == null)
+        //        return;
+
+        //    var gameCamera = _gameCameraCtr?.GameCamera;
+        //    if (gameCamera == null)
+        //        return;
+
+        //    var gameBaseTm = _gameBaseElement.transform;
+
+        //    float distance = gameCamera.WorldToScreenPoint(gameBaseTm.position).z;
+        //    Vector3 movePos = new Vector3(touchPos.x, touchPos.y, distance);
+        //    Vector3 pos = gameCamera.ScreenToWorldPoint(movePos);
+
+        //    pos.y += 160f;
+        //    pos.y = _iGrid.LimitPosY(pos.y);
+
+        //    //_gameBaseElement?.SetLocalPos(pos);
+        //    gameBaseTm.position = pos;
+        //}
+
         private void Drag(Touch? touch)
         {
             if (touch == null)
@@ -115,15 +145,23 @@ namespace Game.Element.State
 
             var gameBaseTm = _gameBaseElement.transform;
 
+            // 1. 목표 위치 계산 (기존 로직 유지)
             float distance = gameCamera.WorldToScreenPoint(gameBaseTm.position).z;
             Vector3 movePos = new Vector3(touchPos.x, touchPos.y, distance);
-            Vector3 pos = gameCamera.ScreenToWorldPoint(movePos);
+            Vector3 targetPos = gameCamera.ScreenToWorldPoint(movePos); // 변수명 pos -> targetPos로 변경 (명확성을 위해)
 
-            pos.y += 160f;
-            pos.y = _iGrid.LimitPosY(pos.y);
+            targetPos.y += 160f;
+            targetPos.y = _iGrid.LimitPosY(targetPos.y);
 
-            //_gameBaseElement?.SetLocalPos(pos);
-            gameBaseTm.position = pos;
+            // 2. 부드럽게 이동 적용 (수정된 부분)
+            // gameBaseTm.position = targetPos; // <-- 기존의 딱딱한 이동
+
+            gameBaseTm.position = Vector3.SmoothDamp(
+                gameBaseTm.position, // 현재 위치
+                targetPos,           // 목표 위치
+                ref _currentVelocity,// 현재 속도 (함수가 실행되면서 계속 갱신됨)
+                smoothTime           // 지연 시간 (보통 0.1f ~ 0.3f 추천)
+            );
         }
 
         #region Overlap

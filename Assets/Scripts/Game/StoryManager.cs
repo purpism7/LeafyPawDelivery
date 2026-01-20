@@ -14,7 +14,7 @@ namespace Game
     {
         public class Data : Manager.BaseData
         {
-            
+            public int PlaceId = 0;
         }
 
         private List<GameObject> _storyPrefabList = new();
