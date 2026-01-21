@@ -207,20 +207,6 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         }
     }
 
-    public async UniTask EndLoadAsync(bool initialize)
-    {
-        await AnimEnterPlaceAsync();
-        await UniTask.Yield();
-
-        if(!IsTutorial)
-            Starter();
-        
-        if (initialize)
-            CheckOpenLastPlace();
-        
-        Game.Notification.Get?.AllNotify();
-    }
-
     private async UniTask AnimEnterPlaceAsync()
     {
         bool endEnterPlace = false;
@@ -256,8 +242,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         IGameCameraCtr?.SetConfinerBoundingShape(placeMgr?.ActivityIPlace?.Collider);
 
         await UniTask.WaitUntil(() => endEnterPlace);
-        IGameCameraCtr?.SetCinemachineCameraPosition(0, 0);
-
+        
         if (IsTutorial)
         {
             InitializeTutorialManager();
@@ -271,6 +256,20 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         IGameCameraCtr?.SetStopUpdate(false);
 
         OpenContent();
+    }
+
+    public async UniTask EndLoadAsync(bool initialize)
+    {
+        await AnimEnterPlaceAsync();
+        await UniTask.Yield();
+
+        if(!IsTutorial)
+            Starter();
+        
+        if (initialize)
+            CheckOpenLastPlace();
+        
+        Game.Notification.Get?.AllNotify();
     }
 
     private void InitializeTutorialManager()

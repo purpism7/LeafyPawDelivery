@@ -95,7 +95,7 @@ namespace GameSystem
             {
                 if(cinemachineCamera != null)
                 {
-                    var pos = cinemachineCamera.transform.position + cinemachineCamera.transform.forward;
+                    var pos = GameCamera.transform.position + GameCamera.transform.forward;
                     pos.y = IGrid != null ? IGrid.LimitPosY(pos.y) : pos.y;
 
                     return pos;
@@ -181,8 +181,8 @@ namespace GameSystem
 
             Gizmos.color = Color.yellow;
 
-            float height = cinemachineCamera.Lens.OrthographicSize * 2f;
-            float width = height * cinemachineCamera.Lens.Aspect;
+            float height = GameCamera.orthographicSize * 2f;
+            float width = height * GameCamera.aspect;
 
             Gizmos.DrawWireCube(Center, new Vector3(width - 300f, height - 850f));
         }
@@ -221,15 +221,61 @@ namespace GameSystem
                     }
             }
         }
+        
+        private Vector3 ClampToConfinerBounds(Vector3 targetPos)
+        {
+            // 1. 시네머신 및 Confiner 컴포넌트 가져오기
+            if (cinemachineCamera == null) 
+                return targetPos;
+    
+            var confiner = cinemachineCamera.GetComponent<CinemachineConfiner2D>();
+    
+            // Confiner가 없거나, BoundingShape(콜라이더)가 연결 안 되어 있으면 제한 없이 리턴
+            if (confiner == null || confiner.BoundingShape2D == null)
+                return targetPos;
+
+            // 2. 현재 카메라의 화면 크기(절반) 계산
+            // 드래그 중에는 Cinemachine이 꺼져있을 수 있으므로 MainCamera(GameCamera) 기준으로 계산 권장
+            float vertExtent = GameCamera.orthographicSize; 
+            float horzExtent = vertExtent * GameCamera.aspect;
+
+            // 3. 콜라이더 영역(Bounds) 가져오기
+            Bounds bounds = confiner.BoundingShape2D.bounds;
+
+            // 4. 제한 영역 계산 (콜라이더 내부 - 카메라 크기)
+            // 카메라가 맵 밖으로 나가지 않으려면 [min + 카메라반크기 ~ max - 카메라반크기] 사이여야 함
+            float minX = bounds.min.x + horzExtent;
+            float maxX = bounds.max.x - horzExtent;
+            float minY = bounds.min.y + vertExtent;
+            float maxY = bounds.max.y - vertExtent;
+
+            // 5. 맵이 카메라보다 작은 경우 예외 처리 (항상 중앙에 위치)
+            if (minX > maxX)
+            {
+                // 맵 폭이 카메라보다 좁으면 맵의 중심 X좌표로 고정
+                minX = maxX = bounds.center.x; 
+            }
+            if (minY > maxY)
+            {
+                // 맵 높이가 카메라보다 낮으면 맵의 중심 Y좌표로 고정
+                minY = maxY = bounds.center.y;
+            }
+
+            // 6. 좌표 클램핑 (Clamp)
+            float clampedX = Mathf.Clamp(targetPos.x, minX, maxX);
+            float clampedY = Mathf.Clamp(targetPos.y, minY, maxY);
+
+            return new Vector3(clampedX, clampedY, targetPos.z);
+        }
 
         private void SetSize()
         {
-            if (cinemachineCamera == null)
+            if (GameCamera == null)
                 return;
         
-            _halfHeight = cinemachineCamera.Lens.OrthographicSize;
+            _halfHeight = GameCamera.orthographicSize;
             Height = _halfHeight * 2f;
-            _width = Height * cinemachineCamera.Lens.Aspect;
+            _width = Height * GameCamera.aspect;
         
             // _dragWidth = _halfHeight * Screen.width / Screen.height;
         }
@@ -237,62 +283,20 @@ namespace GameSystem
         private void SetOrthographicSize(float orthographicSize)
         {
             var resOrthographicSize = Mathf.Clamp(orthographicSize, MinOrthographicSize, MaxOrthographicSize);
-            //
-            // if(isLerp)
-            // {
-            //     GameCamera.orthographicSize = Mathf.Lerp(GameCamera.orthographicSize, resOrthographicSize, Time.deltaTime * timeOffset);
-            // }
-            // else
-            // {
-            //     GameCamera.orthographicSize = resOrthographicSize;
-            // }
-
-            cinemachineCamera.Lens.OrthographicSize = resOrthographicSize;
-            // virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(virtualCamera.m_Lens.OrthographicSize,
-            //     resOrthographicSize, Time.deltaTime);
+            GameCamera.orthographicSize = resOrthographicSize;
         }
-
-        // private float GetClampX(float posX)
-        // {
-        //     float x = _mapSize.x - _dragWidth;
-        //
-        //     return Mathf.Clamp(posX, -x + _center.x, x + _center.x);
-        // }
-        //
-        // private float GetClampY(float posY)
-        // {
-        //     float y = _mapSize.y - _halfHeight;
-        //
-        //     return Mathf.Clamp(posY, -y + _center.y, y + _center.y);
-        // }
 
         private void Move(Touch touch)
         {
-            var targetTr = cinemachineCamera.transform;
-            // var screenPosition = Input.mousePosition;
-            // screenPosition.z = 10f;
-            //
-            // var currentWorldPosition = GameCamera.ScreenToWorldPoint(screenPosition);
-            // Vector3 delta = _lastWorldPosition - currentWorldPosition;
-            //
-            // targetTr.position += delta * 1f;
-            //
-            // _lastWorldPosition = currentWorldPosition;
-            // Camera.main.ScreenToWorldPoint(screenPos);
-
+            var targetTr = GameCamera.transform;
+            
             var pos = new Vector3(touch.deltaPosition.x, touch.deltaPosition.y, 0);
             // var cameraTm = cinemachineCamera.Target.TrackingTarget.transform;
             var targetPos = targetTr.position - pos;
             targetPos.z = InitPosZ;
-            //
-            //
-            // // float clampX = GetClampX(movePos.x);
-            // float clampY = GetClampY(movePos.y);
-
-            // var targetPos = new Vector3(clampX, clampY, InitPosZ);
-
+            targetPos = ClampToConfinerBounds(targetPos);
+   
             targetTr.position = Vector3.SmoothDamp(targetTr.position, targetPos, ref _velocity, _smoothTime * 0.7f);
-            // cameraTm.position = Vector3.Lerp(cameraTm.position, targetPos, Time.deltaTime * 2f);
         }
 
         private void ZoomInOut()
@@ -313,16 +317,8 @@ namespace GameSystem
 
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
             
-            SetOrthographicSize(cinemachineCamera.Lens.OrthographicSize + deltaMagnitudeDiff);
-
+            SetOrthographicSize(GameCamera.orthographicSize + deltaMagnitudeDiff);
             SetSize();
-            //
-            // var cameraTm = GameCamera.transform;
-            //
-            // float clampX = GetClampX(cameraTm.position.x);
-            // float clampY = GetClampY(cameraTm.position.y);
-            // var targetPos = new Vector3(clampX, clampY, InitPosZ);
-            // cameraTm.position = targetPos;
         }
 
         public void SetStopUpdate(bool stopUpdate)
@@ -336,26 +332,13 @@ namespace GameSystem
             SetOrthographicSize(orthographicSize);
         }
 
-        // void IGameCameraCtr.MoveCenterGameCamera()
-        // {
-        //     // _isMoveCenter = true;
-        //     // Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, GameCamera.nearClipPlane);
-        //     // Vector3 worldCenter = GameCamera.ScreenToWorldPoint(screenCenter);
-        //     // worldCenter.z = InitPosZ;
-        //
-        //     GameUtils.SetActive(virtualCamera, false);
-        //     GameCamera.transform.position = new Vector3(0, 0, InitPosZ);
-        //     GameUtils.SetActive(virtualCamera, true);
-        //     // GameCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 1f);
-        // }
-        
         public async UniTask MoveCenterGameCameraAsync()
         {
-            GameUtils.SetActive(cinemachineCamera, false);
+            // GameUtils.SetActive(cinemachineCamera, false);
             
-            await cinemachineCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 0.5f);
+            await GameCamera.transform.DOMove(new Vector3(0, 0, InitPosZ), 0.5f);
             
-            GameUtils.SetActive(cinemachineCamera, true);
+            // GameUtils.SetActive(cinemachineCamera, true);
         }
 
         float IGameCameraCtr.GameCameraWidth
@@ -373,8 +356,8 @@ namespace GameSystem
                 var center = Center;
                 // var halfWidth = (_width - 300f) / 2f;
                 
-                float height = cinemachineCamera.Lens.OrthographicSize * 2f;
-                float width = height * cinemachineCamera.Lens.Aspect - 300f;
+                float height = GameCamera.orthographicSize * 2f;
+                float width = height * GameCamera.aspect - 300f;
                 var halfWidth = width * 0.5f;
                 var randomX = Random.Range(center.x - halfWidth, center.x + halfWidth);
 
@@ -389,7 +372,7 @@ namespace GameSystem
                 var center = Center;
                 // var halfHeight = (Height - 850f) / 2f;
                 
-                float height = cinemachineCamera.Lens.OrthographicSize * 2f - 850f;
+                float height = GameCamera.orthographicSize * 2f - 850f;
                 // float width = height * GameCamera.aspect;
                 var halfHeight = height * 0.5f;
                 var randomY = Random.Range(center.y - halfHeight, center.y + halfHeight);
@@ -438,6 +421,59 @@ namespace GameSystem
             }
         }
 
+        private async UniTask ZoomInAsync(Transform targetTr, System.Action endAction)
+        {
+            if (follwCamera == null)
+                return;
+
+            // 1. 현재 메인 카메라의 상태를 캡처
+            Vector3 startPos = GameCamera.transform.position;
+            startPos.z = InitPosZ; // 2D 환경에서 Z축 유지
+            float startSize = GameCamera.orthographicSize;
+    
+            // 2. Follow 카메라 초기 설정 (타겟을 잠시 비워둠)
+            follwCamera.Follow = null; 
+            follwCamera.transform.position = startPos;
+            follwCamera.Lens.OrthographicSize = startSize;
+
+            // 3. 카메라 교체
+            follwCamera.SetActive(true);
+
+            // 4. 최종 목표 위치 계산 (미리 Clamp 적용)
+            Vector3 targetPos = ClampToConfinerBounds(new Vector3(targetTr.position.x, targetTr.position.y, InitPosZ));
+            float targetSize = 500f; // 목표 줌 사이즈
+            
+            // 애니메이션 시간 설정
+            float distance = Vector3.Distance(startPos, targetPos);
+            float duration = Mathf.Max(distance * 0.001f, 1f); 
+            float timeElapsed = 0f;
+
+            // 5. 부드러운 이동 루프 (위치와 줌을 동시에 이동)
+            while (timeElapsed < duration)
+            {
+                timeElapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(timeElapsed / duration);
+                float curveT = Mathf.SmoothStep(0f, 1f, t);
+
+                // 위치와 줌을 직접 보간 (Follow가 null이므로 직접 제어 가능)
+                follwCamera.transform.position = Vector3.Lerp(startPos, targetPos, curveT);
+                follwCamera.Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, curveT);
+
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
+
+            // 6. [중요] 도착 후 최종 상태 고정 및 Follow 연결
+            follwCamera.transform.position = targetPos;
+            follwCamera.Lens.OrthographicSize = targetSize;
+
+            // 시네머신 내부 로직이 현재 위치를 '기본값'으로 인식하게 함 (위치 튐 방지)
+            // follwCamera.OnTargetObjectWarped(targetTr, targetPos - targetTr.position);
+            // follwCamera.Follow = null;
+
+            await UniTask.Yield();
+            endAction?.Invoke();
+        }
+
         void IGameCameraCtr.ZoomIn(Transform targetTr, System.Action endAction)
         {
             if (GameCamera == null)
@@ -450,87 +486,28 @@ namespace GameSystem
             ZoomInAsync(targetTr, endAction).Forget();
         }
 
-        private async UniTask ZoomInAsync(Transform targetTr, System.Action endAction)
-        {
-            if (follwCamera == null)
-                return;
-
-            if (cinemachineCamera == null)
-                return;
-            
-            cinemachineCamera.SetActive(false);
-            follwCamera.SetActive(true);
-
-            follwCamera.Lens.OrthographicSize = DefaultOrthographicSize;
-            follwCamera.Follow = targetTr;
-  
-            // 2. 초기값 설정
-            float startSize = follwCamera.Lens.OrthographicSize;
-            float targetSize = 500f; // 매우 큰 값인데, 2D라면 보통 5 전후를 사용하니 확인 필요!
-            
-            // 이동 거리에 따른 동적 시간 계산
-            float distance = Mathf.Abs(startSize - targetSize);
-            float duration = Mathf.Max(distance * 0.002f, 0.5f); // 너무 빠르지 않게 최소값 조정
-            float timeElapsed = 0f;
-
-            // 3. 부드러운 이동 루프
-            while (timeElapsed < duration)
-            {
-                timeElapsed += Time.deltaTime;
-                float t = Mathf.Clamp01(timeElapsed / duration);
-                float curveT = Mathf.SmoothStep(0f, 1f, t);
-
-                // [중요] Lens 크기 변경
-                follwCamera.Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, curveT);
-
-                await UniTask.Yield(PlayerLoopTiming.Update);
-            }
-
-            // 4. 최종 수치 고정
-            follwCamera.Lens.OrthographicSize = targetSize;
-            cinemachineCamera.Lens.OrthographicSize = targetSize;
-
-            await UniTask.Yield();
-            endAction?.Invoke();
-        }
-
         void IGameCameraCtr.ZoomOut(System.Action endAction)
         {
             if (cinemachineCamera == null)
                 return;
 
             ZoomOutAsync(endAction).Forget();
-            // float duration = 1f;
-            // DOTween.To(() => cinemachineCamera.Lens.OrthographicSize,
-            //         size => cinemachineCamera.Lens.OrthographicSize = size, DefaultOrthographicSize, duration)
-            //     .SetEase(Ease.Linear);
-            //
-            // await UniTask.Delay(TimeSpan.FromSeconds(duration));
-            
-            // Sequence sequence = DOTween.Sequence()
-            //     .SetAutoKill(false)
-            //     .Append()
-            //     .OnComplete(() =>
-            //     {
-            //         
-            //     });
-            // sequence.Restart();
         }
 
         private async UniTask ZoomOutAsync(System.Action endAction)
         {
-            if (cinemachineCamera == null)
+            if (GameCamera == null)
                 return;
             
             follwCamera.SetActive(false);
-            cinemachineCamera?.SetActive(true);
+            // cinemachineCamera?.SetActive(true);
             
             follwCamera.Follow = null;
             
             float duration = 1f;
             
-            await DOTween.To(() => cinemachineCamera.Lens.OrthographicSize,
-                    size => cinemachineCamera.Lens.OrthographicSize = size, DefaultOrthographicSize, duration)
+            await DOTween.To(() => GameCamera.orthographicSize,
+                    size => GameCamera.orthographicSize = size, DefaultOrthographicSize, duration)
                 .SetEase(Ease.Linear);
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
             

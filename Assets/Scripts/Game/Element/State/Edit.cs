@@ -13,7 +13,7 @@ namespace Game.Element.State
         private GameSystem.IGrid _iGrid = null;
 
         private Vector3 _currentVelocity = Vector3.zero;
-        public float smoothTime = 0.005f; 
+        private float _smoothTime = 0.005f; 
 
         public override Base Initialize(GameSystem.GameCameraController gameCameraCtr, GameSystem.IGrid iGrid)
         {
@@ -160,7 +160,7 @@ namespace Game.Element.State
                 gameBaseTm.position, // ���� ��ġ
                 targetPos,           // ��ǥ ��ġ
                 ref _currentVelocity,// ���� �ӵ� (�Լ��� ����Ǹ鼭 ��� ���ŵ�)
-                smoothTime           // ���� �ð� (���� 0.1f ~ 0.3f ��õ)
+                _smoothTime           // ���� �ð� (���� 0.1f ~ 0.3f ��õ)
             );
         }
 
