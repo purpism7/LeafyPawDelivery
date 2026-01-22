@@ -42,7 +42,6 @@ namespace GameSystem
         void ZoomOut(System.Action endAction);
 
         void SetConfinerBoundingShape(Collider2D collider);
-        void SetCinemachineCameraPosition(float x, float y);
     }
 
     public class GameCameraController : MonoBehaviour, IFixedUpdater, IGameCameraCtr
@@ -304,21 +303,28 @@ namespace GameSystem
             int touchCnt = Input.touchCount;
             if (touchCnt != 2)
                 return;
-            
+    
             var firTouch = Input.GetTouch(0);
             var secTouch = Input.GetTouch(1);
 
             var firPrevPos = firTouch.position - firTouch.deltaPosition;
             var secPrevPos = secTouch.position - secTouch.deltaPosition;
 
-            // 각 프레임에서 터치 사이의 벡터 거리 구함
-            float prevTouchDeltaMag = (firPrevPos - secPrevPos).magnitude; //magnitude는 두 점간의 거리 비교(벡터)
+            // 1. 터치 델타 계산
+            float prevTouchDeltaMag = (firPrevPos - secPrevPos).magnitude;
             float touchDeltaMag = (firTouch.position - secTouch.position).magnitude;
-
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
-            
-            SetOrthographicSize(GameCamera.orthographicSize + deltaMagnitudeDiff);
+
+            // 2. 새로운 오쏘그래픽 사이즈 계산 및 적용
+            // (SetOrthographicSize 내부에서 이미 Clamp가 되어 있다고 가정)
+            float targetSize = GameCamera.orthographicSize + (deltaMagnitudeDiff * 2.0f); // 감도 조절 필요 시 곱셈 추가
+            SetOrthographicSize(targetSize);
+    
+            // 3. 사이즈 정보 갱신 (Height, Width 등 업데이트)
             SetSize();
+
+            Vector3 clampedPos = ClampToConfinerBounds(GameCamera.transform.position);
+            GameCamera.transform.position = clampedPos;
         }
 
         public void SetStopUpdate(bool stopUpdate)
@@ -465,6 +471,8 @@ namespace GameSystem
             // 6. [중요] 도착 후 최종 상태 고정 및 Follow 연결
             follwCamera.transform.position = targetPos;
             follwCamera.Lens.OrthographicSize = targetSize;
+            
+            follwCamera.ForceCameraPosition(targetPos, Quaternion.identity);
 
             // 시네머신 내부 로직이 현재 위치를 '기본값'으로 인식하게 함 (위치 튐 방지)
             // follwCamera.OnTargetObjectWarped(targetTr, targetPos - targetTr.position);
@@ -524,15 +532,6 @@ namespace GameSystem
                 return;
 
             confiner.BoundingShape2D = collider;
-        }
-
-        void IGameCameraCtr.SetCinemachineCameraPosition(float x, float y)
-        {
-            if (cinemachineCamera == null)
-                return;
-
-            var position = new Vector3(x, y, InitPosZ);
-            cinemachineCamera.transform.position = position;
         }
         #endregion
     }
