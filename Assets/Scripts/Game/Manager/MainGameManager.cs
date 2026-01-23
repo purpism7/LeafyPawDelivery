@@ -88,7 +88,25 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
 
         _gameStateDic.Clear();
         
+        // 시스템 트레이/메뉴바 매니저 초기화 (Windows/macOS)
+        InitializeSystemTray();
+        
         Debug.Log("MainGameManager initialized");
+    }
+
+    private void InitializeSystemTray()
+    {
+#if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_EDITOR_WIN || UNITY_EDITOR_OSX
+        // 백그라운드에서도 실행되도록 설정
+        Application.runInBackground = true;
+        
+        // 시스템 트레이 매니저 초기화
+        var systemTrayMgr = Plugin.SystemTrayManager.Instance;
+        if (systemTrayMgr != null)
+        {
+            Debug.Log("SystemTrayManager initialized in MainGameManager");
+        }
+#endif
     }
 
     public override IEnumerator CoInit(GameSystem.IPreprocessingProvider iProvider)
