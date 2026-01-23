@@ -221,7 +221,7 @@ namespace GameSystem
             }
         }
         
-        private Vector3 ClampToConfinerBounds(Vector3 targetPos)
+        private Vector3 ClampToConfinerBounds(Vector3 targetPos, Camera camera = null)
         {
             // 1. 시네머신 및 Confiner 컴포넌트 가져오기
             if (cinemachineCamera == null) 
@@ -234,9 +234,44 @@ namespace GameSystem
                 return targetPos;
 
             // 2. 현재 카메라의 화면 크기(절반) 계산
-            // 드래그 중에는 Cinemachine이 꺼져있을 수 있으므로 MainCamera(GameCamera) 기준으로 계산 권장
-            float vertExtent = GameCamera.orthographicSize; 
-            float horzExtent = vertExtent * GameCamera.aspect;
+            // camera 파라미터가 제공되면 해당 카메라 사용, 없으면 GameCamera 사용
+            Camera cam = camera != null ? camera : GameCamera;
+            if (cam == null)
+                return targetPos;
+                
+            float vertExtent = cam.orthographicSize; 
+            float horzExtent = vertExtent * cam.aspect;
+            
+            return ClampToConfinerBoundsInternal(targetPos, vertExtent, horzExtent);
+        }
+
+        private Vector3 ClampToConfinerBounds(Vector3 targetPos, float orthographicSize, float aspect)
+        {
+            // 1. 시네머신 및 Confiner 컴포넌트 가져오기
+            if (cinemachineCamera == null) 
+                return targetPos;
+    
+            var confiner = cinemachineCamera.GetComponent<CinemachineConfiner2D>();
+    
+            // Confiner가 없거나, BoundingShape(콜라이더)가 연결 안 되어 있으면 제한 없이 리턴
+            if (confiner == null || confiner.BoundingShape2D == null)
+                return targetPos;
+
+            // 2. 제공된 orthographic size와 aspect 사용
+            float vertExtent = orthographicSize; 
+            float horzExtent = vertExtent * aspect;
+            
+            return ClampToConfinerBoundsInternal(targetPos, vertExtent, horzExtent);
+        }
+
+        private Vector3 ClampToConfinerBoundsInternal(Vector3 targetPos, float vertExtent, float horzExtent)
+        {
+            if (cinemachineCamera == null) 
+                return targetPos;
+    
+            var confiner = cinemachineCamera.GetComponent<CinemachineConfiner2D>();
+            if (confiner == null || confiner.BoundingShape2D == null)
+                return targetPos;
 
             // 3. 콜라이더 영역(Bounds) 가져오기
             Bounds bounds = confiner.BoundingShape2D.bounds;
@@ -429,54 +464,73 @@ namespace GameSystem
 
         private async UniTask ZoomInAsync(Transform targetTr, System.Action endAction)
         {
-            if (follwCamera == null)
-                return;
+            if (follwCamera == null) return;
 
-            // 1. 현재 메인 카메라의 상태를 캡처
+            // 1. 현재 메인 카메라의 상태 캡처
             Vector3 startPos = GameCamera.transform.position;
-            startPos.z = InitPosZ; // 2D 환경에서 Z축 유지
+            startPos.z = InitPosZ;
             float startSize = GameCamera.orthographicSize;
-    
-            // 2. Follow 카메라 초기 설정 (타겟을 잠시 비워둠)
-            follwCamera.Follow = null; 
+
+            // 2. Follow 카메라 초기 설정
+            follwCamera.Follow = null;
             follwCamera.transform.position = startPos;
             follwCamera.Lens.OrthographicSize = startSize;
-
-            // 3. 카메라 교체
             follwCamera.SetActive(true);
 
-            // 4. 최종 목표 위치 계산 (미리 Clamp 적용)
-            Vector3 targetPos = ClampToConfinerBounds(new Vector3(targetTr.position.x, targetTr.position.y, InitPosZ));
-            float targetSize = 500f; // 목표 줌 사이즈
+            float targetSize = 500f; // [설정] 목표 줌 사이즈 (예시값)
+
+            // =========================================================
+            // [핵심 수정 1] 타겟을 화면 정중앙에 배치하기 위한 카메라 위치 계산
+            // Orthographic 카메라에서 타겟을 정중앙에 배치하려면 카메라 위치 = 타겟 위치
+            // =========================================================
+            follwCamera.Lens.OrthographicSize = targetSize;
+
+            // 타겟의 월드 좌표를 카메라 위치로 설정 (타겟이 화면 정중앙에 오도록)
+            Vector3 desiredCameraPos = new Vector3(targetTr.position.x, targetTr.position.y, InitPosZ);
             
+            // 목표 사이즈 기준으로 경계 체크 (follwCamera의 orthographic size와 GameCamera의 aspect 사용)
+            float aspect = GameCamera != null ? GameCamera.aspect : 16f / 9f;
+            Vector3 targetPos = ClampToConfinerBounds(desiredCameraPos, targetSize, aspect);
+
+            // 다시 시작 사이즈로 되돌림 (애니메이션을 위해)
+            follwCamera.Lens.OrthographicSize = startSize;
+            // =========================================================
+
             // 애니메이션 시간 설정
             float distance = Vector3.Distance(startPos, targetPos);
-            float duration = Mathf.Max(distance * 0.001f, 1f); 
+            float duration = Mathf.Max(distance * 0.001f, 1f);
             float timeElapsed = 0f;
 
-            // 5. 부드러운 이동 루프 (위치와 줌을 동시에 이동)
+            // 5. 부드러운 이동 루프
             while (timeElapsed < duration)
             {
                 timeElapsed += Time.deltaTime;
                 float t = Mathf.Clamp01(timeElapsed / duration);
                 float curveT = Mathf.SmoothStep(0f, 1f, t);
 
-                // 위치와 줌을 직접 보간 (Follow가 null이므로 직접 제어 가능)
-                follwCamera.transform.position = Vector3.Lerp(startPos, targetPos, curveT);
-                follwCamera.Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, curveT);
+                // 현재 프레임의 orthographic size 계산
+                float currentSize = Mathf.Lerp(startSize, targetSize, curveT);
+                follwCamera.Lens.OrthographicSize = currentSize;
+
+                // 타겟을 화면 정중앙에 배치하기 위한 카메라 위치 계산
+                Vector3 desiredPos = new Vector3(targetTr.position.x, targetTr.position.y, InitPosZ);
+                // 현재 사이즈 기준으로 경계 체크 (사이즈가 변하면서 경계도 달라질 수 있음)
+                Vector3 currentTargetPos = ClampToConfinerBounds(desiredPos, currentSize, aspect);
+                
+                follwCamera.transform.position = Vector3.Lerp(startPos, currentTargetPos, curveT);
 
                 await UniTask.Yield(PlayerLoopTiming.Update);
             }
 
-            // 6. [중요] 도착 후 최종 상태 고정 및 Follow 연결
-            follwCamera.transform.position = targetPos;
+            // 6. 도착 처리 - 최종 사이즈로 다시 경계 체크하여 정확한 위치 설정
             follwCamera.Lens.OrthographicSize = targetSize;
-            
-            follwCamera.ForceCameraPosition(targetPos, Quaternion.identity);
+            Vector3 finalDesiredPos = new Vector3(targetTr.position.x, targetTr.position.y, InitPosZ);
+            Vector3 finalPos = ClampToConfinerBounds(finalDesiredPos, targetSize, aspect);
+            follwCamera.transform.position = finalPos;
+            follwCamera.ForceCameraPosition(finalPos, Quaternion.identity);
 
-            // 시네머신 내부 로직이 현재 위치를 '기본값'으로 인식하게 함 (위치 튐 방지)
-            // follwCamera.OnTargetObjectWarped(targetTr, targetPos - targetTr.position);
-            // follwCamera.Follow = null;
+            // [중요] 타겟을 계속 따라다니게 하려면 여기서 Follow 연결
+            // follwCamera.Follow = targetTr; 
 
             await UniTask.Yield();
             endAction?.Invoke();
