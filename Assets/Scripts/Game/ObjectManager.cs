@@ -36,11 +36,8 @@ namespace Game
         public ObjectManager Initialize(IGardenManager gardenManager)
         {
             _gardenManager = gardenManager;
-
-            Event?.RemoveAllListeners();
-
+            
             return this;
-
         }
 
         public override IEnumerator CoInitialize(Data data)
@@ -48,7 +45,9 @@ namespace Game
             _data = data;
 
             _objectHolder?.LoadInfo();
-
+            
+            Event?.RemoveAllListeners();
+            
             yield break;
         }
 

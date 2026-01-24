@@ -64,13 +64,14 @@ namespace GameSystem
         // private float _dragWidth = 0;
         private Vector3 _velocity = Vector3.zero;
         private float _smoothTime = 0.045f;
-        //private float _smoothTime = 1f;
+    
 
         private float _width = 0;
         private bool _zoomIn = false;
         // private Vector3 _zoomInTargetPos = Vector3.zero;
         private System.Action _zoomInEndAction = null; 
         private float _timeElapsed = 0;
+        private Vector3 _lastPreZoomPos = Vector3.zero;
 
         private bool _isMoveCenter = false;
 
@@ -471,6 +472,8 @@ namespace GameSystem
             startPos.z = InitPosZ;
             float startSize = GameCamera.orthographicSize;
 
+            _lastPreZoomPos = startPos;
+
             // 2. Follow 카메라 초기 설정
             follwCamera.Follow = null;
             follwCamera.transform.position = startPos;
@@ -558,26 +561,86 @@ namespace GameSystem
 
         private async UniTask ZoomOutAsync(System.Action endAction)
         {
-            if (GameCamera == null)
-                return;
-            
+            if (follwCamera == null || GameCamera == null) return;
+
+            // 1. 시작 상태 (현재 줌인된 상태)
+            Vector3 startPos = follwCamera.transform.position;
+            float startSize = follwCamera.Lens.OrthographicSize;
+
+            // 2. 목표 상태 (원래 기본 상태)
+            // _lastPreZoomPos는 ZoomIn 시작 시 저장해둔 GameCamera.transform.position입니다.
+            // 만약 저장된 값이 없다면 특정 기본 좌표를 사용하세요.
+            Vector3 targetPosCenter = _lastPreZoomPos; 
+            float targetSize = DefaultOrthographicSize;
+            float aspect = GameCamera.aspect;
+
+            float duration = 1.0f; // 줌아웃 시간
+            float timeElapsed = 0f;
+
+            // 3. 부드러운 복귀 루프
+            while (timeElapsed < duration)
+            {
+                timeElapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(timeElapsed / duration);
+                float curveT = Mathf.SmoothStep(0f, 1f, t); // 부드러운 가속/감속
+
+                // 현재 프레임의 사이즈 계산
+                float currentSize = Mathf.Lerp(startSize, targetSize, curveT);
+                follwCamera.Lens.OrthographicSize = currentSize;
+
+                // [핵심] 현재 사이즈에 맞춰서 목표 위치를 실시간으로 제한(Clamp)
+                // 줌아웃되면서 화면이 커지면 카메라 중심이 이동할 수 있는 범위가 좁아집니다.
+                Vector3 currentTargetPos = ClampToConfinerBounds(targetPosCenter, currentSize, aspect);
+        
+                // 위치 보간 이동
+                follwCamera.transform.position = Vector3.Lerp(startPos, currentTargetPos, curveT);
+
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
+
+            // 4. 최종 상태 고정
+            follwCamera.Lens.OrthographicSize = targetSize;
+            Vector3 finalPos = ClampToConfinerBounds(targetPosCenter, targetSize, aspect);
+            follwCamera.transform.position = finalPos;
+
+            // 5. 메인 카메라로 제어권 전환
+            // 메인 카메라의 위치를 줌아웃이 끝난 최종 위치로 옮겨준 뒤 가상 카메라를 끕니다.
+            GameCamera.transform.position = finalPos;
+            GameCamera.orthographicSize = targetSize;
+    
             follwCamera.SetActive(false);
-            // cinemachineCamera?.SetActive(true);
-            
             follwCamera.Follow = null;
-            
-            float duration = 1f;
-            
-            await DOTween.To(() => GameCamera.orthographicSize,
-                    size => GameCamera.orthographicSize = size, DefaultOrthographicSize, duration)
-                .SetEase(Ease.Linear);
-            await UniTask.Delay(TimeSpan.FromSeconds(duration));
-            
-            endAction?.Invoke();
-                    
+
+            // 6. 후속 처리
             SetSize();
             SetStopUpdate(false);
+    
+            await UniTask.Yield();
+            endAction?.Invoke();
         }
+        
+        // private async UniTask ZoomOutAsync(System.Action endAction)
+        // {
+        //     if (GameCamera == null)
+        //         return;
+        //     
+        //     follwCamera.SetActive(false);
+        //     // cinemachineCamera?.SetActive(true);
+        //     
+        //     follwCamera.Follow = null;
+        //     
+        //     float duration = 1f;
+        //     
+        //     await DOTween.To(() => GameCamera.orthographicSize,
+        //             size => GameCamera.orthographicSize = size, DefaultOrthographicSize, duration)
+        //         .SetEase(Ease.Linear);
+        //     await UniTask.Delay(TimeSpan.FromSeconds(duration));
+        //     
+        //     endAction?.Invoke();
+        //             
+        //     SetSize();
+        //     SetStopUpdate(false);
+        // }
 
         void IGameCameraCtr.SetConfinerBoundingShape(Collider2D collider)
         {

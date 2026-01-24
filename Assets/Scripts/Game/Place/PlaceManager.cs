@@ -46,10 +46,10 @@ namespace Game
 
         public override MonoBehaviour Initialize()
         {
-            //Event = new();
-            //Event?.RemoveAllListeners();
+            Event = new();
+            Event?.RemoveAllListeners();
 
-            //PlaceEventController.Event?.RemoveAllListeners();
+            PlaceEventController.Event?.RemoveAllListeners();
             
             return this;
         }
@@ -58,10 +58,10 @@ namespace Game
         {
             _gardenManager = gardenManger;
 
-            Event = new();
-            Event?.RemoveAllListeners();
-
-            PlaceEventController.Event?.RemoveAllListeners();
+            // Event = new();
+            // Event?.RemoveAllListeners();
+            //
+            // PlaceEventController.Event?.RemoveAllListeners();
 
             return this;
         }

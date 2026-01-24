@@ -117,11 +117,11 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         placeMgr?.Initialize(gardenManager);
 
         yield return StartCoroutine(CoInitializeManager(activityPlaceId));
-        yield return StartCoroutine(Get<Game.StoryManager>().CoInitialize(
-            new Game.StoryManager.Data
-            {
-                PlaceId = activityPlaceId,
-            }));
+
+        var storyManager = Get<Game.StoryManager>();
+        if (storyManager != null)
+            yield return StartCoroutine(storyManager.CoInitialize(new StoryManager.Data()));
+
         yield return StartCoroutine(boostMgr?.CoInitialize(
             new Game.BoostManager.Data
             {
@@ -195,7 +195,9 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
             {
                 PlaceId = placeId,
             }));
-
+        
+        Get<StoryManager>()?.SetActivityPlaceID(placeId);
+        
         placeMgr?.ActivityPlace?.Activate();
 
         yield return null;
@@ -495,7 +497,7 @@ public class MainGameManager : Singleton<MainGameManager>, Game.TutorialManager.
         await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
         endMoveAction?.Invoke();
-
+        
         PlayerPrefs.SetInt(Games.Data.PlayPrefsKeyLastPlaceKey, placeId);
     }
 

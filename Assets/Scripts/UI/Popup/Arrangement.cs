@@ -509,9 +509,7 @@ namespace UI
             var sortArrangementCellList = _arrangementCellList?.OrderBy(cell => cell.Id).ToList();
             if (sortArrangementCellList == null)
                 return null;
-
-            int index = 0;
-
+            
             for (int i = 0; i < sortArrangementCellList.Count ; ++i)
             {
                 var cell = _arrangementCellList[i];
@@ -523,8 +521,60 @@ namespace UI
 
                 if (cell.Id == id)
                     return cell;
+            }
 
+            return null;
+        }
+        
+        private IArrangementCell AvailableObjectArrangementCell(int placeID)
+        {
+            var objectDatas = ObjectContainer.Instance?.GetDataListByPlaceId(placeID);
+            var sortObjectDsats = objectDatas?.OrderBy(obj => obj.Order).ToList();
+            if (sortObjectDsats == null)
+                return null;
+            
+            int index = 0;
+
+            int objectID = 0;
+            foreach (var objectData in sortObjectDsats)
+            {
+                if(objectData == null)
+                    continue;
+
+                if(objectData.Grade >= Type.EObjectGrade.Special)
+                    continue;
+                
+                if(objectData.ObjectType == Type.ObjectType.Garden)
+                    continue;
+
+                if (!MainGameManager.Get<ObjectManager>().CheckExist(objectData.Id))
+                {
+                    objectID = objectData.Id;
+                    break;
+                } 
+                
                 ++index;
+            }
+            
+            var sortArrangementCellList = _arrangementCellList?.OrderBy(cell => cell.Id).ToList();
+            if (sortArrangementCellList == null)
+                return null;
+            
+            // index = 0;
+            
+            for (int i = 0; i < sortArrangementCellList.Count ; ++i)
+            {
+                var cell = _arrangementCellList[i];
+                if (cell == null)
+                    continue;
+            
+                if (cell.ElementType != Type.EElement.Object)
+                    continue;
+            
+                if (cell.Id == objectID)
+                    return cell;
+            
+                // ++index;
             }
 
             return null;
@@ -549,7 +599,7 @@ namespace UI
             }
             else if(_currETabType == Game.Type.ETab.Object)
             {
-                var cell = GetArrangementCell(Game.Type.EElement.Object, PossibleBuyObject);
+                var cell = AvailableObjectArrangementCell(_placeId);
                 if (cell == null)
                     return;
 

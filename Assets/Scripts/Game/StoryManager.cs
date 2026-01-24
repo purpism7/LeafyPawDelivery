@@ -14,7 +14,7 @@ namespace Game
     {
         public class Data : Manager.BaseData
         {
-            public int PlaceId = 0;
+            
         }
 
         private List<GameObject> _storyPrefabList = new();
@@ -31,7 +31,7 @@ namespace Game
 
             AnimalManager.Event?.AddListener(OnChangedAnimalInfo);
             ObjectManager.Event?.AddListener(OnChangedObjectInfo);
-            Game.PlaceManager.Event?.AddListener(OnChangedPlace);
+            // Game.PlaceManager.Event?.AddListener(OnChangedPlace);
 
             return this;
         }
@@ -72,7 +72,7 @@ namespace Game
             var mainGameMgr = MainGameManager.Instance;
             if (mainGameMgr == null)
                 return false;
-
+            
             var storyList = StoryContainer.Instance.GetStoryList(_placeId);
             if (storyList == null)
                 return false;
@@ -181,6 +181,11 @@ namespace Game
             });
         }
 
+        public void SetActivityPlaceID(int placeID)
+        {
+            _placeId = placeID;
+        }
+
         //public bool CheckCompleted(int storyId)
         //{
         //    //if (_storyDic.TryGetValue(_placeId, out GameData.Story story))
@@ -245,14 +250,6 @@ namespace Game
         private void OnChangedObjectInfo(Game.Event.ObjectData objectData)
         {
             StartStory();
-        }
-
-        private void OnChangedPlace(Game.Event.PlaceData placeData)
-        {
-            if (placeData == null)
-                return;
-            
-            _placeId = placeData.Id;
         }
         #endregion
     }
