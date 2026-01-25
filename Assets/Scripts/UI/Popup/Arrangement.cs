@@ -533,49 +533,64 @@ namespace UI
             if (sortObjectDsats == null)
                 return null;
             
-            int index = 0;
-
-            int objectID = 0;
-            foreach (var objectData in sortObjectDsats)
-            {
-                if(objectData == null)
-                    continue;
-
-                if(objectData.Grade >= Type.EObjectGrade.Special)
-                    continue;
-                
-                if(objectData.ObjectType == Type.ObjectType.Garden)
-                    continue;
-
-                if (!MainGameManager.Get<ObjectManager>().CheckExist(objectData.Id))
-                {
-                    objectID = objectData.Id;
-                    break;
-                } 
-                
-                ++index;
-            }
-            
-            var sortArrangementCellList = _arrangementCellList?.OrderBy(cell => cell.Id).ToList();
-            if (sortArrangementCellList == null)
+            var openConditionContainer = ObjectOpenConditionContainer.Instance;
+            if (openConditionContainer == null)
                 return null;
-            
-            // index = 0;
-            
-            for (int i = 0; i < sortArrangementCellList.Count ; ++i)
+
+            if (openConditionContainer.CheckPossibleBuy(out int objectID))
             {
-                var cell = _arrangementCellList[i];
-                if (cell == null)
-                    continue;
+                var sortArrangementCellList = _arrangementCellList?.OrderBy(cell => cell.Id).ToList();
+                if (sortArrangementCellList == null)
+                    return null;
             
-                if (cell.ElementType != Type.EElement.Object)
-                    continue;
+                // index = 0;
             
-                if (cell.Id == objectID)
-                    return cell;
+                for (int i = 0; i < sortArrangementCellList.Count ; ++i)
+                {
+                    var cell = _arrangementCellList[i];
+                    if (cell == null)
+                        continue;
             
-                // ++index;
+                    if (cell.ElementType != Type.EElement.Object)
+                        continue;
+            
+                    if (cell.Id == objectID)
+                        return cell;
+            
+                    // ++index;
+                }
             }
+            
+            // int index = 0;
+            //
+            // int objectID = 0;
+            // foreach (var objectData in sortObjectDsats)
+            // {
+            //     if(objectData == null)
+            //         continue;
+            //
+            //     var openConditionData = ObjectOpenConditionContainer.Instance?.GetData(objectData.Id);  
+            //     if(openConditionData == null)
+            //         continue;
+            //     
+            //     openConditionData.
+            //     
+            //     if(objectData.Grade >= Type.EObjectGrade.Special)
+            //         continue;
+            //     
+            //     if(objectData.ObjectType == Type.ObjectType.Garden)
+            //         continue;
+            //
+            //     if (!MainGameManager.Get<ObjectManager>().CheckExist(objectData.Id))
+            //     {
+            //         objectID = objectData.Id;
+            //         break;
+            //     } 
+            //     
+            //     ++index;
+            // }
+            
+            
 
             return null;
         }

@@ -28,7 +28,7 @@ namespace Game
 
         public override MonoBehaviour Initialize()
         {
-            //Event?.RemoveAllListeners();
+            Event?.RemoveAllListeners();
 
             return this;
         }
@@ -45,8 +45,6 @@ namespace Game
             _data = data;
 
             _objectHolder?.LoadInfo();
-            
-            Event?.RemoveAllListeners();
             
             yield break;
         }
