@@ -12,7 +12,7 @@ namespace Game.Manager
 
         private void Start()
         {
-            Initialize();
+            //Initialize();
         }
 
         public MonoBehaviour Initialize()

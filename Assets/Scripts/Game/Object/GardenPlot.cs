@@ -37,7 +37,7 @@ namespace Game
         {
             base.Initialize(data);
             
-            Debug.Log(data.ObjectUniqueID);
+            //Debug.Log(data.ObjectUniqueID);
         }
 
         public override void Activate()
