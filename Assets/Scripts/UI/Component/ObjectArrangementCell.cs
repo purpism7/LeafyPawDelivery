@@ -221,15 +221,39 @@ namespace UI.Component
                 return;
 
             var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
-
+            
             var animalCurrency = RequiredAnimalCurrency;
-            var openConditionData = CreateOpenConditionData(placeData.AnimalSpriteName, animalCurrency, () => objectOpenConditionContainer.CheckAnimalCurrency(_data.Id));
+            var openConditionData = CreateOpenConditionData(placeData.AnimalSpriteName, animalCurrency, 
+                () =>
+                {
+                    var user = Info.UserManager.Instance.User;
+                    if (user == null)
+                        return false;
+
+                    var currency = user.CurrenctCurrency;
+                    if (currency == null)
+                        return false;
+                    
+                    return currency.Animal >= animalCurrency;
+                });
 
             animalCurrencyCost?.Initialize(openConditionData);
             animalCurrencyCost?.Activate();
 
             var objectCurrency = RequiredObjectCurrency;
-            openConditionData = CreateOpenConditionData(placeData.ObjectSpriteName, objectCurrency, () => objectOpenConditionContainer.CheckObjectCurrency(_data.Id));
+            openConditionData = CreateOpenConditionData(placeData.ObjectSpriteName, objectCurrency, 
+                () =>
+                {
+                    var user = Info.UserManager.Instance.User;
+                    if (user == null)
+                        return false;
+
+                    var currency = user.CurrenctCurrency;
+                    if (currency == null)
+                        return false;
+                    
+                    return currency.Object >= objectCurrency;
+                });
 
             objectCurrencyCost?.Initialize(openConditionData);
             objectCurrencyCost?.Activate();

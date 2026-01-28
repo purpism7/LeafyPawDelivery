@@ -303,7 +303,7 @@ namespace UI.Component
 
         protected OpenCondition.Data CreateOpenConditionData(string spriteName, int currency, Func<bool> possibleFunc)
         {
-            return new OpenCondition.Data()
+            return new OpenCondition.Data
             {
                 ImgSprite = GameSystem.ResourceManager.Instance?.AtalsLoader?.GetCurrencySprite(spriteName),
                 Text = string.Format("{0}", currency),
