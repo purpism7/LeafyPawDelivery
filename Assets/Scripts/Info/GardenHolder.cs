@@ -80,10 +80,11 @@ namespace Info
             _plotInfos?.Add(plotInfo);
 
             SaveInfo();
-            
-            List<string> plotUniqueIDs = new();
+
             if (_plotInfos != null)
             {
+                List<string> plotUniqueIDs = new();
+
                 for (int i = 0; i < _plotInfos.Count; ++i)
                 {
                     if(_plotInfos[i] == null)
@@ -91,20 +92,32 @@ namespace Info
                     
                     plotUniqueIDs.Add(_plotInfos[i].uniqueID);
                 }
+
+                UserManager.Instance?.SetGardenPlotInfos(plotUniqueIDs);
             }
-            
-            UserManager.Instance?.SetGardenPlotInfos(plotUniqueIDs);
 
             return true;
         }
 
         public bool TryRemovePlotInfo(string objectUniqueID)
         {
-            var plotInfo = GetPlotInfo(objectUniqueID);
-            if (plotInfo == null)
+            if (_plotInfos == null)
                 return false;
 
-            return _plotInfos.Remove(plotInfo);
+            for(int i = 0; i < _plotInfos.Count; ++i)
+            {
+                var plotInfo = _plotInfos[i];
+                if (plotInfo == null)
+                    continue;
+
+                if (plotInfo.objectUniqueID == objectUniqueID)
+                {
+                    _plotInfos.RemoveAt(i);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public PlotInfo GetPlotInfo(string objectUniqueID)
