@@ -38,17 +38,24 @@ namespace Info
             var userPlotInfos = UserManager.Instance?.User?.PlotUniqueIDs?.ToList();
             if (userPlotInfos != null)
             {
-                List<PlotInfo > plotInfos = new();
-                
-                for (int i = userPlotInfos.Count - 1; i >= 0; --i)
+                if (_plotInfos != null)
                 {
-                    var plotUniqueID = userPlotInfos[i];
-                    if (string.IsNullOrEmpty(plotUniqueID))
-                        continue;
-
-                    if (_plotInfos?.Find(info => info.uniqueID == plotUniqueID) == null)
-                        _plotInfos?.RemoveAt(i);
+                    // 내 ID 리스트에 없는 녀석들은 데이터 리스트에서 전부 삭제
+                    _plotInfos.RemoveAll(info => info != null && !userPlotInfos.Contains(info.uniqueID));
                 }
+
+                ////List<PlotInfo > plotInfos = new();
+                
+                //for (int i = userPlotInfos.Count - 1; i >= 0; --i)
+                //{
+                //    var plotUniqueID = userPlotInfos[i];
+                //    if (string.IsNullOrEmpty(plotUniqueID))
+                //        continue;
+
+                //    if (_plotInfos != null &&
+                //        _plotInfos?.Find(info => info != null && info.uniqueID == plotUniqueID) == null)
+                //        _plotInfos?.RemoveAt(i);
+                //}
             }
         }
         
@@ -70,9 +77,8 @@ namespace Info
             if (plotInfo != null)
                 return false;
 
-            plotInfo = new PlotInfo
+            plotInfo = new PlotInfo(objectUniqueID)
             {
-                objectUniqueID = objectUniqueID,
                 cropID = cropID,
                 growthEndTime = System.DateTime.UtcNow.AddSeconds(growthTimeSeconds)
             };
@@ -113,9 +119,13 @@ namespace Info
                 if (plotInfo.objectUniqueID == objectUniqueID)
                 {
                     _plotInfos.RemoveAt(i);
+                    SaveInfo();
+
                     return true;
                 }
             }
+
+            
 
             return false;
         }
