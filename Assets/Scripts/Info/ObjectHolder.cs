@@ -194,7 +194,7 @@ namespace Info
                     if (editObject.Arrangement)
                         continue;
 
-                    GenerateObjectUniqueID(editObject, objectData);
+                    // GenerateObjectUniqueID(editObject, objectData);
 
                     return editObject;
                 }

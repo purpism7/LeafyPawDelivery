@@ -22,8 +22,9 @@ namespace Info
         [JsonProperty]
         public int cropID = 0;
 
-        public PlotInfo()
+        public PlotInfo(string objectUID)
         {
+            objectUniqueID = objectUID;
             uniqueID = GameUtils.GenerateUniqueID("P");
         }
     }
