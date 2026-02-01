@@ -133,6 +133,9 @@ namespace Game.Manager
                             addObjectData.eOpenConditionType == OpenConditionData.EType.Special)
                             return;
 
+                        if (addObjectData.ObjectType == Type.ObjectType.Garden)
+                            return;
+
                         CheckOpenPlace();
 
                         break;

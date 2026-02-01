@@ -219,8 +219,6 @@ namespace UI.Component
             var placeData = MainGameManager.Get<PlaceManager>()?.ActivityPlaceData;
             if (placeData == null)
                 return;
-
-            var objectOpenConditionContainer = ObjectOpenConditionContainer.Instance;
             
             var animalCurrency = RequiredAnimalCurrency;
             var openConditionData = CreateOpenConditionData(placeData.AnimalSpriteName, animalCurrency, 
