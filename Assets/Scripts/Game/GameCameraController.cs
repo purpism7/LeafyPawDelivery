@@ -593,7 +593,10 @@ namespace GameSystem
                 Vector3 currentTargetPos = ClampToConfinerBounds(targetPosCenter, currentSize, aspect);
         
                 // 위치 보간 이동
-                follwCamera.transform.position = Vector3.Lerp(startPos, currentTargetPos, curveT);
+                Vector3 lerpedPos = Vector3.Lerp(startPos, currentTargetPos, curveT);
+                
+                // [수정] 보간된 위치도 현재 사이즈 기준으로 다시 클램핑하여 맵 바깥 영역이 보이지 않도록 보장
+                follwCamera.transform.position = ClampToConfinerBounds(lerpedPos, currentSize, aspect);
 
                 await UniTask.Yield(PlayerLoopTiming.Update);
             }
