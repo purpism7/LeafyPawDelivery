@@ -12,44 +12,71 @@ namespace Plugin
 
         protected override void Initialize()
         {
-            if (Application.isEditor)
-                return;
+            // 1. 플랫폼별 컴포넌트 할당 (전략 패턴)
+#if UNITY_EDITOR
+            _base = gameObject.GetOrAddComponent<Local>();
+#elif UNITY_ANDROID
+    var eLoginType = GameSystem.Auth.ELoginType;
+    // 로그인 타입에 따라 분기하되, 기본값은 Local 등으로 방어 로직 구축
+    if(eLoginType == GameSystem.Auth.EType.GooglePlayGames)
+        _base = gameObject.GetOrAddComponent<Android>();
+    else
+        _base = gameObject.GetOrAddComponent<Local>(); 
+#elif UNITY_IOS
+    _base = gameObject.GetOrAddComponent<IOS>();
+#else
+    _base = gameObject.GetOrAddComponent<Local>();
+#endif
 
-            var eLoginType = GameSystem.Auth.ELoginType;
-            if(eLoginType == GameSystem.Auth.EType.GooglePlayGames)
+            // 2. _base가 확실히 있을 때 Initialize 호출
+            if (_base != null)
             {
-#if UNITY_ANDROID
-                _base = gameObject.GetOrAddComponent<Android>();
-#endif
+                Debug.Log($"[Native] Initialized with {_base.GetType().Name}");
+                _base.Initialize();
             }
-            else if(eLoginType == GameSystem.Auth.EType.GameCenter)
+            else
             {
-#if UNITY_IOS
-                _base = gameObject.GetOrAddComponent<IOS>();
-#endif
+                Debug.LogError("[Native] Failed to initialize Base component!");
             }
-            //else
-            //{
-            //    _base = gameObject.GetOrAddComponent<Local>();
-            //}
             
-
-//            if(Application.isEditor)
-//            {
-//                _base = gameObject.GetOrAddComponent<Local>();
-//            }
-//            else
-//            {
-//#if UNITY_IOS
-//                _base = gameObject.GetOrAddComponent<IOS>();
-//#elif UNITY_ANDROID
-//                _base = gameObject.GetOrAddComponent<Android>();
-//#else
-//                _base = gameObject.GetOrAddComponent<Local>();
-//#endif
-//            }
-
-            _base?.Initialize();
+//             if (Application.isEditor)
+//                 return;
+//
+//             var eLoginType = GameSystem.Auth.ELoginType;
+//             if(eLoginType == GameSystem.Auth.EType.GooglePlayGames)
+//             {
+// #if UNITY_ANDROID
+//                 _base = gameObject.GetOrAddComponent<Android>();
+// #endif
+//             }
+//             else if(eLoginType == GameSystem.Auth.EType.GameCenter)
+//             {
+// #if UNITY_IOS
+//                 _base = gameObject.GetOrAddComponent<IOS>();
+// #endif
+//             }
+//             //else
+//             //{
+//             //    _base = gameObject.GetOrAddComponent<Local>();
+//             //}
+//             
+//
+// //            if(Application.isEditor)
+// //            {
+// //                _base = gameObject.GetOrAddComponent<Local>();
+// //            }
+// //            else
+// //            {
+// //#if UNITY_IOS
+// //                _base = gameObject.GetOrAddComponent<IOS>();
+// //#elif UNITY_ANDROID
+// //                _base = gameObject.GetOrAddComponent<Android>();
+// //#else
+// //                _base = gameObject.GetOrAddComponent<Local>();
+// //#endif
+// //            }
+//
+//             _base?.Initialize();
         }
 
         public override IEnumerator CoInit()

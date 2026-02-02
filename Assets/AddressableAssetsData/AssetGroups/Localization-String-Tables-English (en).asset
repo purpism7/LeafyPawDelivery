@@ -20,14 +20,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
-    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a37675578dae4cb5a7d6385123fa032
     m_Address: Object_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
-    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4a59f4d586af4408e9b4fddb31cb3e33
     m_Address: Acquire_en
@@ -52,14 +50,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
-    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c9c667fd7910542e8815b4a96da710fe
     m_Address: Animal_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
-    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: da39db3f58415425f97db016a9d378c9
     m_Address: App_en
