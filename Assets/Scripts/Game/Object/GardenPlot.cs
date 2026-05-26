@@ -159,6 +159,7 @@ namespace Game
             cropSpriteRenderer?.SetActive(true);
 
             isWind = true;
+            SetMaterial(Game.Type.EMaterial.WindEffect, cropSpriteRenderer);
 
             return true;
         }

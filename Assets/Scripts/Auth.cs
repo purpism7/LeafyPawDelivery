@@ -64,8 +64,7 @@ namespace GameSystem
             _nickName = PlayerPrefs.GetString(Games.Data.PlayPrefsKeyNickName, string.Empty);
 
             _endAuth = false;
-
-
+            
 #if UNITY_EDITOR
             _endAuth = true;
 #elif UNITY_ANDROID
@@ -99,23 +98,33 @@ namespace GameSystem
 #if UNITY_ANDROID
         private void LoginGooglePlayGames()
         {
-            PlayGamesPlatform.Instance.Authenticate(
-                (status) =>
+            PlayGamesPlatform.Instance.Authenticate((status) =>
+            {
+                if (status == SignInStatus.Success)
                 {
-                    Debug.Log(status);
-                    if (status == SignInStatus.Success)
+                    Debug.Log("GPGS Login success!");
+
+                    // v11 방식: 서버 사이드 액세스 요청
+                    PlayGamesPlatform.Instance.RequestServerSideAccess(false, (authCode) =>
                     {
-                        PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
+                        if (!string.IsNullOrEmpty(authCode))
                         {
-                            Debug.Log("Authorization code: " + code);
-                            SignInWithGooglePlayGamesAsync(code).Forget();
-                        });
-                    }
-                    else
-                    {
-                        Debug.Log("로그인 실패");
-                    }
-                });
+                            Debug.Log($"auth code : {authCode}");
+                            // AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(authCode);
+                            SignInWithGooglePlayGamesAsync(authCode).Forget();
+
+                        }
+                        else
+                        {
+                            Debug.LogError("인증 코드가 비어있습니다. 에디터 설정을 확인하세요.");
+                        }
+                    });
+                }
+                else
+                {
+                    Debug.LogError($"GPGS 로그인 실패: {status}");
+                }
+            });
         }
         
         async UniTask SignInWithGooglePlayGamesAsync(string authCode)
