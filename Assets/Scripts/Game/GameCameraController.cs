@@ -74,6 +74,8 @@ namespace GameSystem
         private Vector3 _lastPreZoomPos = Vector3.zero;
 
         private bool _isMoveCenter = false;
+        private Vector2 _lastMousePosition = Vector2.zero;
+        private bool _hasLastMousePosition = false;
 
         public Camera MainCamera => GameCamera;
         public Camera UICamera => uiCamera;
@@ -135,16 +137,20 @@ namespace GameSystem
             if (StopUpdate)
                 return;
 
-            int touchCnt = Input.touchCount;
-            if (touchCnt <= 0)
+            if (!TryGetPrimaryTouch(out var touch))
                 return;
 
-            var touch = Input.GetTouch(0);
-            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            if (IsPointerOverUI(touch))
                 return;
 
-            ZoomInOut();
-            Drag();
+            if (Input.touchCount == 2)
+            {
+                ZoomInOut();
+
+                return;
+            }
+
+            Drag(touch);
         }
 
         #region IFixedUpdater
@@ -154,14 +160,6 @@ namespace GameSystem
                 return;
 
             if (StopUpdate)
-                return;
-
-            int touchCnt = Input.touchCount;
-            if (touchCnt <= 0)
-                return;
-
-            var touch = Input.GetTouch(0);
-            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                 return;
 
             // ZoomInOut();
@@ -188,13 +186,13 @@ namespace GameSystem
         }
 #endif
 
-        private void Drag()
+        private void Drag(Touch touch)
         {
             int touchCnt = Input.touchCount;
-            if (touchCnt != 1)
+            if (touchCnt > 0 &&
+                touchCnt != 1)
                 return;
-           
-            var touch = Input.GetTouch(0);
+
             switch(touch.phase)
             {
                 case TouchPhase.Began:
@@ -220,6 +218,91 @@ namespace GameSystem
                         break;
                     }
             }
+        }
+
+        private bool TryGetPrimaryTouch(out Touch touch)
+        {
+            if (Input.touchCount > 0)
+            {
+                _hasLastMousePosition = false;
+                touch = Input.GetTouch(0);
+
+                return true;
+            }
+
+#if UNITY_EDITOR || UNITY_STANDALONE
+            if (!Input.GetMouseButton(0) &&
+                !Input.GetMouseButtonDown(0) &&
+                !Input.GetMouseButtonUp(0))
+            {
+                _hasLastMousePosition = false;
+                touch = default;
+
+                return false;
+            }
+
+            var mousePosition = (Vector2)Input.mousePosition;
+            var deltaPosition = _hasLastMousePosition ? mousePosition - _lastMousePosition : Vector2.zero;
+            var phase = TouchPhase.Stationary;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                phase = TouchPhase.Began;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                phase = TouchPhase.Ended;
+            }
+            else if (!_hasLastMousePosition)
+            {
+                phase = TouchPhase.Began;
+            }
+            else if (deltaPosition.sqrMagnitude > 0.01f)
+            {
+                phase = TouchPhase.Moved;
+            }
+
+            touch = new Touch
+            {
+                fingerId = -1,
+                position = mousePosition,
+                rawPosition = mousePosition,
+                deltaPosition = deltaPosition,
+                deltaTime = Time.deltaTime,
+                tapCount = 1,
+                phase = phase,
+                type = TouchType.Direct,
+                pressure = 1f,
+                maximumPossiblePressure = 1f,
+            };
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                _hasLastMousePosition = false;
+            }
+            else
+            {
+                _lastMousePosition = mousePosition;
+                _hasLastMousePosition = true;
+            }
+
+            return true;
+#else
+            touch = default;
+
+            return false;
+#endif
+        }
+
+        private bool IsPointerOverUI(Touch touch)
+        {
+            if (EventSystem.current == null)
+                return false;
+
+            if (touch.fingerId >= 0)
+                return EventSystem.current.IsPointerOverGameObject(touch.fingerId);
+
+            return EventSystem.current.IsPointerOverGameObject();
         }
         
         private Vector3 ClampToConfinerBounds(Vector3 targetPos, Camera camera = null)
@@ -656,4 +739,3 @@ namespace GameSystem
         #endregion
     }
 }
-

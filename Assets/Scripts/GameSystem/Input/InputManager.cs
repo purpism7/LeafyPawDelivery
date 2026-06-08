@@ -36,17 +36,47 @@ namespace GameSystem
             }
 #endif
 
-            int touchCnt = Input.touchCount;
-            if (touchCnt <= 0)
+            if (!HasPrimaryPointer())
                 return;
 
-            var touch = Input.GetTouch(0);
-            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            if (IsPointerOverUI())
                 return;
 
             InputHandler?.ChainUpdate();
         }
         #endregion
+
+        private bool HasPrimaryPointer()
+        {
+            if (Input.touchCount > 0)
+                return true;
+
+#if UNITY_EDITOR || UNITY_STANDALONE
+            return Input.GetMouseButton(0) ||
+                   Input.GetMouseButtonDown(0) ||
+                   Input.GetMouseButtonUp(0);
+#else
+            return false;
+#endif
+        }
+
+        private bool IsPointerOverUI()
+        {
+            if (EventSystem.current == null)
+                return false;
+
+            if (Input.touchCount > 0)
+            {
+                var touch = Input.GetTouch(0);
+
+                return EventSystem.current.IsPointerOverGameObject(touch.fingerId);
+            }
+
+#if UNITY_EDITOR || UNITY_STANDALONE
+            return EventSystem.current.IsPointerOverGameObject();
+#else
+            return false;
+#endif
+        }
     }
 }
-

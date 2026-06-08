@@ -21,6 +21,8 @@ namespace GameSystem
         private bool _longPress = false;
         private bool _possibleTouch = false;
         private float _pressTime = 0;
+        private Vector2 _lastMousePosition = Vector2.zero;
+        private bool _hasLastMousePosition = false;
 
         public void Init(GameSystem.GameCameraController gameCameraCtr)
         {
@@ -42,6 +44,9 @@ namespace GameSystem
         // UI 와 Game 터치 분리.
         private bool IsPointerOverUIObject(Vector2 touchPos)
         {
+            if (EventSystem.current == null)
+                return false;
+
             PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current)
             {
                 position = touchPos,
@@ -59,7 +64,9 @@ namespace GameSystem
             if (_gameCameraCtr == null)
                 return;
 
-            var touch = Input.GetTouch(0);
+            if (!TryGetPrimaryTouch(out var touch))
+                return;
+
             var touchPosition = touch.position;
             if (IsPointerOverUIObject(touchPosition))
                 return;
@@ -166,8 +173,82 @@ namespace GameSystem
                         _pressTime = 0;
 
                         break;
-                    }
+                }
             }
+        }
+
+        private bool TryGetPrimaryTouch(out Touch touch)
+        {
+            if (Input.touchCount > 0)
+            {
+                _hasLastMousePosition = false;
+                touch = Input.GetTouch(0);
+
+                return true;
+            }
+
+#if UNITY_EDITOR || UNITY_STANDALONE
+            if (!Input.GetMouseButton(0) &&
+                !Input.GetMouseButtonDown(0) &&
+                !Input.GetMouseButtonUp(0))
+            {
+                _hasLastMousePosition = false;
+                touch = default;
+
+                return false;
+            }
+
+            var mousePosition = (Vector2)Input.mousePosition;
+            var deltaPosition = _hasLastMousePosition ? mousePosition - _lastMousePosition : Vector2.zero;
+            var phase = TouchPhase.Stationary;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                phase = TouchPhase.Began;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                phase = TouchPhase.Ended;
+            }
+            else if (!_hasLastMousePosition)
+            {
+                phase = TouchPhase.Began;
+            }
+            else if (deltaPosition.sqrMagnitude > 0.01f)
+            {
+                phase = TouchPhase.Moved;
+            }
+
+            touch = new Touch
+            {
+                fingerId = -1,
+                position = mousePosition,
+                rawPosition = mousePosition,
+                deltaPosition = deltaPosition,
+                deltaTime = Time.deltaTime,
+                tapCount = 1,
+                phase = phase,
+                type = TouchType.Direct,
+                pressure = 1f,
+                maximumPossiblePressure = 1f,
+            };
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                _hasLastMousePosition = false;
+            }
+            else
+            {
+                _lastMousePosition = mousePosition;
+                _hasLastMousePosition = true;
+            }
+
+            return true;
+#else
+            touch = default;
+
+            return false;
+#endif
         }
 
         private void OnTouchBegan(Touch? touch, Game.Base gameBase)
@@ -337,4 +418,3 @@ namespace GameSystem
         }
     }
 }
-
