@@ -1,4 +1,4 @@
-# Leafy Paw Delivery
+# Leafy Paw Parcels
 
 동물 수집, 장소 꾸미기, 선물/친밀도, 작물, 짧은 스토리 진행을 중심으로 한 Unity 모바일 캐주얼 게임 프로젝트입니다.
 
