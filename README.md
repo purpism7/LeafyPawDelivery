@@ -1,4 +1,4 @@
-# Leafy Paw Delivery
+# Leafy Paw Parcels
 
 Leafy Paw Delivery는 숲속 우체부와 동물 친구들이 머무는 공간을 꾸미고, 선물과 작물을 통해 친밀도와 이야기를 열어가는 Unity 모바일 힐링 수집 게임입니다.
 
