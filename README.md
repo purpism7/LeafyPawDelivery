@@ -17,14 +17,14 @@
 
 ## Gameplay
 
-| 숲속 마을 꾸미기 | 동물 스토리 |
-| :---: | :---: |
-| [![Leafy Paw Parcels home gameplay](./docs/images/leafy-gameplay-home.png)](./docs/images/leafy-paw-delivery-overview.png) | [![Leafy Paw Parcels story dialogue](./docs/images/leafy-gameplay-story.png)](./docs/images/leafy-paw-delivery-overview.png) |
-| **도감과 컬렉션** | **미션과 보상** |
-| [![Leafy Paw Parcels collection book](./docs/images/leafy-gameplay-collection.png)](./docs/images/leafy-paw-delivery-overview.png) | [![Leafy Paw Parcels mission screen](./docs/images/leafy-gameplay-mission.png)](./docs/images/leafy-paw-delivery-overview.png) |
+<p align="center">
+  <a href="./docs/images/leafy-paw-delivery-overview.png">
+    <img src="./docs/images/leafy-paw-delivery-overview.png" alt="Leafy Paw Parcels gameplay overview" width="900" />
+  </a>
+</p>
 
 <p align="center">
-  <a href="./docs/images/leafy-paw-delivery-overview.png"><strong>전체 화면 이미지 보기</strong></a>
+  <sub>숲속 마을 꾸미기 · 동물 스토리 · 도감과 컬렉션 · 미션과 보상</sub>
 </p>
 
 ## Project Overview
